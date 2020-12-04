@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE layout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/edit_sync_task_dlg_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="SpUsage,HardcodedText,RtlSymmetry,RtlHardcoded,ContentDescription" >
+
+    <LinearLayout
+        android:id="@+id/edit_profile_sync_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                <TextView
+                        android:id="@+id/edit_profile_sync_title"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+                <TextView
+                        android:id="@+id/edit_profile_sync_title_sub"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            </LinearLayout>
+	        <ImageButton
+	            android:id="@+id/edit_profile_sync_help"
+	            android:layout_width="43dp"
+	            android:layout_height="42dp"
+                android:layout_gravity="right|center_vertical"
+	            android:scaleType="centerCrop"
+	            android:src="@drawable/ic_128_help" />
+	        	        
+        </LinearLayout>
+
+    </LinearLayout>
+    <include layout="@layout/divider_line1_turquoise" />
+
+
+    <LinearLayout
+        android:id="@+id/edit_profile_sync_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+       <TextView
+           android:id="@+id/edit_sync_task_msg"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="10dp"
+           android:layout_marginRight="10dp"
+           android:text="ＭＳＧ"
+           android:textAppearance="?android:attr/textAppearanceMedium" />
+
+       <ScrollView
+           android:layout_width="fill_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1"
+           android:fadeScrollbars="false" >
+
+           <LinearLayout
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:orientation="vertical" >
+
+               <CheckedTextView
+                   android:id="@+id/edit_sync_task_option_ctv_sync_test_mode"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="3dp"
+                   android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                   android:gravity="center_vertical"
+                   android:text="@string/msgs_task_sync_task_sync_option_test_mode"
+                   android:textAppearance="?android:attr/textAppearanceMedium" />
+
+               <CheckedTextView
+                   android:id="@+id/edit_sync_task_ctv_auto"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="3dp"
+                   android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                   android:gravity="center_vertical"
+                   android:text="@string/msgs_task_sync_task_dlg_active"
+                   android:textAppearance="?android:attr/textAppearanceMedium" />
+
+               <EditText
+                   android:id="@+id/edit_sync_task_task_name"
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:hint="@string/msgs_task_sync_task_dlg_task_name"
+                   android:inputType="text"
+                   android:textAppearance="?android:attr/textAppearanceMedium" />
+
+               <LinearLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:layout_marginBottom="5dp"
+                   android:layout_marginTop="5dp" >
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:layout_marginLeft="3dp"
+                       android:layout_marginRight="5dp"
+                       android:gravity="center"
+                       android:text="@string/msgs_task_sync_task_dlg_sync_type"
+                       android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                   <Spinner
+                       android:id="@+id/edit_sync_task_sync_type"
+                       style="?android:attr/spinnerStyle"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:layout_marginLeft="5dp"
+                       android:layout_weight="1"
+                       android:minHeight="36dp"
+                       android:paddingLeft="5dp"
+                       android:layout_marginRight="5dp"
+                       android:textAppearance="?android:attr/textAppearanceMedium" />
+               </LinearLayout>
+
+               <Button
+                   android:id="@+id/edit_sync_task_swap_source_and_destination_btn"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_vertical"
+                   android:text="@string/msgs_task_sync_task_dlg_change_source_and_destination"
+                   android:textAppearance="?android:attr/textAppearanceMedium" />
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="3dp"
+                   android:text="@string/msgs_task_sync_task_dlg_source"
+                   android:textAppearance="?android:attr/textAppearanceMedium" />
+
+               <RelativeLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal" >
+
+                   <com.sentaroh.android.Utilities3.Widget.NonWordwrapButton
+                       android:id="@+id/edit_sync_task_source_folder_info_btn"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:gravity="left|top"
+                       android:text="TextView"
+                       android:paddingLeft="32dp"
+                       android:stateListAnimator="@null"
+                       android:textAppearance="?android:attr/textAppearanceMedium" />
+                   <ImageView
+                       android:id="@+id/edit_sync_task_source_folder_info_icon"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:scaleType="centerInside"
+                       android:layout_marginTop="9dp"
+                       android:layout_marginLeft="2dp"
+                       android:src="@drawable/ic_32_mobile" />
+
+               </RelativeLayout>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="3dp"
+                   android:layout_marginTop="5dp"
+                   android:text="@string/msgs_task_sync_task_dlg_destination"
+                   android:textAppearance="?android:attr/textAppearanceMedium" />
+
+               <RelativeLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal" >
+
+                   <com.sentaroh.android.Utilities3.Widget.NonWordwrapButton
+                       android:id="@+id/edit_sync_task_destination_folder_info_btn"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:gravity="left|top"
+                       android:text="TextView"
+                       android:paddingLeft="32dp"
+                       android:stateListAnimator="@null"
+                       android:textAppearance="?android:attr/textAppearanceMedium" />
+                   <ImageView
+                       android:id="@+id/edit_sync_task_destination_folder_info_icon"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:scaleType="centerInside"
+                       android:layout_marginTop="9dp"
+                       android:layout_marginLeft="2dp"
+                       android:src="@drawable/ic_32_mobile" />
+
+               </RelativeLayout>
+
+               <include layout="@layout/edit_sync_task_dlg_filter" />
+
+               <include layout="@layout/edit_sync_task_dlg_options" />
+           </LinearLayout>
+       </ScrollView>
+
+       <include layout="@layout/edit_sync_task_dlg_ok_cancel" />
+
+   </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="3dp"
+        android:text="@string/msgs_task_sync_task_sync_option"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="13dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        tools:ignore="RtlHardcoded" >
+
+        <CheckedTextView
+            android:id="@+id/edit_sync_task_option_ctv_sync_start_when_charging"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center_vertical"
+            android:text="@string/msgs_task_sync_task_sync_option_sync_when_charging"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <include layout="@layout/divider_line1" />
+        <LinearLayout
+            android:id="@+id/edit_sync_task_option_ll_sync_source_root_dir_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <CheckedTextView
+                android:id="@+id/edit_sync_task_option_ctv_sync_source_root_dir_file"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_task_sync_task_sync_option_source_root_dir_file"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <include layout="@layout/divider_line1" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/edit_sync_task_option_ll_confirm_override_delete_file"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <CheckedTextView
+                android:id="@+id/edit_sync_task_option_ctv_confirm_override_delete_file"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_task_sync_task_sync_option_confirm_required"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <include layout="@layout/divider_line1" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/edit_sync_task_option_error_option_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_task_sync_task_sync_option_error_title"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/edit_sync_task_option_error_option_value"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="5dp"
+                android:minHeight="36dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/edit_sync_task_option_twoway_sync_conflict_file_rule_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_task_twoway_sync_conflict_copy_rurle"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/edit_sync_task_option_twoway_sync_conflict_file_rule_value"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:minHeight="36dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/edit_sync_task_option_wifi_condition_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/divider_line1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_task_sync_task_sync_option_wifi_condition_title"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <Spinner
+                android:id="@+id/edit_sync_task_option_spinner_wifi_status"
+                style="?android:attr/spinnerStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:minHeight="36dp"
+                android:paddingLeft="5dp"
+                android:layout_marginLeft="12dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:ignore="RtlSymmetry" />
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_wl_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical" >
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_address_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msgs_task_sync_task_dlg_wifi_address_list"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/edit_sync_task_option_btn_edit_address_white_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|left"
+                        android:text="ap"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <CheckedTextView
+                android:id="@+id/edit_sync_task_option_sync_allow_global_ip_address"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_task_sync_task_sync_option_sync_allow_global_ip_address"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </LinearLayout>
+
+
+        <include layout="@layout/divider_line1_turquoise" />
+
+        <CheckedTextView
+            android:id="@+id/edit_sync_task_option_ctv_show_special_option"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+            android:gravity="center_vertical"
+            android:text="@string/msgs_task_sync_task_sync_option_show_special_option"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:id="@+id/edit_sync_task_option_special_option_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_sub_dir"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_sub_dir"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_sub_dir"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_empty_directory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_empty_directory"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_empty_directory"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_hidden_directory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_hidden_directory"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_hidden_directory"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_hidden_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_hidden_file"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_hidden_file"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_process_override_delete_file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_process_override_delete_file"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_perform_overriden_copy_move"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_advanced_network_option_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msgs_task_sync_task_sync_option_network_adv_options"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_ll_retry_if_error_occured"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_ctv_retry_if_error_occured"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_task_sync_task_sync_option_retry_if_error_occured"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <include layout="@layout/divider_line1" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_ll_sync_use_remote_small_io_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical">
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_ctv_sync_use_remote_small_io_area"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_task_sync_task_sync_use_small_ioarea"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <include layout="@layout/divider_line1" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_delete_first_when_mirror"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_delete_first_when_mirror"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_delete_first_when_mirror"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_remove_dir_file_excluded_by_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_remove_dir_file_excluded_by_filter"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_do_mot_reset_file_last_mod_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_do_mot_reset_file_last_mod_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_not_set_file_last_modified"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_sync_diff_use_file_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_diff_use_file_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_diff_file_use_file_size"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_diff_file_size_greater_than_destination"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_sync_diff_use_last_mod_time_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_sync_diff_use_last_mod_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_diff_file_use_last_mod_time"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_sync_diff_use_last_mod_time_dependant_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="20dp">
+
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_diff_file_determin_time_value_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/msgs_task_sync_task_sync_option_allowance_last_mod_time"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Spinner
+                        android:id="@+id/edit_sync_task_option_spinner_diff_file_determin_time_value"
+                        style="?android:attr/spinnerStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.4"
+                        android:layout_marginRight="5dp"
+                        android:minHeight="36dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                </LinearLayout>
+                <include layout="@layout/divider_line1" />
+
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <include layout="@layout/divider_line1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/edit_sync_task_option_sync_diff_ignore_dst_difference_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <CheckedTextView
+                        android:id="@+id/edit_sync_task_option_ctv_sync_diff_ignore_dst_difference"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                        android:gravity="center_vertical"
+                        android:text="@string/msgs_task_sync_task_sync_option_diff_file_ignore_dst_difference"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <LinearLayout
+                        android:id="@+id/edit_sync_task_option_spinner_offset_daylight_saving_time_value_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/msgs_task_sync_task_sync_option_offset_of_dst_time_value"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                        <Spinner
+                            android:id="@+id/edit_sync_task_option_spinner_offset_daylight_saving_time_value"
+                            style="?android:attr/spinnerStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:layout_marginRight="5dp"
+                            android:minHeight="36dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </LinearLayout>
+
+                    <include layout="@layout/divider_line1" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ignore_unusable_character_used_directory_file_name_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ignore_unusable_character_used_directory_file_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <include layout="@layout/divider_line1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ll_remove_directory_if_empty_when_move_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ctv_remove_directory_if_empty_when_move"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_sync_task_option_remove_directory_if_empty_when_move"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_confirm_exif_date_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/divider_line1" />
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_confirm_exif_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="@string/msgs_task_sync_task_option_confirm_exif_date"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ignore_source_file_that_file_size_gt_4gb_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/divider_line1" />
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ignore_source_file_that_file_size_gt_4gb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="@string/msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_ignore_file_name_over_255_byte_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/divider_line1" />
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_ignore_file_name_length_exceed_255_byte"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:text="@string/msgs_task_sync_task_option_ignore_file_name_over_255_byte"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/edit_sync_task_option_twoway_sync_keep_conflic_file_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <include layout="@layout/divider_line1" />
+                <CheckedTextView
+                    android:id="@+id/edit_sync_task_option_twoway_sync_keep_conflic_file"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_twoway_sync_conflict_keep_conflict_file"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

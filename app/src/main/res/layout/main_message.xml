@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_message_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/main_message_filter_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/main_message_filter_category_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_log_msg_filter_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text=" : "
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            <CheckBox
+                android:id="@+id/main_message_filter_category_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_log_msg_filter_info"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            <CheckBox
+                android:id="@+id/main_message_filter_category_warn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_log_msg_filter_warn"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            <CheckBox
+                android:id="@+id/main_message_filter_category_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_log_msg_filter_error"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_message_filter_string_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <Button
+                android:id="@+id/main_message_filter_string_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/msgs_log_msg_filter_string_reset_button"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            <EditText
+                android:id="@+id/main_message_filter_string_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:hint="@string/msgs_log_msg_filter_string_find_string"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            <Button
+                android:id="@+id/main_message_filter_string_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:text="@string/msgs_log_msg_filter_string_find_button"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            <CheckBox
+                android:id="@+id/main_message_filter_string_case_insensitive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical"
+                android:text="@string/msgs_log_msg_filter_string_find_case_sensitive"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+        </LinearLayout>
+
+        <include layout="@layout/divider_line3" />
+
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/main_message_list_view"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fadeScrollbars="false"
+        android:fastScrollEnabled="true">
+    </ListView>
+    
+    <include layout="@layout/context_view_message" />
+    
+</LinearLayout>

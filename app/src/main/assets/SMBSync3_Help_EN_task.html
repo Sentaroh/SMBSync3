@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync3_Help_EN_task</title></head>
+<body><h3>Test mode</h3>
+<p>It does not perform overwrite and delete the file if you check. Please be tested when you create a synchronization task, files that are copied or deleted can be found in the message tab.</p>
+<h3>Auto sync task</h3>
+<p>If checked the task to the automatic. Tasks that are set to automatic synchronization will start when you press the sync button.</p>
+<h3>Task name</h3>
+<p>Specify task name.</p>
+<h3>Sync type</h3>
+<p>The sync method is selected from mirror, copy, move, archive. Sync is done from master to target in one direction.</p>
+<ul>
+<li>Mirror</li>
+<li>Move</li>
+<li>Copy</li>
+<li>Archive</li>
+
+</ul>
+<h3>Swap the source and destination</h3>
+<p>Swap the contents of the source folder and the destination folder </p>
+<h3>Source folder</h3>
+<p>Tap the button to edit source folder</p>
+<h3>Destination folder</h3>
+<p>Tap the button to edit destination folder</p>
+<h3>Select files for sync</h3>
+<p>If you do not check and then sync all of the file. If you check to see details. </p>
+<ul>
+<li>Sync audio files<br/>If you check to synchronize the files of the following extensions.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav  </li>
+<li>Sync image files<br/>If you check to synchronize the files of the following extensions.<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff</li>
+<li>Sync video files<br/>If you check to synchronize the files of the following extensions.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
+<li>File filter<br/>You can select the name and extension of the file you want to synchronize with other than the above.</li>
+
+</ul>
+<h3>Select sub directories for sync</h3>
+<p>If you do not check and then sync all of the sub directory. If you check to show directory filter button.</p>
+<ul>
+<li>Directory filter
+You can select the name of the directory you want to synchronize.</li>
+
+</ul>
+<h3>Execute sync task only when charging</h3>
+<p>If checked, you can start sync only while charging. If sync is started when not charging it will result in an error.</p>
+<h3>Confirm before override copy or delete</h3>
+<p>It will display a confirmation dialog when you want to overwrite and delete the file if you have checked.</p>
+<h3>Network</h3>
+<ul>
+<li>Run even when off<br/>You can always start syncing</li>
+<li>Conn to any AP<br/>Sync can start if the wireless LAN is connected to the any access point.</li>
+<li>Has private address<br/>You can start synchronization when the IP address is a private address</li>
+<li>IP Address List<br/>You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.<br/>You can use wildcards for the filter. (e.g: 192.168.100.*, 192.168.*.*.)</li>
+
+</ul>
+<h3>If it is not connected to the specified access point Skip the task and start the next task</h3>
+<p>If not connected to a specific access point, start the next synchronization task without error.</p>
+<h3>Allow sync with global IP addresses</h3>
+<p>Enable sync with global IP addresses.</p>
+<h3>Stop syncing when an error occurs</h3>
+<p>If it is not checked, sync continue when sync task ended with error.</p>
+<h3>Sync subdirectory</h3>
+<p>Sync the subdirectory if you check.</p>
+<h3>Sync a empty directory</h3>
+<p>Sync the empty directory if you check.(Create a empty directory on the target) </p>
+<h3>Sync a hidden directory</h3>
+<p>Sync the hidden directory if you check.( The name of the hidden directory starts from &quot;.&quot; In Android, since it is represented by a bit in the directory and not the name of the directory on Samba and Windows, the directory that was created will not be in a hidden directory)</p>
+<h3>Sync a hidden file</h3>
+<p>Sync the hidden file if you check.( The name of the hidden file begins with &quot;.&quot; In Android, since it is represented by a bit in the directory and not the name of the file with Samba and Windows, the file that is created will not be hidden files)</p>
+<h3>Overwrite destination file(s)</h3>
+<p>Overwrite the file if same file exists.</p>
+<h3>Delete files prior to sync(Mirror method only)</h3>
+<p>If checked, delete the target file that does not exist on the source, and then copy the difference file with the source.</p>
+<h3>Maintain Destination directory as an exact image of the Source (Mirror mode only)</h3>
+<p>If checked, all files and folders that do not exist in the Source directory and those that are not included by the defined filters will be deleted from the Target directory !</p>
+<h3>Retry on network error</h3>
+<p>Retry the sync only error on the remote side. Retry is done up to three times, is carried out after 30 seconds from the error occurred retry each.</p>
+<h3>Do not set the last update time of destination file to match source file</h3>
+<p>If checked, the last update time of the file copied from the source will be the time the file was copied. The difference judgment is judged by the existence of the existence of the file and the file size.</p>
+<h3>Limit the SMB I/O write buffer to 16KB</h3>
+<p>If you check to limit the IO buffer at the time of remote file writing to 16KB. </p>
+<h3>Use file size to determine file difference</h3>
+<p>If checked, if the last update time of the file is different, it is determined as a difference file.</p>
+<h3>Files are different only when the source is larger than the destination</h3>
+<p>If checked, the file is overwritten only when the source file is newer than the destination file, even if the file size and last update time are different.</p>
+<h3>Minimum age period(in seconds) between source and destination file for synchronization</h3>
+<p>No change within the specified time difference.</p>
+<h3>Do not overwrite destination file if newer than source file</h3>
+<p>If checked, the file will be overwritten only when the source file is newer than the destination file even if the file size and the last update time are different.</p>
+<h3>Skipping directories or files name that contain invalid characters (&quot;, :, \, *, &lt;, &gt;, |)</h3>
+<p>If checked, it will display a warning message without processing directories/files containing unusable characters and process the following directories/files.</p>
+<h3>(Sync type only moves) Delete the source directory when the source directory is empty</h3>
+<p>If the source directory is empty after moving from the source directory to the destination directory, delete the source directory.</p>
+<h3>If the date and time cannot be determined by EXIF data, a confirmation message is displayed</h3>
+<p>Display a confirmation message when the taken date and time cannot be obtained from Exif.</p>
+<h3>Ignore source files that are larger than 4 GB when sync to external storage.</h3>
+<p>If checked, you can prevent I/O errors when syncing to a MicroSD card by ignoring source files larger than 4 GB in size to be synced to local storage.</p>
+</body>
+</html>

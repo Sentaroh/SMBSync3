@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="sync 1"
+        android:enabled="true"
+        android:icon="@drawable/sync_button_1"
+        android:shortcutShortLabel="@string/msgs_main_shortcut_button_label_button1"
+        android:shortcutLongLabel="@string/msgs_main_shortcut_button_label_button1"
+        >
+        <!--        android:shortcutDisabledMessage="@string/shortcut_disabled_message"-->
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.sentaroh.android.SMBSync3"
+            android:targetClass="com.sentaroh.android.SMBSync3.ActivityShortcut" >
+            <extra
+                android:name="shortcut_id"
+                android:value="1"/>
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="sync 2"
+        android:enabled="true"
+        android:icon="@drawable/sync_button_2"
+        android:shortcutShortLabel="@string/msgs_main_shortcut_button_label_button2"
+        android:shortcutLongLabel="@string/msgs_main_shortcut_button_label_button2"
+        >
+        <!--        android:shortcutDisabledMessage="@string/shortcut_disabled_message"-->
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.sentaroh.android.SMBSync3"
+            android:targetClass="com.sentaroh.android.SMBSync3.ActivityShortcut" >
+            <extra
+                android:name="shortcut_id"
+                android:value="2"/>
+
+        </intent>
+    </shortcut>
+    <shortcut
+        android:shortcutId="sync 3"
+        android:enabled="true"
+        android:icon="@drawable/sync_button_3"
+        android:shortcutShortLabel="@string/msgs_main_shortcut_button_label_button3"
+        android:shortcutLongLabel="@string/msgs_main_shortcut_button_label_button3"
+        >
+        <!--        android:shortcutDisabledMessage="@string/shortcut_disabled_message"-->
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.sentaroh.android.SMBSync3"
+            android:targetClass="com.sentaroh.android.SMBSync3.ActivityShortcut" >
+            <extra
+                android:name="shortcut_id"
+                android:value="3"/>
+
+        </intent>
+    </shortcut>
+</shortcuts>

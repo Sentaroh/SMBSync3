@@ -1,0 +1,69 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:appv7="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_top_scheduler"
+            android:title="@string/msgs_menu_scheduler"
+            android:icon="@drawable/ic_64_schedule"
+            appv7:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_top_sync"
+            android:title="@string/msgs_menu_sync_all_auto"
+            android:icon="@drawable/ic_32_sync"
+            appv7:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_top_execute_group"
+        android:title="@string/msgs_menu_exec_group_all_enabled"
+        android:icon="@drawable/ic_32_player"
+        appv7:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_top_show_hide_filter"
+        android:title="@string/msgs_menu_show_hide_filter"
+        android:icon="@drawable/search"
+        appv7:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/menu_top_export"
+          android:title="@string/msgs_menu_export" 
+          android:icon="@android:drawable/ic_menu_save"
+          />
+    <item android:id="@+id/menu_top_import"
+          android:title="@string/msgs_menu_import"
+          android:icon="@android:drawable/ic_menu_set_as"
+          />
+    <item android:id="@+id/menu_top_log_management"
+          android:title="@string/msgs_menu_log_management"
+          />
+    <item android:id="@+id/menu_top_housekeep"
+          android:title="@string/msgs_menu_housekeep"
+          />
+
+    <item android:id="@+id/menu_top_settings"
+          android:title="@string/msgs_menu_settings"
+          android:icon="@android:drawable/ic_menu_preferences"
+          />
+
+    <item android:id="@+id/menu_top_show_battery_optimization"
+      	  android:title="@string/msgs_menu_show_battery_optimization_screen"
+    	  />
+
+    <item android:id="@+id/menu_top_kill"
+          android:title="@string/msgs_menu_kill" 
+          android:icon="@android:drawable/ic_menu_close_clear_cancel"
+          />
+
+    <item android:id="@+id/menu_top_select_storage"
+        android:title="@string/msgs_task_edit_sync_folder_dlg_select_sdcard"
+        />
+
+    <item android:id="@+id/menu_top_request_all_file_access_permission"
+        android:title="@string/msgs_menu_request_all_file_access"
+        />
+
+    <item android:id="@+id/menu_top_list_storage"
+          android:title="@string/msgs_menu_list_storage_info"
+          />
+
+    <item android:id="@+id/menu_top_about"
+            android:title="@string/msgs_menu_about"
+            />
+
+</menu>

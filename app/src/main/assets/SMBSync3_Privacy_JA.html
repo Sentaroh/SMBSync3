@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync3_Privacy_JA</title></head>
+<body><h2>1.アプリからのデータ送信</h2>
+<p>アプリが記録したデータは下記のアプリ操作によりE-Mailや共有ツールで外部に送信することができます。<span style="color: red; "><u>記録されたデータはユーザーの操作が無い限りアプリが外部に送信することはありません。</u></span></p>
+<ul>
+<li>履歴タブから「共有ボタン」を押す</li>
+<li>システム情報から「開発者に送る」ボタンを押す</li>
+<li>ログ管理から「共有ボタン」または「開発者に送る」ボタンを押す</li>
+
+</ul>
+<h2>2.アプリが記録するデータ</h2>
+<h3>2.1同期タスクリスト</h3>
+<p>アプリは同期を実行するための必要なデータを記録します。</p>
+<ul>
+<li>ディレクトリー名、ファイル名、SMBサーバーのホスト名、IPアドレス、ポート番号、アカウント名(<strong>*1</strong>)、パスワード(<strong>*1</strong>)</li>
+<li>アプリの起動と設定変更を保護するためのアプリパスワード(<strong>*1</strong>)</li>
+<li>アプリ設定値</li>
+
+</ul>
+<p><strong>*1</strong>  Androidキーストアに保管されたシステム生成鍵により暗号化して保存されます。</p>
+<h3>2.2アプリ稼動記録</h3>
+<p>アプリは同期結果の検証とトラブル解決のためにログを有効にすると下記データを記録します。</p>
+<ul>
+<li>Androidバージョン、端末の製作者・端末名・端末モデル、アプリバージョン</li>
+<li>ディレクトリー名、ファイル名、ファイルサイズ、ファイル最終更新時刻</li>
+<li>SMBサーバーのホスト名、IPアドレス、ポート番号、アカウント名</li>
+<li>ネットワーク インターフェース名、IPアドレス</li>
+<li>システム設定値(WiFi Sleep policy, Storage info)</li>
+<li>アプリ設定値</li>
+
+</ul>
+<h3>2.3書き出された同期タスクリスト</h3>
+<p>アプリは「2.1同期タスクリスト」をファイルに書き出すことができます。書き出し時にパスワード保護することができます。</p>
+<ul>
+<li>ディレクトリー名、ファイル名</li>
+<li>SMBサーバーのホスト名、IPアドレス、ポート番号、アカウント名、パスワード</li>
+<li>アプリ設定値</li>
+
+</ul>
+<h2>3. 開発者に送られたデータの使用目的</h2>
+<p>アプリのユーザーから開発者に送られたデータはアプリの問題解決のみに使用し、開発者以外には開示しません。</p>
+<h2>4. 必要な権限</h2>
+<p>アプリでは下記の権限の許可が必要です。</p>
+<h3>4.1.写真、メディア、ファイル</h3>
+<p><strong>read the contents of your USB storage<br/>modify or delete the contents of your USB storage</strong>  </p>
+<p>内部ストレージへのファイル同期と管理ファイルの読み書きで使用します。</p>
+<h3>4.2.ストレージ</h3>
+<p><strong>read the contents of your USB storage<br/>modify or delete the contents of your USB storage</strong>  </p>
+<p>USBストレージへのファイル同期と管理ファイルの読み書きで使用します。</p>
+<h3>4.3.Wi-Fi 接続情報</h3>
+<p><strong>view Wi-Fi connections</strong>  </p>
+<p>同期開始時にWi-Fiの状況を確認するために使用します。</p>
+<h3>4.4.その他</h3>
+<h3>4.4.1.view network connections</h3>
+<p>同期開始時にネットワークに接続されていることを確認するために使用します。</p>
+<h3>4.4.2.connect and disconnect from Wi-Fi</h3>
+<p>Andoid 8/9でスケジュール同期でWi-Fiのオン・オフを行うために使用します。</p>
+<h3>4.4.3.full network access</h3>
+<p>ネットワークを通じてSMBプロトコルで同期を行うために使用します。</p>
+<h3>4.4.4.run at startup</h3>
+<p>スケジュール同期を行うために使用します。</p>
+<h3>4.4.5.control vibration</h3>
+<p>同期終了時にユーザーに通知を行うために使用します。</p>
+<h3>4.4.6.prevent device from sleeping</h3>
+<p>スケジュールまたは外部アプリからの同期開始で使用します。</p>
+<h3>4.4.7.install shortcuts</h3>
+<p>デスクトップに同期開始ショートカットを追加するために使用します。</p>
+<p>&nbsp;</p>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/export_import_profile_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ButtonStyle,RtlHardcoded" >
+
+    <LinearLayout
+        android:id="@+id/export_import_profile_title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/export_import_profile_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <include layout="@layout/divider_line1_turquoise" />
+
+        <com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
+            android:id="@+id/export_import_profile_from_file_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_line3" />
+
+    <CheckedTextView
+        android:id="@+id/export_import_profile_list_ctv_restore_schedule"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_export_import_profile_import_schedule" />
+
+    <include layout="@layout/divider_line3" />
+
+    <CheckedTextView
+        android:id="@+id/export_import_profile_list_ctv_restore_group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_export_import_profile_group_parms" />
+
+	<include layout="@layout/divider_line3" />
+
+    <CheckedTextView
+        android:id="@+id/export_import_profile_list_ctv_restore_setting"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_export_import_profile_import_settings" />
+
+    <include layout="@layout/divider_line3" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="@string/msgs_export_import_profile_hdr_task_list"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <ListView
+        android:id="@+id/export_import_profile_listview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1" >
+    </ListView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/export_import_profile_list_select_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="@string/msgs_export_import_profile_select_all" />
+
+        <Button
+            android:id="@+id/export_import_profile_list_unselect_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/msgs_export_import_profile_unselect_all" />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_line3" />
+
+    <CheckedTextView
+        android:id="@+id/export_import_profile_list_ctv_reset_profile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:gravity="center_vertical"
+        android:text="@string/msgs_export_import_profile_reset_current_profile" />
+
+    <include layout="@layout/divider_line3" />
+
+    <include layout="@layout/export_import_profile_dlg_ok_cancel" />
+
+</LinearLayout>

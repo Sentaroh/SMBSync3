@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"//"29.0.3"
+    defaultConfig {
+        applicationId "com.sentaroh.android.SMBSync3"
+        minSdkVersion 26
+        targetSdkVersion 29
+        versionCode 2
+        versionName "01.01"
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+//    packagingOptions {
+////        pickFirst('META-INF/androidx.vectordrawable_vectordrawable.version')
+//        exclude 'META-INF/androidx.vectordrawable_vectordrawable.version'
+//    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals("debug")) {
+                    variant.outputs.all {
+                        def versionName = variant.versionName
+//                        def versionNumber = String.format("%04d", variant.versionCode)
+                        def mod_name = "${rootProject.name}"
+                        def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
+                        def newName = "${mod_name}_debug.${fileExtension}"
+                        outputFileName = newName
+
+                        task copyDebugApk1(type: Copy) {
+                            from 'build/outputs/apk/debug'
+                            into '../debug_apk/' // Into the project root, one level above the app folder
+//                            include '**/*debug.apk'
+                            include '*debug.apk'
+                        }
+
+                        task copyDebugApk2(type: Copy) {
+                            from 'build/outputs/apk/debug'
+                            into '../release/' // Into the project root, one level above the app folder
+                            include '*debug.apk'
+                        }
+
+                        afterEvaluate {
+                            packageDebug.finalizedBy(copyDebugApk1)
+                            copyDebugApk1.finalizedBy(copyDebugApk2)
+                        }
+
+                    }
+                }
+            }
+
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals("release")) {
+                    variant.outputs.all {
+                        def versionName = variant.versionName
+                        def versionNumber = String.format("%04d", variant.versionCode)
+                        def mod_name = "${rootProject.name}"
+                        def date = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
+                        def fileExtension= outputFileName.toString().substring(outputFileName.toString().lastIndexOf(".")+1)
+                        def newName = "${mod_name}_${versionName}_${versionNumber}_release_${date}.${fileExtension}"
+//                        def newName = "${mod_name}_${versionName}_${versionNumber}_release.${fileExtension}"
+                        outputFileName = newName
+                    }
+                }
+            }
+
+        }
+    }
+
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+//    implementation "androidx.constraintlayout:constraintlayout:2.0.0"
+
+    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    implementation files('libs/jcifs-ng-2.1.4-20200413-03.jar')
+    implementation files('libs/jcifs-1.3.17_patch.jar')
+    implementation files('libs/JcifsFile2-1.0.5.jar')
+    implementation files('libs/bcprov-jdk15to18-1.66.jar')
+//    implementation files('libs/bcprov-jdk15on-158.jar')
+
+    implementation files('libs/Utilities3-1.0.2.aar')
+
+    implementation files('libs/metadata-extractor-2.11.0.jar')
+//    implementation files('libs/xmpcore-5.1.3.jar')
+
+//    implementation 'androidx.activity:activity:1.2.0-beta01'
+//    implementation "androidx.fragment:fragment-ktx:1.3.0-beta01"
+
+    implementation 'androidx.activity:activity:1.2.0-alpha06'
+    implementation "androidx.fragment:fragment-ktx:1.3.0-alpha06"
+    implementation "androidx.core:core-ktx:+"
+
+}

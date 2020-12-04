@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/group_list_item_view"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/group_list_item_group_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="group name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+            <TextView
+                android:id="@+id/group_list_item_task_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Task List"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/msgs_group_label_button"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+                <TextView
+                    android:id="@+id/group_list_item_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:text="Button"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/group_list_item_error_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="error message"
+                android:textColor="#ff0000"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            />
+
+        </LinearLayout>
+        <Switch
+            android:id="@+id/group_list_item_enable"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:focusable="false" />
+
+        <ImageButton
+            android:id="@+id/group_list_item_sync"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:paddingRight="7dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_32_player"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <CheckBox
+            android:id="@+id/group_list_item_checked"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+
+</LinearLayout>

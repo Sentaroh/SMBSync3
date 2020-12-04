@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="@string/settings_sync_title">
+        <CheckBoxPreference
+            android:key="@string/settings_wifi_lock"
+            android:title="@string/settings_wifi_lock_title"
+            android:summary="@string/settings_wifi_lock_summary_ena" />
+
+        <CheckBoxPreference
+            android:key="@string/settings_sync_history_log"
+            android:title="@string/settings_sync_history_log_title"
+            android:summary="@string/settings_sync_history_log_summary_ena" />
+
+        <CheckBoxPreference
+            android:key="@string/settings_force_screen_on_while_sync"
+            android:title="@string/settings_force_screen_on_while_sync_title"
+            android:summary="@string/settings_force_screen_on_while_sync_summary_ena" />
+
+<!--        <CheckBoxPreference-->
+<!--            android:key="@string/settings_suppress_warning_location_service_disabled"-->
+<!--            android:title="@string/settings_suppress_warning_location_service_enabled_title"-->
+<!--            android:summary="@string/settings_suppress_warning_location_service_enabled_summary_ena" />-->
+
+        <CheckBoxPreference
+                android:key="@string/settings_suppress_add_external_storage_notification"
+                android:title="@string/settings_suppress_add_external_storage_notification_title"
+                android:summary="@string/settings_suppress_add_external_storage_notification_summary_ena" />
+
+        <CheckBoxPreference
+                android:key="@string/settings_suppress_start_sync_confirmation_message"
+                android:title="@string/settings_suppress_start_sync_confirmation_message_title"
+                android:summary="@string/settings_suppress_start_sync_confirmation_message_summary_ena" />
+
+        <CheckBoxPreference
+                android:key="@string/settings_suppress_shortcut1_confirmation_message"
+                android:title="@string/settings_suppress_shortcut1_confirmation_message_title"
+                android:summary="@string/settings_suppress_shortcut1_confirmation_message_summary_ena" />
+
+        <CheckBoxPreference
+            android:key="@string/settings_suppress_shortcut2_confirmation_message"
+            android:title="@string/settings_suppress_shortcut2_confirmation_message_title"
+            android:summary="@string/settings_suppress_shortcut2_confirmation_message_summary_ena" />
+
+        <CheckBoxPreference
+            android:key="@string/settings_suppress_shortcut3_confirmation_message"
+            android:title="@string/settings_suppress_shortcut3_confirmation_message_title"
+            android:summary="@string/settings_suppress_shortcut3_confirmation_message_summary_ena" />
+
+        <CheckBoxPreference
+            android:key="@string/settings_suppress_start_group_confirmation_message"
+            android:title="@string/settings_suppress_start_group_confirmation_message_title"
+            android:summary="@string/settings_suppress_start_group_confirmation_message_summary_ena" />
+
+        <com.sentaroh.android.Utilities3.Preference.ListEditPreference
+            android:key="@string/settings_no_compress_file_type"
+            android:title="@string/settings_no_compress_file_type_title"
+            app:hint="@string/settings_no_compress_file_type_hint"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>
