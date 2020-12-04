@@ -42,6 +42,9 @@ import com.sentaroh.android.Utilities3.SafFile3;
 import com.sentaroh.android.Utilities3.StringUtil;
 import com.sentaroh.android.Utilities3.ThreadCtrl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +71,7 @@ import java.util.regex.Pattern;
 import static com.sentaroh.android.SMBSync3.Constants.*;
 
 public class SyncThread extends Thread {
-
+    final private static Logger log= LoggerFactory.getLogger(SyncThread.class);
     private GlobalParameters mGp = null;
 
     private NotifyEvent mNotifyToService = null;

@@ -46,6 +46,9 @@ import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.SafManager3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -54,6 +57,7 @@ import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_TI
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_SCHEDULE_NAME_KEY;
 
 public class SyncService extends Service {
+    final private static Logger log= LoggerFactory.getLogger(SyncService.class);
     private GlobalParameters mGp = null;
 
     private CommonUtilities mUtil = null;
