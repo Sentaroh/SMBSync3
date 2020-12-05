@@ -34,9 +34,7 @@ If it is not permitted to change the last update time of the file by the applica
 
 ## FAQs
 
-Please refer to the PDF link below.
-
-https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=sharing
+[Please refer to the PDF](https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=sharing)
 
 ## Library
 
@@ -49,8 +47,4 @@ https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=shari
 
 ## Document
 
-Please refer to the PDF link below.
-
-https://drive.google.com/file/d/1gIsulxyGBY-Fl0Ki7BJ50gPFWx0iQ9Tm/view?usp=sharing
-
-##  
+[Please refer to the PDF.](https://drive.google.com/file/d/1gIsulxyGBY-Fl0Ki7BJ50gPFWx0iQ9Tm/view?usp=sharing)

@@ -115,6 +115,7 @@ import com.sentaroh.android.Utilities3.Zip.ZipUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -122,28 +123,8 @@ import java.util.ArrayList;
 
 import javax.crypto.SecretKey;
 
-import static com.sentaroh.android.SMBSync3.Constants.APP_SHORTCUT_ID_KEY;
-import static com.sentaroh.android.SMBSync3.Constants.APP_SHORTCUT_ID_VALUE_BUTTON1;
-import static com.sentaroh.android.SMBSync3.Constants.APP_SHORTCUT_ID_VALUE_BUTTON2;
-import static com.sentaroh.android.SMBSync3.Constants.APP_SHORTCUT_ID_VALUE_BUTTON3;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_CONFLICT_FILE;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_COPY;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_DELETE_DIR;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_DELETE_FILE;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_DELETE_ZIP_ITEM_DIR;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_DELETE_ZIP_ITEM_FILE;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_REQUEST_MOVE;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_RESP_CANCEL;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_RESP_NO;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_RESP_NOALL;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_RESP_YES;
-import static com.sentaroh.android.SMBSync3.Constants.CONFIRM_RESP_YESALL;
-import static com.sentaroh.android.SMBSync3.Constants.KEY_STORE_ALIAS;
-import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
-import static com.sentaroh.android.SMBSync3.Constants.STORED_SECRET_KEY_VALIDATION_KEY;
-import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_SET_TIMER;
-import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET;
+import static com.sentaroh.android.SMBSync3.Constants.*;
+import static com.sentaroh.android.SMBSync3.ScheduleConstants.*;
 import static com.sentaroh.android.Utilities3.SafFile3.SAF_FILE_PRIMARY_UUID;
 
 public class ActivityMain extends AppCompatActivity {
@@ -1888,33 +1869,25 @@ public class ActivityMain extends AppCompatActivity {
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function_view);
         func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        func_view.getSettings().setBuiltInZoomControls(true);
-//        func_view.getSettings().setDisplayZoomControls(true);
-//        func_view.getSettings().setSupportZoom(true);
-//        func_view.getSettings().setBuiltInZoomControls(true);
         func_view.getSettings().setTextZoom(zf);
 
         LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy_view);
         privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        privacy_view.getSettings().setBuiltInZoomControls(true);
         func_view.getSettings().setTextZoom(zf);
 
         LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
         final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_view);
         change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        change_view.getSettings().setBuiltInZoomControls(true);
         func_view.getSettings().setTextZoom(zf);
 
         final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, privacy_view, change_view});
         final CustomViewPager viewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
-//	    mMainViewPager.setBackgroundColor(mThemeColorList.window_color_background);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
-//        viewPager.setSwipeEnabled(false);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {
@@ -2150,8 +2123,11 @@ public class ActivityMain extends AppCompatActivity {
 
         try {
             InputStream is = mContext.getResources().getAssets().open(image_file_name);
-            Bitmap bm = BitmapFactory.decodeStream(is);
+            BufferedInputStream bis = new BufferedInputStream(is, 1024*1024);
+            Bitmap bm = BitmapFactory.decodeStream(bis);
             dlg_image.setImageBitmap(bm);
+            is.close();
+            bis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

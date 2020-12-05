@@ -1,5 +1,5 @@
 ## 機能  
-SMBSync3はAndroid端末の内部ストレージ, MicroSD, USB FlashとPC/NASの間でSMB1, SMB2またはSMB3プロトコルを使用し無線LAN経由でファイルの同期を行うためのツールです。<u>**同期はソースから宛先への一方向**</u>で、ミラー、移動、コピー、アーカイブが使用できます。ローカルストレージ(***<u>1</u>**)、SMB、ZIPの組み合わせが可能です）  
+SMBSync3はAndroid端末の内部ストレージ, MicroSD, USB FlashとPC/NASの間でSMB1, SMB2またはSMB3プロトコルを使用し無線LAN経由でファイルの同期を行うためのツールです。<span style="color: red; "><u>同期はソースから宛先への一方向</u></span>で、ミラー、移動、コピー、アーカイブが使用できます。ローカルストレージ(***<u>1</u>**)、SMB、ZIPの組み合わせが可能です）  
 
 SMBSync3のスケジュール機能または外部アプリケーション（TaskerやAutoMagicなど）により定期的に同期を開始する事が可能です。   
 
@@ -22,13 +22,12 @@ SMBSync3のスケジュール機能または外部アプリケーション（Tas
 
 ## FAQ
 
-下記リンクのPDFを参照ください。  
-https://drive.google.com/file/d/16ahhKVE8jSLwidHyIKKfDUXV3ogXa2-6/view?usp=sharing
+[PDFを参照ください。](https://drive.google.com/file/d/16ahhKVE8jSLwidHyIKKfDUXV3ogXa2-6/view?usp=sharing)  
 
 ## 使用ライブラリー
 
-- [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
-- [bcprov-jdk15to18-1.66](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
+- [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
+- [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
 - [jcifs-1.3.17](https://jcifs.samba.org/)
 - [Zip4J 2.2.3](http://www.lingala.net/zip4j.html)
 - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
@@ -37,6 +36,5 @@ https://drive.google.com/file/d/16ahhKVE8jSLwidHyIKKfDUXV3ogXa2-6/view?usp=shari
 
 ## マニュアル
 
-下記リンクのPDFを参照ください。
+[PDFを参照ください。](https://drive.google.com/file/d/1AfPsJbV7H5WHF7ZcvzVOJ4-e0SzVrA-p/view?usp=sharing)
 
-https://drive.google.com/file/d/1AfPsJbV7H5WHF7ZcvzVOJ4-e0SzVrA-p/view?usp=sharing
