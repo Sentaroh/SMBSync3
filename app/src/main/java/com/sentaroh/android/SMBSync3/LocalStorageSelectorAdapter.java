@@ -46,14 +46,12 @@ import java.util.ArrayList;
 public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelectorAdapter.LocalStorageSelectorItem> {
     private ArrayList<LocalStorageSelectorItem> mItems=null;
     private Activity mActivity=null;
-    private Context mContext=null;
     private int mSelectedPosition=0;
 
     public LocalStorageSelectorAdapter(Activity a, int resource, @NonNull ArrayList<LocalStorageSelectorItem> objects) {
         super(a, resource, objects);
         mItems=objects;
         mActivity=a;
-        mContext=a.getApplicationContext();
     }
 
     @Override
@@ -71,10 +69,10 @@ public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelect
             view = (TextView)convertView;
         }
         if (ls_item.mounted) view.setText(ls_item.description+"("+ls_item.root_path+")");
-        else view.setText(mContext.getString(R.string.msgs_main_external_storage_uuid_unusable)+"("+ls_item.uuid+")");
+        else view.setText(mActivity.getString(R.string.msgs_main_external_storage_uuid_unusable)+"("+ls_item.uuid+")");
         view.setCompoundDrawablePadding(10);
         view.setCompoundDrawablesWithIntrinsicBounds(
-                mContext.getResources().getDrawable(android.R.drawable.arrow_down_float),
+                mActivity.getResources().getDrawable(android.R.drawable.arrow_down_float),
                 null, null, null);
         mSelectedPosition=position;
         return view;
@@ -88,7 +86,7 @@ public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelect
         }
         LocalStorageSelectorItem ls_item=getItem(position);
         String text = ls_item.description+"("+ls_item.root_path+")";
-        if (!ls_item.mounted) text = mContext.getString(R.string.msgs_main_external_storage_uuid_unusable)+"("+ls_item.uuid+")";
+        if (!ls_item.mounted) text = mActivity.getString(R.string.msgs_main_external_storage_uuid_unusable)+"("+ls_item.uuid+")";
         final NonWordwrapCheckedTextView text_view=(NonWordwrapCheckedTextView)convertView.findViewById(R.id.text1);
         SpannableStringBuilder sb=new SpannableStringBuilder(text);
         if (!ls_item.mounted) {
@@ -107,7 +105,7 @@ public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelect
             @Override
             public void onGlobalLayout() {
                 text_view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                setMultilineEllipsize(text_view, 3, TextUtils.TruncateAt.START);
+                setMultilineEllipsize(text_view, 3, TextUtils.TruncateAt.MIDDLE);
             }
         });
         return convertView;
