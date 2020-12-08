@@ -70,7 +70,6 @@ public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelect
         } else {
             view = (TextView)convertView;
         }
-//        log.info("enabled="+isEnabled(position)+", click="+view.isClickable()+", ve="+view.isEnabled());
         if (ls_item.mounted) view.setText(ls_item.description+"("+ls_item.root_path+")");
         else view.setText(mContext.getString(R.string.msgs_main_external_storage_uuid_unusable)+"("+ls_item.uuid+")");
         view.setCompoundDrawablePadding(10);
@@ -91,14 +90,11 @@ public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelect
         String text = ls_item.description+"("+ls_item.root_path+")";
         if (!ls_item.mounted) text = mContext.getString(R.string.msgs_main_external_storage_uuid_unusable)+"("+ls_item.uuid+")";
         final NonWordwrapCheckedTextView text_view=(NonWordwrapCheckedTextView)convertView.findViewById(R.id.text1);
-//        text_view.setWordWrapByFilter(false);
         SpannableStringBuilder sb=new SpannableStringBuilder(text);
         if (!ls_item.mounted) {
             if (ThemeUtil.isLightThemeUsed(mActivity)) {
-//                sb.setSpan(new BackgroundColorSpan(Color.DKGRAY), 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 sb.setSpan(new ForegroundColorSpan(Color.RED), 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else {
-//                sb.setSpan(new BackgroundColorSpan(Color.DKGRAY), 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 sb.setSpan(new ForegroundColorSpan(Color.RED), 0, sb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
         }
@@ -111,13 +107,13 @@ public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelect
             @Override
             public void onGlobalLayout() {
                 text_view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                setMultilineEllipsizeOld(text_view, 3, TextUtils.TruncateAt.START);
+                setMultilineEllipsize(text_view, 3, TextUtils.TruncateAt.START);
             }
         });
         return convertView;
     }
 
-    public static void setMultilineEllipsizeOld(TextView view, int maxLines, TextUtils.TruncateAt where) {
+    public static void setMultilineEllipsize(TextView view, int maxLines, TextUtils.TruncateAt where) {
         if (maxLines >= view.getLineCount()) {
             // ellipsizeする必要無し
             return;
