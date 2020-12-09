@@ -10,8 +10,8 @@ Improved version of SMBSync2
 - Organized and concise options
 
 ### How to Build  
-- Clone from Github(https://github.com/Sentaroh/SMBSync3.git) using Android Studio 3.0 or higher(VCS-> Checkout from Version Control-> GitHub).
-- Build by Android Studio.  
+- Clone or download from Github.
+- Open and Build by Android Studio.
 
 ### License information
 - This software includes the work that is distributed in the Apache License 2.0.
