@@ -756,7 +756,7 @@ public class TwoWaySyncFile {
         }
         String type=CONFIRM_REQUEST_CONFLICT_FILE;
         try {
-            NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
+            NotificationUtils.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
             stwa.gp.confirmDialogShowed = true;
             stwa.gp.confirmDialogMethod = type;
             stwa.gp.syncThreadConfirm.initThreadCtrl();

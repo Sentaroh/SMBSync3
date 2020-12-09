@@ -96,8 +96,8 @@ public class SyncService extends Service {
         th.setName("SvcLoadConfig");
         th.start();
 
-        NotificationUtil.initNotification(mGp, mUtil, mContext);
-        NotificationUtil.clearNotification(mGp, mUtil);
+        NotificationUtils.initNotification(mGp, mUtil, mContext);
+        NotificationUtils.clearNotification(mGp, mUtil);
 //        startForeground(R.string.app_name, mGp.notification);
 
         mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_smbsync_main_start) +
@@ -217,7 +217,7 @@ public class SyncService extends Service {
         mGp.releaseWakeLock(mUtil);
         mUtil.addLogMsgFromUI("I", "", mContext.getString(R.string.msgs_terminate_application));
         LogUtil.closeLog(mContext);
-        NotificationUtil.setNotificationEnabled(mGp, true);
+        NotificationUtils.setNotificationEnabled(mGp, true);
         CommonUtilities.saveMessageList(mContext, mGp);
         if (mGp.activityRestartRequired) {
             mGp.activityRestartRequired=false;
@@ -348,7 +348,7 @@ public class SyncService extends Service {
                 pl.add(sp[i]);
             } else {
                 mUtil.addLogMsg("W", "", not_found_msg + sp[i]);
-                NotificationUtil.showOngoingMsg(mGp, mUtil, 0, not_found_msg + sp[i]);
+                NotificationUtils.showOngoingMsg(mGp, mUtil, 0, not_found_msg + sp[i]);
             }
         }
         if (pl.size() > 0) {
@@ -357,7 +357,7 @@ public class SyncService extends Service {
             queueSpecificSyncTask(nspl, requestor);
         } else {
             mUtil.addLogMsg("W", "", no_task_msg);
-            NotificationUtil.showOngoingMsg(mGp, mUtil, 0, no_task_msg);
+            NotificationUtils.showOngoingMsg(mGp, mUtil, 0, no_task_msg);
         }
 
     }
@@ -368,7 +368,7 @@ public class SyncService extends Service {
         if (bundle != null) {
             if (bundle.containsKey(START_SYNC_EXTRA_PARM_SYNC_PROFILE)) {
                 if (!bundle.get(START_SYNC_EXTRA_PARM_SYNC_PROFILE).getClass().getSimpleName().equals("String")) {
-                    NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
+                    NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                             mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                     mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                     return;
@@ -379,7 +379,7 @@ public class SyncService extends Service {
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_list));
             } else if (bundle.containsKey(START_SYNC_EXTRA_PARM_SYNC_GROUP)) {
                 if (!bundle.get(START_SYNC_EXTRA_PARM_SYNC_GROUP).getClass().getSimpleName().equals("String")) {
-                    NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
+                    NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                             mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                     mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                     return;
@@ -398,13 +398,13 @@ public class SyncService extends Service {
                 } else {
                     mUtil.addLogMsg("W", "",
                             mContext.getString(R.string.msgs_svc_received_start_request_from_external_group_not_found)+ t_sg);
-                    NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
+                    NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                             mContext.getString(R.string.msgs_svc_received_start_request_from_external_group_not_found)+ t_sg);
                 }
             } else {
                 mUtil.addLogMsg("W","",
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
-                NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
+                NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
             }
         } else {
@@ -434,13 +434,13 @@ public class SyncService extends Service {
             } else {
                 mUtil.addLogMsg("W","",
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
-                NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
+                NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
             }
         } else {
             mUtil.addLogMsg("W","",
                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
-            NotificationUtil.showOngoingMsg(mGp, mUtil, 0,
+            NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
         }
 
@@ -521,14 +521,14 @@ public class SyncService extends Service {
 
     private void setActivityForeground() {
         mGp.activityIsBackground = false;
-        NotificationUtil.setNotificationEnabled(mGp, false);
+        NotificationUtils.setNotificationEnabled(mGp, false);
         stopForeground(true);
-        NotificationUtil.clearNotification(mGp, mUtil);
+        NotificationUtils.clearNotification(mGp, mUtil);
     }
 
     private void setActivityBackground() {
         mGp.activityIsBackground = true;
-        NotificationUtil.setNotificationEnabled(mGp, true);
+        NotificationUtils.setNotificationEnabled(mGp, true);
         if (mGp.syncThreadActive) startForeground(R.string.app_name, mGp.notification);
     }
 
@@ -667,7 +667,7 @@ public class SyncService extends Service {
             }
             if (cnt == 0) {
                 mUtil.addLogMsg("E", "", mContext.getString(R.string.msgs_auto_sync_task_not_found));
-                NotificationUtil.showOngoingMsg(mGp, mUtil, System.currentTimeMillis(),
+                NotificationUtils.showOngoingMsg(mGp, mUtil, System.currentTimeMillis(),
                         mContext.getString(R.string.msgs_auto_sync_task_not_found));
             } else {
                 mGp.syncRequestQueue.add(sri);
@@ -708,7 +708,7 @@ public class SyncService extends Service {
             mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_svc_can_not_start_sync_task_disabled));
             return;
         }
-        if (NotificationUtil.isNotificationEnabled(mGp))
+        if (NotificationUtils.isNotificationEnabled(mGp))
             startForeground(R.string.app_name, mGp.notification);
         if (mGp.syncRequestQueue.size() > 0) {
             mGp.acquireWakeLock(mContext, mUtil);
@@ -790,13 +790,13 @@ public class SyncService extends Service {
             if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS || mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
+                    NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
                     is_notice_message_showed=true;
                 }
             } else if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_ERROR) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
-                    NotificationUtil.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
+                    NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
                     is_notice_message_showed=true;
                 }
             }

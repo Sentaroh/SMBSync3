@@ -42,7 +42,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class NotificationUtil {
+public class NotificationUtils {
 
     final public static String NOTIFICATION_CHANNEL_DEFAULT="SMBSync3";
     final public static String NOTIFICATION_CHANNEL_SOUND="Sound";

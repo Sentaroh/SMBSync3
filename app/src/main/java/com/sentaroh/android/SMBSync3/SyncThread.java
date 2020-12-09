@@ -191,7 +191,7 @@ public class SyncThread extends Thread {
 
             listStorageInfo();
 
-            NotificationUtil.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_run_anim, R.drawable.ic_48_smbsync_run);
+            NotificationUtils.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_run_anim, R.drawable.ic_48_smbsync_run);
 
             loadLocalFileLastModList();
 
@@ -271,8 +271,8 @@ public class SyncThread extends Thread {
             saveLocalFileLastModList();
             CommonUtilities.saveMessageList(mStwa.appContext, mGp);
 
-            NotificationUtil.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
-            NotificationUtil.reShowOngoingMsg(mGp, mStwa.util);
+            NotificationUtils.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
+            NotificationUtils.reShowOngoingMsg(mGp, mStwa.util);
 
             mGp.syncThreadActive = false;
 
@@ -738,7 +738,7 @@ public class SyncThread extends Thread {
                 @Override
                 public void uncaughtException(Thread thread, Throwable ex) {
                     Thread.currentThread().setUncaughtExceptionHandler(defaultUEH);
-                    NotificationUtil.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
+                    NotificationUtils.setNotificationIcon(mGp, mStwa.util, R.drawable.ic_48_smbsync_wait, R.drawable.ic_48_smbsync_wait);
                     ex.printStackTrace();
                     String st_msg = MiscUtil.getStackTraceString(ex.getStackTrace());
                     mGp.syncThreadCtrl.setThreadResultError();
@@ -1454,7 +1454,7 @@ public class SyncThread extends Thread {
     }
 
     static public void showProgressMsg(final SyncThreadWorkArea stwa, final String task_name, final String msg) {
-        NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, task_name, msg);
+        NotificationUtils.showOngoingMsg(stwa.gp, stwa.util, 0, task_name, msg);
         stwa.gp.progressSpinSyncprofText = task_name;
         stwa.gp.progressSpinMsgText = msg;
         if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSynctask != null) {
@@ -1493,7 +1493,7 @@ public class SyncThread extends Thread {
         stwa.gp.progressSpinMsgText = notif_msg;//text of in app progress notification
 
         if (!log_only) {
-            NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, file_name, msg, result_type);
+            NotificationUtils.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, file_name, msg, result_type);
             if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSynctask != null) {
                 stwa.gp.uiHandler.post(new Runnable() {
                     @Override
@@ -1550,7 +1550,7 @@ public class SyncThread extends Thread {
         stwa.gp.progressSpinMsgText = notif_msg;//text of in app progress notification
 
         if (!log_only) {//set onscreen notification progress
-            NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, from_file_name, msg, result_type);//system notification if app in background
+            NotificationUtils.showOngoingMsg(stwa.gp, stwa.util, System.currentTimeMillis(), task_name, from_file_name, msg, result_type);//system notification if app in background
             if (stwa.gp.dialogWindowShowed && stwa.gp.progressSpinSynctask != null) {
                 stwa.gp.uiHandler.post(new Runnable() {//in app progress notification
                     @Override
@@ -1632,7 +1632,7 @@ public class SyncThread extends Thread {
                     } else if (type.equals(CONFIRM_REQUEST_MOVE)) {
                         msg = stwa.appContext.getString(R.string.msgs_mirror_confirm_please_check_confirm_msg_move);
                     }
-                    NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
+                    NotificationUtils.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
                     stwa.gp.confirmDialogShowed = true;
                     stwa.gp.confirmDialogFilePathPairA = from_path;
                     stwa.gp.confirmDialogFilePathPairB = to_path;
@@ -1696,7 +1696,7 @@ public class SyncThread extends Thread {
                 if (type.equals(CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE)) {
                     msg = stwa.appContext.getString(R.string.msgs_mirror_confirm_please_check_confirm_msg_archive);
                 }
-                NotificationUtil.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
+                NotificationUtils.showOngoingMsg(stwa.gp, stwa.util, 0, msg);
                 stwa.gp.confirmDialogShowed = true;
                 stwa.gp.confirmDialogFilePathPairA = url;
                 stwa.gp.confirmDialogMethod = type;
