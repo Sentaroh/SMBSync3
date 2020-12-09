@@ -335,7 +335,6 @@ public class SyncService extends Service {
             }
         }
         if (!mGp.syncThreadActive) {
-            sendStartNotificationIntent();
             startSyncThread();
         }
     }
@@ -411,7 +410,6 @@ public class SyncService extends Service {
             mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_svc_received_start_request_from_external_auto_task));
             queueAutoSyncTask(SYNC_REQUEST_EXTERNAL);
             if (!mGp.syncThreadActive) {
-                sendStartNotificationIntent();
                 startSyncThread();
             }
         }
@@ -428,7 +426,6 @@ public class SyncService extends Service {
                 String[] sp = t_sp.split(NAME_LIST_SEPARATOR);
                 queueSpecificSyncTask(sp, SYNC_REQUEST_SHORTCUT);
                 if (!mGp.syncThreadActive) {
-                    sendStartNotificationIntent();
                     startSyncThread();
                 }
             } else {
@@ -487,7 +484,6 @@ public class SyncService extends Service {
         public void aidlStartAutoSyncTask() throws RemoteException {
             queueAutoSyncTask(SYNC_REQUEST_ACTIVITY);
             if (!mGp.syncThreadActive) {
-                sendStartNotificationIntent();
                 startSyncThread();
             }
         }
@@ -569,8 +565,8 @@ public class SyncService extends Service {
         sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
         sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
         sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
-        sri.request_id = req_id;
-        sri.request_id_display= HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
+        sri.requestor = req_id;
+        sri.requestor_display = HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
         if (job_name != null && job_name.length > 0) {
             for (int i = 0; i < job_name.length; i++) {
                 if (getSyncTask(job_name[i]) != null) {
@@ -578,25 +574,25 @@ public class SyncService extends Service {
                         if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[i])) {
                             if (si.scheduleName.equals("")) {
                                 mUtil.addLogMsg("W", "", String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued),
-                                        job_name[i], sri.request_id_display));
+                                        job_name[i], sri.requestor_display));
                             } else {
                                 mUtil.addLogMsg("W", "", String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued_schedule),
-                                        sri.schedule_name, job_name[i], sri.request_id_display));
+                                        sri.schedule_name, job_name[i], sri.requestor_display));
                             }
                         } else {
                             sri.sync_task_list.add(getSyncTask(job_name[i]).clone());
                             if (si.scheduleName.equals("")) {
                                 mUtil.addLogMsg("I", "", String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted),
-                                        job_name[i], sri.request_id_display));
+                                        job_name[i], sri.requestor_display));
                             } else {
                                 mUtil.addLogMsg("I", "", String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_schedule),
-                                        sri.schedule_name, job_name[i], sri.request_id_display));
+                                        sri.schedule_name, job_name[i], sri.requestor_display));
                             }
                         }
                     } else {
                         mUtil.addLogMsg("W", "",
                                 String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_task_is_error),
-                                        job_name[i], sri.request_id_display));
+                                        job_name[i], sri.requestor_display));
                     }
                 } else {
                     mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_main_sync_selected_task_not_found) + job_name[i]);
@@ -621,7 +617,6 @@ public class SyncService extends Service {
         si.syncOverrideOptionCharge= ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
         queueSpecificSyncTask(job_name, req_id, si);
         if (!mGp.syncThreadActive) {
-            sendStartNotificationIntent();
             startSyncThread();
         }
     }
@@ -629,8 +624,8 @@ public class SyncService extends Service {
     private void queueAutoSyncTask(String req_id, ScheduleListItem si) {
         int cnt = 0;
         SyncRequestItem sri = new SyncRequestItem();
-        sri.request_id = req_id;
-        sri.request_id_display= HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
+        sri.requestor = req_id;
+        sri.requestor_display = HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
         sri.schedule_name=si.scheduleName;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
         sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
@@ -644,24 +639,24 @@ public class SyncService extends Service {
                         if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[0])) {
                             mUtil.addLogMsg("W","",
                                     String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued_schedule),
-                                            sri.schedule_name, job_name[0], sri.request_id));
+                                            sri.schedule_name, job_name[0], sri.requestor));
                         } else {
                             cnt++;
                             if (si.scheduleName.equals("")) {
                                 mUtil.addLogMsg("I","",
                                         String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted),
-                                                job_name[0], sri.request_id));
+                                                job_name[0], sri.requestor));
                             } else {
                                 mUtil.addLogMsg("I","",
                                         String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_schedule),
-                                                sri.schedule_name, job_name[0], sri.request_id));
+                                                sri.schedule_name, job_name[0], sri.requestor));
                             }
                             sri.sync_task_list.add(sji.clone());
                         }
                     } else {
                         mUtil.addLogMsg("W","",
                                 String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_task_is_error),
-                                        job_name[0], sri.request_id));
+                                        job_name[0], sri.requestor));
                     }
                 }
             }
@@ -685,24 +680,6 @@ public class SyncService extends Service {
         queueAutoSyncTask(req_id, si);
     }
 
-    private void sendEndNotificationIntent(int sync_result) {
-        Intent in = new Intent(BROADCAST_INTENT_SYNC_ENDED);
-        String rc="";
-        if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) rc="SUCCESS";
-        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_ERROR) rc="ERROR";
-        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) rc="CANCEL";
-        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_WARNING) rc="WARNING";
-        in.putExtra("SYNC_RESULT",rc);
-        sendBroadcast(in, null);
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Send end boradcast intent");
-    }
-
-    private void sendStartNotificationIntent() {
-        Intent in = new Intent(BROADCAST_INTENT_SYNC_STARTED);
-        sendBroadcast(in, null);
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Send start boradcast intent");
-    }
-
     private void startSyncThread() {
         if (!mGp.syncThreadEnabled) {
             mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_svc_can_not_start_sync_task_disabled));
@@ -724,7 +701,6 @@ public class SyncService extends Service {
                             showSyncEndNotificationMessage();
                             startSyncThread();
                         } else {
-                            sendEndNotificationIntent(mSyncThreadResult);
                             if (mGp.callbackStub == null) {
                                 stopSelf();
                             } else {
@@ -742,7 +718,6 @@ public class SyncService extends Service {
                     mGp.releaseWakeLock(mUtil);
                     hideDialogWindow();
                     synchronized (mGp.syncRequestQueue) {
-                        sendEndNotificationIntent(mSyncThreadResult);
                         mGp.syncRequestQueue.clear();
                         if (mGp.callbackStub == null) {
                             stopSelf();

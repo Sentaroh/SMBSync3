@@ -23,13 +23,22 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
 class SyncRequestItem {
 
-    public String request_id = "";
-    public String request_id_display = "";
+    public String request_id = "NONAME";
+    public String requestor = "";
+    public String requestor_display = "";
     public String schedule_name = "";
+
+    public final static int SYNC_RESULT_STATUS_SUCCESS = 0;
+    public final static int SYNC_RESULT_STATUS_CANCEL = 1;
+    public final static int SYNC_RESULT_STATUS_ERROR = 2;
+    public final static int SYNC_RESULT_STATUS_WARNING = 3;
+    public final static int SYNC_RESULT_STATUS_SKIP = 4;
+    public int result=SYNC_RESULT_STATUS_SUCCESS;
 
     public boolean wifi_off_after_sync_ended = false;
     public boolean wifi_on_before_sync_start = false;

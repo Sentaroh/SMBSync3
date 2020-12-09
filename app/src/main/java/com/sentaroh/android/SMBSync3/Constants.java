@@ -64,6 +64,8 @@ public class Constants {
 	public final static String START_SYNC_EXTRA_PARM_SYNC_PROFILE ="SyncProfile";
 	public final static String START_SYNC_EXTRA_PARM_SYNC_GROUP ="SyncGroup";
 	public final static String START_SYNC_EXTRA_PARM_REQUESTOR ="Requestor";
+	public final static String START_SYNC_EXTRA_PARM_REQUEST_ID ="RequestID";
+	public final static String START_SYNC_EXTRA_PARM_TASK_NAME ="TaskName";
 	public final static String START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT ="Shortcut";
 	public final static String START_SYNC_AUTO_INTENT = APPLICATION_ID +".ACTION_AUTO_SYNC";
 

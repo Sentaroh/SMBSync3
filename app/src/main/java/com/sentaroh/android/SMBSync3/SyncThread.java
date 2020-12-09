@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -154,7 +155,8 @@ public class SyncThread extends Thread {
         public SimpleDateFormat sdfLocalTime=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         public SimpleDateFormat sdfUTCTime=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
-        public String currentRequestor="";
+        public String currentRequestor ="";
+        public String currentRequestorDisplay ="";
     }
 
     private SyncThreadWorkArea mStwa = new SyncThreadWorkArea();
@@ -203,9 +205,10 @@ public class SyncThread extends Thread {
             boolean wifi_off_after_end = false;
 
             while (sri != null && sync_result == 0) {
-                mStwa.currentRequestor=sri.request_id_display;
-                mStwa.util.addLogMsg("I", "", String.format(mStwa.appContext.getString(R.string.msgs_mirror_sync_request_started), sri.request_id_display));
-                mStwa.util.addDebugMsg(1, "I", "Sync request option : Requestor=" + sri.request_id +
+                mStwa.currentRequestor =sri.requestor;
+                mStwa.currentRequestorDisplay =sri.requestor_display;
+                mStwa.util.addLogMsg("I", "", String.format(mStwa.appContext.getString(R.string.msgs_mirror_sync_request_started), sri.requestor_display));
+                mStwa.util.addDebugMsg(1, "I", "Sync request option : Requestor=" + sri.requestor +
                         ", WiFi on=" + sri.wifi_on_before_sync_start +
                         ", WiFi delay=" + sri.start_delay_time_after_wifi_on + ", WiFi off=" + sri.wifi_off_after_sync_ended+", OverrideCharge="+sri.overrideSyncOptionCharge);
 
@@ -213,9 +216,14 @@ public class SyncThread extends Thread {
 
                 mStwa.currentSTI = sri.sync_task_list.poll();
                 long start_time = 0;
-                while ((sync_result == 0 || sync_result == SyncTaskItem.SYNC_RESULT_STATUS_WARNING || sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SKIP) &&
-                        mStwa.currentSTI != null) {
+
+                while (mStwa.currentSTI != null &&
+                        (sync_result == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS ||
+                         sync_result == SyncTaskItem.SYNC_RESULT_STATUS_WARNING ||
+                         sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SKIP)) {
                     start_time = System.currentTimeMillis();
+                    sendStartNotificationIntent(sri.requestor, mStwa.currentSTI.getSyncTaskName());
+
                     listSyncOption(mStwa.currentSTI);
                     setSyncTaskRunning(true);
                     showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "I", "", "", mStwa.appContext.getString(R.string.msgs_mirror_task_started));
@@ -224,14 +232,16 @@ public class SyncThread extends Thread {
 
                     if (sync_result == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
                         sync_result = compileFilter(mStwa.currentSTI, mStwa.currentSTI.getFileNameFilter(), mStwa.currentSTI.getDirectoryFilter());
-                        if (sync_result == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) sync_result = performSync(mStwa.currentSTI);
+                        if (sync_result == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
+                            sync_result = performSync(mStwa.currentSTI);
+                        }
                     }
 
                     saveLocalFileLastModList();
 
                     CommonUtilities.saveMessageList(mStwa.appContext, mGp);
 
-                    postProcessSyncResult(mStwa.currentSTI, sync_result, (System.currentTimeMillis() - start_time), sri.request_id);
+                    postProcessSyncResult(mStwa.currentSTI, sync_result, (System.currentTimeMillis() - start_time), sri.requestor);
 
                     if ((mStwa.currentSTI != null || mGp.syncRequestQueue.size() > 0) &&
                             mStwa.currentSTI.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND &&
@@ -241,17 +251,17 @@ public class SyncThread extends Thread {
                         sync_error_detected = true;
                         sync_result = SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
                     }
+                    sendEndNotificationIntent(sri.requestor, mStwa.currentSTI.getSyncTaskName(), sync_result);
                     mStwa.currentSTI = sri.sync_task_list.poll();
                 }
 
                 if (sri.wifi_off_after_sync_ended && wifi_on_issued) wifi_off_after_end = true;
-                String prev_req_id_display=sri.request_id_display;
                 if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_CANCEL || sync_result== SyncTaskItem.SYNC_RESULT_STATUS_ERROR) {
                     //Put not executed sync task
-                    putNotExcutedTaskname(sri, mStwa.currentSTI, prev_req_id_display);
+                    putNotExcutedTaskname(sri, mStwa.currentSTI, sri.requestor_display);
                 } else {
                     //Continue sync
-                    mStwa.util.addLogMsg("I", "", String.format(mStwa.appContext.getString(R.string.msgs_mirror_sync_request_ended), prev_req_id_display));
+                    mStwa.util.addLogMsg("I", "", String.format(mStwa.appContext.getString(R.string.msgs_mirror_sync_request_ended), sri.requestor_display));
                     sri = mGp.syncRequestQueue.poll();
                 }
             }
@@ -281,6 +291,27 @@ public class SyncThread extends Thread {
             mNotifyToService.notifyToListener(true, new Object[]{sync_result});
         }
         System.gc();
+    }
+
+    private void sendStartNotificationIntent(String requestor, String task_name) {
+        if (!requestor.equals(SYNC_REQUEST_EXTERNAL)) return ;
+        Intent in = new Intent(BROADCAST_INTENT_SYNC_STARTED);
+        mStwa.appContext.sendBroadcast(in, null);
+        mStwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Task="+task_name);
+    }
+
+    private void sendEndNotificationIntent(String requestor, String task_name, int sync_result) {
+        if (!requestor.equals(SYNC_REQUEST_EXTERNAL)) return ;
+        Intent in = new Intent(BROADCAST_INTENT_SYNC_ENDED);
+        String rc="";
+        if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) rc="SUCCESS";
+        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_ERROR) rc="ERROR";
+        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) rc="CANCEL";
+        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_WARNING) rc="WARNING";
+        in.putExtra(START_SYNC_EXTRA_PARM_TASK_NAME, task_name);
+        in.putExtra("SYNC_RESULT",rc);
+        mStwa.appContext.sendBroadcast(in, null);
+        mStwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Task="+task_name+", result="+rc);
     }
 
     private boolean performWiFiOnIfRequired(SyncRequestItem sri) {
@@ -323,7 +354,7 @@ public class SyncThread extends Thread {
             while(sti!=null) {
                 task_list.add(sti.getSyncTaskName());
                 sched_list.add(sri.schedule_name);
-                req_list.add(sri.request_id);
+                req_list.add(sri.requestor);
                 sti=sri.sync_task_list.poll();
             }
             sri = mGp.syncRequestQueue.poll();
@@ -761,9 +792,10 @@ public class SyncThread extends Thread {
                             mStwa.appContext.getString(R.string.msgs_mirror_task_result_error_ended));
 
                     if (mStwa.currentSTI != null) {
+                        sendEndNotificationIntent(mStwa.currentRequestor, mStwa.currentSTI.getSyncTaskName(), HistoryListItem.SYNC_RESULT_STATUS_ERROR);
                         addHistoryList(mStwa.currentSTI, HistoryListItem.SYNC_RESULT_STATUS_ERROR,
                                 mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, mStwa.totalMoveCount, mStwa.totalRetryCount, mStwa.totalReplaceCount,
-                                end_msg, 0L, "", mStwa.currentRequestor);
+                                end_msg, 0L, "", mStwa.currentRequestorDisplay);
 //        			mUtil.saveHistoryList(mGp.syncHistoryList);
                         setSyncTaskRunning(false);
                     }
