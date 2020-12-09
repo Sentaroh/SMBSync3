@@ -42,6 +42,8 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static com.sentaroh.android.SMBSync3.Constants.APPLICATION_ID;
+
 public class NotificationUtils {
 
     final public static String NOTIFICATION_CHANNEL_DEFAULT="SMBSync3";
@@ -78,65 +80,60 @@ public class NotificationUtils {
                 .setContentText("")
                 .setWhen(0)
         ;
-        if (Build.VERSION.SDK_INT>=26) {
-            gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
-        }
+        gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
         gwa.notification = gwa.notificationBuilder.build();
         gwa.notificationBigTextStyle = new NotificationCompat.BigTextStyle(gwa.notificationBuilder);
         gwa.notificationBigTextStyle
                 .setBigContentTitle(gwa.notificationLastShowedTitle)
                 .bigText(gwa.notificationLastShowedMessage);
 
-        if (Build.VERSION.SDK_INT>=26) {
-            NotificationChannel def_ch = new NotificationChannel(
-                    NOTIFICATION_CHANNEL_DEFAULT,
-                    NOTIFICATION_CHANNEL_DEFAULT,
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            def_ch.enableLights(false);
-            def_ch.setSound(null,null);
-            def_ch.enableVibration(false);
-            def_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_DEFAULT);
-            gwa.notificationManager.createNotificationChannel(def_ch);
+        NotificationChannel def_ch = new NotificationChannel(
+                NOTIFICATION_CHANNEL_DEFAULT,
+                NOTIFICATION_CHANNEL_DEFAULT,
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        def_ch.enableLights(false);
+        def_ch.setSound(null,null);
+        def_ch.enableVibration(false);
+        def_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_DEFAULT);
+        gwa.notificationManager.createNotificationChannel(def_ch);
 
-            NotificationChannel sound_ch = new NotificationChannel(
-                    NOTIFICATION_CHANNEL_SOUND,
-                    NOTIFICATION_CHANNEL_SOUND,
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            sound_ch.enableLights(false);
-            sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
-            sound_ch.enableVibration(false);
-            sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            gwa.notificationManager.deleteNotificationChannel("Sound");
-            gwa.notificationManager.createNotificationChannel(sound_ch);
+        NotificationChannel sound_ch = new NotificationChannel(
+                NOTIFICATION_CHANNEL_SOUND,
+                NOTIFICATION_CHANNEL_SOUND,
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        sound_ch.enableLights(false);
+        sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
+        sound_ch.enableVibration(false);
+        sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_SOUND);
+        gwa.notificationManager.createNotificationChannel(sound_ch);
 
-            NotificationChannel vibrate_ch = new NotificationChannel(
-                    NOTIFICATION_CHANNEL_VIBRATE,
-                    NOTIFICATION_CHANNEL_VIBRATE,
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            vibrate_ch.enableLights(false);
-            vibrate_ch.setSound(null, null);
-            vibrate_ch.enableVibration(true);
-            vibrate_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_VIBRATE);
-            gwa.notificationManager.createNotificationChannel(vibrate_ch);
+        NotificationChannel vibrate_ch = new NotificationChannel(
+                NOTIFICATION_CHANNEL_VIBRATE,
+                NOTIFICATION_CHANNEL_VIBRATE,
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        vibrate_ch.enableLights(false);
+        vibrate_ch.setSound(null, null);
+        vibrate_ch.enableVibration(true);
+        vibrate_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_VIBRATE);
+        gwa.notificationManager.createNotificationChannel(vibrate_ch);
 
-            NotificationChannel vibrate_sound_ch = new NotificationChannel(
-                    NOTIFICATION_CHANNEL_BOTH,
-                    NOTIFICATION_CHANNEL_BOTH,
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-            vibrate_sound_ch.enableLights(false);
-            vibrate_sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
-            vibrate_sound_ch.enableVibration(true);
-            vibrate_sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-            gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_BOTH);
-            gwa.notificationManager.createNotificationChannel(vibrate_sound_ch);
-
-        }
+        NotificationChannel vibrate_sound_ch = new NotificationChannel(
+                NOTIFICATION_CHANNEL_BOTH,
+                NOTIFICATION_CHANNEL_BOTH,
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        vibrate_sound_ch.enableLights(false);
+        vibrate_sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
+        vibrate_sound_ch.enableVibration(true);
+        vibrate_sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_BOTH);
+        gwa.notificationManager.createNotificationChannel(vibrate_sound_ch);
 
     }
 
@@ -149,9 +146,7 @@ public class NotificationUtils {
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
                 ;//.setLargeIcon(gwa.notificationLargeIcon);
         ;
-        if (Build.VERSION.SDK_INT>=26) {
-            gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
-        }
+        gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
         gwa.notification = gwa.notificationBuilder.build();
         gwa.notificationBigTextStyle =
                 new NotificationCompat.BigTextStyle(gwa.notificationBuilder);
@@ -205,9 +200,7 @@ public class NotificationUtils {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)//.PRIORITY_MAX)
         ;
         if (when != 0) gwa.notificationBuilder.setWhen(when);
-        if (Build.VERSION.SDK_INT>=26) {
-            gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
-        }
+        gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
         gwa.notificationBigTextStyle
                 .setBigContentTitle(gwa.notificationLastShowedTitle)
                 .bigText(gwa.notificationLastShowedMessage);
@@ -227,9 +220,7 @@ public class NotificationUtils {
 //                .setLargeIcon(gwa.notificationLargeIcon)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)//.PRIORITY_MAX)
         ;
-        if (Build.VERSION.SDK_INT>=26) {
-            gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
-        }
+        gwa.notificationBuilder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
         gwa.notificationBuilder.setWhen(gwa.notificationLastShowedWhen);
         gwa.notificationBigTextStyle
                 .setBigContentTitle(gwa.notificationLastShowedTitle)
@@ -252,33 +243,12 @@ public class NotificationUtils {
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
-        if (Build.VERSION.SDK_INT>=26) {
-            builder.setChannelId("SMBSync2");//SMBSync2");
-        } else {
-            builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        }
+        builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
         if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
             Intent activity_intent = new Intent(context, ActivityMain.class);
             PendingIntent activity_pi = PendingIntent.getActivity(context, 0, activity_intent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
-        } else {
-            if (!LogUtil.getLogFilePath(context).equals("") && LogUtil.isLogFileExists(context)) {
-                File lf = new File(LogUtil.getLogFilePath(context));
-                if (lf.exists()) {
-                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
-                    Uri uri= FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",
-                            new File(LogUtil.getLogFilePath(context)));
-                    br_log_intent.setDataAndType(uri, "text/plain");
-                    PendingIntent br_log_pi = PendingIntent.getActivity(context, 0, br_log_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(br_log_pi);
-                } else {
-                    Intent dummy_intent = new Intent(context, ActivityMain.class);
-                    PendingIntent dummy_pi = PendingIntent.getActivity(context, 0, dummy_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    dummy_pi.cancel();
-                    builder.setContentIntent(dummy_pi);
-                }
-            }
         }
         if (isNotificationEnabled(gwa))
             gwa.notificationManager.notify(R.string.app_name, builder.build());
@@ -298,34 +268,18 @@ public class NotificationUtils {
         ;
 
         if (playback_sound) builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
         if (vibration) builder.setVibrate(new long[]{0, 300, 200, 300});
-        if (Build.VERSION.SDK_INT>=26) {
-            if (playback_sound && vibration) builder.setChannelId(NOTIFICATION_CHANNEL_BOTH);
-            else if (playback_sound && !vibration) builder.setChannelId(NOTIFICATION_CHANNEL_SOUND);
-            else if (!playback_sound && vibration) builder.setChannelId(NOTIFICATION_CHANNEL_VIBRATE);
-            else builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
-        }
+
+        if (playback_sound && vibration) builder.setChannelId(NOTIFICATION_CHANNEL_BOTH);
+        else if (playback_sound && !vibration) builder.setChannelId(NOTIFICATION_CHANNEL_SOUND);
+        else if (!playback_sound && vibration) builder.setChannelId(NOTIFICATION_CHANNEL_VIBRATE);
+        else builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
+
         if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
             Intent activity_intent = new Intent(context, ActivityMain.class);
             PendingIntent activity_pi = PendingIntent.getActivity(context, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
-        } else {
-            if (!LogUtil.getLogFilePath(context).equals("") && LogUtil.isLogFileExists(context)) {
-                File lf = new File(LogUtil.getLogFilePath(context));
-                if (lf.exists()) {
-                    Intent br_log_intent = new Intent(Intent.ACTION_VIEW);
-                    Uri uri= FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",
-                            new File(LogUtil.getLogFilePath(context)));
-                    br_log_intent.setDataAndType(uri, "text/plain");
-                    PendingIntent br_log_pi = PendingIntent.getActivity(context, 0, br_log_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.setContentIntent(br_log_pi);
-                } else {
-                    Intent dummy_intent = new Intent(context, ActivityMain.class);
-                    PendingIntent dummy_pi = PendingIntent.getActivity(context, 0, dummy_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    dummy_pi.cancel();
-                    builder.setContentIntent(dummy_pi);
-                }
-            }
         }
         if (isNotificationEnabled(gwa))
             gwa.notificationManager.notify(R.string.app_name, builder.build());
