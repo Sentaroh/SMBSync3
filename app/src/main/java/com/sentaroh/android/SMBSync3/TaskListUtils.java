@@ -2491,41 +2491,6 @@ public class TaskListUtils {
         return true;
     }
 
-    private String detectedInvalidChar = "", detectedInvalidCharMsg = "";
-
-    public boolean hasInvalidChar(String in_text, String[] invchar) {
-        for (int i = 0; i < invchar.length; i++) {
-            if (in_text.indexOf(invchar[i]) >= 0) {
-                if (invchar[i].equals("\t")) {
-                    detectedInvalidCharMsg = "TAB";
-                    detectedInvalidChar = "\t";
-                } else {
-                    detectedInvalidCharMsg = detectedInvalidChar = invchar[i];
-                }
-                return true;
-            }
-
-        }
-        return false;
-    }
-
-    public String getInvalidCharMsg() {
-        return detectedInvalidCharMsg;
-    }
-
-    public String removeInvalidChar(String in) {
-        if (detectedInvalidChar == null || detectedInvalidChar.length() == 0) return in;
-        String out = "";
-        for (int i = 0; i < in.length(); i++) {
-            if (in.substring(i, i + 1).equals(detectedInvalidChar)) {
-                //ignore
-            } else {
-                out = out + in.substring(i, i + 1);
-            }
-        }
-        return out;
-    }
-
     public boolean isSyncTaskExists(String prof_name) {
         return isSyncTaskExists(prof_name, mGp.syncTaskListAdapter.getArrayList());
     }
@@ -2544,8 +2509,7 @@ public class TaskListUtils {
         return dup;
     }
 
-    static public boolean isSyncTaskAuto(GlobalParameters gp,
-                                         String prof_name) {
+    static public boolean isSyncTaskAuto(GlobalParameters gp, String prof_name) {
         boolean active = false;
 
         for (int i = 0; i <= gp.syncTaskListAdapter.getCount() - 1; i++) {
@@ -2655,8 +2619,7 @@ public class TaskListUtils {
         th.start();
     }
 
-    private void createRemoteFileList(String opcd, SmbServerInfo ssi, String remdir,
-                                      final NotifyEvent p_event, boolean readSubDirCnt) {
+    private void createRemoteFileList(String opcd, SmbServerInfo ssi, String remdir, final NotifyEvent p_event, boolean readSubDirCnt) {
         mUtil.addDebugMsg(1, "I", "createRemoteFilelist entered.");
         final long b_time= System.currentTimeMillis();
 
@@ -2807,8 +2770,7 @@ public class TaskListUtils {
 
     }
 
-    private void expandHideRemoteDirTree(SmbServerInfo ssi, final int pos,
-                                         final TreeFilelistItem tfi, final TreeFilelistAdapter tfa) {
+    private void expandHideRemoteDirTree(SmbServerInfo ssi, final int pos, final TreeFilelistItem tfi, final TreeFilelistAdapter tfa) {
         if (tfi.getSubDirItemCount() == 0) return;
         if (tfi.isChildListExpanded()) {
             tfa.hideChildItem(tfi, pos);
