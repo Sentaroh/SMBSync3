@@ -108,7 +108,7 @@ public class ReadSmbFilelist implements Runnable {
         boolean error_exit = false;
         String smb_addr=null;
         if (remoteHostName.equals("")) {
-            if (!CommonUtilities.isSmbHostConnect(remoteHostAddr)) {
+            if (!CommonUtilities.canSmbHostConnectable(remoteHostAddr)) {
                 error_exit = true;
                 if (getFLCtrl.isEnabled()) {
                     getFLCtrl.setThreadResultError();

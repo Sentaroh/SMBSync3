@@ -674,14 +674,14 @@ public class SyncThread extends Thread {
             else mStwa.sourceSmbAddress =addr;
             boolean reachable=false;
             if (sti.getSourceSmbPort().equals("")) {
-                reachable=CommonUtilities.isSmbHostConnect(addr);
+                reachable=CommonUtilities.canSmbHostConnectable(addr);
             } else {
                 try {
                     int port_no=Integer.valueOf(sti.getSourceSmbPort());
-                    reachable=CommonUtilities.isSmbHostConnect(addr, port_no);
+                    reachable=CommonUtilities.canSmbHostConnectable(addr, port_no);
                 } catch(Exception e) {
                     mStwa.util.addDebugMsg(1,"I","Invalid Source SMB port number="+sti.getSourceSmbPort());
-                    reachable=CommonUtilities.isSmbHostConnect(addr);
+                    reachable=CommonUtilities.canSmbHostConnectable(addr);
                 }
             }
             mStwa.util.addDebugMsg(1,"I","Source SMB Address reachable="+reachable+", addr="+addr);
@@ -714,14 +714,14 @@ public class SyncThread extends Thread {
             else mStwa.destinationSmbAddress =addr;
             boolean reachable=false;
             if (sti.getDestinationSmbPort().equals("")) {
-                reachable=CommonUtilities.isSmbHostConnect(addr);
+                reachable=CommonUtilities.canSmbHostConnectable(addr);
             } else {
                 try {
                     int port_no=Integer.valueOf(sti.getDestinationSmbPort());
-                    reachable=CommonUtilities.isSmbHostConnect(addr, port_no);
+                    reachable=CommonUtilities.canSmbHostConnectable(addr, port_no);
                 } catch(Exception e) {
                     mStwa.util.addDebugMsg(1,"I","Invalid Source SMB port number="+sti.getDestinationSmbPort());
-                    reachable=CommonUtilities.isSmbHostConnect(addr);
+                    reachable=CommonUtilities.canSmbHostConnectable(addr);
                 }
             }
             mStwa.util.addDebugMsg(1,"I","Destination SMB Address reachable="+reachable+", addr="+addr);

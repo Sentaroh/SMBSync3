@@ -604,27 +604,27 @@ public final class CommonUtilities {
         }
     }
 
-    public static boolean isSmbHostConnect(String addr) {
+    public static boolean canSmbHostConnectable(String addr) {
         boolean result = false;
-        if (JcifsUtil.isIpAddressAndPortConnected(addr, 139, 3500) ||
-                JcifsUtil.isIpAddressAndPortConnected(addr, 445, 3500)) result = true;
+        if (JcifsUtil.canIpAddressAndPortConnectable(addr, 139, 3500) ||
+                JcifsUtil.canIpAddressAndPortConnectable(addr, 445, 3500)) result = true;
         return result;
     }
 
-    public static boolean isSmbHostConnect(String addr, int port) {
+    public static boolean canSmbHostConnectable(String addr, int port) {
         boolean result = false;
-        result = JcifsUtil.isIpAddressAndPortConnected(addr, port, 3500);
+        result = JcifsUtil.canIpAddressAndPortConnectable(addr, port, 3500);
         return result;
     }
 
     static public boolean isSmbHost(CommonUtilities cu, String address, String scan_port) {
         boolean smbhost = false;
         if (scan_port.equals("")) {
-            if (!JcifsUtil.isIpAddressAndPortConnected(address, 445, 3500)) {
-                smbhost = JcifsUtil.isIpAddressAndPortConnected(address, 139, 3500);
+            if (!JcifsUtil.canIpAddressAndPortConnectable(address, 445, 3500)) {
+                smbhost = JcifsUtil.canIpAddressAndPortConnectable(address, 139, 3500);
             } else smbhost = true;
         } else {
-            smbhost = JcifsUtil.isIpAddressAndPortConnected(address, Integer.parseInt(scan_port), 3500);
+            smbhost = JcifsUtil.canIpAddressAndPortConnectable(address, Integer.parseInt(scan_port), 3500);
         }
         cu.addDebugMsg(2, "I", "isIpAddrSmbHost Address=" + address + ", port=" + scan_port + ", smbhost=" + smbhost);
         return smbhost;
