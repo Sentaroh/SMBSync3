@@ -761,13 +761,13 @@ public class GlobalParameters {
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
         settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
 
-        System.setProperty("jcifs.smb.client.attrExpirationPeriod", "0");
-        System.setProperty("jcifs.netbios.retryTimeout", "3000");
+        System.setProperty(JCIFS_OPTION_CLIENT_ATTR_EXPIRATION_PERIOD, "0");
+        System.setProperty(JCIFS_OPTION_NETBIOS_RETRY_TIMEOUT, "3000");
 //        System.setProperty("jcifs.smb.client.listSize", "1000");
-        System.setProperty("jcifs.smb.lmCompatibility", settingsSmbLmCompatibility);
-        System.setProperty("jcifs.smb.client.useExtendedSecurity", settingsSmbUseExtendedSecurity);
-        System.setProperty("jcifs.smb.client.responseTimeout", settingsSmbClientResponseTimeout);
-        System.setProperty("jcifs.smb.client.disablePlainTextPasswords",settingsSmbDisablePlainTextPasswords);
+        System.setProperty(JCIFS_OPTION_SMB_LM_COMPATIBILITY, settingsSmbLmCompatibility);
+        System.setProperty(JCIFS_OPTION_CLIENT_USE_EXTENDED_SECUEITY, settingsSmbUseExtendedSecurity);
+        System.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, settingsSmbClientResponseTimeout);
+        System.setProperty(JCIFS_OPTION_CLIENT_DISABLE_PLAIN_TEXT_PASSWORDS,settingsSmbDisablePlainTextPasswords);
 
 //        System.setProperty("jcifs.smb.client.snd_buf_size","61440");
 //        System.setProperty("jcifs.smb.client.tcpNoDelay","true");

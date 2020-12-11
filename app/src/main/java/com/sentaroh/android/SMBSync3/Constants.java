@@ -137,4 +137,11 @@ public class Constants {
 	static final public String DEFAULT_NOCOMPRESS_FILE_TYPE =
 			"aac;apk;avi;gif;ico;gz;jar;jpe;jpeg;jpg;m3u;m4a;m4u;mov;movie;mp2;mp3;mpe;mpeg;mpg;mpga;png;qt;ra;ram;svg;tgz;wmv;zip;";
 
+	final public static String JCIFS_OPTION_CLIENT_ATTR_EXPIRATION_PERIOD="jcifs.smb.client.attrExpirationPeriod";
+	final public static String JCIFS_OPTION_NETBIOS_RETRY_TIMEOUT="jcifs.netbios.retryTimeout";
+	final public static String JCIFS_OPTION_SMB_LM_COMPATIBILITY="jcifs.smb.lmCompatibility";
+	final public static String JCIFS_OPTION_CLIENT_USE_EXTENDED_SECUEITY="jcifs.smb.client.useExtendedSecurity";
+	final public static String JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT="jcifs.smb.client.responseTimeout";
+	final public static String JCIFS_OPTION_CLIENT_DISABLE_PLAIN_TEXT_PASSWORDS="jcifs.smb.client.disablePlainTextPasswords";
+
 }

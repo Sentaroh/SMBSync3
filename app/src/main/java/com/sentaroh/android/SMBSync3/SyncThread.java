@@ -477,7 +477,7 @@ public class SyncThread extends Thread {
             mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
         } else {
             Properties prop=new Properties();
-            prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+            prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
             mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, mst_dom, mst_user, mst_pass, prop);
         }
 
@@ -489,7 +489,7 @@ public class SyncThread extends Thread {
             mStwa.destinationAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
         } else {
             Properties prop=new Properties();
-            prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+            prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
             mStwa.destinationAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, tgt_dom, tgt_user, tgt_pass, prop);
         }
 
