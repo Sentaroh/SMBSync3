@@ -420,7 +420,7 @@ public class GlobalParameters {
         LogStream.setInstance(smb1_ps);
         logStream= LogStream.getInstance();//Initial create JCIFS logStream object
 
-        Sl4jLogWriter jcifs_ng_lw=new Sl4jLogWriter(jcifs_ng_lu);
+        Slf4jLogWriter jcifs_ng_lw=new Slf4jLogWriter(jcifs_ng_lu);
         log.setWriter(jcifs_ng_lw);
     }
 
@@ -844,9 +844,9 @@ public class GlobalParameters {
         return pm.isInteractive();
     }
 
-    class Sl4jLogWriter extends LoggerWriter {
+    class Slf4jLogWriter extends LoggerWriter {
         private LogUtil mLu =null;
-        public Sl4jLogWriter(LogUtil lu) {
+        public Slf4jLogWriter(LogUtil lu) {
             mLu =lu;
         }
         @Override
