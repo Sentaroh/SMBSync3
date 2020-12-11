@@ -91,7 +91,7 @@ dependencies {
     implementation files('libs/JcifsFile2-1.0.6.jar')
     implementation files('libs/bcprov-jdk15to18-1.66.jar')
 
-    implementation files('libs/Utilities3-1.0.2.aar')
+    implementation files('libs/Utilities3-1.0.3.aar')
 
     implementation files('libs/metadata-extractor-2.11.0.jar')
 
