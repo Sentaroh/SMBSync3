@@ -689,6 +689,7 @@ public class TaskEditor extends DialogFragment {
         final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
 
+        sp_sync_folder_smb_proto.setOnItemSelectedListener(null);
         setSpinnerSyncFolderSmbProto(sti, sp_sync_folder_smb_proto, sfev.folder_smb_protocol);
 
         if (!sfev.folder_smb_addr.equals("")) et_remote_host.setText(sfev.folder_smb_addr);
@@ -1019,6 +1020,7 @@ public class TaskEditor extends DialogFragment {
 
         final LinearLayout ll_sync_folder_local_storage = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_storage_selector_view);
         final Spinner sp_sync_folder_local_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_local_storage_selector);
+        sp_sync_folder_local_storage_selector.setOnItemSelectedListener(null);
         setSpinnerSyncFolderStorageSelector(sti, sp_sync_folder_local_storage_selector, sfev.folder_storage_uuid);
         final Button btn_sync_folder_permission = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_local_storage_request_permission);
 
@@ -1317,7 +1319,9 @@ public class TaskEditor extends DialogFragment {
 
         final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_retention_period);
         final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_suffix_seqno);
+        sp_sync_suffix_option.setOnItemSelectedListener(null);
         setSpinnerSyncTaskArchiveSuffixSeq(sp_sync_suffix_option, sfev.archive_file_name_suffix_digit);
+        sp_sync_retain_period.setOnItemSelectedListener(null);
         setSpinnerSyncTaskPictureRetainPeriod(sp_sync_retain_period, Integer.valueOf(sfev.archive_retention_period));
 
         final CheckedTextView ctv_ignore_source_directory_hierarchy=(CheckedTextView)dialog.findViewById(R.id.edit_sync_folder_dlg_archive_ignore_source_directory_hierarchy);
@@ -1448,6 +1452,7 @@ public class TaskEditor extends DialogFragment {
         else ctv_sync_folder_show_zip_password.setVisibility(CheckedTextView.VISIBLE);
 
         final Spinner sp_sync_folder_zip_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_storage_selector);
+        sp_sync_folder_zip_storage_selector.setOnItemSelectedListener(null);
         setSpinnerSyncFolderStorageSelector(sti, sp_sync_folder_zip_storage_selector, sfev.folder_storage_uuid);
         final Button btn_sync_folder_permission = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_local_storage_request_permission);
 
@@ -1524,8 +1529,10 @@ public class TaskEditor extends DialogFragment {
         });
 
         final Spinner sp_comp_level = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_comp_level);
+        sp_comp_level.setOnItemSelectedListener(null);
         setSpinnerSyncFolderZipCompressionLevel(sp_comp_level, sfev.zip_comp_level);
         final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
+        sp_zip_enc_method.setOnItemSelectedListener(null);
         setSpinnerSyncFolderZipEncryptMethod(sp_zip_enc_method, sfev.zip_enc_method);
         final LinearLayout ll_zip_password_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password_view);
         final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
@@ -1710,6 +1717,7 @@ public class TaskEditor extends DialogFragment {
         dlg_title.setText(sfev.folder_title);
 
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
+        sp_sync_folder_type.setOnItemSelectedListener(null);
         setSpinnerSyncFolderType(sti, sp_sync_folder_type, sfev.folder_type, sfev.is_source_folder);
 
         if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
@@ -3072,6 +3080,7 @@ public class TaskEditor extends DialogFragment {
 
         final Spinner spinnerTwoWaySyncConflictRule = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_value);
         final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
+        spinnerTwoWaySyncConflictRule.setOnItemSelectedListener(null);
         setSpinnerTwoWaySyncConflictRule(spinnerTwoWaySyncConflictRule, n_sti.getSyncTwoWayConflictFileRule());
         spinnerTwoWaySyncConflictRule.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -3085,6 +3094,7 @@ public class TaskEditor extends DialogFragment {
         });
 
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
+        spinnerSyncType.setOnItemSelectedListener(null);
         setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getDestinationFolderType());
         spinnerSyncType.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -3163,34 +3173,43 @@ public class TaskEditor extends DialogFragment {
         setCtvListenerForEditSyncTask(ctv_sync_remove_source_if_empty, type, n_sti, dlg_msg);
 
         final Spinner sp_sync_task_option_error_option=(Spinner)mDialog.findViewById(R.id.edit_sync_task_option_error_option_value);
+        sp_sync_task_option_error_option.setOnItemSelectedListener(null);
         setSpinnerSyncTaskErrorOption(n_sti, sp_sync_task_option_error_option, n_sti.getSyncTaskErrorOption());
-        sp_sync_task_option_error_option.setOnItemSelectedListener(new OnItemSelectedListener() {
+        Handler hndl=new Handler();
+        hndl.postDelayed(new Runnable(){
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position!=SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_STOP) {
-                    NotifyEvent ntfy=new NotifyEvent(mContext);
-                    ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context context, Object[] objects) {
+            public void run() {
+                sp_sync_task_option_error_option.setOnItemSelectedListener(new OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mUtil.addDebugMsg(1, "I", "OnItemSelectedListener");
+                        if (position!=SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_STOP) {
+                            NotifyEvent ntfy=new NotifyEvent(mContext);
+                            ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                                @Override
+                                public void positiveResponse(Context context, Object[] objects) {
+                                    checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+                                }
+
+                                @Override
+                                public void negativeResponse(Context context, Object[] objects) {
+                                    sp_sync_task_option_error_option.setSelection(n_sti.getSyncTaskErrorOption(), false);
+                                }
+                            });
+                            mUtil.showCommonDialogWarn(true, mContext.getString(R.string.msgs_task_sync_task_sync_option_error_title),
+                                    mContext.getString(R.string.msgs_task_sync_task_sync_option_error_ignore_warning_message), ntfy);
+                        } else {
                             checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                         }
-
-                        @Override
-                        public void negativeResponse(Context context, Object[] objects) {
-                            sp_sync_task_option_error_option.setSelection(n_sti.getSyncTaskErrorOption());
-                        }
-                    });
-                    mUtil.showCommonDialogWarn(true, mContext.getString(R.string.msgs_task_sync_task_sync_option_error_title),
-                            mContext.getString(R.string.msgs_task_sync_task_sync_option_error_ignore_warning_message), ntfy);
-                } else {
-                    checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-                }
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {}
+                });
             }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
+        }, 100);
 
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
+        spinnerSyncWifiStatus.setOnItemSelectedListener(null);
         setSpinnerSyncTaskWifiOption(spinnerSyncWifiStatus, n_sti.getSyncOptionWifiStatusOption());
         if (n_sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) || n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             ll_wifi_condition_view.setVisibility(Button.VISIBLE);
@@ -3538,9 +3557,11 @@ public class TaskEditor extends DialogFragment {
         final LinearLayout ll_DeterminChangedFileByTimeDependantView=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_sync_diff_use_last_mod_time_dependant_view);
         final LinearLayout ll_syncDiffTimeView=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_diff_file_determin_time_value_view);
         final Spinner spinnerSyncDiffTimeValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
+        spinnerSyncDiffTimeValue.setOnItemSelectedListener(null);
         setSpinnerSyncTaskDiffTimeValue(spinnerSyncDiffTimeValue, n_sti.getSyncOptionDifferentFileAllowableTime());
 
         final Spinner spinnerSyncDstOffsetValue = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value);
+        spinnerSyncDstOffsetValue.setOnItemSelectedListener(null);
         setSpinnerSyncDstOffsetValue(spinnerSyncDstOffsetValue, n_sti.getSyncOptionOffsetOfDst());
         final LinearLayout ll_offset_dst_view=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value_view);
         if (n_sti.isSyncOptionIgnoreDstDifference()) {
