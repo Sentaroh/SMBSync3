@@ -851,13 +851,13 @@ public class TaskListUtils {
         Thread th=new Thread(){
              @Override
              public void run() {
-                  JcifsAuth auth=null;
-                  if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                      auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                  } else {
-                      auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                  }
                   try {
+                      JcifsAuth auth=null;
+                      if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+                          auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                      } else {
+                          auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                      }
                       JcifsFile jf=new JcifsFile(new_dir, auth);
                       if (jf.exists()) p_ntfy.notifyToListener(true, new Object[] {true});
                       else p_ntfy.notifyToListener(true, new Object[] {false});
@@ -925,13 +925,13 @@ public class TaskListUtils {
         Thread th=new Thread(){
             @Override
             public void run() {
-                JcifsAuth auth=null;
-                if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                    auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                } else {
-                    auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                }
                 try {
+                    JcifsAuth auth=null;
+                    if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+                        auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                    } else {
+                        auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                    }
                     JcifsFile jf=new JcifsFile(new_dir, auth);
                     jf.mkdirs();
                     if (jf.exists()) p_ntfy.notifyToListener(true, null);

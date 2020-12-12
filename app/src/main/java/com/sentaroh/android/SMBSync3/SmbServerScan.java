@@ -720,23 +720,34 @@ public class SmbServerScan {
         result.server_smb_ip_addr=address;
         result.server_smb_name=srv_name;
 
-        JcifsAuth auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
-        result.smb1_nt_status_desc=isSmbServerAvailable(SMB_LEVEL_SMB1, auth, address);
-        if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-            result.smb1_available=true;
-            ArrayList<SmbServerScanShareInfo> sl=createSmbServerShareList(SMB_LEVEL_SMB1, auth, address);
-            result.share_item_list.addAll(sl);
+        try {
+            JcifsAuth auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
+            result.smb1_nt_status_desc=isSmbServerAvailable(SMB_LEVEL_SMB1, auth, address);
+            if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                result.smb1_available=true;
+                ArrayList<SmbServerScanShareInfo> sl=createSmbServerShareList(SMB_LEVEL_SMB1, auth, address);
+                result.share_item_list.addAll(sl);
+            }
+        } catch(JcifsException e) {
+            e.printStackTrace();
+            mUtil.addDebugMsg(1, "I", "JcifsException occured, error="+e.getMessage());
         }
 
-        Properties prop=new Properties();
-        prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-        auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, "SMB202", "SMB311", prop);
-        result.smb23_nt_status_desc =isSmbServerAvailable(SMB_LEVEL_SMB23, auth, address);
-        if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-            result.smb23_available =true;
-            ArrayList<SmbServerScanShareInfo> sl=createSmbServerShareList(SMB_LEVEL_SMB23, auth, address);
-            result.share_item_list.addAll(sl);
+        try {
+            Properties prop=new Properties();
+            prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+            JcifsAuth auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, "SMB202", "SMB311", prop);
+            result.smb23_nt_status_desc =isSmbServerAvailable(SMB_LEVEL_SMB23, auth, address);
+            if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                result.smb23_available =true;
+                ArrayList<SmbServerScanShareInfo> sl=createSmbServerShareList(SMB_LEVEL_SMB23, auth, address);
+                result.share_item_list.addAll(sl);
+            }
+        } catch(JcifsException e) {
+            e.printStackTrace();
+            mUtil.addDebugMsg(1, "I", "JcifsException occured, error="+e.getMessage());
         }
+
         return result;
     }
 

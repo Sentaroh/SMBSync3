@@ -474,11 +474,27 @@ public class SyncThread extends Thread {
         mst_user=sti.getSourceSmbAccountName().equals("")?null:sti.getSourceSmbAccountName();
         mst_pass=sti.getSourceSmbPassword().equals("")?null:sti.getSourceSmbPassword();
         if (sti.getSourceSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-            mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
+            try {
+                mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
+            } catch(JcifsException e) {
+                e.printStackTrace();
+                String e_msg=String.format("JcifsException occured while %s file creation, SMB_Level=%s error=%s", "Source", sti.getSourceSmbProtocol(), e.getMessage());
+                showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", e_msg);
+                mGp.syncThreadCtrl.setThreadMessage(e_msg);
+                return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+            }
         } else {
             Properties prop=new Properties();
             prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
-            mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, mst_dom, mst_user, mst_pass, prop);
+            try {
+                mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, mst_dom, mst_user, mst_pass, prop);
+            } catch(JcifsException e) {
+                e.printStackTrace();
+                String e_msg=String.format("JcifsException occured while %s file creation, SMB_Level=%s error=%s", "Source", sti.getSourceSmbProtocol(), e.getMessage());
+                showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", e_msg);
+                mGp.syncThreadCtrl.setThreadMessage(e_msg);
+                return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+            }
         }
 
         String tgt_dom=null, tgt_user=null, tgt_pass=null;
@@ -486,11 +502,27 @@ public class SyncThread extends Thread {
         tgt_user=sti.getDestinationSmbAccountName().equals("")?null:sti.getDestinationSmbAccountName();
         tgt_pass=sti.getDestinationSmbPassword().equals("")?null:sti.getDestinationSmbPassword();
         if (sti.getDestinationSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-            mStwa.destinationAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
+            try {
+                mStwa.destinationAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, tgt_dom, tgt_user, tgt_pass);
+            } catch(JcifsException e) {
+                e.printStackTrace();
+                String e_msg=String.format("JcifsException occured while %s file creation, SMB_Level=%s error=%s", "Destination", sti.getSourceSmbProtocol(), e.getMessage());
+                showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", e_msg);
+                mGp.syncThreadCtrl.setThreadMessage(e_msg);
+                return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+            }
         } else {
             Properties prop=new Properties();
             prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
-            mStwa.destinationAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, tgt_dom, tgt_user, tgt_pass, prop);
+            try {
+                mStwa.destinationAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, tgt_dom, tgt_user, tgt_pass, prop);
+            } catch(JcifsException e) {
+                e.printStackTrace();
+                String e_msg=String.format("JcifsException occured while %s file creation, SMB_Level=%s error=%s", "Destination", sti.getSourceSmbProtocol(), e.getMessage());
+                showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", e_msg);
+                mGp.syncThreadCtrl.setThreadMessage(e_msg);
+                return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+            }
         }
 
         mStwa.syncDifferentFileAllowableTime = sti.getSyncOptionDifferentFileAllowableTime() * 1000;//Convert to milisec
