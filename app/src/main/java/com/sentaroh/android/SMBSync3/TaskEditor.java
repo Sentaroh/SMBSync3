@@ -3182,7 +3182,6 @@ public class TaskEditor extends DialogFragment {
                 sp_sync_task_option_error_option.setOnItemSelectedListener(new OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        mUtil.addDebugMsg(1, "I", "OnItemSelectedListener");
                         if (position!=SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_STOP) {
                             NotifyEvent ntfy=new NotifyEvent(mContext);
                             ntfy.setListener(new NotifyEvent.NotifyEventListener() {
