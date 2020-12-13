@@ -874,7 +874,7 @@ public final class CommonUtilities {
             SafFile3 lf =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName + "/.history");
             if (lf.exists()) {
                 InputStreamReader isr = new InputStreamReader(lf.getInputStream(), "UTF-8");
-                BufferedReader bir=new BufferedReader(isr, GENERAL_IO_BUFFER_SIZE);
+                BufferedReader bir=new BufferedReader(isr, 1024*100);
                 String line = "";
                 String[] l_array = null;
                 while ((line = bir.readLine()) != null) {
@@ -971,7 +971,7 @@ public final class CommonUtilities {
             if (!mf.exists()) mf.createNewFile();
 
             OutputStream fos=mf.getOutputStream();
-            BufferedOutputStream bos=new BufferedOutputStream(fos, GENERAL_IO_BUFFER_SIZE);
+            BufferedOutputStream bos=new BufferedOutputStream(fos, 1024*100);
             PrintWriter bw=new PrintWriter(bos);
 
             int max = 500;
