@@ -4,7 +4,8 @@ Improved version of SMBSync2
 
 ### Improvement
 
-- SDCARD/USB OTG to be used without Mount Point
+- SDCARD/USB to be used without Mount Point
+- Multiple USB drives can be used
 - Added GROUP tab for synchronizing multiple tasks
 - Shortcuts or synchronization buttons at the top of the screen allow you to specify tasks to be performed in groups
 - Organized and concise options
