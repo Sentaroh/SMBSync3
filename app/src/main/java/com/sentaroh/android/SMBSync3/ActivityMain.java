@@ -458,8 +458,8 @@ public class ActivityMain extends AppCompatActivity {
         String key_value=prefs.getString(STORED_SECRET_KEY_VALIDATION_KEY, "");
         if (!key_value.equals("")) {
             try {
-                SecretKey enc_key= KeyStoreUtils.getStoredKey(mActivity.getApplicationContext(), KEY_STORE_ALIAS);
-                EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(enc_key, KEY_STORE_ALIAS);
+                SecretKey enc_key= KeyStoreUtils.getStoredKey(mActivity.getApplicationContext(), KeyStoreUtils.KEY_STORE_ALIAS);
+                EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(enc_key, KeyStoreUtils.KEY_STORE_ALIAS);
                 String dec_str=CommonUtilities.decryptUserData(mContext, cp_int, key_value);
                 if (dec_str==null) {
                     //Stored key was changed
@@ -482,8 +482,8 @@ public class ActivityMain extends AppCompatActivity {
             cbl.onCallBack(mContext, true, null);
         } else {
             try {
-                SecretKey enc_key= KeyStoreUtils.getStoredKey(mActivity.getApplicationContext(), KEY_STORE_ALIAS);
-                EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(enc_key, KEY_STORE_ALIAS);
+                SecretKey enc_key= KeyStoreUtils.getStoredKey(mActivity.getApplicationContext(), KeyStoreUtils.KEY_STORE_ALIAS);
+                EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(enc_key, KeyStoreUtils.KEY_STORE_ALIAS);
                 String enc_str=CommonUtilities.encryptUserData(mContext, cp_int, "enc_data");
                 prefs.edit().putString(STORED_SECRET_KEY_VALIDATION_KEY, enc_str).commit();
                 result="key saved";

@@ -38,6 +38,9 @@ import javax.security.auth.x500.X500Principal;
 
 class KeyStoreUtils {
     private static Logger log= LoggerFactory.getLogger(KeyStoreUtils.class);
+
+    public static final String KEY_STORE_ALIAS = "SMBSync3";
+
     static final private String PROVIDER = "AndroidKeyStore";
 
     public static boolean isStoredKeyExists(Context context, String alias) {

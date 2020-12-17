@@ -75,7 +75,6 @@ import javax.crypto.SecretKey;
 
 import static com.sentaroh.android.SMBSync3.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync3.Constants.GENERAL_IO_BUFFER_SIZE;
-import static com.sentaroh.android.SMBSync3.Constants.KEY_STORE_ALIAS;
 import static com.sentaroh.android.SMBSync3.SyncConfiguration.ENCRYPT_MODE_ENCRYPT_VITAL_DATA;
 import static com.sentaroh.android.SMBSync3.SyncConfiguration.ENCRYPT_MODE_ENCRYPT_WHOLE_DATA;
 import static com.sentaroh.android.SMBSync3.SyncConfiguration.ENCRYPT_MODE_NO_ENCRYPT;
@@ -1081,8 +1080,8 @@ public class TaskListImportExport {
     public static String saveTaskListToAppDirectory(Context c,
                                                     ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list, ArrayList<GroupListItem>group_list) {
         try {
-            SecretKey sk = KeyStoreUtils.getStoredKey(c, KEY_STORE_ALIAS);
-            EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(sk, Constants.KEY_STORE_ALIAS);
+            SecretKey sk = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
+            EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(sk, KeyStoreUtils.KEY_STORE_ALIAS);
 
             String config_data = SyncConfiguration.createXmlData(c, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_ENCRYPT_VITAL_DATA, cp_int);
 
@@ -1207,10 +1206,10 @@ public class TaskListImportExport {
                                                        ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListItem> group_list) {
         boolean result = false;
         try {
-            SecretKey priv_key = KeyStoreUtils.getStoredKey(c, KEY_STORE_ALIAS);
+            SecretKey priv_key = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
             EncryptUtilV3.CipherParms cp_int = null;
             if (priv_key != null) {
-                cp_int = EncryptUtilV3.initCipherEnv(priv_key, KEY_STORE_ALIAS);
+                cp_int = EncryptUtilV3.initCipherEnv(priv_key, KeyStoreUtils.KEY_STORE_ALIAS);
 
                 InputStream fis = c.openFileInput(CONFIG_FILE_NAME);
 
@@ -1236,10 +1235,10 @@ public class TaskListImportExport {
             String[] config_array = SyncConfiguration.createConfigurationDataArray(sf);
 
             if (isSavedSyncTaskListFile(c, config_array)) {
-                SecretKey priv_key = KeyStoreUtils.getStoredKey(c, KEY_STORE_ALIAS);
+                SecretKey priv_key = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
                 EncryptUtilV3.CipherParms cp_int = null;
                 if (priv_key != null) {
-                    cp_int = EncryptUtilV3.initCipherEnv(priv_key, KEY_STORE_ALIAS);
+                    cp_int = EncryptUtilV3.initCipherEnv(priv_key, KeyStoreUtils.KEY_STORE_ALIAS);
                     result = SyncConfiguration.buildConfigurationList(c, config_array[1], sync_task_list, schedule_list, setting_parm_list,
                             group_list, ENCRYPT_MODE_ENCRYPT_VITAL_DATA, cp_int);
                 } else {

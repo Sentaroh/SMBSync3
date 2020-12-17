@@ -55,8 +55,6 @@ public class Constants {
 	static public final int GENERAL_IO_BUFFER_SIZE =1024*1024;
 	static public final int SYNC_IO_BUFFER_SIZE=1024*1024*4;
 
-    public static final String KEY_STORE_ALIAS = "SMBSync3";
-
 	public final static String LOCAL_FILE_LAST_MODIFIED_FILE_LIST_NAME_V1 ="local_file_last_modified_V1";
 	public final static String LOCAL_FILE_LAST_MODIFIED_WAS_FORCE_LASTEST ="*";
 

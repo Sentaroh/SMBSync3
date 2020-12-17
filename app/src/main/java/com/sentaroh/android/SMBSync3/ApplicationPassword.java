@@ -56,8 +56,6 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.SecretKey;
 
-import static com.sentaroh.android.SMBSync3.Constants.KEY_STORE_ALIAS;
-
 public class ApplicationPassword {
 
     final private static Logger log= LoggerFactory.getLogger(ApplicationPassword.class);
@@ -202,9 +200,9 @@ public class ApplicationPassword {
                 try {
 //                    input_hv= EncryptUtilV3.makeSHA256Hash(et_pswd1.getText().toString());
                     input_hv=getStretchedPassword(et_pswd1.getText().toString());
-                    SecretKey enc_key= KeyStoreUtils.getStoredKey(mActivity, KEY_STORE_ALIAS);
+                    SecretKey enc_key= KeyStoreUtils.getStoredKey(mActivity, KeyStoreUtils.KEY_STORE_ALIAS);
 
-                    EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(enc_key, KEY_STORE_ALIAS);
+                    EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(enc_key, KeyStoreUtils.KEY_STORE_ALIAS);
                     byte[] encrypted_hv= Base64Compat.decode(gp.settingSecurityApplicationPasswordHashValue, Base64Compat.NO_WRAP);
                     decrypted_hv =EncryptUtilV3.decrypt(encrypted_hv, cp_int);
                 } catch (Exception e) {
@@ -316,8 +314,8 @@ public class ApplicationPassword {
                 try {
 //                    String user_pw_hv=EncryptUtilV3.makeSHA256Hash(et_pswd1.getText().toString());
                     String user_pw_hv=getStretchedPassword(et_pswd1.getText().toString());
-                    SecretKey dec_key= KeyStoreUtils.getStoredKey(mActivity, KEY_STORE_ALIAS);
-                    EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(dec_key, KEY_STORE_ALIAS);
+                    SecretKey dec_key= KeyStoreUtils.getStoredKey(mActivity, KeyStoreUtils.KEY_STORE_ALIAS);
+                    EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(dec_key, KeyStoreUtils.KEY_STORE_ALIAS);
                     encrypted_hv=Base64Compat.encodeToString(EncryptUtilV3.encrypt(user_pw_hv, cp_int), Base64Compat.NO_WRAP);
                     ntfy_create.notifyToListener(true, new Object[]{encrypted_hv});
                 } catch (Exception e) {

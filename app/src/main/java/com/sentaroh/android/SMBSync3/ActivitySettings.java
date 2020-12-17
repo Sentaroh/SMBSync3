@@ -59,9 +59,6 @@ public class ActivitySettings extends PreferenceActivity {
     private String mCurrentScreenTheme=SCREEN_THEME_STANDARD;
 
     private CommonUtilities mUtil = null;
-//    private CommonDialog mCommonDlg = null;
-
-//	private GlobalParameters mGp=null;
 
     @Override
     protected boolean isValidFragment(String fragmentName) {
@@ -89,8 +86,7 @@ public class ActivitySettings extends PreferenceActivity {
 
         if (mUtil == null) mUtil = new CommonUtilities(this, "SettingsActivity", mGp, null);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        if (mGp.settingFixDeviceOrientationToPortrait)
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (mGp.settingFixDeviceOrientationToPortrait) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
@@ -104,7 +100,6 @@ public class ActivitySettings extends PreferenceActivity {
     public void onResume() {
         super.onResume();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-//		setTitle(R.string.settings_main_title);
     }
 
     private List<Header> mHeaderList=null;
@@ -233,39 +228,28 @@ public class ActivitySettings extends PreferenceActivity {
 
         }
 
-        private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
+        private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
             Preference pref_key=findPreference(key_string);
-            boolean isChecked = false;
             if (key_string.equals(c.getString(R.string.settings_force_screen_on_while_sync))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_wifi_lock))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_sync_history_log))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_suppress_add_external_storage_notification))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_suppress_start_sync_confirmation_message))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_suppress_start_group_confirmation_message))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_suppress_shortcut1_confirmation_message))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_no_compress_file_type))) {
-                isChecked = true;
                 if (shared_pref.getString(key_string, "").equals("")) {
                     shared_pref.edit().putString(key_string, DEFAULT_NOCOMPRESS_FILE_TYPE).commit();
                 }
                 pref_key.setSummary(shared_pref.getString(key_string, DEFAULT_NOCOMPRESS_FILE_TYPE));
             }
-            return isChecked;
         }
 
         @Override
         public void onStart() {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .registerOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_sync_title);
         }
 
@@ -273,8 +257,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
 
     }
@@ -304,23 +287,18 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_message_use_standard_text_view), getContext());
         }
 
-        private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
-            boolean isChecked = false;
+        private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
 
             if (key_string.equals(c.getString(R.string.settings_exit_clean))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_sync_message_use_standard_text_view))) {
-                isChecked = true;
             }
-            return isChecked;
         }
 
         @Override
         public void onStart() {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .registerOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_misc_title);
         }
 
@@ -328,8 +306,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
 
         ;
@@ -375,13 +352,10 @@ public class ActivitySettings extends PreferenceActivity {
 
         }
 
-        private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
-            boolean isChecked = false;
+        private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
             Preference pref_key=findPreference(key_string);
             if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_smb_disable_plain_text_passwords))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_smb_lm_compatibility))) {
                 String lmc=shared_pref.getString(c.getString(R.string.settings_smb_lm_compatibility),"3");
                 if (lmc.equals("3") || lmc.equals("4")) {
@@ -390,13 +364,9 @@ public class ActivitySettings extends PreferenceActivity {
                     findPreference(c.getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(true);
                 }
                 pref_key.setSummary(lmc);
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_smb_client_response_timeout))) {
                 pref_key.setSummary(shared_pref.getString(key_string, "30000")+" Millis");
-                isChecked = true;
             }
-
-            return isChecked;
         }
 
 
@@ -404,8 +374,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStart() {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .registerOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_smb_title);
         }
 
@@ -413,8 +382,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
 
     }
@@ -465,11 +433,9 @@ public class ActivitySettings extends PreferenceActivity {
 
         }
 
-        private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
-            boolean isChecked = false;
+        private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
             Preference pref_key=findPreference(key_string);
             if (key_string.equals(c.getString(R.string.settings_playback_ringtone_when_sync_ended))) {
-                isChecked = true;
                 Preference rv = findPreference(c.getString(R.string.settings_playback_ringtone_volume));
                 if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS)) {
                     pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_always));
@@ -485,7 +451,6 @@ public class ActivitySettings extends PreferenceActivity {
                     rv.setEnabled(false);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_vibrate_when_sync_ended))) {
-                isChecked = true;
                 if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) {
                     pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_always));
                 } else if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ERROR)) {
@@ -496,7 +461,6 @@ public class ActivitySettings extends PreferenceActivity {
                     pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_no));
                 }
             } else if (key_string.equals(c.getString(R.string.settings_notification_message_when_sync_ended))) {
-                isChecked = true;
                 if (shared_pref.getString(key_string, "1").equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS)) {
                     pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_always));
                 } else if (shared_pref.getString(key_string, "1").equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
@@ -507,13 +471,11 @@ public class ActivitySettings extends PreferenceActivity {
                     pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_no));
                 }
             } else if (key_string.equals(c.getString(R.string.settings_playback_ringtone_volume))) {
-                isChecked = true;
                 int vol = shared_pref.getInt(key_string, 100);
                 pref_key.setSummary(
                         String.format(c.getString(R.string.settings_playback_ringtone_volume_summary), vol));
                 if (mInitVolume != vol) playBackDefaultNotification(c, getFragmentManager(), vol);
             } else if (key_string.equals(c.getString(R.string.settings_screen_theme))) {
-                isChecked = true;
                 String tid=shared_pref.getString(key_string, "0");
                 String[] wl_label = c.getResources().getStringArray(R.array.settings_screen_theme_list_entries);
                 String sum_msg = wl_label[Integer.parseInt(tid)];
@@ -529,7 +491,6 @@ public class ActivitySettings extends PreferenceActivity {
                     getActivity().startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_screen_theme_language))) {
-                isChecked = true;
                 String lang_value=shared_pref.getString(key_string, APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
                 String[] lang_msgs = c.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
                 String sum_msg=lang_msgs[0];
@@ -550,7 +511,6 @@ public class ActivitySettings extends PreferenceActivity {
                     getActivity().startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_display_font_scale_factor))) {
-                isChecked = true;
                 String font_scale_id=shared_pref.getString(key_string, GlobalParameters.FONT_SCALE_FACTOR_NORMAL);
                 String[] font_scale_label = c.getResources().getStringArray(R.array.settings_display_font_scale_factor_list_entries);
                 String sum_msg = font_scale_label[Integer.parseInt(font_scale_id)];
@@ -568,20 +528,19 @@ public class ActivitySettings extends PreferenceActivity {
                     getActivity().startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_device_orientation_landscape_tablet))) {
-                isChecked = true;
             } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
-                isChecked = true;
+                boolean portrait=shared_pref.getBoolean(key_string, false);
+                Preference pref_key_tablet=findPreference(c.getString(R.string.settings_device_orientation_landscape_tablet));
+                if (portrait) pref_key_tablet.setEnabled(false);
+                else pref_key_tablet.setEnabled(true);
             }
-
-            return isChecked;
         }
 
         @Override
         public void onStart() {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .registerOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_ui_title);
         }
 
@@ -589,8 +548,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
 
     }
@@ -637,13 +595,11 @@ public class ActivitySettings extends PreferenceActivity {
             });
         }
 
-        private boolean checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
-            boolean isChecked = false;
+        private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
             Preference pref_key=findPreference(key_string);
             String hv= ApplicationPassword.getPasswordHashValue(shared_pref);
 
             if (key_string.equals(c.getString(R.string.settings_security_application_password))) {
-                isChecked = true;
                 String contents_string="";
                 if (hv.equals("")) {
                     contents_string=c.getString(R.string.settings_security_application_password_not_created);
@@ -666,16 +622,13 @@ public class ActivitySettings extends PreferenceActivity {
                 }
                 pref_key.setSummary(contents_string);
             }
-
-            return isChecked;
         }
 
         @Override
         public void onStart() {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .registerOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
             getActivity().setTitle(R.string.settings_ui_title);
         }
 
@@ -683,8 +636,7 @@ public class ActivitySettings extends PreferenceActivity {
         public void onStop() {
             super.onStop();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            getPreferenceScreen().getSharedPreferences()
-                    .unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(listenerAfterHc);
         }
 
     }
