@@ -236,14 +236,15 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getSyncOptionWifiStatusOption() {return syncOptionWifiStatus;}
     public void setSyncOptionWifiStatusOption(String p) {syncOptionWifiStatus = p;}
 
-    private ArrayList<FilterListItem> syncOptionWifiAccessPointWhiteList = new ArrayList<FilterListItem>();
-    public ArrayList<FilterListItem> getSyncOptionWifiAccessPointWhiteList() {return syncOptionWifiAccessPointWhiteList;}
-    public void setSyncOptionWifiAccessPointWhiteList(ArrayList<FilterListItem> p) {syncOptionWifiAccessPointWhiteList = p;}
+    private ArrayList<FilterListItem> syncOptionWifiAccessPointGrantList = new ArrayList<FilterListItem>();
+    public ArrayList<FilterListItem> getSyncOptionWifiAccessPointGrantList() {return syncOptionWifiAccessPointGrantList;}
+    public void setSyncOptionWifiAccessPointGrantList(ArrayList<FilterListItem> p) {
+        syncOptionWifiAccessPointGrantList = p;}
 
-    private ArrayList<FilterListItem> syncOptionWifiIPAddressWhiteList = new ArrayList<FilterListItem>();
-    public ArrayList<FilterListItem> getSyncOptionWifiIPAddressWhiteList() {return syncOptionWifiIPAddressWhiteList;}
-    public void setSyncOptionWifiIPAddressWhiteList(ArrayList<FilterListItem> p) {
-        syncOptionWifiIPAddressWhiteList = p;}
+    private ArrayList<FilterListItem> syncOptionWifiIPAddressGrantList = new ArrayList<FilterListItem>();
+    public ArrayList<FilterListItem> getSyncOptionWifiIPAddressGrantList() {return syncOptionWifiIPAddressGrantList;}
+    public void setSyncOptionWifiIPAddressGrantList(ArrayList<FilterListItem> p) {
+        syncOptionWifiIPAddressGrantList = p;}
 
     private boolean syncOptionSyncOnlyCharging = false;
     public void setSyncOptionSyncWhenCharging(boolean charging) {syncOptionSyncOnlyCharging = charging;}
@@ -775,16 +776,16 @@ class SyncTaskItem implements Serializable, Cloneable {
                     for (FilterListItem item : sti.getDirectoryFilter()) df_cmp2 += item.toString()+" ";
 
                     String wap_cmp1 = "";
-                    for (FilterListItem item : syncOptionWifiAccessPointWhiteList) wap_cmp1 += item.toString()+" ";
+                    for (FilterListItem item : syncOptionWifiAccessPointGrantList) wap_cmp1 += item.toString()+" ";
 
                     String wap_cmp2 = "";
-                    for (FilterListItem item : sti.getSyncOptionWifiAccessPointWhiteList()) wap_cmp2 += item.toString()+" ";
+                    for (FilterListItem item : sti.getSyncOptionWifiAccessPointGrantList()) wap_cmp2 += item.toString()+" ";
 
                     String wad_cmp1 = "";
-                    for (FilterListItem item : syncOptionWifiIPAddressWhiteList) wad_cmp1 += item.toString()+" ";
+                    for (FilterListItem item : syncOptionWifiIPAddressGrantList) wad_cmp1 += item.toString()+" ";
 
                     String wad_cmp2 = "";
-                    for (FilterListItem item : sti.getSyncOptionWifiIPAddressWhiteList()) wad_cmp2 += item.toString()+" ";
+                    for (FilterListItem item : sti.getSyncOptionWifiIPAddressGrantList()) wad_cmp2 += item.toString()+" ";
 
                     if ((ff_cmp1.equals(ff_cmp2)) &&
                             (df_cmp1.equals(df_cmp2)) &&

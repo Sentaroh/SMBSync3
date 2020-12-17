@@ -634,10 +634,10 @@ public class SyncConfiguration {
             createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_DIRECTORY, item.getDirectoryFilter());
         if (item.getFileNameFilter().size() > 0)
             createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_FILE_NAME, item.getFileNameFilter());
-        if (item.getSyncOptionWifiAccessPointWhiteList().size() > 0)
-            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_SSID, item.getSyncOptionWifiAccessPointWhiteList());
-        if (item.getSyncOptionWifiIPAddressWhiteList().size() > 0)
-            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_IPADDR, item.getSyncOptionWifiIPAddressWhiteList());
+        if (item.getSyncOptionWifiAccessPointGrantList().size() > 0)
+            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_SSID, item.getSyncOptionWifiAccessPointGrantList());
+        if (item.getSyncOptionWifiIPAddressGrantList().size() > 0)
+            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_IPADDR, item.getSyncOptionWifiIPAddressGrantList());
 
         return task_tag;
     }
@@ -913,9 +913,9 @@ public class SyncConfiguration {
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_FILE_NAME)) {
                             filter_list = sync_task_item.getFileNameFilter();
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_SSID)) {
-                            filter_list = sync_task_item.getSyncOptionWifiAccessPointWhiteList();
+                            filter_list = sync_task_item.getSyncOptionWifiAccessPointGrantList();
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_IPADDR)) {
-                            filter_list = sync_task_item.getSyncOptionWifiIPAddressWhiteList();
+                            filter_list = sync_task_item.getSyncOptionWifiIPAddressGrantList();
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SCHEDULE)) {
                             schedule_item = new ScheduleListItem();
                             buildSyncTaskScheduleFromXml(c, xpp, schedule_list, schedule_item);

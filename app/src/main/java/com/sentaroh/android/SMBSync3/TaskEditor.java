@@ -3120,7 +3120,7 @@ public class TaskEditor extends DialogFragment {
         final LinearLayout ll_wifi_wl_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wl_view);
         final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);
         final Button edit_wifi_addr_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_address_white_list);
-        setWifiApWhiteListInfo(n_sti.getSyncOptionWifiIPAddressWhiteList(), edit_wifi_addr_list);
+        setWifiApWhiteListInfo(n_sti.getSyncOptionWifiIPAddressGrantList(), edit_wifi_addr_list);
         final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
         ctv_sync_allow_global_ip_addr.setChecked(n_sti.isSyncOptionSyncAllowGlobalIpAddress());
         setCtvListenerForEditSyncTask(ctv_sync_allow_global_ip_addr, type, n_sti, dlg_msg);
@@ -3982,7 +3982,7 @@ public class TaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        setWifiApWhiteListInfo(n_sti.getSyncOptionWifiIPAddressWhiteList(), edit_wifi_addr_list);
+                        setWifiApWhiteListInfo(n_sti.getSyncOptionWifiIPAddressGrantList(), edit_wifi_addr_list);
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
 
@@ -3992,7 +3992,7 @@ public class TaskEditor extends DialogFragment {
                     }
 
                 });
-                mTaskUtil.editIPAddressFilterDlg(n_sti.getSyncOptionWifiIPAddressWhiteList(), ntfy);
+                mTaskUtil.editIPAddressFilterDlg(n_sti.getSyncOptionWifiIPAddressGrantList(), ntfy);
             }
         });
 
@@ -4641,7 +4641,7 @@ public class TaskEditor extends DialogFragment {
                 setDialogMsg(dlg_msg, e_msg);
             } else {
                 if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
-                        if (n_sti.getSyncOptionWifiIPAddressWhiteList().size() == 0) {
+                        if (n_sti.getSyncOptionWifiIPAddressGrantList().size() == 0) {
                             CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
                             setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_address_not_specified));
                             error_detected = true;

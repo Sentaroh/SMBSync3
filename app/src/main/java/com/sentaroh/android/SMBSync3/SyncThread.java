@@ -473,6 +473,8 @@ public class SyncThread extends Thread {
         mst_dom=sti.getSourceSmbDomain().equals("")?null:sti.getSourceSmbDomain();
         mst_user=sti.getSourceSmbAccountName().equals("")?null:sti.getSourceSmbAccountName();
         mst_pass=sti.getSourceSmbPassword().equals("")?null:sti.getSourceSmbPassword();
+        Properties prop=new Properties();
+        prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
         if (sti.getSourceSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
             try {
                 mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mst_dom, mst_user, mst_pass);
@@ -484,8 +486,6 @@ public class SyncThread extends Thread {
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
             }
         } else {
-            Properties prop=new Properties();
-            prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
             try {
                 mStwa.sourceAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, mst_dom, mst_user, mst_pass, prop);
             } catch(JcifsException e) {
@@ -512,8 +512,6 @@ public class SyncThread extends Thread {
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
             }
         } else {
-            Properties prop=new Properties();
-            prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
             try {
                 mStwa.destinationAuth =new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, tgt_dom, tgt_user, tgt_pass, prop);
             } catch(JcifsException e) {
@@ -1381,7 +1379,7 @@ public class SyncThread extends Thread {
                 }
             } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) {
                 if (!if_addr.equals("")) {
-                    ArrayList<FilterListItem> wl = sti.getSyncOptionWifiIPAddressWhiteList();
+                    ArrayList<FilterListItem> wl = sti.getSyncOptionWifiIPAddressGrantList();
                     boolean found=isWifiFilterMatched(sti, wl, if_addr);
                     if (!found) {
                         if (sti.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK) {

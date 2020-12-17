@@ -420,7 +420,7 @@ public class TaskListImportFromSMBSync2 {
             stli.setFileNameFilter(ff);
             stli.setDirectoryFilter(df);
 //            stli.setSyncOptionWifiAccessPointWhiteList(wifi_ap_list);
-            stli.setSyncOptionWifiIPAddressWhiteList(wifi_addr_list);
+            stli.setSyncOptionWifiIPAddressGrantList(wifi_addr_list);
 
             stli.setSyncProcessRootDirFile(parm[22].equals("1") ? true : false);
 //            boolean processRootDirectoryFile=(parm[22].equals("1") ? true : false);
