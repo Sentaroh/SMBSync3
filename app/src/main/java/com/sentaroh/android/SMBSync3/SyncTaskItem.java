@@ -224,14 +224,14 @@ class SyncTaskItem implements Serializable, Cloneable {
     public int getSyncOptionDifferentFileAllowableTime() {return syncOptionDeterminChangedFileByTimeValue;}
     public void setSyncOptionDifferentFileAllowableTime(int p) {syncOptionDeterminChangedFileByTimeValue = p;}
 
-    public final static String WIFI_STATUS_WIFI_OFF = "0"; // list index 0
-    public final static String WIFI_STATUS_WIFI_CONNECT_ANY_AP = "1"; // list index 1
-    public final static String WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR = "2"; // list index 2
-    public final static String WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR = "3"; // list index 3
+    public final static String WIFI_STATUS_WIFI_OFF = "OFF"; // list index 0
+    public final static String WIFI_STATUS_WIFI_CONNECT_ANY_AP = "ANY_AP"; // list index 1
+    public final static String WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS = "PRIVATE_IP_ADDRESS"; // list index 2
+    public final static String WIFI_STATUS_WIFI_IP_ADDRESS_LIST = "IP_ADDRESS_LIST"; // list index 3
     public final static String WIFI_STATUS_WIFI_DEFAULT = WIFI_STATUS_WIFI_CONNECT_ANY_AP;
     public final static String WIFI_STATUS_WIFI_DEFAULT_DESCRIPTION = "Conn any AP";
     public final static String[] WIFI_STATUS_WIFI_LIST = new String[]{WIFI_STATUS_WIFI_OFF , WIFI_STATUS_WIFI_CONNECT_ANY_AP,
-            WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR, WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR};
+            WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS, WIFI_STATUS_WIFI_IP_ADDRESS_LIST};
     private String syncOptionWifiStatus = WIFI_STATUS_WIFI_DEFAULT;
     public String getSyncOptionWifiStatusOption() {return syncOptionWifiStatus;}
     public void setSyncOptionWifiStatusOption(String p) {syncOptionWifiStatus = p;}
@@ -696,6 +696,9 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskSourceFolderSmbPassword.equals(sti.getSourceSmbPassword())) &&
                 (syncTaskSourceFolderSmbDomain.equals(sti.getSourceSmbDomain())) &&
                 (syncTaskSourceFolderSmbProtocol.equals(sti.getSourceSmbProtocol())) &&
+
+                (syncOptionWifiStatus.equals(sti.getSyncOptionWifiStatusOption())) &&
+
                 (syncTaskSourceFolderStorageUuid.equals(sti.getSourceStorageUuid()))) {
             if ((syncTaskDestinationFolderType.equals(sti.getDestinationFolderType())) &&
                     (syncTaskDestinationFolderDirName.equals(sti.getDestinationDirectoryName())) &&

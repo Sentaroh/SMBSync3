@@ -1370,14 +1370,14 @@ public class SyncThread extends Thread {
         } else {
             if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_OFF)) {
                 //NOP
-            } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR)) {
+            } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS)) {
                 if (!CommonUtilities.isPrivateAddress(if_addr)) {
                     e_msg=mStwa.appContext.getString(R.string.msgs_mirror_sync_can_not_start_wifi_connect_not_local_addr);
                     showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", e_msg);
                     mGp.syncThreadCtrl.setThreadMessage(e_msg);
                     sync_status= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
                 }
-            } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR)) {
+            } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_IP_ADDRESS_LIST)) {
                 if (!if_addr.equals("")) {
                     ArrayList<FilterListItem> wl = sti.getSyncOptionWifiIPAddressGrantList();
                     boolean found=isWifiFilterMatched(sti, wl, if_addr);

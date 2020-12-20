@@ -263,7 +263,7 @@ public class TaskEditor extends DialogFragment {
         public boolean sync_process_override;
         public boolean sync_copy_by_rename;
 
-        public int sync_wifi_option = -1;
+        public String sync_wifi_option =SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP;
 
         public boolean sync_test_mode;
         public boolean sync_diff_use_file_size;
@@ -382,7 +382,7 @@ public class TaskEditor extends DialogFragment {
         sv.sync_conf_required = ctvConfirmOverride.isChecked();
         sv.sync_delete_first = ctvDeleteFirst.isChecked();
 
-        sv.sync_wifi_option = spinnerSyncWifiStatus.getSelectedItemPosition();
+        sv.sync_wifi_option = getSpinnerSyncTaskWifiOptionValue(spinnerSyncWifiStatus);
 
         sv.sync_show_special_option = ctvShowSpecialOption.isChecked();
 
@@ -509,7 +509,12 @@ public class TaskEditor extends DialogFragment {
         ctvDeleteFirst.setChecked(sv.sync_delete_first);
 
         CommonDialog.setViewEnabled(getActivity(), spinnerSyncWifiStatus, false);
-        spinnerSyncWifiStatus.setSelection(sv.sync_wifi_option);
+
+        int wifi_opt_sel=0;
+        if (sv.sync_wifi_option.equals(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP)) wifi_opt_sel=1;
+        else if (sv.sync_wifi_option.equals(SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS)) wifi_opt_sel=2;
+        else if (sv.sync_wifi_option.equals(SyncTaskItem.WIFI_STATUS_WIFI_IP_ADDRESS_LIST)) wifi_opt_sel=3;
+        spinnerSyncWifiStatus.setSelection(wifi_opt_sel);
 
         ctvShowSpecialOption.setChecked(false);
         if (sv.sync_show_special_option) {
@@ -2883,14 +2888,23 @@ public class TaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
         int sel = 0;
-        if (cv.equals("0")) sel = 0;
-        else if (cv.equals("1")) sel = 1;
-        else if (cv.equals("2")) sel = 2;
-        else if (cv.equals("3")) sel = 3;
+        if (cv.equals(SyncTaskItem.WIFI_STATUS_WIFI_OFF)) sel = 0;
+        else if (cv.equals(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP)) sel = 1;
+        else if (cv.equals(SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS)) sel = 2;
+        else if (cv.equals(SyncTaskItem.WIFI_STATUS_WIFI_IP_ADDRESS_LIST)) sel = 3;
 
         spinner.setSelection(sel);
 
         adapter.notifyDataSetChanged();
+    }
+
+    private String getSpinnerSyncTaskWifiOptionValue(Spinner spinner) {
+        String value=SyncTaskItem.WIFI_STATUS_WIFI_OFF;
+        int sel_pos=spinner.getSelectedItemPosition();
+        if (sel_pos==1) value=SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP;
+        else if (sel_pos==2) value=SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS;
+        else if (sel_pos==3) value=SyncTaskItem.WIFI_STATUS_WIFI_IP_ADDRESS_LIST;
+        return value;
     }
 
     private void setSpinnerSyncTaskDiffTimeValue(Spinner spinner, int cv) {
@@ -3905,7 +3919,7 @@ public class TaskEditor extends DialogFragment {
                                         opt_temp= SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP;
                                         msg=mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_to_any);
                                     } else {
-                                        opt_temp= SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR;
+                                        opt_temp= SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS;
                                         msg=mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_has_private);
                                     }
                                     final String option=opt_temp;
@@ -4326,7 +4340,7 @@ public class TaskEditor extends DialogFragment {
 
         nstli.setSyncTaskErrorOption(sp_sync_task_option_error_option.getSelectedItemPosition());
 
-        String wifi_sel = Integer.toString(spinnerSyncWifiStatus.getSelectedItemPosition());
+        String wifi_sel = getSpinnerSyncTaskWifiOptionValue(spinnerSyncWifiStatus);
         nstli.setSyncOptionWifiStatusOption(wifi_sel);
         nstli.setSyncOptionSyncAllowGlobalIpAddress(ctv_sync_allow_global_ip_addr.isChecked());
 
@@ -4399,7 +4413,7 @@ public class TaskEditor extends DialogFragment {
 
         dlg_wb.loadUrl("file:///android_asset/" + help_msg);
         dlg_wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        dlg_wb.getSettings().setBuiltInZoomControls(true);
+        dlg_wb.getSettings().setBuiltInZoomControls(false);
         dlg_wb.setInitialScale(0);
 
         dlg_tv.setText(title);

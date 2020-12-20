@@ -448,10 +448,10 @@ public class TaskListImportFromSMBSync2 {
             stli.setSyncOptionDifferentFileByTime(parm[35].equals("1") ? true : false);
 
             if (parm[37].equals("0")) stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_OFF);
-            else if (parm[37].equals("1")) stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR);
-            else if (parm[37].equals("3")) stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR);
-            else if (parm[37].equals("4")) stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_SPECIFIC_ADDR);
-            else stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_PRIVATE_ADDR);
+            else if (parm[37].equals("1")) stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS);
+            else if (parm[37].equals("3")) stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS);
+            else if (parm[37].equals("4")) stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_IP_ADDRESS_LIST);
+            else stli.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS);
 
 //            stli.setLastSyncTime(parm[38]);
 //            try {stli.setLastSyncResult(Integer.parseInt(parm[39]));} catch(Exception e) {}
