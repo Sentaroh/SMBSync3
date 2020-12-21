@@ -2843,14 +2843,14 @@ public class TaskEditor extends DialogFragment {
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_move));
         adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive));
-        if (mGp.debuggable) adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync));
+//        if (mGp.debuggable) adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync));
 
         int sel=0;
         if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) sel=0;
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) sel=1;
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MOVE)) sel=2;
         else if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) sel=3;
-		else if (mGp.debuggable && prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) sel=4;
+//		else if (mGp.debuggable && prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) sel=4;
 
         spinnerSyncOption.setSelection(sel);
         adapterSyncOption.notifyDataSetChanged();
@@ -2942,7 +2942,7 @@ public class TaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
-    private String buildDirectoryFilterInfo(ArrayList<FilterListItem> filter_list) {
+    private String buildDirectoryFilterInfo(ArrayList<FilterListAdapter.FilterListItem> filter_list) {
         String info=buildFilterInfo(filter_list);
         if (info.equals("")) {
             if (filter_list.size()>0) {
@@ -2954,7 +2954,7 @@ public class TaskEditor extends DialogFragment {
         return info;
     }
 
-    private String buildFileFilterInfo(ArrayList<FilterListItem> filter_list) {
+    private String buildFileFilterInfo(ArrayList<FilterListAdapter.FilterListItem> filter_list) {
         String info=buildFilterInfo(filter_list);
         if (info.equals("")) {
             if (filter_list.size()>0) {
@@ -2966,7 +2966,7 @@ public class TaskEditor extends DialogFragment {
         return info;
     }
 
-    private String buildFilterInfo(ArrayList<FilterListItem> filter_list) {
+    private String buildFilterInfo(ArrayList<FilterListAdapter.FilterListItem> filter_list) {
         String info = "";
         String inc_char = "\u2295"; //(+) ASCII
         String exc_char = "\u2296"; //(-) ASCII
@@ -4124,7 +4124,7 @@ public class TaskEditor extends DialogFragment {
         String new_val=input_string;
         if (input_string.contains("%")) {
             String new_dir=input_string;
-            for(String kw_item: SyncTaskItem.TEMPLATE) {
+            for(String kw_item: SyncTaskItem.TEMPLATES) {
                 new_dir=new_dir.replaceAll(kw_item, "");
             }
             if (!input_string.equals(new_dir)) {
@@ -4739,7 +4739,7 @@ public class TaskEditor extends DialogFragment {
                     result = mContext.getString(R.string.msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified);
                 } else {
                     int enabled_count=0;
-                    for(FilterListItem fli:n_sti.getDirectoryFilter()) {
+                    for(FilterListAdapter.FilterListItem fli:n_sti.getDirectoryFilter()) {
                         if (fli.isEnabled()) {
                             enabled_count++;
                         }
@@ -4780,10 +4780,10 @@ public class TaskEditor extends DialogFragment {
         return emsg;
     }
 
-    private void setWifiApWhiteListInfo(ArrayList<FilterListItem> wpal, Button edit_wifi_ap_list) {
+    private void setWifiApWhiteListInfo(ArrayList<FilterListAdapter.FilterListItem> wpal, Button edit_wifi_ap_list) {
         if (wpal.size() > 0) {
             String ap_list = "", sep = "";
-            for (FilterListItem wapl : wpal) {
+            for (FilterListAdapter.FilterListItem wapl : wpal) {
                 ap_list += sep + wapl.getFilter();
                 sep = ",";
             }
@@ -4800,7 +4800,7 @@ public class TaskEditor extends DialogFragment {
         boolean select_specified=false;
         boolean exclude_found=false;
         boolean exclude_specified=false;
-        for(FilterListItem item:sti.getDirectoryFilter()) {
+        for(FilterListAdapter.FilterListItem item:sti.getDirectoryFilter()) {
             String filter=source_dir.equals("")?item.getFilter():source_dir+"/"+item.getFilter();
             Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(filter.toLowerCase())+"$");
             if (item.isInclude()) {
@@ -4812,7 +4812,7 @@ public class TaskEditor extends DialogFragment {
                 }
             }
         }
-        for(FilterListItem item:sti.getDirectoryFilter()) {
+        for(FilterListAdapter.FilterListItem item:sti.getDirectoryFilter()) {
             String filter=source_dir.equals("")?item.getFilter():source_dir+"/"+item.getFilter();
             Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(filter.toLowerCase())+"$");
             if (!item.isInclude()) {//Exclude only

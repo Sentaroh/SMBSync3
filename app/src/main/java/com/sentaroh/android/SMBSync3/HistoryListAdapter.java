@@ -46,8 +46,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_ACTIVITY;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_EXTERNAL;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_SCHEDULE;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_SHORTCUT;
+
 @SuppressWarnings("ALL")
-public class HistoryListAdapter extends ArrayAdapter<HistoryListItem> {
+public class HistoryListAdapter extends ArrayAdapter<HistoryListAdapter.HistoryListItem> {
     private static final Logger log= LoggerFactory.getLogger(HistoryListAdapter.class);
     private Context mContext;
     @SuppressWarnings("unused")
@@ -313,5 +318,43 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryListItem> {
         LinearLayout ll_count, ll_main;
     }
 
+    public static class HistoryListItem {
+        public boolean isChecked = false;
+
+        public String sync_date = null;
+        public String sync_time = null;
+        public long sync_elapsed_time = 0L;
+        public String sync_transfer_speed = null;
+        public String sync_task = "";
+        public String sync_req = "";
+        public boolean sync_test_mode = false;
+        public int sync_status = SYNC_RESULT_STATUS_SUCCESS;
+        public final static int SYNC_RESULT_STATUS_SUCCESS = 0;
+        public final static int SYNC_RESULT_STATUS_CANCEL = 1;
+        public final static int SYNC_RESULT_STATUS_ERROR = 2;
+        public final static int SYNC_RESULT_STATUS_WARNING = 3;
+        public final static int SYNC_RESULT_STATUS_SKIP = 4;
+
+        public int sync_result_no_of_copied = 0;
+        public int sync_result_no_of_deleted = 0;
+        public int sync_result_no_of_ignored = 0;
+        public int sync_result_no_of_moved = 0;
+        public int sync_result_no_of_replaced = -1;
+        public int sync_result_no_of_retry = 0;
+
+        public String sync_error_text = "";
+
+        public String sync_result_file_path = "";
+
+        static public String getSyncStartRequestorDisplayName(Context c, String request_id) {
+            String display_name="";
+            if (request_id.equals(SYNC_REQUEST_ACTIVITY)) display_name=c.getString(R.string.msgs_svc_received_start_sync_task_request_intent_activity);
+            else if (request_id.equals(SYNC_REQUEST_EXTERNAL)) display_name=c.getString(R.string.msgs_svc_received_start_sync_task_request_intent_external);
+            else if (request_id.equals(SYNC_REQUEST_SHORTCUT)) display_name=c.getString(R.string.msgs_svc_received_start_sync_task_request_intent_shortcut);
+            else if (request_id.equals(SYNC_REQUEST_SCHEDULE)) display_name=c.getString(R.string.msgs_svc_received_start_sync_task_request_intent_schedule);
+            return display_name;
+        }
+
+    }
 }
 

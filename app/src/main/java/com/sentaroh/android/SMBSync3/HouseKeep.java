@@ -173,7 +173,7 @@ class HouseKeep {
             for (SafFile3 ll : fl) {
                 boolean found = false;
                 if (mGp.syncHistoryList.size() > 0) {
-                    for (HistoryListItem shi : mGp.syncHistoryList) {
+                    for (HistoryListAdapter.HistoryListItem shi : mGp.syncHistoryList) {
                         if (shi.sync_result_file_path.equals(ll.getPath())) {
                             found = true;
                             break;

@@ -41,10 +41,15 @@ import com.sentaroh.android.Utilities3.NotifyEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-class ScheduleListAdapter extends ArrayAdapter<ScheduleListItem> {
+class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListItem> {
     private static final Logger log= LoggerFactory.getLogger(ScheduleListAdapter.class);
     private int layout_id = 0;
     private Context mContext = null;
@@ -342,5 +347,114 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListItem> {
         ImageButton ib_sync;
     }
 
+    public static class ScheduleListItem implements Serializable, Cloneable {
+        public static final String SCHEDULE_TYPE_EVERY_HOURS = "H";
+        public static final String SCHEDULE_TYPE_EVERY_DAY = "D";
+        public static final String SCHEDULE_TYPE_DAY_OF_THE_WEEK = "W";
+        public static final String SCHEDULE_TYPE_EVERY_MONTH = "M";
+        public static final String SCHEDULE_TYPE_INTERVAL = "I";
+        public static final String SCHEDULE_TYPE_DEFAULT = SCHEDULE_TYPE_EVERY_DAY;
+        public static final String[] SCHEDULE_TYPE_LIST =new String[]{SCHEDULE_TYPE_EVERY_HOURS, SCHEDULE_TYPE_EVERY_DAY,
+                SCHEDULE_TYPE_DAY_OF_THE_WEEK, SCHEDULE_TYPE_EVERY_MONTH, SCHEDULE_TYPE_INTERVAL};
+
+        public boolean scheduleEnabled = false;
+
+        public String scheduleName = "";
+
+        public int schedulePosition = 0;
+
+        public String scheduleType = SCHEDULE_TYPE_DEFAULT;
+        public String scheduleDay = "01";
+        public String scheduleHours = "00";
+        public String scheduleMinutes = "00";
+        public String scheduleDayOfTheWeek = "0000000";
+
+        public boolean scheduleIntervalFirstRunImmed = true;
+
+        public long scheduleLastExecTime = 0;
+
+        public String syncTaskList = "";
+
+        public boolean syncAutoSyncTask=true;
+
+        public String syncGroupList = "";
+
+        public boolean syncWifiOnBeforeStart = false;
+        public boolean syncWifiOffAfterEnd = false;
+        public int syncDelayAfterWifiOn = 5;
+
+        public final static String OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE="0";
+        public final static String OVERRIDE_SYNC_OPTION_ENABLED="1";
+        public final static String OVERRIDE_SYNC_OPTION_DISABLED="2";
+        public final static String OVERRIDE_SYNC_OPTION_DEFAULT=OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        public final static String[] OVERRIDE_SYNC_OPTION_LIST=new String[]{OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE, OVERRIDE_SYNC_OPTION_ENABLED, OVERRIDE_SYNC_OPTION_DISABLED};
+        public String syncOverrideOptionCharge=OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+
+        //    public String syncOverrideOptionWifiStatus=OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        //    public ArrayList<String>syncOverrideOptionWifiApList=new ArrayList<String>();
+        //    public ArrayList<String>syncOverrideOptionWifiIpAddressList=new ArrayList<String>();
+
+        public transient boolean isChecked = false;
+    //    public transient boolean isChanged = false;
+
+        public boolean isSame(ScheduleListItem new_item) {
+            if (
+                    this.scheduleEnabled ==new_item.scheduleEnabled &&
+                            this.scheduleName.equals(new_item.scheduleName) &&
+                            this.schedulePosition==new_item.schedulePosition &&
+
+                            this.scheduleType.equals(new_item.scheduleType) &&
+                            this.scheduleDay.equals(new_item.scheduleDay) &&
+                            this.scheduleHours.equals(new_item.scheduleHours) &&
+                            this.scheduleMinutes.equals(new_item.scheduleMinutes) &&
+                            this.scheduleDayOfTheWeek.equals(new_item.scheduleDayOfTheWeek) &&
+
+                            this.scheduleIntervalFirstRunImmed==new_item.scheduleIntervalFirstRunImmed &&
+
+                            this.syncTaskList.equals(new_item.syncTaskList) &&
+
+                            this.syncAutoSyncTask==new_item.syncAutoSyncTask &&
+
+                            this.syncGroupList.equals(new_item.syncGroupList) &&
+
+                            this.syncWifiOnBeforeStart==new_item.syncWifiOnBeforeStart &&
+                            this.syncWifiOffAfterEnd==new_item.syncWifiOffAfterEnd &&
+                            this.syncDelayAfterWifiOn==new_item.syncDelayAfterWifiOn &&
+
+                            this.syncOverrideOptionCharge.equals(new_item.syncOverrideOptionCharge)
+            ) {
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public ScheduleListItem clone() {
+            ScheduleListItem new_si = null;
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(this);
+
+                oos.flush();
+                oos.close();
+
+                baos.flush();
+                byte[] ba_buff = baos.toByteArray();
+                baos.close();
+
+                ByteArrayInputStream bais = new ByteArrayInputStream(ba_buff);
+                ObjectInputStream ois = new ObjectInputStream(bais);
+
+                new_si = (ScheduleListItem) ois.readObject();
+                ois.close();
+                bais.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return new_si;
+        }
+    }
 }
 

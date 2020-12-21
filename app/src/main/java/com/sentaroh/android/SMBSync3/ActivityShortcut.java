@@ -176,7 +176,7 @@ public class ActivityShortcut extends FragmentActivity {
         if (mShotcutId==1 && mGp.isSupressShortcut1ConfirmationMessage()) suppress=true;
         else if (mShotcutId==2 && mGp.isSupressShortcut2ConfirmationMessage()) suppress=true;
         else if (mShotcutId==3 && mGp.isSupressShortcut3ConfirmationMessage()) suppress=true;
-        GroupListItem group_item= getShortCutGroup();
+        GroupListAdapter.GroupListItem group_item= getShortCutGroup();
         if (group_item==null) {
             String task_list=getAutoTaskList();
             if (task_list.equals("")) {
@@ -337,18 +337,18 @@ public class ActivityShortcut extends FragmentActivity {
         return task_list;
     }
 
-    private GroupListItem getShortCutGroup() {
-        for(GroupListItem gi:mGp.syncGroupList) {
+    private GroupListAdapter.GroupListItem getShortCutGroup() {
+        for(GroupListAdapter.GroupListItem gi:mGp.syncGroupList) {
             if (mShotcutId==1) {
-                if (gi.button == GroupListItem.BUTTON_SHORTCUT1) {
+                if (gi.button == GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) {
                     return gi;
                 }
             } else if (mShotcutId==2) {
-                if (gi.button == GroupListItem.BUTTON_SHORTCUT2) {
+                if (gi.button == GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) {
                     return gi;
                 }
             } else if (mShotcutId==3) {
-                if (gi.button == GroupListItem.BUTTON_SHORTCUT3) {
+                if (gi.button == GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) {
                     return gi;
                 }
             }

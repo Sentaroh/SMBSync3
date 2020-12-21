@@ -293,7 +293,7 @@ public class SyncConfiguration {
     public final static String CONFIG_LIST_VER1 = "1.0.1";
 
     public static String createXmlData(Context c,
-                                       ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list, ArrayList<GroupListItem>group_list,
+                                       ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ArrayList<GroupListAdapter.GroupListItem>group_list,
                                        int enc_mode, CipherParms cp_enc) {
         if (log.isDebugEnabled()) log.debug("buildConfigData enc_mode=" + enc_mode + ", cp_enc=" + cp_enc);
         boolean result = true;
@@ -319,12 +319,12 @@ public class SyncConfiguration {
 
                 }
 
-                for (ScheduleListItem item : schedule_list) {
+                for (ScheduleListAdapter.ScheduleListItem item : schedule_list) {
                     Element schedule_tag = createXmlScheduleData(c, main_document, item);
                     config_tag.appendChild(schedule_tag);
                 }
 
-                for (GroupListItem item : group_list) {
+                for (GroupListAdapter.GroupListItem item : group_list) {
                     Element group_tag = createXmlGroupData(c, main_document, item);
                     config_tag.appendChild(group_tag);
                 }
@@ -376,7 +376,7 @@ public class SyncConfiguration {
         return config_data;
     }
 
-    private static Element createXmlScheduleData(Context c, Document main_document, ScheduleListItem item) {
+    private static Element createXmlScheduleData(Context c, Document main_document, ScheduleListAdapter.ScheduleListItem item) {
         Element schedule_tag = main_document.createElement(SYNC_TASK_XML_TAG_SCHEDULE);
         schedule_tag.setAttribute(SCHEDULE_XML_TAG_NAME, item.scheduleName);
         schedule_tag.setAttribute(SCHEDULE_XML_TAG_ENABLED, item.scheduleEnabled ? "true" : "false");
@@ -397,7 +397,7 @@ public class SyncConfiguration {
         return schedule_tag;
     }
 
-    private static void buildSyncTaskScheduleFromXml(Context c, XmlPullParser xpp, ArrayList<ScheduleListItem> schedule_list, ScheduleListItem item) {
+    private static void buildSyncTaskScheduleFromXml(Context c, XmlPullParser xpp, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ScheduleListAdapter.ScheduleListItem item) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(SCHEDULE_XML_TAG_NAME)) {
                 String unusable=hasUnusableCharacter(xpp.getAttributeValue(i));
@@ -457,7 +457,7 @@ public class SyncConfiguration {
         }
     }
 
-    private static Element createXmlGroupData(Context c, Document main_document, GroupListItem item) {
+    private static Element createXmlGroupData(Context c, Document main_document, GroupListAdapter.GroupListItem item) {
         Element group_tag = main_document.createElement(SYNC_TASK_XML_TAG_GROUP);
         group_tag.setAttribute(GROUP_XML_TAG_GROUP_NAME, item.groupName);
         group_tag.setAttribute(GROUP_XML_TAG_ENABLED, item.enabled ? "true" : "false");
@@ -468,7 +468,7 @@ public class SyncConfiguration {
         return group_tag;
     }
 
-    private static void buildSyncTaskGroupFromXml(Context c, XmlPullParser xpp, ArrayList<GroupListItem> group_list, GroupListItem item) {
+    private static void buildSyncTaskGroupFromXml(Context c, XmlPullParser xpp, ArrayList<GroupListAdapter.GroupListItem> group_list, GroupListAdapter.GroupListItem item) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(GROUP_XML_TAG_GROUP_NAME)) {
                 String unusable=hasUnusableCharacter(xpp.getAttributeValue(i));
@@ -691,10 +691,10 @@ public class SyncConfiguration {
         task_tag.appendChild(option_tag);
     }
 
-    private static void createXmlFilterElement(Context c, Document main_document, Element task_tag, String filter_type, ArrayList<FilterListItem> filter_list) {
+    private static void createXmlFilterElement(Context c, Document main_document, Element task_tag, String filter_type, ArrayList<FilterListAdapter.FilterListItem> filter_list) {
         if (filter_list.size() > 0) {
             Element user_file_filter_tag = main_document.createElement(filter_type);
-            for (FilterListItem ff_item : filter_list) {
+            for (FilterListAdapter.FilterListItem ff_item : filter_list) {
                 Element user_file_filter_entry_tag = main_document.createElement(SYNC_TASK_XML_TAG_FILTER_ITEM);
                 user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_INCLUDE, ff_item.isInclude() ? "true" : "false");
                 user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_MIGRATE_FROM_SMBSYNC2, ff_item.isMigrateFromSmbsync2() ? "true" : "false");
@@ -834,9 +834,9 @@ public class SyncConfiguration {
     }
 
     public static boolean buildConfigurationList(Context c, String config_data,
-                                                 ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list,
+                                                 ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
                                                  ArrayList<SettingParameterItem> setting_parm_list,
-                                                 ArrayList<GroupListItem> group_list,
+                                                 ArrayList<GroupListAdapter.GroupListItem> group_list,
                                                  int enc_mode, CipherParms cp_enc) {
         boolean result = true;
         try {
@@ -860,9 +860,9 @@ public class SyncConfiguration {
             int eventType = xpp.getEventType();
             String config_ver = "";
             SyncTaskItem sync_task_item = null;
-            ArrayList<FilterListItem> filter_list = null;
-            ScheduleListItem schedule_item = null;
-            GroupListItem group_item = null;
+            ArrayList<FilterListAdapter.FilterListItem> filter_list = null;
+            ScheduleListAdapter.ScheduleListItem schedule_item = null;
+            GroupListAdapter.GroupListItem group_item = null;
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 switch (eventType) {
                     case XmlPullParser.START_DOCUMENT:
@@ -903,7 +903,7 @@ public class SyncConfiguration {
                                     filter_val = xpp.getAttributeValue(i);
                                 }
                             }
-                            FilterListItem fli = new FilterListItem(filter_val, include, match_from_begin);
+                            FilterListAdapter.FilterListItem fli = new FilterListAdapter.FilterListItem(filter_val, include, match_from_begin);
                             fli.setMigrateFromSmbsync2(migrate_from_smbsyn2);
                             filter_list.add(fli);
                             if (log.isDebugEnabled())
@@ -917,10 +917,10 @@ public class SyncConfiguration {
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_IPADDR)) {
                             filter_list = sync_task_item.getSyncOptionWifiIPAddressGrantList();
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SCHEDULE)) {
-                            schedule_item = new ScheduleListItem();
+                            schedule_item = new ScheduleListAdapter.ScheduleListItem();
                             buildSyncTaskScheduleFromXml(c, xpp, schedule_list, schedule_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_GROUP)) {
-                            group_item = new GroupListItem();
+                            group_item = new GroupListAdapter.GroupListItem();
                             buildSyncTaskGroupFromXml(c, xpp, group_list, group_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SETTINGS)) {
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SETTINGS_ITEM)) {

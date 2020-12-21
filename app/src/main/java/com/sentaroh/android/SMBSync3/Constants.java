@@ -84,9 +84,9 @@ public class Constants {
 	final public static String NAME_LIST_SEPARATOR =",";
 
 	final public static String APP_SHORTCUT_ID_KEY ="shortcut_id";
-	final public static int APP_SHORTCUT_ID_VALUE_BUTTON1 = GroupListItem.BUTTON_SHORTCUT1;
-	final public static int APP_SHORTCUT_ID_VALUE_BUTTON2 = GroupListItem.BUTTON_SHORTCUT2;
-	final public static int APP_SHORTCUT_ID_VALUE_BUTTON3 = GroupListItem.BUTTON_SHORTCUT3;
+	final public static int APP_SHORTCUT_ID_VALUE_BUTTON1 = GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1;
+	final public static int APP_SHORTCUT_ID_VALUE_BUTTON2 = GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2;
+	final public static int APP_SHORTCUT_ID_VALUE_BUTTON3 = GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3;
 
 	final public static long FAT32_MAX_FILE_SIZE=(((long)Integer.MAX_VALUE)*2)-1;
 

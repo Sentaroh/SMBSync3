@@ -42,13 +42,19 @@ import com.sentaroh.android.Utilities3.NotifyEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import static com.sentaroh.android.SMBSync3.Constants.*;
 
-class GroupListAdapter extends ArrayAdapter<GroupListItem> {
+class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
     private static final Logger log= LoggerFactory.getLogger(GroupListAdapter.class);
 
     private int layout_id = 0;
@@ -245,5 +251,68 @@ class GroupListAdapter extends ArrayAdapter<GroupListItem> {
         ImageButton ib_sync;
     }
 
+    static class GroupListItem implements Cloneable, Serializable {
+        public String groupName="";
+        public boolean enabled=true;
+        public boolean isChecked=false;
+        public int position=0;
+        public boolean autoTaskOnly=false;
+        public String taskList="";
+
+        final static public int BUTTON_NOT_ASSIGNED=0;
+        final static public int BUTTON_SHORTCUT1=1;
+        final static public int BUTTON_SHORTCUT2=2;
+        final static public int BUTTON_SHORTCUT3=3;
+        final static public int BUTTON_SYNC_BUTTON =9;
+        public int button =BUTTON_NOT_ASSIGNED;
+
+        public GroupListItem() {
+            //NOP
+        }
+
+        public boolean isSame(GroupListItem new_gi) {
+            boolean result=false;
+            if (this.groupName.equalsIgnoreCase(new_gi.groupName)
+                    && this.enabled==new_gi.enabled
+                    && this.autoTaskOnly==new_gi.autoTaskOnly
+                    && this.position==new_gi.position
+                    && this.button ==new_gi.button) {
+                if (this.taskList.equalsIgnoreCase(new_gi.taskList)) result=true;
+            }
+            return result;
+        }
+
+        @Override
+        public GroupListItem clone() {
+            GroupListItem new_gi = null;
+            try {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(this);
+
+                oos.flush();
+                oos.close();
+
+                baos.flush();
+                byte[] ba_buff = baos.toByteArray();
+                baos.close();
+
+                ByteArrayInputStream bais = new ByteArrayInputStream(ba_buff);
+                ObjectInputStream ois = new ObjectInputStream(bais);
+
+                new_gi = (GroupListItem) ois.readObject();
+                ois.close();
+                bais.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return new_gi;
+        }
+
+
+    }
 }
 

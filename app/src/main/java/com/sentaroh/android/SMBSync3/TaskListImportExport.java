@@ -472,8 +472,8 @@ public class TaskListImportExport {
             public void positiveResponse(Context c, Object[] o) {
                 mGp.profilePassword = (String) o[0];
                 ArrayList<SyncTaskItem>sync_task=new ArrayList<SyncTaskItem>();
-                ArrayList<ScheduleListItem>sync_sched=new ArrayList<ScheduleListItem>();
-                ArrayList<GroupListItem>sync_group=new ArrayList<GroupListItem>();
+                ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
+                ArrayList<GroupListAdapter.GroupListItem>sync_group=new ArrayList<GroupListAdapter.GroupListItem>();
                 ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
                 if (from_auto_save) loadTaskListFromAutosaveFile(mActivity, sf, sync_task, sync_sched, sync_setting, sync_group);
                 else loadTaskListFromExportFile(mActivity, sf, sync_task, sync_sched, sync_setting, sync_group, mGp.profilePassword);
@@ -512,8 +512,8 @@ public class TaskListImportExport {
             public void positiveResponse(Context c, Object[] o) {
                 mGp.profilePassword = (String) o[0];
                 ArrayList<SyncTaskItem>sync_task=new ArrayList<SyncTaskItem>();
-                ArrayList<ScheduleListItem>sync_sched=new ArrayList<ScheduleListItem>();
-                ArrayList<GroupListItem>sync_group=new ArrayList<GroupListItem>();
+                ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
+                ArrayList<GroupListAdapter.GroupListItem>sync_group=new ArrayList<GroupListAdapter.GroupListItem>();
                 ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
                 TaskListImportFromSMBSync2.buildSyncTaskList(mActivity, mGp, mUtil, sf, mGp.profilePassword, sync_task, sync_sched);
                 final SyncTaskListAdapter tfl = new SyncTaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
@@ -786,8 +786,8 @@ public class TaskListImportExport {
         }
     }
 
-    private void importSyncTaskItemSelector(final boolean from_smbsync2, final SyncTaskListAdapter tfl, final ArrayList<ScheduleListItem>sync_sched,
-                                            final ArrayList<SettingParameterItem>sync_setting, ArrayList<GroupListItem>sync_group,
+    private void importSyncTaskItemSelector(final boolean from_smbsync2, final SyncTaskListAdapter tfl, final ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched,
+                                            final ArrayList<SettingParameterItem>sync_setting, ArrayList<GroupListAdapter.GroupListItem>sync_group,
                                             final SafFile3 sf, final NotifyEvent p_ntfy, final boolean from_auto_save) {
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -947,9 +947,9 @@ public class TaskListImportExport {
     private void importSelectedSyncTaskItem(final boolean from_smbsync2,
                                             final ImportTaskListItemAdapter imp_list_adapt,
                                             final SyncTaskListAdapter tfl,
-                                            final ArrayList<ScheduleListItem>sync_sched,
+                                            final ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched,
                                             final ArrayList<SettingParameterItem>sync_setting,
-                                            final ArrayList<GroupListItem>sync_group,
+                                            final ArrayList<GroupListAdapter.GroupListItem>sync_group,
                                             final NotifyEvent p_ntfy, final boolean from_auto_save, final boolean import_schedule,
                                             final boolean import_setting, final boolean import_group) {
         String repl_list = "";
@@ -1078,7 +1078,7 @@ public class TaskListImportExport {
 
     final static private String CONFIG_FILE_NAME = "config.xml";
     public static String saveTaskListToAppDirectory(Context c,
-                                                    ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list, ArrayList<GroupListItem>group_list) {
+                                                    ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ArrayList<GroupListAdapter.GroupListItem>group_list) {
         try {
             SecretKey sk = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
             EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(sk, KeyStoreUtils.KEY_STORE_ALIAS);
@@ -1160,14 +1160,14 @@ public class TaskListImportExport {
     }
 
     public static boolean saveTaskListToExportFile(Context c, Uri file_uri,
-                                                   ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list, ArrayList<GroupListItem>group_list, String priv_key) {
+                                                   ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ArrayList<GroupListAdapter.GroupListItem>group_list, String priv_key) {
         SafFile3 sf = new SafFile3(c, file_uri);
         return saveTaskListToExportFile(c, sf, sync_task_list, schedule_list, group_list, priv_key);
     }
 
     public static boolean saveTaskListToExportFile(Context c, SafFile3 sf,
-                                                   ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list,
-                                                   ArrayList<GroupListItem>group_list, String priv_key) {
+                                                   ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
+                                                   ArrayList<GroupListAdapter.GroupListItem>group_list, String priv_key) {
         try {
             EncryptUtilV3.CipherParms cp_int = null;
             String config_data = null;
@@ -1202,8 +1202,8 @@ public class TaskListImportExport {
     }
 
     public static boolean loadTaskListFromAppDirectory(Context c,
-                                                       ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list,
-                                                       ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListItem> group_list) {
+                                                       ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
+                                                       ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListAdapter.GroupListItem> group_list) {
         boolean result = false;
         try {
             SecretKey priv_key = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
@@ -1228,8 +1228,8 @@ public class TaskListImportExport {
     }
 
     public static boolean loadTaskListFromAutosaveFile(Context c, SafFile3 sf,
-                                                       ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list,
-                                                       ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListItem> group_list) {
+                                                       ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
+                                                       ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListAdapter.GroupListItem> group_list) {
         boolean result = false;
         try {
             String[] config_array = SyncConfiguration.createConfigurationDataArray(sf);
@@ -1270,8 +1270,8 @@ public class TaskListImportExport {
     }
 
     public static boolean loadTaskListFromExportFile(Context c, SafFile3 sf,
-                                                     ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListItem> schedule_list,
-                                                     ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListItem> group_list,
+                                                     ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
+                                                     ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListAdapter.GroupListItem> group_list,
                                                      String dec_key) {
         boolean result = false;
         try {

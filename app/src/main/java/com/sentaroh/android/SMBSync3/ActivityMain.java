@@ -837,7 +837,7 @@ public class ActivityMain extends AppCompatActivity {
 
         public String prog_task_name = "", prog_msg = "";
 
-        public ArrayList<HistoryListItem> sync_hist_list = null;
+        public ArrayList<HistoryListAdapter.HistoryListItem> sync_hist_list = null;
 
         public String confirm_msg = "";
         public String progress_bar_msg = "";
@@ -892,7 +892,7 @@ public class ActivityMain extends AppCompatActivity {
 
         mGp.syncGroupView.setAdapter(null);
 
-        ArrayList<MessageListItem> mfl=new ArrayList<MessageListItem>(GlobalParameters.MESSAGE_LIST_INITIAL_VALUE);
+        ArrayList<MessageListAdapter.MessageListItem> mfl=new ArrayList<MessageListAdapter.MessageListItem>(GlobalParameters.MESSAGE_LIST_INITIAL_VALUE);
         if (mGp.syncMessageListAdapter !=null) mfl=mGp.syncMessageListAdapter.getMessageList();
 
         boolean sync_schedule_adapter_select_mode=mGp.syncScheduleListAdapter.isSelectMode();
@@ -1291,7 +1291,7 @@ public class ActivityMain extends AppCompatActivity {
             menu.findItem(R.id.menu_top_show_hide_filter).setVisible(false);
             if (mGp.syncGroupListAdapter.isSelectMode()) {
                 menu.findItem(R.id.menu_top_execute_group).setTitle(R.string.msgs_menu_exec_group_selected);
-                for(GroupListItem gli:mGp.syncGroupList) {
+                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                     if (gli.isChecked) {
                         if (!gli.autoTaskOnly) {
                             String valid=GroupEditor.hasValidSyncTaskList(mContext, gli, mGp.syncTaskList);
@@ -1464,9 +1464,9 @@ public class ActivityMain extends AppCompatActivity {
                             mContext.getString(R.string.msgs_main_sync_select_task_no_auto_task), null);
                 }
             } else {
-                GroupListItem group_item=null;
-                for(GroupListItem gi:mGp.syncGroupList) {
-                    if (gi.button== GroupListItem.BUTTON_SYNC_BUTTON) {
+                GroupListAdapter.GroupListItem group_item=null;
+                for(GroupListAdapter.GroupListItem gi:mGp.syncGroupList) {
+                    if (gi.button== GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) {
                         group_item=gi;
                         break;
                     }
@@ -1543,7 +1543,7 @@ public class ActivityMain extends AppCompatActivity {
             ArrayList<String>exec_task_name_list=new ArrayList<String>();
             ArrayList<String>duplicate_task_name_list=new ArrayList<String>();
             if (mGp.syncGroupListAdapter.isSelectMode()) {
-                for(GroupListItem gli:mGp.syncGroupList) {
+                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                     if (gli.isChecked) {
                         if (gli.enabled) {
                             e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
@@ -1552,7 +1552,7 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 }
             } else {
-                for(GroupListItem gli:mGp.syncGroupList) {
+                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                     if (gli.enabled) {
                         e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
                         if (!e_msg.equals("")) break;
@@ -2351,7 +2351,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mGp.syncHistoryView.setEnabled(false);
-                HistoryListItem item = mGp.syncHistoryListAdapter.getItem(position);
+                HistoryListAdapter.HistoryListItem item = mGp.syncHistoryListAdapter.getItem(position);
                 if (mGp.syncHistoryListAdapter.isShowCheckBox()) {
                     item.isChecked = !item.isChecked;
                     setHistoryContextButtonSelectMode();
@@ -2536,7 +2536,7 @@ public class ActivityMain extends AppCompatActivity {
                     setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
                     setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
                     for (int i = 0; i < mGp.syncGroupListAdapter.getCount(); i++) {
-                        GroupListItem item = mGp.syncGroupListAdapter.getItem(i);
+                        GroupListAdapter.GroupListItem item = mGp.syncGroupListAdapter.getItem(i);
                         if (item.isChecked) {
                             int c_pos = item.position;
                             if (c_pos > 0) {
@@ -2575,7 +2575,7 @@ public class ActivityMain extends AppCompatActivity {
                     setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
                     setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
                     for (int i = 0; i < mGp.syncGroupListAdapter.getCount(); i++) {
-                        GroupListItem item = mGp.syncGroupListAdapter.getItem(i);
+                        GroupListAdapter.GroupListItem item = mGp.syncGroupListAdapter.getItem(i);
                         if (item.isChecked) {
                             int c_pos = item.position;
                             if (item.position < (mGp.syncGroupListAdapter.getCount() - 1)) {
@@ -2610,7 +2610,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String list="", sep="";
-                for(GroupListItem gli:mGp.syncGroupList) {
+                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                     if (gli.isChecked) {
                         list+=sep+gli.groupName;
                         sep="\n";
@@ -2620,7 +2620,7 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        for(GroupListItem gli:mGp.syncGroupList) {
+                        for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                             if (gli.isChecked) {
                                 gli.enabled=true;
                             }
@@ -2643,7 +2643,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String list="", sep="";
-                for(GroupListItem gli:mGp.syncGroupList) {
+                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                     if (gli.isChecked) {
                         list+=sep+gli.groupName;
                         sep="\n";
@@ -2653,7 +2653,7 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        for(GroupListItem gli:mGp.syncGroupList) {
+                        for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                             if (gli.isChecked) {
                                 gli.enabled=false;
                             }
@@ -2679,7 +2679,7 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        GroupListItem si = (GroupListItem) objects[0];
+                        GroupListAdapter.GroupListItem si = (GroupListAdapter.GroupListItem) objects[0];
                         mGp.syncGroupListAdapter.add(si);
                         mGp.syncGroupListAdapter.sort();
                         mGp.syncGroupListAdapter.notifyDataSetChanged();
@@ -2692,7 +2692,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                GroupEditor ge=new GroupEditor(mUtil, mActivity, mGp, false, mGp.syncGroupList, new GroupListItem(), ntfy);
+                GroupEditor ge=new GroupEditor(mUtil, mActivity, mGp, false, mGp.syncGroupList, new GroupListAdapter.GroupListItem(), ntfy);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonAdd, mContext.getString(R.string.msgs_group_cont_label_add));
@@ -2700,13 +2700,13 @@ public class ActivityMain extends AppCompatActivity {
         mContextGroupButtonCopy.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(GroupListItem item:mGp.syncGroupList) {
+                for(GroupListAdapter.GroupListItem item:mGp.syncGroupList) {
                     if (item.isChecked) {
                         NotifyEvent ntfy = new NotifyEvent(mContext);
                         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                             @Override
                             public void positiveResponse(Context context, Object[] objects) {
-                                GroupListItem si = (GroupListItem) objects[0];
+                                GroupListAdapter.GroupListItem si = (GroupListAdapter.GroupListItem) objects[0];
                                 item.isChecked=false;
                                 mGp.syncGroupListAdapter.add(si);
                                 mGp.syncGroupListAdapter.sort();
@@ -2719,7 +2719,7 @@ public class ActivityMain extends AppCompatActivity {
                             @Override
                             public void negativeResponse(Context context, Object[] objects) {}
                         });
-                        GroupListItem gi=item.clone();
+                        GroupListAdapter.GroupListItem gi=item.clone();
                         gi.isChecked=false;
                         GroupEditor ge=new GroupEditor(mUtil, mActivity, mGp, false, mGp.syncGroupList, gi, ntfy);
                         break;
@@ -2879,7 +2879,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void positiveResponse(Context context, Object[] o) {
                 if (isUiEnabled()) {
-                    GroupListItem gi=(GroupListItem)o[0];
+                    GroupListAdapter.GroupListItem gi=(GroupListAdapter.GroupListItem)o[0];
                     if (!gi.autoTaskOnly) {
                         String[]task_array=gi.taskList.split(NAME_LIST_SEPARATOR);
                         ArrayList<SyncTaskItem>task_list=new ArrayList<SyncTaskItem>();
@@ -2971,7 +2971,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void confirmGroupRename() {
-        for(GroupListItem item:mGp.syncGroupList) {
+        for(GroupListAdapter.GroupListItem item:mGp.syncGroupList) {
             if (item.isChecked) {
                 NotifyEvent ntfy=new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
@@ -2999,7 +2999,7 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    private void renameGroup(final GroupListItem si, final NotifyEvent p_ntfy) {
+    private void renameGroup(final GroupListAdapter.GroupListItem si, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
@@ -3097,8 +3097,8 @@ public class ActivityMain extends AppCompatActivity {
 
     private void confirmGroupDelete() {
         String del_name="", sep="";
-        final ArrayList<GroupListItem>del_list=new ArrayList<GroupListItem>();
-        for(GroupListItem item:mGp.syncGroupList) {
+        final ArrayList<GroupListAdapter.GroupListItem>del_list=new ArrayList<GroupListAdapter.GroupListItem>();
+        for(GroupListAdapter.GroupListItem item:mGp.syncGroupList) {
             if (item.isChecked) {
                 del_name+=sep+item.groupName;
                 sep=", ";
@@ -3109,7 +3109,7 @@ public class ActivityMain extends AppCompatActivity {
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-                for(GroupListItem item:del_list) {
+                for(GroupListAdapter.GroupListItem item:del_list) {
                     mGp.syncGroupList.remove(item);
                 }
                 mGp.syncGroupListAdapter.unselectAll();
@@ -3163,7 +3163,7 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        ScheduleListItem si = (ScheduleListItem) objects[0];
+                        ScheduleListAdapter.ScheduleListItem si = (ScheduleListAdapter.ScheduleListItem) objects[0];
                         mGp.syncScheduleListAdapter.add(si);
                         mGp.syncScheduleListAdapter.sort();
                         mGp.syncScheduleListAdapter.notifyDataSetChanged();
@@ -3176,7 +3176,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mContext, mGp, false, mGp.syncScheduleList, new ScheduleListItem(), ntfy);
+                ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mContext, mGp, false, mGp.syncScheduleList, new ScheduleListAdapter.ScheduleListItem(), ntfy);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonAdd, mContext.getString(R.string.msgs_schedule_cont_label_add));
@@ -3305,7 +3305,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                ScheduleListItem si = null;
+                ScheduleListAdapter.ScheduleListItem si = null;
                 for (int i = mGp.syncScheduleListAdapter.getCount() - 1; i >= 0; i--) {
                     if (mGp.syncScheduleListAdapter.getItem(i).isChecked) {
                         si = mGp.syncScheduleListAdapter.getItem(i);
@@ -3329,7 +3329,7 @@ public class ActivityMain extends AppCompatActivity {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        ScheduleListItem si = (ScheduleListItem) objects[0];
+                        ScheduleListAdapter.ScheduleListItem si = (ScheduleListAdapter.ScheduleListItem) objects[0];
                         mGp.syncScheduleListAdapter.setSelectMode(false);
                         mGp.syncScheduleListAdapter.add(si);
                         mGp.syncScheduleListAdapter.unselectAll();
@@ -3340,11 +3340,11 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                ScheduleListItem si = null;
+                ScheduleListAdapter.ScheduleListItem si = null;
                 for (int i = mGp.syncScheduleListAdapter.getCount() - 1; i >= 0; i--) {
                     if (mGp.syncScheduleListAdapter.getItem(i).isChecked) {
                         si = mGp.syncScheduleListAdapter.getItem(i);
-                        ScheduleListItem new_si = si.clone();
+                        ScheduleListAdapter.ScheduleListItem new_si = si.clone();
                         ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mContext, mGp, false, mGp.syncScheduleList, new_si, ntfy);
                         break;
                     }
@@ -3374,7 +3374,7 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonUnselectAll, mContext.getString(R.string.msgs_schedule_cont_label_unselect_all));
     }
 
-    private void renameSchedule(final ScheduleListItem si, final NotifyEvent p_ntfy) {
+    private void renameSchedule(final ScheduleListAdapter.ScheduleListItem si, final NotifyEvent p_ntfy) {
 
         // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
@@ -3462,9 +3462,9 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    private String checkExecuteScheduleConditions(ScheduleListItem sched_item) {
+    private String checkExecuteScheduleConditions(ScheduleListAdapter.ScheduleListItem sched_item) {
         String e_msg="";
-        if (sched_item.syncOverrideOptionCharge.equals(ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
+        if (sched_item.syncOverrideOptionCharge.equals(ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
             if (!CommonUtilities.isCharging(mContext, mUtil)) {
                 e_msg=mContext.getString(R.string.msgs_mirror_sync_cancelled_battery_option_not_satisfied);
             }
@@ -3505,7 +3505,7 @@ public class ActivityMain extends AppCompatActivity {
         ntfy_sync.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-                ScheduleListItem sched_item=(ScheduleListItem)objects[0];
+                ScheduleListAdapter.ScheduleListItem sched_item=(ScheduleListAdapter.ScheduleListItem)objects[0];
                 String e_msg= checkExecuteScheduleConditions(sched_item);
                 if (e_msg.equals("")) {
                     try {
@@ -3841,15 +3841,15 @@ public class ActivityMain extends AppCompatActivity {
                     StringBuilder out = new StringBuilder(256);
                     for (int i = 0; i < mGp.syncHistoryListAdapter.getCount(); i++) {
                         if (mGp.syncHistoryListAdapter.getItem(i).isChecked) {
-                            HistoryListItem hli = mGp.syncHistoryListAdapter.getItem(i);
+                            HistoryListAdapter.HistoryListItem hli = mGp.syncHistoryListAdapter.getItem(i);
                             out.append(hli.sync_date).append(" ");
                             out.append(hli.sync_time).append(" ");
                             out.append(hli.sync_task).append("\n");
-                            if (hli.sync_status == HistoryListItem.SYNC_RESULT_STATUS_SUCCESS) {
+                            if (hli.sync_status == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SUCCESS) {
                                 out.append(mContext.getString(R.string.msgs_main_sync_history_status_success)).append("\n");
-                            } else if (hli.sync_status == HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
+                            } else if (hli.sync_status == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
                                 out.append(mContext.getString(R.string.msgs_main_sync_history_status_error)).append("\n");
-                            } else if (hli.sync_status == HistoryListItem.SYNC_RESULT_STATUS_CANCEL) {
+                            } else if (hli.sync_status == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_CANCEL) {
                                 out.append(mContext.getString(R.string.msgs_main_sync_history_status_cancel)).append("\n");
                             }
                             out.append(mContext.getString(R.string.msgs_main_sync_history_count_copied))

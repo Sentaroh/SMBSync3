@@ -241,23 +241,23 @@ public class GlobalParameters {
 //    public Bitmap notificationLargeIcon = null;
 
     public static final int MESSAGE_LIST_INITIAL_VALUE=5500;
-    public ArrayList<MessageListItem> syncMessageList = null; //new ArrayList<MessageListItem>();
+    public ArrayList<MessageListAdapter.MessageListItem> syncMessageList = null; //new ArrayList<MessageListItem>();
     public boolean syncMessageListChanged =false;
     public boolean freezeMessageViewScroll = false;
     public MessageListAdapter syncMessageListAdapter = null;
     public ListView syncMessageView = null;
 
     public static final int HISTORY_LIST_INITIAL_VALUE=510;
-    public ArrayList<HistoryListItem> syncHistoryList = null;
+    public ArrayList<HistoryListAdapter.HistoryListItem> syncHistoryList = null;
     public HistoryListAdapter syncHistoryListAdapter = null;
     public ListView syncHistoryView = null;
 
-    public ArrayList<ScheduleListItem> syncScheduleList = new ArrayList<ScheduleListItem>();
+    public ArrayList<ScheduleListAdapter.ScheduleListItem> syncScheduleList = new ArrayList<ScheduleListAdapter.ScheduleListItem>();
     public ScheduleListAdapter syncScheduleListAdapter = null;
     public ListView syncScheduleView = null;
     public TextView syncScheduleMessage =null;
 
-    public ArrayList<GroupListItem> syncGroupList = new ArrayList<GroupListItem>();
+    public ArrayList<GroupListAdapter.GroupListItem> syncGroupList = new ArrayList<GroupListAdapter.GroupListItem>();
     public GroupListAdapter syncGroupListAdapter = null;
     public ListView syncGroupView = null;
     public TextView syncGroupMessage =null;
@@ -379,8 +379,8 @@ public class GlobalParameters {
         if (!configListLoaded) {
             configListLoaded=true;
             ArrayList<SyncTaskItem>stl=new ArrayList<SyncTaskItem>();
-            ArrayList<ScheduleListItem>sl=new ArrayList<ScheduleListItem>();
-            ArrayList<GroupListItem>gl=new ArrayList<GroupListItem>();
+            ArrayList<ScheduleListAdapter.ScheduleListItem>sl=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
+            ArrayList<GroupListAdapter.GroupListItem>gl=new ArrayList<GroupListAdapter.GroupListItem>();
             TaskListImportExport.loadTaskListFromAppDirectory(c, stl, sl, null, gl);
             syncTaskList.addAll(stl);
             syncScheduleList.addAll(sl);

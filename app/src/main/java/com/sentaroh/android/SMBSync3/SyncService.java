@@ -246,8 +246,8 @@ public class SyncService extends Service {
         return result;
     }
 
-    private ScheduleListItem getScheduleInformation(ArrayList<ScheduleListItem> sl, String name) {
-        for (ScheduleListItem si : sl) {
+    private ScheduleListAdapter.ScheduleListItem getScheduleInformation(ArrayList<ScheduleListAdapter.ScheduleListItem> sl, String name) {
+        for (ScheduleListAdapter.ScheduleListItem si : sl) {
             if (si.scheduleName.equals(name))
                 return si;
         }
@@ -317,7 +317,7 @@ public class SyncService extends Service {
 
         for(String schedule_name:schedule_list) {
             mUtil.addDebugMsg(1, "I", "Schedule start, name=" + schedule_name);
-            ScheduleListItem si = getScheduleInformation(mGp.syncScheduleList, schedule_name);
+            ScheduleListAdapter.ScheduleListItem si = getScheduleInformation(mGp.syncScheduleList, schedule_name);
             if (si!=null) {
                 if (si.syncAutoSyncTask) {
                     queueAutoSyncTask(SYNC_REQUEST_SCHEDULE, si);
@@ -385,7 +385,7 @@ public class SyncService extends Service {
                 }
                 String t_sg = bundle.getString(START_SYNC_EXTRA_PARM_SYNC_GROUP);
                 String t_sp="";
-                for(GroupListItem item:mGp.syncGroupList) {
+                for(GroupListAdapter.GroupListItem item:mGp.syncGroupList) {
                     if (item.groupName.equalsIgnoreCase(t_sg)) {
                         t_sp=item.taskList;
                     }
@@ -558,7 +558,7 @@ public class SyncService extends Service {
         return result;
     }
 
-    private void queueSpecificSyncTask(String job_name[], String req_id, ScheduleListItem si) {
+    private void queueSpecificSyncTask(String job_name[], String req_id, ScheduleListAdapter.ScheduleListItem si) {
         SyncRequestItem sri = new SyncRequestItem();
         sri.schedule_name=si.scheduleName;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
@@ -566,7 +566,7 @@ public class SyncService extends Service {
         sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
         sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
         sri.requestor = req_id;
-        sri.requestor_display = HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
+        sri.requestor_display = HistoryListAdapter.HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
         if (job_name != null && job_name.length > 0) {
             for (int i = 0; i < job_name.length; i++) {
                 if (getSyncTask(job_name[i]) != null) {
@@ -609,23 +609,23 @@ public class SyncService extends Service {
     }
 
     private void queueSpecificSyncTask(String job_name[], String req_id) {
-        ScheduleListItem si=new ScheduleListItem();
+        ScheduleListAdapter.ScheduleListItem si=new ScheduleListAdapter.ScheduleListItem();
         si.scheduleName="";
         si.syncWifiOnBeforeStart=false;
         si.syncDelayAfterWifiOn=0;
         si.syncWifiOffAfterEnd=false;
-        si.syncOverrideOptionCharge= ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        si.syncOverrideOptionCharge= ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
         queueSpecificSyncTask(job_name, req_id, si);
         if (!mGp.syncThreadActive) {
             startSyncThread();
         }
     }
 
-    private void queueAutoSyncTask(String req_id, ScheduleListItem si) {
+    private void queueAutoSyncTask(String req_id, ScheduleListAdapter.ScheduleListItem si) {
         int cnt = 0;
         SyncRequestItem sri = new SyncRequestItem();
         sri.requestor = req_id;
-        sri.requestor_display = HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
+        sri.requestor_display = HistoryListAdapter.HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
         sri.schedule_name=si.scheduleName;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
         sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
@@ -671,12 +671,12 @@ public class SyncService extends Service {
     }
 
     private void queueAutoSyncTask(String req_id) {
-        ScheduleListItem si=new ScheduleListItem();
+        ScheduleListAdapter.ScheduleListItem si=new ScheduleListAdapter.ScheduleListItem();
         si.scheduleName="";
         si.syncWifiOnBeforeStart=false;
         si.syncDelayAfterWifiOn=0;
         si.syncWifiOffAfterEnd=false;
-        si.syncOverrideOptionCharge= ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        si.syncOverrideOptionCharge= ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
         queueAutoSyncTask(req_id, si);
     }
 

@@ -73,9 +73,9 @@ class GroupEditor {
 
     private CommonUtilities mUtil = null;
 
-    private GroupListItem mGroupListItem = null;
+    private GroupListAdapter.GroupListItem mGroupListItem = null;
 
-    private ArrayList<GroupListItem> mGroupList = null;
+    private ArrayList<GroupListAdapter.GroupListItem> mGroupList = null;
     private NotifyEvent mNotify = null;
 
     private boolean mEditMode = true;
@@ -87,8 +87,8 @@ class GroupEditor {
     private String mCurrentSyncTaskList="";
 
     public GroupEditor(CommonUtilities mu, AppCompatActivity a, GlobalParameters gp,
-                       boolean edit_mode, ArrayList<GroupListItem> gl,
-                       GroupListItem gi, NotifyEvent ntfy) {
+                       boolean edit_mode, ArrayList<GroupListAdapter.GroupListItem> gl,
+                       GroupListAdapter.GroupListItem gi, NotifyEvent ntfy) {
         mContext = a;
         mActivity = a;
         mGp = gp;
@@ -130,7 +130,7 @@ class GroupEditor {
     private boolean isGroupChanged(Dialog dialog) {
         boolean result=false;
         if (mEditMode) {
-            GroupListItem new_si= mGroupListItem.clone();
+            GroupListAdapter.GroupListItem new_si= mGroupListItem.clone();
             buildGroupItem(dialog, new_si);
             result = !mGroupListItem.isSame(new_si);
         } else {
@@ -346,9 +346,9 @@ class GroupEditor {
         return task_list.replaceAll(NAME_LIST_SEPARATOR, ", ");
     }
 
-    private boolean isButtonAlreadyAssigned(GlobalParameters gp, GroupListItem gi, int id) {
+    private boolean isButtonAlreadyAssigned(GlobalParameters gp, GroupListAdapter.GroupListItem gi, int id) {
         boolean result=false;
-        for(GroupListItem item:gp.syncGroupList) {
+        for(GroupListAdapter.GroupListItem item:gp.syncGroupList) {
 //            if (!item.groupName.equals(gi.groupName) && item.assigned_button==id) {
             if (item.button ==id) {
                 result=true;
@@ -358,7 +358,7 @@ class GroupEditor {
         return result;
     }
 
-    private void setSpinnerAssignedButton(GlobalParameters gp, Spinner spinner, GroupListItem curr_item, int button_id) {
+    private void setSpinnerAssignedButton(GlobalParameters gp, Spinner spinner, GroupListAdapter.GroupListItem curr_item, int button_id) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 
@@ -367,24 +367,24 @@ class GroupEditor {
         spinner.setAdapter(adapter);
 
         adapter.add(mContext.getString(R.string.msgs_group_button_not_assigned));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListItem.BUTTON_SHORTCUT1) || button_id== GroupListItem.BUTTON_SHORTCUT1) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut1));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListItem.BUTTON_SHORTCUT2) || button_id== GroupListItem.BUTTON_SHORTCUT2) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut2));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListItem.BUTTON_SHORTCUT3) || button_id== GroupListItem.BUTTON_SHORTCUT3) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut3));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListItem.BUTTON_SYNC_BUTTON) || button_id== GroupListItem.BUTTON_SYNC_BUTTON) adapter.add(mContext.getString(R.string.msgs_group_name_for_sync_button));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut1));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut2));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut3));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) || button_id== GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) adapter.add(mContext.getString(R.string.msgs_group_name_for_sync_button));
 
         int sel=0;
         for(int i=1;i<adapter.getCount();i++) {
             String item=adapter.getItem(i);
-            if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut1)) && button_id== GroupListItem.BUTTON_SHORTCUT1) {
+            if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut1)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) {
                 sel=i;
             }
-            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut2)) && button_id== GroupListItem.BUTTON_SHORTCUT2) {
+            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut2)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) {
                 sel=i;
             }
-            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut3)) && button_id== GroupListItem.BUTTON_SHORTCUT3) {
+            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut3)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) {
                 sel=i;
             }
-            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_sync_button)) && button_id== GroupListItem.BUTTON_SYNC_BUTTON) {
+            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_sync_button)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) {
                 sel=i;
             }
         }
@@ -394,12 +394,12 @@ class GroupEditor {
     private int getSpinnerAssignedButton(Spinner spinner) {
         String sel=(String)spinner.getSelectedItem();
         int result=0;
-        if (sel==null) result= GroupListItem.BUTTON_NOT_ASSIGNED;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_button_not_assigned))) result= GroupListItem.BUTTON_NOT_ASSIGNED;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut1))) result= GroupListItem.BUTTON_SHORTCUT1;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut2))) result= GroupListItem.BUTTON_SHORTCUT2;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut3))) result= GroupListItem.BUTTON_SHORTCUT3;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_sync_button))) result= GroupListItem.BUTTON_SYNC_BUTTON;
+        if (sel==null) result= GroupListAdapter.GroupListItem.BUTTON_NOT_ASSIGNED;
+        else if (sel.equals(mContext.getString(R.string.msgs_group_button_not_assigned))) result= GroupListAdapter.GroupListItem.BUTTON_NOT_ASSIGNED;
+        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut1))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1;
+        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut2))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2;
+        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut3))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3;
+        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_sync_button))) result= GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON;
         return result;
     }
 
@@ -496,9 +496,9 @@ class GroupEditor {
 
     }
 
-    static public boolean isGroupExists(ArrayList<GroupListItem> gl, String name) {
+    static public boolean isGroupExists(ArrayList<GroupListAdapter.GroupListItem> gl, String name) {
         boolean result=false;
-        for(GroupListItem item:gl) {
+        for(GroupListAdapter.GroupListItem item:gl) {
             if (item.groupName.equalsIgnoreCase(name)) {
                 result=true;
                 break;
@@ -507,7 +507,7 @@ class GroupEditor {
         return result;
     }
 
-    private void buildGroupItem(Dialog dialog, GroupListItem gi) {
+    private void buildGroupItem(Dialog dialog, GroupListAdapter.GroupListItem gi) {
 //        final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
         final EditText et_name = (EditText) dialog.findViewById(R.id.group_item_edit_dlg_group_name);
         final CheckedTextView ctv_group_enabled=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_enabled);
@@ -1009,7 +1009,7 @@ class GroupEditor {
     }
 
     static public void removeSyncTaskFromGroup(GlobalParameters gp, CommonUtilities cu, String task_name) {
-        for(GroupListItem gli:gp.syncGroupList) {
+        for(GroupListAdapter.GroupListItem gli:gp.syncGroupList) {
             if (!gli.autoTaskOnly && !gli.taskList.equals("")) {
                 String[] name_array=gli.taskList.split(NAME_LIST_SEPARATOR);
                 String new_list="", sep="";
@@ -1026,7 +1026,7 @@ class GroupEditor {
     }
 
     static public void renameSyncTaskFromGroup(GlobalParameters gp, CommonUtilities cu, String old_name, String new_name) {
-        for(GroupListItem gli:gp.syncGroupList) {
+        for(GroupListAdapter.GroupListItem gli:gp.syncGroupList) {
             if (!gli.autoTaskOnly && !gli.taskList.equals("")) {
                 String[] name_array=gli.taskList.split(NAME_LIST_SEPARATOR);
                 String new_list="", sep="";
@@ -1218,7 +1218,7 @@ class GroupEditor {
         }
     }
 
-    static public String getSyncTaskList(Context c, GroupListItem gli, ArrayList<SyncTaskItem>task_list) {
+    static public String getSyncTaskList(Context c, GroupListAdapter.GroupListItem gli, ArrayList<SyncTaskItem>task_list) {
         if (gli.autoTaskOnly) {
             String list="", sep="";
             for(SyncTaskItem sti:task_list) {
@@ -1233,7 +1233,7 @@ class GroupEditor {
         }
     }
 
-    static public String hasValidSyncTaskList(Context c, GroupListItem o, ArrayList<SyncTaskItem>task_list) {
+    static public String hasValidSyncTaskList(Context c, GroupListAdapter.GroupListItem o, ArrayList<SyncTaskItem>task_list) {
         String e_msg="";
         String[]task_list_array=o.taskList.split(NAME_LIST_SEPARATOR);
         for(String item:task_list_array) {
@@ -1247,7 +1247,7 @@ class GroupEditor {
     }
 
     static public String buildGroupExecuteSyncTaskList(Context c, GlobalParameters gp, CommonUtilities cu,
-                                                       GroupListItem gli, ArrayList<String>exec_task_list, ArrayList<String>duplicate_list) {
+                                                       GroupListAdapter.GroupListItem gli, ArrayList<String>exec_task_list, ArrayList<String>duplicate_list) {
         String e_msg="";
         if (gli.autoTaskOnly) {
             for(SyncTaskItem sti:gp.syncTaskList) {

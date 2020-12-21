@@ -22,11 +22,11 @@ import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_SCHEDULE_
 
 class ScheduleUtils {
     private static Logger log = LoggerFactory.getLogger(ScheduleUtils.class);
-    final static public long getNextScheduleTime(ScheduleListItem sp) {
+    final static public long getNextScheduleTime(ScheduleListAdapter.ScheduleListItem sp) {
         return getNextScheduleTime(sp, 0L);
     }
 
-    final static private long getNextScheduleTime(ScheduleListItem sp, long offset) {
+    final static private long getNextScheduleTime(ScheduleListAdapter.ScheduleListItem sp, long offset) {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(System.currentTimeMillis()+offset);
         long result = 0;
@@ -55,7 +55,7 @@ class ScheduleUtils {
         int c_dw = cal.get(Calendar.DAY_OF_WEEK) - 1;
         int c_hr = cal.get(Calendar.HOUR_OF_DAY);
         int c_mm = cal.get(Calendar.MINUTE);
-        if (sp.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS)) {
+        if (sp.scheduleType.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS)) {
             if (c_mm >= s_min) {
                 cal.set(c_year, c_month, c_day, c_hr, 0, 0);
                 result = cal.getTimeInMillis() + (60 * 1000 * 60) + (60 * 1000 * s_min);
@@ -63,7 +63,7 @@ class ScheduleUtils {
                 cal.set(c_year, c_month, c_day, c_hr, 0, 0);
                 result = cal.getTimeInMillis() + (60 * 1000 * s_min);
             }
-        } else if (sp.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY)) {
+        } else if (sp.scheduleType.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY)) {
             cal.clear();
             cal.set(c_year, c_month, c_day, s_hrs, 0, 0);
             if ((c_hr * 100 + c_mm) >= (s_hrs * 100 + s_min)) {
@@ -71,7 +71,7 @@ class ScheduleUtils {
             } else {
                 result = cal.getTimeInMillis() + (60 * 1000 * s_min);
             }
-        } else if (sp.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) {
+        } else if (sp.scheduleType.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) {
             int s_day_last_day=0, s_day_temp=0;
             cal.set(Calendar.YEAR, c_year);
             cal.set(Calendar.MONTH, c_month);
@@ -95,7 +95,7 @@ class ScheduleUtils {
             result = cal.getTimeInMillis();
             log.debug("name="+sp.scheduleName+", c_year="+c_year+", c_month="+c_month+
                     ", s_day="+s_day_temp+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
-        } else if (sp.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
+        } else if (sp.scheduleType.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
             if (sp.scheduleLastExecTime == 0) {
                 if (!sp.scheduleIntervalFirstRunImmed) {
                     sp.scheduleLastExecTime = System.currentTimeMillis();
@@ -123,7 +123,7 @@ class ScheduleUtils {
 
                 log.debug("name="+sp.scheduleName+", m_nt="+m_nt+", nt="+nt+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
             }
-        } else if (sp.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
+        } else if (sp.scheduleType.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
             boolean[] dwa = new boolean[]{false, false, false, false, false, false, false};
             for (int i = 0; i < sp.scheduleDayOfTheWeek.length(); i++) {
                 String dw_s = sp.scheduleDayOfTheWeek.substring(i, i + 1);
@@ -190,8 +190,8 @@ class ScheduleUtils {
         return result;
     }
 
-    public static ScheduleListItem getScheduleItem(ArrayList<ScheduleListItem> sl, String name) {
-        for (ScheduleListItem si : sl) {
+    public static ScheduleListAdapter.ScheduleListItem getScheduleItem(ArrayList<ScheduleListAdapter.ScheduleListItem> sl, String name) {
+        for (ScheduleListAdapter.ScheduleListItem si : sl) {
             if (si.scheduleName.equals(name)) {
                 return si;
             }
@@ -205,9 +205,9 @@ class ScheduleUtils {
         c.sendBroadcast(intent);
     }
 
-    public static boolean isScheduleExists(ArrayList<ScheduleListItem> sl, String name) {
+    public static boolean isScheduleExists(ArrayList<ScheduleListAdapter.ScheduleListItem> sl, String name) {
         boolean result = false;
-        for (ScheduleListItem si : sl) {
+        for (ScheduleListAdapter.ScheduleListItem si : sl) {
             if (si.scheduleName.equals(name)) result = true;
         }
         return result;
@@ -223,7 +223,7 @@ class ScheduleUtils {
     }
 
     public static void setScheduleInfo(Context c, GlobalParameters gp, CommonUtilities cu) {
-        ArrayList<ScheduleListItem> sl = gp.syncScheduleList;
+        ArrayList<ScheduleListAdapter.ScheduleListItem> sl = gp.syncScheduleList;
         String sched_list="", sep="", first="";
         long latest_sched_time = -1;
         ArrayList<String> sched_array=new ArrayList<String>();
@@ -231,7 +231,7 @@ class ScheduleUtils {
         String error_sched_name="", error_task_name="";
 
         if (gp.settingScheduleSyncEnabled) {
-            for (ScheduleListItem si : sl) {
+            for (ScheduleListAdapter.ScheduleListItem si : sl) {
                 if (si.scheduleEnabled) {
                     long time = getNextScheduleTime(si);
                     String dt=StringUtil.convDateTimeTo_YearMonthDayHourMin(time);
@@ -301,7 +301,7 @@ class ScheduleUtils {
         }
     }
 
-    public static String buildScheduleNextInfo(Context c, ScheduleListItem sp) {
+    public static String buildScheduleNextInfo(Context c, ScheduleListAdapter.ScheduleListItem sp) {
         long nst = -1;
         nst = getNextScheduleTime(sp);
         String sched_time = "", result = "";
@@ -326,11 +326,11 @@ class ScheduleUtils {
         if (lu.getLogLevel()>0) lu.addDebugMsg(1, "I", "setTimer entered, settingScheduleSyncEnabled="+gp.settingScheduleSyncEnabled);
         cancelTimer(c, lu);
         boolean scheduleEnabled = false;
-        for (ScheduleListItem si : gp.syncScheduleList) if (si.scheduleEnabled) scheduleEnabled = true;
+        for (ScheduleListAdapter.ScheduleListItem si : gp.syncScheduleList) if (si.scheduleEnabled) scheduleEnabled = true;
         if (scheduleEnabled && gp.settingScheduleSyncEnabled) {
-            ArrayList<ScheduleListItem> begin_sched_list = new ArrayList<ScheduleListItem>();
+            ArrayList<ScheduleListAdapter.ScheduleListItem> begin_sched_list = new ArrayList<ScheduleListAdapter.ScheduleListItem>();
             ArrayList<String> sched_list=new ArrayList<String>();
-            for (ScheduleListItem si : gp.syncScheduleList) {
+            for (ScheduleListAdapter.ScheduleListItem si : gp.syncScheduleList) {
                 if (si.scheduleEnabled) {
                     long time = getNextScheduleTime(si);
                     String item= StringUtil.convDateTimeTo_YearMonthDayHourMin(time)+","+si.scheduleName;
@@ -346,7 +346,7 @@ class ScheduleUtils {
                     String[]sa=item.split(",");
                     if (sched_time.equals("")) {
                         sched_time=sa[0];
-                        ScheduleListItem si=getScheduleItem(gp.syncScheduleList, sa[1]);
+                        ScheduleListAdapter.ScheduleListItem si=getScheduleItem(gp.syncScheduleList, sa[1]);
                         if (si!=null) {
                             begin_sched_list.add(si);
                             if (lu.getLogLevel()>0) lu.addDebugMsg(1,"I", "setTimer NextSchedule added. Name="+si.scheduleName+", "+sa[0]);
@@ -354,7 +354,7 @@ class ScheduleUtils {
                             if (lu.getLogLevel()>0) lu.addDebugMsg(1,"E", "setTimer Schedule can not be found. Name="+sa[1]);
                         }
                     } else if (sched_time.equals(sa[0])) {
-                        ScheduleListItem si=getScheduleItem(gp.syncScheduleList, sa[1]);
+                        ScheduleListAdapter.ScheduleListItem si=getScheduleItem(gp.syncScheduleList, sa[1]);
                         if (si!=null) {
                             begin_sched_list.add(si);
                             if (lu.getLogLevel()>0) lu.addDebugMsg(1,"I", "setTimer NextSchedule added. Name="+si.scheduleName+", "+sa[0]);
@@ -366,7 +366,7 @@ class ScheduleUtils {
             }
             if (begin_sched_list.size() > 0) {
                 String sched_names = "", sep="";
-                for (ScheduleListItem si : begin_sched_list) {
+                for (ScheduleListAdapter.ScheduleListItem si : begin_sched_list) {
                     sched_names += sep + si.scheduleName;
                     sep=",";
                 }

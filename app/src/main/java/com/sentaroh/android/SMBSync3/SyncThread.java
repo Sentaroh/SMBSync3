@@ -245,7 +245,7 @@ public class SyncThread extends Thread {
 
                     if ((mStwa.currentSTI != null || mGp.syncRequestQueue.size() > 0) &&
                             mStwa.currentSTI.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND &&
-                            sync_result == HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
+                            sync_result == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
                         showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "W", "", "",
                                 mStwa.appContext.getString(R.string.msgs_mirror_task_result_error_ignored));
                         sync_error_detected = true;
@@ -546,12 +546,12 @@ public class SyncThread extends Thread {
         sync_result=checkNetworkOption(mStwa.currentSTI);
         if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS || sync_result== SyncTaskItem.SYNC_RESULT_STATUS_WARNING) {
             boolean charge_status=mStwa.currentSTI.isSyncOptionSyncWhenCharging();
-            if (sri.overrideSyncOptionCharge.equals(ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
+            if (sri.overrideSyncOptionCharge.equals(ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED)) {
                 charge_status=true;
                 if (mStwa.currentSTI.isSyncOptionSyncWhenCharging()!=charge_status) {
                     mStwa.util.addDebugMsg(1, "I", "Charge staus option was enabled by schedule option.");
                 }
-            } else if (sri.overrideSyncOptionCharge.equals(ScheduleListItem.OVERRIDE_SYNC_OPTION_DISABLED)) {
+            } else if (sri.overrideSyncOptionCharge.equals(ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DISABLED)) {
                 charge_status=false;
                 if (mStwa.currentSTI.isSyncOptionSyncWhenCharging()!=charge_status) {
                     mStwa.util.addDebugMsg(1, "I", "Charge staus option was disabled by schedule option.");
@@ -822,8 +822,8 @@ public class SyncThread extends Thread {
                             mStwa.appContext.getString(R.string.msgs_mirror_task_result_error_ended));
 
                     if (mStwa.currentSTI != null) {
-                        sendEndNotificationIntent(mStwa.currentRequestor, mStwa.currentSTI.getSyncTaskName(), HistoryListItem.SYNC_RESULT_STATUS_ERROR);
-                        addHistoryList(mStwa.currentSTI, HistoryListItem.SYNC_RESULT_STATUS_ERROR,
+                        sendEndNotificationIntent(mStwa.currentRequestor, mStwa.currentSTI.getSyncTaskName(), HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR);
+                        addHistoryList(mStwa.currentSTI, HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR,
                                 mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, mStwa.totalMoveCount, mStwa.totalRetryCount, mStwa.totalReplaceCount,
                                 end_msg, 0L, "", mStwa.currentRequestorDisplay);
 //        			mUtil.saveHistoryList(mGp.syncHistoryList);
@@ -1379,7 +1379,7 @@ public class SyncThread extends Thread {
                 }
             } else if (sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_IP_ADDRESS_LIST)) {
                 if (!if_addr.equals("")) {
-                    ArrayList<FilterListItem> wl = sti.getSyncOptionWifiIPAddressGrantList();
+                    ArrayList<FilterListAdapter.FilterListItem> wl = sti.getSyncOptionWifiIPAddressGrantList();
                     boolean found=isWifiFilterMatched(sti, wl, if_addr);
                     if (!found) {
                         if (sti.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK) {
@@ -1438,13 +1438,13 @@ public class SyncThread extends Thread {
         return sync_status;
     }
 
-    private boolean isWifiFilterMatched(SyncTaskItem sti, ArrayList<FilterListItem>fl, String value) {
+    private boolean isWifiFilterMatched(SyncTaskItem sti, ArrayList<FilterListAdapter.FilterListItem>fl, String value) {
         int flags = Pattern.CASE_INSENSITIVE|Pattern.MULTILINE;
         boolean matched = false;
         if (fl.size()>0) {
             String filter_val="";
             String filter_sep="";
-            for (FilterListItem al : fl) {
+            for (FilterListAdapter.FilterListItem al : fl) {
                 if (al.isInclude()) {
                     String[] filter_array=al.getFilter().split(";");
                     for(String filter_item:filter_array) {
@@ -2402,17 +2402,17 @@ public class SyncThread extends Thread {
         return filter_matched;
     }
 
-    private void addPresetFileFilter(ArrayList<FilterListItem> ff, String[] preset_ff) {
+    private void addPresetFileFilter(ArrayList<FilterListAdapter.FilterListItem> ff, String[] preset_ff) {
         for (String add_str : preset_ff) {
             boolean found = false;
-            for (FilterListItem ff_str : ff) {
+            for (FilterListAdapter.FilterListItem ff_str : ff) {
                 if (ff_str.getFilter().equals(add_str)) {
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                FilterListItem fli=new FilterListItem(add_str, true);
+                FilterListAdapter.FilterListItem fli=new FilterListAdapter.FilterListItem(add_str, true);
                 ff.add(fli);
             } else {
                 mStwa.util.addDebugMsg(1, "I", "addPresetFileFilter" + " Duplicate file filter=" + add_str);
@@ -2422,11 +2422,11 @@ public class SyncThread extends Thread {
 
 //    final private static String WHOLE_DIRECTORY_FILTER_PREFIX="\\\\";
 
-    private String convertFilterToRegExp(ArrayList<FilterListItem> filter_array, String prefix, String suffix) {
+    private String convertFilterToRegExp(ArrayList<FilterListAdapter.FilterListItem> filter_array, String prefix, String suffix) {
         String out_filter = "";
         String filter, cni = "";
 
-        for(FilterListItem in_filter:filter_array) {
+        for(FilterListAdapter.FilterListItem in_filter:filter_array) {
             String rf_file_filter=in_filter.getFilter();
             while(rf_file_filter.indexOf(";;")>=0) rf_file_filter=rf_file_filter.replaceAll(";;",";");
             if (rf_file_filter.endsWith(";")) rf_file_filter=rf_file_filter.substring(0,rf_file_filter.length()-1);
@@ -2436,9 +2436,9 @@ public class SyncThread extends Thread {
         return out_filter;
     }
 
-    private ArrayList<Pattern[]> convertDirectoryFilterToRegExp(ArrayList<FilterListItem> filter_array, String prefix, String suffix) {
+    private ArrayList<Pattern[]> convertDirectoryFilterToRegExp(ArrayList<FilterListAdapter.FilterListItem> filter_array, String prefix, String suffix) {
         ArrayList<Pattern[]>fpl=new ArrayList<Pattern[]>();
-        for(FilterListItem item:filter_array) {
+        for(FilterListAdapter.FilterListItem item:filter_array) {
             String[] dir_parts=item.getFilter().split("/");
             Pattern[] dir_pattern=new Pattern[dir_parts.length];
             for(int i=0;i<dir_parts.length;i++) {
@@ -2450,25 +2450,25 @@ public class SyncThread extends Thread {
         return fpl;
     }
 
-    private ArrayList<String[]> convertDirectoryFilterToDirName(ArrayList<FilterListItem> filter_array) {
+    private ArrayList<String[]> convertDirectoryFilterToDirName(ArrayList<FilterListAdapter.FilterListItem> filter_array) {
         ArrayList<String[]>fpl=new ArrayList<String[]>();
-        for(FilterListItem item:filter_array) {
+        for(FilterListAdapter.FilterListItem item:filter_array) {
             String[] dir_parts=item.getFilter().split("/");
             fpl.add(dir_parts);
         }
         return fpl;
     }
 
-    final private int compileFilter(SyncTaskItem sti, ArrayList<FilterListItem> s_ff, ArrayList<FilterListItem> s_df) {
-        ArrayList<FilterListItem> include_file_filter = new ArrayList<FilterListItem>();
-        ArrayList<FilterListItem> exclude_file_filter = new ArrayList<FilterListItem>();
-        ArrayList<FilterListItem> include_file_filter_with_directory_path = new ArrayList<FilterListItem>();
-        ArrayList<FilterListItem> exclude_file_filter_with_directory_path = new ArrayList<FilterListItem>();
-        for(FilterListItem file_filter:s_ff) {
+    final private int compileFilter(SyncTaskItem sti, ArrayList<FilterListAdapter.FilterListItem> s_ff, ArrayList<FilterListAdapter.FilterListItem> s_df) {
+        ArrayList<FilterListAdapter.FilterListItem> include_file_filter = new ArrayList<FilterListAdapter.FilterListItem>();
+        ArrayList<FilterListAdapter.FilterListItem> exclude_file_filter = new ArrayList<FilterListAdapter.FilterListItem>();
+        ArrayList<FilterListAdapter.FilterListItem> include_file_filter_with_directory_path = new ArrayList<FilterListAdapter.FilterListItem>();
+        ArrayList<FilterListAdapter.FilterListItem> exclude_file_filter_with_directory_path = new ArrayList<FilterListAdapter.FilterListItem>();
+        for(FilterListAdapter.FilterListItem file_filter:s_ff) {
             String filter=file_filter.getFilter();
             String[] filter_array=filter.split(";");
             for(String part:filter_array) {
-                FilterListItem new_fli=new FilterListItem(part, file_filter.isInclude());
+                FilterListAdapter.FilterListItem new_fli=new FilterListAdapter.FilterListItem(part, file_filter.isInclude());
                 if (part.contains("/")) {
                     if (file_filter.isInclude()) include_file_filter_with_directory_path.add(new_fli);
                     else  exclude_file_filter_with_directory_path.add(new_fli);
@@ -2494,7 +2494,7 @@ public class SyncThread extends Thread {
         mStwa.matchAnyWhereExcludeDirectoryList.clear();
         mStwa.matchFromBeginIncludeDirectoryList.clear();
         mStwa.matchFromBeginExcludeDirectoryList.clear();
-        for (FilterListItem fli:s_df) {
+        for (FilterListAdapter.FilterListItem fli:s_df) {
             if (fli.isEnabled()) {
                 String[] filter_array=fli.getFilter().split(";");
                 for(String item:filter_array) {
@@ -2651,7 +2651,7 @@ public class SyncThread extends Thread {
         String date_time = StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis());
         String date = date_time.substring(0, 10);
         String time = date_time.substring(11);
-        final HistoryListItem hli = new HistoryListItem();
+        final HistoryListAdapter.HistoryListItem hli = new HistoryListAdapter.HistoryListItem();
         hli.sync_date = date;
         hli.sync_time = time;
         hli.sync_elapsed_time = sync_elapsed_time;

@@ -40,6 +40,7 @@ import com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -376,6 +377,57 @@ public class MessageListAdapter extends BaseAdapter {
     private class ViewHolder {
         TextView tv_row_time, tv_row_date, tv_row_title, tv_row_type, tv_row_seq;
         NonWordwrapTextView  tv_row_msg, tv_row_path;
+    }
+
+    public static class MessageListItem implements Serializable {
+        private static final long serialVersionUID = 1L;
+        private String msgCat, msgBody, msgDate, msgTime, msgTitle, msgPath, msgType;
+        final public static String MESSAGE_CATEGORY_ALL="A";
+        final public static String MESSAGE_CATEGORY_INFO="I";
+        final public static String MESSAGE_CATEGORY_WARN="W";
+        final public static String MESSAGE_CATEGORY_ERROR="E";
+
+        public MessageListItem(String cat, String mdate, String mtime, String mtitle, String msg, String mpath, String mtype) {
+            msgCat = cat;
+            msgBody = msg;
+            msgDate = mdate;
+            msgTime = mtime;
+            msgTitle = mtitle;
+            msgType = mtype;
+            msgPath = mpath;
+        }
+
+        public String getCategory() {
+            return msgCat;
+        }
+
+        public String getDate() {
+            return msgDate;
+        }
+
+        public String getTime() {
+            return msgTime;
+        }
+
+        public String getMessage() {
+            return msgBody;
+        }
+
+        public String getTitle() {
+            return msgTitle;
+        }
+
+        public String getPath() {
+            return msgPath;
+        }
+
+        public String getType() {
+            return msgType;
+        }
+
+        public String toString() {
+            return msgCat + " " + msgDate + " " + msgTime + " " + msgTitle + " " + msgPath + " " + msgBody + " " + msgType;
+        }
     }
 }
 

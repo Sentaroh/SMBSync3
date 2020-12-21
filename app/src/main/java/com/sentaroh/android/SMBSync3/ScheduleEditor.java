@@ -24,13 +24,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
@@ -59,9 +56,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
-import com.sentaroh.android.Utilities3.MiscUtil;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.StringUtil;
 import com.sentaroh.android.Utilities3.ThemeColorList;
@@ -71,12 +66,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 
 import static com.sentaroh.android.SMBSync3.Constants.NAME_UNUSABLE_CHARACTER;
-import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_TIMER_EXPIRED;
-import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_SCHEDULE_NAME_KEY;
 
 public class ScheduleEditor {
     private static Logger log = LoggerFactory.getLogger(ScheduleEditor.class);
@@ -89,9 +80,9 @@ public class ScheduleEditor {
 
     private CommonUtilities mUtil = null;
 
-    private ScheduleListItem mSched = null;
+    private ScheduleListAdapter.ScheduleListItem mSched = null;
 
-    private ArrayList<ScheduleListItem> mScheduleList = null;
+    private ArrayList<ScheduleListAdapter.ScheduleListItem> mScheduleList = null;
     private NotifyEvent mNotify = null;
 
     private boolean mEditMode = true;
@@ -101,7 +92,7 @@ public class ScheduleEditor {
     private ThemeColorList mThemeColorList = null;
 
     public ScheduleEditor(CommonUtilities mu, AppCompatActivity a, Context c, GlobalParameters gp,
-                          boolean edit_mode, ArrayList<ScheduleListItem> sl, ScheduleListItem si, NotifyEvent ntfy) {
+                          boolean edit_mode, ArrayList<ScheduleListAdapter.ScheduleListItem> sl, ScheduleListAdapter.ScheduleListItem si, NotifyEvent ntfy) {
         mContext = c;
         mActivity = a;
         mGp = gp;
@@ -244,9 +235,9 @@ public class ScheduleEditor {
         final RadioButton rb_override_sync_option_charge_1=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_1);
         final RadioButton rb_override_sync_option_charge_2=(RadioButton)dialog.findViewById(R.id.scheduler_main_dlg_override_sync_option_charge_rg_2);
 
-        if (mSched.syncOverrideOptionCharge.equals(ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE)) rb_override_sync_option_charge_0.setChecked(true);
-        else if (mSched.syncOverrideOptionCharge.equals(ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED)) rb_override_sync_option_charge_1.setChecked(true);
-        else if (mSched.syncOverrideOptionCharge.equals(ScheduleListItem.OVERRIDE_SYNC_OPTION_DISABLED)) rb_override_sync_option_charge_2.setChecked(true);
+        if (mSched.syncOverrideOptionCharge.equals(ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE)) rb_override_sync_option_charge_0.setChecked(true);
+        else if (mSched.syncOverrideOptionCharge.equals(ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED)) rb_override_sync_option_charge_1.setChecked(true);
+        else if (mSched.syncOverrideOptionCharge.equals(ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DISABLED)) rb_override_sync_option_charge_2.setChecked(true);
         rg_override_sync_option_charge.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -332,7 +323,7 @@ public class ScheduleEditor {
             public void onClick(View v) {
                 ctv_sched_enabled.toggle();
                 boolean isChecked = ctv_sched_enabled.isChecked();
-                ScheduleListItem n_sli = mSched.clone();
+                ScheduleListAdapter.ScheduleListItem n_sli = mSched.clone();
                 if (isChecked) {
                     if (!mSched.scheduleEnabled) {
                         n_sli.scheduleEnabled = true;
@@ -380,7 +371,7 @@ public class ScheduleEditor {
         sp_sched_minutes.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {//Interval
+                if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {//Interval
                     if (mSched.scheduleMinutes.equals(sp_sched_minutes.getSelectedItem().toString())) {
                         ctv_reset_interval.setChecked(false);
                     } else {
@@ -436,7 +427,7 @@ public class ScheduleEditor {
 
                 setOkButtonEnabledDisabled(dialog);
 
-                if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK) &&
+                if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK) &&
                         buildDayOfWeekString(dialog).equals("0000000")) {
                     cb_sched_sun.setChecked(true);
                 }
@@ -548,7 +539,7 @@ public class ScheduleEditor {
                 ctv_sync_all_prof.toggle();
                 boolean isChecked = ctv_sync_all_prof.isChecked();
 
-                if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
+                if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
                     if (cb_sched_sun.isChecked() || cb_sched_mon.isChecked() || cb_sched_tue.isChecked() ||
                             cb_sched_wed.isChecked() || cb_sched_thu.isChecked() || cb_sched_fri.isChecked() ||
                             cb_sched_sat.isChecked()) {
@@ -699,10 +690,10 @@ public class ScheduleEditor {
         return  error_item_name;
     }
 
-    private void setScheduleInfo(Dialog dialog, ScheduleListItem sli) {
+    private void setScheduleInfo(Dialog dialog, ScheduleListAdapter.ScheduleListItem sli) {
         final TextView tv_schedule_time = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_schedule_time);
         if (sli.scheduleEnabled) {
-            ScheduleListItem n_sp = sli.clone();
+            ScheduleListAdapter.ScheduleListItem n_sp = sli.clone();
             buildSchedParms(dialog, n_sp);
             tv_schedule_time.setText(
                     String.format(mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time),
@@ -755,16 +746,16 @@ public class ScheduleEditor {
 
     }
 
-    private boolean isScheduleChanged(Dialog dialog, ScheduleListItem si) {
+    private boolean isScheduleChanged(Dialog dialog, ScheduleListAdapter.ScheduleListItem si) {
         boolean result=false;
-        ScheduleListItem new_si=si.clone();
+        ScheduleListAdapter.ScheduleListItem new_si=si.clone();
         buildSchedParms(dialog, new_si);
         result=si.isSame(new_si);
         mUtil.addDebugMsg(1, "I", "result="+!result);
         return !result;
     }
 
-    private void checkDayOfTheWeekSetting(Dialog dialog, ScheduleListItem sp) {
+    private void checkDayOfTheWeekSetting(Dialog dialog, ScheduleListAdapter.ScheduleListItem sp) {
         final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
 //		final Button btn_cancel = (Button) dialog.findViewById(R.id.scheduler_main_dlg_cancel);
         final Button btn_edit = (Button) dialog.findViewById(R.id.scheduler_main_dlg_edit_sync_prof);
@@ -812,7 +803,7 @@ public class ScheduleEditor {
             tv_msg.setText("");
             setViewEnabled(mActivity, btn_ok, isScheduleChanged(dialog, mSched));
 
-            ScheduleListItem n_sp = mSched.clone();
+            ScheduleListAdapter.ScheduleListItem n_sp = mSched.clone();
             buildSchedParms(dialog, n_sp);
             tv_schedule_time.setText(
                     String.format(mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time),
@@ -836,7 +827,7 @@ public class ScheduleEditor {
         if (ctv_last_day.isChecked()) {
             tv_sched_day_warning.setVisibility(TextView.GONE);
         } else {
-            if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) {//Every month
+            if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) {//Every month
                 if (mThemeColorList.theme_is_light) {
                     tv_sched_day_warning.setBackgroundColor(Color.DKGRAY);
                     tv_sched_day_warning.setTextColor(Color.YELLOW);
@@ -859,7 +850,7 @@ public class ScheduleEditor {
         }
     }
 
-    private void buildSchedParms(Dialog dialog, ScheduleListItem sp) {
+    private void buildSchedParms(Dialog dialog, ScheduleListAdapter.ScheduleListItem sp) {
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
         final CheckedTextView ctv_sched_enabled = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_enabled);
         final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
@@ -921,7 +912,7 @@ public class ScheduleEditor {
 
         sp.scheduleMinutes = sp_sched_minutes.getSelectedItem().toString();
 
-        if (sp.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
+        if (sp.scheduleType.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
             if (!p_sched_type.equals(sp.scheduleType) || !p_sched_mm.equals(sp.scheduleMinutes) ||
                     (!p_intv_first_run && sp.scheduleIntervalFirstRunImmed) ||
                     (p_intv_first_run && !sp.scheduleIntervalFirstRunImmed) ||
@@ -953,9 +944,9 @@ public class ScheduleEditor {
         if (ctv_wifi_on.isChecked()) sp.syncWifiOffAfterEnd = ctv_wifi_off.isChecked();
         else sp.syncWifiOffAfterEnd = false;
 
-        if (rb_override_sync_option_charge_0.isChecked()) sp.syncOverrideOptionCharge= ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
-        else if (rb_override_sync_option_charge_1.isChecked()) sp.syncOverrideOptionCharge= ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED;
-        else if (rb_override_sync_option_charge_2.isChecked()) sp.syncOverrideOptionCharge= ScheduleListItem.OVERRIDE_SYNC_OPTION_DISABLED;
+        if (rb_override_sync_option_charge_0.isChecked()) sp.syncOverrideOptionCharge= ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        else if (rb_override_sync_option_charge_1.isChecked()) sp.syncOverrideOptionCharge= ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_ENABLED;
+        else if (rb_override_sync_option_charge_2.isChecked()) sp.syncOverrideOptionCharge= ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DISABLED;
     }
 
     private void editScheduleRunSyncTaskList(final String prof_list, final NotifyEvent p_ntfy) {
@@ -1109,35 +1100,35 @@ public class ScheduleEditor {
         final CheckedTextView ctv_reset_interval = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_interval_schedule_reset);
         ctv_reset_interval.setVisibility(CheckedTextView.GONE);
 
-        if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS)) {//Every hours
+        if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS)) {//Every hours
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.GONE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
             ctv_last_day.setVisibility(CheckedTextView.GONE);
-        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY)) {//Every day
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY)) {//Every day
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
             ctv_last_day.setVisibility(CheckedTextView.GONE);
-        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) {//Every month
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) {//Every month
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
             ctv_last_day.setVisibility(CheckedTextView.VISIBLE);
-        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {//Day off the week
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {//Day off the week
             ll_sched_dw.setVisibility(LinearLayout.VISIBLE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.GONE);
             ll_sched_hours.setVisibility(LinearLayout.VISIBLE);
             ll_sched_minutes.setVisibility(LinearLayout.VISIBLE);
             ctv_last_day.setVisibility(CheckedTextView.GONE);
-        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {//Interval
+        } else if (getScheduleTypeFromSpinner(sp_sched_type).equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {//Interval
             ll_sched_dw.setVisibility(LinearLayout.GONE);
             ll_sched_hm.setVisibility(LinearLayout.VISIBLE);
             ll_sched_day.setVisibility(LinearLayout.GONE);
@@ -1209,11 +1200,11 @@ public class ScheduleEditor {
 
         if (!type.equals("")) {
             int sel = -1;
-            if (type.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS)) sel = 0;
-            else if (type.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY)) sel = 1;
-            else if (type.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) sel = 2;
-            else if (type.equals(ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) sel = 3;
-            else if (type.equals(ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) sel = 4;
+            if (type.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS)) sel = 0;
+            else if (type.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY)) sel = 1;
+            else if (type.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) sel = 2;
+            else if (type.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) sel = 3;
+            else if (type.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) sel = 4;
             sp_sched_type.setSelection(sel);
         }
         adapter.notifyDataSetChanged();
@@ -1227,11 +1218,11 @@ public class ScheduleEditor {
 
     private String getScheduleTypeFromPosition(int position) {
         String sched_type = "";
-        if (position == 0) sched_type = ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS;
-        else if (position == 1) sched_type = ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY;
-        else if (position == 2) sched_type = ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH;
-        else if (position == 3) sched_type = ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK;
-        else if (position == 4) sched_type = ScheduleListItem.SCHEDULE_TYPE_INTERVAL;
+        if (position == 0) sched_type = ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS;
+        else if (position == 1) sched_type = ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY;
+        else if (position == 2) sched_type = ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH;
+        else if (position == 3) sched_type = ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK;
+        else if (position == 4) sched_type = ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL;
         return sched_type;
     }
 
@@ -1283,7 +1274,7 @@ public class ScheduleEditor {
         sp_sched_minutes.setAdapter(adapter);
 
         int sel = 0, s_mm = Integer.parseInt(mm);
-        if (sched_type.equals(ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
+        if (sched_type.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
             for (int i = 1; i < 5; i++) {
                 adapter.add("0" + i);
                 if (s_mm == i) sel = adapter.getCount() - 1;
@@ -1372,8 +1363,8 @@ public class ScheduleEditor {
         }
     }
 
-    final static public void removeSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleListItem> sl, String delete_task_name) {
-        for (ScheduleListItem si : sl) {
+    final static public void removeSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleListAdapter.ScheduleListItem> sl, String delete_task_name) {
+        for (ScheduleListAdapter.ScheduleListItem si : sl) {
             if (!si.syncTaskList.equals("")&& si.syncTaskList.contains(delete_task_name)) {
                 if (si.syncTaskList.indexOf(",")>0) {//Multiple entry
                     String[] task_list=si.syncTaskList.split(",");
@@ -1411,8 +1402,8 @@ public class ScheduleEditor {
         }
     }
 
-    final static public void renameSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleListItem> sl, String rename_task_name, String new_name) {
-        for (ScheduleListItem si : sl) {
+    final static public void renameSyncTaskFromSchedule(GlobalParameters gp, CommonUtilities cu, ArrayList<ScheduleListAdapter.ScheduleListItem> sl, String rename_task_name, String new_name) {
+        for (ScheduleListAdapter.ScheduleListItem si : sl) {
             if (!si.syncTaskList.equals("") && si.syncTaskList.contains(rename_task_name)) {
                 if (si.syncTaskList.indexOf(",")>0) {//Multiple entry
                     String[] task_list=si.syncTaskList.split(",");

@@ -1002,9 +1002,9 @@ public class TaskListUtils {
         dlg_parent_dir.setVisibility(TextView.VISIBLE);
         dlg_parent_dir.setText(parent_dir);
 
-        ArrayList<FilterListItem> filterList = new ArrayList<FilterListItem>();
+        ArrayList<FilterListAdapter.FilterListItem> filterList = new ArrayList<FilterListAdapter.FilterListItem>();
         for (int i = 0; i < sti.getDirectoryFilter().size(); i++) {
-            FilterListItem fli=sti.getDirectoryFilter().get(i).clone();
+            FilterListAdapter.FilterListItem fli=sti.getDirectoryFilter().get(i).clone();
             filterList.add(fli);
         }
         final FilterListAdapter filterAdapter = new FilterListAdapter(mActivity, R.layout.filter_list_item_view,
@@ -1039,7 +1039,7 @@ public class TaskListUtils {
         ntfy_switch.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                FilterListItem fli=(FilterListItem)o[0];
+                FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
                 if (!hasEnabledFilters(filterAdapter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
@@ -1073,7 +1073,7 @@ public class TaskListUtils {
 
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, final int idx, long id) {
-                FilterListItem fli = filterAdapter.getItem(idx);
+                FilterListAdapter.FilterListItem fli = filterAdapter.getItem(idx);
                 if (fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
                 NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -1114,7 +1114,7 @@ public class TaskListUtils {
                     parent_view.requestLayout();
                     String filter= StringUtil.removeRedundantCharacter(s.toString(), ";", true, true);
                     String[]filter_array=filter.split(";");
-                    String err_msg=FilterListItem.checkDirectoryFilterError(mContext, filter);
+                    String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mContext, filter);
                     if (!err_msg.equals("")) {
                         dlg_msg.setText(err_msg);
                         CommonDialog.setViewEnabled(mActivity, addbtn, false);
@@ -1132,7 +1132,7 @@ public class TaskListUtils {
                         CommonDialog.setViewEnabled(mActivity, addbtn, true);
                         CommonDialog.setViewEnabled(mActivity, dirbtn, false);
                         CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        if (FilterListItem.hasMatchAnyWhereFilter(filter)) {
+                        if (FilterListAdapter.FilterListItem.hasMatchAnyWhereFilter(filter)) {
                             CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
                             if (!add_exclude_btn.isChecked()) {
                                 add_exclude_btn.setChecked(true);
@@ -1173,7 +1173,7 @@ public class TaskListUtils {
                 dirbtn.setVisibility(Button.VISIBLE);
                 lv.setVisibility(ListView.VISIBLE);
                 parent_view.requestLayout();
-                FilterListItem fli=new FilterListItem(newfilter, add_include_btn.isChecked());
+                FilterListAdapter.FilterListItem fli=new FilterListAdapter.FilterListItem(newfilter, add_include_btn.isChecked());
                 if (fli.hasMatchAnyWhereFilter()) fli.setInclude(false);
                 filterAdapter.add(fli);
                 filterAdapter.setNotifyOnChange(true);
@@ -1191,9 +1191,9 @@ public class TaskListUtils {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
                         String org_filter_list="";
-                        for(FilterListItem fli:sti.getDirectoryFilter()) org_filter_list+=fli.toString();
+                        for(FilterListAdapter.FilterListItem fli:sti.getDirectoryFilter()) org_filter_list+=fli.toString();
                         String new_filter_list="";
-                        for(FilterListItem fli:filterAdapter.getFilterList()) new_filter_list+=fli.toString();
+                        for(FilterListAdapter.FilterListItem fli:filterAdapter.getFilterList()) new_filter_list+=fli.toString();
 
                         if (!org_filter_list.equals(new_filter_list)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                         else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
@@ -1257,8 +1257,8 @@ public class TaskListUtils {
                 sti.getDirectoryFilter().clear();
                 if (filterAdapter.getCount() > 0) {
                     for (int i = 0; i < filterAdapter.getCount(); i++) {
-                        FilterListItem fli=filterAdapter.getItem(i);
-                        String sort_result=FilterListItem.sort(fli.getFilter());
+                        FilterListAdapter.FilterListItem fli=filterAdapter.getItem(i);
+                        String sort_result= FilterListAdapter.FilterListItem.sort(fli.getFilter());
                         fli.setFilter(sort_result);
                         if (!fli.isDeleted())sti.getDirectoryFilter().add(fli);
                     }
@@ -1270,8 +1270,8 @@ public class TaskListUtils {
 
     }
 
-    public void editFileFilterDlg(final ArrayList<FilterListItem> file_filter, final NotifyEvent p_ntfy) {
-        ArrayList<FilterListItem> filterList = new ArrayList<FilterListItem>();
+    public void editFileFilterDlg(final ArrayList<FilterListAdapter.FilterListItem> file_filter, final NotifyEvent p_ntfy) {
+        ArrayList<FilterListAdapter.FilterListItem> filterList = new ArrayList<FilterListAdapter.FilterListItem>();
         final FilterListAdapter filterAdapter;
 
         // カスタムダイアログの生成
@@ -1301,7 +1301,7 @@ public class TaskListUtils {
         ListView lv = (ListView) dialog.findViewById(R.id.filter_list_edit_listview);
 
         for (int i = 0; i < file_filter.size(); i++) {
-            FilterListItem fli=file_filter.get(i).clone();
+            FilterListAdapter.FilterListItem fli=file_filter.get(i).clone();
             filterAdapter.add(fli);
         }
         lv.setAdapter(filterAdapter);
@@ -1328,7 +1328,7 @@ public class TaskListUtils {
         ntfy_switch.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                FilterListItem fli=(FilterListItem)o[0];
+                FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
                 if (!hasEnabledFilters(filterAdapter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                     CommonDialog.setViewEnabled(mActivity, btn_ok, false);
@@ -1362,7 +1362,7 @@ public class TaskListUtils {
 
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
-                FilterListItem fli = filterAdapter.getItem(idx);
+                FilterListAdapter.FilterListItem fli = filterAdapter.getItem(idx);
                 if (fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
                 NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -1402,7 +1402,7 @@ public class TaskListUtils {
                     parent_view.requestLayout();
 
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
-                    String error_message=FilterListItem.checkFileFilterError(mContext, new_filter);
+                    String error_message= FilterListAdapter.FilterListItem.checkFileFilterError(mContext, new_filter);
                     if (!error_message.equals("")) {
                         dlg_msg.setText(error_message);
                         CommonDialog.setViewEnabled(mActivity, addBtn, false);
@@ -1447,7 +1447,7 @@ public class TaskListUtils {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString().trim();
                 et_filter.setText("");
-                filterAdapter.add(new FilterListItem(newfilter, true));
+                filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
                 CommonDialog.setViewEnabled(mActivity, btn_ok, true);
@@ -1507,8 +1507,8 @@ public class TaskListUtils {
         dialog.show();
     }
 
-    public void editIPAddressFilterDlg(final ArrayList<FilterListItem> addr_list, final NotifyEvent p_ntfy) {
-        ArrayList<FilterListItem> filterList = new ArrayList<FilterListItem>();
+    public void editIPAddressFilterDlg(final ArrayList<FilterListAdapter.FilterListItem> addr_list, final NotifyEvent p_ntfy) {
+        ArrayList<FilterListAdapter.FilterListItem> filterList = new ArrayList<FilterListAdapter.FilterListItem>();
         final FilterListAdapter filterAdapter;
 
         // カスタムダイアログの生成
@@ -1540,7 +1540,7 @@ public class TaskListUtils {
         ListView lv = (ListView) dialog.findViewById(R.id.filter_list_edit_listview);
 
         for (int i = 0; i < addr_list.size(); i++) {
-            FilterListItem fli=addr_list.get(i).clone();
+            FilterListAdapter.FilterListItem fli=addr_list.get(i).clone();
             filterAdapter.add(fli);
         }
         lv.setAdapter(filterAdapter);
@@ -1574,7 +1574,7 @@ public class TaskListUtils {
 
         lv.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
-                FilterListItem fli = filterAdapter.getItem(idx);
+                FilterListAdapter.FilterListItem fli = filterAdapter.getItem(idx);
                 if (fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
                 NotifyEvent ntfy = new NotifyEvent(mContext);
@@ -1609,7 +1609,7 @@ public class TaskListUtils {
                     lv.setVisibility(ListView.GONE);
                     parent_view.requestLayout();
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
-                    String error_message=FilterListItem.checkApAndAddressFilterError(mContext, new_filter);
+                    String error_message= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mContext, new_filter);
                     if (!error_message.equals("")) {
                         dlg_msg.setText(error_message);
                         CommonDialog.setViewEnabled(mActivity, addBtn, false);
@@ -1659,7 +1659,7 @@ public class TaskListUtils {
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else {
                         dlg_msg.setText("");
-                        filterAdapter.add(new FilterListItem(ip_addr, true));
+                        filterAdapter.add(new FilterListAdapter.FilterListItem(ip_addr, true));
                         filterAdapter.setNotifyOnChange(true);
                         filterAdapter.sort();
                         CommonDialog.setViewEnabled(mActivity, btn_ok, true);
@@ -1680,7 +1680,7 @@ public class TaskListUtils {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString().trim();
                 et_filter.setText("");
-                filterAdapter.add(new FilterListItem(newfilter, true));
+                filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
                 CommonDialog.setViewEnabled(mActivity, btn_ok, true);
@@ -1741,7 +1741,7 @@ public class TaskListUtils {
     }
 
     private void editFilterItem(final int edit_idx, final FilterListAdapter fa,
-                                final FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy,
+                                final FilterListAdapter.FilterListItem fli, final String filter, String title_text, final NotifyEvent p_ntfy,
                                 final int filter_type) {
 
         // カスタムダイアログの生成
@@ -1791,7 +1791,7 @@ public class TaskListUtils {
         if (fli.isInclude()) rb_include.setChecked(true);
         else rb_exclude.setChecked(true);
 
-        final ArrayList<FilterListItem>current_fl_exclude_edit_item=new ArrayList<FilterListItem>();
+        final ArrayList<FilterListAdapter.FilterListItem>current_fl_exclude_edit_item=new ArrayList<FilterListAdapter.FilterListItem>();
         for(int i=0;i<fa.getCount();i++) {
             if (i!=edit_idx) current_fl_exclude_edit_item.add(fa.getItem(i));
         }
@@ -1804,7 +1804,7 @@ public class TaskListUtils {
         cb_enabled.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FilterListItem new_fli=buildFilterItem(dialog);
+                FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                 if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
             }
@@ -1813,7 +1813,7 @@ public class TaskListUtils {
         rb_include.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FilterListItem new_fli=buildFilterItem(dialog);
+                FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                 if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
             }
@@ -1822,7 +1822,7 @@ public class TaskListUtils {
         rb_exclude.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FilterListItem new_fli=buildFilterItem(dialog);
+                FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                 if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                 else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
             }
@@ -1845,7 +1845,7 @@ public class TaskListUtils {
                     String newfilter =StringUtil.removeRedundantCharacter(s.toString(), ";", true, true);
                     if (filter_type==FilterListAdapter.FILTER_TYPE_DIRECTORY) {
                         dlg_msg.setText("");
-                        String err_msg=FilterListItem.checkDirectoryFilterError(mContext, newfilter);
+                        String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mContext, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
@@ -1873,10 +1873,10 @@ public class TaskListUtils {
                         } else {
                             CommonDialog.setViewEnabled(mActivity, rb_include, true);
                         }
-                        FilterListItem new_fli=buildFilterItem(dialog);
+                        FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                         if (isFilterItemChanged(fli, new_fli)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else if (filter_type==FilterListAdapter.FILTER_TYPE_FILE) {
-                        String err_msg=FilterListItem.checkFileFilterError(mContext, newfilter);
+                        String err_msg= FilterListAdapter.FilterListItem.checkFileFilterError(mContext, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
@@ -1895,10 +1895,10 @@ public class TaskListUtils {
                             dlg_msg.setText("");
                         }
                         if (newfilter.equals(filter))CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        FilterListItem new_fli=buildFilterItem(dialog);
+                        FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                         if (isFilterItemChanged(fli, new_fli)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     } else if (filter_type==FilterListAdapter.FILTER_TYPE_ACCESS_POINT || filter_type==FilterListAdapter.FILTER_TYPE_IP_ADDRESS) {
-                        String err_msg=FilterListItem.checkApAndAddressFilterError(mContext, newfilter);
+                        String err_msg= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mContext, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
@@ -1917,7 +1917,7 @@ public class TaskListUtils {
                             dlg_msg.setText("");
                         }
                         if (newfilter.equals(filter))CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-                        FilterListItem new_fli=buildFilterItem(dialog);
+                        FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                         if (isFilterItemChanged(fli, new_fli)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
                     }
                 }
@@ -1928,7 +1928,7 @@ public class TaskListUtils {
         // CANCELボタンの指定
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                FilterListItem new_fli=buildFilterItem(dialog);
+                FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                 if (isFilterItemChanged(fli, new_fli)) {
                     NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mContext);
                     ntfy_cancel_confirm.setListener(new NotifyEvent.NotifyEventListener() {
@@ -1989,12 +1989,12 @@ public class TaskListUtils {
     }
 
     private String getDuplicateFilter(String new_filter, FilterListAdapter fa) {
-        ArrayList<FilterListItem>fl=new ArrayList<FilterListItem>();
+        ArrayList<FilterListAdapter.FilterListItem>fl=new ArrayList<FilterListAdapter.FilterListItem>();
         for(int i=0;i<fa.getCount();i++) fl.add(fa.getItem(i));
         return getDuplicateFilter(new_filter, fl);
     }
 
-    private String getDuplicateFilter(String new_filter, ArrayList<FilterListItem> fl) {
+    private String getDuplicateFilter(String new_filter, ArrayList<FilterListAdapter.FilterListItem> fl) {
         //new_filter内での重複チェック
         String[]mew_filter_array=new_filter.split(";");
         if (mew_filter_array.length>1) {
@@ -2067,7 +2067,7 @@ public class TaskListUtils {
         return result;
     }
 
-    private boolean isFilterListChanged(ArrayList<FilterListItem>org, FilterListAdapter fla) {
+    private boolean isFilterListChanged(ArrayList<FilterListAdapter.FilterListItem>org, FilterListAdapter fla) {
         String org_filter_content="";
         for(int i=0;i<org.size();i++) {
             org_filter_content+=org.get(i).toString()+";";
@@ -2081,7 +2081,7 @@ public class TaskListUtils {
         return result;
     }
 
-    private boolean isFilterItemChanged(FilterListItem org_filter, FilterListItem new_filter) {
+    private boolean isFilterItemChanged(FilterListAdapter.FilterListItem org_filter, FilterListAdapter.FilterListItem new_filter) {
         if (org_filter.getFilter().equals(new_filter.getFilter())
                 && org_filter.isEnabled()==new_filter.isEnabled()
                 && org_filter.isInclude()==new_filter.isInclude()) {
@@ -2090,12 +2090,12 @@ public class TaskListUtils {
         return true;
     }
 
-    private FilterListItem buildFilterItem(Dialog dialog) {
+    private FilterListAdapter.FilterListItem buildFilterItem(Dialog dialog) {
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_item_edit_dlg_filter);
         final CheckBox cb_enabled=(CheckBox)dialog.findViewById(R.id.filter_item_edit_dlg_enabled);
         final RadioButton rb_include=(RadioButton) dialog.findViewById(R.id.filter_item_edit_dlg_include);
         final RadioButton rb_exclude=(RadioButton) dialog.findViewById(R.id.filter_item_edit_dlg_exclude);
-        FilterListItem fli=new FilterListItem();
+        FilterListAdapter.FilterListItem fli=new FilterListAdapter.FilterListItem();
         fli.setFilter(StringUtil.removeRedundantCharacter(et_filter.getText().toString(), ";", true, true));
         fli.setEnabled(cb_enabled.isChecked());
         fli.setInclude(rb_include.isChecked());
@@ -2506,7 +2506,7 @@ public class TaskListUtils {
                 if (!smb_filter) {
                 }
                 if (!check_only) {
-                    fla.add(new FilterListItem(sel, true, true));
+                    fla.add(new FilterListAdapter.FilterListItem(sel, true, true));
                     if (add_msg.length() == 0) add_msg = sel;
                     else add_msg = add_msg + "," + sel;
                 }

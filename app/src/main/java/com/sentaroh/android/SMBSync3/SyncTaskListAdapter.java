@@ -254,15 +254,15 @@ public class SyncTaskListAdapter extends ArrayAdapter<SyncTaskItem> {
                 if (ThemeUtil.isLightThemeUsed(mContext)) holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
                 else holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
             } else {
-                if (o.getLastSyncResult() == HistoryListItem.SYNC_RESULT_STATUS_SUCCESS) {
+                if (o.getLastSyncResult() == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SUCCESS) {
                     result = mTaskStatusSuccess;
-                } else if (o.getLastSyncResult() == HistoryListItem.SYNC_RESULT_STATUS_CANCEL) {
+                } else if (o.getLastSyncResult() == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_CANCEL) {
                     result = mTaskSttatusCancel;
-                } else if (o.getLastSyncResult() == HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
+                } else if (o.getLastSyncResult() == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
                     result = mTaskStatusError;
-                } else if (o.getLastSyncResult() == HistoryListItem.SYNC_RESULT_STATUS_WARNING) {
+                } else if (o.getLastSyncResult() == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_WARNING) {
                     result = mTaskStatusWarning;
-                } else if (o.getLastSyncResult() == HistoryListItem.SYNC_RESULT_STATUS_SKIP) {
+                } else if (o.getLastSyncResult() == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SKIP) {
                     result = mTaskStatusSkip;
                 }
             }

@@ -131,13 +131,13 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncDifferentFileSizeGreaterThanDestinationFile() {return syncOptionDeterminChangedFileSizeGreaterThanDestinationFile;}
     public void setSyncDifferentFileSizeGreaterThanTagetFile(boolean p) {syncOptionDeterminChangedFileSizeGreaterThanDestinationFile = p;}
 
-    private ArrayList<FilterListItem> syncFileNameFilter = new ArrayList<FilterListItem>();
-    public ArrayList<FilterListItem> getFileNameFilter() {return syncFileNameFilter;}
-    public void setFileNameFilter(ArrayList<FilterListItem> p) {syncFileNameFilter = p;}
+    private ArrayList<FilterListAdapter.FilterListItem> syncFileNameFilter = new ArrayList<FilterListAdapter.FilterListItem>();
+    public ArrayList<FilterListAdapter.FilterListItem> getFileNameFilter() {return syncFileNameFilter;}
+    public void setFileNameFilter(ArrayList<FilterListAdapter.FilterListItem> p) {syncFileNameFilter = p;}
 
-    private ArrayList<FilterListItem> syncDirectoryFilter = new ArrayList<FilterListItem>();
-    public ArrayList<FilterListItem> getDirectoryFilter() {return syncDirectoryFilter;}
-    public void setDirectoryFilter(ArrayList<FilterListItem> p) {syncDirectoryFilter = p;}
+    private ArrayList<FilterListAdapter.FilterListItem> syncDirectoryFilter = new ArrayList<FilterListAdapter.FilterListItem>();
+    public ArrayList<FilterListAdapter.FilterListItem> getDirectoryFilter() {return syncDirectoryFilter;}
+    public void setDirectoryFilter(ArrayList<FilterListAdapter.FilterListItem> p) {syncDirectoryFilter = p;}
 
     private boolean syncOptionRootDirFileToBeProcessed = true;
     public boolean isSyncProcessRootDirFile() {return syncOptionRootDirFileToBeProcessed;}
@@ -236,14 +236,14 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getSyncOptionWifiStatusOption() {return syncOptionWifiStatus;}
     public void setSyncOptionWifiStatusOption(String p) {syncOptionWifiStatus = p;}
 
-    private ArrayList<FilterListItem> syncOptionWifiAccessPointGrantList = new ArrayList<FilterListItem>();
-    public ArrayList<FilterListItem> getSyncOptionWifiAccessPointGrantList() {return syncOptionWifiAccessPointGrantList;}
-    public void setSyncOptionWifiAccessPointGrantList(ArrayList<FilterListItem> p) {
+    private ArrayList<FilterListAdapter.FilterListItem> syncOptionWifiAccessPointGrantList = new ArrayList<FilterListAdapter.FilterListItem>();
+    public ArrayList<FilterListAdapter.FilterListItem> getSyncOptionWifiAccessPointGrantList() {return syncOptionWifiAccessPointGrantList;}
+    public void setSyncOptionWifiAccessPointGrantList(ArrayList<FilterListAdapter.FilterListItem> p) {
         syncOptionWifiAccessPointGrantList = p;}
 
-    private ArrayList<FilterListItem> syncOptionWifiIPAddressGrantList = new ArrayList<FilterListItem>();
-    public ArrayList<FilterListItem> getSyncOptionWifiIPAddressGrantList() {return syncOptionWifiIPAddressGrantList;}
-    public void setSyncOptionWifiIPAddressGrantList(ArrayList<FilterListItem> p) {
+    private ArrayList<FilterListAdapter.FilterListItem> syncOptionWifiIPAddressGrantList = new ArrayList<FilterListAdapter.FilterListItem>();
+    public ArrayList<FilterListAdapter.FilterListItem> getSyncOptionWifiIPAddressGrantList() {return syncOptionWifiIPAddressGrantList;}
+    public void setSyncOptionWifiIPAddressGrantList(ArrayList<FilterListAdapter.FilterListItem> p) {
         syncOptionWifiIPAddressGrantList = p;}
 
     private boolean syncOptionSyncOnlyCharging = false;
@@ -500,7 +500,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public final static String TEMPLATE_ORIGINAL_NAME = "%ORIGINAL-NAME%";
 
-    public final static String[] TEMPLATE =new String[]{
+    public final static String[] TEMPLATES =new String[]{
             TEMPLATE_TAKEN_DATE,
             TEMPLATE_TAKEN_TIME,
             TEMPLATE_TAKEN_YEAR,
@@ -541,7 +541,8 @@ class SyncTaskItem implements Serializable, Cloneable {
             TEMPLATE_TAKEN_MIN,
             TEMPLATE_TAKEN_SEC,
             TEMPLATE_TAKEN_WEEK_NUMBER,
-            TEMPLATE_TAKEN_WEEK_DAY, TEMPLATE_TAKEN_WEEK_DAY_LONG,
+            TEMPLATE_TAKEN_WEEK_DAY,
+            TEMPLATE_TAKEN_WEEK_DAY_LONG
     };
 
     public final static String[] TEMPLATE_EXECS =new String[]{
@@ -556,7 +557,8 @@ class SyncTaskItem implements Serializable, Cloneable {
             TEMPLATE_EXEC_MIN,
             TEMPLATE_EXEC_SEC,
             TEMPLATE_EXEC_WEEK_NUMBER,
-            TEMPLATE_EXEC_WEEK_DAY,TEMPLATE_EXEC_WEEK_DAY_LONG,
+            TEMPLATE_EXEC_WEEK_DAY,
+            TEMPLATE_EXEC_WEEK_DAY_LONG
     };
 
     public final static int ARCHIVE_SUFFIX_DIGIT_NOT_USED = 0;
@@ -606,11 +608,11 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncTaskRunning() {return syncTaskIsRunning;}
 
     private int syncLastSyncResult = 0;
-    static public final int SYNC_RESULT_STATUS_SUCCESS = HistoryListItem.SYNC_RESULT_STATUS_SUCCESS;
-    static public final int SYNC_RESULT_STATUS_CANCEL = HistoryListItem.SYNC_RESULT_STATUS_CANCEL;
-    static public final int SYNC_RESULT_STATUS_ERROR = HistoryListItem.SYNC_RESULT_STATUS_ERROR;
-    static public final int SYNC_RESULT_STATUS_WARNING = HistoryListItem.SYNC_RESULT_STATUS_WARNING;
-    static public final int SYNC_RESULT_STATUS_SKIP = HistoryListItem.SYNC_RESULT_STATUS_SKIP;
+    static public final int SYNC_RESULT_STATUS_SUCCESS = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SUCCESS;
+    static public final int SYNC_RESULT_STATUS_CANCEL = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_CANCEL;
+    static public final int SYNC_RESULT_STATUS_ERROR = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR;
+    static public final int SYNC_RESULT_STATUS_WARNING = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_WARNING;
+    static public final int SYNC_RESULT_STATUS_SKIP = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SKIP;
     static public final int SYNC_RESULT_STATUS_DEFAULT = SYNC_RESULT_STATUS_SUCCESS;
     static public final String SYNC_RESULT_STATUS_DEFAULT_DESCRIPTION = "SUCCESS";
     public final static int[] SYNC_RESULT_STATUS_LIST = new int[]{SYNC_RESULT_STATUS_SUCCESS, SYNC_RESULT_STATUS_CANCEL, SYNC_RESULT_STATUS_ERROR, SYNC_RESULT_STATUS_WARNING};
@@ -767,28 +769,28 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncOptionSyncOnlyCharging==sti.isSyncOptionSyncWhenCharging())) {
 
                     String ff_cmp1 = "";
-                    for (FilterListItem item : syncFileNameFilter) ff_cmp1 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : syncFileNameFilter) ff_cmp1 += item.toString()+" ";
 
                     String ff_cmp2 = "";
-                    for (FilterListItem item : sti.getFileNameFilter()) ff_cmp2 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : sti.getFileNameFilter()) ff_cmp2 += item.toString()+" ";
 
                     String df_cmp1 = "";
-                    for (FilterListItem item : syncDirectoryFilter) df_cmp1 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : syncDirectoryFilter) df_cmp1 += item.toString()+" ";
 
                     String df_cmp2 = "";
-                    for (FilterListItem item : sti.getDirectoryFilter()) df_cmp2 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : sti.getDirectoryFilter()) df_cmp2 += item.toString()+" ";
 
                     String wap_cmp1 = "";
-                    for (FilterListItem item : syncOptionWifiAccessPointGrantList) wap_cmp1 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : syncOptionWifiAccessPointGrantList) wap_cmp1 += item.toString()+" ";
 
                     String wap_cmp2 = "";
-                    for (FilterListItem item : sti.getSyncOptionWifiAccessPointGrantList()) wap_cmp2 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : sti.getSyncOptionWifiAccessPointGrantList()) wap_cmp2 += item.toString()+" ";
 
                     String wad_cmp1 = "";
-                    for (FilterListItem item : syncOptionWifiIPAddressGrantList) wad_cmp1 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : syncOptionWifiIPAddressGrantList) wad_cmp1 += item.toString()+" ";
 
                     String wad_cmp2 = "";
-                    for (FilterListItem item : sti.getSyncOptionWifiIPAddressGrantList()) wad_cmp2 += item.toString()+" ";
+                    for (FilterListAdapter.FilterListItem item : sti.getSyncOptionWifiIPAddressGrantList()) wad_cmp2 += item.toString()+" ";
 
                     if ((ff_cmp1.equals(ff_cmp2)) &&
                             (df_cmp1.equals(df_cmp2)) &&

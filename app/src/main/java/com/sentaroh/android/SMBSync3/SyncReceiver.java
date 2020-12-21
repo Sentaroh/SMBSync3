@@ -74,7 +74,7 @@ public class SyncReceiver extends BroadcastReceiver {
                     action.equals(Intent.ACTION_TIME_CHANGED) ||
                     action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
                 if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                for (ScheduleListItem si : mGp.syncScheduleList) si.scheduleLastExecTime = System.currentTimeMillis();
+                for (ScheduleListAdapter.ScheduleListItem si : mGp.syncScheduleList) si.scheduleLastExecTime = System.currentTimeMillis();
                 TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                 ScheduleUtils.setTimer(mContext, mGp, mLog);
             } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||

@@ -95,7 +95,7 @@ public class TaskListImportFromSMBSync2 {
     }
 
     static public void buildSyncTaskList(Context c, GlobalParameters gp, CommonUtilities mUtil,
-                                         SafFile3 sf, String private_key, ArrayList<SyncTaskItem>sync_task, ArrayList<ScheduleListItem>sync_sched) {
+                                         SafFile3 sf, String private_key, ArrayList<SyncTaskItem>sync_task, ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched) {
         ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
         boolean loaded=loadSyncTaskListFromFile(c, gp, mUtil, sf, private_key, sync_task, sync_setting);
 
@@ -190,7 +190,7 @@ public class TaskListImportFromSMBSync2 {
     public static final String SCHEDULER_SEPARATOR_ITEM = "\u0002";
 
     final private static String SMBSYNC2_TASK_END_MARK="end";
-    final static public void loadScheduleListV5(GlobalParameters gp, String v5_data, ArrayList<ScheduleListItem>sync_sched) {
+    final static public void loadScheduleListV5(GlobalParameters gp, String v5_data, ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched) {
         String[] sd_array = v5_data.split(SCHEDULER_SEPARATOR_ENTRY);
         int nc=0;
         for (String sd_sub : sd_array) {
@@ -198,7 +198,7 @@ public class TaskListImportFromSMBSync2 {
             String[] sub_array = sd_sub.split(SCHEDULER_SEPARATOR_ITEM);
             if (sub_array.length >= 14) {
                 for (String item : sub_array) item = item.replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
-                ScheduleListItem si = new ScheduleListItem();
+                ScheduleListAdapter.ScheduleListItem si = new ScheduleListAdapter.ScheduleListItem();
                 si.scheduleEnabled = sub_array[0].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 String sched_name=sub_array[1].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 String unusable=SyncConfiguration.hasUnusableCharacter(sched_name);
@@ -277,17 +277,17 @@ public class TaskListImportFromSMBSync2 {
         }
 
         if (parm[0].equals(SMBSYNC2_PROF_TYPE_SYNC)) {//Sync
-            ArrayList<FilterListItem> ff = new ArrayList<FilterListItem>();
-            ArrayList<FilterListItem> df = new ArrayList<FilterListItem>();
+            ArrayList<FilterListAdapter.FilterListItem> ff = new ArrayList<FilterListAdapter.FilterListItem>();
+            ArrayList<FilterListAdapter.FilterListItem> df = new ArrayList<FilterListAdapter.FilterListItem>();
 //            ArrayList<FilterListItem> wifi_ap_list = new ArrayList<FilterListItem>();
-            ArrayList<FilterListItem> wifi_addr_list = new ArrayList<FilterListItem>();
+            ArrayList<FilterListAdapter.FilterListItem> wifi_addr_list = new ArrayList<FilterListAdapter.FilterListItem>();
             ff.clear();
             if (list1.length() != 0) {//File filter
                 String[] fp = list1.split("\t");
                 for (int i = 0; i < fp.length; i++) {
                     String filter=convertToSpecChar(fp[i]);
                     if (filter.length()>=2) {
-                        FilterListItem fli=new FilterListItem();
+                        FilterListAdapter.FilterListItem fli=new FilterListAdapter.FilterListItem();
                         String filter_include=filter.substring(0,1);
                         String filter_val=filter.substring(1);
                         if (filter_include.equals("I")) fli.setInclude(true);
@@ -305,7 +305,7 @@ public class TaskListImportFromSMBSync2 {
                 for (int i = 0; i < dp.length; i++) {
                     String filter=convertToSpecChar(dp[i]);
                     if (filter.length()>=2) {
-                        FilterListItem fli=new FilterListItem();
+                        FilterListAdapter.FilterListItem fli=new FilterListAdapter.FilterListItem();
                         String filter_include=filter.substring(0,1);
                         String filter_val=filter.substring(1);
                         if (filter_include.equals("I")) fli.setInclude(true);
@@ -342,7 +342,7 @@ public class TaskListImportFromSMBSync2 {
                 for (int i = 0; i < al.length; i++) {
                     String filter=convertToSpecChar(al[i]);
                     if (filter.length()>=2) {
-                        FilterListItem fli=new FilterListItem();
+                        FilterListAdapter.FilterListItem fli=new FilterListAdapter.FilterListItem();
                         String filter_include=filter.substring(0,1);
                         String filter_val=filter.substring(1);
                         if (filter_include.equals("I")) fli.setInclude(true);

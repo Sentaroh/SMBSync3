@@ -439,7 +439,7 @@ public final class CommonUtilities {
                 PrintWriter pw=new PrintWriter(bos);
                 StringBuffer sb=new StringBuffer(1024*5);
                 synchronized (gp.syncMessageList) {
-                    for (MessageListItem smi:gp.syncMessageList) {
+                    for (MessageListAdapter.MessageListItem smi:gp.syncMessageList) {
                         sb.setLength(0);
                         sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getCategory()).append(LIST_ITEM_SEPARATOR); //msgCat
                         sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getDate()).append(LIST_ITEM_SEPARATOR); //msgDate
@@ -460,9 +460,9 @@ public final class CommonUtilities {
         }
     }
 
-    synchronized static public ArrayList<MessageListItem> loadMessageList(Context c, GlobalParameters gp) {
+    synchronized static public ArrayList<MessageListAdapter.MessageListItem> loadMessageList(Context c, GlobalParameters gp) {
         long b_time= System.currentTimeMillis();
-        ArrayList<MessageListItem> result=new ArrayList<MessageListItem>(GlobalParameters.MESSAGE_LIST_INITIAL_VALUE);
+        ArrayList<MessageListAdapter.MessageListItem> result=new ArrayList<MessageListAdapter.MessageListItem>(GlobalParameters.MESSAGE_LIST_INITIAL_VALUE);
         try {
             SafFile3 mf =new SafFile3(c, gp.settingAppManagemsntDirectoryName + "/.messages");
             if (mf!=null && mf.exists()) {
@@ -472,7 +472,7 @@ public final class CommonUtilities {
                 while((line=bir.readLine())!=null) {
                     String[] msg_array=line.split(LIST_ITEM_SEPARATOR);
                     if (msg_array.length>=7) {
-                        MessageListItem smi = new MessageListItem(
+                        MessageListAdapter.MessageListItem smi = new MessageListAdapter.MessageListItem(
                                 msg_array[0].replace(LIST_ITEM_DUMMY_DATA, ""),//Cat
                                 msg_array[1].replace(LIST_ITEM_DUMMY_DATA, ""), //msgDate
                                 msg_array[2].replace(LIST_ITEM_DUMMY_DATA, ""), //msgTime
@@ -506,7 +506,7 @@ public final class CommonUtilities {
         String[] dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(System.currentTimeMillis()).split(" ");
 
         //addDebugMsg(2, "I", "cat=" + cat," dt[0]=" + dt[0] + " dt[1]=" + dt[1] + " title=" + title + " finalMsg=" + finalMsg + " path=" + path + " type=" + type);
-        final MessageListItem mli = new MessageListItem(cat, dt[0], dt[1], title, finalMsg, path, result_type);
+        final MessageListAdapter.MessageListItem mli = new MessageListAdapter.MessageListItem(cat, dt[0], dt[1], title, finalMsg, path, result_type);
         if (ui_thread) {
             putMsgListArray(mli);
         } else {
@@ -527,7 +527,7 @@ public final class CommonUtilities {
         addLogMsg(true, false, false, false, cat, task, "", "", msg);
     }
 
-    private void putMsgListArray(MessageListItem mli) {
+    private void putMsgListArray(MessageListAdapter.MessageListItem mli) {
         synchronized (mGp.syncMessageList) {
             if (mGp.syncMessageList.size() > (MAX_MSG_COUNT + 200)) {
                 for (int i = 0; i < 200; i++) mGp.syncMessageList.remove(0);
@@ -867,9 +867,9 @@ public final class CommonUtilities {
         });
     }
 
-    public ArrayList<HistoryListItem> loadHistoryList() {
+    public ArrayList<HistoryListAdapter.HistoryListItem> loadHistoryList() {
         long b_time=System.currentTimeMillis();
-        ArrayList<HistoryListItem> hl = new ArrayList<HistoryListItem>(GlobalParameters.HISTORY_LIST_INITIAL_VALUE);
+        ArrayList<HistoryListAdapter.HistoryListItem> hl = new ArrayList<HistoryListAdapter.HistoryListItem>(GlobalParameters.HISTORY_LIST_INITIAL_VALUE);
         try {
             SafFile3 lf =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName + "/.history");
             if (lf.exists()) {
@@ -880,7 +880,7 @@ public final class CommonUtilities {
                 while ((line = bir.readLine()) != null) {
                     l_array = line.split(LIST_ITEM_SEPARATOR);
                     if (l_array != null && l_array.length >= 16 && !l_array[3].equals("")) {
-                        HistoryListItem hli = new HistoryListItem();
+                        HistoryListAdapter.HistoryListItem hli = new HistoryListAdapter.HistoryListItem();
                         try {
                             hli.sync_date = l_array[0];
                             hli.sync_time = l_array[1];
@@ -907,9 +907,9 @@ public final class CommonUtilities {
                 }
                 bir.close();
                 if (hl.size() > 1) {
-                    Collections.sort(hl, new Comparator<HistoryListItem>() {
+                    Collections.sort(hl, new Comparator<HistoryListAdapter.HistoryListItem>() {
                         @Override
-                        public int compare(HistoryListItem lhs, HistoryListItem rhs) {
+                        public int compare(HistoryListAdapter.HistoryListItem lhs, HistoryListAdapter.HistoryListItem rhs) {
                             if (rhs.sync_date.equals(lhs.sync_date)) {
                                 if (rhs.sync_time.equals(lhs.sync_time)) {
                                     return lhs.sync_task.compareToIgnoreCase(rhs.sync_task);
@@ -961,7 +961,7 @@ public final class CommonUtilities {
         return fp;
     }
 
-    final public void saveHistoryList(final ArrayList<HistoryListItem> hl) {
+    final public void saveHistoryList(final ArrayList<HistoryListAdapter.HistoryListItem> hl) {
         if (hl == null || (hl!=null && hl.size()==0)) return;
         try {
             SafFile3 df =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName);
@@ -976,8 +976,8 @@ public final class CommonUtilities {
 
             int max = 500;
             StringBuilder sb_buf = new StringBuilder(1024 * 2);
-            HistoryListItem shli = null;
-            final ArrayList<HistoryListItem> del_list = new ArrayList<HistoryListItem>();
+            HistoryListAdapter.HistoryListItem shli = null;
+            final ArrayList<HistoryListAdapter.HistoryListItem> del_list = new ArrayList<HistoryListAdapter.HistoryListItem>();
             for (int i = 0; i < hl.size(); i++) {
                 if (!hl.get(i).sync_task.equals("")) {
                     shli = hl.get(i);
