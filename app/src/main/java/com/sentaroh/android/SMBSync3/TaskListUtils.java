@@ -32,6 +32,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -75,6 +76,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX;
 import static com.sentaroh.android.SMBSync3.Constants.NAME_UNUSABLE_CHARACTER;
 
@@ -1232,11 +1234,19 @@ public class TaskListUtils {
             }
         });
 
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+            public boolean onKey(DialogInterface dialogInterface, int kc, KeyEvent keyEvent) {
+                switch (kc) {
+                    case KEYCODE_BACK:
+                        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            btn_cancel.performClick();
+                        }
+                        return true;
+                    default:
+                }
+
+                return false;
             }
         });
 
@@ -1464,13 +1474,23 @@ public class TaskListUtils {
                 }
             }
         });
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+            public boolean onKey(DialogInterface dialogInterface, int kc, KeyEvent keyEvent) {
+                switch (kc) {
+                    case KEYCODE_BACK:
+                        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            btn_cancel.performClick();
+                        }
+                        return true;
+                    default:
+                }
+
+                return false;
             }
         });
+
         // OKボタンの指定
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -1686,13 +1706,23 @@ public class TaskListUtils {
                 }
             }
         });
-        // Cancelリスナーの指定
-        dialog.setOnCancelListener(new Dialog.OnCancelListener() {
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
-            public void onCancel(DialogInterface arg0) {
-                btn_cancel.performClick();
+            public boolean onKey(DialogInterface dialogInterface, int kc, KeyEvent keyEvent) {
+                switch (kc) {
+                    case KEYCODE_BACK:
+                        if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                            btn_cancel.performClick();
+                        }
+                        return true;
+                    default:
+                }
+
+                return false;
             }
         });
+
         // OKボタンの指定
         btn_ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
