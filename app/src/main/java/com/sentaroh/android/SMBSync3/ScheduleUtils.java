@@ -97,20 +97,25 @@ class ScheduleUtils {
                     ", s_day="+s_day_temp+", s_hrs="+s_hrs+", s_min="+s_min+", result="+StringUtil.convDateTimeTo_YearMonthDayHourMinSec(result));
         } else if (sp.scheduleType.equals(ScheduleListAdapter.ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
             if (sp.scheduleLastExecTime == 0) {
-                if (!sp.scheduleIntervalFirstRunImmed) {
-                    sp.scheduleLastExecTime = System.currentTimeMillis();
-                    long nt = sp.scheduleLastExecTime;
-                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
-                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
-                    result = nt + s_min * (60 * 1000);
-                } else {
-                    sp.scheduleLastExecTime = System.currentTimeMillis();
-                    long nt = sp.scheduleLastExecTime;
-                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
-                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000) + (60 * 1000);
-                    else nt += 60 * 1000;
-                    result = nt;
-                }
+                sp.scheduleLastExecTime = System.currentTimeMillis();
+                long nt = sp.scheduleLastExecTime;
+                if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
+                    nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
+                result = nt + s_min * (60 * 1000);
+//                if (!sp.scheduleIntervalFirstRunImmed) {
+//                    sp.scheduleLastExecTime = System.currentTimeMillis();
+//                    long nt = sp.scheduleLastExecTime;
+//                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
+//                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000);
+//                    result = nt + s_min * (60 * 1000);
+//                } else {
+//                    sp.scheduleLastExecTime = System.currentTimeMillis();
+//                    long nt = sp.scheduleLastExecTime;
+//                    if ((sp.scheduleLastExecTime % (60 * 1000)) > 0)
+//                        nt = (sp.scheduleLastExecTime / (60 * 1000)) * (60 * 1000) + (60 * 1000);
+//                    else nt += 60 * 1000;
+//                    result = nt;
+//                }
             } else {
                 long nt = sp.scheduleLastExecTime;
                 long m_nt=0l;

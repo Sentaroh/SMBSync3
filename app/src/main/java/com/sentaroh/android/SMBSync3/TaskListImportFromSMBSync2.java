@@ -213,7 +213,7 @@ public class TaskListImportFromSMBSync2 {
                 si.scheduleHours = sub_array[4].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleMinutes = sub_array[5].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.scheduleDayOfTheWeek = sub_array[6].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
-                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
+//                si.scheduleIntervalFirstRunImmed = sub_array[7].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "").equals("1") ? true : false;
                 if (sub_array[8].length() > 0) si.scheduleLastExecTime = Long.valueOf(sub_array[8].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, ""));
                 si.syncTaskList = sub_array[9].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");
                 si.syncGroupList = sub_array[10].replace(SCHEDULER_SEPARATOR_DUMMY_DATA, "");

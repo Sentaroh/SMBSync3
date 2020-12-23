@@ -369,8 +369,6 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
         public String scheduleMinutes = "00";
         public String scheduleDayOfTheWeek = "0000000";
 
-        public boolean scheduleIntervalFirstRunImmed = true;
-
         public long scheduleLastExecTime = 0;
 
         public String syncTaskList = "";
@@ -400,28 +398,28 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
         public boolean isSame(ScheduleListItem new_item) {
             if (
                     this.scheduleEnabled ==new_item.scheduleEnabled &&
-                            this.scheduleName.equals(new_item.scheduleName) &&
-                            this.schedulePosition==new_item.schedulePosition &&
+                    this.scheduleName.equals(new_item.scheduleName) &&
+                    this.schedulePosition==new_item.schedulePosition &&
 
-                            this.scheduleType.equals(new_item.scheduleType) &&
-                            this.scheduleDay.equals(new_item.scheduleDay) &&
-                            this.scheduleHours.equals(new_item.scheduleHours) &&
-                            this.scheduleMinutes.equals(new_item.scheduleMinutes) &&
-                            this.scheduleDayOfTheWeek.equals(new_item.scheduleDayOfTheWeek) &&
+                    this.scheduleType.equals(new_item.scheduleType) &&
+                    this.scheduleDay.equals(new_item.scheduleDay) &&
+                    this.scheduleHours.equals(new_item.scheduleHours) &&
+                    this.scheduleMinutes.equals(new_item.scheduleMinutes) &&
+                    this.scheduleDayOfTheWeek.equals(new_item.scheduleDayOfTheWeek) &&
 
-                            this.scheduleIntervalFirstRunImmed==new_item.scheduleIntervalFirstRunImmed &&
+                    this.syncTaskList.equals(new_item.syncTaskList) &&
 
-                            this.syncTaskList.equals(new_item.syncTaskList) &&
+                    this.syncAutoSyncTask==new_item.syncAutoSyncTask &&
 
-                            this.syncAutoSyncTask==new_item.syncAutoSyncTask &&
+                    this.syncGroupList.equals(new_item.syncGroupList) &&
 
-                            this.syncGroupList.equals(new_item.syncGroupList) &&
+                    this.syncWifiOnBeforeStart==new_item.syncWifiOnBeforeStart &&
+                    this.syncWifiOffAfterEnd==new_item.syncWifiOffAfterEnd &&
+                    this.syncDelayAfterWifiOn==new_item.syncDelayAfterWifiOn &&
 
-                            this.syncWifiOnBeforeStart==new_item.syncWifiOnBeforeStart &&
-                            this.syncWifiOffAfterEnd==new_item.syncWifiOffAfterEnd &&
-                            this.syncDelayAfterWifiOn==new_item.syncDelayAfterWifiOn &&
+                    this.scheduleLastExecTime==new_item.scheduleLastExecTime &&
 
-                            this.syncOverrideOptionCharge.equals(new_item.syncOverrideOptionCharge)
+                    this.syncOverrideOptionCharge.equals(new_item.syncOverrideOptionCharge)
             ) {
                 return true;
             }

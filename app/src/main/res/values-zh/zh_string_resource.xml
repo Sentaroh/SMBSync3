@@ -666,7 +666,6 @@
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">请勿更改</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">已启用</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">残疾人</string>
-        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">它将使第一次同步与下一分钟。</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">重置时间间隔表时间。</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">计划时间：%s</string>
         <string name="msgs_scheduler_main_spinner_sched_type_prompt">选择计划类型</string>

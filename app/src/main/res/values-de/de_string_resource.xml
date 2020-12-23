@@ -665,7 +665,6 @@
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">Nicht ändern</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">Aktiviert</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">Behinderte</string>
-        <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_first_run_immed">Es wird die erste Synchronisierung mit der nächsten Minute vornehmen.</string>
         <string name="msgs_scheduler_main_dlg_hdr_interval_schedule_reset">Intervallplanzeit zurücksetzen.</string>
         <string name="msgs_scheduler_main_dlg_hdr_schedule_time">Zeitplanzeit : %s</string>
         <string name="msgs_scheduler_main_spinner_sched_type_prompt">Zeitplantyp auswählen</string>
