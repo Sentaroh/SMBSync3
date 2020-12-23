@@ -434,7 +434,7 @@
         <string name="msgs_task_sync_task_sync_option_error_title">エラーオプション</string>
         <string name="msgs_task_sync_task_sync_option_error_prompt">エラーオプションの選択</string>
         <string name="msgs_task_sync_task_sync_option_error_stop">同期を停止する</string>
-        <string name="msgs_task_sync_task_sync_option_error_skip_network">ネットワークオプションに適合しなくても後続タスクを開始する</string>
+        <string name="msgs_task_sync_task_sync_option_error_skip_network">ネットワークオプションでエラーとなった場合は後続タスクを開始する</string>
         <string name="msgs_task_sync_task_sync_option_error_ignore">全てのエラーを無視して後続タスクを開始する</string>
         <string name="msgs_task_sync_task_sync_option_error_ignore_warning_message">停止以外にすると同期タスクがエラーで終了しても後続のタスクを実行します。後続タスクを必ず実行したい場合の時だけ無効にしてください。</string>
         <string name="msgs_task_sync_task_sync_option_sub_dir">サブディレクトリーを処理する</string>
