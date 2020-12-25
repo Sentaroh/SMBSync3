@@ -92,7 +92,7 @@ public class ScheduleEditor {
     private ThemeColorList mThemeColorList = null;
 
     public ScheduleEditor(CommonUtilities mu, AppCompatActivity a, Context c, GlobalParameters gp,
-                          boolean edit_mode, ArrayList<ScheduleListAdapter.ScheduleListItem> sl, ScheduleListAdapter.ScheduleListItem si, NotifyEvent ntfy) {
+           boolean edit_mode, ArrayList<ScheduleListAdapter.ScheduleListItem> sl, ScheduleListAdapter.ScheduleListItem si, NotifyEvent ntfy) {
         mContext = c;
         mActivity = a;
         mGp = gp;
