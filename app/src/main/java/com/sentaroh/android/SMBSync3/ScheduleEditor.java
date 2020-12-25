@@ -119,24 +119,6 @@ public class ScheduleEditor {
 
     private boolean mScheduleChanged = false;
 
-//    private void setScheduleWasChanged(Dialog dialog, ScheduleListItem curr_si) {
-//        final Button btn_ok = (Button) dialog.findViewById(R.id.scheduler_main_dlg_ok);
-//        if (mInitialTime) {
-//            mScheduleChanged=!mEditMode;
-//        } else {
-////            Thread.dumpStack();
-//            ScheduleListItem new_si=curr_si.clone();
-//            buildSchedParms(dialog, new_si);
-//            if (mEditMode) mScheduleChanged = !curr_si.isSame(new_si);
-//            else mScheduleChanged=true;
-//            setViewEnabled(mActivity, btn_ok, mScheduleChanged);
-//        }
-//    }
-
-//    private boolean isScheduleWasChanged() {
-//        return mScheduleChanged;
-//    }
-
     private void setViewEnabled(Activity a, View v, boolean enabled) {
 //        mUtil.addDebugMsg(1, "I", "enabled="+enabled+", v="+v);
 //        Thread.dumpStack();
@@ -144,14 +126,12 @@ public class ScheduleEditor {
     }
     
     private void initDialog() {
-        // カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.schedule_sync_edit_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.schedule_edit_dlg_view);
-//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.schedule_edit_dlg_title_view);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
@@ -637,15 +617,6 @@ public class ScheduleEditor {
                 btn_cancel.performClick();
             }
         });
-
-//        Handler hndl = new Handler();
-//        hndl.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mInitialTime = false;
-//                setViewEnabled(mActivity, btn_ok, !mEditMode);
-//            }
-//        }, 500);
 
         dialog.show();
     }
@@ -1264,23 +1235,6 @@ public class ScheduleEditor {
         sp_sched_minutes.setSelection(sel);
         adapter.notifyDataSetChanged();
     }
-
-    ;
-
-//    private void loadScheduleData() {
-//    	mGp.scheduleInfoList = ScheduleUtil.loadScheduleData(mGp);
-//    	mSched=mGp.scheduleInfoList.get(0);
-//
-//    	mUtil.addDebugMsg(1,"I", CommonUtilities.getExecutedMethodName()+" type="+mSched.scheduleType+
-//    			", hours="+mSched.scheduleHours+
-//    			", minutes="+mSched.scheduleMinutes+
-//    			", dw="+mSched.scheduleDayOfTheWeek+
-//    			", sync_task="+mSched.syncTaskList+
-//				", Wifi On="+mSched.syncWifiOnBeforeStart+
-//				", Wifi Off="+mSched.syncWifiOffAfterEnd+
-//				", Wifi On dlayed="+mSched.syncDelayAfterWifiOn
-//    			);
-//    };
 
     private class SchedulerAdapterSyncList extends ArrayAdapter<String> {
         private int layout_id = 0;

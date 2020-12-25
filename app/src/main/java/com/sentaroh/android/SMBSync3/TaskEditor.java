@@ -3039,9 +3039,7 @@ public class TaskEditor extends DialogFragment {
 
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
         if (type.equals(TASK_EDIT_METHOD_EDIT)) {
-            et_sync_main_task_name.setTextColor(Color.LTGRAY);
             et_sync_main_task_name.setText(n_sti.getSyncTaskName());
-            CommonDialog.setViewEnabled(getActivity(), et_sync_main_task_name,false);
             et_sync_main_task_name.setVisibility(EditText.GONE);
             dlg_title.setText(mContext.getString(R.string.msgs_edit_sync_profile));
             dlg_title_sub.setText(" (" + n_sti.getSyncTaskName() + ")");
@@ -3052,7 +3050,7 @@ public class TaskEditor extends DialogFragment {
         } else if (type.equals(TASK_EDIT_METHOD_ADD)) {
             dlg_title.setText(mContext.getString(R.string.msgs_add_sync_profile));
             dlg_title_sub.setVisibility(TextView.GONE);
-            n_sti.setSyncOptionWifiStatusOption("0");
+            n_sti.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_OFF);
         }
 
         final LinearLayout ll_advanced_network_option_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_advanced_network_option_view);

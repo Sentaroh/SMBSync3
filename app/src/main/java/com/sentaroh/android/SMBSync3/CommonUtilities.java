@@ -938,9 +938,7 @@ public final class CommonUtilities {
         File tlf = new File(dir);
         if (!tlf.exists()) {
             boolean create = tlf.mkdirs();
-//            Log.v("","create="+create);
         }
-//		Log.v("","fp="+dir+", exists="+tlf.exists());
         String dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis()).replaceAll("/", "-").replaceAll(":", "").replaceAll(" ", "_");
         String fn = "result_" + syncProfName;
         if ((fn.length() + dt.length()) > 250) {//250 = 255-5 for "_" and ".txt" appended at end of file name
