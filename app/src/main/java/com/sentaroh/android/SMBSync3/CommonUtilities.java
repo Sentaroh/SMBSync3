@@ -930,35 +930,6 @@ public final class CommonUtilities {
         else return SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+uuid;
     }
 
-    //source: https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file
-    final private static String[] SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS=new String[]{"<", ">", ":", "\"", "/", "\\", "|", "?", "*", " "};
-    final private static String[] SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS_TAIL=new String[]{".", " "};
-    final public String createSyncResultFilePath(String syncProfName) {
-        String dir = mGp.settingAppManagemsntDirectoryName + "/result_log";
-        File tlf = new File(dir);
-        if (!tlf.exists()) {
-            boolean create = tlf.mkdirs();
-        }
-        String dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSec(System.currentTimeMillis()).replaceAll("/", "-").replaceAll(":", "").replaceAll(" ", "_");
-        String fn = "result_" + syncProfName;
-        if ((fn.length() + dt.length()) > 250) {//250 = 255-5 for "_" and ".txt" appended at end of file name
-            fn = fn.substring(0, 250 - dt.length());
-        }
-
-        fn += "_" + dt;
-        for(String invalid_str:SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS) {
-            fn = fn.replaceAll(Pattern.quote(invalid_str), "_");
-        }
-        for(String invalid_str:SMBSYNC2_PROF_SYNC_LOG_FILE_INVALID_CHARS_TAIL) {
-            if (fn.endsWith(invalid_str))
-                fn = fn.replaceFirst(Pattern.quote(invalid_str), "_");
-        }
-
-        fn+=".txt";
-        String fp = dir + "/" + fn;
-        return fp;
-    }
-
     final public void saveHistoryList(final ArrayList<HistoryListAdapter.HistoryListItem> hl) {
         if (hl == null || (hl!=null && hl.size()==0)) return;
         try {

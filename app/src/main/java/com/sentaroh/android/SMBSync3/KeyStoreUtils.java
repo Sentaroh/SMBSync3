@@ -43,7 +43,7 @@ class KeyStoreUtils {
 
     static final private String PROVIDER = "AndroidKeyStore";
 
-    public static boolean isStoredKeyExists(Context context, String alias) {
+    public static boolean isStoredKeyExists(Context c, String alias) {
         boolean result=false;
         try {
             KeyStore keyStore = KeyStore.getInstance(PROVIDER);
@@ -54,12 +54,12 @@ class KeyStoreUtils {
         return result;
     }
 
-    public static SecretKey getStoredKey(Context context, String alias) throws Exception {
+    public static SecretKey getStoredKey(Context c, String alias) throws Exception {
         if (log.isDebugEnabled()) log.debug("getStoredKey entered");
         KeyStore keyStore = KeyStore.getInstance(PROVIDER);
         keyStore.load(null);
         SecretKey privateKey =null;
-        if (!keyStore.containsAlias(alias)) {
+        if (!isStoredKeyExists(c, alias)) {
             KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, PROVIDER);
             keyGenerator.init(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT| KeyProperties.PURPOSE_DECRYPT)
                     .setCertificateSubject(new X500Principal("CN="+alias))
