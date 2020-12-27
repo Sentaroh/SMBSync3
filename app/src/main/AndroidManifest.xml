@@ -131,8 +131,9 @@
             android:excludeFromRecents="true">
         </activity>
 
-        <service android:name=".SyncService"
-            android:foregroundServiceType="dataSync|location"/>
+        <service
+            android:name=".SyncService"
+            android:foregroundServiceType="dataSync"/>
 
         <activity
             android:name=".ActivityShortcut"
