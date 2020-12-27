@@ -1,6 +1,6 @@
 ### SMBSync3
 
-Improved version of SMBSync2
+Improved version of [SMBSync2](https://github.com/Sentaroh/SMBSync2)
 
 ### Improvement
 
