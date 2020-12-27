@@ -133,7 +133,7 @@
         <string name="msgs_filter_list_filter_not_allowed_blank_with_asterisk">Нельзя использовать пробелы до и после \"*\".</string>
         <string name="msgs_filter_list_filter_not_allowed_multiple_back_slash">Вы не можете использовать \"\" кроме первого символа. Пожалуйста, удалите \"\", кроме первой буквы. Фильтр=%</string>
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Содержит непригодные символы. Символы =\"%1$s\", Фильтр = %2$s.</string>
-        <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\".\nФильтр=%</string>
+        <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\\\".\nФильтр=%</string>
         <string name="msgs_filter_list_invalid_ip_address">Недействительный IP-адрес.</string>
         <string name="msgs_filter_list_guide_directory">- include exp: cache/temp;my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_filter_list_guide_file">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
@@ -194,7 +194,7 @@
         <string name="msgs_main_sync_history_count_retry">Повтор:</string>
         <string name="msgs_main_sync_history_del_conf_all_history">Вы хотите удалить всю историю?</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">Вы хотите удалить следующую историю?</string>
-        <string name="msgs_main_sync_history_elapsed_time">Затраченное\u00a0время:</string>
+        <string name="msgs_main_sync_history_elapsed_time">Прошедшее время (сек):</string>
         <string name="msgs_main_sync_history_transfer_speed">Средняя скорость передачи:</string>
         <string name="msgs_main_sync_history_mode">Режим:</string>
         <string name="msgs_main_sync_history_mode_normal">Обычный</string>
@@ -314,8 +314,6 @@
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">Поисковый SMB-сервер</string>
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Разрешить использование внешнего хранилища</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Показать пароль</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">Протокол SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">Используйте SMB V1</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">Используйте SMB V2/3 </string>
@@ -1050,6 +1048,7 @@
             <item>Deutsch (de)</item>
             <item>English (en)</item>
             <item>Français (fr)</item>
+            <item>Italiano (it)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
             <item>中文 (zh)</item>
@@ -1059,6 +1058,7 @@
             <item>de</item>
             <item>en</item>
             <item>fr</item>
+            <item>it</item>
             <item>ja</item>
             <item>ru</item>
             <item>zh</item>
@@ -1111,6 +1111,6 @@
         <string name="settings_vibrate_when_sync_ended_summary_success">Включить уведомление вибрации для задач, которые успешно завершены</string>
         <string name="settings_vibrate_when_sync_ended_title">Вибрация уведомлений</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
-        <string name="settings_wifi_lock_summary_ena">Не давать уходить в сон Wi-Fi до завершенной синхронизации</string>
         <string name="settings_wifi_lock_title">Блокировка Wi-Fi</string>
+        <string name="settings_wifi_lock_summary_ena">Не давать уходить в сон Wi-Fi до завершенной синхронизации</string>
 </resources>

@@ -132,9 +132,9 @@
         <string name="msgs_filter_list_filter_not_allowed_asterisk_only">You cannot use the \"*\" only filter. Please specify like \"*abc\" etc.</string>
         <string name="msgs_filter_list_filter_not_allowed_multiple_asterisk">You can\'t use a filter with a series of \"*\" like \"**\". Please specify like \"*a*\".</string>
         <string name="msgs_filter_list_filter_not_allowed_blank_with_asterisk">You cannot use spaces before and after the\"*\".</string>
-        <string name="msgs_filter_list_filter_not_allowed_multiple_back_slash">You cannot use \"\" except for the first character. Please remove the \"\" except for the first letter. Filter=%s</string>
+        <string name="msgs_filter_list_filter_not_allowed_multiple_back_slash">You cannot use \"\\\" except for the first character. Please remove the \"\\\" except for the first letter. Filter=%s</string>
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Contains unusable characters. Characters=\"%1$s\", Filter=%2$s</string>
-        <string name="msgs_filter_list_match_any_where_change_to_exclude">Changed the filter to exclude it from being selected because it contains a \"\".\nFilter=%s</string>
+        <string name="msgs_filter_list_match_any_where_change_to_exclude">Changed the filter to exclude it from being selected because it contains a \"\\".\nFilter=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">Invalid IP address.</string>
         <string name="msgs_filter_list_guide_directory">- include exp: cache/temp;my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_filter_list_guide_file">- filter all files with specific name: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
@@ -195,7 +195,7 @@
         <string name="msgs_main_sync_history_count_retry">Retry:</string>
         <string name="msgs_main_sync_history_del_conf_all_history">Do you want to delete all history?</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">Do you want to delete the following history items?</string>
-        <string name="msgs_main_sync_history_elapsed_time">Elapsed\u00a0time:</string>
+        <string name="msgs_main_sync_history_elapsed_time">Elapsed time(Sec):</string>
         <string name="msgs_main_sync_history_transfer_speed">Average transfer rate:</string>
         <string name="msgs_main_sync_history_mode">Mode:</string>
         <string name="msgs_main_sync_history_mode_normal">Normal</string>
@@ -315,8 +315,6 @@
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">Search SMB server</string>
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Allow use to external storage</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Show password</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">Use SMB V1</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">Use SMB V2/3</string>
@@ -1055,6 +1053,7 @@
             <item>Deutsch (de)</item>
             <item>English (en)</item>
             <item>Français (fr)</item>
+            <item>Italiano (it)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
             <item>中文 (zh)</item>
@@ -1064,6 +1063,7 @@
             <item>de</item>
             <item>en</item>
             <item>fr</item>
+            <item>it</item>
             <item>ja</item>
             <item>ru</item>
             <item>zh</item>
@@ -1116,6 +1116,6 @@
         <string name="settings_vibrate_when_sync_ended_summary_success">Vibrate on notification for tasks that complete successfully</string>
         <string name="settings_vibrate_when_sync_ended_title">Vibrate on Notifications</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
-        <string name="settings_wifi_lock_summary_ena">Keep the Wi-Fi radio awake until sync is completed</string>
         <string name="settings_wifi_lock_title">Wi-Fi Locking</string>
+        <string name="settings_wifi_lock_summary_ena">Keep the Wi-Fi radio awake until sync is completed</string>
 </resources>

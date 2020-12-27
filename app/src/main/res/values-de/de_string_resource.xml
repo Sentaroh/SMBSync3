@@ -314,8 +314,6 @@
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">SMB-Server durchsuchen</string>
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Verwendung für externe Speicherung erlauben</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Passwort anzeigen</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMB-Protokoll</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">SMB V1 verwenden</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">SMB V2/3 verwenden</string>
@@ -1054,6 +1052,7 @@
             <item>Deutsch (de)</item>
             <item>English (en)</item>
             <item>Français (fr)</item>
+            <item>Italiano (it)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
             <item>中文 (zh)</item>
@@ -1063,6 +1062,7 @@
             <item>de</item>
             <item>en</item>
             <item>fr</item>
+            <item>it</item>
             <item>ja</item>
             <item>ru</item>
             <item>zh</item>
@@ -1115,6 +1115,6 @@
         <string name="settings_vibrate_when_sync_ended_summary_success">Aktivieren der Benachrichtigungsvibration für Aufgaben, die erfolgreich abgeschlossen werden</string>
         <string name="settings_vibrate_when_sync_ended_title">Benachrichtigung Vibration</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
-        <string name="settings_wifi_lock_summary_ena">Um das Wi-Fi-Funkgerät bis zum Abschluss der Synchronisierung wach zu halten</string>
         <string name="settings_wifi_lock_title">Wi-Fi-Sperrung</string>
+        <string name="settings_wifi_lock_summary_ena">Um das Wi-Fi-Funkgerät bis zum Abschluss der Synchronisierung wach zu halten</string>
 </resources>

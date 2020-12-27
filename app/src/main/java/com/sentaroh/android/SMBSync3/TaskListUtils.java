@@ -1110,8 +1110,9 @@ public class TaskListUtils {
                 if (s.length() != 0) {
 //                    guide_view.setVisibility(ScrollView.VISIBLE);
                     dirbtn.setVisibility(Button.GONE);
-                    lv.setVisibility(ListView.GONE);
+//                    lv.setVisibility(ListView.GONE);
                     parent_view.requestLayout();
+                    ll_dlg_view.requestLayout();
                     String filter= StringUtil.removeRedundantCharacter(s.toString(), ";", true, true);
                     String[]filter_array=filter.split(";");
                     String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mContext, filter);
@@ -1398,7 +1399,7 @@ public class TaskListUtils {
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
 //                    guide_view.setVisibility(ScrollView.VISIBLE);
-                    lv.setVisibility(ListView.GONE);
+//                    lv.setVisibility(ListView.GONE);
                     parent_view.requestLayout();
 
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
@@ -1606,7 +1607,7 @@ public class TaskListUtils {
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
 //                    guide_view.setVisibility(ScrollView.VISIBLE);
-                    lv.setVisibility(ListView.GONE);
+//                    lv.setVisibility(ListView.GONE);
                     parent_view.requestLayout();
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
                     String error_message= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mContext, new_filter);

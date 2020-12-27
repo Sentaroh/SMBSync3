@@ -131,9 +131,9 @@
         <string name="msgs_filter_list_filter_not_allowed_asterisk_only">Vous ne pouvez pas utiliser le filtre \"*\" seulement. Veuillez préciser comme \"*abc\" etc.</string>
         <string name="msgs_filter_list_filter_not_allowed_multiple_asterisk">\"**\"Les filtres avec une série de \"*\" ne sont pas autorisés, comme \"*a*\". Veuillez préciser comme \"*a*\".</string>
         <string name="msgs_filter_list_filter_not_allowed_blank_with_asterisk">Vous ne pouvez pas utiliser d\'espaces avant et après le \"*\".</string>
-        <string name="msgs_filter_list_filter_not_allowed_multiple_back_slash">Vous ne pouvez pas utiliser \"\" sauf pour le premier caractère. Veuillez supprimer le \"\", sauf pour la première lettre. Filtre=%s</string>
+        <string name="msgs_filter_list_filter_not_allowed_multiple_back_slash">Vous ne pouvez pas utiliser \"\\\" sauf pour le premier caractère. Veuillez supprimer le \"\\\", sauf pour la première lettre. Filtre=%s</string>
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Contient des caractères inutilisables. Caractères=\"%1$s\", Filtre=%2$s</string>
-        <string name="msgs_filter_list_match_any_where_change_to_exclude">Le filtre a été modifié pour l\'empêcher d\'être sélectionné parce qu\'il contient un \"\".\nFiltre=%s</string>
+        <string name="msgs_filter_list_match_any_where_change_to_exclude">Le filtre a été modifié pour l\'empêcher d\'être sélectionné parce qu\'il contient un \"\\\".\nFiltre=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">Adresse IP invalide.</string>
         <string name="msgs_filter_list_guide_directory">- exp. inclure: mon/dossier;doss*/p?ivé\n- exclure tous les dossiers cache/tmp: \\cache/tmp\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
         <string name="msgs_filter_list_guide_file">- exp. de filtre: fichier1;*.txt;*.jpg;fichier*\n- les filtres peuvent être saisis en une seule ligne, séparés par \";\"\n- le filtre Exclure est prioritaire</string>
@@ -194,7 +194,7 @@
         <string name="msgs_main_sync_history_count_retry">Tentatives:</string>
         <string name="msgs_main_sync_history_del_conf_all_history">Voulez-vous supprimer tout l\'historique?</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">Voulez-vous supprimer ces éléments de l\'historique?</string>
-        <string name="msgs_main_sync_history_elapsed_time">Temps\u00a0écoulé:</string>
+        <string name="msgs_main_sync_history_elapsed_time">Temps écoulé (Sec) :</string>
         <string name="msgs_main_sync_history_transfer_speed">Vitesse de transfert:</string>
         <string name="msgs_main_sync_history_mode">Mode:</string>
         <string name="msgs_main_sync_history_mode_normal">Normal</string>
@@ -314,8 +314,6 @@
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">Rechercher un serveur SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Permettre l\'utilisation d\'un stockage externe</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Afficher le mot de passe</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_ipc_signing_enforced">SMB IPC Signing Enforced</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_use_smb2_negotiation">Use SMB2 negotiation</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">Protocole SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">Utiliser SMB V1</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">Utiliser SMB V2/3</string>
@@ -1057,6 +1055,7 @@
             <item>Deutsch (de)</item>
             <item>English (en)</item>
             <item>Français (fr)</item>
+            <item>Italiano (it)</item>
             <item>日本語 (ja)</item>
             <item>русский (ru)</item>
             <item>中文 (zh)</item>
@@ -1066,6 +1065,7 @@
             <item>de</item>
             <item>en</item>
             <item>fr</item>
+            <item>it</item>
             <item>ja</item>
             <item>ru</item>
             <item>zh</item>
@@ -1118,6 +1118,6 @@
         <string name="settings_vibrate_when_sync_ended_summary_success">Vibrer lors des notifications pour les tâches réussies</string>
         <string name="settings_vibrate_when_sync_ended_title">Vibration lors des Notifications</string>
         <string name="settings_wifi_lock">settings_wifi_lock</string>
-        <string name="settings_wifi_lock_summary_ena">Maintenir le Wi-Fi activé jusqu\'à la fin de la synchronisation</string>
         <string name="settings_wifi_lock_title">Verrouillage du Wi-Fi</string>
+        <string name="settings_wifi_lock_summary_ena">Maintenir le Wi-Fi activé jusqu\'à la fin de la synchronisation</string>
 </resources>
