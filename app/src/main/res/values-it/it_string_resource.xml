@@ -57,7 +57,7 @@
         <string name="msgs_help_sync_folder_smb_title">Aiuto Server SMB</string>
         <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_EN_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Aiuto file ZIP</string>
-        <string name="msgs_help_directory_filter_file">SMBSync3_Help_EN_cartella_filter.html</string>
+        <string name="msgs_help_directory_filter_file">SMBSync3_Help_EN_directory_filter.html</string>
         <string name="msgs_help_directory_filter_title">Aiuto per il filtro di cartella</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_EN_schedule.html</string>
         <string name="msgs_help_schedule_title">Aiuto per la programmazione</string>
