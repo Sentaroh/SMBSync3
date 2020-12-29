@@ -50,6 +50,8 @@ import java.util.zip.ZipOutputStream;
 
 import static com.sentaroh.android.SMBSync3.Constants.*;
 
+// Two way sync is not yet complete, so do not use it.
+
 public class TwoWaySyncFile {
     static public int syncTwowayInternalToInternal(SyncThread.SyncThreadWorkArea stwa, SyncTaskItem sti, String from_path, String to_path) {
         stwa.currSyncFileInfoList.clear();

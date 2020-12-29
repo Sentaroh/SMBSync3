@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+// Two way sync is not yet complete, so do not use it.
+
 class TwoWaySyncFileInfoItem {
     private boolean isPairAReferenced =false;
     private boolean isPairAUpdated =false;
