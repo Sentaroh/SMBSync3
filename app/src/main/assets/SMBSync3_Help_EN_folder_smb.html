@@ -9,7 +9,7 @@
 <p>Manually set the parameters for the SMB server. </p>
 <h3>Server host name/IP address</h3>
 <p>To specify SMB server name or IP address </p>
-<h3>SMBProtocol</h3>
+<h3>SMB Protocol</h3>
 <p>You can specify SMB protocol.</p>
 <ul>
 <li>Use SMB V1</li>
@@ -20,7 +20,7 @@
 <p>Specify if the port number of the standard is not available. The standard port number is 139/tcp and 445/tcp. </p>
 <h3>Use Account name and password</h3>
 <p>It specifies whether to use the SMB server account name and password</p>
-<p>The account name is a local account on the SMB server. You cannot use a Microsoft account. </p>
+<p>The account name is a local account on the SMB server. <span style="color: red;"><u>Microsoft account is not available.</u></span> </p>
 <h3>Account name</h3>
 <p>To specify account name for SMB server. </p>
 <h3>Password</h3>
@@ -32,7 +32,7 @@
 <h3>Edit directory name parameters(Hidden in master directory)</h3>
 <p>The date and time <strong>can be included in the target directory</strong>. Variables are converted to date when synchronization starts. Please confirm the details of the variable by pressing &quot;Edit directory name parameter&quot;. </p>
 <h3>Directory</h3>
-<p>To specify directory for SMB host.If the target directory does not exist, it will be created at the time of synchronization.</p>
+<p>To specify directory for SMB host. If the target directory does not exist, it will be created at the time of synchronization.</p>
 <p>Note: Under the following conditions, it becomes a circular reference and loops. Specify a directory filter or specify a directory on the master side that is different from the target.</p>
 <ul>
 <li>No directory specified when the same SMB server is specified for master and target</li>
@@ -40,11 +40,11 @@
 
 </ul>
 <p><strong>The following is only displayed when the synchronization type is Archive.</strong></p>
-<h3>Do not create a source directory in the destination directory</h3>
+<h3>Save all  files in the destination directory without creating subdirectories</h3>
 <p>If checked, the destination directory will not create a subdirectory in the source directory.</p>
 <h3>To archive the</h3>
 <p>Select a file with a shooting date and time older than the archive execution date and time. (Regardless of the shooting date and time, the shooting date is 7 days or older, the shooting date is 30 days or older, the shooting date is 60 days or older, the shooting date is 90 days or older, the shooting date is 180 days or older, the shooting date is You can choose from more than one year old) </p>
-<h3>Sequence number</h3>
+<h3>Increment  file names by appending</h3>
 <p>You can add a sequence number to the file name. </p>
 <h3>Edit file name parameter</h3>
 <p>To include the date and time in the file name, tap the button and edit.</p>

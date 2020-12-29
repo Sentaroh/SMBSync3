@@ -26,7 +26,7 @@ Specify if the port number of the standard is not available. The standard port n
 
 It specifies whether to use the SMB server account name and password
 
-The account name is a local account on the SMB server. You cannot use a Microsoft account. 
+The account name is a local account on the SMB server. <span style="color: red;"><u>Microsoft account is not available.</u></span> 
 
 ### Account name
 

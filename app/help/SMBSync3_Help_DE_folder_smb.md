@@ -26,7 +26,7 @@ Geben Sie an, wenn die Portnummer des Standards nicht verfügbar ist. Die Standa
 
 Legt fest, ob der Kontoname und das Passwort des SMB-Servers verwendet werden sollen
 
-Der Kontoname ist ein lokales Konto auf dem SMB-Server. Sie können kein Microsoft-Konto verwenden. 
+Der Kontoname ist ein lokales Konto auf dem SMB-Server.<span style="color: red;"><u>Microsoft-Konto ist nicht verfügbar.</u></span>  
 
 ### Kontoname
 

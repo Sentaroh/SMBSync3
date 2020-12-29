@@ -26,7 +26,7 @@ Specificare se il numero di porta dello standard non è disponibile. Il numero d
 
 Specifica se utilizzare il nome del conto del server SMB e la password
 
-Il nome del conto è un conto locale sul server SMB. Non è possibile utilizzare un account Microsoft. 
+Il nome del conto è un conto locale sul server SMB. <span style="color: red;"><u>Il conto Microsoft non è disponibile.</u></span>  
 
 ### Nome dell'account
 

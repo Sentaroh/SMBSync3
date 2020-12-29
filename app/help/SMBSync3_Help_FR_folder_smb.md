@@ -26,7 +26,7 @@ Précisez si le numéro de port de la norme n'est pas disponible. Le numéro de 
 
 Il précise s'il faut utiliser le nom de compte et le mot de passe du serveur SMB
 
-Le nom du compte est un compte local sur le serveur SMB. Vous ne pouvez pas utiliser un compte Microsoft. 
+Le nom du compte est un compte local sur le serveur SMB. <span style="color : red ;"><u>Le compte Microsoft n'est pas disponible.</u></span> 
 
 ### Nom du compte
 
