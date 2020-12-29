@@ -47,11 +47,11 @@ The app can export "2.1 Synchronization task list" to a file. You can password p
 - SMB server host name, IP address, port number, account name, password
 - App setting value 
 
-## 3. Purpose of use of data sent to app developers
+## 3.Purpose of use of data sent to app developers
 
 The data sent by the users of the app to the developer will be used only to solve problems with the app and will not be disclosed to anyone other than the developer.
 
-## 4. Permissions
+## 4.Permissions
 
 The app requires the following permissions.
 

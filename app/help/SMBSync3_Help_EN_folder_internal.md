@@ -7,17 +7,17 @@ Request permission to use external storage. If you format the MicroSD card, the 
 ### List Files
 Show directory list for local storage. 
 
-### Edit directory name parameters(Hidden in master directory)
+### Edit directory name parameters
 The date and time can be included in the target directory. Variables are converted to date when synchronization starts. Please confirm the details of the variable by pressing "Edit directory name parameter".
 
 ### Directory
 To specify directory for local storage. If the target directory does not exist, it will be created at the time of synchronization.
 Note: Under the following conditions, it becomes a circular reference and loops. Specify a directory filter or specify a directory on the master side that is different from the target.
 
-### No directory specified for master and target
-### No directory filter specified
+- No directory specified for master and target
+- No directory filter specified
 
-The following is only displayed when the synchronization type is Archive.
+### <u>The following is only displayed when the synchronization type is Archive.</u>
 ### Do not create a source directory in the destination directory
 If checked, the destination directory will not create a subdirectory in the source directory.
 ### To archive the

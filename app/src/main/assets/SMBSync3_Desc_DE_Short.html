@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync3_Desc_DE_Short</title></head>
+<body><h2>Funktion</h2>
+<p>SMBSync3 ist ein Android-Gerät den internen Speicher, MicroSD, USB-Flash und PC/NAS über WLAN mit SMBv1, SMBv2 oder SMBv3-Protokolle. Es ist ein Werkzeug zum Synchronisieren von Dateien. </p>
+<p><u><strong>Die Synchronisation erfolgt in einer Richtung von der Quelle zum Ziel</strong></u> und kann gespiegelt, verschoben, kopiert oder archiviert werden. Eine Kombination von Local storage(<u><strong>*1</strong></u>), SMB und ZIP ist möglich).  </p>
+<p>Die periodische Synchronisation kann durch die Zeitplanungsfunktion von SMBSync3 oder durch externe Anwendungen (Tasker, AutoMagic, etc.) initiiert werden.</p>
+<ul>
+<li><p>Spiegeln</p>
+<p>Das Quellverzeichnis und die Dateien werden delta-kopiert (<u><strong>*2</strong></u>) auf das Ziel, und nach Abschluss des Kopiervorgangs werden die Dateien und Verzeichnisse, die auf der Quellseite nicht vorhanden sind, gelöscht.</p>
+</li>
+<li><p>Verschieben</p>
+<p>Das Quellverzeichnis und die Dateien werden in einem Delta-Kopiervorgang (<u><strong>*2</strong></u>) auf die Zielseite kopiert, und nach Abschluss des Kopiervorgangs werden die Dateien auf der Quellseite gelöscht. (Die Datei mit demselben Namen, der Dateigröße und dem Änderungsdatum sind jedoch in der Quelle und im Ziel identisch, und die Datei wird nicht kopiert, und das Quellverzeichnis und die Datei werden nach Abschluss des Kopiervorgangs gelöscht).</p>
+</li>
+<li><p>Kopieren</p>
+<p>Delta-Kopiert(<u><strong>*2</strong></u>) die im Quellverzeichnis enthaltenen Dateien in das Ziel.</p>
+</li>
+<li><p>Archivieren</p>
+<p>Fotos und Videos, die im Quellverzeichnis enthalten sind, mit einem Datum und einer Uhrzeit von 7 Tagen ab dem Ausführungsdatum des Archivs gehen zum Ziel vor oder vor 30 Tagen, usw. (Sie können aber kein ZIP für das Ziel verwenden.)</p>
+</li>
+
+</ul>
+<p><u><strong>*1</strong></u> Der lokale Speicher kann entweder interner Speicher, MicroSD oder USB-Flash sein. </p>
+<p><u><strong>*2</strong></u> Die Differenzdatei ist eine der folgenden drei Bedingungen.  </p>
+<ol start='' >
+<li>Datei ist nicht vorhanden  </li>
+<li>Unterschiedliche Dateigrößen  </li>
+<li>Unterschiedlich über wenn letzte Aktualisierung 3 Sekunden</li>
+
+</ol>
+<p>Wenn es nicht erlaubt ist, die letzte Aktualisierungszeit der Datei durch die Anwendung zu ändern, wird die letzte Aktualisierungszeit der Datei in der Verwaltungsdatei aufgezeichnet und zur Beurteilung der Differenzdatei verwendet. Wenn Sie also eine andere Datei als SMBSync3 kopieren oder keine Verwaltungsdatei vorhanden ist, wird die Datei kopiert.</p>
+<h2>FAQs</h2>
+<p><a href='https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=sharing'>Bitte beachten Sie das PDF</a></p>
+<h2>Dokument</h2>
+<p><a href='https://drive.google.com/file/d/1gIsulxyGBY-Fl0Ki7BJ50gPFWx0iQ9Tm/view?usp=sharing'>Bitte beachten Sie das PDF</a></p>
+<h2>Bibliothek</h2>
+<ul>
+<li><a href='https://github.com/AgNO3/jcifs-ng'>jcifs-ng ClientLibrary</a></li>
+<li><a href='https://jcifs.samba.org/'>jcifs-1.3.17</a></li>
+<li><a href='http://www.lingala.net/zip4j.html'>Zip4J 2.2.3</a></li>
+<li><a href='https://code.google.com/archive/p/juniversalchardet/'>juniversalchardet-1.0.3</a></li>
+<li><a href='https://github.com/drewnoakes/metadata-extractor'>Metadata-extractor</a></li>
+
+</ul>
+</body>
+</html>

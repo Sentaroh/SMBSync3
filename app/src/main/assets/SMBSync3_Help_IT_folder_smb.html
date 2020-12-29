@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync3_Help_IT_folder_smb</title></head>
+<body><h3>Trovare e configurare il server SMB</h3>
+<p>Eseguire la scansione della rete e selezionare dall&#39;elenco dei server SMB da configurare. </p>
+<h3>Modifica i parametri del server SMB</h3>
+<p>Impostare manualmente i parametri per il server SMB. </p>
+<h3>Nome host del server/indirizzo IP</h3>
+<p>Per specificare il nome del server SMB o l&#39;indirizzo IP </p>
+<h3>Protocollo SMB</h3>
+<p>È possibile specificare il protocollo SMB.</p>
+<ul>
+<li>Utilizzare SMB V1</li>
+<li>Utilizzare SMB V2/3</li>
+
+</ul>
+<h3>Utilizzare il numero di porta</h3>
+<p>Specificare se il numero di porta dello standard non è disponibile. Il numero di porta standard è 139/tcp e 445/tcp. </p>
+<h3>Utilizzare il nome del conto e la password</h3>
+<p>Specifica se utilizzare il nome del conto del server SMB e la password</p>
+<p>Il nome del conto è un conto locale sul server SMB. Non è possibile utilizzare un account Microsoft. </p>
+<h3>Nome dell&#39;account</h3>
+<p>Per specificare il nome dell&#39;account per il server SMB. </p>
+<h3>Password</h3>
+<p>Per specificare la password per il server SMB. </p>
+<h3>Condividi la lista</h3>
+<p>Mostra il nome della condivisione per il server SMB.  </p>
+<h3>Elenca le directory</h3>
+<p>Mostra l&#39;elenco delle directory del server SMB.  </p>
+<h3>Modifica i parametri del nome della directory</h3>
+<p>La data e l&#39;ora <strong><u>può essere inclusa nella directory di destinazione</u></strong>. Le variabili vengono convertite in data all&#39;inizio della sincronizzazione. Si prega di confermare i dettagli della variabile premendo &quot;Modifica parametro nome della directory&quot;. </p>
+<h3>Directory</h3>
+<p>Per specificare la directory per l&#39;host SMB. Se la directory di destinazione non esiste, verrà creata al momento della sincronizzazione.</p>
+<p>Nota: Nelle seguenti condizioni, essa diventa un riferimento circolare ed è in loop. Specificare un filtro di directory o specificare una directory sul lato master che sia diversa dalla destinazione.</p>
+<ul>
+<li>Nessuna directory specificata quando lo stesso server SMB è specificato per il master e il target</li>
+<li>Nessun filtro di directory specificato</li>
+
+</ul>
+<h3><u>Il seguente viene visualizzato solo quando il tipo di sincronizzazione è Archive.</u></h3>
+<h3>Non creare una directory di origine nella directory di destinazione</h3>
+<p>Se spuntata, la directory di destinazione non creerà una sottodirectory nella directory di origine.</p>
+<h3>Per archiviare il file</h3>
+<p>Selezionare un file con data e ora di ripresa più vecchie della data e ora di esecuzione dell&#39;archivio. (Indipendentemente dalla data e dall&#39;ora di ripresa, la data di ripresa è di 7 giorni o più vecchia, la data di ripresa è di 30 giorni o più vecchia, la data di ripresa è di 60 giorni o più vecchia, la data di ripresa è di 90 giorni o più vecchia, la data di ripresa è di 180 giorni o più vecchia, la data di ripresa è di più di un anno) </p>
+<h3>Numero progressivo</h3>
+<p>È possibile aggiungere un numero di sequenza al nome del file. </p>
+<h3>Modifica il parametro del nome del file</h3>
+<p>Per includere la data e l&#39;ora nel nome del file, toccare il pulsante e modificare.</p>
+</body>
+</html>

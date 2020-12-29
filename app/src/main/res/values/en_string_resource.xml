@@ -63,8 +63,6 @@
         <string name="msgs_help_schedule_title">Schedule help</string>
         <string name="msgs_help_group_file">SMBSync3_Help_EN_group.html</string>
         <string name="msgs_help_group_title">Group help</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync3_Help_EN_task_picture.html</string>
-        <string name="msgs_help_sync_task_picture_title">Help with archiving</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">If you proceed, the following data will be recorded in the log file:\nAndroid version, Device name, Directory name, File name, SMB Account name, IP address, Network interface name, System settings, App information</string>
         <string name="msgs_log_management_send_log_file_warning">Send log file by E-Mail to the developer. The log file contains Android version, Device name, Directory name, File name, SMB Account name, IP address, Network interface name, System settings and App information.\n1.Press the Preview button to check the conents of the temp_log.txt file that will be sent (if the selection screen of the application is displayed, then select the FAVORIT application to display the text file.)\n

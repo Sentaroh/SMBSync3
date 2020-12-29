@@ -5,8 +5,8 @@
         <string name="msgs_about_dlg_privacy_btn">Log cambiamenti</string>
         <string name="msgs_about_dlg_change_btn">Privacy</string>
         <string name="msgs_dlg_title_about">A proposito di SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_EN_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_EN.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_IT_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_IT.html</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_EN.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Seleziona impostazioni e task da importare</string>
@@ -47,24 +47,22 @@
         <string name="msgs_export_import_pswd_hint_confirm">Conferma password</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Le password non coincidono.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync3_Help_EN_task.html</string>
+        <string name="msgs_help_sync_task_file">SMBSync3_Help_IT_task.html</string>
         <string name="msgs_help_sync_task_title">Aiuto Sync Task</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_EN_folder_internal.html</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_IT_folder_internal.html</string>
         <string name="msgs_help_sync_folder_internal_title">Aiuto Memoria Interna</string>
-        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_EN_folder_keyword.html</string>
+        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_IT_folder_keyword.html</string>
         <string name="msgs_help_sync_folder_keyword_title">Parameter Help</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_EN_folder_smb.html</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_IT_folder_smb.html</string>
         <string name="msgs_help_sync_folder_smb_title">Aiuto Server SMB</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_EN_folder_zip.html</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_IT_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Aiuto file ZIP</string>
-        <string name="msgs_help_directory_filter_file">SMBSync3_Help_EN_directory_filter.html</string>
+        <string name="msgs_help_directory_filter_file">SMBSync3_Help_IT_directory_filter.html</string>
         <string name="msgs_help_directory_filter_title">Aiuto per il filtro di directory</string>
-        <string name="msgs_help_schedule_file">SMBSync3_Help_EN_schedule.html</string>
+        <string name="msgs_help_schedule_file">SMBSync3_Help_IT_schedule.html</string>
         <string name="msgs_help_schedule_title">Aiuto per la programmazione</string>
-        <string name="msgs_help_group_file">SMBSync3_Help_EN_group.html</string>
+        <string name="msgs_help_group_file">SMBSync3_Help_IT_group.html</string>
         <string name="msgs_help_group_title">Aiuto di gruppo</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync3_Help_EN_task_picture.html</string>
-        <string name="msgs_help_sync_task_picture_title">Aiuto per l\'archiviazione</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">Se si procede, nel file di registro verranno registrati i seguenti dati: \n Versione Android, Nome del dispositivo, Nome della directory, Nome del file, Nome dell\'account SMB, Indirizzo IP, Nome dell\'interfaccia di rete, Impostazioni di sistema, Informazioni sull\'applicazione</string>
         <string name="msgs_log_management_send_log_file_warning">Inviare il file di log via e-mail allo sviluppatore. Il file di log contiene la versione Android, il nome del dispositivo, il nome della directory, il nome del file, il nome dell\'account SMB, l\'indirizzo IP, il nome dell\'interfaccia di rete, le impostazioni di sistema e le informazioni dell\'applicazione.\n1.Premere il pulsante Anteprima per controllare i conenti del file temp_log.txt che verrà inviato (se viene visualizzata la schermata di selezione dell\'applicazione, selezionare l\'applicazione FAVORIT per visualizzare il file di testo.)\n

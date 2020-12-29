@@ -63,8 +63,6 @@
         <string name="msgs_help_schedule_title">スケジュールのヘルプ</string>
         <string name="msgs_help_group_file">SMBSync3_Help_JA_group.html</string>
         <string name="msgs_help_group_title">グループのヘルプ</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync3_Help_JA_task_picture.html</string>
-        <string name="msgs_help_sync_task_picture_title">アーカイブのヘルプ</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">有効にすることにより下記のデータがログファイルに記録されます。\nAndroidバージョン、端末名、ディレクトリー名、ファイル名、SMBアカウント名、IPアドレス、ネットワークインターフェース名、システム設定、アプリ情報</string>
         <string name="msgs_log_management_send_log_file_warning">ログを開発者にE-Mailを使用して送信します。ログファイルにはAndroidバージョン、端末名、ディレクトリー名、ファイル名、SMBアカウント名、IPアドレス、ネットワークインターフェース名、システム設定、アプリ情報が含まれます。\n１．内容表示ボタンを押しtemp_log.txtを表示し、内容を確認してください（テキストファイルを表示するためのアプリケーション選択の画面が表示されたら、アプリケーションを表示してください）\n

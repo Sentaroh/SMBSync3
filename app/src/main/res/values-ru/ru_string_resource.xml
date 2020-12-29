@@ -5,8 +5,8 @@
         <string name="msgs_about_dlg_privacy_btn">Политика приватности</string>
         <string name="msgs_about_dlg_change_btn">Журнал изменений</string>
         <string name="msgs_dlg_title_about">О SMBSync3</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_EN_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_EN.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_RU_Short.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_RU.html</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_EN.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Импорт файла задания</string>
@@ -47,24 +47,22 @@
         <string name="msgs_export_import_pswd_hint_confirm">Подтвердите пароль</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Пароли не совпадают.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync3_Help_EN_task.html</string>
+        <string name="msgs_help_sync_task_file">SMBSync3_Help_RU_task.html</string>
         <string name="msgs_help_sync_task_title">Справка по задачам синхронизации</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_EN_folder_internal.html</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_RU_folder_internal.html</string>
         <string name="msgs_help_sync_folder_internal_title">Справка по внутреннему хранилищу</string>
-        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_EN_folder_keyword.html</string>
+        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_RU_folder_keyword.html</string>
         <string name="msgs_help_sync_folder_keyword_title">Справка по параметрам</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_EN_folder_smb.html</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_RU_folder_smb.html</string>
         <string name="msgs_help_sync_folder_smb_title">Справка по SMB-серверу</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_EN_folder_zip.html</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_RU_folder_zip.html</string>
         <string name="msgs_help_sync_folder_zip_title">Справка по ZIP файлу</string>
-        <string name="msgs_help_directory_filter_file">SMBSync3_Help_EN_directory_filter.html</string>
+        <string name="msgs_help_directory_filter_file">SMBSync3_Help_RU_directory_filter.html</string>
         <string name="msgs_help_directory_filter_title">Справка по каталогу фильтрации</string>
-        <string name="msgs_help_schedule_file">SMBSync3_Help_EN_schedule.html</string>
+        <string name="msgs_help_schedule_file">SMBSync3_Help_RU_schedule.html</string>
         <string name="msgs_help_schedule_title">Schedule help</string>
-        <string name="msgs_help_group_file">SMBSync3_Help_EN_group.html</string>
+        <string name="msgs_help_group_file">SMBSync3_Help_RU_group.html</string>
         <string name="msgs_help_group_title">Group help</string>
-        <string name="msgs_help_sync_task_picture_file">SMBSync3_Help_EN_task_picture.html</string>
-        <string name="msgs_help_sync_task_picture_title">Помощь в архивировании</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">Следующие данные будут записаны в файл журнала, если его включить. \nВерсия Android, Имя устройства, Имя каталога, Имя файла, Имя учетной записи SMB, IP-адрес, Имя сетевого интерфейса, Настройки системы, Информация о приложении</string>
         <string name="msgs_log_management_send_log_file_warning">Отправить файл журнала по электронной почте разработчику. Файл журнала содержит версию Android, имя устройства, имя каталога, имя файла, имя учетной записи SMB, IP-адрес, имя сетевого интерфейса, настройки системы и информацию о приложении.\n1.Нажмите кнопку предварительного просмотра, чтобы увидеть файл temp_log.txt, затем проверьте содержимое. (Если отображается экран выбора приложения то выберите приложение для отображения текстового файла.)\n

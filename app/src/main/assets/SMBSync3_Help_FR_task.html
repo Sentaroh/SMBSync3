@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>SMBSync3_Help_FR_task</title></head>
+<body><h3>Mode test</h3>
+<p>Il n&#39;effectue pas l&#39;écrasement et la suppression du fichier si vous vérifiez. Veuillez être testé lorsque vous créez une tâche de synchronisation, les fichiers qui sont copiés ou supprimés se trouvent dans l&#39;onglet message.</p>
+<h3>Tâche de synchronisation automatique</h3>
+<p>Si la tâche a été vérifiée, elle est passée à l&#39;automatique. Les tâches qui sont réglées sur la synchronisation automatique commenceront lorsque vous appuierez sur le bouton de synchronisation.</p>
+<h3>Nom de la tâche</h3>
+<p>Précisez le nom de la tâche.</p>
+<h3>Type de synchronisation</h3>
+<p>La méthode de synchronisation est choisie parmi les suivantes : miroir, copie, déplacement, archive. La synchronisation se fait du maître à la cible dans une direction.</p>
+<ul>
+<li>Miroir</li>
+<li>Déplacement</li>
+<li>Copie</li>
+<li>Archives</li>
+
+</ul>
+<h3>Échangez la source et la destination</h3>
+<p>Échanger le contenu du dossier source et du dossier de destination </p>
+<h3>Dossier source</h3>
+<p>Appuyez sur le bouton pour modifier le dossier source</p>
+<h3>Dossier de destination</h3>
+<p>Appuyez sur le bouton pour modifier le dossier de destination</p>
+<h3>Sélectionner les fichiers à synchroniser</h3>
+<p>Si vous ne vérifiez pas et synchronisez ensuite l&#39;ensemble du fichier. Si vous vérifiez pour voir les détails. </p>
+<ul>
+<li>Synchroniser les fichiers audio<br/>Si vous vérifiez la synchronisation des fichiers des extensions suivantes.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav  </li>
+<li>Synchroniser les fichiers d&#39;images<br/>Si vous vérifiez la synchronisation des fichiers des extensions suivantes.<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff</li>
+<li>Synchroniser les fichiers vidéo<br/>Si vous vérifiez la synchronisation des fichiers des extensions suivantes.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
+<li>Filtre de fichiers<br/>Vous pouvez sélectionner le nom et l&#39;extension du fichier avec lequel vous voulez synchroniser autre chose que ce qui précède.</li>
+
+</ul>
+<h3>Sélectionner les sous-répertoires pour la synchronisation</h3>
+<p>Si vous ne vérifiez pas et synchronisez ensuite tous les sous-répertoires. Si vous vérifiez que le bouton de filtrage des répertoires s&#39;affiche.</p>
+<ul>
+<li>Filtre de répertoire
+Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.</li>
+
+</ul>
+<h3>Exécuter la tâche de synchronisation uniquement lors du chargement</h3>
+<p>Si la case est cochée, vous ne pouvez démarrer la synchronisation que pendant la charge. Si la synchronisation est lancée alors que vous n&#39;êtes pas en train de charger, cela entraînera une erreur.</p>
+<h3>Confirmer avant d&#39;annuler la copie ou la suppression</h3>
+<p>Il affichera un dialogue de confirmation lorsque vous voudrez écraser et supprimer le fichier si vous avez coché.</p>
+<h3>Options d&#39;erreur  </h3>
+<p>Vous pouvez spécifier le comportement à adopter lorsqu&#39;une erreur se produit.</p>
+<ul>
+<li>Arrêter la synchronisation</li>
+<li>Ignorez toutes les erreurs et commencez les tâches suivantes
+Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont exécutées. </li>
+<li>Lancer les tâches suivantes si les options de réseau entraînent des erreurs<br/>Utilisez cette fonction si vous souhaitez exécuter des tâches ultérieures lorsque l&#39;adresse n&#39;est pas privée ou lorsqu&#39;elle n&#39;est pas l&#39;adresse IP spécifiée.  </li>
+
+</ul>
+<h3>Réseau</h3>
+<ul>
+<li>Courir même quand on est éteint<br/>Vous pouvez toujours commencer à synchroniser</li>
+<li>Conn à tout AP<br/>La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d&#39;accès quelconque.</li>
+<li>A une adresse privée<br/>Vous pouvez lancer la synchronisation lorsque l&#39;adresse IP est une adresse privée</li>
+<li>Liste d&#39;adresses IP<br/>Vous ne pouvez commencer la synchronisation que si l&#39;adresse IP WiFi correspond à l&#39;une des adresses spécifiées. Vous pouvez également ajouter directement l&#39;adresse IP actuelle à laquelle votre appareil est connecté via la liste de sélection des adresses IP.<br/>Vous pouvez utiliser des jokers pour le filtre. (par exemple : 192.168.100.*, 192.168.*.*.)</li>
+
+</ul>
+<h3>Affiche les options avancées</h3>
+<p><strong>Veuillez l&#39;utiliser lors de la définition des options détaillées.</strong></p>
+<h3>Inclure les sous-répertoires</h3>
+<p>Il inclura récursivement des sous-répertoires sous le dossier principal spécifié. </p>
+<h3>Inclure les répertoires vides</h3>
+<p>Synchronise les répertoires vides (même si un répertoire est vide sur le master, il sera créé sur la cible). Si elle n&#39;est pas cochée, les répertoires vides sur le master sont ignorés. </p>
+<h3>Inclure les répertoires cachés</h3>
+<p>Lorsqu&#39;elle est cochée, Sync inclura les dossiers linux cachés (ceux dont le nom commence par un point). Notez que dans Windows et Samba, l&#39;attribut caché n&#39;est pas défini par le nom du dossier. Ainsi, le dossier synchronisé sur la cible SMB/Windows n&#39;aura pas l&#39;attribut caché host. </p>
+<h3>Inclure les fichiers cachés</h3>
+<p>Lorsqu&#39;il est vérifié, Sync inclura les fichiers linux cachés (ceux dont le nom commence par un point). Notez que dans Windows et Samba, l&#39;attribut caché n&#39;est pas défini par le nom du fichier. Ainsi, le fichier synchronisé sur la cible SMB/Windows n&#39;aura pas l&#39;attribut caché de l&#39;hôte.</p>
+<h3>Écraser les fichiers de destination</h3>
+<p>S&#39;ils ne sont pas cochés, les fichiers sur la cible ne seront jamais écrasés, même si les critères de comparaison par taille et par temps sont différents. </p>
+<h3>Réessayer en cas d&#39;erreur de réseau (uniquement pour les partages SMB)</h3>
+<p>En cas d&#39;erreur de connexion côté serveur, SMBSync3 réessaiera la synchronisation au maximum 3 fois à un intervalle de 30 secondes. </p>
+<h3>Limiter le tampon d&#39;écriture des E/S SMB à 16KB (uniquement pour les partages SMB)</h3>
+<p><strong>Veuillez essayer si vous obtenez une erreur &quot;Access is denied&quot; en écrivant dans le dossier PC/NAS.</strong></p>
+<p>Lorsqu&#39;il est vérifié, il limite le tampon d&#39;entrée/sortie à 16KB pour les opérations d&#39;écriture sur l&#39;hôte SMB. </p>
+<h3>Effacer les fichiers avant la synchronisation (mode miroir uniquement)</h3>
+<p>Lorsqu&#39;elle est cochée, les répertoires et les fichiers qui sont présents sur le dossier cible mais qui n&#39;existent pas sur le master, seront d&#39;abord supprimés. Ensuite, les fichiers et les dossiers qui sont différents seront copiés sur la cible.</p>
+<p>Si le dossier maître est SMB, le temps de traitement sera plus long car la structure des répertoires et leur contenu sont scannés à travers le réseau. Il est fortement recommandé d&#39;activer l&#39;option &quot;Utiliser la négociation SMB2&quot; car SMB1 sera très lent.</p>
+<h3>Supprimer les répertoires et les fichiers exclus par les filtres</h3>
+<p>Si elle est activée, <strong>elle supprime les répertoires/fichiers qui sont exclus du filtre.</strong> </p>
+<h3>Ne pas régler l&#39;heure de la dernière modification du fichier de destination pour qu&#39;elle corresponde à celle du fichier source</h3>
+<p>Veuillez l&#39;activer si vous obtenez une erreur du type SmbFile#setLastModified()/File#setLastModified() fails. Cela signifie que l&#39;hôte distant n&#39;autorise pas le paramétrage du fichier de la dernière modification. Si cette case n&#39;est pas cochée, la dernière heure de modification du fichier copié sur la cible sera fixée à l&#39;heure à laquelle il a été copié / synchronisé. Cela signifie que le fichier cible apparaîtra plus récent que le fichier maître. </p>
+<p>Pour les prochaines synchronisations, vous pouvez :</p>
+<ul>
+<li>vous en tenir à une comparaison par taille uniquement, ou</li>
+<li>vous pouvez activer l&#39;option &quot;Ne pas écraser le fichier de destination s&#39;il est plus récent que le fichier source&quot; pour ne copier que les fichiers modifiés ultérieurement sur le master, ou</li>
+<li>vous pouvez activer l&#39;option de tâche &quot;Obtenir l&#39;heure de dernière modification des fichiers de la liste personnalisée de l&#39;application SMBSync3&quot;. Cependant, cette option n&#39;est pas disponible actuellement si la cible est SMB. La plupart des hôtes SMB prennent en charge la définition de l&#39;heure de dernière modification. </li>
+
+</ul>
+<p>Voir ci-dessous pour des informations détaillées sur chaque option. </p>
+<h3>Utiliser la taille du fichier pour déterminer si les fichiers sont différents</h3>
+<p>Lors de la vérification, les fichiers sont considérés comme différents s&#39;ils diffèrent par leur taille. </p>
+<h3>Comparaison des tailles uniquement</h3>
+<p>Les fichiers ne sont considérés comme différents que si la taille de la source est supérieure à celle de la destination. Cela désactivera la comparaison par temps de fichier. </p>
+<h3>Utiliser l&#39;heure de la dernière modification pour déterminer si les fichiers sont différents </h3>
+<p>Lors de la vérification, les fichiers sont considérés comme différents en fonction de leur dernière date de modification </p>
+<h3>Différence de temps minimale autorisée (en secondes) entre les fichiers source et destination</h3>
+<p>Les fichiers sont considérés comme identiques si la différence entre leurs derniers temps modifiés est inférieure ou égale au temps sélectionné en secondes. Ils sont considérés comme différents si la différence de temps entre les fichiers est supérieure à l&#39;heure sélectionnée. Les fichiers FAT et ExFAT ont besoin d&#39;une tolérance minimale de 2 secondes. Si 0 seconde est sélectionnée, les fichiers doivent avoir exactement le même temps pour être considérés comme similaires.</p>
+<h3>N&#39;écrasez pas le fichier de destination s&#39;il est plus récent que le fichier source</h3>
+<p>Si la case est cochée, le fichier ne sera écrasé que si le fichier principal est plus récent que le fichier cible, même si la taille du fichier et les heures de la dernière mise à jour sont différentes. Gardez à l&#39;esprit que si vous changez de fuseau horaire ou si les fichiers sont modifiés pendant la période d&#39;intervalle du changement d&#39;heure d&#39;été, le dernier fichier modifié pourrait apparaître plus ancien que le fichier non mis à jour. Ceci est lié aux différences de système de fichiers et seule une vérification manuelle avant d&#39;écraser le fichier évitera la perte de données. Il est généralement recommandé de ne pas modifier les fichiers pendant l&#39;intervalle de changement d&#39;heure d&#39;été s&#39;ils sont destinés à être auto-synchronisés </p>
+<h3>Ignorer l&#39;heure d&#39;été Différence de temps entre les fichiers</h3>
+<p>Permet de sélectionner le décalage horaire en minutes entre l&#39;heure d&#39;été et l&#39;heure d&#39;hiver. Les fichiers sont considérés comme différents si le décalage horaire n&#39;est pas exactement égal à l&#39;intervalle spécifié (+/- le &quot;décalage horaire minimum autorisé (en secondes)&quot; spécifié dans l&#39;option précédente)</p>
+<h3>Sauter les noms de répertoires et de fichiers qui contiennent des caractères non valides (&quot;, :, \, *, &lt;, &gt;, |)</h3>
+<p>Si elle est cochée, elle affichera un message d&#39;avertissement et la synchronisation se poursuivra sans traiter les répertoires/fichiers contenant des caractères non valides. </p>
+<h3>Effacer le répertoire principal lorsqu&#39;il est vide (uniquement lorsque l&#39;option de synchronisation est Déplacer)</h3>
+<p>Lorsque le mode de synchronisation est &quot;Move&quot;, après que les fichiers aient été déplacés vers la cible, le dossier &quot;Master&quot; est également supprimé. </p>
+<h3>Si la date et l&#39;heure ne peuvent pas être déterminées par les données EXIF, un message de confirmation s&#39;affiche</h3>
+<p>Afficher un message de confirmation lorsque la date et l&#39;heure de la prise ne peuvent être obtenues auprès d&#39;Exif.</p>
+<h3>Ignorer les fichiers sources de plus de 4 Go lors de la synchronisation avec le stockage externe.</h3>
+<p>Si cette case est cochée, vous pouvez éviter les erreurs d&#39;entrée/sortie lors de la synchronisation avec une carte MicroSD en ignorant les fichiers sources de plus de 4 Go à synchroniser avec le stockage local.</p>
+<h3>Ignorer les fichiers dont le nom dépasse 255 octets</h3>
+<p>Si cette option est cochée, ignorez les fichiers dont le nom dépasse 255 octets.</p>
+</body>
+</html>
