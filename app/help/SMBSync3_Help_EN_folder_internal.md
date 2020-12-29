@@ -18,7 +18,7 @@ Note: Under the following conditions, it becomes a circular reference and loops.
 - No directory filter specified
 
 ### <u>The following is only displayed when the synchronization type is Archive.</u>
-### Do not create a source directory in the destination directory
+### Save all  files in the destination directory without creating subdirectories
 If checked, the destination directory will not create a subdirectory in the source directory.
 ### To archive the
 Select a file with a shooting date and time older than the archive execution date and time. (Regardless of the shooting date and time, the shooting date is 7 days or older, the shooting date is 30 days or older, the shooting date is 60 days or older, the shooting date is 90 days or older, the shooting date is 180 days or older, the shooting date is You can choose from more than one year old)

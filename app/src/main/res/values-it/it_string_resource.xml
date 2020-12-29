@@ -735,7 +735,7 @@
         <string name="msgs_group_button_not_assigned">Niente</string>
         <string name="msgs_group_select_button_title">Selezionare un pulsante</string>
         <string name="msgs_group_label_button">Pulsante assegnato :</string>
-        <string name="msgs_group_label_assign_button">Pulsante Assegnazione</string>
+        <string name="msgs_group_label_assign_button">Assegnazione dei pulsanti</string>
         <string name="msgs_group_edit_delete_sync_task">Volete cancellare i seguenti compiti?</string>
         <string name="msgs_group_main_dlg_hdr_enable">Attivare il gruppo</string>
         <string name="msgs_group_main_dlg_hdr_disabled">Disabili</string>

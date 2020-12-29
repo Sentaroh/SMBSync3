@@ -2,7 +2,7 @@
 
 Wählen Sie den zu verwendenden Speicher aus.
 
-### Verwendung von externem Speicher zulassen
+### Erlaubt  die Verwendung externer Speicher
 
 Fordern Sie die Erlaubnis zur Verwendung von externem Speicher an. Wenn Sie die MicroSD-Karte formatieren, ändert sich die UUID, daher sollten Sie die Erlaubnis zur Verwendung anfordern.
 
@@ -10,7 +10,7 @@ Fordern Sie die Erlaubnis zur Verwendung von externem Speicher an. Wenn Sie die 
 
 Zeigt die Verzeichnisliste für den lokalen Speicher an. 
 
-### Parameter für Verzeichnisnamen bearbeiten
+### Verzeichnisse auflisten
 
 Das Datum und die Uhrzeit können in das Zielverzeichnis aufgenommen werden. Variablen werden beim Start der Synchronisation in ein Datum umgewandelt. Bitte bestätigen Sie die Angaben der Variablen mit "Verzeichnisnamensparameter bearbeiten".
 
@@ -24,7 +24,7 @@ Hinweis: Unter den folgenden Bedingungen wird es zu einer zirkulären Referenz u
 
 ### <u>Das Folgende wird nur angezeigt, wenn der Synchronisationstyp Archiv ist.</u>
 
-### Kein Quellverzeichnis im Zielverzeichnis erstellen
+### Alle Dateien im Zielverzeichnis speichern, ohne Unterverzeichnisse anzulegen
 
 Wenn diese Option aktiviert ist, wird im Zielverzeichnis kein Unterverzeichnis im Quellverzeichnis angelegt.
 
@@ -32,10 +32,10 @@ Wenn diese Option aktiviert ist, wird im Zielverzeichnis kein Unterverzeichnis i
 
 Wählen Sie eine Datei mit einem Aufnahmedatum und einer Aufnahmezeit, die älter sind als das Datum und die Uhrzeit der Archivausführung. (Unabhängig von Aufnahmedatum und -zeit ist das Aufnahmedatum 7 Tage oder älter, das Aufnahmedatum 30 Tage oder älter, das Aufnahmedatum 60 Tage oder älter, das Aufnahmedatum 90 Tage oder älter, das Aufnahmedatum 180 Tage oder älter, das Aufnahmedatum ist Sie können aus mehr als ein Jahr alt wählen)
 
-### Sequenznummer
+### Laufende  Nummer
 
 Sie können dem Dateinamen eine Sequenznummer hinzufügen.
 
-### Parameter Dateiname bearbeiten
+### Dateinamen-Parameter  bearbeiten
 
 Um das Datum und die Uhrzeit in den Dateinamen aufzunehmen, tippen Sie auf die Schaltfläche und bearbeiten Sie sie.

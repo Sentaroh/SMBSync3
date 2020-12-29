@@ -60,7 +60,7 @@ Note : Dans les conditions suivantes, il devient une référence circulaire et d
 
 ### <u> Ce qui suit n'est affiché que lorsque le type de synchronisation est Archive.</u>
 
-### Ne pas créer un répertoire source dans le répertoire de destination
+### Enregistrer  tous les fichiers dans le répertoire de destination sans créer de  sous-répertoires
 
 Si cette case est cochée, le répertoire de destination ne créera pas de sous-répertoire dans le répertoire source.
 
@@ -68,7 +68,7 @@ Si cette case est cochée, le répertoire de destination ne créera pas de sous-
 
 Sélectionnez un fichier dont la date et l'heure de tournage sont antérieures à la date et à l'heure d'exécution de l'archive. (Indépendamment de la date et de l'heure de tournage, la date de tournage est de 7 jours ou plus, la date de tournage est de 30 jours ou plus, la date de tournage est de 60 jours ou plus, la date de tournage est de 90 jours ou plus, la date de tournage est de 180 jours ou plus, la date de tournage est de Vous pouvez choisir parmi des fichiers datant de plus d'un an) 
 
-### Numéro de séquence
+### Incrémenter  les noms de fichiers
 
 Vous pouvez ajouter un numéro de séquence au nom du fichier. 
 

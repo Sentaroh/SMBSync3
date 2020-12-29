@@ -1,8 +1,8 @@
-### Lokaler Speicher
+### Lokaler Speicherung
 
 Wählen Sie den zu verwendenden Speicher aus. 
 
-### Verwendung von externem Speicher zulassen
+### Erlaubt  die Verwendung externer Speicher
 
 Fordern Sie die Erlaubnis zur Verwendung von externem Speicher an. Wenn Sie die MicroSD-Karte formatieren, ändert sich die UUID, daher sollten Sie die Erlaubnis zur Verwendung anfordern. 
 

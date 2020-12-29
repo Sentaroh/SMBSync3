@@ -24,7 +24,7 @@ Note : Dans les conditions suivantes, il devient une référence circulaire et d
 
 ### <u> Ce qui suit n'est affiché que lorsque le type de synchronisation est Archive.</u>
 
-### Ne pas créer un répertoire source dans le répertoire de destination
+### Enregistrer tous les fichiers dans le répertoire de destination sans créer de sous-répertoires
 
 Si cette case est cochée, le répertoire de destination ne créera pas de sous-répertoire dans le répertoire source.
 

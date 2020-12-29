@@ -731,7 +731,7 @@
         <string name="msgs_group_button_not_assigned">Ничего</string>
         <string name="msgs_group_select_button_title">Выберите кнопку</string>
         <string name="msgs_group_label_button">Назначенная кнопка :</string>
-        <string name="msgs_group_label_assign_button">Button Assignment</string>
+        <string name="msgs_group_label_assign_button">Назначение кнопки</string>
         <string name="msgs_group_edit_delete_sync_task">Вы хотите удалить следующие задачи?</string>
         <string name="msgs_group_main_dlg_hdr_enable">Разрешительная группа</string>
         <string name="msgs_group_main_dlg_hdr_disabled">Инвалид</string>

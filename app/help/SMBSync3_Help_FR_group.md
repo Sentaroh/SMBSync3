@@ -2,7 +2,7 @@
 
 Le nom du groupe.
 
-### Activer le groupe
+### Activer  le groupe
 
 Activez le groupe. En l'activant, le bouton "Sync" apparaîtra.
 
@@ -10,7 +10,7 @@ Activez le groupe. En l'activant, le bouton "Sync" apparaîtra.
 
 Vous pouvez attribuer un bouton de raccourci ou un bouton de synchronisation pour effectuer une tâche lorsque le bouton est enfoncé.
 
-### Tâche automatique uniquement
+### Synchroniser  uniquement les tâches automatiques     
 
 Lance les tâches de synchronisation qui sont automatiquement vérifiées dans la tâche de synchronisation. La liste des tâches n'apparaîtra pas si elle est cochée.
 

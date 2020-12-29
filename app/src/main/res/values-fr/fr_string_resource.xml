@@ -732,7 +732,7 @@
         <string name="msgs_group_button_not_assigned">Rien</string>
         <string name="msgs_group_select_button_title">Sélectionnez un bouton</string>
         <string name="msgs_group_label_button">Bouton assigné :</string>
-        <string name="msgs_group_label_assign_button">Button Assignment</string>
+        <string name="msgs_group_label_assign_button">Affectation des boutons</string>
         <string name="msgs_group_edit_delete_sync_task">Souhaitez-vous supprimer les tâches suivantes ?</string>
         <string name="msgs_group_main_dlg_hdr_enable">Activer le groupe</string>
         <string name="msgs_group_main_dlg_hdr_disabled">Handicapés</string>

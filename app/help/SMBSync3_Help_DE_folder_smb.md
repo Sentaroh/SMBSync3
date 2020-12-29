@@ -10,7 +10,7 @@ Legen Sie die Parameter für den SMB-Server manuell fest.
 
 So geben Sie den SMB-Servernamen oder die IP-Adresse an 
 
-### SMBProtokoll
+### SMB-Protokoll
 
 Sie können das SMB-Protokoll angeben.
 
@@ -18,7 +18,7 @@ Sie können das SMB-Protokoll angeben.
 
 - SMB V2/3 verwenden
 
-### Portnummer verwenden
+### Portn-ummer verwenden
 
 Geben Sie an, wenn die Portnummer des Standards nicht verfügbar ist. Die Standard-Portnummer ist 139/tcp und 445/tcp. 
 
@@ -36,7 +36,7 @@ Zur Angabe des Kontonamens für den SMB-Server.
 
 Zur Angabe des Passworts für den SMB-Server. 
 
-### Freigabe auflisten
+### Liste  der Aktien
 
 Zeigt den Freigabenamen für den SMB-Server an.  
 
@@ -60,7 +60,7 @@ Hinweis: Unter den folgenden Bedingungen wird es zu einer zirkulären Referenz u
 
 ### <u>Das Folgende wird nur angezeigt, wenn der Synchronisationstyp Archiv ist.</u>
 
-### Kein Quellverzeichnis im Zielverzeichnis erstellen
+### Alle  Dateien im Zielverzeichnis speichern, ohne Unterverzeichnisse zu erstellen
 
 Wenn diese Option aktiviert ist, wird im Zielverzeichnis kein Unterverzeichnis im Quellverzeichnis angelegt.
 
@@ -68,7 +68,7 @@ Wenn diese Option aktiviert ist, wird im Zielverzeichnis kein Unterverzeichnis i
 
 Wählen Sie eine Datei mit einem Aufnahmedatum und einer Aufnahmezeit, die älter sind als das Datum und die Uhrzeit der Archivausführung. (Unabhängig von Aufnahmedatum und -zeit ist das Aufnahmedatum 7 Tage oder älter, das Aufnahmedatum 30 Tage oder älter, das Aufnahmedatum 60 Tage oder älter, das Aufnahmedatum 90 Tage oder älter, das Aufnahmedatum 180 Tage oder älter, das Aufnahmedatum ist Sie können aus mehr als ein Jahr alt wählen) 
 
-### Sequenznummer
+### Laufende  Nummer
 
 Sie können dem Dateinamen eine Sequenznummer hinzufügen. 
 

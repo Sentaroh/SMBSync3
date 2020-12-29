@@ -2,7 +2,7 @@
 
 Sélectionnez le stockage à utiliser. 
 
-### Autoriser l'utilisation d'un stockage externe
+### Permettre l'utilisation d'un stockage externe
 
 Demander l'autorisation d'utiliser un stockage externe. Si vous formatez la carte MicroSD, l'UUID changera, alors demandez la permission de l'utiliser. 
 

@@ -10,7 +10,7 @@ Manually set the parameters for the SMB server.
 
 To specify SMB server name or IP address 
 
-### SMBProtocol
+### SMB Protocol
 
 You can specify SMB protocol.
 
@@ -50,7 +50,7 @@ The date and time **can be included in the target directory**. Variables are con
 
 ### Directory
 
-To specify directory for SMB host.If the target directory does not exist, it will be created at the time of synchronization.
+To specify directory for SMB host. If the target directory does not exist, it will be created at the time of synchronization.
 
 Note: Under the following conditions, it becomes a circular reference and loops. Specify a directory filter or specify a directory on the master side that is different from the target.
 
@@ -60,7 +60,7 @@ Note: Under the following conditions, it becomes a circular reference and loops.
 
 **The following is only displayed when the synchronization type is Archive.**
 
-### Do not create a source directory in the destination directory
+### Save all  files in the destination directory without creating subdirectories
 
 If checked, the destination directory will not create a subdirectory in the source directory.
 
@@ -68,7 +68,7 @@ If checked, the destination directory will not create a subdirectory in the sour
 
 Select a file with a shooting date and time older than the archive execution date and time. (Regardless of the shooting date and time, the shooting date is 7 days or older, the shooting date is 30 days or older, the shooting date is 60 days or older, the shooting date is 90 days or older, the shooting date is 180 days or older, the shooting date is You can choose from more than one year old) 
 
-### Sequence number
+### Increment  file names by appending
 
 You can add a sequence number to the file name. 
 

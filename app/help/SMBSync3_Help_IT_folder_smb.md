@@ -60,7 +60,7 @@ Nota: Nelle seguenti condizioni, essa diventa un riferimento circolare ed è in 
 
 ### <u>Il seguente viene visualizzato solo quando il tipo di sincronizzazione è Archive.</u>
 
-### Non creare una directory di origine nella directory di destinazione
+### Salvare  tutti i file nella directory di destinazione senza creare sottodirectory
 
 Se spuntata, la directory di destinazione non creerà una sottodirectory nella directory di origine.
 
@@ -68,7 +68,7 @@ Se spuntata, la directory di destinazione non creerà una sottodirectory nella d
 
 Selezionare un file con data e ora di ripresa più vecchie della data e ora di esecuzione dell'archivio. (Indipendentemente dalla data e dall'ora di ripresa, la data di ripresa è di 7 giorni o più vecchia, la data di ripresa è di 30 giorni o più vecchia, la data di ripresa è di 60 giorni o più vecchia, la data di ripresa è di 90 giorni o più vecchia, la data di ripresa è di 180 giorni o più vecchia, la data di ripresa è di più di un anno) 
 
-### Numero progressivo
+### Incrementare  i nomi dei file aggiungendo
 
 È possibile aggiungere un numero di sequenza al nome del file. 
 
