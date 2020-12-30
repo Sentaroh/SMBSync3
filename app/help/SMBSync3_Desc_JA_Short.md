@@ -27,13 +27,3 @@ SMBSync3のスケジュール機能または外部アプリケーション（Tas
 ## マニュアル
 
 [マニュアルへのリンク](https://drive.google.com/file/d/1AfPsJbV7H5WHF7ZcvzVOJ4-e0SzVrA-p/view?usp=sharing)
-
-## 使用ライブラリー
-
-- [jcifs-ng](https://github.com/AgNO3/jcifs-ng)
-- [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15to18/1.66)  
-- [jcifs-1.3.17](https://jcifs.samba.org/)
-- [Zip4J 2.2.3](https://github.com/srikanth-lingala/zip4j)
-- [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
-- [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)
-

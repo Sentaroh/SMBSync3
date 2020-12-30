@@ -5,20 +5,20 @@
 <title>SMBSync3_Help_FR_task</title></head>
 <body><h3>Mode test</h3>
 <p>Il n&#39;effectue pas l&#39;écrasement et la suppression du fichier si vous vérifiez. Veuillez être testé lorsque vous créez une tâche de synchronisation, les fichiers qui sont copiés ou supprimés se trouvent dans l&#39;onglet message.</p>
-<h3>Tâche de synchronisation automatique</h3>
+<h3>Synchronisation  Auto</h3>
 <p>Si la tâche a été vérifiée, elle est passée à l&#39;automatique. Les tâches qui sont réglées sur la synchronisation automatique commenceront lorsque vous appuierez sur le bouton de synchronisation.</p>
 <h3>Nom de la tâche</h3>
 <p>Précisez le nom de la tâche.</p>
-<h3>Type de synchronisation</h3>
+<h3>Mode de sync</h3>
 <p>La méthode de synchronisation est choisie parmi les suivantes : miroir, copie, déplacement, archive. La synchronisation se fait du maître à la cible dans une direction.</p>
 <ul>
 <li>Miroir</li>
-<li>Déplacement</li>
+<li>Déplacer</li>
 <li>Copie</li>
-<li>Archives</li>
+<li>Archive</li>
 
 </ul>
-<h3>Échangez la source et la destination</h3>
+<h3>Inverser  les dossiers source et destination</h3>
 <p>Échanger le contenu du dossier source et du dossier de destination </p>
 <h3>Dossier source</h3>
 <p>Appuyez sur le bouton pour modifier le dossier source</p>
@@ -33,34 +33,38 @@
 <li>Filtre de fichiers<br/>Vous pouvez sélectionner le nom et l&#39;extension du fichier avec lequel vous voulez synchroniser autre chose que ce qui précède.</li>
 
 </ul>
-<h3>Sélectionner les sous-répertoires pour la synchronisation</h3>
+<h3>Sélectionner les sous-dossiers</h3>
 <p>Si vous ne vérifiez pas et synchronisez ensuite tous les sous-répertoires. Si vous vérifiez que le bouton de filtrage des répertoires s&#39;affiche.</p>
 <ul>
 <li>Filtre de répertoire
 Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.</li>
 
 </ul>
-<h3>Exécuter la tâche de synchronisation uniquement lors du chargement</h3>
+<h3>Démarrer  la synchronisation seulement si l&#39;appareil est en charge</h3>
 <p>Si la case est cochée, vous ne pouvez démarrer la synchronisation que pendant la charge. Si la synchronisation est lancée alors que vous n&#39;êtes pas en train de charger, cela entraînera une erreur.</p>
-<h3>Confirmer avant d&#39;annuler la copie ou la suppression</h3>
+<h3>Synchroniser  les fichiers situés dans la racine du dossier source </h3>
+<p>si elle n&#39;est pas cochée, seuls les dossiers et leurs fichiers/sous-dossiers sont synchronisés</p>
+<h3>Confirmer  avant de remplacer/supprimer</h3>
 <p>Il affichera un dialogue de confirmation lorsque vous voudrez écraser et supprimer le fichier si vous avez coché.</p>
 <h3>Options d&#39;erreur  </h3>
 <p>Vous pouvez spécifier le comportement à adopter lorsqu&#39;une erreur se produit.</p>
 <ul>
 <li>Arrêter la synchronisation</li>
-<li>Ignorez toutes les erreurs et commencez les tâches suivantes
+<li>Ignorez  toutes les erreurs et commencez les tâches suivantes
 Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont exécutées. </li>
-<li>Lancer les tâches suivantes si les options de réseau entraînent des erreurs<br/>Utilisez cette fonction si vous souhaitez exécuter des tâches ultérieures lorsque l&#39;adresse n&#39;est pas privée ou lorsqu&#39;elle n&#39;est pas l&#39;adresse IP spécifiée.  </li>
+<li>Commencer  les tâches suivantes même si elles ne correspondent pas aux options du réseau<br/>Utilisez cette fonction si vous souhaitez exécuter des tâches ultérieures lorsque l&#39;adresse n&#39;est pas privée ou lorsqu&#39;elle n&#39;est pas l&#39;adresse IP spécifiée.  </li>
 
 </ul>
 <h3>Réseau</h3>
 <ul>
-<li>Courir même quand on est éteint<br/>Vous pouvez toujours commencer à synchroniser</li>
-<li>Conn à tout AP<br/>La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d&#39;accès quelconque.</li>
-<li>A une adresse privée<br/>Vous pouvez lancer la synchronisation lorsque l&#39;adresse IP est une adresse privée</li>
+<li>Même si  Wifi éteint<br/>Vous pouvez toujours commencer à synchroniser</li>
+<li>Tous les  réseaux<br/>La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d&#39;accès quelconque.</li>
+<li>Wifi  avec IP privée<br/>Vous pouvez lancer la synchronisation lorsque l&#39;adresse IP est une adresse privée</li>
 <li>Liste d&#39;adresses IP<br/>Vous ne pouvez commencer la synchronisation que si l&#39;adresse IP WiFi correspond à l&#39;une des adresses spécifiées. Vous pouvez également ajouter directement l&#39;adresse IP actuelle à laquelle votre appareil est connecté via la liste de sélection des adresses IP.<br/>Vous pouvez utiliser des jokers pour le filtre. (par exemple : 192.168.100.*, 192.168.*.*.)</li>
 
 </ul>
+<h3>Autoriser  la connexion aux addresses IP publiques(inclure le public)  </h3>
+<p>Permet la synchronisation sur toutes les adresses IP. Cependant, le balayage du serveur SMB ne peut pas être effectué.</p>
 <h3>Affiche les options avancées</h3>
 <p><strong>Veuillez l&#39;utiliser lors de la définition des options détaillées.</strong></p>
 <h3>Inclure les sous-répertoires</h3>
@@ -76,8 +80,7 @@ Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont
 <h3>Réessayer en cas d&#39;erreur de réseau (uniquement pour les partages SMB)</h3>
 <p>En cas d&#39;erreur de connexion côté serveur, SMBSync3 réessaiera la synchronisation au maximum 3 fois à un intervalle de 30 secondes. </p>
 <h3>Limiter le tampon d&#39;écriture des E/S SMB à 16KB (uniquement pour les partages SMB)</h3>
-<p><strong>Veuillez essayer si vous obtenez une erreur &quot;Access is denied&quot; en écrivant dans le dossier PC/NAS.</strong></p>
-<p>Lorsqu&#39;il est vérifié, il limite le tampon d&#39;entrée/sortie à 16KB pour les opérations d&#39;écriture sur l&#39;hôte SMB. </p>
+<p>Veuillez essayer si vous obtenez une erreur &quot;Access is denied&quot; en écrivant dans le dossier PC/NAS. Lorsqu&#39;il est vérifié, il limite le tampon d&#39;entrée/sortie à 16KB pour les opérations d&#39;écriture sur l&#39;hôte SMB. </p>
 <h3>Effacer les fichiers avant la synchronisation (mode miroir uniquement)</h3>
 <p>Lorsqu&#39;elle est cochée, les répertoires et les fichiers qui sont présents sur le dossier cible mais qui n&#39;existent pas sur le master, seront d&#39;abord supprimés. Ensuite, les fichiers et les dossiers qui sont différents seront copiés sur la cible.</p>
 <p>Si le dossier maître est SMB, le temps de traitement sera plus long car la structure des répertoires et leur contenu sont scannés à travers le réseau. Il est fortement recommandé d&#39;activer l&#39;option &quot;Utiliser la négociation SMB2&quot; car SMB1 sera très lent.</p>
@@ -108,7 +111,7 @@ Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont
 <h3>Sauter les noms de répertoires et de fichiers qui contiennent des caractères non valides (&quot;, :, \, *, &lt;, &gt;, |)</h3>
 <p>Si elle est cochée, elle affichera un message d&#39;avertissement et la synchronisation se poursuivra sans traiter les répertoires/fichiers contenant des caractères non valides. </p>
 <h3>Effacer le répertoire principal lorsqu&#39;il est vide (uniquement lorsque l&#39;option de synchronisation est Déplacer)</h3>
-<p>Lorsque le mode de synchronisation est &quot;Move&quot;, après que les fichiers aient été déplacés vers la cible, le dossier &quot;Master&quot; est également supprimé. </p>
+<p>Lorsque le mode de synchronisation est &quot;Déplacement&quot;, après que les fichiers aient été déplacés vers la destination, le dossier Source est également supprimé.  </p>
 <h3>Si la date et l&#39;heure ne peuvent pas être déterminées par les données EXIF, un message de confirmation s&#39;affiche</h3>
 <p>Afficher un message de confirmation lorsque la date et l&#39;heure de la prise ne peuvent être obtenues auprès d&#39;Exif.</p>
 <h3>Ignorer les fichiers sources de plus de 4 Go lors de la synchronisation avec le stockage externe.</h3>

@@ -404,7 +404,7 @@
         <string name="msgs_task_sync_task_sync_file_type_video">Sincronizzare i file video</string>
         <string name="msgs_task_sync_task_sync_option">Opzioni:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">Differenza di tempo minima consentita (in secondi) tra i file di origine e di destinazione</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Consentire la sincronizzazione con tutti gli indirizzi IP (anche pubblici)</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Permette la sincronizzazione con tutti gli indirizzi IP (includono pubblico)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">Confermare prima di sovrascrivere/cancellare</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">Cancellare i file prima della sincronizzazione (solo modalità Mirror)</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">Le dimensioni si confrontano solo tra loro (i file sono considerati diversi solo se la dimensione della fonte è più grande della destinazione)</string>
@@ -418,7 +418,7 @@
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter">Rimuove le directory e i file esclusi dal filtro</string>
         <string name="msgs_task_sync_task_sync_option_ignore_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_option_enabled">La sincronizzazione dei file è saltata perché l\'opzione "Non sovrascrivere il file di destinazione se è più recente del file sorgente" è attivata.</string>
         <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Salta i nomi delle directory e dei file che contengono caratteri non validi(\", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="msgs_task_sync_task_sync_option_source_root_dir_file">La sincronizzazione include i file che si trovano direttamente nella root della directory di origine (se deselezionata, solo le cartelle e i loro file/sottocartelle sono sincronizzati)</string>
+        <string name="msgs_task_sync_task_sync_option_source_root_dir_file">La sincronizzazione include i file che si trovano direttamente nella root della directory di origine</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file">Non sovrascrivere il file di destinazione se è più recente del file sorgente</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning">ATTENZIONE: Possibili risultati inattesi Se si vive in una zona con DST o se si cambia TimeZones, il file di destinazione può mostrare erroneamente un tempo più vecchio della sorgente se è stato modificato all\'interno del cambio di intervallo DST/TimeZone. Si consiglia vivamente di attivare l\'opzione \"Conferma prima di sovrascrivere/cancellare \". Si prega di verificare il contenuto del file prima di sovrascrivere.</string>
         <string name="msgs_task_sync_task_sync_option_copy_no_compare_title">Avviso di sovrascrittura del file di destinazione</string>
@@ -443,7 +443,7 @@
         <string name="msgs_task_sync_task_sync_option_test_mode">Modalità di test (non copiare o cancellare i file)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Opzione di rete:</string>
         <string name="msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Il filtro di directory non è stato specificato.</string>
-        <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Cancellare la directory di origine quando è vuota (solo quando l\'opzione Sync è Move)</string>
+        <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Cancellare la directory di origine quando è vuota (solo quando l\'opzione Sync è Spostare)</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Selezionare le sottodirectory</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Limitare il buffer di scrittura SMB I/O a 16 KB</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">Se la data e l\'ora non possono essere determinate dai dati EXIF, viene visualizzato un messaggio di conferma</string>

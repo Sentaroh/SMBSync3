@@ -5,7 +5,7 @@
 <title>SMBSync3_Help_IT_task</title></head>
 <body><h3>Modalità di test</h3>
 <p>Non esegue la sovrascrittura e la cancellazione del file se si controlla. Si prega di essere testato quando si crea un&#39;attività di sincronizzazione, i file che vengono copiati o cancellati possono essere trovati nella scheda dei messaggi.</p>
-<h3>Attività di sincronizzazione automatica</h3>
+<h3>Sincronizzazione  automatica</h3>
 <p>Se si seleziona l&#39;attività all&#39;automatico. Le attività che sono impostate sulla sincronizzazione automatica si avvieranno quando si preme il pulsante sync.</p>
 <h3>Nome dell&#39;attività</h3>
 <p>Specificare il nome dell&#39;attività.</p>
@@ -18,9 +18,9 @@
 <li>Archivio</li>
 
 </ul>
-<h3>Scambia la sorgente e la destinazione</h3>
+<h3>Scambiare  fonte e destinazione</h3>
 <p>Scambiare il contenuto della cartella di origine e della cartella di destinazione </p>
-<h3>Cartella sorgente</h3>
+<h3>Cartella di origine</h3>
 <p>Toccare il pulsante per modificare la cartella sorgente</p>
 <h3>Cartella di destinazione</h3>
 <p>Toccare il pulsante per modificare la cartella di destinazione</p>
@@ -33,24 +33,26 @@
 <li>Filtro file<br/>È possibile selezionare il nome e l&#39;estensione del file con cui si desidera sincronizzarsi, oltre a quanto sopra.</li>
 
 </ul>
-<h3>Selezionare le sottodirectory per la sincronizzazione</h3>
+<h3>Selezionare  le sottodirectory</h3>
 <p>Se non si controlla e poi si sincronizza tutta la sottocartella. Se si controlla per mostrare il pulsante del filtro della directory.</p>
 <ul>
 <li>Filtro della directory
 È possibile selezionare il nome della directory che si desidera sincronizzare.</li>
 
 </ul>
-<h3>Eseguire l&#39;operazione di sincronizzazione solo durante la ricarica</h3>
+<h3>Eseguire  le operazioni di sincronizzazione solo in fase di ricarica</h3>
 <p>Se l&#39;opzione è selezionata, è possibile avviare la sincronizzazione solo durante la carica. Se la sincronizzazione viene avviata quando non è in carica, si verificherà un errore.</p>
-<h3>Confermare prima di annullare la copia o cancellare</h3>
+<h3>La  sincronizzazione include i file che si trovano direttamente nella root della  directory di origine  </h3>
+<p>si décoché, seuls les  dossiers et leurs fichiers/sous-dossiers seront synchronisés</p>
+<h3>Confermare  prima di sovrascrivere/cancellare</h3>
 <p>Quando si desidera sovrascrivere e cancellare il file, viene visualizzata una finestra di dialogo di conferma se è stato selezionato.</p>
 <h3>Opzioni di errore  </h3>
 <p>È possibile specificare il comportamento quando si verifica un errore.</p>
 <ul>
 <li>Interrompere la sincronizzazione</li>
-<li>Ignorare tutti gli errori e iniziare le attività successive
+<li>Ignorare  tutti gli errori e iniziare le attività successive
 Utilizzare questa opzione se si vuole essere sicuri che le attività successive vengano eseguite. </li>
-<li>Avviare le attività successive se le opzioni di rete causano errori<br/>Utilizzare questa funzione se si desidera eseguire attività successive quando l&#39;indirizzo non è privato o quando non è l&#39;indirizzo IP specificato.  </li>
+<li>Avviare  le attività successive anche se non si adattano alle opzioni di rete<br/>Utilizzare questa funzione se si desidera eseguire attività successive quando l&#39;indirizzo non è privato o quando non è l&#39;indirizzo IP specificato.  </li>
 
 </ul>
 <h3>Rete</h3>
@@ -61,6 +63,8 @@ Utilizzare questa opzione se si vuole essere sicuri che le attività successive 
 <li>Elenco indirizzi IP<br/>La sincronizzazione può iniziare solo se l&#39;indirizzo IP WiFi corrisponde a uno degli indirizzi specificati. È inoltre possibile aggiungere direttamente l&#39;indirizzo IP corrente al quale il dispositivo è collegato attraverso l&#39;elenco di selezione IP.<br/>È possibile utilizzare i caratteri jolly per il filtro. (ad esempio: 192.168.100.*, 192.168.*.*.*).</li>
 
 </ul>
+<h3>Permette  la sincronizzazione con tutti gli indirizzi IP (includono pubblico) </h3>
+<p>Permette la sincronizzazione su tutti gli indirizzi IP. Tuttavia, la scansione del server SMB non può essere eseguita.</p>
 <h3>Mostra le opzioni avanzate</h3>
 <p><strong>Si prega di utilizzarlo quando si impostano opzioni dettagliate.</strong></p>
 <h3>Includi le sottodirectory</h3>
@@ -76,7 +80,7 @@ Utilizzare questa opzione se si vuole essere sicuri che le attività successive 
 <h3>Riprova su errore di rete (solo per le condivisioni SMB)</h3>
 <p>In caso di errori di connessione lato server, SMBSync3 riproverà la sincronizzazione per un massimo di 3 volte ad un intervallo di 30 secondi. </p>
 <h3>Limitare il buffer di scrittura SMB I/O a 16KB (solo per le condivisioni SMB)</h3>
-<p><strong>Provare se si ottiene un errore di &quot;Accesso negato&quot; quando si scrive nella cartella PC/NAS.</strong></p>
+<p>Provare se si ottiene un errore di &quot;Accesso negato&quot; quando si scrive nella cartella PC/NAS.</p>
 <p>Quando viene selezionato, limiterà il buffer I/O a 16KB per le operazioni di scrittura sull&#39;host SMB. </p>
 <h3>Cancellare i file prima della sincronizzazione (solo modalità Mirror)</h3>
 <p>Una volta spuntate, le directory e i file che sono presenti nella cartella di destinazione ma che non esistono sul master, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella cartella di destinazione.</p>
@@ -107,13 +111,14 @@ Utilizzare questa opzione se si vuole essere sicuri che le attività successive 
 <p>Permette di selezionare la differenza di fuso orario in minuti tra l&#39;ora legale e quella invernale. I file sono considerati diversi se la differenza di orario non è esattamente uguale all&#39;intervallo specificato (+/- la &quot;differenza di orario minima consentita (in secondi)&quot; specificata nell&#39;opzione precedente)</p>
 <h3>Salta i nomi di directory e file che contengono caratteri non validi(&quot;, :, \, \, *, &lt;, &gt;, |)</h3>
 <p>Se spuntata, visualizzerà un messaggio di avviso e la sincronizzazione continuerà senza elaborare le directory/file contenenti caratteri non validi. </p>
-<h3>Cancella la directory master quando è vuota (solo quando l&#39;opzione Sync è Move)</h3>
-<p>Quando la modalità di sincronizzazione è Move, dopo che i file sono stati spostati nella destinazione, viene cancellata anche la cartella Master. </p>
+<h3>Cancella la directory master quando è vuota (solo quando l&#39;opzione Sync è Spostare)</h3>
+<p>Quando la modalità di sincronizzazione è &quot;Spostare&quot;, dopo che i file sono stati spostati nella destinazione, viene cancellata anche la cartella Source. </p>
 <h3>Se la data e l&#39;ora non possono essere determinate dai dati EXIF, viene visualizzato un messaggio di conferma</h3>
 <p>Visualizzare un messaggio di conferma quando non è possibile ottenere da Exif la data e l&#39;ora prese.</p>
 <h3>Ignora i file sorgente che sono più grandi di 4 GB quando la sincronizzazione con la memoria esterna.</h3>
 <p>Se l&#39;opzione è selezionata, è possibile evitare errori I/O durante la sincronizzazione su una scheda MicroSD ignorando i file sorgente di dimensioni superiori a 4 GB da sincronizzare sulla memoria locale.</p>
 <h3>Ignora i file il cui nome file supera i 255 byte</h3>
 <p>Se spuntata, ignorare i file con nomi di file più lunghi di 255 byte.</p>
+<p>&nbsp;</p>
 </body>
 </html>

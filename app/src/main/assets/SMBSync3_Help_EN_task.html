@@ -42,6 +42,8 @@ You can select the name of the directory you want to synchronize.</li>
 </ul>
 <h3>Execute sync task only when charging</h3>
 <p>If checked, you can start sync only while charging. If sync is started when not charging it will result in an error.</p>
+<h3>Sync  includes the files located directly in root of the source directory </h3>
+<p>If  unchecked, only folders and their files/subfolders are synchronized</p>
 <h3>Confirm before override copy or delete</h3>
 <p>It will display a confirmation dialog when you want to overwrite and delete the file if you have checked.</p>
 <h3>Error Options  </h3>
@@ -61,6 +63,8 @@ Use this option if you want to make sure that subsequent tasks are executed. </l
 <li>IP Address List<br/>You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.<br/>You can use wildcards for the filter. (e.g: 192.168.100.*, 192.168.*.*.)</li>
 
 </ul>
+<h3>Allow  sync with all IP addresses (include public)  </h3>
+<p>Enables synchronization on all IP addresses. However, SMB server scan cannot be performed. </p>
 <h3>Shows advanced options</h3>
 <p><strong>Please use it when setting detailed options.</strong></p>
 <h3>Include subdirectories</h3>
@@ -76,8 +80,7 @@ Use this option if you want to make sure that subsequent tasks are executed. </l
 <h3>Retry on network error (only for SMB shares)</h3>
 <p>On server-side connection errors, SMBSync3 will try again the synchronization for a maximum of 3 times at a 30 seconds interval. </p>
 <h3>Limit SMB I/O write buffer to 16KB (only for SMB shares)</h3>
-<p><strong>Please try if you get an &quot;Access is denied&quot; error when writing to the PC/NAS folder.</strong></p>
-<p>When checked, it will limit I/O buffer to 16KB for writing operations to the SMB host. </p>
+<p>Please try if you get an &quot;Access is denied&quot; error when writing to the PC/NAS folder. When checked, it will limit I/O buffer to 16KB for writing operations to the SMB host. </p>
 <h3>Delete files prior to sync (Mirror mode only)</h3>
 <p>When checked, the directories and files that are present on the target folder but that do not exist on the master, will be first deleted. After that, files and folders that are different will be copied to the target.</p>
 <p>If the master folder is SMB, the processing time will be longer because the directory structure and their contents is scanned through the network. It is strongly recommended to enable the option &quot; Use SMB2 negotiation&quot; because SMB1 will be very slow.</p>
@@ -107,8 +110,8 @@ Use this option if you want to make sure that subsequent tasks are executed. </l
 <p>Let you select the time difference in minutes between summer and winter time. Files are considered different if the time difference is not exactly equal to the specified interval (+/- the “Min allowed time difference (in seconds)” specified in previous option)</p>
 <h3>Skip directory and file names that contain invalid characters(&quot;, :, \, *, &lt;, &gt;, |)</h3>
 <p>If checked, it will display a warning message and the sync will continue without processing the directories/files containing invalid characters. </p>
-<h3>Delete the master directory when it is empty (only when Sync option is Move)</h3>
-<p>When sync mode is Move, after the files are moved to the target, the Master folder is also deleted. </p>
+<h3>Delete the source directory when it is empty (only when Sync option is Move)</h3>
+<p>When sync mode is Move, after the files are moved to the destination, the Source folder is also deleted. </p>
 <h3>If the date and time cannot be determined by EXIF data, a confirmation message is displayed</h3>
 <p>Display a confirmation message when the taken date and time cannot be obtained from Exif.</p>
 <h3>Ignore source files that are larger than 4 GB when sync to external storage.</h3>

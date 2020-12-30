@@ -404,7 +404,7 @@
         <string name="msgs_task_sync_task_sync_file_type_video">Synchronisieren von Videodateien</string>
         <string name="msgs_task_sync_task_sync_option">Optionen:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">Min. erlaubter Zeitunterschied (in Sekunden) zwischen Quell- und Zieldatei für die Synchronisierung</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Synchronisierung mit globalen IP-Adressen zulassen</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Synchronisierung mit allen IP-Adressen zulassen (einschließlich öffentlich)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">Bestätigen vor dem Überschreiben/Löschen</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">Dateien vor der Synchronisierung löschen (nur Spiegelmethode)</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">Die Dateien unterscheiden sich nur dann, wenn die Quelle größer als das Ziel ist.</string>
@@ -428,7 +428,7 @@
         <string name="msgs_task_sync_task_sync_option_offset_of_dst_time_value_title">Sommerzeitverschiebung wählen (Minuten)</string>
         <string name="msgs_task_sync_task_sync_option_not_set_file_last_modified">Aktualisierungszeit der Zieldatei nicht auf Übereinstimmung mit der Quelldatei einstellen</string>
         <string name="msgs_task_sync_task_sync_option_not_set_file_last_modified_warning">Wenn diese Option aktiviert ist, kann der letzte Änderungszeitpunkt der Zieldatei nicht mit dem der Quelldatei identisch sein, so dass die Datei bei jeder Synchronisierung kopiert wird.　Verwenden Sie diese Option z.B., wenn das Ziel die zuletzt geänderte Zeit nicht einstellen kann.\nWenn diese Option aktiviert ist, können Sie verhindern, dass Dateien jedes Mal kopiert werden, indem Sie \"Zeitpunkt der letzten Änderung verwenden, um festzustellen, ob Dateien unterschiedlich sind\" deaktivieren.</string>
-        <string name="msgs_task_sync_task_sync_option_perform_overriden_copy_move">Zieldatei(en) überschreiben</string>
+        <string name="msgs_task_sync_task_sync_option_perform_overriden_copy_move">Zieldateien überschreiben</string>
         <string name="msgs_task_sync_task_sync_option_retry_if_error_occured">Wiederholung bei Netzwerkfehler</string>
         <string name="msgs_task_sync_task_sync_option_show_special_option">Erweiterte Optionen anzeigen</string>
         <string name="msgs_task_sync_task_sync_option_network_adv_options">Erweiterte Netzwerk-Optionen:</string>
@@ -439,7 +439,7 @@
         <string name="msgs_task_sync_task_sync_option_error_ignore">Ignorieren Sie alle Fehler und starten Sie nachfolgende Aufgaben</string>
         <string name="msgs_task_sync_task_sync_option_error_ignore_warning_message">Wenn diese Option auf \"Stop\" gesetzt ist, wird auch dann, wenn eine synchrone Aufgabe mit einem Fehler beendet wird, eine nachfolgende Aufgabe ausgeführt. Deaktivieren Sie diese Option nur, wenn Sie sicherstellen wollen, dass die nächste Aufgabe ausgeführt wird.</string>
         <string name="msgs_task_sync_task_sync_option_sub_dir">Unterverzeichnisse synchronisieren</string>
-        <string name="msgs_task_sync_task_sync_option_sync_when_charging">Ausführen von Synchronisierungsaufgaben nur beim Laden</string>
+        <string name="msgs_task_sync_task_sync_option_sync_when_charging">Starten Sie die Synchronisation nur, wenn der Akku geladen wird.</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">Testmodus (keine Dateien kopieren oder löschen)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Netzwerk-Option</string>
         <string name="msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Verzeichnisfilter wurde nicht angegeben.</string>

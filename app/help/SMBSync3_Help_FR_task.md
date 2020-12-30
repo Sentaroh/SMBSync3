@@ -2,7 +2,7 @@
 
 Il n'effectue pas l'écrasement et la suppression du fichier si vous vérifiez. Veuillez être testé lorsque vous créez une tâche de synchronisation, les fichiers qui sont copiés ou supprimés se trouvent dans l'onglet message.
 
-### Tâche de synchronisation automatique
+### Synchronisation  Auto
 
 Si la tâche a été vérifiée, elle est passée à l'automatique. Les tâches qui sont réglées sur la synchronisation automatique commenceront lorsque vous appuierez sur le bouton de synchronisation.
 
@@ -10,16 +10,16 @@ Si la tâche a été vérifiée, elle est passée à l'automatique. Les tâches 
 
 Précisez le nom de la tâche.
 
-### Type de synchronisation
+### Mode de sync
 
 La méthode de synchronisation est choisie parmi les suivantes : miroir, copie, déplacement, archive. La synchronisation se fait du maître à la cible dans une direction.
 
 - Miroir
-- Déplacement
+- Déplacer
 - Copie
-- Archives
+- Archive
 
-### Échangez la source et la destination
+### Inverser  les dossiers source et destination
 
 Échanger le contenu du dossier source et du dossier de destination 
 
@@ -47,18 +47,22 @@ Si vous ne vérifiez pas et synchronisez ensuite l'ensemble du fichier. Si vous 
 - Filtre de fichiers  
   Vous pouvez sélectionner le nom et l'extension du fichier avec lequel vous voulez synchroniser autre chose que ce qui précède.
 
-### Sélectionner les sous-répertoires pour la synchronisation
+### Sélectionner les sous-dossiers
 
 Si vous ne vérifiez pas et synchronisez ensuite tous les sous-répertoires. Si vous vérifiez que le bouton de filtrage des répertoires s'affiche.
 
 - Filtre de répertoire
   Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.
 
-### Exécuter la tâche de synchronisation uniquement lors du chargement
+### Démarrer  la synchronisation seulement si l\'appareil est en charge
 
 Si la case est cochée, vous ne pouvez démarrer la synchronisation que pendant la charge. Si la synchronisation est lancée alors que vous n'êtes pas en train de charger, cela entraînera une erreur.
 
-### Confirmer avant d'annuler la copie ou la suppression
+### Synchroniser  les fichiers situés dans la racine du dossier source 
+
+si elle n'est pas cochée, seuls les dossiers et leurs fichiers/sous-dossiers sont synchronisés
+
+### Confirmer  avant de remplacer/supprimer
 
 Il affichera un dialogue de confirmation lorsque vous voudrez écraser et supprimer le fichier si vous avez coché.
 
@@ -67,22 +71,26 @@ Il affichera un dialogue de confirmation lorsque vous voudrez écraser et suppri
 Vous pouvez spécifier le comportement à adopter lorsqu'une erreur se produit.
 
 - Arrêter la synchronisation
-- Ignorez toutes les erreurs et commencez les tâches suivantes
+- Ignorez  toutes les erreurs et commencez les tâches suivantes
   Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont exécutées. 
-- Lancer les tâches suivantes si les options de réseau entraînent des erreurs  
+- Commencer  les tâches suivantes même si elles ne correspondent pas aux options du réseau  
   Utilisez cette fonction si vous souhaitez exécuter des tâches ultérieures lorsque l'adresse n'est pas privée ou lorsqu'elle n'est pas l'adresse IP spécifiée.  
 
 ### Réseau
 
-- Courir même quand on est éteint  
+- Même si  Wifi éteint  
   Vous pouvez toujours commencer à synchroniser
-- Conn à tout AP  
+- Tous les  réseaux  
   La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d'accès quelconque.
-- A une adresse privée  
+- Wifi  avec IP privée  
   Vous pouvez lancer la synchronisation lorsque l'adresse IP est une adresse privée
 - Liste d'adresses IP  
   Vous ne pouvez commencer la synchronisation que si l'adresse IP WiFi correspond à l'une des adresses spécifiées. Vous pouvez également ajouter directement l'adresse IP actuelle à laquelle votre appareil est connecté via la liste de sélection des adresses IP.  
   Vous pouvez utiliser des jokers pour le filtre. (par exemple : 192.168.100.\*, 192.168.\*.\*.)
+
+### Autoriser  la connexion aux addresses IP publiques(inclure le public)  
+
+Permet la synchronisation sur toutes les adresses IP. Cependant, le balayage du serveur SMB ne peut pas être effectué.
 
 ### Affiche les options avancées
 
@@ -114,9 +122,7 @@ En cas d'erreur de connexion côté serveur, SMBSync3 réessaiera la synchronisa
 
 ### Limiter le tampon d'écriture des E/S SMB à 16KB (uniquement pour les partages SMB)
 
-**Veuillez essayer si vous obtenez une erreur "Access is denied" en écrivant dans le dossier PC/NAS.**
-
-Lorsqu'il est vérifié, il limite le tampon d'entrée/sortie à 16KB pour les opérations d'écriture sur l'hôte SMB. 
+Veuillez essayer si vous obtenez une erreur "Access is denied" en écrivant dans le dossier PC/NAS. Lorsqu'il est vérifié, il limite le tampon d'entrée/sortie à 16KB pour les opérations d'écriture sur l'hôte SMB. 
 
 ### Effacer les fichiers avant la synchronisation (mode miroir uniquement)
 
@@ -172,7 +178,7 @@ Si elle est cochée, elle affichera un message d'avertissement et la synchronisa
 
 ### Effacer le répertoire principal lorsqu'il est vide (uniquement lorsque l'option de synchronisation est Déplacer)
 
-Lorsque le mode de synchronisation est "Move", après que les fichiers aient été déplacés vers la cible, le dossier "Master" est également supprimé. 
+Lorsque le mode de synchronisation est "Déplacement", après que les fichiers aient été déplacés vers la destination, le dossier Source est également supprimé.  
 
 ### Si la date et l'heure ne peuvent pas être déterminées par les données EXIF, un message de confirmation s'affiche
 

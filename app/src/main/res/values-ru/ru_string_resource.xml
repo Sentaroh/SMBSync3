@@ -399,7 +399,7 @@
         <string name="msgs_task_sync_task_sync_file_type_video">Синхронизировать видеофайлы</string>
         <string name="msgs_task_sync_task_sync_option">Опции:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">Минимально допустимая разница во времени (в секундах) между исходным и целевым файлами для синхронизации</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию с глобальными IP-адресами</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию со всеми IP-адресами (привлекать публику)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">Подтвердите, прежде чем перезаписать/удалить</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">Удаление файлов перед синхронизацией (только в режиме зеркального отображения).</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">Файлы считаются разными только в том случае, если размер источника больше, чем место назначения (только сравнение размеров, отключение разницы во времени).</string>
@@ -424,7 +424,7 @@
         <string name="msgs_task_sync_task_sync_option_not_set_file_last_modified">Не устанавливайте время обновления файла назначения в соответствии с исходным файлом</string>
         <string name="msgs_task_sync_task_sync_option_not_set_file_last_modified_warning">При включении, время последнего изменения целевого файла не может совпадать с исходным файлом, поэтому файл копируется каждый раз при синхронизации. Используйте эту опцию, например, когда цель не может установить последнее измененное время. 
 Если эта опция включена, вы можете предотвратить копирование файлов каждый раз, отключив функцию \"Использовать время последней модификации для определения различий в файлах\". \nПереведено с помощью www.DeepL.com/Translator (бесплатная версия)</string>
-        <string name="msgs_task_sync_task_sync_option_perform_overriden_copy_move">Перезаписать целевой файл (файлы)</string>
+        <string name="msgs_task_sync_task_sync_option_perform_overriden_copy_move">Перезаписать целевой(ые) файл(ы)</string>
         <string name="msgs_task_sync_task_sync_option_retry_if_error_occured">Повторите попытку при сетевой ошибке</string>
         <string name="msgs_task_sync_task_sync_option_show_special_option">Показать расширенные опции</string>
         <string name="msgs_task_sync_task_sync_option_network_adv_options">Расширенные возможности сети:</string>
@@ -439,7 +439,7 @@
         <string name="msgs_task_sync_task_sync_option_test_mode">Тестовый режим (не копировать и не удалять файлы)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
         <string name="msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
-        <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Удалить исходный каталог, когда он пуст (только если опция Sync - Move).</string>
+        <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Удалить исходный каталог, когда он пуст (только если опция Sync - Переместить).</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Выберите подкаталоги</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Ограничить буфер записи ввода / вывода SMB 16 КБ</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">Если дата и время не могут быть определены по данным EXIF, отображается подтверждающее сообщение.</string>

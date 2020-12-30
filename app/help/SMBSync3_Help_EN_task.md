@@ -45,7 +45,12 @@ You can select the name of the directory you want to synchronize.
 ### Execute sync task only when charging
 If checked, you can start sync only while charging. If sync is started when not charging it will result in an error.
 
+### Sync  includes the files located directly in root of the source directory 
+
+If  unchecked, only folders and their files/subfolders are synchronized
+
 ### Confirm before override copy or delete
+
 It will display a confirmation dialog when you want to overwrite and delete the file if you have checked.
 
 ### Error Options  
@@ -69,6 +74,10 @@ You can start synchronization when the IP address is a private address
 - IP Address List  
 You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.  
 You can use wildcards for the filter. (e.g: 192.168.100.\*, 192.168.\*.\*.)
+
+### Allow  sync with all IP addresses (include public)  
+
+Enables synchronization on all IP addresses. However, SMB server scan cannot be performed. 
 
 ### Shows advanced options
 
@@ -100,9 +109,7 @@ On server-side connection errors, SMBSync3 will try again the synchronization fo
 
 ### Limit SMB I/O write buffer to 16KB (only for SMB shares)
 
-**Please try if you get an "Access is denied" error when writing to the PC/NAS folder.**
-
-When checked, it will limit I/O buffer to 16KB for writing operations to the SMB host. 
+Please try if you get an "Access is denied" error when writing to the PC/NAS folder. When checked, it will limit I/O buffer to 16KB for writing operations to the SMB host. 
 
 ### Delete files prior to sync (Mirror mode only)
 
@@ -156,9 +163,9 @@ Let you select the time difference in minutes between summer and winter time. Fi
 
 If checked, it will display a warning message and the sync will continue without processing the directories/files containing invalid characters. 
 
-###  Delete the master directory when it is empty (only when Sync option is Move)
+###  Delete the source directory when it is empty (only when Sync option is Move)
 
-When sync mode is Move, after the files are moved to the target, the Master folder is also deleted. 
+When sync mode is Move, after the files are moved to the destination, the Source folder is also deleted. 
 
 ### If the date and time cannot be determined by EXIF data, a confirmation message is displayed
 

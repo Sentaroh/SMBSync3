@@ -39,11 +39,3 @@ SMBSync3是安卓设备的内部存储，MicroSD，USB闪存和PC/NAS通过无�
 ## 文件
 
 [请参考PDF文件](https://drive.google.com/file/d/1gIsulxyGBY-Fl0Ki7BJ50gPFWx0iQ9Tm/view?usp=sharing)
-
-## 图书馆
-
-- [jcifs-ng ClientLibrary](https://github.com/AgNO3/jcifs-ng)
-- [jcifs-1.3.17](https://jcifs.samba.org/)
-- [Zip4J 2.2.3](http://www.lingala.net/zip4j.html)
-- [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)
-- [Metadata-extractor](https://github.com/drewnoakes/metadata-extractor)

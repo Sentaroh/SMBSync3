@@ -405,7 +405,7 @@
         <string name="msgs_task_sync_task_sync_file_type_video">同步视频文件</string>
         <string name="msgs_task_sync_task_sync_option">选项:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">同步的源文件和目标文件之间的最小允许时间差（秒）</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">允许与全局IP地址同步</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">允许与所有IP地址同步 (包括公众)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">覆盖/删除前确认</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">在同步前删除文件（仅镜像法）</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">只有当源文件大于目的文件时，文件才会不同</string>
