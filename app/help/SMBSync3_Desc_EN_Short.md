@@ -8,15 +8,15 @@ Periodic synchronization can be initiated by SMBSync3's scheduling feature or ex
 
 - Mirror
 
-  The source directory and files are delta-copied (<u>***2**</u>) to the destination, and after the copying is completed, the files and directories that do not exist on the source side are deleted.
+  The source directory and files are differential copied (<u>***2**</u>) to the destination, and after the copying is completed, the files and directories that do not exist on the source side are deleted.
 
 - Move
 
-  The source directory and files are delta-copied(<u>***2**</u>) to the destination side, and the files on the source side are deleted when the copying is completed.(However, the file with the same name, the file size, and the modified date are the same in the source and the destination, and the file is not copied, and the source directory and the file are deleted after the copy is finished. side of the file).
+  The source directory and files are differential copied(<u>***2**</u>) to the destination side, and the files on the source side are deleted when the copying is completed.(However, the file with the same name, the file size, and the modified date are the same in the source and the destination, and the file is not copied, and the source directory and the file are deleted after the copy is finished. side of the file).
 
 - Copy
 
-  Delta-copies(<u>***2**</u>) the files contained in the source directory to the destination.
+  Make a differential copy (***2**) of the files contained in the directory on the source side to the destination side.
 
 - Archive
 

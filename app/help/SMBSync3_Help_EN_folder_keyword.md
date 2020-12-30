@@ -52,8 +52,6 @@
 
   Day of the week (sunday, monday, etc.)
 
- 
-
 ### Sync begin date parameters
 
 - E-DATE

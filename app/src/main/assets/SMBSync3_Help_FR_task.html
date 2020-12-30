@@ -10,14 +10,22 @@
 <h3>Nom de la tâche</h3>
 <p>Précisez le nom de la tâche.</p>
 <h3>Mode de sync</h3>
-<p>La méthode de synchronisation est choisie parmi les suivantes : miroir, copie, déplacement, archive. La synchronisation se fait du maître à la cible dans une direction.</p>
+<p>Sélectionnez la méthode de synchronisation parmi Miroir, Copier, Déplacer et Archiver. La synchronisation est unidirectionnelle du dossier source au dossier de destination.</p>
 <ul>
-<li>Miroir</li>
-<li>Déplacer</li>
-<li>Copie</li>
-<li>Archive</li>
+<li>Miroir<br/>Faites une copie différentielle (<strong><u>*1</u></strong>) des répertoires et des fichiers du côté source vers le côté destination, et supprimez les fichiers et les répertoires du côté destination qui n&#39;existent pas du côté source une fois la copie terminée.</li>
+<li>Déplacer<br/>Faites une copie différentielle du répertoire et du fichier côté source vers le côté destination, et supprimez le fichier côté source copié vers le côté destination.
+Toutefois, le fichier portant le même nom que la source et la destination mais ayant la même taille et la même date de modification n&#39;est pas copié et le fichier du côté source est supprimé.</li>
+<li>Copie<br/>Faites une copie différentielle des fichiers contenus dans le répertoire source vers le côté destination.</li>
+<li>Archive<br/>Déplacer les photos et vidéos contenues dans le répertoire source vers la destination à condition que la date et l&#39;heure de tournage soient antérieures à 7 jours ou 30 jours à la date et l&#39;heure d&#39;exécution de l&#39;archive. (Toutefois, le ZIP ne peut pas être utilisé comme destination).</li>
 
 </ul>
+<p><strong><u>*1</u></strong> Si l&#39;une des trois conditions suivantes est remplie, le fichier est considéré comme un fichier de différence et est copié ou déplacé. Cependant, la taille du fichier et le moment de la dernière modification peuvent être ignorés dans les options de la tâche de synchronisation.  </p>
+<ol start='' >
+<li>le fichier n&#39;existe pas</li>
+<li>la taille du fichier est différente</li>
+<li>la date et l&#39;heure de la dernière modification sont différentes de plus de 3 secondes (le nombre de secondes peut être modifié par l&#39;option de la tâche de synchronisation)</li>
+
+</ol>
 <h3>Inverser  les dossiers source et destination</h3>
 <p>Échanger le contenu du dossier source et du dossier de destination </p>
 <h3>Dossier source</h3>
@@ -25,11 +33,14 @@
 <h3>Dossier de destination</h3>
 <p>Appuyez sur le bouton pour modifier le dossier de destination</p>
 <h3>Sélectionner les fichiers à synchroniser</h3>
-<p>Si vous ne vérifiez pas et synchronisez ensuite l&#39;ensemble du fichier. Si vous vérifiez pour voir les détails. </p>
+<p>Si elle n&#39;est pas cochée, tous les fichiers seront synchronisés. Si coché, vous pouvez sélectionner les fichiers à synchroniser.</p>
 <ul>
-<li>Synchroniser les fichiers audio<br/>Si vous vérifiez la synchronisation des fichiers des extensions suivantes.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav  </li>
-<li>Synchroniser les fichiers d&#39;images<br/>Si vous vérifiez la synchronisation des fichiers des extensions suivantes.<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff</li>
-<li>Synchroniser les fichiers vidéo<br/>Si vous vérifiez la synchronisation des fichiers des extensions suivantes.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
+<li>Synchroniser les fichiers audio<br/>Synchronisez les fichiers avec les extensions suivantes
+aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  </li>
+<li>Synchroniser les fichiers d&#39;images<br/>Synchronisez les fichiers avec les extensions suivantes
+bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</li>
+<li>Synchroniser les fichiers vidéo<br/>Synchronisez les fichiers avec les extensions suivantes
+avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
 <li>Filtre de fichiers<br/>Vous pouvez sélectionner le nom et l&#39;extension du fichier avec lequel vous voulez synchroniser autre chose que ce qui précède.</li>
 
 </ul>
@@ -40,7 +51,7 @@
 Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.</li>
 
 </ul>
-<h3>Démarrer  la synchronisation seulement si l&#39;appareil est en charge</h3>
+<h3>Démarrer la synchronisation uniquement pendant la charge</h3>
 <p>Si la case est cochée, vous ne pouvez démarrer la synchronisation que pendant la charge. Si la synchronisation est lancée alors que vous n&#39;êtes pas en train de charger, cela entraînera une erreur.</p>
 <h3>Synchroniser  les fichiers situés dans la racine du dossier source </h3>
 <p>si elle n&#39;est pas cochée, seuls les dossiers et leurs fichiers/sous-dossiers sont synchronisés</p>
@@ -50,8 +61,7 @@ Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.
 <p>Vous pouvez spécifier le comportement à adopter lorsqu&#39;une erreur se produit.</p>
 <ul>
 <li>Arrêter la synchronisation</li>
-<li>Ignorez  toutes les erreurs et commencez les tâches suivantes
-Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont exécutées. </li>
+<li>Ignorez  toutes les erreurs et commencez les tâches suivantes<br/>Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont exécutées. </li>
 <li>Commencer  les tâches suivantes même si elles ne correspondent pas aux options du réseau<br/>Utilisez cette fonction si vous souhaitez exécuter des tâches ultérieures lorsque l&#39;adresse n&#39;est pas privée ou lorsqu&#39;elle n&#39;est pas l&#39;adresse IP spécifiée.  </li>
 
 </ul>
@@ -82,20 +92,12 @@ Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont
 <h3>Limiter le tampon d&#39;écriture des E/S SMB à 16KB (uniquement pour les partages SMB)</h3>
 <p>Veuillez essayer si vous obtenez une erreur &quot;Access is denied&quot; en écrivant dans le dossier PC/NAS. Lorsqu&#39;il est vérifié, il limite le tampon d&#39;entrée/sortie à 16KB pour les opérations d&#39;écriture sur l&#39;hôte SMB. </p>
 <h3>Effacer les fichiers avant la synchronisation (mode miroir uniquement)</h3>
-<p>Lorsqu&#39;elle est cochée, les répertoires et les fichiers qui sont présents sur le dossier cible mais qui n&#39;existent pas sur le master, seront d&#39;abord supprimés. Ensuite, les fichiers et les dossiers qui sont différents seront copiés sur la cible.</p>
-<p>Si le dossier maître est SMB, le temps de traitement sera plus long car la structure des répertoires et leur contenu sont scannés à travers le réseau. Il est fortement recommandé d&#39;activer l&#39;option &quot;Utiliser la négociation SMB2&quot; car SMB1 sera très lent.</p>
+<p>Lorsqu&#39;elle est cochée, les répertoires et les fichiers qui sont présents sur le dossier cible mais qui n&#39;existent pas sur le master, seront d&#39;abord supprimés. Ensuite, les fichiers et les dossiers qui sont différents seront copiés sur la cible.
+Si le dossier maître est SMB, le temps de traitement sera plus long car la structure des répertoires et leur contenu sont scannés à travers le réseau. Il est fortement recommandé d&#39;activer l&#39;option &quot;Utiliser la négociation SMB2&quot; car SMB1 sera très lent.</p>
 <h3>Supprimer les répertoires et les fichiers exclus par les filtres</h3>
 <p>Si elle est activée, <strong>elle supprime les répertoires/fichiers qui sont exclus du filtre.</strong> </p>
 <h3>Ne pas régler l&#39;heure de la dernière modification du fichier de destination pour qu&#39;elle corresponde à celle du fichier source</h3>
 <p>Veuillez l&#39;activer si vous obtenez une erreur du type SmbFile#setLastModified()/File#setLastModified() fails. Cela signifie que l&#39;hôte distant n&#39;autorise pas le paramétrage du fichier de la dernière modification. Si cette case n&#39;est pas cochée, la dernière heure de modification du fichier copié sur la cible sera fixée à l&#39;heure à laquelle il a été copié / synchronisé. Cela signifie que le fichier cible apparaîtra plus récent que le fichier maître. </p>
-<p>Pour les prochaines synchronisations, vous pouvez :</p>
-<ul>
-<li>vous en tenir à une comparaison par taille uniquement, ou</li>
-<li>vous pouvez activer l&#39;option &quot;Ne pas écraser le fichier de destination s&#39;il est plus récent que le fichier source&quot; pour ne copier que les fichiers modifiés ultérieurement sur le master, ou</li>
-<li>vous pouvez activer l&#39;option de tâche &quot;Obtenir l&#39;heure de dernière modification des fichiers de la liste personnalisée de l&#39;application SMBSync3&quot;. Cependant, cette option n&#39;est pas disponible actuellement si la cible est SMB. La plupart des hôtes SMB prennent en charge la définition de l&#39;heure de dernière modification. </li>
-
-</ul>
-<p>Voir ci-dessous pour des informations détaillées sur chaque option. </p>
 <h3>Utiliser la taille du fichier pour déterminer si les fichiers sont différents</h3>
 <p>Lors de la vérification, les fichiers sont considérés comme différents s&#39;ils diffèrent par leur taille. </p>
 <h3>Comparaison des tailles uniquement</h3>

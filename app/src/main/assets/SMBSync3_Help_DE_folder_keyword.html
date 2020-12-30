@@ -3,37 +3,37 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync3_Help_DE_folder_keyword</title></head>
-<body><h3>Über übernommene Datumsparameter</h3>
+<body><h3>Über die Parameter des Aufnahmedatums</h3>
 <ul>
-<li><p>T-DATUM     </p>
+<li><p>T-DATE</p>
 <p>Aufnahmedatum (JJJJ-MM-TT)</p>
 </li>
-<li><p>T-ZEIT</p>
+<li><p>T-TIME</p>
 <p>Aufgenommene Zeit(HH-MM-SS)</p>
 </li>
 <li><p>T-DAY-Of-YEAR</p>
 <p>Aufnahmedatum(Tage seit Jahresbeginn)</p>
 </li>
-<li><p>T-JJJJ</p>
-<p>Erfasstes Jahr</p>
+<li><p>T-YYYY</p>
+<p>Drehjahr (4 Ziffern)</p>
 </li>
-<li><p>T-JA</p>
-<p>Aufgenommenes Jahr(2D-stellig)</p>
+<li><p>T-YY</p>
+<p>Drehjahr (2 Ziffern)</p>
 </li>
 <li><p>T-MM</p>
-<p>Genommener Monat</p>
+<p>Der Monat der Dreharbeiten</p>
 </li>
 <li><p>T-DD</p>
-<p>Genommener Tag</p>
+<p>Datum der Aufnahme</p>
 </li>
 <li><p>T-HH</p>
-<p>Aufgenommene Stunden</p>
+<p>Beim Schießen</p>
 </li>
 <li><p>T-MIN</p>
-<p>Aufgenommene Minuten</p>
+<p>Aufnahme Minuten</p>
 </li>
 <li><p>T-SEC</p>
-<p>Aufgenommene Sekunden</p>
+<p>Aufnahme Sekunden</p>
 </li>
 <li><p>T-WEEKNO</p>
 <p>Die Wochennummer des aufgenommenen Datums</p>
@@ -46,23 +46,22 @@
 </li>
 
 </ul>
-<p> </p>
 <h3>Parameter für das Sync-Anfangsdatum</h3>
 <ul>
-<li><p>E-DATUM</p>
+<li><p>E-DATE</p>
 <p>Sync-Anfangsdatum (JJJJ-MM-TT)</p>
 </li>
-<li><p>E-ZEIT</p>
+<li><p>E-TIME</p>
 <p>Sync-Anfangszeit(HH-MM-SS)</p>
 </li>
 <li><p>E-DAY-OF-YEAR</p>
 <p>Sync-Anfangsdatum(Tage seit Jahresbeginn)</p>
 </li>
-<li><p>E-JJJJ</p>
+<li><p>E-YYYY</p>
 <p>Sync-Anfangsjahr</p>
 </li>
-<li><p>E-JJ</p>
-<p>Sync Jahresanfang (2-stellig)</p>
+<li><p>E-YY</p>
+<p>Sync-Anfangsjahr (2-stellig)</p>
 </li>
 <li><p>E-MM</p>
 <p>Sync-Anfang Monat</p>
@@ -83,13 +82,15 @@
 <p>Die Wochennummer des übernommenen Datums</p>
 </li>
 <li><p>E-WEEKDAY</p>
-<p>Wochentag (Sonne, Mo, etc.)</p>
-</li>
-<li><p>E-WOCHENTAG_LÄNGS</p>
-<p>Wochentag (Sonntag, Montag, etc.)</p>
 </li>
 
 </ul>
+<p>Starttag der Synchronisation (Tag, Monat usw.)</p>
+<ul>
+<li>E-WOCHENTAG_LÄNGS</li>
+
+</ul>
+<p>Starttag der Synchronisation (Sonntag, Montag, etc.)</p>
 <h3>Dateinamensparameter (Kann nur verwendet werden, wenn die Synchronisationsmethode Archiv ist)</h3>
 <ul>
 <li><p>ORIGINAL-NAME</p>

@@ -1,16 +1,16 @@
-### Informazioni sui parametri della data presa
+### Informazioni sui parametri della data di ripresa
 
 - T-DATE     
 
-  Data di assunzione(AAAA-MM-GG)
+Data di ripresa (YYYY-MM-DD)
 
 - T-TIME
 
-  Tempo impiegato(HH-MM-SS)
+Tempo di ripresa (HH-MM-SS)
 
 - T-DAY-Of-YEAR
 
-  Data di assunzione(Giorni dall'inizio dell'anno)
+Giorni dall'inizio dell'anno (Giorni dall'inizio dell'anno)
 
 - T-YYYYY
 
@@ -18,7 +18,7 @@
 
 - T-YYY
 
-  Preso anno(2Digit)
+  Preso anno (2Digit)
 
 - T-MM
 
@@ -30,15 +30,15 @@
 
 - T-HH
 
-  Ore di lavoro
+Tempo di ripresa
 
 - T-MIN
 
-  Minuti presi
+Minuti di tempo di ripresa
 
 - T-SEC
 
-  Ci sono voluti pochi secondi.
+Secondi di tempo di ripresa
 
 - T-WEEKNO
 
@@ -52,13 +52,11 @@
 
   Giorno della settimana (domenica, lunedì, ecc.)
 
- 
-
-### Sincronizzazione dei parametri della data di inizio
+### Parametro dell'ora di inizio della sincronizzazione
 
 - E-DATE
 
-  Data di inizio della sincronizzazione(AAAA-MM-GG)
+  Data di inizio della sincronizzazione(YYYY-MM-DD)
 
 - E-TIME
 
@@ -78,11 +76,11 @@
 
 - E-MM
 
-  Sincronizzazione inizio mese
+Mese di inizio sincronizzazione
 
 - E-DD
 
-  Inizio giornata di sincronizzazione
+Data di inizio sincronizzazione
 
 - E-HH
 
@@ -94,7 +92,7 @@
 
 - E-SEC
 
-  Inizio sincronizzazione secondi
+Secondi all'inizio della sincronizzazione
 
 - E-WEEKNO
 
@@ -104,7 +102,7 @@
 
   Giorno della settimana (sole, lun, ecc.)
 
-- GIORNO_LUNGO_DELLA_SETTIMANA
+- GIORNO SETTIMANALE
 
   Giorno della settimana (domenica, lunedì, ecc.)
 

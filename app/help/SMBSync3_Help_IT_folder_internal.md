@@ -6,35 +6,41 @@ Selezionare la memoria da utilizzare.
 
 Richiedere il permesso di utilizzare la memoria esterna. Se formattate la scheda MicroSD, l'UUID cambierà, quindi richiedete l'autorizzazione all'uso.
 
-### Elenca i file
+### Elenco Elenchi
 
-Mostra l'elenco degli elenchi per la memorizzazione locale. 
+Cliccare il "tasto Lista" per visualizzare le directory disponibili. La directory corrente viene visualizzata nella parte superiore dello schermo.
 
 ### Modifica i parametri del nome della directory
-
 La data e l'ora possono essere inserite nell'elenco di destinazione. Le variabili vengono convertite in data all'inizio della sincronizzazione. Si prega di confermare i dettagli della variabile premendo "Edit directory name parameter".
 
 ### Directory
-
 Per specificare la directory per la memorizzazione locale. Se la directory di destinazione non esiste, verrà creata al momento della sincronizzazione.
-Nota: Nelle seguenti condizioni, essa diventa un riferimento circolare e si collega in loop. Specificare un filtro di directory o specificare una directory sul lato master che sia diversa dalla destinazione.
-
-- Nessuna directory specificata per il master e il target
-- Nessun filtro di directory specificato
 
 ### <u>Il seguente viene visualizzato solo quando il tipo di sincronizzazione è Archive.</u>
-
 ### Salvare tutti i file nella directory di destinazione senza creare sottodirectory
-
 Se spuntata, la directory di destinazione non creerà una sottodirectory nella directory di origine.
+### Seleziona cosa archiviare
 
-### Per archiviare il file
+Selezionare i criteri per le foto o i video da archiviare.
 
-Selezionare un file con data e ora di ripresa più vecchie della data e ora di esecuzione dell'archivio. (Indipendentemente dalla data e dall'ora di ripresa, la data di ripresa è di 7 giorni o più vecchia, la data di ripresa è di 30 giorni o più vecchia, la data di ripresa è di 60 giorni o più vecchia, la data di ripresa è di 90 giorni o più vecchia, la data di ripresa è di 180 giorni o più vecchia, la data di ripresa è di più di un anno)
+- Qualsiasi data (Tutti)
+- Più vecchio di 7 giorni
+- Più vecchio di 30 giorni
+- Più vecchio di 60 giorni
+- Più vecchio di 90 giorni
+- Più di 180 giorni
+- Più vecchio di 1 anno
 
 ### Incrementare  i nomi dei file aggiungendo
 
 È possibile aggiungere un numero di sequenza al nome del file.
+
+Non cambiare
+- Sequenza a 2 cifre (01-99)
+- Sequenza a 3 cifre (001-999)
+- Sequenza a 4 cifre (0001-9999)
+- Sequenza a 5 cifre (00001-99999)
+- Sequenza a 6 cifre (000001-99999999)
 
 ### Modifica il parametro del nome del file
 

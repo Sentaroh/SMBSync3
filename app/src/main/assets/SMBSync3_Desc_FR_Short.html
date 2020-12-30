@@ -9,10 +9,10 @@
 <p>La synchronisation périodique peut être initiée par la fonction de planification de SMBSync3 ou par des applications externes (Tasker, AutoMagic, etc.).</p>
 <ul>
 <li><p>Miroir</p>
-<p>Le répertoire et les fichiers sources sont copiés en delta (<u><strong>*2</strong></u>) vers la destination, et une fois la copie terminée, les fichiers et répertoires qui n&#39;existent pas du côté source sont supprimés.</p>
+<p>Le répertoire et les fichiers sources sont copiés de manière différentielle (<u><strong>*2</strong></u>) vers la destination, et une fois la copie terminée, les fichiers et répertoires qui n&#39;existent pas du côté source sont supprimés.</p>
 </li>
 <li><p>Déplacement</p>
-<p>Le répertoire source et les fichiers sont copiés en delta(<u><strong>*2</strong></u>) vers le côté destination, et les fichiers du côté source sont supprimés lorsque la copie est terminée (cependant, le fichier avec le même nom, la taille du fichier et la date de modification sont les mêmes dans le côté source et le côté destination, et le fichier n&#39;est pas copié, et le répertoire source et le fichier sont supprimés lorsque la copie est terminée. du fichier).</p>
+<p>Le répertoire et les fichiers sources sont copiés de manière différentielle (<u><strong>*2</strong></u>) vers le côté destination, et les fichiers du côté source sont supprimés lorsque la copie est terminée. (Toutefois, le fichier ayant le même nom, la même taille et la même date de modification sont les mêmes du côté source et du côté destination, et le fichier n&#39;est pas copié, et le répertoire source et le fichier sont supprimés une fois la copie terminée. côté du fichier).</p>
 </li>
 <li><p>Copie</p>
 <p>Delta-copie(<u><strong>*2</strong></u>) les fichiers contenus dans le répertoire source vers la destination.</p>

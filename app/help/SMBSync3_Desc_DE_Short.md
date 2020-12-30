@@ -8,11 +8,11 @@ Die periodische Synchronisation kann durch die Zeitplanungsfunktion von SMBSync3
 
 - Spiegeln
 
-  Das Quellverzeichnis und die Dateien werden delta-kopiert (<u>***2**</u>) auf das Ziel, und nach Abschluss des Kopiervorgangs werden die Dateien und Verzeichnisse, die auf der Quellseite nicht vorhanden sind, gelöscht.
+  Das Quellverzeichnis und die Dateien werden differenziert (<u>***2**</u>) auf das Ziel kopiert, und nach Abschluss des Kopiervorgangs werden die Dateien und Verzeichnisse, die auf der Quellseite nicht vorhanden sind, gelöscht.
 
 - Verschieben
 
-  Das Quellverzeichnis und die Dateien werden in einem Delta-Kopiervorgang (<u>***2**</u>) auf die Zielseite kopiert, und nach Abschluss des Kopiervorgangs werden die Dateien auf der Quellseite gelöscht. (Die Datei mit demselben Namen, der Dateigröße und dem Änderungsdatum sind jedoch in der Quelle und im Ziel identisch, und die Datei wird nicht kopiert, und das Quellverzeichnis und die Datei werden nach Abschluss des Kopiervorgangs gelöscht).
+  Das Quellverzeichnis und die Dateien werden differenziell (<u>***2**</u>) auf die Zielseite kopiert, und die Dateien auf der Quellseite werden gelöscht, wenn der Kopiervorgang abgeschlossen ist. (Die Datei mit dem gleichen Namen, die Dateigröße und das Änderungsdatum sind jedoch in der Quelle und im Ziel gleich, und die Datei wird nicht kopiert, und das Quellverzeichnis und die Datei werden nach Abschluss des Kopiervorgangs gelöscht. seite der Datei).
 
 - Kopieren
 

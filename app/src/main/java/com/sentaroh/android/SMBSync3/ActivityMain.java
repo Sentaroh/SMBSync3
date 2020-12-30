@@ -1875,13 +1875,13 @@ public class ActivityMain extends AppCompatActivity {
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy_view);
         privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        func_view.getSettings().setTextZoom(zf);
+        privacy_view.getSettings().setTextZoom(zf);
 
         LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
         final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_view);
         change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        func_view.getSettings().setTextZoom(zf);
+        change_view.getSettings().setTextZoom(zf);
 
         final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, privacy_view, change_view});

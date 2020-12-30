@@ -8,11 +8,11 @@ La synchronisation périodique peut être initiée par la fonction de planificat
 
 - Miroir
 
-  Le répertoire et les fichiers sources sont copiés en delta (<u>***2**</u>) vers la destination, et une fois la copie terminée, les fichiers et répertoires qui n'existent pas du côté source sont supprimés.
+  Le répertoire et les fichiers sources sont copiés de manière différentielle (<u>***2**</u>) vers la destination, et une fois la copie terminée, les fichiers et répertoires qui n'existent pas du côté source sont supprimés.
 
 - Déplacement
 
-  Le répertoire source et les fichiers sont copiés en delta(<u>***2**</u>) vers le côté destination, et les fichiers du côté source sont supprimés lorsque la copie est terminée (cependant, le fichier avec le même nom, la taille du fichier et la date de modification sont les mêmes dans le côté source et le côté destination, et le fichier n'est pas copié, et le répertoire source et le fichier sont supprimés lorsque la copie est terminée. du fichier).
+  Le répertoire et les fichiers sources sont copiés de manière différentielle (<u>***2**</u>) vers le côté destination, et les fichiers du côté source sont supprimés lorsque la copie est terminée. (Toutefois, le fichier ayant le même nom, la même taille et la même date de modification sont les mêmes du côté source et du côté destination, et le fichier n'est pas copié, et le répertoire source et le fichier sont supprimés une fois la copie terminée. côté du fichier).
 
 - Copie
 

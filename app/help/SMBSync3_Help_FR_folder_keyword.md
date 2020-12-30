@@ -2,11 +2,11 @@
 
 - T-DATE     
 
-  Date de prise de décision (AAAA-MM-JJ)
+Date de tournage (YYYY-MM-DD)
 
 - T-TIME
 
-  Temps pris(HH-MM-SS)
+Temps de prise de vue (HH-MM-SS)
 
 - T-DAY-Of-YEAR
 
@@ -18,11 +18,11 @@
 
 - T-YY
 
-  Année de prise en charge (2 chiffres)
+    Année prise (2 chiffres)
 
 - T-MM
 
-  Pris mois
+  Mois de tournage
 
 - T-DD
 
@@ -30,7 +30,7 @@
 
 - T-HH
 
-  Heures prises
+Temps de prise de vue
 
 - T-MIN
 
@@ -52,8 +52,6 @@
 
   Jour de la semaine (dimanche, lundi, etc.)
 
- 
-
 ### Paramètres de la date de début de la synchronisation
 
 - E-DATE
@@ -70,35 +68,35 @@
 
 - E-YYYYY
 
-  Sync début année
+Sync start year
 
 - E-YY
 
-  Sync begin year(2Digit)
+Sync start year (2Digit)
 
 - E-MM
 
-  Sync begin month
+Sync start month
 
 - E-DD
 
-  Sync begin day
+Sync start day
 
 - E-HH
 
-  Sync begin hours
+Sync start hours
 
 - E-MIN
 
-  Sync début minutes
+Sync start minutes
 
 - E-SEC
 
-  Sync begin seconds
+Sync start secondes
 
 - E-WEEKNO
 
-  Le numéro de la semaine de la date prise
+Numéro de la semaine du jour où la synchronisation a commencé
 
 - E-WEEKDAY
 

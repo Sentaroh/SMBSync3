@@ -70,10 +70,15 @@ import com.sentaroh.android.Utilities3.SystemInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -253,6 +258,27 @@ public final class CommonUtilities {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_DANGER, title, msgtext, ok_text, cancel_text);
         cdf.showDialog(c, mFragMgr,cdf,cbl);
     };
+
+//    public static String convertMakdownToHtml(Context c, String mark_down_fp) {
+//        try {
+//            InputStream is = c.getAssets().open(mark_down_fp);
+//            BufferedReader br = new BufferedReader(new InputStreamReader(is), 1024*1024);
+//            String mark_down_text="", line="", sep="";
+//            while ((line = br.readLine()) != null) {
+//                mark_down_text+=sep+line;
+//                sep="\n";
+//            }
+//            br.close();
+//            MarkdownProcessor processor = new MarkdownProcessor();
+//            String html = processor.markdown(mark_down_text);
+//            return html;
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
 
     public String getStringWithLangCode(Activity c, String lang_code, int res_id) {
         Configuration config = new Configuration(c.getResources().getConfiguration());

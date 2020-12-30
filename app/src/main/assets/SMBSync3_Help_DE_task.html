@@ -12,12 +12,20 @@
 <h3>Sync-Typ</h3>
 <p>Die Sync-Methode wird aus Spiegeln, Kopieren, Verschieben, Archivieren ausgewählt. Die Synchronisierung erfolgt vom Master zum Ziel in eine Richtung.</p>
 <ul>
-<li>Spiegel</li>
-<li>Verschieben</li>
-<li>Kopie</li>
-<li>Archiv</li>
+<li>Spiegel<br/>Erstellen Sie eine differenzielle Kopie (<strong><u>*1</u></strong>) von Verzeichnissen und Dateien auf der Quellseite auf die Zielseite und löschen Sie Dateien und Verzeichnisse auf der Zielseite, die auf der Quellseite nicht vorhanden sind, nachdem die Kopie abgeschlossen ist.</li>
+<li>Verschieben<br/>Erstellen Sie eine Differenzkopie des quellseitigen Verzeichnisses und der Datei auf der Zielseite und löschen Sie die auf die Zielseite kopierte quellseitige Datei.
+Die quell- und zielseitige Datei mit gleichem Namen, aber gleicher Dateigröße und gleichem Änderungsdatum wird jedoch nicht kopiert und die quellseitige Datei wird gelöscht.</li>
+<li>Kopie<br/>Erstellen Sie eine differenzielle Kopie der im Quellverzeichnis enthaltenen Dateien auf der Zielseite.</li>
+<li>Archiv<br/>Verschieben Sie die im Quellverzeichnis enthaltenen Fotos und Videos in das Ziel unter der Bedingung, dass Aufnahmedatum und -zeit vor 7 Tagen oder 30 Tagen ab dem Datum und der Uhrzeit der Archivausführung liegen. (ZIP kann jedoch nicht als Ziel verwendet werden.)</li>
 
 </ul>
+<p><strong><u>*1</u></strong> Wenn eine der folgenden drei Bedingungen erfüllt ist, wird die Datei als Differenzdatei eingestuft und kopiert oder verschoben. Die Dateigröße und die letzte Änderungszeit können jedoch in den Optionen der Synchronisationsaufgabe ignoriert werden.  </p>
+<ol start='' >
+<li>Datei ist nicht vorhanden</li>
+<li>Dateigröße ist unterschiedlich</li>
+<li>Datum und Uhrzeit der letzten Änderung unterscheiden sich um mehr als 3 Sekunden (die Anzahl der Sekunden kann über die Option der Synchronisationsaufgabe geändert werden).</li>
+
+</ol>
 <h3>Quelle und Ziel vertauschen</h3>
 <p>Tauschen Sie den Inhalt des Quellordners und des Zielordners </p>
 <h3>Quellordner</h3>
@@ -27,8 +35,8 @@
 <h3>Dateien für die Synchronisierung auswählen</h3>
 <p>Wenn Sie kein Häkchen setzen und dann alle Dateien synchronisieren. Wenn Sie ein Häkchen setzen, um Details zu sehen. </p>
 <ul>
-<li>Audiodateien synchronisieren<br/>Wenn Sie ein Häkchen setzen, um die Dateien mit den folgenden Erweiterungen zu synchronisieren.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav  </li>
-<li>Bilddateien synchronisieren<br/>Wenn Sie ankreuzen, die Dateien mit den folgenden Erweiterungen zu synchronisieren.<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff</li>
+<li>Audiodateien synchronisieren<br/>Wenn Sie ein Häkchen setzen, um die Dateien mit den folgenden Erweiterungen zu synchronisieren.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  </li>
+<li>Bilddateien synchronisieren<br/>Wenn Sie ankreuzen, die Dateien mit den folgenden Erweiterungen zu synchronisieren.<br/>bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</li>
 <li>Videodateien synchronisieren<br/>Wenn Sie ankreuzen, dass Sie die Dateien mit den folgenden Erweiterungen synchronisieren möchten.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
 <li>Dateifilter<br/>Sie können den Namen und die Erweiterung der Datei, die Sie synchronisieren möchten, mit anderen als den oben genannten auswählen.</li>
 
@@ -44,12 +52,13 @@ Sie können den Namen des Verzeichnisses auswählen, das Sie synchronisieren mö
 <p>Wenn diese Option aktiviert ist, kann die Synchronisation nur gestartet werden, wenn der Akku geladen wird. Wenn Sie die Synchronisation starten, wenn der Akku nicht geladen ist, tritt ein Fehler auf.</p>
 <h3>Bestätigen  vor dem Überschreiben/Löschen</h3>
 <p>Es wird ein Bestätigungsdialog angezeigt, wenn Sie die Datei überschreiben und löschen wollen, wenn Sie das Häkchen gesetzt haben.</p>
+<h3>Bestätigen Sie vor dem Überschreiben Kopieren oder Löschen</h3>
+<p>Es wird ein Bestätigungsdialog angezeigt, wenn Sie die Datei überschreiben und löschen wollen, wenn Sie das Häkchen gesetzt haben.</p>
 <h3>Fehler-Option</h3>
 <p>Sie können das Verhalten beim Auftreten eines Fehlers festlegen.</p>
 <ul>
 <li>Synchronisation stoppen</li>
-<li>Alle Fehler ignorieren und nachfolgende Aufgaben starten
-Verwenden Sie diese Option, wenn Sie sicherstellen möchten, dass nachfolgende Aufgaben ausgeführt werden. </li>
+<li>Alle Fehler ignorieren und nachfolgende Aufgaben starten<br/>Verwenden Sie diese Option, wenn Sie sicherstellen möchten, dass nachfolgende Aufgaben ausgeführt werden. </li>
 <li>Folgeaufgaben starten, wenn Netzwerkoptionen zu Fehlern führen<br/>Verwenden Sie diese Option, wenn Sie nachfolgende Aufgaben ausführen möchten, wenn die Adresse nicht privat ist oder wenn es sich nicht um die angegebene IP-Adresse handelt.  </li>
 
 </ul>
@@ -80,20 +89,12 @@ Verwenden Sie diese Option, wenn Sie sicherstellen möchten, dass nachfolgende A
 <h3>SMB-E/A-Schreibpuffer  auf 16 KB begrenzen</h3>
 <p>Bitte versuchen Sie es, wenn Sie beim Schreiben in den PC/NAS-Ordner die Fehlermeldung &quot;Access is denied&quot; erhalten.　Wenn diese Option aktiviert ist, wird der I/O-Puffer für Schreibvorgänge auf dem SMB-Host auf 16 KB begrenzt. </p>
 <h3>Dateien  vor der Synchronisierung löschen (nur Spiegelmethode)</h3>
-<p>Wenn dieses Kontrollkästchen aktiviert ist, werden zuerst die Verzeichnisse und Dateien gelöscht, die im Zielordner vorhanden sind, aber nicht auf dem Master existieren. Danach werden die Dateien und Ordner, die anders sind, auf das Ziel kopiert.</p>
-<p>Wenn es sich bei dem Masterordner um einen SMB-Ordner handelt, verlängert sich die Verarbeitungszeit, da die Verzeichnisstruktur und deren Inhalt über das Netzwerk gescannt wird. Es wird dringend empfohlen, die Option &quot; SMB2-Verhandlung verwenden&quot; zu aktivieren, da SMB1 sehr langsam ist.</p>
+<p>Wenn dieses Kontrollkästchen aktiviert ist, werden zuerst die Verzeichnisse und Dateien gelöscht, die im Zielordner vorhanden sind, aber nicht auf dem Master existieren. Danach werden die Dateien und Ordner, die anders sind, auf das Ziel kopiert.
+Wenn es sich bei dem Masterordner um einen SMB-Ordner handelt, verlängert sich die Verarbeitungszeit, da die Verzeichnisstruktur und deren Inhalt über das Netzwerk gescannt wird. Es wird dringend empfohlen, die Option &quot; SMB2-Verhandlung verwenden&quot; zu aktivieren, da SMB1 sehr langsam ist.</p>
 <h3>Entfernt  Verzeichnisse und Dateien, die vom Filter ausgeschlossen wurden</h3>
 <p>Wenn diese Option aktiviert ist, <strong>entfernt sie Verzeichnisse/Dateien, die von den Filtern ausgeschlossen sind</strong>. </p>
 <h3>Aktualisierungszeit  der Zieldatei nicht auf Übereinstimmung mit der Quelldatei einstellen</h3>
 <p>Bitte aktivieren Sie diese Option, wenn Sie eine Fehlermeldung erhalten wie SmbFile#setLastModified()/File#setLastModified() schlägt fehl. Das bedeutet, dass der Remote-Host das Setzen der letzten Änderungszeit der Datei nicht zulässt. Wenn diese Option nicht aktiviert ist, wird die letzte Änderungszeit der kopierten Datei auf dem Ziel auf den Zeitpunkt des Kopierens/Synchronisierens gesetzt. Das bedeutet, dass die Zieldatei neuer erscheint als die Masterdatei. </p>
-<p>Für die nächsten Synchronisationen können Sie:</p>
-<ul>
-<li>dabei bleiben, nur nach Größe zu vergleichen, oder</li>
-<li>Sie können die Option &quot;Zieldatei nicht überschreiben, wenn sie neuer als die Quelldatei ist&quot; aktivieren, um nur Dateien zu kopieren, die später auf dem Master geändert wurden, oder</li>
-<li>Sie können die Task-Option &quot;Letzte Änderungszeit von Dateien aus der benutzerdefinierten Liste der SMBSync3-Anwendung abrufen&quot; aktivieren. Diese Option ist jedoch derzeit nicht verfügbar, wenn das Ziel SMB ist. Die meisten SMB-Hosts unterstützen die Einstellung der letzten Änderungszeit. </li>
-
-</ul>
-<p>Im Folgenden finden Sie detaillierte Informationen zu den einzelnen Optionen. </p>
 <h3>Verwendung  der Dateigröße zur Bestimmung von Dateiänderungen</h3>
 <p>Wenn diese Option aktiviert ist, werden Dateien als unterschiedlich betrachtet, wenn sie sich in der Größe unterscheiden. </p>
 <h3>Die  Dateien unterscheiden sich nur dann, wenn die Quelle größer als das Ziel ist</h3>

@@ -1,6 +1,6 @@
 ## 1.Send recorded data from the app
 
-The data recorded by the app can be sent externally via email and sharing tools by the following app operations. <span style="color: red; "><u>The app will not send the recorded data externally unless the user does so.</u></span>
+The data recorded by the application can be sent externally via email and sharing tools by the following app operations. <span style="color: red; "><u>The application will not send the recorded data externally unless the user does so.</u></span>
 
 - Press "Share button" from History tab
 

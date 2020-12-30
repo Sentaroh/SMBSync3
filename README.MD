@@ -25,6 +25,8 @@
   - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)  
 - This software includes the work that is distributed in the Bouncy Castle LICENSE.
   - [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on/1.66)
+- This software includes the work that is distributed in the BSD 3-Clause License.
+  - [MarkdownJ](https://github.com/myabc/markdownj/blob/master/LICENSE)
 - This software includes the work that is distributed in the MIT LICENSE.
   - [Utilities3](https://github.com/Sentaroh/Utilities3)
   - [JcifsFile2](https://github.com/Sentaroh/JcifsFile2)

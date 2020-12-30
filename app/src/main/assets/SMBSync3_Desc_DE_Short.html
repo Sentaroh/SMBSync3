@@ -9,10 +9,10 @@
 <p>Die periodische Synchronisation kann durch die Zeitplanungsfunktion von SMBSync3 oder durch externe Anwendungen (Tasker, AutoMagic, etc.) initiiert werden.</p>
 <ul>
 <li><p>Spiegeln</p>
-<p>Das Quellverzeichnis und die Dateien werden delta-kopiert (<u><strong>*2</strong></u>) auf das Ziel, und nach Abschluss des Kopiervorgangs werden die Dateien und Verzeichnisse, die auf der Quellseite nicht vorhanden sind, gelöscht.</p>
+<p>Das Quellverzeichnis und die Dateien werden differenziert (<u><strong>*2</strong></u>) auf das Ziel kopiert, und nach Abschluss des Kopiervorgangs werden die Dateien und Verzeichnisse, die auf der Quellseite nicht vorhanden sind, gelöscht.</p>
 </li>
 <li><p>Verschieben</p>
-<p>Das Quellverzeichnis und die Dateien werden in einem Delta-Kopiervorgang (<u><strong>*2</strong></u>) auf die Zielseite kopiert, und nach Abschluss des Kopiervorgangs werden die Dateien auf der Quellseite gelöscht. (Die Datei mit demselben Namen, der Dateigröße und dem Änderungsdatum sind jedoch in der Quelle und im Ziel identisch, und die Datei wird nicht kopiert, und das Quellverzeichnis und die Datei werden nach Abschluss des Kopiervorgangs gelöscht).</p>
+<p>Das Quellverzeichnis und die Dateien werden differenziell (<u><strong>*2</strong></u>) auf die Zielseite kopiert, und die Dateien auf der Quellseite werden gelöscht, wenn der Kopiervorgang abgeschlossen ist. (Die Datei mit dem gleichen Namen, die Dateigröße und das Änderungsdatum sind jedoch in der Quelle und im Ziel gleich, und die Datei wird nicht kopiert, und das Quellverzeichnis und die Datei werden nach Abschluss des Kopiervorgangs gelöscht. seite der Datei).</p>
 </li>
 <li><p>Kopieren</p>
 <p>Delta-Kopiert(<u><strong>*2</strong></u>) die im Quellverzeichnis enthaltenen Dateien in das Ziel.</p>

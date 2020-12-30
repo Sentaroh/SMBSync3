@@ -1,9 +1,12 @@
 ### Enable schedule
+
 Enable/disable schedule
 
 ### Schedule type
+
 The schedule can be specified as follows
-- Every hour (eg, every 10 minutes)
+
+- Every hour (executed every hour, such as 0:00, 1:00, 2:00, etc.)
 - Every day (Every day at 20:00)
 - Every month (executed at 10:30 on the 10th of every month)
 - Specify day of the week (executed at 21:00 on Monday and Friday)
@@ -18,19 +21,17 @@ If you check, you can run it on the last day of each month, such as the 31st for
 Set the synchronization start time to the interval time. (If the interval time is set to 5 minutes and the save button is pressed at 1:10:20, the task starts at 1: 15: 0)
 
 ### Execute all auto sync tasks
+
 If unchecked, you can select a synchronization task
 
 ### Edit Sync List
+
 Press the button to display the edit screen. Select tasks to sync.
 
-### Turn on Wi-Fi when Wi-Fi is off at the start of sync (<span style="color: red; "><u>Not available on Android   10 or later</u></span>)
-If Wi-Fi is off at the start of synchronization, turn on Wi-Fi.
-
-- Delay period before sync after WIFI enable   
-	Wait time before starting synchronization after turning on Wi-Fi.
-
-- If you turn on Wi-Fi at the start of sync, turn off Wi-Fi after the end of sync  
-	If you turned on Wi-Fi at the start of synchronization, turn off Wi-Fi at the end of synchronization.
+### If Wi-Fi is off, enable it to start the scheduled tasks (<span style="color: red; "><u>Not available on Android   10 or later</u></span>)
+When enabled, you can turn Wi-Fi on when Wi-Fi is off.  
+- You can specify the amount of time to wait for synchronization to start after Wi-Fi is turned on.
+- You can also turn off Wi-Fi at the end of synchronization.
 
 ### Sync only starts while charging
-You can change the synchronization task options.
+You can change the charging options when you start the sync. When synchronizing manually, it can be synchronized regardless of charging, and when synchronizing on a schedule, it can be changed only during charging.

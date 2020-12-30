@@ -12,12 +12,20 @@
 <h3>Tipo di sincronizzazione</h3>
 <p>Il metodo di sincronizzazione viene selezionato da mirror, copia, sposta, archivia. La sincronizzazione viene effettuata dal master al bersaglio in una direzione.</p>
 <ul>
-<li>Mirror</li>
-<li>Spostare</li>
-<li>Copia</li>
-<li>Archivio</li>
+<li>Mirror<br/>Fare una copia differenziale (<strong><u>*1</u></strong>) delle directory e dei file sul lato sorgente verso il lato destinazione, ed eliminare i file e le directory sul lato destinazione che non esistono sul lato sorgente dopo che la copia è stata completata.</li>
+<li>Spostare<br/>Fare una copia differenziale della directory lato sorgente e del file sul lato di destinazione e cancellare il file lato sorgente copiato sul lato di destinazione.
+Tuttavia, il file con lo stesso nome dell&#39;origine e della destinazione, ma con le stesse dimensioni del file e la stessa data di modifica, non viene copiato e il file sul lato origine viene cancellato.</li>
+<li>Copia<br/>Fare una copia differenziale dei file contenuti nella directory di origine sul lato di destinazione.</li>
+<li>Archivio<br/>Spostare le foto e i video contenuti nella directory di origine a destinazione con la condizione che la data e l&#39;ora di ripresa siano anteriori a 7 giorni o 30 giorni dalla data e dall&#39;ora di esecuzione dell&#39;archivio. (Tuttavia, ZIP non può essere utilizzato come destinazione).</li>
 
 </ul>
+<p><strong><u>*1</u></strong> Se una delle tre condizioni seguenti è soddisfatta, il file viene giudicato come un file di differenza e viene copiato o spostato. Tuttavia, la dimensione del file e l&#39;ultimo tempo modificato possono essere ignorati nelle opzioni del task di sincronizzazione.  </p>
+<ol start='' >
+<li>il file non esiste</li>
+<li>la dimensione del file è diversa</li>
+<li>l&#39;ultima data e ora modificata è diversa di oltre 3 secondi (il numero di secondi può essere cambiato con l&#39;opzione del task di sincronizzazione)</li>
+
+</ol>
 <h3>Scambiare  fonte e destinazione</h3>
 <p>Scambiare il contenuto della cartella di origine e della cartella di destinazione </p>
 <h3>Cartella di origine</h3>
@@ -27,9 +35,9 @@
 <h3>Selezionare i file per la sincronizzazione</h3>
 <p>Se non si controlla e poi si sincronizza tutto il file. Se si controlla per vedere i dettagli. </p>
 <ul>
-<li>Sincronizzare i file audio<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mp3, mpga, ogg, ra, ra, ram, wav  </li>
-<li>Sincronizzare i file di immagine<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, tif, tiff</li>
-<li>Sincronizzare i file video<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>avi, m4u, mov, mp4, film, mpe, mpeg, mpg, mxu, qt, wmv  </li>
+<li>Sincronizzare i file audio<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  </li>
+<li>Sincronizzare i file di immagine<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</li>
+<li>Sincronizzare i file video<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
 <li>Filtro file<br/>È possibile selezionare il nome e l&#39;estensione del file con cui si desidera sincronizzarsi, oltre a quanto sopra.</li>
 
 </ul>
@@ -50,8 +58,7 @@
 <p>È possibile specificare il comportamento quando si verifica un errore.</p>
 <ul>
 <li>Interrompere la sincronizzazione</li>
-<li>Ignorare  tutti gli errori e iniziare le attività successive
-Utilizzare questa opzione se si vuole essere sicuri che le attività successive vengano eseguite. </li>
+<li>Ignorare  tutti gli errori e iniziare le attività successive<br/>Utilizzare questa opzione se si vuole essere sicuri che le attività successive vengano eseguite. </li>
 <li>Avviare  le attività successive anche se non si adattano alle opzioni di rete<br/>Utilizzare questa funzione se si desidera eseguire attività successive quando l&#39;indirizzo non è privato o quando non è l&#39;indirizzo IP specificato.  </li>
 
 </ul>
@@ -80,23 +87,14 @@ Utilizzare questa opzione se si vuole essere sicuri che le attività successive 
 <h3>Riprova su errore di rete (solo per le condivisioni SMB)</h3>
 <p>In caso di errori di connessione lato server, SMBSync3 riproverà la sincronizzazione per un massimo di 3 volte ad un intervallo di 30 secondi. </p>
 <h3>Limitare il buffer di scrittura SMB I/O a 16KB (solo per le condivisioni SMB)</h3>
-<p>Provare se si ottiene un errore di &quot;Accesso negato&quot; quando si scrive nella cartella PC/NAS.</p>
-<p>Quando viene selezionato, limiterà il buffer I/O a 16KB per le operazioni di scrittura sull&#39;host SMB. </p>
+<p>Provare se si ottiene un errore di &quot;Accesso negato&quot; quando si scrive nella cartella PC/NAS. Quando viene selezionato, limiterà il buffer I/O a 16KB per le operazioni di scrittura sull&#39;host SMB. </p>
 <h3>Cancellare i file prima della sincronizzazione (solo modalità Mirror)</h3>
-<p>Una volta spuntate, le directory e i file che sono presenti nella cartella di destinazione ma che non esistono sul master, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella cartella di destinazione.</p>
-<p>Se la cartella master è SMB, il tempo di elaborazione sarà più lungo perché la struttura delle directory e il loro contenuto viene scansionato attraverso la rete. Si raccomanda vivamente di attivare l&#39;opzione &quot;Usa la negoziazione SMB2&quot; perché SMB1 sarà molto lenta.</p>
+<p>Una volta spuntate, le directory e i file che sono presenti nella cartella di destinazione ma che non esistono sul master, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella cartella di destinazione.
+Se la cartella master è SMB, il tempo di elaborazione sarà più lungo perché la struttura delle directory e il loro contenuto viene scansionato attraverso la rete. Si raccomanda vivamente di attivare l&#39;opzione &quot;Usa la negoziazione SMB2&quot; perché SMB1 sarà molto lenta.</p>
 <h3>Rimuovere le directory e i file esclusi dai filtri</h3>
 <p>Se abilitato, <strong>rimuove le directory/file che sono escluse dal filtro.</strong> </p>
 <h3>Non impostare l&#39;ultimo orario modificato del file di destinazione per far corrispondere il file sorgente</h3>
 <p>Si prega di abilitare se si ottiene un errore come SmbFile#setLastModified()/File#setLastModified() fallisce. Significa che l&#39;host remoto non permette l&#39;impostazione del file modificato l&#39;ultima volta. Se deselezionato, l&#39;ultimo tempo modificato del file copiato sul target sarà impostato all&#39;ora in cui è stato copiato / sincronizzato. Ciò significa che il file di destinazione apparirà più nuovo del master. </p>
-<p>Per le sincronizzazioni successive, è possibile:</p>
-<ul>
-<li>attenersi a confrontare solo in base alle dimensioni, oppure</li>
-<li>è possibile attivare l&#39;opzione &quot;Non sovrascrivere il file di destinazione se è più recente del file sorgente&quot; per copiare solo i file modificati in seguito sul master, oppure</li>
-<li>è possibile attivare l&#39;opzione task &quot;Ottenere l&#39;ora dell&#39;ultima modifica dei file dalla lista personalizzata dell&#39;applicazione SMBSync3&quot;. Tuttavia, questa opzione non è attualmente disponibile se l&#39;obiettivo è SMB. La maggior parte degli host SMB supporta l&#39;impostazione dell&#39;ultimo orario di modifica. </li>
-
-</ul>
-<p>Vedere sotto per informazioni dettagliate su ogni opzione. </p>
 <h3>Utilizzare la dimensione del file per determinare se i file sono diversi</h3>
 <p>Quando viene selezionato, i file sono considerati diversi se differiscono per dimensioni. </p>
 <h3>Solo le dimensioni confrontare</h3>
@@ -119,6 +117,5 @@ Utilizzare questa opzione se si vuole essere sicuri che le attività successive 
 <p>Se l&#39;opzione è selezionata, è possibile evitare errori I/O durante la sincronizzazione su una scheda MicroSD ignorando i file sorgente di dimensioni superiori a 4 GB da sincronizzare sulla memoria locale.</p>
 <h3>Ignora i file il cui nome file supera i 255 byte</h3>
 <p>Se spuntata, ignorare i file con nomi di file più lunghi di 255 byte.</p>
-<p>&nbsp;</p>
 </body>
 </html>

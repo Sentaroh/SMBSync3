@@ -201,6 +201,7 @@ public class ScheduleEditor {
         ctv_wifi_off.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                ctv_wifi_off.setChecked(!ctv_wifi_off.isChecked());
                 setOkButtonEnabledDisabled(dialog);
             }
         });
@@ -469,6 +470,14 @@ public class ScheduleEditor {
             } else if (mSched.syncDelayAfterWifiOn == 30) {
                 rg_wifi_on_delay_time.check(R.id.scheduler_main_dlg_wifi_on_delay_time_rg_3);
             }
+
+            rg_wifi_on_delay_time.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    setOkButtonEnabledDisabled(dialog);
+                }
+            });
+
         } else {
             mSched.syncWifiOnBeforeStart=false;
             ctv_wifi_on.setVisibility(CheckedTextView.GONE);

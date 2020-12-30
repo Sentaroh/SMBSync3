@@ -12,7 +12,7 @@ Show file lists.
 
 ### ZIP File name
 
-Specify ZIP file name. 
+Enter the name of the destination file. If you specify a non-existent file, it will be created when the synchronization is executed. 
 
 ### Compression level
 

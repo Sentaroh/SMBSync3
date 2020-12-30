@@ -9,13 +9,13 @@
 <p>Periodic synchronization can be initiated by SMBSync3&#39;s scheduling feature or external applications (Tasker, AutoMagic, etc.).</p>
 <ul>
 <li><p>Mirror</p>
-<p>The source directory and files are delta-copied (<u><strong>*2</strong></u>) to the destination, and after the copying is completed, the files and directories that do not exist on the source side are deleted.</p>
+<p>The source directory and files are differential copied (<u><strong>*2</strong></u>) to the destination, and after the copying is completed, the files and directories that do not exist on the source side are deleted.</p>
 </li>
 <li><p>Move</p>
-<p>The source directory and files are delta-copied(<u><strong>*2</strong></u>) to the destination side, and the files on the source side are deleted when the copying is completed.(However, the file with the same name, the file size, and the modified date are the same in the source and the destination, and the file is not copied, and the source directory and the file are deleted after the copy is finished. side of the file).</p>
+<p>The source directory and files are differential copied(<u><strong>*2</strong></u>) to the destination side, and the files on the source side are deleted when the copying is completed.(However, the file with the same name, the file size, and the modified date are the same in the source and the destination, and the file is not copied, and the source directory and the file are deleted after the copy is finished. side of the file).</p>
 </li>
 <li><p>Copy</p>
-<p>Delta-copies(<u><strong>*2</strong></u>) the files contained in the source directory to the destination.</p>
+<p>Make a differential copy (<strong>*2</strong>) of the files contained in the directory on the source side to the destination side.</p>
 </li>
 <li><p>Archive</p>
 <p>Photos and videos contained in the source directory with a date and time of 7 days from the archive&#39;s execution date Go to the destination before or before 30 days, etc. (But you can&#39;t use ZIP for the destination.)</p>

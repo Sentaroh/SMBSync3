@@ -12,7 +12,7 @@ Afficher les listes de fichiers.
 
 ### ZIP Nom du fichier
 
-Précisez le nom du fichier ZIP. 
+Saisissez le nom du fichier de destination. Si vous indiquez un fichier inexistant, il sera créé lors de l'exécution de la synchronisation. 
 
 ### Niveau de compression
 

@@ -16,4 +16,4 @@ Lance les tâches de synchronisation qui sont automatiquement vérifiées dans l
 
 ### Liste de tâches
 
-Appuyez dessus pour sélectionner une tâche de synchronisation.
+Appuyez sur le bouton pour sélectionner la tâche de synchronisation.

@@ -24,9 +24,7 @@ Specificare se il numero di porta dello standard non è disponibile. Il numero d
 
 ### Utilizzare il nome del conto e la password
 
-Specifica se utilizzare il nome del conto del server SMB e la password
-
-Il nome del conto è un conto locale sul server SMB. <span style="color: red;"><u>Il conto Microsoft non è disponibile.</u></span>  
+È necessario specificare un nome utente o una password. Il nome del conto è un conto locale sul server SMB. <span style="colore: rosso;"><u>I conti microsoft non possono essere utilizzati.</u></span></span 
 
 ### Nome dell'account
 
@@ -40,9 +38,13 @@ Per specificare la password per il server SMB.
 
 Mostra il nome della condivisione per il server SMB.  
 
+### Nome condivisione
+
+È possibile inserire il nome della condivisione a mano. 
+
 ### Elenca le directory
 
-Mostra l'elenco delle directory del server SMB.  
+Cliccare il "tasto Lista" per visualizzare le directory disponibili. La directory corrente viene visualizzata nella parte superiore dello schermo.
 
 ### Modifica i parametri del nome della directory
 
@@ -52,25 +54,34 @@ La data e l'ora **<u>può essere inclusa nella directory di destinazione</u>**. 
 
 Per specificare la directory per l'host SMB. Se la directory di destinazione non esiste, verrà creata al momento della sincronizzazione.
 
-Nota: Nelle seguenti condizioni, essa diventa un riferimento circolare ed è in loop. Specificare un filtro di directory o specificare una directory sul lato master che sia diversa dalla destinazione.
-
-- Nessuna directory specificata quando lo stesso server SMB è specificato per il master e il target
-
-- Nessun filtro di directory specificato
-
 ### <u>Il seguente viene visualizzato solo quando il tipo di sincronizzazione è Archive.</u>
 
 ### Salvare  tutti i file nella directory di destinazione senza creare sottodirectory
 
 Se spuntata, la directory di destinazione non creerà una sottodirectory nella directory di origine.
 
-### Per archiviare il file
+### Seleziona cosa archiviare
 
-Selezionare un file con data e ora di ripresa più vecchie della data e ora di esecuzione dell'archivio. (Indipendentemente dalla data e dall'ora di ripresa, la data di ripresa è di 7 giorni o più vecchia, la data di ripresa è di 30 giorni o più vecchia, la data di ripresa è di 60 giorni o più vecchia, la data di ripresa è di 90 giorni o più vecchia, la data di ripresa è di 180 giorni o più vecchia, la data di ripresa è di più di un anno) 
+Selezionare i criteri per le foto o i video da archiviare.
+
+- Qualsiasi data (Tutti)
+- Più vecchio di 7 giorni
+- Più vecchio di 30 giorni
+- Più vecchio di 60 giorni
+- Più vecchio di 90 giorni
+- Più di 180 giorni
+- Più vecchio di 1 anno
 
 ### Incrementare  i nomi dei file aggiungendo
 
 È possibile aggiungere un numero di sequenza al nome del file. 
+
+- Non cambiare
+- Sequenza a 2 cifre (01-99)
+- Sequenza a 3 cifre (001-999)
+- Sequenza a 4 cifre (0001-9999)
+- Sequenza a 5 cifre (00001-99999)
+- Sequenza a 6 cifre (000001-99999999)
 
 ### Modifica il parametro del nome del file
 

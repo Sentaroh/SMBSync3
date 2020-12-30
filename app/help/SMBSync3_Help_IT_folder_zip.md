@@ -12,7 +12,7 @@ Mostra le liste dei file.
 
 ### ZIP Nome del file
 
-Specificare il nome del file ZIP. 
+Inserire il nome del file di destinazione. Se si specifica un file inesistente, questo verrà creato al momento dell'esecuzione della sincronizzazione. 
 
 ### Livello di compressione
 

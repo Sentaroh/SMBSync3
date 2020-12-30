@@ -1,10 +1,10 @@
-### Über übernommene Datumsparameter
+### Über die Parameter des Aufnahmedatums
 
-- T-DATUM     
+- T-DATE
 
   Aufnahmedatum (JJJJ-MM-TT)
 
-- T-ZEIT
+- T-TIME
 
   Aufgenommene Zeit(HH-MM-SS)
 
@@ -12,33 +12,33 @@
 
   Aufnahmedatum(Tage seit Jahresbeginn)
 
-- T-JJJJ
+- T-YYYY
 
-  Erfasstes Jahr
+  Drehjahr (4 Ziffern)
 
-- T-JA
+- T-YY
 
-  Aufgenommenes Jahr(2D-stellig)
+  Drehjahr (2 Ziffern)
 
 - T-MM
 
-  Genommener Monat
+  Der Monat der Dreharbeiten
 
 - T-DD
 
-  Genommener Tag
+  Datum der Aufnahme
 
 - T-HH
 
-  Aufgenommene Stunden
+  Beim Schießen
 
 - T-MIN
 
-  Aufgenommene Minuten
+  Aufnahme Minuten
 
 - T-SEC
 
-  Aufgenommene Sekunden
+  Aufnahme Sekunden
 
 - T-WEEKNO
 
@@ -52,15 +52,13 @@
 
   Wochentag (Sonntag, Montag, etc.)
 
- 
-
 ### Parameter für das Sync-Anfangsdatum
 
-- E-DATUM
+- E-DATE
 
   Sync-Anfangsdatum (JJJJ-MM-TT)
 
-- E-ZEIT
+- E-TIME
 
   Sync-Anfangszeit(HH-MM-SS)
 
@@ -68,13 +66,13 @@
 
   Sync-Anfangsdatum(Tage seit Jahresbeginn)
 
-- E-JJJJ
+- E-YYYY
 
   Sync-Anfangsjahr
 
-- E-JJ
+- E-YY
 
-  Sync Jahresanfang (2-stellig)
+  Sync-Anfangsjahr (2-stellig)
 
 - E-MM
 
@@ -102,11 +100,11 @@
 
 - E-WEEKDAY
 
-  Wochentag (Sonne, Mo, etc.)
+Starttag der Synchronisation (Tag, Monat usw.)
 
 - E-WOCHENTAG_LÄNGS
 
-  Wochentag (Sonntag, Montag, etc.)
+Starttag der Synchronisation (Sonntag, Montag, etc.)
 
 ### Dateinamensparameter (Kann nur verwendet werden, wenn die Synchronisationsmethode Archiv ist)
 

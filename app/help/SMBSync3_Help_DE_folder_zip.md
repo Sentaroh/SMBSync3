@@ -12,7 +12,7 @@ Dateilisten anzeigen.
 
 ### ZIP Dateiname
 
-Geben Sie den ZIP-Dateinamen an. 
+Geben Sie den Namen der Zieldatei ein. Wenn Sie eine nicht existierende Datei angeben, wird diese bei der Ausführung der Synchronisation erstellt. 
 
 ### Komprimierungsstufe
 

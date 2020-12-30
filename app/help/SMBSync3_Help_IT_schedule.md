@@ -6,7 +6,7 @@ Abilitazione/disabilitazione del programma
 
 Il programma può essere specificato come segue
 
-- Ogni ora (ad esempio, ogni 10 minuti)
+- Ogni ora (eseguita ogni ora, come 0:00, 1:00, 2:00, ecc.)
 - Tutti i giorni (Tutti i giorni alle 20:00)
 - Ogni mese (eseguito alle 10:30 del 10 di ogni mese)
 - Specificare il giorno della settimana (eseguito alle 21:00 il lunedì e il venerdì)
@@ -28,16 +28,10 @@ Se deselezionato, è possibile selezionare un task di sincronizzazione
 
 Premere il tasto per visualizzare la schermata di modifica. Selezionare le attività da sincronizzare.
 
-### Accendere il Wi-Fi quando il Wi-Fi è spento all'inizio della sincronizzazione (<span style="color: rosso; "><u>Non disponibile su Android 10 o successivo</u></span>)
-
-Se il Wi-Fi è spento all'inizio della sincronizzazione, attivare il Wi-Fi.
-
-- Periodo di ritardo prima della sincronizzazione dopo l'attivazione del WIFI   
-  Attendere il tempo di attesa prima di avviare la sincronizzazione dopo l'accensione del Wi-Fi.
-
-- Se si accende il Wi-Fi all'inizio della sincronizzazione, spegnere il Wi-Fi dopo la fine della sincronizzazione  
-  Se avete acceso il Wi-Fi all'inizio della sincronizzazione, spegnete il Wi-Fi alla fine della sincronizzazione.
+### Se il Wi-Fi è disattivato, abilitarlo per avviare le attività programmate (<span style="color: rosso; "><u>Non disponibile su Android 10 o successivo</u></span>)
+Quando è attivata, è possibile attivare il Wi-Fi quando il Wi-Fi è spento.  
+- È possibile specificare il tempo di attesa per l'avvio della sincronizzazione dopo l'attivazione del Wi-Fi.
+- È anche possibile disattivare il Wi-Fi al termine della sincronizzazione.
 
 ### La sincronizzazione inizia solo durante la ricarica
-
-È possibile modificare le opzioni del task di sincronizzazione.
+È possibile modificare le opzioni di ricarica quando si avvia la sincronizzazione. Durante la sincronizzazione manuale, può essere sincronizzato indipendentemente dalla carica e durante la sincronizzazione su un programma, può essere modificato solo durante la ricarica.
