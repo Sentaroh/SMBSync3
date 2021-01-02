@@ -87,12 +87,12 @@ Quando si desidera sovrascrivere e cancellare il file, viene visualizzata una fi
 
 - Esegui anche quando sei fuori  
   È sempre possibile iniziare la sincronizzazione
-- Connessione a qualsiasi AP  
+- Quando è collegato all'AP  
   La sincronizzazione può iniziare se la LAN wireless è collegata a qualsiasi punto di accesso.
-- Ha un indirizzo privato  
-  È possibile avviare la sincronizzazione quando l'indirizzo IP è un indirizzo privato
-- Elenco indirizzi IP  
-  La sincronizzazione può iniziare solo se l'indirizzo IP WiFi corrisponde a uno degli indirizzi specificati. È inoltre possibile aggiungere direttamente l'indirizzo IP corrente al quale il dispositivo è collegato attraverso l'elenco di selezione IP.  
+- Solo indirizzo IP privato  
+La sincronizzazione può essere avviata quando l'indirizzo IP è un indirizzo privato
+- Registrato nell'elenco degli indirizzi IP  
+È possibile avviare la sincronizzazione quando l'indirizzo IP è registrato nell'elenco degli indirizzi IP.  
   È possibile utilizzare i caratteri jolly per il filtro. (ad esempio: 192.168.100.\*, 192.168.\*.\*.*).
 
 ### Permette  la sincronizzazione con tutti gli indirizzi IP (includono pubblico) 

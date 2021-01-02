@@ -87,12 +87,12 @@ You can specify the behavior when an error occurs.
 
 - Run even when off  
 You can always start syncing
-- Conn to any AP  
+- When connected to AP  
 Sync can start if the wireless LAN is connected to the any access point.
-- Has private address  
-You can start synchronization when the IP address is a private address
-- IP Address List  
-You can start syncing only if the WiFi IP address matches one of the specified addresses. You can also directly add the current IP address your device is connected to through the IP selection list.  
+- Private IP address only  
+Synchronization can be started when the IP address is a private address
+- Registered in the IP address list  
+You can start synchronization when the IP address is registered in the IP address list.  
 You can use wildcards for the filter. (e.g: 192.168.100.\*, 192.168.\*.\*.)
 
 ### Allow  sync with all IP addresses (include public)  

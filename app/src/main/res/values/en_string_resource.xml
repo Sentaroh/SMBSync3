@@ -249,10 +249,10 @@
         <string name="msgs_main_sync_profile_dlg_title_source">Edit source folder</string>
         <string name="msgs_main_sync_profile_dlg_title_destination">Edit destination folder</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Start sync only in specified Wifi condition</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Conn to any AP</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Has private addr</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">IP address list</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Run even when off</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">When connected to AP</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Private IP address only</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Registered in the IP address list</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Sync task was not selected.</string>
         <string name="msgs_main_sync_selected_tasks">Execute selected sync task</string>
         <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist:</string>

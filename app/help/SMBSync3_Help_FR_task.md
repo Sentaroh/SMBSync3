@@ -87,12 +87,12 @@ Vous pouvez spécifier le comportement à adopter lorsqu'une erreur se produit.
 
 - Même si  Wifi éteint  
   Vous pouvez toujours commencer à synchroniser
-- Tous les  réseaux  
+- Lorsqu'il est connecté à l'AP  
   La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d'accès quelconque.
-- Wifi  avec IP privée  
-  Vous pouvez lancer la synchronisation lorsque l'adresse IP est une adresse privée
-- Liste d'adresses IP  
-  Vous ne pouvez commencer la synchronisation que si l'adresse IP WiFi correspond à l'une des adresses spécifiées. Vous pouvez également ajouter directement l'adresse IP actuelle à laquelle votre appareil est connecté via la liste de sélection des adresses IP.  
+- Adresse IP privée uniquement  
+La synchronisation peut être lancée lorsque l'adresse IP est une adresse privée
+- Enregistré dans la liste des adresses IP  
+Vous pouvez lancer la synchronisation lorsque l'adresse IP est enregistrée dans la liste des adresses IP.  
   Vous pouvez utiliser des jokers pour le filtre. (par exemple : 192.168.100.\*, 192.168.\*.\*.)
 
 ### Autoriser  la connexion aux addresses IP publiques(inclure le public)  

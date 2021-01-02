@@ -253,10 +253,10 @@
         <string name="msgs_main_sync_profile_dlg_title_source">Quellordner bearbeiten</string>
         <string name="msgs_main_sync_profile_dlg_title_destination">Zielordner bearbeiten</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Sync-Startbedingung durch Wireless LAN</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Verbindung zu jedem AP</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Hat private IP-Adressen</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">IP-Adressen-Liste</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Laufen auch im ausgeschalteten Zustand</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Wenn mit AP verbunden</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Nur private IP-Adresse</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Registriert in der IP-Adressliste</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Die Sync-Aufgabe wurde nicht ausgewählt.</string>
         <string name="msgs_main_sync_selected_tasks">Ausgewählte Sync-Aufgabe ausführen</string>
         <string name="msgs_main_sync_selected_task_not_found">Ausgewählte Aufgabe existiert nicht:</string>

@@ -248,10 +248,10 @@
         <string name="msgs_main_sync_profile_dlg_title_source">Редактировать папку источника</string>
         <string name="msgs_main_sync_profile_dlg_title_destination">Редактировать папку назначения</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Синхронизирующее условие запуска Беспроводной LAN</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Подключаться к любой точке доступа</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Имеет частный адрес</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Список IP-адресов</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Выполнить, даже когда офлайн</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">При подключении к точке доступа</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Только частный IP-адрес</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Зарегистрирован в списке IP-адресов</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Синхронизирующая задача не была выбрана.</string>
         <string name="msgs_main_sync_selected_tasks">Выполните выбранную синхронизирующую задачу</string>
         <string name="msgs_main_sync_selected_task_not_found">Выбранная задача не существует:</string>

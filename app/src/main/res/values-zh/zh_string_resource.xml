@@ -253,10 +253,10 @@
         <string name="msgs_main_sync_profile_dlg_title_source">编辑源文件夹</string>
         <string name="msgs_main_sync_profile_dlg_title_destination">编辑目标文件夹</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">无线局域网同步启动条件</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">连接到任何AP</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">拥有私人IP地址</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">IP地址列表</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">关机时也能运行</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">当您连接到AP时</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">仅限私人IP地址</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">在IP地址列表中注册</string>
         <string name="msgs_main_sync_select_task_no_auto_task">未选择同步任务。</string>
         <string name="msgs_main_sync_selected_tasks">执行选定的同步任务</string>
         <string name="msgs_main_sync_selected_task_not_found">所选任务不存在。</string>

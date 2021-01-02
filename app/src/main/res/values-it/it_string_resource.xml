@@ -253,10 +253,10 @@
         <string name="msgs_main_sync_profile_dlg_title_source">Modifica cartella di origine</string>
         <string name="msgs_main_sync_profile_dlg_title_destination">Modifica cartella di destinazione</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Avviare la sincronizzazione solo in condizioni Wifi specificate</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Connessione a qualsiasi AP</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Ha un addr privato</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Elenco indirizzi IP</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Esegui anche quando sei fuori</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Quando è collegato all\'AP</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Solo indirizzo IP privato</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Registrato nell\'elenco degli indirizzi IP</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Il compito di sincronizzazione non è stato selezionato.</string>
         <string name="msgs_main_sync_selected_tasks">Eseguire il task di sincronizzazione selezionato</string>
         <string name="msgs_main_sync_selected_task_not_found">Il compito selezionato non esiste:</string>

@@ -87,12 +87,12 @@ Sie können das Verhalten beim Auftreten eines Fehlers festlegen.
 
 - Auch im ausgeschalteten Zustand ausführen  
   Sie können immer die Synchronisierung starten
-- Conn mit einem beliebigen AP  
+- Wenn mit AP verbunden  
   Die Synchronisierung kann starten, wenn das drahtlose LAN mit einem beliebigen Zugangspunkt verbunden ist.
-- Hat eine private Adresse  
-  Sie können die Synchronisierung starten, wenn die IP-Adresse eine private Adresse ist
-- IP-Adressliste  
-  Sie können die Synchronisierung nur starten, wenn die WiFi-IP-Adresse mit einer der angegebenen Adressen übereinstimmt. Sie können auch die aktuelle IP-Adresse, mit der Ihr Gerät verbunden ist, direkt über die IP-Auswahlliste hinzufügen.  
+- Nur private IP-Adresse  
+Die Synchronisation kann gestartet werden, wenn die IP-Adresse eine private Adresse ist
+- Registriert in der IP-Adressliste  
+Sie können die Synchronisation starten, wenn die IP-Adresse in der IP-Adressliste registriert ist.  
   Sie können Wildcards für den Filter verwenden. (z. B.: 192.168.100.\*, 192.168.\*.\*.)
 
 ### Synchronisierung  mit allen IP-Adressen zulassen (einschließlich öffentlich)  

@@ -248,10 +248,10 @@
         <string name="msgs_main_sync_profile_dlg_title_source">Modifier le dossier source</string>
         <string name="msgs_main_sync_profile_dlg_title_destination">Modifier le dossier de destination</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">Démarrer la synchro selon la connexion Wifi</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Tous les réseaux</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Wifi avec IP privée</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Liste d\'addresse IP</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">Même si Wifi éteint</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">Lorsqu\'il est connecté à l\'AP</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">Adresse IP privée uniquement</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Enregistré dans la liste des adresses IP</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Tache de synchronisation non sélectionnée</string>
         <string name="msgs_main_sync_selected_tasks">Exécuter la tâche de synchronisation sélectionnée</string>
         <string name="msgs_main_sync_selected_task_not_found">La tâche sélectionnée n\'existe pas:</string>

@@ -248,10 +248,10 @@
         <string name="msgs_main_sync_profile_dlg_title_source">ソースフォルダーの編集</string>
         <string name="msgs_main_sync_profile_dlg_title_destination">宛先フォルダーの編集</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_prompt">無線LANによる同期開始条件</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">APに接続されている時</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">プライベートIPアドレス</string>
-        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">IPアドレスリスト</string>
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_off">オフでも実行</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap">APに接続されている時</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address">プライベートIPアドレスだけ</string>
+        <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">IPアドレスリストに登録されている</string>
         <string name="msgs_main_sync_select_task_no_auto_task">同期タスクが選択されていません。</string>
         <string name="msgs_main_sync_selected_tasks">選択された同期タスクを同期します。</string>
         <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=</string>
