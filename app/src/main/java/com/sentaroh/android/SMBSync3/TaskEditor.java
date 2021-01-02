@@ -28,6 +28,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -4407,12 +4408,78 @@ public class TaskEditor extends DialogFragment {
         TextView dlg_tv = (TextView) dialog.findViewById(R.id.help_view_title_text);
         dlg_tv.setTextColor(mGp.themeColorList.title_text_color);
 
+        final EditText et_find_string=(EditText)dialog.findViewById(R.id.help_view_find_value);
+        final ImageButton ib_find_next=(ImageButton) dialog.findViewById(R.id.help_view_find_next);
+        final ImageButton ib_find_prev=(ImageButton) dialog.findViewById(R.id.help_view_find_prev);
+        final TextView tv_find_count=(TextView) dialog.findViewById(R.id.help_view_find_count);
+
         WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
 
         dlg_wb.loadUrl("file:///android_asset/" + help_msg);
         dlg_wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         dlg_wb.getSettings().setBuiltInZoomControls(false);
         dlg_wb.setInitialScale(0);
+
+        ib_find_next.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dlg_wb.findNext(true);
+            }
+        });
+
+        ib_find_prev.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dlg_wb.findNext(false);
+            }
+        });
+
+        CommonDialog.setViewEnabled(a, ib_find_next, false);
+        CommonDialog.setViewEnabled(a, ib_find_prev, false);
+
+        final ColorStateList default_text_color=tv_find_count.getTextColors();
+        dlg_wb.setFindListener(new WebView.FindListener() {
+            @Override
+            public void onFindResultReceived(int i, int i1, boolean b) {
+                if (et_find_string.getText().length()>0) {
+                    if (i1>0) {
+                        tv_find_count.setText((i+1)+"/"+i1);
+                        tv_find_count.setTextColor(default_text_color);
+                        CommonDialog.setViewEnabled(a, ib_find_next, true);
+                        CommonDialog.setViewEnabled(a, ib_find_prev, true);
+                    } else {
+                        tv_find_count.setText(0+"/"+0);
+                        tv_find_count.setTextColor(Color.RED);
+                        CommonDialog.setViewEnabled(a, ib_find_next, false);
+                        CommonDialog.setViewEnabled(a, ib_find_prev, false);
+                    }
+                } else {
+                    CommonDialog.setViewEnabled(a, ib_find_next, false);
+                    CommonDialog.setViewEnabled(a, ib_find_prev, false);
+                    tv_find_count.setText("");
+                    tv_find_count.setTextColor(default_text_color);
+                }
+            }
+        });
+
+        et_find_string.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()>0) {
+                    dlg_wb.findAllAsync(s.toString());
+                } else {
+                    CommonDialog.setViewEnabled(a, ib_find_next, false);
+                    CommonDialog.setViewEnabled(a, ib_find_prev, false);
+                    dlg_wb.findAllAsync("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         dlg_tv.setText(title);
 
