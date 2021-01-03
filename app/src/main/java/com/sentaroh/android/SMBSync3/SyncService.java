@@ -595,7 +595,7 @@ public class SyncService extends Service {
                                         job_name[i], sri.requestor_display));
                     }
                 } else {
-                    mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_main_sync_selected_task_not_found) + job_name[i]);
+                    mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_main_sync_selected_task_not_found, job_name[i]));
                 }
             }
             if (sri.sync_task_list.size() > 0) {

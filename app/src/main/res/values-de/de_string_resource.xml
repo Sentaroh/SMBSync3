@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">Datenschutzerklärung</string>
         <string name="msgs_about_dlg_change_btn">Änderungsprotokoll</string>
         <string name="msgs_dlg_title_about">Über SMBSync3</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_DE_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_DE.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_EN.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_JA_Desc.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_JA_Privacy.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Aufgabendatei zum Import auswählen</string>
         <string name="msgs_export_import_profile_listing">Dateiliste</string>
@@ -259,7 +259,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Registriert in der IP-Adressliste</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Die Sync-Aufgabe wurde nicht ausgewählt.</string>
         <string name="msgs_main_sync_selected_tasks">Ausgewählte Sync-Aufgabe ausführen</string>
-        <string name="msgs_main_sync_selected_task_not_found">Ausgewählte Aufgabe existiert nicht:</string>
+        <string name="msgs_main_sync_selected_task_not_found">Ausgewählte Aufgabe existiert nicht: %s</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">Die angegebene Synchronisierungsaufgabe wird nicht ausgeführt, da sie ignoriert wurde.</string>
         <string name="msgs_main_sync_test_mode_warnning">Ausgewählte Aufgabe ist nur für Testzwecke konfiguriert.  Es werden keine Dateien kopiert oder gelöscht.  Die Aufgabe ausführen?</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Drücken Sie die Schaltfläche Hinzufügen, um eine neue Synchronisierungsaufgabe zu erstellen.</string>

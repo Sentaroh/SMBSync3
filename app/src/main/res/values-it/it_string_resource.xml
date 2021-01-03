@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">Log cambiamenti</string>
         <string name="msgs_about_dlg_change_btn">Privacy</string>
         <string name="msgs_dlg_title_about">A proposito di SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_IT_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_IT.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_EN.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_IT_Desc.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_IT_Privacy.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Seleziona impostazioni e task da importare</string>
         <string name="msgs_export_import_profile_listing">Lista file di configurazione</string>
@@ -259,7 +259,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Registrato nell\'elenco degli indirizzi IP</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Il compito di sincronizzazione non è stato selezionato.</string>
         <string name="msgs_main_sync_selected_tasks">Eseguire il task di sincronizzazione selezionato</string>
-        <string name="msgs_main_sync_selected_task_not_found">Il compito selezionato non esiste:</string>
+        <string name="msgs_main_sync_selected_task_not_found">Il compito selezionato non esiste: %s</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">Il task di sincronizzazione specificato non verrà eseguito perché è stato ignorato.</string>
         <string name="msgs_main_sync_test_mode_warnning">Il task selezionato è configurato solo per il test.  Nessun file verrà copiato o cancellato.  Eseguire il task?</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Premere il pulsante add per creare un nuovo task di sincronizzazione.</string>

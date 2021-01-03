@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">私隐政策</string>
         <string name="msgs_about_dlg_change_btn">变更日志</string>
         <string name="msgs_dlg_title_about">关于SMBSync3</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_ZH_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_ZH.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_EN.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_ZH_Desc.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_ZH_Privacy.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">选择要导入的任务文件</string>
         <string name="msgs_export_import_profile_listing">档案表</string>
@@ -259,7 +259,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">在IP地址列表中注册</string>
         <string name="msgs_main_sync_select_task_no_auto_task">未选择同步任务。</string>
         <string name="msgs_main_sync_selected_tasks">执行选定的同步任务</string>
-        <string name="msgs_main_sync_selected_task_not_found">所选任务不存在。</string>
+        <string name="msgs_main_sync_selected_task_not_found">所选任务不存在。 任务=%s</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定的同步任务将不会被执行，因为它被忽略了。</string>
         <string name="msgs_main_sync_test_mode_warnning">所选任务仅配置为测试。 不会复制或删除任何文件。 执行任务？</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">按添加按钮创建新的同步任务。</string>

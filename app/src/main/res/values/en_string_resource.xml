@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">Privacy Policy</string>
         <string name="msgs_about_dlg_change_btn">Change Log</string>
         <string name="msgs_dlg_title_about">About SMBSync3</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_EN_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_EN.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_EN.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_EN_Desc.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_EN_Privacy.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Select tasks and settings to import</string>
         <string name="msgs_export_import_profile_listing">List configuration files</string>
@@ -255,7 +255,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Registered in the IP address list</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Sync task was not selected.</string>
         <string name="msgs_main_sync_selected_tasks">Execute selected sync task</string>
-        <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist:</string>
+        <string name="msgs_main_sync_selected_task_not_found">Selected task does not exist: %s</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">The specified sync task will not be executed because it was ignored.</string>
         <string name="msgs_main_sync_test_mode_warnning">Selected task is configured for test only.  No files will be copied or deleted.  Execute the task?</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Press add button to create new sync task.</string>

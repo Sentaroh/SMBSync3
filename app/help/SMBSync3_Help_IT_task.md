@@ -11,13 +11,13 @@ Se si seleziona l'attività all'automatico. Le attività che sono impostate sull
 Specificare il nome dell'attività.
 
 ### Tipo di sincronizzazione
-Il metodo di sincronizzazione viene selezionato da mirror, copia, sposta, archivia. La sincronizzazione viene effettuata dal master al bersaglio in una direzione.
+Selezionare un metodo tra Mirror, Copy, Move e Archive. <span style="color: red;"><u>La sincronizzazione viene effettuata in una direzione, dalla cartella sorgente alla cartella di destinazione.</u></span></span   
 - Mirror  
   Fare una copia differenziale (**<u>*1</u>**) delle directory e dei file sul lato sorgente verso il lato destinazione, ed eliminare i file e le directory sul lato destinazione che non esistono sul lato sorgente dopo che la copia è stata completata.
 
 - Spostare  
-Fare una copia differenziale della directory lato sorgente e del file sul lato di destinazione e cancellare il file lato sorgente copiato sul lato di destinazione.
-Tuttavia, il file con lo stesso nome dell'origine e della destinazione, ma con le stesse dimensioni del file e la stessa data di modifica, non viene copiato e il file sul lato origine viene cancellato.
+
+  Fare una copia differenziale della directory lato sorgente e del file sul lato di destinazione e cancellare il file lato sorgente copiato sul lato di destinazione. Tuttavia, il file con lo stesso nome dell'origine e della destinazione, ma con le stesse dimensioni del file e la stessa data di modifica, non viene copiato e il file sul lato origine viene cancellato.
 
 - Copia  
 Fare una copia differenziale dei file contenuti nella directory di origine sul lato di destinazione.
@@ -86,9 +86,9 @@ Quando si desidera sovrascrivere e cancellare il file, viene visualizzata una fi
 ### Rete
 
 - Esegui anche quando sei fuori  
-  È sempre possibile iniziare la sincronizzazione
+È sempre possibile iniziare la sincronizzazione
 - Quando è collegato all'AP  
-  La sincronizzazione può iniziare se la LAN wireless è collegata a qualsiasi punto di accesso.
+La sincronizzazione può iniziare se la LAN wireless è collegata a qualsiasi punto di accesso.
 - Solo indirizzo IP privato  
 La sincronizzazione può essere avviata quando l'indirizzo IP è un indirizzo privato
 - Registrato nell'elenco degli indirizzi IP  
@@ -102,19 +102,19 @@ Permette la sincronizzazione su tutti gli indirizzi IP. Tuttavia, la scansione d
 
 **Si prega di utilizzarlo quando si impostano opzioni dettagliate.**
 ### Includi le sottodirectory
-Includerà ricorsivamente le sottodirectory sotto la cartella master specificata. 
+Includerà ricorsivamente le sottocartelle sotto la cartella sorgente specificata. 
 
 ### Includere le directory vuote
-Sincronizza le directory vuote (anche se una directory è vuota sul master, verrà creata sul target). Se deselezionata, le directory vuote sul master vengono ignorate. 
+Sincronizza le directory vuote (anche se una directory è vuota sul sorgente, verrà creata sulla destinazione). Se deselezionata, le directory vuote sul sorgente vengono ignorate. 
 
 ### Includi le directory nascoste
 Quando spuntata, Sync includerà le cartelle linux nascoste (quelle con un nome che inizia con un punto). Si noti che in Windows e Samba, l'attributo nascosto non è impostato dal nome della cartella. Pertanto, la cartella sincronizzata sulla destinazione SMB/Windows non avrà l'attributo nascosto dell'host. 
 
 ### Includere i file nascosti
-Quando spuntata, Sync includerà i file linux nascosti (quelli con un nome che inizia con un punto). Si noti che in Windows e Samba, l'attributo nascosto non è impostato dal nome del file. Quindi, il file sincronizzato sulla destinazione SMB/Windows non avrà l'attributo nascosto dell'host.
+Quando spuntata, Sync includerà i file linux nascosti (quelli con un nome che inizia con un punto). Si noti che in Windows e Samba, l'attributo nascosto non è impostato dal nome del file. Pertanto, il file sincronizzato sulla destinazione SMB/Windows non avrà l'attributo nascosto dell'host.
 
 ### Sovrascrivere i file di destinazione
-Se deselezionati, i file sul target non saranno mai sovrascritti anche se i criteri di confronto per dimensioni e tempo sono diversi. 
+Se deselezionati, i file sulla destinazione non verranno mai sovrascritti anche se i criteri di confronto per dimensioni e tempo sono diversi. 
 
 ### Riprova su errore di rete (solo per le condivisioni SMB)
 In caso di errori di connessione lato server, SMBSync3 riproverà la sincronizzazione per un massimo di 3 volte ad un intervallo di 30 secondi. 
@@ -124,8 +124,8 @@ Provare se si ottiene un errore di "Accesso negato" quando si scrive nella carte
 
 ### Cancellare i file prima della sincronizzazione (solo modalità Mirror)
 
-Una volta spuntate, le directory e i file che sono presenti nella cartella di destinazione ma che non esistono sul master, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella cartella di destinazione.
-Se la cartella master è SMB, il tempo di elaborazione sarà più lungo perché la struttura delle directory e il loro contenuto viene scansionato attraverso la rete. Si raccomanda vivamente di attivare l'opzione "Usa la negoziazione SMB2" perché SMB1 sarà molto lenta.
+Una volta spuntate, le directory e i file che sono presenti nella cartella di destinazione ma che non esistono nella sorgente, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella destinazione.
+Se la cartella di origine è SMB, il tempo di elaborazione sarà più lungo perché la struttura delle directory e il loro contenuto viene scansionato attraverso la rete. Si raccomanda vivamente di abilitare l'opzione "Usa la negoziazione SMB2" perché SMB1 sarà molto lenta.
 
 ### Rimuovere le directory e i file esclusi dai filtri
 
@@ -133,7 +133,7 @@ Se abilitato, **rimuove le directory/file che sono escluse dal filtro.**
 
 ### Non impostare l'ultimo orario modificato del file di destinazione per far corrispondere il file sorgente
 
-Si prega di abilitare se si ottiene un errore come SmbFile#setLastModified()/File#setLastModified() fallisce. Significa che l'host remoto non permette l'impostazione del file modificato l'ultima volta. Se deselezionato, l'ultimo tempo modificato del file copiato sul target sarà impostato all'ora in cui è stato copiato / sincronizzato. Ciò significa che il file di destinazione apparirà più nuovo del master. 
+Si prega di abilitare se si ottiene un errore come SmbFile#setLastModified()/File#setLastModified() fallisce. Significa che l'host remoto non permette l'impostazione del file modificato l'ultima volta. Se deselezionato, l'ultimo orario modificato del file copiato sulla destinazione sarà impostato all'orario in cui è stato copiato / sincronizzato. Ciò significa che il file di destinazione apparirà più nuovo del sorgente. 
 
 ### Utilizzare la dimensione del file per determinare se i file sono diversi
 
@@ -148,7 +148,7 @@ Quando si seleziona, i file sono considerati diversi in base al loro ultimo temp
 I file sono considerati identici se la differenza tra i loro ultimi tempi modificati è inferiore o uguale al tempo selezionato in secondi. Sono considerati diversi se la differenza di tempo tra i file è superiore al tempo selezionato. FAT e ExFAT richiedono una tolleranza minima di 2 secondi. Se si seleziona 0 secondi, i file devono avere esattamente lo stesso tempo per essere considerati simili.
 
 ### Non sovrascrivere il file di destinazione se è più nuovo del file sorgente
-Se spuntata, il file viene sovrascritto solo quando il file master è più nuovo del file di destinazione, anche se le dimensioni del file e gli ultimi tempi di aggiornamento sono diversi. Tenere presente che se si cambiano i fusi orari o se i file vengono modificati durante il periodo di intervallo della modifica dell'ora legale, l'ultimo file modificato potrebbe apparire più vecchio del file non aggiornato. Ciò è legato alle differenze del file system e solo un controllo manuale prima di sovrascrivere il file eviterà la perdita di dati. Si raccomanda generalmente di non modificare i file durante l'intervallo del cambio dell'ora legale se sono destinati ad essere auto-sincronizzati 
+Se spuntata, il file verrà sovrascritto solo quando il file di origine è più nuovo del file di destinazione, anche se le dimensioni del file e gli ultimi tempi di aggiornamento sono diversi. Tenere presente che se si cambiano i fusi orari o se i file vengono modificati durante il periodo di intervallo del cambio dell'ora legale, l'ultimo file modificato potrebbe apparire più vecchio del file non aggiornato. Ciò è legato alle differenze del file system e solo un controllo manuale prima di sovrascrivere il file eviterà la perdita di dati. Si raccomanda generalmente di non modificare i file durante l'intervallo del cambio dell'ora legale se sono destinati ad essere auto-sincronizzati. 
 
 ### Ignora la differenza di fuso orario tra i file
 Permette di selezionare la differenza di fuso orario in minuti tra l'ora legale e quella invernale. I file sono considerati diversi se la differenza di orario non è esattamente uguale all'intervallo specificato (+/- la "differenza di orario minima consentita (in secondi)" specificata nell'opzione precedente)
@@ -156,7 +156,7 @@ Permette di selezionare la differenza di fuso orario in minuti tra l'ora legale 
 ### Salta i nomi di directory e file che contengono caratteri non validi(", :, \, \, *, <, >, |)
 Se spuntata, visualizzerà un messaggio di avviso e la sincronizzazione continuerà senza elaborare le directory/file contenenti caratteri non validi. 
 
-### Cancella la directory master quando è vuota (solo quando l'opzione Sync è Spostare)
+### Cancellare la directory di origine quando è vuota (solo quando l'opzione Sync è Move)
 Quando la modalità di sincronizzazione è "Spostare", dopo che i file sono stati spostati nella destinazione, viene cancellata anche la cartella Source. 
 
 ### Se la data e l'ora non possono essere determinate dai dati EXIF, viene visualizzato un messaggio di conferma

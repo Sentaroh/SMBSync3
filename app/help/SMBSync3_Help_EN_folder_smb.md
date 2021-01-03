@@ -16,7 +16,7 @@ You can specify SMB protocol.
 
 - Use SMB V1
 
-- Use SMB V2/3(2.14) 
+- Use SMB V2/3 
 
 ### Use port number
 

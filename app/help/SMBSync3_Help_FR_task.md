@@ -11,19 +11,19 @@ Si la tâche a été vérifiée, elle est passée à l'automatique. Les tâches 
 Précisez le nom de la tâche.
 
 ### Mode de sync
-Sélectionnez la méthode de synchronisation parmi Miroir, Copier, Déplacer et Archiver. La synchronisation est unidirectionnelle du dossier source au dossier de destination.
+Choisissez une méthode parmi les suivantes : miroir, copie, déplacement et archivage. <span style="color : red ;"><u>La synchronisation se fait dans un sens, du dossier source au dossier de destination.</u></span>   
 - Miroir  
   Faites une copie différentielle (**<u>*1</u>**) des répertoires et des fichiers du côté source vers le côté destination, et supprimez les fichiers et les répertoires du côté destination qui n'existent pas du côté source une fois la copie terminée.
 
 - Déplacer  
-Faites une copie différentielle du répertoire et du fichier côté source vers le côté destination, et supprimez le fichier côté source copié vers le côté destination.
-Toutefois, le fichier portant le même nom que la source et la destination mais ayant la même taille et la même date de modification n'est pas copié et le fichier du côté source est supprimé.
+
+  Faites une copie différentielle du répertoire et du fichier côté source vers le côté destination, et supprimez le fichier côté source copié vers le côté destination. Toutefois, le fichier portant le même nom que la source et la destination mais ayant la même taille et la même date de modification n'est pas copié et le fichier du côté source est supprimé.
 
 - Copie  
-Faites une copie différentielle des fichiers contenus dans le répertoire source vers le côté destination.
+  Faites une copie différentielle des fichiers contenus dans le répertoire source vers le côté destination.
 
 - Archive  
-Déplacer les photos et vidéos contenues dans le répertoire source vers la destination à condition que la date et l'heure de tournage soient antérieures à 7 jours ou 30 jours à la date et l'heure d'exécution de l'archive. (Toutefois, le ZIP ne peut pas être utilisé comme destination).
+  Déplacer les photos et vidéos contenues dans le répertoire source vers la destination à condition que la date et l'heure de tournage soient antérieures à 7 jours ou 30 jours à la date et l'heure d'exécution de l'archive. (Toutefois, le ZIP ne peut pas être utilisé comme destination).
 
 **<u>*1</u>** Si l'une des trois conditions suivantes est remplie, le fichier est considéré comme un fichier de différence et est copié ou déplacé. Cependant, la taille du fichier et le moment de la dernière modification peuvent être ignorés dans les options de la tâche de synchronisation.  
 
@@ -86,9 +86,9 @@ Vous pouvez spécifier le comportement à adopter lorsqu'une erreur se produit.
 ### Réseau
 
 - Même si  Wifi éteint  
-  Vous pouvez toujours commencer à synchroniser
+Vous pouvez toujours commencer à synchroniser
 - Lorsqu'il est connecté à l'AP  
-  La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d'accès quelconque.
+La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d'accès quelconque.
 - Adresse IP privée uniquement  
 La synchronisation peut être lancée lorsque l'adresse IP est une adresse privée
 - Enregistré dans la liste des adresses IP  
@@ -102,19 +102,19 @@ Permet la synchronisation sur toutes les adresses IP. Cependant, le balayage du 
 
 **Veuillez l'utiliser lors de la définition des options détaillées.**
 ### Inclure les sous-répertoires
-Il inclura récursivement des sous-répertoires sous le dossier principal spécifié. 
+Il inclura récursivement les sous-répertoires sous le dossier source spécifié. 
 
 ### Inclure les répertoires vides
-Synchronise les répertoires vides (même si un répertoire est vide sur le master, il sera créé sur la cible). Si elle n'est pas cochée, les répertoires vides sur le master sont ignorés. 
+Synchronise les répertoires vides (même si un répertoire est vide sur la source, il sera créé sur la destination). Si elle n'est pas cochée, les répertoires vides sur la source sont ignorés. 
 
 ### Inclure les répertoires cachés
-Lorsqu'elle est cochée, Sync inclura les dossiers linux cachés (ceux dont le nom commence par un point). Notez que dans Windows et Samba, l'attribut caché n'est pas défini par le nom du dossier. Ainsi, le dossier synchronisé sur la cible SMB/Windows n'aura pas l'attribut caché host. 
+Lorsqu'elle est cochée, Sync inclura les dossiers linux cachés (ceux dont le nom commence par un point). Notez que dans Windows et Samba, l'attribut caché n'est pas défini par le nom du dossier. Ainsi, le dossier synchronisé sur la destination SMB/Windows n'aura pas l'attribut caché host. 
 
 ### Inclure les fichiers cachés
-Lorsqu'il est vérifié, Sync inclura les fichiers linux cachés (ceux dont le nom commence par un point). Notez que dans Windows et Samba, l'attribut caché n'est pas défini par le nom du fichier. Ainsi, le fichier synchronisé sur la cible SMB/Windows n'aura pas l'attribut caché de l'hôte.
+Lorsqu'il est vérifié, Sync inclura les fichiers linux cachés (ceux dont le nom commence par un point). Notez que dans Windows et Samba, l'attribut caché n'est pas défini par le nom du fichier. Ainsi, le fichier synchronisé sur la destination SMB/Windows n'aura pas l'attribut caché de l'hôte.
 
 ### Écraser les fichiers de destination
-S'ils ne sont pas cochés, les fichiers sur la cible ne seront jamais écrasés, même si les critères de comparaison par taille et par temps sont différents. 
+S'ils ne sont pas cochés, les fichiers sur la destination ne seront jamais écrasés, même si les critères de comparaison par taille et par heure sont différents. 
 
 ### Réessayer en cas d'erreur de réseau (uniquement pour les partages SMB)
 En cas d'erreur de connexion côté serveur, SMBSync3 réessaiera la synchronisation au maximum 3 fois à un intervalle de 30 secondes. 
@@ -124,8 +124,8 @@ Veuillez essayer si vous obtenez une erreur "Access is denied" en écrivant dans
 
 ### Effacer les fichiers avant la synchronisation (mode miroir uniquement)
 
-Lorsqu'elle est cochée, les répertoires et les fichiers qui sont présents sur le dossier cible mais qui n'existent pas sur le master, seront d'abord supprimés. Ensuite, les fichiers et les dossiers qui sont différents seront copiés sur la cible.
-Si le dossier maître est SMB, le temps de traitement sera plus long car la structure des répertoires et leur contenu sont scannés à travers le réseau. Il est fortement recommandé d'activer l'option "Utiliser la négociation SMB2" car SMB1 sera très lent.
+Lorsqu'elle est cochée, les répertoires et les fichiers qui sont présents sur le dossier de destination mais qui n'existent pas sur la source, seront d'abord supprimés. Ensuite, les fichiers et les dossiers qui sont différents seront copiés dans le dossier de destination.
+Si le dossier source est SMB, le temps de traitement sera plus long car la structure des répertoires et leur contenu sont scannés par le réseau. Il est fortement recommandé d'activer l'option "Utiliser la négociation SMB2" car SMB1 sera très lent.
 
 ### Supprimer les répertoires et les fichiers exclus par les filtres
 
@@ -133,7 +133,7 @@ Si elle est activée, **elle supprime les répertoires/fichiers qui sont exclus 
 
 ### Ne pas régler l'heure de la dernière modification du fichier de destination pour qu'elle corresponde à celle du fichier source
 
-Veuillez l'activer si vous obtenez une erreur du type SmbFile#setLastModified()/File#setLastModified() fails. Cela signifie que l'hôte distant n'autorise pas le paramétrage du fichier de la dernière modification. Si cette case n'est pas cochée, la dernière heure de modification du fichier copié sur la cible sera fixée à l'heure à laquelle il a été copié / synchronisé. Cela signifie que le fichier cible apparaîtra plus récent que le fichier maître. 
+Veuillez l'activer si vous obtenez une erreur du type SmbFile#setLastModified()/File#setLastModified() fails. Cela signifie que l'hôte distant n'autorise pas le paramétrage du fichier de la dernière modification. Si cette case n'est pas cochée, la dernière heure de modification du fichier copié sur la destination sera fixée à l'heure à laquelle il a été copié / synchronisé. Cela signifie que le fichier de destination apparaîtra plus récent que la source. 
 
 ### Utiliser la taille du fichier pour déterminer si les fichiers sont différents
 
@@ -148,7 +148,7 @@ Lors de la vérification, les fichiers sont considérés comme différents en fo
 Les fichiers sont considérés comme identiques si la différence entre leurs derniers temps modifiés est inférieure ou égale au temps sélectionné en secondes. Ils sont considérés comme différents si la différence de temps entre les fichiers est supérieure à l'heure sélectionnée. Les fichiers FAT et ExFAT ont besoin d'une tolérance minimale de 2 secondes. Si 0 seconde est sélectionnée, les fichiers doivent avoir exactement le même temps pour être considérés comme similaires.
 
 ### N'écrasez pas le fichier de destination s'il est plus récent que le fichier source
-Si la case est cochée, le fichier ne sera écrasé que si le fichier principal est plus récent que le fichier cible, même si la taille du fichier et les heures de la dernière mise à jour sont différentes. Gardez à l'esprit que si vous changez de fuseau horaire ou si les fichiers sont modifiés pendant la période d'intervalle du changement d'heure d'été, le dernier fichier modifié pourrait apparaître plus ancien que le fichier non mis à jour. Ceci est lié aux différences de système de fichiers et seule une vérification manuelle avant d'écraser le fichier évitera la perte de données. Il est généralement recommandé de ne pas modifier les fichiers pendant l'intervalle de changement d'heure d'été s'ils sont destinés à être auto-synchronisés 
+Si la case est cochée, le fichier ne sera écrasé que si le fichier source est plus récent que le fichier de destination, même si la taille du fichier et les heures de la dernière mise à jour sont différentes. Gardez à l'esprit que si vous changez de fuseau horaire ou si les fichiers sont modifiés pendant la période d'intervalle du changement d'heure d'été, le dernier fichier modifié pourrait apparaître plus ancien que le fichier non mis à jour. Ceci est lié aux différences de système de fichiers et seule une vérification manuelle avant d'écraser le fichier évitera la perte de données. Il est généralement recommandé de ne pas modifier les fichiers pendant l'intervalle de changement d'heure d'été s'ils sont destinés à être auto-synchronisés. 
 
 ### Ignorer l'heure d'été Différence de temps entre les fichiers
 Permet de sélectionner le décalage horaire en minutes entre l'heure d'été et l'heure d'hiver. Les fichiers sont considérés comme différents si le décalage horaire n'est pas exactement égal à l'intervalle spécifié (+/- le "décalage horaire minimum autorisé (en secondes)" spécifié dans l'option précédente)
@@ -156,7 +156,7 @@ Permet de sélectionner le décalage horaire en minutes entre l'heure d'été et
 ### Sauter les noms de répertoires et de fichiers qui contiennent des caractères non valides (", :, \, *, <, >, |)
 Si elle est cochée, elle affichera un message d'avertissement et la synchronisation se poursuivra sans traiter les répertoires/fichiers contenant des caractères non valides. 
 
-### Effacer le répertoire principal lorsqu'il est vide (uniquement lorsque l'option de synchronisation est Déplacer)
+### Supprimez le répertoire source lorsqu'il est vide (uniquement lorsque l'option de synchronisation est Déplacer)
 Lorsque le mode de synchronisation est "Déplacement", après que les fichiers aient été déplacés vers la destination, le dossier Source est également supprimé.  
 
 ### Si la date et l'heure ne peuvent pas être déterminées par les données EXIF, un message de confirmation s'affiche

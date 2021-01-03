@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">Confidentialité</string>
         <string name="msgs_about_dlg_change_btn">Historique des modifications</string>
         <string name="msgs_dlg_title_about">À propos de SMBSync3</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_FR_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_FR.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_EN.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_FR_Desc.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_FR_Privacy.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Sélectionner les tâches et les paramètres à importer</string>
         <string name="msgs_export_import_profile_listing">Afficher les fichiers de configutaion</string>
@@ -254,7 +254,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">Enregistré dans la liste des adresses IP</string>
         <string name="msgs_main_sync_select_task_no_auto_task">Tache de synchronisation non sélectionnée</string>
         <string name="msgs_main_sync_selected_tasks">Exécuter la tâche de synchronisation sélectionnée</string>
-        <string name="msgs_main_sync_selected_task_not_found">La tâche sélectionnée n\'existe pas:</string>
+        <string name="msgs_main_sync_selected_task_not_found">La tâche sélectionnée n\'existe pas: %s</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">La tâche sélectionnée ne sera pas exécutée, car elle a été ignorée.</string>
         <string name="msgs_main_sync_test_mode_warnning">La tâche sélectionnée est configurée en mode Test. Aucun fichier ne sera copié ou effacé. Exécuter la tâche ?</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">Appuyer sur le bouton ajouter pour créer une nouvelle tâche.</string>

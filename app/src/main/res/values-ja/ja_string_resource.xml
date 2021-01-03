@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">プライバシー ポリシー</string>
         <string name="msgs_about_dlg_change_btn">更新履歴</string>
         <string name="msgs_dlg_title_about">SMBSync3について</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_Desc_JA_Short.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_Privacy_JA.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_Change_JA.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_JA_Desc.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_JA_Privacy.html</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_JA_Change.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">取り込むタスク項目の選択</string>
         <string name="msgs_export_import_profile_listing">一覧</string>
@@ -254,7 +254,7 @@
         <string name="msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address">IPアドレスリストに登録されている</string>
         <string name="msgs_main_sync_select_task_no_auto_task">同期タスクが選択されていません。</string>
         <string name="msgs_main_sync_selected_tasks">選択された同期タスクを同期します。</string>
-        <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=</string>
+        <string name="msgs_main_sync_selected_task_not_found">選択されたタスクは存在しません。タスク=%s</string>
         <string name="msgs_main_sync_specified_sync_task_not_scheduled">指定された同期タスクは無視されたため実行されません。</string>
         <string name="msgs_main_sync_test_mode_warnning">選択された同期タスクにテストモードの同期タスクが含まれています。テストモードの同期タスクではファイルのコピーや削除が行われません。同期を開始しますか？</string>
         <string name="msgs_main_sync_task_press_add_button_to_create_new_sync_task">追加ボタンをタップして同期タスクを作成してください。</string>
