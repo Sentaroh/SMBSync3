@@ -53,8 +53,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.logging.Handler;
 
-public class SyncTaskListAdapter extends ArrayAdapter<SyncTaskItem> {
-    private static Logger log= LoggerFactory.getLogger(SyncTaskListAdapter.class);
+public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
+    private static Logger log= LoggerFactory.getLogger(TaskListAdapter.class);
 
     private Context mContext;
     private Handler mUiHandler;
@@ -70,8 +70,7 @@ public class SyncTaskListAdapter extends ArrayAdapter<SyncTaskItem> {
 
     String mMirrorTypeMirror, mMirrorTypeMove, mMirrorTypeCopy, mMirrorTypeSync, mMirrorTypeArchive;
 
-    public SyncTaskListAdapter(Context c, int textViewResourceId,
-                               ArrayList<SyncTaskItem> objects, GlobalParameters gp) {
+    public TaskListAdapter(Context c, int textViewResourceId, ArrayList<SyncTaskItem> objects, GlobalParameters gp) {
         super(c, textViewResourceId, objects);
         mContext = c;
         id = textViewResourceId;

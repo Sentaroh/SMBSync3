@@ -263,7 +263,7 @@ public class GlobalParameters {
     public TextView syncGroupMessage =null;
 
     public ArrayList<SyncTaskItem> syncTaskList = new ArrayList<SyncTaskItem>();
-    public SyncTaskListAdapter syncTaskListAdapter = null;
+    public TaskListAdapter syncTaskListAdapter = null;
     public ListView syncTaskView = null;
     public TextView syncTaskEmptyMessage=null;
 

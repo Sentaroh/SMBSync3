@@ -224,7 +224,7 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.settingFixDeviceOrientationToPortrait) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        mGp.syncTaskListAdapter = new SyncTaskListAdapter(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
+        mGp.syncTaskListAdapter = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
 
         Thread th=new Thread(){
             @Override
@@ -903,7 +903,7 @@ public class ActivityMain extends AppCompatActivity {
 
         GlobalParameters.setDisplayFontScale(mActivity);
 
-        mGp.syncTaskListAdapter = new SyncTaskListAdapter(mActivity, R.layout.sync_task_item_view, pfl, mGp);
+        mGp.syncTaskListAdapter = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, pfl, mGp);
         mGp.syncTaskListAdapter.setShowCheckBox(vsa.prof_adapter_show_cb);
         mGp.syncTaskListAdapter.notifyDataSetChanged();
         if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
@@ -4589,7 +4589,7 @@ public class ActivityMain extends AppCompatActivity {
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonUnselectAll, mContext.getString(R.string.msgs_task_cont_label_unselect_all));
     }
 
-    private void confirmToAuto(SyncTaskListAdapter pa, final NotifyEvent p_ntfy) {
+    private void confirmToAuto(TaskListAdapter pa, final NotifyEvent p_ntfy) {
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
@@ -4614,7 +4614,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_task_cont_to_auto_task), msg, ntfy);
     }
 
-    private void confirmToManual(SyncTaskListAdapter pa, final NotifyEvent p_ntfy) {
+    private void confirmToManual(TaskListAdapter pa, final NotifyEvent p_ntfy) {
         NotifyEvent ntfy = new NotifyEvent(mContext);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override

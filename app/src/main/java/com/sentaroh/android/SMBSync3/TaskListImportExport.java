@@ -477,7 +477,7 @@ public class TaskListImportExport {
                 ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
                 if (from_auto_save) loadTaskListFromAutosaveFile(mActivity, sf, sync_task, sync_sched, sync_setting, sync_group);
                 else loadTaskListFromExportFile(mActivity, sf, sync_task, sync_sched, sync_setting, sync_group, mGp.profilePassword);
-                final SyncTaskListAdapter tfl = new SyncTaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
+                final TaskListAdapter tfl = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
                 if (tfl.getCount() > 0) {
                     importSyncTaskItemSelector(false, tfl, sync_sched, sync_setting, sync_group, sf, p_ntfy, from_auto_save);
                 } else {
@@ -516,7 +516,7 @@ public class TaskListImportExport {
                 ArrayList<GroupListAdapter.GroupListItem>sync_group=new ArrayList<GroupListAdapter.GroupListItem>();
                 ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
                 TaskListImportFromSMBSync2.buildSyncTaskList(mActivity, mGp, mUtil, sf, mGp.profilePassword, sync_task, sync_sched);
-                final SyncTaskListAdapter tfl = new SyncTaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
+                final TaskListAdapter tfl = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
                 if (tfl.getCount() > 0) {
                     importSyncTaskItemSelector(true, tfl, sync_sched, sync_setting, sync_group, sf, p_ntfy, false);
                 } else {
@@ -786,7 +786,7 @@ public class TaskListImportExport {
         }
     }
 
-    private void importSyncTaskItemSelector(final boolean from_smbsync2, final SyncTaskListAdapter tfl, final ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched,
+    private void importSyncTaskItemSelector(final boolean from_smbsync2, final TaskListAdapter tfl, final ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched,
                                             final ArrayList<SettingParameterItem>sync_setting, ArrayList<GroupListAdapter.GroupListItem>sync_group,
                                             final SafFile3 sf, final NotifyEvent p_ntfy, final boolean from_auto_save) {
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
@@ -946,7 +946,7 @@ public class TaskListImportExport {
 
     private void importSelectedSyncTaskItem(final boolean from_smbsync2,
                                             final ImportTaskListItemAdapter imp_list_adapt,
-                                            final SyncTaskListAdapter tfl,
+                                            final TaskListAdapter tfl,
                                             final ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched,
                                             final ArrayList<SettingParameterItem>sync_setting,
                                             final ArrayList<GroupListAdapter.GroupListItem>sync_group,

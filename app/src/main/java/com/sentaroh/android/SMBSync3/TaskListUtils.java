@@ -100,7 +100,7 @@ public class TaskListUtils {
         mFragMgr = fm;
     }
 
-    static public void setAllSyncTaskToUnchecked(boolean hideCheckBox, SyncTaskListAdapter pa) {
+    static public void setAllSyncTaskToUnchecked(boolean hideCheckBox, TaskListAdapter pa) {
         pa.setAllItemChecked(false);
         if (hideCheckBox) pa.setShowCheckBox(false);
         pa.notifyDataSetChanged();
@@ -2115,7 +2115,7 @@ public class TaskListUtils {
         return stli;
     }
 
-    static public SyncTaskItem getSyncTaskByName(SyncTaskListAdapter t_prof, String task_name) {
+    static public SyncTaskItem getSyncTaskByName(TaskListAdapter t_prof, String task_name) {
         return getSyncTaskByName(t_prof.getArrayList(), task_name);
     }
 
@@ -2552,7 +2552,7 @@ public class TaskListUtils {
         return active;
     }
 
-    static public boolean isSyncTaskSelected(SyncTaskListAdapter pa) {
+    static public boolean isSyncTaskSelected(TaskListAdapter pa) {
         boolean result = false;
 
         for (int i = 0; i < pa.getCount(); i++) {
@@ -2564,7 +2564,7 @@ public class TaskListUtils {
         return result;
     }
 
-    static public int getSyncTaskSelectedItemCount(SyncTaskListAdapter pa) {
+    static public int getSyncTaskSelectedItemCount(TaskListAdapter pa) {
         int result = 0;
 
         for (int i = 0; i < pa.getCount(); i++) {
