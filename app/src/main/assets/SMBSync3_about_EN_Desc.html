@@ -4,33 +4,21 @@
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync3_about_EN_Desc</title></head>
 <body><h2>Function</h2>
-<p>SMBSync3 is an Android device&#39;s internal storage, MicroSD, USB Flash and PC/NAS via wireless LAN using SMBv1, SMBv2 or SMBv3 protocols. It is a tool for synchronizing files. </p>
-<p><u><strong>Synchronization is one-way from source to destination</strong></u> and can be mirrored, moved, copied or archived. A combination of Local storage(<u><strong>*1</strong></u>), SMB and ZIP is possible.)  </p>
-<p>Periodic synchronization can be initiated by SMBSync3&#39;s scheduling feature or external applications (Tasker, AutoMagic, etc.).</p>
+<p>SMBSync3 is an Android device&#39;s internal storage, MicroSD, USB Flash and PC/NAS via wireless LAN using SMBv1, SMBv2 or SMBv3 protocols. It is a tool for synchronizing files.   <u><strong>Synchronization is one-way from source to destination</strong></u> and can be mirrored, moved, copied or archived. A combination of Local storage(<u><strong>*1</strong></u>), SMB and ZIP is possible.)<br/>Periodic synchronization can be initiated by SMBSync3&#39;s scheduling feature or external applications (Tasker, AutoMagic, etc.).</p>
 <ul>
-<li><p>Mirror</p>
-<p>The source directory and files are differential copied (<u><strong>*2</strong></u>) to the destination, and after the copying is completed, the files and directories that do not exist on the source side are deleted.</p>
-</li>
-<li><p>Move</p>
-<p>The source directory and files are differential copied(<u><strong>*2</strong></u>) to the destination side, and the files on the source side are deleted when the copying is completed.(However, the file with the same name, the file size, and the modified date are the same in the source and the destination, and the file is not copied, and the source directory and the file are deleted after the copy is finished. side of the file).</p>
-</li>
-<li><p>Copy</p>
-<p>Make a differential copy (<strong>*2</strong>) of the files contained in the directory on the source side to the destination side.</p>
-</li>
-<li><p>Archive</p>
-<p>Photos and videos contained in the source directory with a date and time of 7 days from the archive&#39;s execution date Go to the destination before or before 30 days, etc. (But you can&#39;t use ZIP for the destination.)</p>
-</li>
+<li>Mirror<br/>The source directory and files are differential copied (<u><strong>*1</strong></u>) to the destination, and after the copying is completed, the files and directories that do not exist on the source side are deleted.</li>
+<li>Move<br/>The source directory and files are differential copied(<u><strong>*1</strong></u>) to the destination side, and the files on the source side are deleted when the copying is completed.(However, the file with the same name, the file size, and the modified date are the same in the source and the destination, and the file is not copied, and the source directory and the file are deleted after the copy is finished. side of the file).</li>
+<li>Copy<br/>Make a differential copy (<strong>*1</strong>) of the files contained in the directory on the source side to the destination side.</li>
+<li>Archive<br/>Photos and videos contained in the source directory with a date and time of 7 days from the archive&#39;s execution date Go to the destination before or before 30 days, etc. (But you can&#39;t use ZIP for the destination.)</li>
 
 </ul>
-<p><u><strong>*1</strong></u> Local storage can be either internal storage, MicroSD or USB Flash. </p>
-<p><u><strong>*2</strong></u> The difference file is one of the following three conditions.  </p>
+<p><u><strong>*1</strong></u> The difference file is one of the following three conditions.  </p>
 <ol start='' >
 <li>File does not exist  </li>
 <li>Different file sizes  </li>
 <li>Different over when last updated 3 seconds</li>
 
 </ol>
-<p>If it is not permitted to change the last update time of the file by the application, the last update time of the file is recorded in the management file and it is used to judge the difference file. Therefore, if you copy a file other than SMBSync3 or there is no management file, the file will be copied.</p>
 <h2>FAQs</h2>
 <p><a href='https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=sharing'>Please refer to the PDF</a></p>
 <h2>Document</h2>

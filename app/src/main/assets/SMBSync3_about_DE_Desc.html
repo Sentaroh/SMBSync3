@@ -4,33 +4,21 @@
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync3_about_DE_Desc</title></head>
 <body><h2>Funktion</h2>
-<p>SMBSync3 ist ein Android-Gerät den internen Speicher, MicroSD, USB-Flash und PC/NAS über WLAN mit SMBv1, SMBv2 oder SMBv3-Protokolle. Es ist ein Werkzeug zum Synchronisieren von Dateien. </p>
-<p><u><strong>Die Synchronisation erfolgt in einer Richtung von der Quelle zum Ziel</strong></u> und kann gespiegelt, verschoben, kopiert oder archiviert werden. Eine Kombination von Local storage(<u><strong>*1</strong></u>), SMB und ZIP ist möglich).  </p>
-<p>Die periodische Synchronisation kann durch die Zeitplanungsfunktion von SMBSync3 oder durch externe Anwendungen (Tasker, AutoMagic, etc.) initiiert werden.</p>
+<p>SMBSync3 ist ein Android-Gerät den internen Speicher, MicroSD, USB-Flash und PC/NAS über WLAN mit SMBv1, SMBv2 oder SMBv3-Protokolle. Es ist ein Werkzeug zum Synchronisieren von Dateien. <u><strong>Die Synchronisation erfolgt in einer Richtung von der Quelle zum Ziel</strong></u> und kann gespiegelt, verschoben, kopiert oder archiviert werden. Eine Kombination von Local storage(<u><strong>*1</strong></u>), SMB und ZIP ist möglich).<br/>Die periodische Synchronisation kann durch die Zeitplanungsfunktion von SMBSync3 oder durch externe Anwendungen (Tasker, AutoMagic, etc.) initiiert werden.</p>
 <ul>
-<li><p>Spiegeln</p>
-<p>Das Quellverzeichnis und die Dateien werden differenziert (<u><strong>*2</strong></u>) auf das Ziel kopiert, und nach Abschluss des Kopiervorgangs werden die Dateien und Verzeichnisse, die auf der Quellseite nicht vorhanden sind, gelöscht.</p>
-</li>
-<li><p>Verschieben</p>
-<p>Das Quellverzeichnis und die Dateien werden differenziell (<u><strong>*2</strong></u>) auf die Zielseite kopiert, und die Dateien auf der Quellseite werden gelöscht, wenn der Kopiervorgang abgeschlossen ist. (Die Datei mit dem gleichen Namen, die Dateigröße und das Änderungsdatum sind jedoch in der Quelle und im Ziel gleich, und die Datei wird nicht kopiert, und das Quellverzeichnis und die Datei werden nach Abschluss des Kopiervorgangs gelöscht. seite der Datei).</p>
-</li>
-<li><p>Kopieren</p>
-<p>Delta-Kopiert(<u><strong>*2</strong></u>) die im Quellverzeichnis enthaltenen Dateien in das Ziel.</p>
-</li>
-<li><p>Archivieren</p>
-<p>Fotos und Videos, die im Quellverzeichnis enthalten sind, mit einem Datum und einer Uhrzeit von 7 Tagen ab dem Ausführungsdatum des Archivs gehen zum Ziel vor oder vor 30 Tagen, usw. (Sie können aber kein ZIP für das Ziel verwenden.)</p>
-</li>
+<li>Spiegeln<br/>Das Quellverzeichnis und die Dateien werden differenziert (<u><strong>*1</strong></u>) auf das Ziel kopiert, und nach Abschluss des Kopiervorgangs werden die Dateien und Verzeichnisse, die auf der Quellseite nicht vorhanden sind, gelöscht.</li>
+<li>Verschieben<br/>Das Quellverzeichnis und die Dateien werden differenziell (<u><strong>*1</strong></u>) auf die Zielseite kopiert, und die Dateien auf der Quellseite werden gelöscht, wenn der Kopiervorgang abgeschlossen ist. (Die Datei mit dem gleichen Namen, die Dateigröße und das Änderungsdatum sind jedoch in der Quelle und im Ziel gleich, und die Datei wird nicht kopiert, und das Quellverzeichnis und die Datei werden nach Abschluss des Kopiervorgangs gelöscht. seite der Datei).</li>
+<li>Kopieren<br/>Delta-Kopiert(<u><strong>*1</strong></u>) die im Quellverzeichnis enthaltenen Dateien in das Ziel.</li>
+<li>Archivieren<br/>Fotos und Videos, die im Quellverzeichnis enthalten sind, mit einem Datum und einer Uhrzeit von 7 Tagen ab dem Ausführungsdatum des Archivs gehen zum Ziel vor oder vor 30 Tagen, usw. (Sie können aber kein ZIP für das Ziel verwenden.)</li>
 
 </ul>
-<p><u><strong>*1</strong></u> Der lokale Speicher kann entweder interner Speicher, MicroSD oder USB-Flash sein. </p>
-<p><u><strong>*2</strong></u> Die Differenzdatei ist eine der folgenden drei Bedingungen.  </p>
+<p><u><strong>*1</strong></u> Die Differenzdatei ist eine der folgenden drei Bedingungen.  </p>
 <ol start='' >
 <li>Datei ist nicht vorhanden  </li>
 <li>Unterschiedliche Dateigrößen  </li>
 <li>Unterschiedlich über wenn letzte Aktualisierung 3 Sekunden</li>
 
 </ol>
-<p>Wenn es nicht erlaubt ist, die letzte Aktualisierungszeit der Datei durch die Anwendung zu ändern, wird die letzte Aktualisierungszeit der Datei in der Verwaltungsdatei aufgezeichnet und zur Beurteilung der Differenzdatei verwendet. Wenn Sie also eine andere Datei als SMBSync3 kopieren oder keine Verwaltungsdatei vorhanden ist, wird die Datei kopiert.</p>
 <h2>FAQs</h2>
 <p><a href='https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=sharing'>Bitte beachten Sie das PDF</a></p>
 <h2>Dokument</h2>

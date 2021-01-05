@@ -4,33 +4,21 @@
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync3_about_FR_Desc</title></head>
 <body><h2>Fonction</h2>
-<p>SMBSync3 est le stockage interne d&#39;un appareil Android, MicroSD, USB Flash et PC/NAS via un réseau local sans fil utilisant les protocoles SMBv1, SMBv2 ou SMBv3. C&#39;est un outil de synchronisation de fichiers. </p>
-<p><u><strong>La synchronisation est unidirectionnelle de la source à la destination</strong></u> et peut être mise en miroir, déplacée, copiée ou archivée. Une combinaison de stockage local(<u><strong>*1</strong></u>), SMB et ZIP est possible).  </p>
-<p>La synchronisation périodique peut être initiée par la fonction de planification de SMBSync3 ou par des applications externes (Tasker, AutoMagic, etc.).</p>
+<p>SMBSync3 est le stockage interne d&#39;un appareil Android, MicroSD, USB Flash et PC/NAS via un réseau local sans fil utilisant les protocoles SMBv1, SMBv2 ou SMBv3. C&#39;est un outil de synchronisation de fichiers. <u><strong>La synchronisation est unidirectionnelle de la source à la destination</strong></u> et peut être mise en miroir, déplacée, copiée ou archivée. Une combinaison de stockage local(<u><strong>*1</strong></u>), SMB et ZIP est possible).<br/>La synchronisation périodique peut être initiée par la fonction de planification de SMBSync3 ou par des applications externes (Tasker, AutoMagic, etc.).</p>
 <ul>
-<li><p>Miroir</p>
-<p>Le répertoire et les fichiers sources sont copiés de manière différentielle (<u><strong>*2</strong></u>) vers la destination, et une fois la copie terminée, les fichiers et répertoires qui n&#39;existent pas du côté source sont supprimés.</p>
-</li>
-<li><p>Déplacement</p>
-<p>Le répertoire et les fichiers sources sont copiés de manière différentielle (<u><strong>*2</strong></u>) vers le côté destination, et les fichiers du côté source sont supprimés lorsque la copie est terminée. (Toutefois, le fichier ayant le même nom, la même taille et la même date de modification sont les mêmes du côté source et du côté destination, et le fichier n&#39;est pas copié, et le répertoire source et le fichier sont supprimés une fois la copie terminée. côté du fichier).</p>
-</li>
-<li><p>Copie</p>
-<p>Delta-copie(<u><strong>*2</strong></u>) les fichiers contenus dans le répertoire source vers la destination.</p>
-</li>
-<li><p>Archive</p>
-<p>Photos et vidéos contenues dans le répertoire source avec une date et une heure à 7 jours de la date d&#39;exécution de l&#39;archive Aller à la destination avant ou avant 30 jours, etc. (Mais vous ne pouvez pas utiliser ZIP pour la destination).</p>
-</li>
+<li>Miroir<br/>Le répertoire et les fichiers sources sont copiés de manière différentielle (<u><strong>*1</strong></u>) vers la destination, et une fois la copie terminée, les fichiers et répertoires qui n&#39;existent pas du côté source sont supprimés.</li>
+<li>Déplacement<br/>Le répertoire et les fichiers sources sont copiés de manière différentielle (<u><strong>*1</strong></u>) vers le côté destination, et les fichiers du côté source sont supprimés lorsque la copie est terminée. (Toutefois, le fichier ayant le même nom, la même taille et la même date de modification sont les mêmes du côté source et du côté destination, et le fichier n&#39;est pas copié, et le répertoire source et le fichier sont supprimés une fois la copie terminée. côté du fichier).</li>
+<li>Copie<br/>Delta-copie(<u><strong>*1</strong></u>) les fichiers contenus dans le répertoire source vers la destination.</li>
+<li>Archive<br/>Photos et vidéos contenues dans le répertoire source avec une date et une heure à 7 jours de la date d&#39;exécution de l&#39;archive Aller à la destination avant ou avant 30 jours, etc. (Mais vous ne pouvez pas utiliser ZIP pour la destination).</li>
 
 </ul>
-<p><u><strong>*1</strong></u> Le stockage local peut être soit un stockage interne, soit une carte MicroSD ou une clé USB. </p>
-<p><u><strong>*2</strong></u> Le fichier de différence est l&#39;une des trois conditions suivantes.  </p>
+<p><u><strong>*1</strong></u> Le fichier de différence est l&#39;une des trois conditions suivantes.  </p>
 <ol start='' >
 <li>Le fichier n&#39;existe pas  </li>
 <li>Différentes tailles de fichiers  </li>
 <li>Différent de la dernière mise à jour 3 secondes</li>
 
 </ol>
-<p>S&#39;il n&#39;est pas permis de modifier l&#39;heure de la dernière mise à jour du fichier par la demande, l&#39;heure de la dernière mise à jour du fichier est enregistrée dans le fichier de gestion et elle est utilisée pour juger le fichier de différence. Par conséquent, si vous copiez un fichier autre que SMBSync3 ou s&#39;il n&#39;y a pas de fichier de gestion, le fichier sera copié.</p>
 <h2>FAQs</h2>
 <p><a href='https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=sharing'>Veuillez vous référer au PDF</a></p>
 <h2>Document</h2>
