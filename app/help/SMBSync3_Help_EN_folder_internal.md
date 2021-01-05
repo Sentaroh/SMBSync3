@@ -35,7 +35,7 @@ Select the criteria for the photos or videos to be archived.
 
 You can add a sequence number to the file name.
 
-Do not change
+- Do not change
 - 2 digit sequence (01-99)
 - 3 digit sequence (001-999)
 - 4 digit sequence (0001-9999)

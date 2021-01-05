@@ -14,17 +14,14 @@ Dateilisten anzeigen.
 
 Geben Sie den Namen der Zieldatei ein. Wenn Sie eine nicht existierende Datei angeben, wird diese bei der Ausführung der Synchronisation erstellt. 
 
-### Komprimierungsstufe
+### Verdichtungsverhältnis
 
 Wählen Sie die Komprimierungsstufe.
 
-- Schnellste
-
-- Schnell
-
+- kleinste
+- Klein
 - Normal
-
-- Maximal 
+- Maximum
 
 ### Verschlüsselungsmethode
 

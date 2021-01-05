@@ -14,17 +14,14 @@ Show file lists.
 
 Enter the name of the destination file. If you specify a non-existent file, it will be created when the synchronization is executed. 
 
-### Compression level
+### Compression ratio
 
 Select compression level.
 
-- Fastest
-
-- Fast
-
+- Smallest
+- Small
 - Normal
-
-- Maximum 
+- Maximum
 
 ### Encryption method
 

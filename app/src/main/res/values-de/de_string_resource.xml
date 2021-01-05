@@ -326,11 +326,11 @@
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password">Das SMB-Konto oder Passwort im Zielordner ist leer, da es nicht entschlüsselt werden kann. Bitte bearbeiten Sie den Zielordner und korrigieren Sie das SMB-Konto oder das Passwort.</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">Das ZIP-Passwort für den Zielordner ist leer, da es nicht entschlüsselt werden kann. Bearbeiten Sie den Zielordner und ändern Sie das Passwort auf das richtige.</string>
         <string name="msgs_task_edit_sync_folder_dlg_use_user_pass">Kontoname und Passwort verwenden</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">Fastest</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">kleinste</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Klein</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">Normal</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">Maximum</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Kompressionsstufe</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Verdichtungsverhältnis</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">Die Passwörter stimmen nicht überein.</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">Kennwort</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">Confirm password</string>

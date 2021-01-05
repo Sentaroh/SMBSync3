@@ -322,11 +322,11 @@
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password">The SMB account or password in the destination folder is blank because it cannot be decrypted. Please edit the destination folder and correct the SMB account or password.</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">The ZIP password for the destination folder is blank because it cannot be decrypted. Edit the destination folder and change the password to the correct one.</string>
         <string name="msgs_task_edit_sync_folder_dlg_use_user_pass">Use Account name and password</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">Fastest</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Fast</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">Smallest</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Small</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">Normal</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">Maximum</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Compression level</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Compression ratio</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">Passwords do not match</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">Password</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">Confirm password</string>

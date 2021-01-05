@@ -35,7 +35,7 @@ Wählen Sie die Kriterien für die zu archivierenden Fotos oder Videos.
 
 Sie können dem Dateinamen eine Sequenznummer hinzufügen.
 
-Nicht anhängen
+- Nicht anhängen
 - 2-stellige Sequenz (01-99)
 - 3-stellige laufende Nummer anhängen
 - 4-stellige laufende Nummer anhängen

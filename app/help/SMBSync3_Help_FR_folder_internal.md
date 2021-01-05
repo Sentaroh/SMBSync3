@@ -35,7 +35,7 @@ Sélectionnez les critères pour les photos ou les vidéos à archiver.
 
 Vous pouvez ajouter un numéro de séquence au nom du fichier.
 
-Ne pas changer
+- Ne pas changer
 - 2 chiffres (01-99)
 - 3 chiffres (001-999)
 - 4 chiffres (0001-9999)

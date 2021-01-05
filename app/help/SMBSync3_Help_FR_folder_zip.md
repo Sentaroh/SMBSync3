@@ -14,17 +14,14 @@ Afficher les listes de fichiers.
 
 Saisissez le nom du fichier de destination. Si vous indiquez un fichier inexistant, il sera créé lors de l'exécution de la synchronisation. 
 
-### Niveau de compression
+### Verdichtungsverhältnis
 
 Sélectionnez le niveau de compression.
 
-- Le plus rapide
-
-- Rapide
-
+- kleinste
+- Klein
 - Normal
-
-- Maximum 
+- Maximum
 
 ### Méthode de cryptage
 

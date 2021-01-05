@@ -14,17 +14,14 @@ Mostra le liste dei file.
 
 Inserire il nome del file di destinazione. Se si specifica un file inesistente, questo verrà creato al momento dell'esecuzione della sincronizzazione. 
 
-### Livello di compressione
+### Rapporto di compressione
 
 Selezionare il livello di compressione.
 
-- Il più veloce
-
-- Veloce
-
+- il più piccolo
+- Piccolo
 - Normale
-
-- Massimo 
+- Massimo
 
 ### Metodo di crittografia
 

@@ -327,11 +327,11 @@
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password">目标文件夹中的SMB账户或密码因无法解密而为空白。请编辑目标文件夹，并修改SMB账户或密码。</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">目标文件夹的ZIP密码是空白的，因为它不能被解密。 编辑目标文件夹，将密码改为正确的密码。</string>
         <string name="msgs_task_edit_sync_folder_dlg_use_user_pass">使用账户名和密码</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">最快</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">迅速</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">标准</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">最大压缩比 </string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">压缩级别</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">最低值</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">低</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">媒介</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">最大</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">压缩比</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">密码不匹配</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">密码</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">确认密码</string>
