@@ -875,6 +875,10 @@
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">Permission to use storage</string>
         <string name="msgs_storage_permission_msg_select_storage">Select the storage for which you want permission.</string>
+        <string name="msgs_storage_permission_msg_no_storage_requiring_permissions">There was no storage requiring permissions.</string>
+        <string name="msgs_storage_permission_msg_grant_permission_failed_null">Storage Grant write permission failed because null intent data was returned.</string>
+        <string name="msgs_storage_permission_msg_add_uuid_failed">Add UUID failed.</string>
+        <string name="msgs_storage_permission_msg_saf_error_occured">SAF Request permission error</string>
         <string name="msgs_storage_permission_all_file_access_title">All File Access</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_en.png</string>
         <string name="msgs_storage_permission_all_file_access_request_message">SMBSync 3 requires \"All File Access\" permission to synchronize to the various directories you specify.\nPlease follow the steps below to allow \"All File Access\" to access the storage.\n\n

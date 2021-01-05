@@ -874,6 +874,10 @@
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">ストレージの許可</string>
         <string name="msgs_storage_permission_msg_select_storage">許可を要求するストレージを選択してください。</string>
+        <string name="msgs_storage_permission_msg_no_storage_requiring_permissions">許可が必要なストレージは存在しません。</string>
+        <string name="msgs_storage_permission_msg_grant_permission_failed_null">ストレージ許可が失敗しました。</string>
+        <string name="msgs_storage_permission_msg_add_uuid_failed">UUIDの登録に失敗しました。</string>
+        <string name="msgs_storage_permission_msg_saf_error_occured">SAF 許可エラー</string>
         <string name="msgs_storage_permission_all_file_access_title">全てのファイルへのアクセス</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_en.png</string>
         <string name="msgs_storage_permission_all_file_access_request_message">SMBSync3では貴方が指定する様々なディレクトリーへの同期を行うために「全てのファイルへのアクセス」の許可が必要です。\n下記の手順で「全てのファイルへのアクセス」を許可してください。\n0.画面最下部の「次へ」をタップしてください「全てのファイルへのアクセス」画面が表示されますので\"SMBSync3\"をタップしてください\n2.画面右端のスイッチをオンにしてください\n3.画面右端のスイッチが青になっている事を確認する\n4.戻るキーでアプリケーション画面に戻る</string>

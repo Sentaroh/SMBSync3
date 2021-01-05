@@ -879,6 +879,10 @@
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">Erlaubnis zur Nutzung der Speicherung</string>
         <string name="msgs_storage_permission_msg_select_storage">Wählen Sie den Speicher, für den Sie eine Genehmigung wünschen.</string>
+        <string name="msgs_storage_permission_msg_no_storage_requiring_permissions">Es gab keinen Speicher, für den Berechtigungen erforderlich waren.</string>
+        <string name="msgs_storage_permission_msg_grant_permission_failed_null">Storage Grant write permission failed because null intent data was returned.</string>
+        <string name="msgs_storage_permission_msg_add_uuid_failed">UUID hinzufügen schlug fehl.</string>
+        <string name="msgs_storage_permission_msg_saf_error_occured">SAF Berechtigungsfehler anfordern</string>
         <string name="msgs_storage_permission_all_file_access_title">All File Access</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_en.png</string>
         <string name="msgs_storage_permission_all_file_access_request_message">Please follow the steps below to allow \"All File Access\" to access the storage.\n\n

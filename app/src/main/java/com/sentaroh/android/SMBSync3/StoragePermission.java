@@ -64,9 +64,9 @@ public class StoragePermission {
     private NotifyEvent mNtfyGrantRequest=null;
 
     public StoragePermission(ActivityMain a, NotifyEvent ntfy_request) {
-        mContext = a.getApplicationContext();
+        mContext = a;
         mActivity = a;
-        mSafMgr =new SafManager3(a.getApplicationContext());
+        mSafMgr =new SafManager3(a);
 //        commonDlg = cd;
         mNtfyGrantRequest=ntfy_request;
     }
@@ -127,7 +127,8 @@ public class StoragePermission {
 
         final ArrayList<String> rows=buildStoragePermissionRequiredList();
         if (rows.size()==0) {
-            CommonDialog.showCommonDialog(mActivity.getSupportFragmentManager(), false, "W", "There was no storage requiring permissions.", "", null);
+            CommonDialog.showCommonDialog(mActivity.getSupportFragmentManager(), false, "W",
+                    mContext.getString(R.string.msgs_storage_permission_msg_no_storage_requiring_permissions), "", null);
             return;
         }
 

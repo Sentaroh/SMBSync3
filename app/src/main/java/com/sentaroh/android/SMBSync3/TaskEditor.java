@@ -1219,8 +1219,9 @@ public class TaskEditor extends DialogFragment {
 
                         if (resultCode == Activity.RESULT_OK) {
                             if (data==null || data.getDataString()==null) {
-                                ut.showCommonDialogWarn(false, "Storage Grant write permission failed because null intent data was returned.", "", null);
-                                ut.addLogMsg("E", "", "Storage Grant write permission failed because null intent data was returned.", "");
+                                String msg=activity.getString(R.string.msgs_storage_permission_msg_grant_permission_failed_null);
+                                ut.showCommonDialogWarn(false, msg, "", null);
+                                ut.addLogMsg("E", "", msg, "");
                                 return;
                             }
                             ut.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
@@ -1247,9 +1248,10 @@ public class TaskEditor extends DialogFragment {
                                 if (em.length()>0) ut.addDebugMsg(1, "I", "SafMessage="+em);
                                 boolean rc=gp.safMgr.addUuid(data.getData());
                                 if (!rc) {
+                                    String msg=activity.getString(R.string.msgs_storage_permission_msg_add_uuid_failed);
                                     String saf_msg=gp.safMgr.getLastErrorMessage();
-                                    ut.showCommonDialogWarn(false, "Primary UUID registration failed.", saf_msg, null);
-                                    ut.addLogMsg("E", "", "Primary UUID registration failed.\n", saf_msg);
+                                    ut.showCommonDialogWarn(false, msg, saf_msg, null);
+                                    ut.addLogMsg("E", "", msg, "\n", saf_msg);
                                 }
                                 if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
                             }
@@ -1304,7 +1306,8 @@ public class TaskEditor extends DialogFragment {
                         activity_launcher.launch(intent);
                     } catch(Exception e) {
                         String st= MiscUtil.getStackTraceString(e);
-                        cu.showCommonDialog(false, "E", "SAF Request permission error", e.getMessage()+"\n"+st, null);
+                        cu.showCommonDialog(false, "E",
+                                a.getString(R.string.msgs_storage_permission_msg_saf_error_occured), e.getMessage()+"\n"+st, null);
                     }
                     break;
                 }

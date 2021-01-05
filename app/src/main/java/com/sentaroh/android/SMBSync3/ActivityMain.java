@@ -1617,7 +1617,8 @@ public class ActivityMain extends AppCompatActivity {
                         for(String item:exec_task_name_list) {
                             exec_task_item_list.add(TaskListUtils.getSyncTaskByName(mGp.syncTaskList, item));
                         }
-                        startSyncTask(exec_task_item_list);                        setSyncTaskContextButtonNormalMode();
+                        startSyncTask(exec_task_item_list);
+                        setSyncTaskContextButtonNormalMode();
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {
@@ -1658,9 +1659,7 @@ public class ActivityMain extends AppCompatActivity {
             }
 
             @Override
-            public void negativeResponse(Context context, Object[] objects) {
-
-            }
+            public void negativeResponse(Context context, Object[] objects) {}
         });
         TaskEditor.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy_esp);
     }

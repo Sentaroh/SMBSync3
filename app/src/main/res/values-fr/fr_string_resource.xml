@@ -877,6 +877,10 @@
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">Autorisation d\'utiliser le stockage</string>
         <string name="msgs_storage_permission_msg_select_storage">Sélectionnez le stockage pour lequel vous souhaitez obtenir une autorisation.</string>
+        <string name="msgs_storage_permission_msg_no_storage_requiring_permissions">Il n\'y avait pas de stockage nécessitant des autorisations.</string>
+        <string name="msgs_storage_permission_msg_grant_permission_failed_null">L\'autorisation d\'écriture Storage Grant a échoué parce que les données d\'intention nulle ont été renvoyées.</string>
+        <string name="msgs_storage_permission_msg_add_uuid_failed">L\'ajout de l\'UUID a échoué.</string>
+        <string name="msgs_storage_permission_msg_saf_error_occured">SAF Erreur de demande d\'autorisation</string>
         <string name="msgs_storage_permission_all_file_access_title">All File Access</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_en.png</string>
         <string name="msgs_storage_permission_all_file_access_request_message">SMBSync 3 nécessite l\'autorisation \"All File Access\" pour se synchroniser avec les différents répertoires que vous spécifiez.\nPlease follow the steps below to allow \"All File Access\" to access the storage.\n\n
