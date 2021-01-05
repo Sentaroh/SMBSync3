@@ -357,7 +357,6 @@
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Der Verzeichnisname enthielt ungültige Zeichen und wurde gelöscht(\", :, \\, *, &lt;, &gt;, \|).</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Dateifilter wurde nicht angegeben</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Ungültige Zeichen(/, \", \", :, \\, *, &lt;, &gt;, \|)  wurden aus dem Dateinamen entfernt.</string>
-        <string name="deleted_msgs_task_sync_task_dlg_remove_directory_keyword">Sie können keine Parameter in Verzeichnisnamen im Quellordner verwenden. Parameter gelöscht.</string>
         <string name="msgs_task_sync_task_dlg_source">Quellordner</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Sync-Typ</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archiv</string>
@@ -509,7 +508,6 @@
         <string name="msgs_menu_sync_selected">Synchronisierung der Ausführung ausgewählter Aufgaben</string>
         <string name="msgs_menu_exec_group_all_enabled">Alle aktivierten Gruppen ausführen</string>
         <string name="msgs_menu_exec_group_selected">Ausführen der ausgewählten Gruppe</string>
-        <string name="msgs_menu_browse_logfile">Protokoll anzeigen</string>
         <string name="msgs_menu_export">Einstellungen exportieren</string>
         <string name="msgs_menu_import">Einstellungen importieren</string>
         <string name="msgs_menu_log_management">Log-Verwaltung</string>
@@ -518,7 +516,6 @@
         <string name="msgs_menu_settings">Einstellungen</string>
         <string name="msgs_menu_housekeep">Pflege der Datenbank</string>
         <string name="msgs_menu_kill">Beenden Sie die Anwendung</string>
-        <string name="msgs_menu_add_shortcut">Verknüpfung hinzufügen</string>
         <string name="msgs_menu_list_storage_info">System-Info</string>
         <string name="msgs_menu_request_all_file_access">Alle Dateizugriffe anfordern</string>
         <string name="msgs_menu_show_battery_optimization_screen">Optimierung der Batterie</string>
@@ -872,10 +869,6 @@
         <string name="msgs_sync_folder_archive_period_90_days">Älter als 90 Tage</string>
         <string name="msgs_sync_folder_archive_period_180_days">Älter als 180 Tage</string>
         <string name="msgs_sync_folder_archive_period_1_years">Älter als 1 Jahr</string>
-    <!-- string -->
-        <string name="app_name">SMBSync3</string>
-        <string name="smbsync_main_title">SMBSync3</string>
-        <string name="app_name_auto_sync">StartSync3</string>
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">Erlaubnis zur Nutzung der Speicherung</string>
         <string name="msgs_storage_permission_msg_select_storage">Wählen Sie den Speicher, für den Sie eine Genehmigung wünschen.</string>

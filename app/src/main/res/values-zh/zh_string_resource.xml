@@ -358,7 +358,6 @@
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">该目录名称包含无效字符，已被删除(\", :,\, *, &lt;, &gt;, \|)。</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">未指定文件过滤器</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">文件名中的无效字符(/, \", :,\, *, &lt;, &gt;, \|) 已被删除。</string>
-        <string name="deleted_msgs_task_sync_task_dlg_remove_directory_keyword">不能在源文件夹的目录名中使用参数。删除参数。</string>
         <string name="msgs_task_sync_task_dlg_source">源文件夹</string>
         <string name="msgs_task_sync_task_dlg_sync_type">同步类型</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">档案</string>
@@ -510,16 +509,14 @@
         <string name="msgs_menu_sync_selected">同步执行所选任务</string>
         <string name="msgs_menu_exec_group_all_enabled">执行所有启用的组</string>
         <string name="msgs_menu_exec_group_selected">执行所选组别</string>
-        <string name="msgs_menu_browse_logfile">显示日志</string>
-        <string name="msgs_menu_export">输出设置</string>
-        <string name="msgs_menu_import">输入设置</string>
+        <string name="msgs_menu_export">导出设置</string>
+        <string name="msgs_menu_import">导入设置</string>
         <string name="msgs_menu_log_management">记录管理</string>
         <string name="msgs_menu_show_hide_filter">显示/隐藏过滤器</string>
         <string name="msgs_menu_about">关于SMBSync3</string>
-        <string name="msgs_menu_settings">设定</string>
+        <string name="msgs_menu_settings">设置</string>
         <string name="msgs_menu_housekeep">数据库维护</string>
         <string name="msgs_menu_kill">关闭应用程序</string>
-        <string name="msgs_menu_add_shortcut">添加快捷键</string>
         <string name="msgs_menu_list_storage_info">系统信息</string>
         <string name="msgs_menu_request_all_file_access">申请所有文件访问</string>
         <string name="msgs_menu_show_battery_optimization_screen">电池优化</string>
@@ -873,10 +870,6 @@
         <string name="msgs_sync_folder_archive_period_90_days">90天以上</string>
         <string name="msgs_sync_folder_archive_period_180_days">超过180天</string>
         <string name="msgs_sync_folder_archive_period_1_years">1年以上</string>
-    <!-- string -->
-        <string name="app_name">SMBSync3</string>
-        <string name="smbsync_main_title">SMBSync3</string>
-        <string name="app_name_auto_sync">StartSync3</string>
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">允许使用存储</string>
         <string name="msgs_storage_permission_msg_select_storage">选择您希望获得权限的存储。</string>

@@ -352,7 +352,6 @@
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\": \\, *, &lt; &gt;, \|).</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Фильтр файла не был определен</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Недопустимые символы (/, \": \\, *, &lt; &gt;, \|), были удалены из имени файла.</string>
-        <string name="deleted_msgs_task_sync_task_dlg_remove_directory_keyword">You cannot use parameters in directory names in the source folder. Parameter deleted.</string>
         <string name="msgs_task_sync_task_dlg_source">Папка-источник</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Тип синхронизации</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Архив</string>
@@ -505,7 +504,6 @@
         <string name="msgs_menu_sync_selected">Синхронное выполнение выбранных задач</string>
         <string name="msgs_menu_exec_group_all_enabled">Выполнить все включенные группы</string>
         <string name="msgs_menu_exec_group_selected">Выполнить выбранную группу</string>
-        <string name="msgs_menu_browse_logfile">Показать журнал</string>
         <string name="msgs_menu_export">Экспорт списка задач</string>
         <string name="msgs_menu_import">Импортировать список задач</string>
         <string name="msgs_menu_log_management">Управление файлами журналов</string>
@@ -514,7 +512,6 @@
         <string name="msgs_menu_settings">Настройки</string>
         <string name="msgs_menu_housekeep">Обслуживание файлов администратора</string>
         <string name="msgs_menu_kill">Убить приложение</string>
-        <string name="msgs_menu_add_shortcut">Добавьте ярлык</string>
         <string name="msgs_menu_list_storage_info">Системная информация</string>
         <string name="msgs_menu_request_all_file_access">Запрос \"Доступ ко всем файлам\"</string>
         <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
@@ -868,10 +865,6 @@
         <string name="msgs_sync_folder_archive_period_90_days">Старше 90 дней</string>
         <string name="msgs_sync_folder_archive_period_180_days">Старше 180 дней</string>
         <string name="msgs_sync_folder_archive_period_1_years">Старше 1 года</string>
-    <!-- string -->
-        <string name="app_name">SMBSync3</string>
-        <string name="smbsync_main_title">SMBSync3</string>
-        <string name="app_name_auto_sync">StartSync3</string>
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">Разрешение на использование хранилища</string>
         <string name="msgs_storage_permission_msg_select_storage">Выберите хранилище, для которого требуется разрешение.</string>

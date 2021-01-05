@@ -357,7 +357,6 @@
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome della directory specificata (\", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Il filtro file non è stato specificato</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome del file specificato (\", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="deleted_msgs_task_sync_task_dlg_remove_directory_keyword">Non è possibile utilizzare i parametri nei nomi delle directory nella cartella sorgente. Parametro cancellato.</string>
         <string name="msgs_task_sync_task_dlg_source">Cartella di origine</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Tipo di sincronizzazione</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archivio</string>
@@ -509,7 +508,6 @@
         <string name="msgs_menu_sync_selected">Sincronizzare l\'esecuzione dei compiti selezionati</string>
         <string name="msgs_menu_exec_group_all_enabled">Eseguire tutti i gruppi abilitati</string>
         <string name="msgs_menu_exec_group_selected">Eseguire il gruppo selezionato</string>
-        <string name="msgs_menu_browse_logfile">Mostra registro</string>
         <string name="msgs_menu_export">Impostazioni di esportazione</string>
         <string name="msgs_menu_import">Importazione delle impostazioni</string>
         <string name="msgs_menu_log_management">Gestione dei log</string>
@@ -518,7 +516,6 @@
         <string name="msgs_menu_settings">Impostazioni</string>
         <string name="msgs_menu_housekeep">Manutenzione del database</string>
         <string name="msgs_menu_kill">Uccidete l\'applicazione</string>
-        <string name="msgs_menu_add_shortcut">Aggiungi una scorciatoia</string>
         <string name="msgs_menu_list_storage_info">Informazioni sul sistema</string>
         <string name="msgs_menu_request_all_file_access">Richiesta di accesso a tutti i file</string>
         <string name="msgs_menu_show_battery_optimization_screen">Ottimizzazione della batteria</string>
@@ -872,10 +869,6 @@
         <string name="msgs_sync_folder_archive_period_90_days">Più vecchio di 90 giorni</string>
         <string name="msgs_sync_folder_archive_period_180_days">Più di 180 giorni</string>
         <string name="msgs_sync_folder_archive_period_1_years">Più vecchio di 1 anno</string>
-    <!-- string -->
-        <string name="app_name">SMBSync3</string>
-        <string name="smbsync_main_title">SMBSync3</string>
-        <string name="app_name_auto_sync">StartSync3</string>
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">Permesso di utilizzare lo stoccaggio</string>
         <string name="msgs_storage_permission_msg_select_storage">Selezionare la memoria per la quale si desidera l\'autorizzazione.</string>

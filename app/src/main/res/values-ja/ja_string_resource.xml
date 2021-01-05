@@ -352,7 +352,6 @@
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">ファイルフィルタ―は指定されてません</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (/, \", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="deleted_msgs_task_sync_task_dlg_remove_directory_keyword">ソースフォルダーではディレクトリー名に変数を使用できません。変数を削除しました。</string>
         <string name="msgs_task_sync_task_dlg_source">ソースフォルダー</string>
         <string name="msgs_task_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">アーカイブ</string>
@@ -504,7 +503,6 @@
         <string name="msgs_menu_sync_selected">選択したタスクの同期実行</string>
         <string name="msgs_menu_exec_group_all_enabled">全ての有効なグループを実行</string>
         <string name="msgs_menu_exec_group_selected">選択したグループを実行</string>
-        <string name="msgs_menu_browse_logfile">ログ表示</string>
         <string name="msgs_menu_export">タスクリスト保存</string>
         <string name="msgs_menu_import">タスクリスト取込み</string>
         <string name="msgs_menu_log_management">ログ管理</string>
@@ -513,7 +511,6 @@
         <string name="msgs_menu_settings">設定</string>
         <string name="msgs_menu_housekeep">管理ファイルの保守</string>
         <string name="msgs_menu_kill">強制終了</string>
-        <string name="msgs_menu_add_shortcut">ショートカットの追加</string>
         <string name="msgs_menu_list_storage_info">システム情報</string>
         <string name="msgs_menu_request_all_file_access">All File Access許可</string>
         <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化の表示</string>
@@ -867,10 +864,6 @@
         <string name="msgs_sync_folder_archive_period_90_days">撮影日が90日以上古い</string>
         <string name="msgs_sync_folder_archive_period_180_days">撮影日が180日以上古い</string>
         <string name="msgs_sync_folder_archive_period_1_years">撮影日が1年以上古い</string>
-    <!-- string -->
-        <string name="app_name">SMBSync3</string>
-        <string name="smbsync_main_title">SMBSync3</string>
-        <string name="app_name_auto_sync">StartSync3</string>
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">ストレージの許可</string>
         <string name="msgs_storage_permission_msg_select_storage">許可を要求するストレージを選択してください。</string>

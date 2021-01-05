@@ -353,7 +353,6 @@
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Invalid characters have been removed from the specified directory name (\", :, \\, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">File filter has not been specified</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Invalid characters have been removed from the specified file name (/, \", :, \\, *, &lt;, &gt;, \|)</string>
-        <string name="deleted_msgs_task_sync_task_dlg_remove_directory_keyword">You cannot use parameters in directory names in the source folder. Parameter deleted.</string>
         <string name="msgs_task_sync_task_dlg_source">Source folder</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Sync type</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archive</string>
@@ -505,7 +504,6 @@
         <string name="msgs_menu_sync_selected">Sync execution of selected tasks</string>
         <string name="msgs_menu_exec_group_all_enabled">Execute all enabled groups</string>
         <string name="msgs_menu_exec_group_selected">Execute the selected group</string>
-        <string name="msgs_menu_browse_logfile">Show log</string>
         <string name="msgs_menu_export">Export settings</string>
         <string name="msgs_menu_import">Import settings</string>
         <string name="msgs_menu_log_management">Log management</string>
@@ -514,7 +512,6 @@
         <string name="msgs_menu_settings">Settings</string>
         <string name="msgs_menu_housekeep">Database maintenance</string>
         <string name="msgs_menu_kill">Kill the application</string>
-        <string name="msgs_menu_add_shortcut">Add shortcut</string>
         <string name="msgs_menu_list_storage_info">System info</string>
         <string name="msgs_menu_request_all_file_access">Request All File Access</string>
         <string name="msgs_menu_show_battery_optimization_screen">Battery optimization</string>
@@ -868,10 +865,6 @@
         <string name="msgs_sync_folder_archive_period_90_days">Older than 90 days</string>
         <string name="msgs_sync_folder_archive_period_180_days">Older than 180 days</string>
         <string name="msgs_sync_folder_archive_period_1_years">Older than 1 year</string>
-    <!-- string -->
-        <string name="app_name">SMBSync3</string>
-        <string name="smbsync_main_title">SMBSync3</string>
-        <string name="app_name_auto_sync">StartSync3</string>
     <!-- storage_permission -->
         <string name="msgs_storage_permission_title">Permission to use storage</string>
         <string name="msgs_storage_permission_msg_select_storage">Select the storage for which you want permission.</string>
