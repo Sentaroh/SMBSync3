@@ -1,13 +1,11 @@
 ### SMBSync3
 
-(Pull requests are not accepted as it is under development)Improved version of [SMBSync2](https://github.com/Sentaroh/SMBSync2)
+Improved version of [SMBSync2](https://github.com/Sentaroh/SMBSync2)
 
 ### Improvement
 
-- SDCARD/USB to be used without Mount Point
 - Multiple USB drives can be used
 - Added GROUP tab for synchronizing multiple tasks
-- Shortcuts or synchronization buttons at the top of the screen allow you to specify tasks to be performed in groups
 - Organized and concise options
 
 ### How to Build  
@@ -25,8 +23,6 @@
   - [juniversalchardet-1.0.3](https://code.google.com/archive/p/juniversalchardet/)  
 - This software includes the work that is distributed in the Bouncy Castle LICENSE.
   - [Bouncy Castle Provider](https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on/1.66)
-- This software includes the work that is distributed in the BSD 3-Clause License.
-  - [MarkdownJ](https://github.com/myabc/markdownj/blob/master/LICENSE)
 - This software includes the work that is distributed in the MIT LICENSE.
   - [Utilities3](https://github.com/Sentaroh/Utilities3)
   - [JcifsFile2](https://github.com/Sentaroh/JcifsFile2)
