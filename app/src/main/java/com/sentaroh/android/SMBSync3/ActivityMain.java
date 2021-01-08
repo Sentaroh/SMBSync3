@@ -675,7 +675,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 android.content.ClipboardManager cm=(android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setPrimaryClip(ClipData.newPlainText("SMBSync3 System Info", tv_msg.getText().toString()));
+                cm.setPrimaryClip(ClipData.newPlainText("SMBSync3 System Info", tv_msg.getOriginalText().toString()));
                 CommonDialog.showPopupMessageAsUpAnchorViewShort(mActivity, btn_copy, mContext.getString(R.string.msgs_info_storage_copy_completed));
             }
         });

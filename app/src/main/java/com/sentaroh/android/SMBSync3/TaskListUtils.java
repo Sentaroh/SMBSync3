@@ -598,7 +598,7 @@ public class TaskListUtils {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                createRemoteDirectoryDlg(ssi, tv_home.getText().toString(), ne);
+                createRemoteDirectoryDlg(ssi, tv_home.getOriginalText().toString(), ne);
             }
         });
 
@@ -609,7 +609,7 @@ public class TaskListUtils {
                 ntfy_refresh.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
-                        tv_home.setText(directory_pre+tv_home.getText().toString().replace(directory_pre,""));
+                        tv_home.setText(directory_pre+tv_home.getOriginalText().toString().replace(directory_pre,""));
                         ArrayList<TreeFilelistItem> new_rfl = (ArrayList<TreeFilelistItem>) o[0];
 
                         if (new_rfl.size()==0) {
@@ -626,14 +626,14 @@ public class TaskListUtils {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                createRemoteFileList(ReadSmbFilelist.OPCD_READ_FILELIST, ssi, "/"+tv_home.getText().toString().replace(directory_pre,""), ntfy_refresh, true);
+                createRemoteFileList(ReadSmbFilelist.OPCD_READ_FILELIST, ssi, "/"+tv_home.getOriginalText().toString().replace(directory_pre,""), ntfy_refresh, true);
             }
         });
 
         btn_up.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String c_dir=tv_home.getText().toString().replace(directory_pre,"");
+                final String c_dir=tv_home.getOriginalText().toString().replace(directory_pre,"");
                 String t_dir=c_dir.substring(0,c_dir.lastIndexOf("/"));
                 final String n_dir=t_dir.lastIndexOf("/")>0?t_dir.substring(0,t_dir.lastIndexOf("/"))+"/":"";
 
@@ -693,7 +693,7 @@ public class TaskListUtils {
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
-                String sel=tv_home.getText().toString().replace(directory_pre,"");
+                String sel=tv_home.getOriginalText().toString().replace(directory_pre,"");
                 if (sel.endsWith("/")) p_ntfy.notifyToListener(true, new Object[]{sel.substring(0,sel.length()-1)});
                 else p_ntfy.notifyToListener(true, new Object[]{sel});
             }
