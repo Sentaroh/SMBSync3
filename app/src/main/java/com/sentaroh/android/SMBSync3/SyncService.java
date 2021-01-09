@@ -29,9 +29,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.hardware.usb.UsbManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -45,6 +42,7 @@ import android.os.SystemClock;
 import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.SafManager3;
+import com.sentaroh.android.Utilities3.SystemInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,7 +100,7 @@ public class SyncService extends Service {
 
         mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_smbsync_main_start) +
                 " API=" + Build.VERSION.SDK_INT +
-                ", Version " + getApplVersionName());
+                ", Version " + SystemInfo.getApplVersionNameCode(mContext));
 
         if (mGp.syncHistoryList == null)
             mGp.syncHistoryList = mUtil.loadHistoryList();
@@ -115,18 +113,6 @@ public class SyncService extends Service {
         int_filter.addAction(Intent.ACTION_SCREEN_ON);
         int_filter.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(mSleepReceiver, int_filter);
-    }
-
-    private String getApplVersionName() {
-        String result = "Unknown";
-        try {
-            String packegeName = getPackageName();
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(packegeName, PackageManager.GET_META_DATA);
-            result = packageInfo.versionName;
-        } catch (NameNotFoundException e) {
-            mUtil.addDebugMsg(1, "I", "SMBSync3 package can not be found");
-        }
-        return result;
     }
 
     @Override
