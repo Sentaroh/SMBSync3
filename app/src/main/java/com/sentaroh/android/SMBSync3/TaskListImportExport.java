@@ -410,8 +410,6 @@ public class TaskListImportExport {
 
     private static ArrayList<SafFile3> createAutoSaveFileList(Context c, GlobalParameters mGp, CommonUtilities util) {
         ArrayList<SafFile3> as_fl=new ArrayList<SafFile3>();
-        File lf=new File(mGp.settingAppManagemsntDirectoryName);
-        File[]xfl=lf.listFiles();
         SafFile3 df=new SafFile3(c, mGp.settingAppManagemsntDirectoryName+"/autosave");
         SafFile3[] fl=df.listFiles();
         if (fl!=null) {
