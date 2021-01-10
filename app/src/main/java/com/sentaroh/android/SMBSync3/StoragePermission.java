@@ -132,8 +132,8 @@ public class StoragePermission {
             return;
         }
 
-        lv.setAdapter(new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_multiple_choice, rows));
-        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lv.setAdapter(new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_single_choice, rows));
+        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
