@@ -63,6 +63,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -409,6 +410,8 @@ public class TaskListImportExport {
 
     private static ArrayList<SafFile3> createAutoSaveFileList(Context c, GlobalParameters mGp, CommonUtilities util) {
         ArrayList<SafFile3> as_fl=new ArrayList<SafFile3>();
+        File lf=new File(mGp.settingAppManagemsntDirectoryName);
+        File[]xfl=lf.listFiles();
         SafFile3 df=new SafFile3(c, mGp.settingAppManagemsntDirectoryName+"/autosave");
         SafFile3[] fl=df.listFiles();
         if (fl!=null) {

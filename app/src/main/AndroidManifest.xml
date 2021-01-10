@@ -33,6 +33,7 @@
         android:theme="@style/Main"
         android:allowBackup="false"
         android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
         >
         <receiver
             android:name=".SyncReceiver"
