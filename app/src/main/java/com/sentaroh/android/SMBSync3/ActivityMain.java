@@ -195,6 +195,7 @@ public class ActivityMain extends AppCompatActivity {
 //        startActivity(splash);
 
         mGp= GlobalWorkArea.getGlobalParameter(mActivity);
+        GlobalParameters.setDisplayFontScale(mActivity);
         setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());

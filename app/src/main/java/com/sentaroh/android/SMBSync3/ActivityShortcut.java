@@ -84,6 +84,7 @@ public class ActivityShortcut extends FragmentActivity {
 
         mActivity= ActivityShortcut.this;
         mGp= GlobalWorkArea.getGlobalParameter(mActivity);
+        GlobalParameters.setDisplayFontScale(mActivity);
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
         }
