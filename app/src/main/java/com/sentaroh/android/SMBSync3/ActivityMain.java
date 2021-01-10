@@ -1276,10 +1276,10 @@ public class ActivityMain extends AppCompatActivity {
 //        LogCatUtil.prepareOptionMenu(mGp, mUtil, menu);
 
         menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(false);
-        //ENable "ALL_FILE_ACCESS"
-        if (CommonUtilities.isAllFileAccessAvailable()) {
-            menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(true);
-        }
+        //Enable "ALL_FILE_ACCESS"
+//        if (CommonUtilities.isAllFileAccessAvailable()) {
+//            menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(true);
+//        }
 
         if (mGp.settingScheduleSyncEnabled) menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule);
         else menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule_disabled);
