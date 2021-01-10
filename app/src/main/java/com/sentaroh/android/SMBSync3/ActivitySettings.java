@@ -56,7 +56,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     private static GlobalParameters mGp = null;
 
-    private String mCurrentScreenTheme=SCREEN_THEME_STANDARD;
+    private static String mCurrentScreenTheme=SCREEN_THEME_STANDARD;
 
     private CommonUtilities mUtil = null;
 
@@ -88,6 +88,9 @@ public class ActivitySettings extends PreferenceActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mGp.settingFixDeviceOrientationToPortrait) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+
+        mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+        mCurrentThemeLangaue=shared_pref.getString(getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
     }
 
     @Override
@@ -387,6 +390,8 @@ public class ActivitySettings extends PreferenceActivity {
 
     }
 
+    private static String mCurrentThemeLangaue=null;
+
     public static class SettingsUi extends PreferenceFragment {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
                 new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -396,8 +401,6 @@ public class ActivitySettings extends PreferenceActivity {
                 };
         private CommonUtilities mUtil = null;
         private int mInitVolume = 100;
-        private String mCurrentScreenTheme="";
-        private String mCurrentThemeLangaue=null;
         private String mCurrentFontScaleFactor=null;
 
         @Override
@@ -412,8 +415,8 @@ public class ActivitySettings extends PreferenceActivity {
 
             mInitVolume = shared_pref.getInt(getString(R.string.settings_playback_ringtone_volume), 100);
 
-            mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
-            mCurrentThemeLangaue=shared_pref.getString(getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
+//            mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+//            mCurrentThemeLangaue=shared_pref.getString(getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
             mCurrentFontScaleFactor=shared_pref.getString(getString(R.string.settings_display_font_scale_factor), GlobalParameters.FONT_SCALE_FACTOR_NORMAL);
 
             setCurrentValue(shared_pref);

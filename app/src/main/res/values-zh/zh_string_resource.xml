@@ -993,12 +993,12 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">响应超时</string>
-        <string name="settings_smb_client_response_timeout_title">客户端响应超时(SMBv1/2/3)</string>
+        <string name="settings_smb_client_response_timeout_title">服务器连接超时(SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_summary_ena">禁用纯文本密码</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">禁用纯文本密码(SMBv1)</string>
+        <string name="settings_smb_disable_plain_text_passwords_summary_ena">一律加密密码</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">加密密码(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
-        <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility 级别</string>
+        <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility Level</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
             <item>0</item>
             <item>1</item>

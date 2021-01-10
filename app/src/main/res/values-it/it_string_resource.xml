@@ -991,13 +991,13 @@
             <item>60000</item>
             <item>120000</item>
         </string-array >
-        <string name="settings_smb_client_response_timeout_summary">Tempo di risposta</string>
-        <string name="settings_smb_client_response_timeout_title">Timeout di risposta del cliente (SMBv1/2/3)</string>
+        <string name="settings_smb_client_response_timeout_summary">Risposta Timeout</string>
+        <string name="settings_smb_client_response_timeout_title">Timeout Connessione Server (SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Crittografare sempre le password</string>
-        <string name="settings_smb_disable_plain_text_passwords_title">Crittografare le password(SMBv1)</string>
+        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Cripta Sempre Password</string>
+        <string name="settings_smb_disable_plain_text_passwords_title">Cripta Password (SMBv1)</string>
         <string name="settings_smb_lm_compatibility">impostazioni_smb_lm_compatibilità</string>
-        <string name="settings_smb_lm_compatibility_dialog_title">Compatibilità SMB (LmCompatibilità)</string>
+        <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility Level</string>
         <string-array name="settings_smb_lm_compatibility_list_entries">
             <item>0</item>
             <item>1</item>

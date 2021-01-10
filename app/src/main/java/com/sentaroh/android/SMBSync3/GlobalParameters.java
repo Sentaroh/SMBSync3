@@ -112,7 +112,7 @@ public class GlobalParameters {
     public ThemeColorList themeColorList = null;
 
     public static final String APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT = "system";
-    public static final String APPLICATION_LANGUAGE_SETTING_INITIAL_VALUE = "-99";//ensure onStartSettingScreenThemeLanguageValue is assigned language value only once on app start
+    public static final String APPLICATION_LANGUAGE_SETTING_INITIAL_VALUE = "system";//ensure onStartSettingScreenThemeLanguageValue is assigned language value only once on app start
     public static String settingApplicationLanguage = APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;//holds language code (fr, en... or "0" for system default)
     public static String settingApplicationLanguageValue = APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;//language value (array index) in listPreferences: "0" for system default, "1" for english...
     public static String onStartSettingApplicationLanguageValue = APPLICATION_LANGUAGE_SETTING_INITIAL_VALUE;//on first App start, it will be assigned the active language value
@@ -366,6 +366,8 @@ public class GlobalParameters {
 
         initSettingsParms(c);
         loadSettingsParms(c);
+
+        onStartSettingApplicationLanguageValue = settingApplicationLanguageValue;
 
         if (syncMessageList == null) syncMessageList =CommonUtilities.loadMessageList(c, this);
 

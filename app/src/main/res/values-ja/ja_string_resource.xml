@@ -982,9 +982,9 @@
             <item>120000</item>
         </string-array >
         <string name="settings_smb_client_response_timeout_summary">Response timeout</string>
-        <string name="settings_smb_client_response_timeout_title">Client Response Timeout(SMBv1/2/3)</string>
+        <string name="settings_smb_client_response_timeout_title">Server Connection Timeout (SMBv1/2/3)</string>
         <string name="settings_smb_disable_plain_text_passwords">settings_smb_disable_plain_text_passwords</string>
-        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Always Encrypt Passwords</string>
+        <string name="settings_smb_disable_plain_text_passwords_summary_ena">Disable Plain Text Passwords</string>
         <string name="settings_smb_disable_plain_text_passwords_title">Encrypt Passwords(SMBv1)</string>
         <string name="settings_smb_lm_compatibility">settings_smb_lm_compatibility</string>
         <string name="settings_smb_lm_compatibility_dialog_title">LmCompatibility Level</string>

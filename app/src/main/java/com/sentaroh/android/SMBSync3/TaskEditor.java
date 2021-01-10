@@ -2639,8 +2639,8 @@ public class TaskEditor extends DialogFragment {
 
     private void setSpinnerSyncFolderZipCompressionLevel(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
-        final CustomSpinnerAdapter adapter =
-                new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_title));
@@ -2662,8 +2662,8 @@ public class TaskEditor extends DialogFragment {
 
     private void setSpinnerSyncFolderZipEncryptMethod(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
-        final CustomSpinnerAdapter adapter =
-                new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_select_msg));
         spinner.setAdapter(adapter);
@@ -2753,6 +2753,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerSyncFolderSmbProto(SyncTaskItem sti, Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         mGp.safMgr.refreshSafList();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2770,6 +2771,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerSyncTaskErrorOption(SyncTaskItem sti, Spinner spinner, int cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_option_error_prompt));
@@ -2787,6 +2789,7 @@ public class TaskEditor extends DialogFragment {
         String sync_type=spinnerSyncType.getSelectedItem().toString();
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         mGp.safMgr.refreshSafList();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2838,6 +2841,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerSyncTaskType(Spinner spinnerSyncOption, String prof_syncopt, String destination_folder_type) {
         CommonUtilities.setSpinnerBackground(mActivity, spinnerSyncOption, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapterSyncOption = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapterSyncOption.setDropDownTextWordwrapEnabled(true);
 //        adapterSyncOption.setDebug(true);
         adapterSyncOption.setSpinner(spinnerSyncOption);
         adapterSyncOption.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2863,6 +2867,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerTwoWaySyncConflictRule(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
 //        adapter.setDebug(true, "SpinnerTwoWaySyncConflictRule");
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
@@ -2882,6 +2887,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerSyncTaskWifiOption(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_prompt));
@@ -2914,6 +2920,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerSyncTaskDiffTimeValue(Spinner spinner, int cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_prompt));
@@ -2935,6 +2942,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerSyncDstOffsetValue(Spinner spinner, int cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_option_offset_of_dst_time_value_title));
         spinner.setAdapter(adapter);
@@ -4217,8 +4225,8 @@ public class TaskEditor extends DialogFragment {
 
     private void setSpinnerSyncTaskArchiveSuffixSeq(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
-        final CustomSpinnerAdapter adapter =
-                new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_prompt_title));
@@ -4244,6 +4252,7 @@ public class TaskEditor extends DialogFragment {
     private void setSpinnerSyncTaskPictureRetainPeriod(Spinner spinner, int cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
+        adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setPrompt(mContext.getString(R.string.msgs_sync_folder_archive_period_prompt_title));
