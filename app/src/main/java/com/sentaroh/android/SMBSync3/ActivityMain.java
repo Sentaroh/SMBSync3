@@ -271,10 +271,22 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, appStartStaus=" + appStartStaus);
         if (appStartStaus == START_INITIALYZING) {
             appStartStaus = START_INPROGRESS;
-            if (Build.VERSION.SDK_INT>=31) {
-                //Disable "ALL_FILE_ACCESS"
-//            if (!isAllFileAccessPermissionGranted()) requestAllFileAccessPermission(ntfy_check_location);
-//            else initApplication();
+            if (Build.VERSION.SDK_INT>=30) {
+                //ENable "ALL_FILE_ACCESS"
+                if (!isAllFileAccessPermissionGranted()) {
+                    NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
+                    ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context context, Object[] objects) {
+                            initApplication();
+                        }
+                        @Override
+                        public void negativeResponse(Context context, Object[] objects) {}
+                    });
+                    requestAllFileAccessPermission(ntfy_all_file_access);
+                } else {
+                    initApplication();
+                }
             } else {
                 if (isLegacyStorageAccessGranted()) initApplication();
                 else {
@@ -1264,9 +1276,9 @@ public class ActivityMain extends AppCompatActivity {
 //        LogCatUtil.prepareOptionMenu(mGp, mUtil, menu);
 
         menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(false);
-        //Disable "ALL_FILE_ACCESS"
+        //ENable "ALL_FILE_ACCESS"
         if (CommonUtilities.isAllFileAccessAvailable()) {
-//            menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(true);
+            menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(true);
         }
 
         if (mGp.settingScheduleSyncEnabled) menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule);
@@ -1422,8 +1434,8 @@ public class ActivityMain extends AppCompatActivity {
                 invokeStorageRequestor();
                 return true;
             case R.id.menu_top_request_all_file_access_permission:
-                //Disable "ALL_FILE_ACCESS"
-//                requestAllFileAccessPermission(null);
+                //ENable "ALL_FILE_ACCESS"
+                requestAllFileAccessPermission(null);
                 return true;
         }
         if (isUiEnabled()) {
@@ -2048,60 +2060,60 @@ public class ActivityMain extends AppCompatActivity {
         return false;
     }
 
-//    private void requestAllFileAccessPermission(NotifyEvent p_ntfy) {
-////        Disable "ALL_FILE_ACCESS"
-//        NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
-//        ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
-//            @Override
-//            public void positiveResponse(Context context, Object[] objects) {
-//                ActivityResultLauncher<Intent> mStartForActivityResult =
-//                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//                        if (isAllFileAccessPermissionGranted()) {
-//                            if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-//                        } else {
-//                            NotifyEvent ntfy_denied=new NotifyEvent(mContext);
-//                            ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
-//                                @Override
-//                                public void positiveResponse(Context context, Object[] objects) {
-//                                    finish();
-//                                }
-//                                @Override
-//                                public void negativeResponse(Context context, Object[] objects) {}
-//                            });
-//                            mUtil.showCommonDialogWarn(false,
-//                                    mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
-//                                    mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
-//                        }
-//                    }
-//                });
-//                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-//                mStartForActivityResult.launch(intent);
-//            }
-//
-//            @Override
-//            public void negativeResponse(Context context, Object[] objects) {
-//                NotifyEvent ntfy_denied=new NotifyEvent(mContext);
-//                ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
-//                    @Override
-//                    public void positiveResponse(Context context, Object[] objects) {
-//                        finish();
-//                    }
-//                    @Override
-//                    public void negativeResponse(Context context, Object[] objects) {}
-//                });
-//                mUtil.showCommonDialogWarn(false,
-//                        mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
-//                        mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
-//            }
-//        });
-//        showDialogWithImageView(mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
-//                mContext.getString(R.string.msgs_storage_permission_all_file_access_request_message),
-//                mContext.getString(R.string.msgs_storage_permission_all_file_access_image),
-//                mContext.getString(R.string.msgs_storage_permission_all_file_access_button_text),
-//                mContext.getString(R.string.msgs_common_dialog_cancel), ntfy_all_file_access);
-//    }
+    private void requestAllFileAccessPermission(NotifyEvent p_ntfy) {
+//        Enable "ALL_FILE_ACCESS"
+        NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
+        ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                ActivityResultLauncher<Intent> mStartForActivityResult =
+                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (isAllFileAccessPermissionGranted()) {
+                            if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+                        } else {
+                            NotifyEvent ntfy_denied=new NotifyEvent(mContext);
+                            ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
+                                @Override
+                                public void positiveResponse(Context context, Object[] objects) {
+                                    finish();
+                                }
+                                @Override
+                                public void negativeResponse(Context context, Object[] objects) {}
+                            });
+                            mUtil.showCommonDialogWarn(false,
+                                    mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
+                                    mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
+                        }
+                    }
+                });
+                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                mStartForActivityResult.launch(intent);
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {
+                NotifyEvent ntfy_denied=new NotifyEvent(mContext);
+                ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        finish();
+                    }
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                mUtil.showCommonDialogWarn(false,
+                        mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
+                        mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
+            }
+        });
+        showDialogWithImageView(mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
+                mContext.getString(R.string.msgs_storage_permission_all_file_access_request_message),
+                mContext.getString(R.string.msgs_storage_permission_all_file_access_image),
+                mContext.getString(R.string.msgs_storage_permission_all_file_access_button_text),
+                mContext.getString(R.string.msgs_common_dialog_cancel), ntfy_all_file_access);
+    }
 
     private void showDialogWithImageView(final  String title_text, final String msg_text, String image_file_name,
                                          String button_label_ok, String button_label_cancel, final NotifyEvent p_ntfy) {
