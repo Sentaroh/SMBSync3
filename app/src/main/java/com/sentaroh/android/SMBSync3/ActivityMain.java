@@ -124,6 +124,7 @@ import java.util.ArrayList;
 import javax.crypto.SecretKey;
 
 import static com.sentaroh.android.SMBSync3.Constants.*;
+import static com.sentaroh.android.SMBSync3.GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.*;
 import static com.sentaroh.android.Utilities3.SafFile3.SAF_FILE_PRIMARY_UUID;
 
@@ -177,7 +178,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(new GlobalParameters().setNewLocale(base, true));
+        super.attachBaseContext(GlobalParameters.setNewLocale(base));
         GlobalParameters.setDisplayFontScale(base);
     }
 
@@ -1981,33 +1982,32 @@ public class ActivityMain extends AppCompatActivity {
                 reloadSettingParms();
             }
         });
+        mPrevLanguageSetting=GlobalParameters.getLanguageCode(mContext);
         Intent intent = new Intent(mContext, ActivitySettings.class);
         activity_laucher.launch(intent);
     }
 
+    private String mPrevLanguageSetting=APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
     private void reloadSettingParms() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         String p_theme = mGp.settingScreenTheme;
 
         mGp.loadSettingsParms(mContext);
-        mGp.loadLanguagePreference(mContext);// load language value preference and refresh settingScreenThemeLanguage
 
-        final boolean theme_lang_changed=!mGp.settingApplicationLanguageValue.equals(mGp.onStartSettingApplicationLanguageValue);
+        String new_lc=GlobalParameters.getLanguageCode(mContext);
+        final boolean theme_lang_changed=!new_lc.equals(mPrevLanguageSetting);
 
         if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed) {
             mUtil.showCommonDialogWarn(mContext, true,
-                    mUtil.getStringWithLangCode(mActivity, mGp.settingApplicationLanguage, R.string.msgs_smbsync_main_settings_restart_title),
-                    mUtil.getStringWithLangCode(mActivity, mGp.settingApplicationLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart),
-                    mUtil.getStringWithLangCode(mActivity, mGp.settingApplicationLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
-                    mUtil.getStringWithLangCode(mActivity, mGp.settingApplicationLanguage, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
+                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_main_settings_restart_title),
+                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart),
+                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
+                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
                     new CallBackListener() {
                 @Override
                 public void onCallBack(Context c, boolean positive, Object[] objects) {
                     if (positive) {
-                        if (theme_lang_changed) {
-                            mGp.onStartSettingApplicationLanguageValue =mGp.settingApplicationLanguageValue;
-                        }
                         mGp.activityRestartRequired=true;
                         mUtil.flushLog();
                         mGp.settingExitClean=false;
@@ -2042,7 +2042,7 @@ public class ActivityMain extends AppCompatActivity {
 
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingForceDeviceTabletViewInLandscape=" + mGp.settingForceDeviceTabletViewInLandscape +
-                ", settingScreenThemeLanguage=" + mGp.settingApplicationLanguage + " (value=" + mGp.settingApplicationLanguageValue + ")" +
+                ", settingApplicationLanguage=" + GlobalParameters.getLanguageCode(mContext) +
 
                 ", settingExportedTaskEncryptRequired=" + mGp.settingExportedTaskEncryptRequired +
                 ", settingScreenTheme=" + mGp.applicationTheme+//.settingScreenTheme +

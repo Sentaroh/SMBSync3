@@ -38,7 +38,7 @@ public class ActivityNotification extends Activity {
     private ActivityNotification mActivity=null;
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
+        super.attachBaseContext(GlobalParameters.setNewLocale(base));
     }
 
     @Override

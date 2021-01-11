@@ -68,7 +68,7 @@ public class SyncService extends Service {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(new GlobalParameters().setNewLocale(base, true));
+        super.attachBaseContext(GlobalParameters.setNewLocale(base));
     }
 
     @Override

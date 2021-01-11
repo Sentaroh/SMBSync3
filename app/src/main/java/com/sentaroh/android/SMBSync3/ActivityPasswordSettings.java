@@ -67,7 +67,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
+        super.attachBaseContext(GlobalParameters.setNewLocale(base));
     }
 
     @Override

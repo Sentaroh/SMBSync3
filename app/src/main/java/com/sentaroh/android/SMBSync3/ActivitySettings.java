@@ -70,7 +70,7 @@ public class ActivitySettings extends PreferenceActivity {
     @Override
     protected void attachBaseContext(Context base) {
 //        log.info("attachBaseContext entered");
-        super.attachBaseContext(new GlobalParameters().setNewLocale(base, false));
+        super.attachBaseContext(GlobalParameters.setNewLocale(base));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class ActivitySettings extends PreferenceActivity {
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
-        mCurrentThemeLangaue=shared_pref.getString(getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
+        mCurrentThemeLangaue=GlobalParameters.getLanguageCode(ActivitySettings.this);
     }
 
     @Override
@@ -508,7 +508,7 @@ public class ActivitySettings extends PreferenceActivity {
                 pref_key.setSummary(sum_msg);
                 if (!lang_value.equals(mCurrentThemeLangaue)) {
                     getActivity().finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
-                    mGp.setNewLocale(getActivity(), true);
+                    GlobalParameters.setNewLocale(getActivity());
                     Intent intent = new Intent(getActivity(), ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     getActivity().startActivity(intent);

@@ -111,16 +111,6 @@ public class GlobalParameters {
     public int applicationTheme = -1;
     public ThemeColorList themeColorList = null;
 
-    public static final String APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT = "system";
-    public static final String APPLICATION_LANGUAGE_SETTING_INITIAL_VALUE = "system";//ensure onStartSettingScreenThemeLanguageValue is assigned language value only once on app start
-    public static String settingApplicationLanguage = APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;//holds language code (fr, en... or "0" for system default)
-    public static String settingApplicationLanguageValue = APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;//language value (array index) in listPreferences: "0" for system default, "1" for english...
-    public static String onStartSettingApplicationLanguageValue = APPLICATION_LANGUAGE_SETTING_INITIAL_VALUE;//on first App start, it will be assigned the active language value
-//    private static final boolean APPLICATION_LANGUAGE_LOCALE_USE_NEW_API = true;//set false to force using deprecated setLocale() and not createConfigurationContext() in attachBaseContext
-
-//	public boolean scheduleSyncEnabled=false;
-//	public ArrayList<ScheduleItem> scheduleInfoList =new ArrayList<ScheduleItem>();
-
     //	Settings parameter
 //    public String settingAppManagemsntDirectoryUuid ="primary";
     public String settingAppManagemsntDirectoryName = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
@@ -367,8 +357,6 @@ public class GlobalParameters {
         initSettingsParms(c);
         loadSettingsParms(c);
 
-        onStartSettingApplicationLanguageValue = settingApplicationLanguageValue;
-
         if (syncMessageList == null) syncMessageList =CommonUtilities.loadMessageList(c, this);
 
         initJcifsOption(c);
@@ -554,7 +542,7 @@ public class GlobalParameters {
         else if (settingScreenTheme.equals(SCREEN_THEME_BLACK)) applicationTheme = R.style.MainBlack;
         else applicationTheme = R.style.Main;
 
-        loadLanguagePreference(c);
+//        loadLanguagePreference(c);
         setDisplayFontScale(c);
 
         settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
@@ -657,25 +645,21 @@ public class GlobalParameters {
 
     }
 
-    //+ To use createConfigurationContext() non deprecated method:
-    //  - set LANGUAGE_LOCALE_USE_NEW_API to true
-    //  - use as wrapper in attachBaseContext() for all activities and App or extend all App/Activities from a base Activity Class with attachBaseContext()
-    //  - for App: implement also in onConfigurationChanged(), not needed in AppCompatActivity class
-    //  - in ActivityMain, when wrapping language in attachBaseContext(), we must int language by calling initLanguagePreference(context)
-    //    because preferences manager is init later in onCreate()
-    //+ To use updateConfiguration() deprecated method on new API:
-    //  - set LANGUAGE_LOCALE_USE_NEW_API to false
-    //  - no need to use wrapper in attachBaseContext()
-    //  - call "mGp.setNewLocale(this, false)" in onCreate() and onConfigurationChanged() of all activities and App, not needed in Activity fragments
-    //  - SyncTaskEditor.java onCreate() and onConfigurationChanged() must be also edited
-    //  - all activities and App in AndroidManifest must have: android:configChanges="locale|orientation|screenSize|keyboardHidden|layoutDirection"
-    public Context setNewLocale(Context c, boolean init) {
-        if (init) loadLanguagePreference(c);
-        return updateLanguageResources(c, settingApplicationLanguage);
+    static public Context setNewLocale(Context c) {
+        String lc= getLanguageCode(c);
+        return updateLanguageResources(c, lc);
+    }
+
+    public static final String APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT = "system";
+
+    static public String getLanguageCode(Context c) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        String lc=prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
+        return lc;
     }
 
     // wrap language layout in the base context for all activities
-    private Context updateLanguageResources(Context context, String language) {
+    static private Context updateLanguageResources(Context context, String language) {
         //if language is set to system default (defined as "0"), do not apply non existing language code "0" and return current context without wrapped language
         if (!language.equals(APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT)) {
             Locale locale = new Locale(language);
@@ -690,7 +674,7 @@ public class GlobalParameters {
         return context;
     }
 
-    private void setLocaleForApi24(android.content.res.Configuration config, Locale target) {
+    static private void setLocaleForApi24(android.content.res.Configuration config, Locale target) {
         Set<Locale> set = new LinkedHashSet<>();
         // bring the target locale to the front of the list
         set.add(target);
@@ -705,29 +689,10 @@ public class GlobalParameters {
         config.setLocales(new LocaleList(locales));
     }
 
-    //load language list value from listPreferences. New languages can be added with Excel template without any change in code.
-    //Language list entries must contain "(language_code)" string, exp "English (en)"
-    //"English" will be the preferences menu description and "en" the language code
-    //settingScreenThemeLanguageValue and settingScreenThemeLanguage are updated only here by loadLanguagePreference()
-    //loadLanguagePreference() is called on mainActivity start, any mainActivity result, SyncReceiver, and any early init to GlobalParameters
-    //onStartSettingScreenThemeLanguageValue() is assigned only once at app start the value of current active language (settingScreenThemeLanguage)
-    //on language change by user or through import settings, settingScreenThemeLanguage no longer equals onStartSettingScreenThemeLanguageValue ->
-    //it will cause Pref activitiy to finish() and mainActivity to end with a Warning Dialog in checkThemeLanguageChanged()
-    public void loadLanguagePreference(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
-        settingApplicationLanguageValue = prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
-        settingApplicationLanguage = settingApplicationLanguageValue;
-//        String[] lang_entries = c.getResources().getStringArray(R.array.settings_screen_theme_language_list_entries);
-//        if (settingApplicationLanguageValue.equals(APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT)) {
-//            settingApplicationLanguage = APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
-//        } else {
-//            // language entries are in the format "description (languageCode)"
-////            settingApplicationLanguage = lang_entries[Integer.parseInt(settingApplicationLanguageValue)].split("[\\(\\)]")[1];
-//            settingApplicationLanguage = settingApplicationLanguageValue;
-//        }
-//        if (onStartSettingApplicationLanguageValue.equals(APPLICATION_LANGUAGE_SETTING_INITIAL_VALUE))
-//            onStartSettingApplicationLanguageValue = settingApplicationLanguageValue;
-    }
+//    static public void loadLanguagePreference(Context c) {
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+//        settingApplicationLanguage = prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
+//    }
 
     public boolean isScreenThemeIsLight() {
         boolean result=false;
