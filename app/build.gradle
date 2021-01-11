@@ -35,21 +35,21 @@ android {
                         def newName = "${mod_name}_debug.${fileExtension}"
                         outputFileName = newName
 
-                        task copyDebugApk1(type: Copy) {
+                        task copyDebugApk(type: Copy) {
                             from 'build/outputs/apk/debug'
                             into '../debug_apk/' // Into the project root, one level above the app folder
                             include '*debug.apk'
                         }
 
-                        task copyDebugApk2(type: Copy) {
+                        task copyDebugApkRelease(type: Copy) {
                             from 'build/outputs/apk/debug'
                             into '../release/' // Into the project root, one level above the app folder
                             include '*debug.apk'
                         }
 
                         afterEvaluate {
-                            packageDebug.finalizedBy(copyDebugApk1)
-                            copyDebugApk1.finalizedBy(copyDebugApk2)
+                            packageDebug.finalizedBy(copyDebugApkRelease)
+//                            copyDebugApkRelease.finalizedBy(copyDebugApk)
                         }
 
                     }
