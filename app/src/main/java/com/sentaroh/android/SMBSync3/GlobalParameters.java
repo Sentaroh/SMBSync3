@@ -736,7 +736,7 @@ public class GlobalParameters {
     }
 
     final static public String SMB_LM_COMPATIBILITY_DEFAULT="3";
-    final static public String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT="3000";
+    final static public String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT="30000";
     final static public String SMB_USE_EXTENDED_SECURITY_DEFAULT="true";
     final static public String SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT="false";
 
