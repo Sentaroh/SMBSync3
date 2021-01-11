@@ -491,6 +491,12 @@
         <string name="msgs_tab_name_task">任务</string>
         <string name="msgs_tab_name_group">群体</string>
         <string name="msgs_terminate_application">退出SMBSync3。</string>
+    <!-- Privacy Policy confirm -->
+        <string name="msgs_privacy_policy_confirm_title">我同意隐私政策</string>
+        <string name="msgs_privacy_policy_confirm_message">我同意隐私政策</string>
+        <string name="msgs_privacy_policy_confirm_btn_confirm">同意继续</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">我同意隐私政策</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">如果你不同意隐私政策，你就不能启动这个应用程序。</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">进行管理档案的维护。</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">取消维护</string>

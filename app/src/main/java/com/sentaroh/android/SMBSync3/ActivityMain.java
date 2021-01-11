@@ -69,6 +69,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -276,43 +277,43 @@ public class ActivityMain extends AppCompatActivity {
             if (Build.VERSION.SDK_INT>=30) {
                 //ENable "ALL_FILE_ACCESS"
                 if (!isAllFileAccessPermissionGranted()) {
-                    NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
-                    ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
+                    checkPrivacyPolicyAgreement(new CallBackListener() {
                         @Override
-                        public void positiveResponse(Context context, Object[] objects) {
-                            initApplication();
+                        public void onCallBack(Context context, boolean positive, Object[] objects) {
+                            if (positive) {
+                                NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
+                                ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
+                                    @Override
+                                    public void positiveResponse(Context context, Object[] objects) {
+                                        initApplication();
+                                    }
+                                    @Override
+                                    public void negativeResponse(Context context, Object[] objects) {}
+                                });
+                                requestAllFileAccessPermission(ntfy_all_file_access);
+                            } else {
+                                mUtil.showCommonDialogWarn(mContext, false,
+                                        mContext.getString(R.string.msgs_privacy_policy_confirm_deny_title),
+                                        mContext.getString(R.string.msgs_privacy_policy_confirm_deny_message),
+                                        new CallBackListener(){
+                                            @Override
+                                            public void onCallBack(Context context, boolean positive, Object[] objects) {
+                                                finish();
+                                            }
+                                        });
+                            }
                         }
-                        @Override
-                        public void negativeResponse(Context context, Object[] objects) {}
                     });
-                    requestAllFileAccessPermission(ntfy_all_file_access);
                 } else {
                     initApplication();
                 }
             } else {
                 if (isLegacyStorageAccessGranted()) initApplication();
                 else {
-                    checkPrivacyPolicyAgreement(new CallBackListener() {
+                    requestLegacyStoragePermission(new CallBackListener(){
                         @Override
-                        public void onCallBack(Context context, boolean positive, Object[] objects) {
-                            if (positive) {
-                                requestLegacyStoragePermission(new CallBackListener(){
-                                    @Override
-                                    public void onCallBack(Context c, boolean positive, Object[] o) {
-                                        initApplication();
-                                    }
-                                });
-                            } else {
-                                mUtil.showCommonDialogWarn(mContext, false,
-                                    "プライバシーポリシーへの同意",
-                                    "プライバシーポリシーに同意していただけないとアプリは起動できません",
-                                    new CallBackListener(){
-                                    @Override
-                                    public void onCallBack(Context context, boolean positive, Object[] objects) {
-                                        finish();
-                                    }
-                                });
-                            }
+                        public void onCallBack(Context c, boolean positive, Object[] o) {
+                            initApplication();
                         }
                     });
                 }
@@ -404,64 +405,64 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void checkPrivacyPolicyAgreement(CallBackListener cbl) {
-        cbl.onCallBack(mContext, true, null);
+//        cbl.onCallBack(mContext, true, null);
 
-//        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.privacy_policy_agreement);
-//
-//        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.privacy_policy_agreement_dlg_title_view);
-//        ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
-//        final TextView tv_title=(TextView)dialog.findViewById(R.id.agree_privacy_policy_dlg_title);
-//        tv_title.setTextColor(mGp.themeColorList.title_text_color);
-//        final TextView tv_msg=(TextView)dialog.findViewById(R.id.privacy_policy_agreement_dlg_msg);
-//        tv_msg.setVisibility(TextView.GONE);
-//        final Button btn_ok=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_ok);
-//        final Button btn_cancel=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_cancel);
-//
-//        final WebView web_view=(WebView)dialog.findViewById(R.id.agree_privacy_policy_dlg_webview);
-//        final CheckedTextView ct_agree=(CheckedTextView) dialog.findViewById(R.id.privacy_policy_agreement_dlg_agree);
-//
-//        web_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
-//        web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//
-//        ct_agree.setChecked(false);
-//        ct_agree.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                boolean checked=!ct_agree.isChecked();
-//                ct_agree.setChecked(checked);
-//                if (checked) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-//                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-//            }
-//        });
-//
-//        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-//        btn_ok.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cbl.onCallBack(mContext, true, null);
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        btn_cancel.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cbl.onCallBack(mContext, false, null);
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-//            @Override
-//            public void onCancel(DialogInterface dialog) {
-//                cbl.onCallBack(mContext, false, null);
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        dialog.show();
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.privacy_policy_agreement);
+
+        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.privacy_policy_agreement_dlg_title_view);
+        ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
+        final TextView tv_title=(TextView)dialog.findViewById(R.id.agree_privacy_policy_dlg_title);
+        tv_title.setTextColor(mGp.themeColorList.title_text_color);
+        final TextView tv_msg=(TextView)dialog.findViewById(R.id.privacy_policy_agreement_dlg_msg);
+        tv_msg.setVisibility(TextView.GONE);
+        final Button btn_ok=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_ok);
+        final Button btn_cancel=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_cancel);
+
+        final WebView web_view=(WebView)dialog.findViewById(R.id.agree_privacy_policy_dlg_webview);
+        final CheckedTextView ct_agree=(CheckedTextView) dialog.findViewById(R.id.privacy_policy_agreement_dlg_agree);
+
+        web_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
+        web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+
+        ct_agree.setChecked(false);
+        ct_agree.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean checked=!ct_agree.isChecked();
+                ct_agree.setChecked(checked);
+                if (checked) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+            }
+        });
+
+        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        btn_ok.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cbl.onCallBack(mContext, true, null);
+                dialog.dismiss();
+            }
+        });
+
+        btn_cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cbl.onCallBack(mContext, false, null);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                cbl.onCallBack(mContext, false, null);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
 
     }
 

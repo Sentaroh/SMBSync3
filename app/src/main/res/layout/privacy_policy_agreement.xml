@@ -18,7 +18,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:gravity="center_horizontal"
-            android:text="プライバシーポリシーへの同意"
+            android:text="@string/msgs_privacy_policy_confirm_title"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <include layout="@layout/divider_line3_turquoise"/>
@@ -51,7 +51,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-            android:text="プライバシーポリシーに同意します"/>
+            android:text="@string/msgs_privacy_policy_confirm_message"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
     </LinearLayout>
 
@@ -73,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="同意して続行"
+            android:text="@string/msgs_privacy_policy_confirm_btn_confirm"
             android:textAppearance="?android:attr/textAppearanceLarge" />
     </LinearLayout>
 

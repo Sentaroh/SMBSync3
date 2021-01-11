@@ -486,6 +486,12 @@
         <string name="msgs_tab_name_task">Задача</string>
         <string name="msgs_tab_name_group">Группа</string>
         <string name="msgs_terminate_application">Выход из SMBSync3.</string>
+    <!-- Privacy Policy confirm -->
+        <string name="msgs_privacy_policy_confirm_title">Соглашение о политике конфиденциальности</string>
+        <string name="msgs_privacy_policy_confirm_message">Я согласен с политикой конфиденциальности</string>
+        <string name="msgs_privacy_policy_confirm_btn_confirm">Согласитесь продолжать</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">Соглашение о политике конфиденциальности</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">Если вы не согласны с политикой конфиденциальности, вы не сможете запустить приложение.</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Выполнение управления файлами обслуживания.</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Отмена обслуживания</string>

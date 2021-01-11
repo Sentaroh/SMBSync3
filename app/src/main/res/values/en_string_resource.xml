@@ -486,6 +486,12 @@
         <string name="msgs_tab_name_task">Tasks</string>
         <string name="msgs_tab_name_group">Group</string>
         <string name="msgs_terminate_application">Exit SMBSync3.</string>
+    <!-- Privacy Policy confirm -->
+        <string name="msgs_privacy_policy_confirm_title">Agreement of the privacy policy</string>
+        <string name="msgs_privacy_policy_confirm_message">I agree to the privacy policy</string>
+        <string name="msgs_privacy_policy_confirm_btn_confirm">Agree to continue</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">Agreement of the privacy policy</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">If you do not agree to the privacy policy, you will not be able to start the application.</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Performing maintenance of app data files</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>

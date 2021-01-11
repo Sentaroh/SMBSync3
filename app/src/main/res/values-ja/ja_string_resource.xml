@@ -485,6 +485,12 @@
         <string name="msgs_tab_name_task">タスク</string>
         <string name="msgs_tab_name_group">グループ</string>
         <string name="msgs_terminate_application">SMBSync3を終了します。</string>
+    <!-- Privacy Policy confirm -->
+        <string name="msgs_privacy_policy_confirm_title">プライバシーポリシーへの同意</string>
+        <string name="msgs_privacy_policy_confirm_message">プライバシーポリシーに同意します</string>
+        <string name="msgs_privacy_policy_confirm_btn_confirm">同意して続行</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">プライバシーポリシーへの同意</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">プライバシーポリシーに同意していただけないとアプリは起動できません</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">管理ファイルの保守実行中</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">保守の中止</string>

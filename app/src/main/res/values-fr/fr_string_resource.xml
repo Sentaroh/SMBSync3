@@ -486,6 +486,12 @@
         <string name="msgs_tab_name_task">Tâches</string>
         <string name="msgs_tab_name_group">Groupe</string>
         <string name="msgs_terminate_application">Quitter SMBSync3</string>
+    <!-- Privacy Policy confirm -->
+        <string name="msgs_privacy_policy_confirm_title">Accord de la politique de confidentialité</string>
+        <string name="msgs_privacy_policy_confirm_message">J\'accepte la politique de confidentialité</string>
+        <string name="msgs_privacy_policy_confirm_btn_confirm">Accepter de poursuivre</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">Accord de la politique de confidentialité</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">Si vous n\'acceptez pas la politique de confidentialité, vous ne pourrez pas lancer la demande.</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Maintenance des fichiers de données internes en cours</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Annuler la maintenance</string>
