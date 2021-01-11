@@ -974,7 +974,9 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">Play default notification sound for tasks that complete successfully</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">Notifications Sound</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
-        <string name="settings_smb_client_response_timeout_dialog_title">Sélectionner le délai de réponse (millisecondes)</string>
+        <string name="settings_smb_set_default_value_text">Restore default values</string>
+        <string name="settings_smb_set_default_value_key">settings_smb_set_default_value</string>
+        <string name="settings_smb_client_response_timeout_dialog_title">Server Connection Timeout (SMBv1/2/3)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">
             <item>30000</item>
             <item>45000</item>

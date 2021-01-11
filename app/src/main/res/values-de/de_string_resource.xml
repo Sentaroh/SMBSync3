@@ -978,7 +978,9 @@
         <string name="settings_playback_ringtone_when_sync_ended_summary_success">Standardbenachrichtigungston für erfolgreich abgeschlossene Aufgaben abspielen</string>
         <string name="settings_playback_ringtone_when_sync_ended_title">Benachrichtigungs-Töne</string>
         <string name="settings_smb_client_response_timeout">settings_smb_client_reponse_timeout</string>
-        <string name="settings_smb_client_response_timeout_dialog_title">Antwortzeitüberschreitungswert wählen (in Millisekunden)</string>
+        <string name="settings_smb_set_default_value_text">Standardwerte wiederherstellen</string>
+        <string name="settings_smb_set_default_value_key">settings_smb_set_default_value</string>
+        <string name="settings_smb_client_response_timeout_dialog_title">Server-Verbindungs-Timeout (SMBv1/2/3)</string>
         <string-array name="settings_smb_client_response_timeout_list_entries">
             <item>30000</item>
             <item>45000</item>

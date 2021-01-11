@@ -209,10 +209,6 @@ public class GlobalParameters {
 
     public int settingNotificationVolume = 100;
 
-    public float displayFontSizeMedium =15.0f;//Small=12, Normal=15, Large=18
-    public float displayFontSizeSmall=displayFontSizeMedium/1.2f;
-    public float displayFontSizeLarge=displayFontSizeMedium*1.2f;
-
     public boolean settingScheduleSyncEnabled=true;
 
     public NotificationManager notificationManager = null;

@@ -50,6 +50,8 @@ import java.util.Locale;
 
 import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
+import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT;
+import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_LM_COMPATIBILITY_DEFAULT;
 
 public class ActivitySettings extends PreferenceActivity {
     static final private Logger log= LoggerFactory.getLogger(ActivitySettings.class);
@@ -90,7 +92,7 @@ public class ActivitySettings extends PreferenceActivity {
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
-        mCurrentThemeLangaue=GlobalParameters.getLanguageCode(ActivitySettings.this);
+        mCurrentLangaue =GlobalParameters.getLanguageCode(ActivitySettings.this);
     }
 
     @Override
@@ -341,14 +343,14 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_disable_plain_text_passwords), getContext());
 
             final Context c=getContext();
-            Preference button = (Preference)getPreferenceManager().findPreference("settings_smb_set_default_value");
+            Preference button = (Preference)getPreferenceManager().findPreference(getString(R.string.settings_smb_set_default_value_key));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     shared_pref.edit().putBoolean(c.getString(R.string.settings_smb_use_extended_security),true).commit();
                     shared_pref.edit().putBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false).commit();
-                    shared_pref.edit().putString(c.getString(R.string.settings_smb_lm_compatibility),"3").commit();
-                    shared_pref.edit().putString(c.getString(R.string.settings_smb_client_response_timeout),"30000").commit();
+                    shared_pref.edit().putString(c.getString(R.string.settings_smb_lm_compatibility),SMB_LM_COMPATIBILITY_DEFAULT).commit();
+                    shared_pref.edit().putString(c.getString(R.string.settings_smb_client_response_timeout),SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT).commit();
                     return false;
                 }
             });
@@ -360,7 +362,7 @@ public class ActivitySettings extends PreferenceActivity {
             if (key_string.equals(c.getString(R.string.settings_smb_use_extended_security))) {
             } else if (key_string.equals(c.getString(R.string.settings_smb_disable_plain_text_passwords))) {
             } else if (key_string.equals(c.getString(R.string.settings_smb_lm_compatibility))) {
-                String lmc=shared_pref.getString(c.getString(R.string.settings_smb_lm_compatibility),"3");
+                String lmc=shared_pref.getString(c.getString(R.string.settings_smb_lm_compatibility),SMB_LM_COMPATIBILITY_DEFAULT);
                 if (lmc.equals("3") || lmc.equals("4")) {
                     findPreference(c.getString(R.string.settings_smb_use_extended_security).toString()).setEnabled(false);
                 } else {
@@ -368,7 +370,7 @@ public class ActivitySettings extends PreferenceActivity {
                 }
                 pref_key.setSummary(lmc);
             } else if (key_string.equals(c.getString(R.string.settings_smb_client_response_timeout))) {
-                pref_key.setSummary(shared_pref.getString(key_string, "30000")+" Millis");
+                pref_key.setSummary(shared_pref.getString(key_string, SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT)+" Millis");
             }
         }
 
@@ -390,7 +392,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     }
 
-    private static String mCurrentThemeLangaue=null;
+    private static String mCurrentLangaue =null;
 
     public static class SettingsUi extends PreferenceFragment {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
@@ -415,8 +417,6 @@ public class ActivitySettings extends PreferenceActivity {
 
             mInitVolume = shared_pref.getInt(getString(R.string.settings_playback_ringtone_volume), 100);
 
-//            mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
-//            mCurrentThemeLangaue=shared_pref.getString(getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
             mCurrentFontScaleFactor=shared_pref.getString(getString(R.string.settings_display_font_scale_factor), GlobalParameters.FONT_SCALE_FACTOR_NORMAL);
 
             setCurrentValue(shared_pref);
@@ -506,7 +506,7 @@ public class ActivitySettings extends PreferenceActivity {
                     }
                 }
                 pref_key.setSummary(sum_msg);
-                if (!lang_value.equals(mCurrentThemeLangaue)) {
+                if (!lang_value.equals(mCurrentLangaue)) {
                     getActivity().finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
                     GlobalParameters.setNewLocale(getActivity());
                     Intent intent = new Intent(getActivity(), ActivitySettings.class);
@@ -521,10 +521,6 @@ public class ActivitySettings extends PreferenceActivity {
                 if (!mCurrentFontScaleFactor.equals(font_scale_id)) {
                     mCurrentFontScaleFactor=font_scale_id;
                     GlobalParameters.setDisplayFontScale(c, mCurrentFontScaleFactor);
-//                    setPreferenceScreen(null);
-//                    addPreferencesFromResource(R.xml.settings_frag_ui);
-//                    setCurrentValue(shared_pref);
-//                    ((ActivitySettings)getActivity()).refreshHeader(mCurrentFontScaleFactor);
                     getActivity().finish();
                     Intent intent = new Intent(getActivity(), ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
