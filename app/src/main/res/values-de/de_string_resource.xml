@@ -119,7 +119,7 @@
         <string name="msgs_filter_list_dlg_file_filter">Datei-Filter</string>
         <string name="msgs_filter_list_dlg_filter_added">Filter \"%s\" wurde hinzugefügt.</string>
         <string name="msgs_filter_list_dlg_filter_hint">Filtern Sie</string>
-        <string name="msgs_filter_list_dlg_not_specified">Nicht angegeben</string>
+        <string name="msgs_filter_list_dlg_not_specified">Es ist kein Filter angegeben.</string>
         <string name="msgs_filter_list_duplicate_filter_specified">\"%s\" existiert bereits.</string>
         <string name="msgs_filter_list_filter_deleted">Gelöscht</string>
         <string name="msgs_filter_list_filter_was_changed">Der Inhalt wurde geändert, möchten Sie abbrechen, ohne zu speichern?</string>

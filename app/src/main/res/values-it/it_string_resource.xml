@@ -119,7 +119,7 @@
         <string name="msgs_filter_list_dlg_file_filter">File filtro</string>
         <string name="msgs_filter_list_dlg_filter_added">Filtro %s aggiunto.</string>
         <string name="msgs_filter_list_dlg_filter_hint">filtro</string>
-        <string name="msgs_filter_list_dlg_not_specified">Non specificato</string>
+        <string name="msgs_filter_list_dlg_not_specified">Non è specificato alcun filtro.</string>
         <string name="msgs_filter_list_duplicate_filter_specified">\"%s\" esiste già.</string>
         <string name="msgs_filter_list_filter_deleted">Questa voce è stata eliminata.</string>
         <string name="msgs_filter_list_filter_was_changed">Il contenuto è stato modificato, vuoi cancellare senza salvare?</string>

@@ -120,7 +120,7 @@
         <string name="msgs_filter_list_dlg_file_filter">File filter</string>
         <string name="msgs_filter_list_dlg_filter_added">Filter \"%s\" was added.</string>
         <string name="msgs_filter_list_dlg_filter_hint">Filter</string>
-        <string name="msgs_filter_list_dlg_not_specified">Not specified</string>
+        <string name="msgs_filter_list_dlg_not_specified">No filter specified.</string>
         <string name="msgs_filter_list_duplicate_filter_specified">\"%s\" already exists.</string>
         <string name="msgs_filter_list_filter_deleted">This entry was deleted.</string>
         <string name="msgs_filter_list_filter_was_changed">The content has been changed, do you want to cancel without saving?</string>

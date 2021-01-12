@@ -119,7 +119,7 @@
         <string name="msgs_filter_list_dlg_file_filter">文件过滤器</string>
         <string name="msgs_filter_list_dlg_filter_added">增加了过滤器\"%s\"。</string>
         <string name="msgs_filter_list_dlg_filter_hint">滤镜</string>
-        <string name="msgs_filter_list_dlg_not_specified">未说明</string>
+        <string name="msgs_filter_list_dlg_not_specified">没有指定过滤器。</string>
         <string name="msgs_filter_list_duplicate_filter_specified">\"%s\" 已经存在。</string>
         <string name="msgs_filter_list_filter_deleted">删去</string>
         <string name="msgs_filter_list_filter_was_changed">内容已经更改，要不要取消不保存？</string>

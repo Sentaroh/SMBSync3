@@ -119,7 +119,7 @@
         <string name="msgs_filter_list_dlg_file_filter">ファイル フィルター</string>
         <string name="msgs_filter_list_dlg_filter_added">フィルター \"%s\" 追加しました。</string>
         <string name="msgs_filter_list_dlg_filter_hint">フィルター</string>
-        <string name="msgs_filter_list_dlg_not_specified">無指定</string>
+        <string name="msgs_filter_list_dlg_not_specified">フィルターが指定されていません</string>
         <string name="msgs_filter_list_duplicate_filter_specified">\"%s\" は既に登録されています。</string>
         <string name="msgs_filter_list_filter_deleted">削除済み</string>
         <string name="msgs_filter_list_filter_was_changed">内容が変更されています、保存せずに終了しますか？</string>

@@ -119,7 +119,7 @@
         <string name="msgs_filter_list_dlg_file_filter">Фильтр файлов</string>
         <string name="msgs_filter_list_dlg_filter_added">Фильтр \"%s\" был добавлен.</string>
         <string name="msgs_filter_list_dlg_filter_hint">Фильтр</string>
-        <string name="msgs_filter_list_dlg_not_specified">Не определен</string>
+        <string name="msgs_filter_list_dlg_not_specified">Фильтр не указан.</string>
         <string name="msgs_filter_list_duplicate_filter_specified">\"%s\" уже существует.</string>
         <string name="msgs_filter_list_filter_deleted">Эта запись была удалена.</string>
         <string name="msgs_filter_list_filter_was_changed">Содержание было изменено, вы хотите отменить без сохранения?</string>
