@@ -561,6 +561,10 @@ public class SyncThreadSyncFile {
                                             String from_base, String from_path, SafFile3 mf, String to_base, String to_path, ContentProviderClient cpc, boolean isTakenDateUsed) {
         if (stwa.logLevel>=2) stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         int sync_result = 0;
+        if (!sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID) && !SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+            if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+            else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+        }
         try {
             if (isSafExists(mf, cpc)) {
                 if (!mf.canRead()) {
@@ -997,6 +1001,12 @@ public class SyncThreadSyncFile {
         if (stwa.logLevel>=2) stwa.util.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName() + " entered, from=" + from_path + ", to=" + to_path + ", move=" + move_file);
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
+
+        if (!SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+            if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+            else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+        }
+
         try {
             if (mf.exists()) {
                 if (!mf.canRead()) {

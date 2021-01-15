@@ -308,6 +308,12 @@ public class SyncThreadArchiveFile {
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         File tf;
+
+        if (!sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID) && !SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+            if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+            else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+        }
+
         try {
             if (mf.exists()) {
                 if (!mf.canRead()) {
@@ -479,6 +485,12 @@ public class SyncThreadArchiveFile {
         int sync_result = 0;
         stwa.jcifsNtStatusCode=0;
         JcifsFile tf;
+
+        if (!SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+            if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+            else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+        }
+
         try {
             if (mf.exists()) {
                 if (!mf.canRead()) {
