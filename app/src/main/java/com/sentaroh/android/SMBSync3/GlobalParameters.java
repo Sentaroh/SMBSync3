@@ -417,9 +417,7 @@ public class GlobalParameters {
 //        }
     }
 
-    @SuppressLint("NewApi")
     public void initStorageStatus(Context c) {
-
         refreshMediaDir(c);
     }
 
@@ -799,7 +797,6 @@ public class GlobalParameters {
         }
     }
 
-    @SuppressLint("NewApi")
     static public boolean isScreenOn(Context context, CommonUtilities util) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         util.addDebugMsg(1, "I", "isDeviceIdleMode()=" + pm.isDeviceIdleMode() +

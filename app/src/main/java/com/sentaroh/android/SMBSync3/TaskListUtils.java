@@ -419,7 +419,6 @@ public class TaskListUtils {
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                @SuppressWarnings("unchecked")
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
 
                 for (int i = 0; i < rfl.size(); i++) {
@@ -2324,7 +2323,6 @@ public class TaskListUtils {
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                @SuppressWarnings("unchecked")
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
 
                 if (rfl.size()==0) {
@@ -2708,7 +2706,6 @@ public class TaskListUtils {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 final ArrayList<String> rows = new ArrayList<String>();
-                @SuppressWarnings("unchecked")
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
                 for (TreeFilelistItem item:rfl) rows.add(item.getName());
                 if (rows.size() < 1) {
@@ -2808,7 +2805,6 @@ public class TaskListUtils {
                 else {
                     NotifyEvent ne = new NotifyEvent(mContext);
                     ne.setListener(new NotifyEvent.NotifyEventListener() {
-                        @SuppressWarnings("unchecked")
                         @Override
                         public void positiveResponse(Context c, Object[] o) {
                             tfa.addChildItem(tfi, (ArrayList<TreeFilelistItem>) o[0], pos);
@@ -2836,7 +2832,6 @@ public class TaskListUtils {
                 else {
                     NotifyEvent ne = new NotifyEvent(mContext);
                     ne.setListener(new NotifyEvent.NotifyEventListener() {
-                        @SuppressWarnings("unchecked")
                         @Override
                         public void positiveResponse(Context c, Object[] o) {
                             tfa.addChildItem(tfi, (ArrayList<TreeFilelistItem>) o[0], pos);

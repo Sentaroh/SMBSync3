@@ -60,7 +60,6 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
     private Handler mUiHandler;
     private int id;
     private ArrayList<SyncTaskItem> items;
-    @SuppressWarnings("unused")
     private String mTaskTypeAuto, mTaskTypeManual, mTaskNoExec, mTaskStatusRunning, mTaskTypeTest;
     private String mTaskStatusSuccess, mTaskStatusError, mTaskSttatusCancel, mTaskStatusWarning, mTaskStatusSkip;
 

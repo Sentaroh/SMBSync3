@@ -60,7 +60,6 @@ import java.util.regex.Pattern;
 
 import static com.sentaroh.android.SMBSync3.Constants.DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX;
 
-@SuppressWarnings("ALL")
 public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterListItem> {
     private static final Logger log= LoggerFactory.getLogger(FilterListAdapter.class);
     private Context c;

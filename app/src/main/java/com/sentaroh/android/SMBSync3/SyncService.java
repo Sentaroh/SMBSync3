@@ -23,7 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -793,7 +792,6 @@ public class SyncService extends Service {
     }
 
     final private class SleepReceiver extends BroadcastReceiver {
-        @SuppressLint({"Wakelock", "NewApi"})
         @Override
         final public void onReceive(Context c, Intent in) {
             String action = in.getAction();

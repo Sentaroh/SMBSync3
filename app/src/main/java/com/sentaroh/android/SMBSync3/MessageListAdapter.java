@@ -47,7 +47,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-@SuppressWarnings("ALL")
 public class MessageListAdapter extends BaseAdapter {
     private static final Logger log= LoggerFactory.getLogger(MessageListAdapter.class);
     private Context c;

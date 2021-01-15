@@ -1160,7 +1160,6 @@ public class ScheduleEditor {
         adapter.notifyDataSetChanged();
     }
 
-    @SuppressWarnings("unused")
     private String getScheduleTypeFromSpinner(Spinner spinner) {
         return getScheduleTypeFromPosition(spinner.getSelectedItemPosition());
     }
@@ -1248,7 +1247,6 @@ public class ScheduleEditor {
     private class SchedulerAdapterSyncList extends ArrayAdapter<String> {
         private int layout_id = 0;
         private Context context = null;
-        @SuppressWarnings("unused")
         private int text_color = 0;
 
         public SchedulerAdapterSyncList(Context c, int textViewResourceId) {

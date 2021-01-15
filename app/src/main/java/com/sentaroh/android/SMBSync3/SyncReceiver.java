@@ -22,7 +22,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,7 +50,6 @@ public class SyncReceiver extends BroadcastReceiver {
 
     private static LogUtil mLog = null;
 
-    @SuppressLint("Wakelock")
     @Override
     final public void onReceive(Context c, Intent received_intent) {
         PowerManager.WakeLock wl =((PowerManager) c.getSystemService(Context.POWER_SERVICE))

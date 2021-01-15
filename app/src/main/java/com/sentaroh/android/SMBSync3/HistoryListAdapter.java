@@ -51,11 +51,9 @@ import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_EXTERNAL;
 import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_SCHEDULE;
 import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_SHORTCUT;
 
-@SuppressWarnings("ALL")
 public class HistoryListAdapter extends ArrayAdapter<HistoryListAdapter.HistoryListItem> {
     private static final Logger log= LoggerFactory.getLogger(HistoryListAdapter.class);
     private Context mContext;
-    @SuppressWarnings("unused")
     private Activity mActivity;
     private int id;
     private ArrayList<HistoryListItem> items;
