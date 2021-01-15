@@ -1252,6 +1252,23 @@ public class SyncThread extends Thread {
         return out;
     }
 
+    static public String getUnprintableCharacter(String in) {
+        String removed=in.replaceAll("\\p{C}", "");
+        for(int i=0;i<removed.length();i++) {
+            String in_sub=in.substring(i,i+1);
+            String out_sub=removed.substring(i,i+1);
+            if (!in_sub.equals(out_sub)) {
+                return "Pos="+(i+1)+", 0x"+StringUtil.getHexString(in_sub.getBytes(),0,in_sub.getBytes().length).toUpperCase();
+            }
+        }
+        return "";
+    }
+
+    static public String removeUnprintableCharacter(String in) {
+        String removed=in.replaceAll("\\p{C}", "");
+        return removed;
+    }
+
     public static String hasInvalidCharForFileDirName(String in_str) {
         if (in_str.contains(":")) return ":";
         if (in_str.contains("\\")) return "\\";
@@ -1263,8 +1280,8 @@ public class SyncThread extends Thread {
         if (in_str.contains("|")) return "|";
         if (in_str.contains("\n")) return "CR";
         if (in_str.contains("\t")) return "TAB";
-        String printable=in_str.replaceAll("\\p{C}", "");
-        if (in_str.length()!=printable.length()) return "UNPRINTABLE";
+//        String printable=in_str.replaceAll("\\p{C}", "");
+//        if (in_str.length()!=printable.length()) return "UNPRINTABLE("+getUnprintableCharacter(in_str)+")";
         return "";
     }
 
