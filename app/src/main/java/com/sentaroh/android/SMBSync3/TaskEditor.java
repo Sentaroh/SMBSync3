@@ -235,6 +235,7 @@ public class TaskEditor extends DialogFragment {
             initViewWidget();
             editSyncTask(mOpType, mCurrentSyncTaskItem);
         }
+        mProgressSipnDialogForActivity.dismiss();
         return mDialog;
     }
 
@@ -631,7 +632,12 @@ public class TaskEditor extends DialogFragment {
         FragmentTransaction ft = fm.beginTransaction();
         ft.add(frag, null);
         ft.commitAllowingStateLoss();
+
+        mProgressSipnDialogForActivity =CommonDialog.showProgressSpinIndicator((Activity)ntfy.getContext());
+        mProgressSipnDialogForActivity.show();
     }
+
+    private Dialog mProgressSipnDialogForActivity =null;
 
     private void setDialogMsg(final TextView tv, final String msg) {
         if (msg.equals("")) {
