@@ -1178,7 +1178,7 @@ public class TaskEditor extends DialogFragment {
                     public void positiveResponse(Context arg0, Object[] arg1) {
                         EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
                         LocalStorageSelectorItem sel_item=(LocalStorageSelectorItem)sp_sync_folder_local_storage_selector.getSelectedItem();
-                        Uri zip_uri = (Uri) arg1[0];
+//                        Uri zip_uri = (Uri) arg1[0];
                         String fp=((String)arg1[1]).replace(sel_item.root_path, "");
                         if (fp.endsWith("/")) et_sync_folder_dir_name.setText(fp.substring(0, fp.length()-1));
                         else et_sync_folder_dir_name.setText(fp);
@@ -1190,10 +1190,10 @@ public class TaskEditor extends DialogFragment {
                     }
                 });
                 LocalStorageSelectorItem sel_item=(LocalStorageSelectorItem)sp_sync_folder_local_storage_selector.getSelectedItem();
-                SafFile3 sf=new SafFile3(mContext, sel_item.root_path);
+//                SafFile3 sf=new SafFile3(mContext, sel_item.root_path);
                 CommonFileSelector2 fsdf=CommonFileSelector2.newInstance(true, !sfev.is_source_folder, true,
                                 CommonFileSelector2.DIALOG_SELECT_CATEGORY_DIRECTORY,
-                                true, true, sf.getUuid(), "", "", mContext.getString(R.string.msgs_select_local_dir));
+                                true, true, sel_item.uuid, "", "", mContext.getString(R.string.msgs_select_local_dir));
                 fsdf.showDialog(false, getActivity().getSupportFragmentManager(), fsdf, ntfy);
 
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
