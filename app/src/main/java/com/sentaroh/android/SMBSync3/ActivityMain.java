@@ -2632,7 +2632,6 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setGroupContextButtonMode(GroupListAdapter adapter) {
-        boolean selected = false;
         int sel_cnt = 0;
 
         setContextButtonVisibility(mContextGroupButtonAddView,LinearLayout.VISIBLE);
@@ -2641,6 +2640,11 @@ public class ActivityMain extends AppCompatActivity {
         setContextButtonVisibility(mContextGroupButtonDeleteView,LinearLayout.INVISIBLE);
         setContextButtonVisibility(mContextGroupButtonSelectAllView,LinearLayout.VISIBLE);
         setContextButtonVisibility(mContextGroupButtonUnselectAllView,LinearLayout.INVISIBLE);
+
+        for(int i=0;i<adapter.getCount();i++) {
+            GroupListAdapter.GroupListItem gli=adapter.getItem(i);
+            if (gli.isChecked) sel_cnt++;
+        }
 
         if (adapter.isSelectMode()) {
             if (sel_cnt == 0) {
