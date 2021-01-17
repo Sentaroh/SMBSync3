@@ -30,10 +30,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
@@ -144,7 +142,6 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
             holder.tv_name = (TextView) v.findViewById(R.id.group_list_item_group_name);
             holder.tv_task_list = (TextView) v.findViewById(R.id.group_list_item_task_list);
             holder.tv_error_message = (TextView) v.findViewById(R.id.group_list_item_error_message);
-            holder.sw_enable = (Switch) v.findViewById(R.id.group_list_item_enable);
             holder.tv_button = (TextView) v.findViewById(R.id.group_list_item_button);
             holder.ib_sync=(ImageButton)v.findViewById(R.id.group_list_item_sync);
             holder.cb_checked=(CheckBox) v.findViewById(R.id.group_list_item_checked);
@@ -167,32 +164,13 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
             if (mSelectMode) {
                 holder.cb_checked.setVisibility(CheckBox.VISIBLE);
                 holder.ib_sync.setVisibility(CheckBox.GONE);
-                holder.sw_enable.setVisibility(TextView.GONE);
             } else {
                 holder.cb_checked.setVisibility(CheckBox.GONE);
-                holder.sw_enable.setVisibility(TextView.VISIBLE);
-                if (o.enabled) {
-                    holder.ib_sync.setVisibility(CheckBox.VISIBLE);
-                } else {
-                    holder.ib_sync.setVisibility(CheckBox.INVISIBLE);
-                }
+                holder.ib_sync.setVisibility(CheckBox.VISIBLE);
             }
 
             if(isEnabled(position)) CommonDialog.setViewEnabled(mContext, holder.ll_view, true);
             else CommonDialog.setViewEnabled(mContext, holder.ll_view, false);
-
-            holder.sw_enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (o.enabled!=isChecked) {
-                        o.enabled = isChecked;
-                        if (mSwNotify != null)
-                            mSwNotify.notifyToListener(true, new Object[]{position});
-                    }
-                    notifyDataSetChanged();
-                }
-            });
-            holder.sw_enable.setChecked(o.enabled);
 
             holder.cb_checked.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -221,11 +199,9 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
             holder.ib_sync.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if (o.enabled) {
-                        CommonDialog.showPopupMessageAsUpAnchorView((Activity)mContext,
-                                holder.ib_sync, mContext.getString(R.string.msgs_task_cont_label_sync_specific,
-                                        GroupEditor.getSyncTaskList(mContext, o, mGp.syncTaskList)), 2);
-                    }
+                    CommonDialog.showPopupMessageAsUpAnchorView((Activity)mContext,
+                            holder.ib_sync, mContext.getString(R.string.msgs_task_cont_label_sync_specific,
+                                    GroupEditor.getSyncTaskList(mContext, o, mGp.syncTaskList)), 2);
                     return true;
                 }
             });
@@ -233,7 +209,7 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
             holder.ib_sync.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (mSyncNotify!=null && o.enabled) mSyncNotify.notifyToListener(true, new Object[]{o});
+                    if (mSyncNotify!=null) mSyncNotify.notifyToListener(true, new Object[]{o});
                 }
             });
         }
@@ -243,7 +219,6 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
 
     class ViewHolder {
         TextView tv_name, tv_task_list, tv_error_message;
-        Switch sw_enable;
         TextView tv_button;
         LinearLayout ll_view;
 //        Switch sw_enabled;
@@ -253,7 +228,7 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
 
     static class GroupListItem implements Cloneable, Serializable {
         public String groupName="";
-        public boolean enabled=true;
+        public boolean enabled =true;
         public boolean isChecked=false;
         public int position=0;
         public boolean autoTaskOnly=false;
@@ -273,7 +248,7 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
         public boolean isSame(GroupListItem new_gi) {
             boolean result=false;
             if (this.groupName.equalsIgnoreCase(new_gi.groupName)
-                    && this.enabled==new_gi.enabled
+                    && this.enabled ==new_gi.enabled
                     && this.autoTaskOnly==new_gi.autoTaskOnly
                     && this.position==new_gi.position
                     && this.button ==new_gi.button) {

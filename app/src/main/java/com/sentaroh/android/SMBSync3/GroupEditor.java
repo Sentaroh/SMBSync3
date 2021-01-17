@@ -179,8 +179,6 @@ class GroupEditor {
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.group_item_edit_dlg_msg);
 
         final EditText et_name = (EditText) dialog.findViewById(R.id.group_item_edit_dlg_group_name);
-        final CheckedTextView ctv_group_enabled=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_enabled);
-        CommonDialog.setViewEnabled(mActivity, ctv_group_enabled, true);
         final CheckedTextView ctv_auto_task_only=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_auto_task_only);
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
@@ -219,15 +217,6 @@ class GroupEditor {
             }
             mGroupListItem.position=mGroupList.size();
         }
-        ctv_group_enabled.setChecked(mGroupListItem.enabled);
-        ctv_group_enabled.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isChecked=!((CheckedTextView)view).isChecked();
-                ((CheckedTextView)view).setChecked(isChecked);
-                setOkButtonEnabledGroupEditor(dialog);
-            }
-        });
 
         et_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -445,7 +434,6 @@ class GroupEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.group_item_edit_dlg_ok);
         final EditText et_name = (EditText) dialog.findViewById(R.id.group_item_edit_dlg_group_name);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.group_item_edit_dlg_msg);
-        final CheckedTextView ctv_group_enabled=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_enabled);
         final CheckedTextView ctv_auto_task_only=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_auto_task_only);
         final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
         CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
@@ -510,11 +498,9 @@ class GroupEditor {
     private void buildGroupItem(Dialog dialog, GroupListAdapter.GroupListItem gi) {
 //        final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
         final EditText et_name = (EditText) dialog.findViewById(R.id.group_item_edit_dlg_group_name);
-        final CheckedTextView ctv_group_enabled=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_enabled);
         final CheckedTextView ctv_auto_task_only=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_auto_task_only);
         final Spinner sp_assigned_button=(Spinner)dialog.findViewById(R.id.group_item_edit_dlg_assigned_button);
         gi.taskList=mCurrentSyncTaskList;
-        gi.enabled=ctv_group_enabled.isChecked();
         gi.autoTaskOnly=ctv_auto_task_only.isChecked();
         gi.groupName=et_name.getText().toString().trim();
         gi.button =getSpinnerAssignedButton(sp_assigned_button);

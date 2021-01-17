@@ -1560,18 +1560,14 @@ public class ActivityMain extends AppCompatActivity {
             if (mGp.syncGroupListAdapter.isSelectMode()) {
                 for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
                     if (gli.isChecked) {
-                        if (gli.enabled) {
-                            e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
-                            if (!e_msg.equals("")) break;
-                        }
+                        e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
+                        if (!e_msg.equals("")) break;
                     }
                 }
             } else {
                 for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                    if (gli.enabled) {
-                        e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
-                        if (!e_msg.equals("")) break;
-                    }
+                    e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
+                    if (!e_msg.equals("")) break;
                 }
             }
             if (!e_msg.equals("")) mUtil.showCommonDialogError(false, mContext.getString(R.string.msgs_group_start_confirmation_message_title), e_msg, null);
@@ -2542,149 +2538,6 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setGroupContextButtonListener() {
-        mContextGroupButtonMoveToUp.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isUiEnabled()) {
-                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
-                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
-                    for (int i = 0; i < mGp.syncGroupListAdapter.getCount(); i++) {
-                        GroupListAdapter.GroupListItem item = mGp.syncGroupListAdapter.getItem(i);
-                        if (item.isChecked) {
-                            int c_pos = item.position;
-                            if (c_pos > 0) {
-                                for (int j = 0; j < mGp.syncGroupListAdapter.getCount(); j++) {
-                                    if (mGp.syncGroupListAdapter.getItem(j).position == (c_pos - 1)) {
-                                        mGp.syncGroupListAdapter.getItem(j).position=c_pos;
-                                    }
-                                }
-                                item.position=c_pos - 1;
-                                mGp.syncGroupListAdapter.sort();
-                                mGp.syncGroupListAdapter.notifyDataSetChanged();
-                                saveGroupList();
-
-                                if (item.position == 0) {
-                                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.INVISIBLE);
-                                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
-                                }
-                                if (item.position == (mGp.syncGroupListAdapter.getCount() - 1)) {
-                                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
-                                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.INVISIBLE);
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-
-            }
-        });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonMoveToUp, mContext.getString(R.string.msgs_group_cont_label_up));
-
-        mContextGroupButtonMoveToDown.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isUiEnabled()) {
-                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
-                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
-                    for (int i = 0; i < mGp.syncGroupListAdapter.getCount(); i++) {
-                        GroupListAdapter.GroupListItem item = mGp.syncGroupListAdapter.getItem(i);
-                        if (item.isChecked) {
-                            int c_pos = item.position;
-                            if (item.position < (mGp.syncGroupListAdapter.getCount() - 1)) {
-                                for (int j = 0; j < mGp.syncGroupListAdapter.getCount(); j++) {
-                                    if (mGp.syncGroupListAdapter.getItem(j).position == (c_pos + 1)) {
-                                        mGp.syncGroupListAdapter.getItem(j).position=c_pos;
-                                    }
-                                }
-                                item.position=c_pos + 1;
-                                mGp.syncGroupListAdapter.notifyDataSetChanged();
-                                saveGroupList();
-
-                                if (item.position == 0) {
-                                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.INVISIBLE);
-                                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
-                                }
-                                if (item.position == (mGp.syncGroupListAdapter.getCount() - 1)) {
-                                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
-                                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.INVISIBLE);
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-
-            }
-        });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonMoveToDown, mContext.getString(R.string.msgs_group_cont_label_down));
-
-        mContextGroupButtonToEnabled.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String list="", sep="";
-                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                    if (gli.isChecked) {
-                        list+=sep+gli.groupName;
-                        sep="\n";
-                    }
-                }
-                NotifyEvent ntfy=new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                            if (gli.isChecked) {
-                                gli.enabled=true;
-                            }
-                        }
-                        mGp.syncGroupListAdapter.setSelectMode(false);
-                        mGp.syncGroupListAdapter.notifyDataSetChanged();
-                        setGroupContextButtonMode(mGp.syncGroupListAdapter);
-                        saveGroupList();
-                    }
-
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {}
-                });
-                mUtil.showCommonDialogWarn(true, mContext.getString(R.string.msgs_group_edit_enable_sync_group), list, ntfy);
-            }
-        });
-//        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonToEnabled, mContext.getString(R.string.msgs_group_cont_label_add));
-
-        mContextGroupButtonToDisabled.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String list="", sep="";
-                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                    if (gli.isChecked) {
-                        list+=sep+gli.groupName;
-                        sep="\n";
-                    }
-                }
-                NotifyEvent ntfy=new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                            if (gli.isChecked) {
-                                gli.enabled=false;
-                            }
-                        }
-                        mGp.syncGroupListAdapter.setSelectMode(false);
-                        mGp.syncGroupListAdapter.notifyDataSetChanged();
-                        setGroupContextButtonMode(mGp.syncGroupListAdapter);
-                        saveGroupList();
-                    }
-
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {}
-                });
-                mUtil.showCommonDialogWarn(true, mContext.getString(R.string.msgs_group_edit_disable_sync_group), list, ntfy);
-            }
-        });
-//        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonToDisabled, mContext.getString(R.string.msgs_group_cont_label_add));
-
         mContextGroupButtonAdd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -2771,7 +2624,6 @@ public class ActivityMain extends AppCompatActivity {
         mContextGroupButtonUnselectAll.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-//                mGp.syncTabGroupAdapter.setSelectMode(false);
                 mGp.syncGroupListAdapter.unselectAll();
                 setGroupContextButtonMode(mGp.syncGroupListAdapter);
             }
@@ -2782,15 +2634,6 @@ public class ActivityMain extends AppCompatActivity {
     private void setGroupContextButtonMode(GroupListAdapter adapter) {
         boolean selected = false;
         int sel_cnt = 0;
-        boolean enabled = false, disabled = false;
-        for (int i = 0; i < adapter.getCount(); i++) {
-            if (adapter.getItem(i).isChecked) {
-                selected = true;
-                sel_cnt++;
-                if (adapter.getItem(i).enabled) enabled = true;
-                else disabled = true;
-            }
-        }
 
         setContextButtonVisibility(mContextGroupButtonAddView,LinearLayout.VISIBLE);
         setContextButtonVisibility(mContextGroupButtonCopyView,LinearLayout.INVISIBLE);
@@ -2799,11 +2642,6 @@ public class ActivityMain extends AppCompatActivity {
         setContextButtonVisibility(mContextGroupButtonSelectAllView,LinearLayout.VISIBLE);
         setContextButtonVisibility(mContextGroupButtonUnselectAllView,LinearLayout.INVISIBLE);
 
-        setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.INVISIBLE);
-        setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.INVISIBLE);
-
-        setContextButtonVisibility(mContextGroupButtonToEnabledView,ImageButton.INVISIBLE);
-        setContextButtonVisibility(mContextGroupButtonToDisabledView,ImageButton.INVISIBLE);
         if (adapter.isSelectMode()) {
             if (sel_cnt == 0) {
                 setContextButtonVisibility(mContextGroupButtonAddView,LinearLayout.INVISIBLE);
@@ -2823,23 +2661,8 @@ public class ActivityMain extends AppCompatActivity {
                 for(int i=0;i<mGp.syncGroupList.size();i++) {
                     if (mGp.syncGroupList.get(i).isChecked) {
                         sel_pos=i;
-                        if (mGp.syncGroupList.get(i).enabled) {
-                            setContextButtonVisibility(mContextGroupButtonToDisabledView,ImageButton.VISIBLE);
-                        } else {
-                            setContextButtonVisibility(mContextGroupButtonToEnabledView,ImageButton.VISIBLE);
-                        }
                         break;
                     }
-                }
-                setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
-                setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
-                if (sel_pos == 0) {
-                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.INVISIBLE);
-                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.VISIBLE);
-                }
-                if (sel_pos == (mGp.syncGroupList.size() - 1)) {
-                    setContextButtonVisibility(mContextGroupButtonMoveToUpView,ImageButton.VISIBLE);
-                    setContextButtonVisibility(mContextGroupButtonMoveToDownView,ImageButton.INVISIBLE);
                 }
             } else if (sel_cnt >= 1) {
                 setContextButtonVisibility(mContextGroupButtonAddView,LinearLayout.INVISIBLE);
@@ -2848,20 +2671,6 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonVisibility(mContextGroupButtonDeleteView,LinearLayout.VISIBLE);
                 setContextButtonVisibility(mContextGroupButtonSelectAllView,LinearLayout.VISIBLE);
                 setContextButtonVisibility(mContextGroupButtonUnselectAllView,LinearLayout.VISIBLE);
-
-                boolean show_enable=false, show_disable=false;
-                for(int i=0;i<mGp.syncGroupList.size();i++) {
-                    if (mGp.syncGroupList.get(i).isChecked) {
-                        if (mGp.syncGroupList.get(i).enabled) {
-                            show_disable=true;
-                        } else {
-                            show_enable=true;
-                        }
-                    }
-                }
-                if (show_disable) setContextButtonVisibility(mContextGroupButtonToDisabledView,ImageButton.VISIBLE);
-                if (show_enable) setContextButtonVisibility(mContextGroupButtonToEnabledView,ImageButton.VISIBLE);
-
             }
             int tot_cnt = adapter.getCount();
             setActionBarSelectMode(sel_cnt, tot_cnt);
@@ -4212,25 +4021,17 @@ public class ActivityMain extends AppCompatActivity {
     private ImageButton mContextGroupButtonDelete = null;
     private ImageButton mContextGroupButtonSelectAll = null;
     private ImageButton mContextGroupButtonUnselectAll = null;
-    private ImageButton mContextGroupButtonMoveToUp = null;
-    private ImageButton mContextGroupButtonMoveToDown = null;
     private ImageButton mContextGroupButtonToEnabled = null;
     private ImageButton mContextGroupButtonToDisabled = null;
 
     private LinearLayout mContextGroupView = null;
 
     private LinearLayout mContextGroupButtonAddView = null;
-//    private LinearLayout mContextGroupButtonActivateView = null;
-//    private LinearLayout mContextGroupButtonInactivateView = null;
     private LinearLayout mContextGroupButtonCopyView = null;
     private LinearLayout mContextGroupButtonRenameView = null;
     private LinearLayout mContextGroupButtonDeleteView = null;
     private LinearLayout mContextGroupButtonSelectAllView = null;
     private LinearLayout mContextGroupButtonUnselectAllView = null;
-    private LinearLayout mContextGroupButtonMoveToUpView = null;
-    private LinearLayout mContextGroupButtonMoveToDownView = null;
-    private LinearLayout mContextGroupButtonToEnabledView = null;
-    private LinearLayout mContextGroupButtonToDisabledView = null;
 
     private ImageButton mContextMessageButtonMoveTop = null;
     private ImageButton mContextMessageButtonPinned = null;
@@ -4311,10 +4112,6 @@ public class ActivityMain extends AppCompatActivity {
         mContextGroupButtonDeleteView = (LinearLayout) mGroupView.findViewById(R.id.context_button_delete_view);
         mContextGroupButtonSelectAllView = (LinearLayout) mGroupView.findViewById(R.id.context_button_select_all_view);
         mContextGroupButtonUnselectAllView = (LinearLayout) mGroupView.findViewById(R.id.context_button_unselect_all_view);
-        mContextGroupButtonMoveToUpView = (LinearLayout) mGroupView.findViewById(R.id.context_button_up_arrow_view);
-        mContextGroupButtonMoveToDownView = (LinearLayout) mGroupView.findViewById(R.id.context_button_down_arrow_view);
-        mContextGroupButtonToEnabledView = (LinearLayout) mGroupView.findViewById(R.id.context_button_activate_view);
-        mContextGroupButtonToDisabledView = (LinearLayout) mGroupView.findViewById(R.id.context_button_inactivate_view);
 
         mContextGroupButtonAdd = (ImageButton) mGroupView.findViewById(R.id.context_button_add);
         mContextGroupButtonCopy = (ImageButton) mGroupView.findViewById(R.id.context_button_copy);
@@ -4322,15 +4119,11 @@ public class ActivityMain extends AppCompatActivity {
         mContextGroupButtonDelete = (ImageButton) mGroupView.findViewById(R.id.context_button_delete);
         mContextGroupButtonSelectAll = (ImageButton) mGroupView.findViewById(R.id.context_button_select_all);
         mContextGroupButtonUnselectAll = (ImageButton) mGroupView.findViewById(R.id.context_button_unselect_all);
-        mContextGroupButtonMoveToUp = (ImageButton) mGroupView.findViewById(R.id.context_button_up_arrow);
-        mContextGroupButtonMoveToDown = (ImageButton) mGroupView.findViewById(R.id.context_button_down_arrow);
         mContextGroupButtonToEnabled = (ImageButton) mGroupView.findViewById(R.id.context_button_activate);
         mContextGroupButtonToDisabled = (ImageButton) mGroupView.findViewById(R.id.context_button_inactivate);
 
         mContextHistoryButtonSendTo = (ImageButton) mHistoryView.findViewById(R.id.context_button_share);
         if (mGp.themeColorList.theme_is_light) mContextHistoryButtonSendTo.setImageResource(R.drawable.context_button_share_dark);
-//        mContextHistoryButtonMoveTop = (ImageButton) mHistoryView.findViewById(R.id.context_button_move_to_top);
-//        mContextHistoryButtonMoveBottom = (ImageButton) mHistoryView.findViewById(R.id.context_button_move_to_bottom);
         mContextHistoryButtonScrollDown = (ImageButton) mHistoryView.findViewById(R.id.context_button_scroll_down);
         mContextHistoryButtonScrollUp = (ImageButton) mHistoryView.findViewById(R.id.context_button_scroll_up);
         mContextHistoryButtonPageDown = (ImageButton) mHistoryView.findViewById(R.id.context_button_page_down);
@@ -4341,8 +4134,6 @@ public class ActivityMain extends AppCompatActivity {
         mContextHistiryButtonUnselectAll = (ImageButton) mHistoryView.findViewById(R.id.context_button_unselect_all);
 
         mContextHistiryViewShare = (LinearLayout) mHistoryView.findViewById(R.id.context_button_share_view);
-//        mContextHistiryViewMoveTop = (LinearLayout) mHistoryView.findViewById(R.id.context_button_move_to_top_view);
-//        mContextHistiryViewMoveBottom = (LinearLayout) mHistoryView.findViewById(R.id.context_button_move_to_bottom_view);
         mContextHistiryViewScrollDown = (LinearLayout) mHistoryView.findViewById(R.id.context_button_scroll_down_view);
         mContextHistiryViewScrollUp = (LinearLayout) mHistoryView.findViewById(R.id.context_button_scroll_up_view);
         mContextHistiryViewPageDown = (LinearLayout) mHistoryView.findViewById(R.id.context_button_page_down_view);
@@ -4495,7 +4286,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonMoveToUp, mContext.getString(R.string.msgs_task_cont_label_up));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonRenameSyncTask, mContext.getString(R.string.msgs_task_cont_label_up));
 
         mContextSyncTaskButtonMoveToUp.setOnClickListener(new OnClickListener() {
             @Override
@@ -4512,9 +4303,15 @@ public class ActivityMain extends AppCompatActivity {
                                     }
                                 }
                                 item.setSyncTaskPosition(c_pos - 1);
-                                mGp.syncGroupListAdapter.sort();
-                                mGp.syncGroupListAdapter.notifyDataSetChanged();
-                                saveGroupList();
+                                mGp.syncTaskListAdapter.sort();
+                                Thread th=new Thread() {
+                                    @Override
+                                    public void run() {
+                                        TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                                    }
+                                };
+                                th.start();
+                                mGp.syncTaskListAdapter.notifyDataSetChanged();
 
                                 if (item.getSyncTaskPosition() == 0) {
                                     setContextButtonVisibility(mContextSyncTaskViewMoveToUp,ImageButton.INVISIBLE);
@@ -4531,7 +4328,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonMoveToDown, mContext.getString(R.string.msgs_task_cont_label_down));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonMoveToUp, mContext.getString(R.string.msgs_task_cont_label_down));
 
         mContextSyncTaskButtonMoveToDown.setOnClickListener(new OnClickListener() {
             @Override
@@ -4549,7 +4346,13 @@ public class ActivityMain extends AppCompatActivity {
                                 }
                                 item.setSyncTaskPosition(c_pos + 1);
                                 mGp.syncTaskListAdapter.sort();
-                                TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                                Thread th=new Thread() {
+                                    @Override
+                                    public void run() {
+                                        TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                                    }
+                                };
+                                th.start();
                                 mGp.syncTaskListAdapter.notifyDataSetChanged();
 
                                 if (item.getSyncTaskPosition() == 0) {

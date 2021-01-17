@@ -192,13 +192,6 @@ public class ActivityShortcut extends FragmentActivity {
                 return;
             }
             mSyncTaskList=task_list;
-        } else if (!group_item.enabled) {
-            String task_list=getAutoTaskList();
-            if (task_list.equals("")) {
-                putAutoTaskNotFoundMessage(mActivity.getString(R.string.msgs_main_shortcut_start_error_auto_task_does_not_exists, mShortcutName));
-                return;
-            }
-            mSyncTaskList=task_list;
         } else {
             String error_task_name=isSpecificSyncTaskExists(group_item.taskList);
             if (!error_task_name.equals("")) {

@@ -85,16 +85,6 @@
                 android:text="group name"
                 android:inputType="text"/>
 
-            <CheckedTextView
-                android:id="@+id/group_item_edit_dlg_enabled"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center_vertical"
-                android:text="@string/msgs_group_main_dlg_hdr_enable"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
