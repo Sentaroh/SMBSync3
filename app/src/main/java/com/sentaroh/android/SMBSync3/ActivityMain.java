@@ -4292,6 +4292,13 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isUiEnabled()) {
+                    CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, false);
+                    mUiHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, true);
+                        }
+                    }, 500);
                     for (int i = 0; i < mGp.syncTaskListAdapter.getCount(); i++) {
                         SyncTaskItem item = mGp.syncTaskListAdapter.getItem(i);
                         if (item.isChecked()) {
@@ -4312,6 +4319,8 @@ public class ActivityMain extends AppCompatActivity {
                                 };
                                 th.start();
                                 mGp.syncTaskListAdapter.notifyDataSetChanged();
+                                int set_pos = c_pos < 3 ? c_pos:c_pos-3;//show the 2 items before (moved item is set at c_pos-1)
+                                mGp.syncTaskView.smoothScrollToPosition(set_pos);
 
                                 if (item.getSyncTaskPosition() == 0) {
                                     setContextButtonVisibility(mContextSyncTaskViewMoveToUp,ImageButton.INVISIBLE);
@@ -4334,6 +4343,13 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isUiEnabled()) {
+                    CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, false);
+                    mUiHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, true);
+                        }
+                    }, 500);
                     for (int i = 0; i < mGp.syncTaskListAdapter.getCount(); i++) {
                         SyncTaskItem item = mGp.syncTaskListAdapter.getItem(i);
                         if (item.isChecked()) {
@@ -4354,6 +4370,9 @@ public class ActivityMain extends AppCompatActivity {
                                 };
                                 th.start();
                                 mGp.syncTaskListAdapter.notifyDataSetChanged();
+                                int last_pos = mGp.syncTaskListAdapter.getCount() - 1;
+                                int set_pos = c_pos > (last_pos - 3) ? c_pos:c_pos+3;//show next 2 items (moved item is set at c_pos+1)
+                                mGp.syncTaskView.smoothScrollToPosition(set_pos);
 
                                 if (item.getSyncTaskPosition() == 0) {
                                     setContextButtonVisibility(mContextSyncTaskViewMoveToUp,ImageButton.INVISIBLE);

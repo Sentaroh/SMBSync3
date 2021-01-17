@@ -1078,7 +1078,7 @@ public class TaskListImportExport {
     }
 
     final static private String CONFIG_FILE_NAME = "config.xml";
-    public static String saveTaskListToAppDirectory(Context c,
+    synchronized public static String saveTaskListToAppDirectory(Context c,
                                                     ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ArrayList<GroupListAdapter.GroupListItem>group_list) {
         try {
             SecretKey sk = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
