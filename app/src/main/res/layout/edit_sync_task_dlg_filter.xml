@@ -18,7 +18,7 @@
         android:id="@+id/sync_filter_file_detail_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
+        android:layout_marginLeft="20dp"
         android:orientation="vertical" >
 
         <CheckedTextView
@@ -80,7 +80,7 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="13dp"
+		android:layout_marginLeft="20dp"
 		android:orientation="vertical" >
 		<CheckedTextView
 			android:id="@+id/sync_filter_sub_directory_specific"
@@ -98,7 +98,7 @@
         android:id="@+id/sync_filter_sub_directory_detail_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="23dp"
+        android:layout_marginLeft="28dp"
         android:orientation="vertical" >
 
 	    <Button

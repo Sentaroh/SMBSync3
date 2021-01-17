@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="13dp"
+        android:layout_marginLeft="20dp"
         android:layout_weight="1"
         android:orientation="vertical"
         tools:ignore="RtlHardcoded" >
@@ -80,7 +80,7 @@
                 style="?android:attr/spinnerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginRight="5dp"
                 android:minHeight="36dp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -132,7 +132,7 @@
                 android:layout_marginRight="5dp"
                 android:minHeight="36dp"
                 android:paddingLeft="5dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="20dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 tools:ignore="RtlSymmetry" />
 
@@ -146,7 +146,7 @@
                     android:id="@+id/edit_sync_task_option_address_list_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="25dp"
                     android:orientation="vertical" >
                     <TextView
                         android:layout_width="wrap_content"
@@ -171,7 +171,7 @@
                 android:id="@+id/edit_sync_task_option_sync_allow_global_ip_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="20dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
                 android:text="@string/msgs_task_sync_task_sync_option_sync_allow_global_ip_address"
