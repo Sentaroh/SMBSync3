@@ -1302,7 +1302,7 @@ public class ActivityMain extends AppCompatActivity {
         } else if (mCurrentTab.equals(mTabNameGroup)) {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             menu.findItem(R.id.menu_top_scheduler).setVisible(false);
-            menu.findItem(R.id.menu_top_execute_group).setVisible(true);
+            menu.findItem(R.id.menu_top_execute_group).setVisible(false);
             menu.findItem(R.id.menu_top_show_hide_filter).setVisible(false);
             if (mGp.syncGroupListAdapter.isSelectMode()) {
                 menu.findItem(R.id.menu_top_execute_group).setTitle(R.string.msgs_menu_exec_group_selected);
