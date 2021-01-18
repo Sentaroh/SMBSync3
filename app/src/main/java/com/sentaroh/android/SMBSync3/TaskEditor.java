@@ -553,12 +553,13 @@ public class TaskEditor extends DialogFragment {
         ct_specific_file_type_audio.setChecked(sv.specific_file_type_audio);
         ct_specific_file_type_image.setChecked(sv.specific_file_type_image);
         ct_specific_file_type_video.setChecked(sv.specific_file_type_video);
-        if (sv.specific_file_type || sv.specific_file_type_audio || sv.specific_file_type_image || sv.specific_file_type_video || !sv.sync_file_filter_info.equals("")) {
+        if (sv.specific_file_type || sv.specific_file_type_audio || sv.specific_file_type_image || sv.specific_file_type_video ||
+                !sv.sync_file_filter_info.equals(mContext.getString(R.string.msgs_task_sync_task_dlg_file_filter_not_specified))) {
             performClickNoSound(ct_specific_file_type);
         }
 
         ct_specific_directory.setChecked(false);
-        if (sv.specific_diretory || !sv.sync_dir_filter_info.equals("")) {
+        if (sv.specific_diretory || !sv.sync_dir_filter_info.equals(mContext.getString(R.string.msgs_task_sync_task_dlg_dir_filter_not_specified))) {
             performClickNoSound(ct_specific_directory);
         }
 
@@ -769,6 +770,8 @@ public class TaskEditor extends DialogFragment {
                 else et_sync_folder_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             }
         });
+        ctv_show_password.setChecked(sfev.show_smb_passowrd);
+        if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
         et_sync_folder_share_name.setText(sfev.folder_smb_share);
 
@@ -882,7 +885,6 @@ public class TaskEditor extends DialogFragment {
         });
 
         setSyncFolderSmbDetailView(dialog, false);
-        ctv_sync_folder_edit_smb_detail.setChecked(false);
         ctv_sync_folder_edit_smb_detail.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -892,6 +894,8 @@ public class TaskEditor extends DialogFragment {
                 setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev);
             }
         });
+        ctv_sync_folder_edit_smb_detail.setChecked(sfev.show_smb_detail_settings);
+        setSyncFolderSmbDetailView(dialog, sfev.show_smb_detail_settings);
 
         final Button btn_sync_folder_edit_dir_rule = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_edit_smb_dir_keyword);
 //        if (sfev.is_source_folder) btn_sync_folder_edit_dir_rule.setVisibility(Button.GONE);
@@ -1563,7 +1567,7 @@ public class TaskEditor extends DialogFragment {
                 ctv_sync_folder_show_zip_password.setChecked(isChecked);
                 if (isChecked) {
                     et_zip_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                    ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
                 } else {
                     et_zip_pswd.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     String pswd=et_zip_pswd.getText().toString();
@@ -1571,21 +1575,29 @@ public class TaskEditor extends DialogFragment {
                     if (!pswd.equals(sfev.zip_file_password)) {
                         ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
                     } else {
-                        ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                        ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
                     }
                 }
             }
         });
+        ctv_sync_folder_show_zip_password.setChecked(sfev.show_zip_passowrd);
+        if (sfev.show_zip_passowrd) et_zip_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
 
+        if (!mGp.settingSecurityReinitZipPasswordValue) {
+            et_zip_pswd.setText(sfev.zip_file_password);
+            et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
+        }
         if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
             ll_zip_password_view.setVisibility(LinearLayout.GONE);
         } else {
             ll_zip_password_view.setVisibility(LinearLayout.VISIBLE);
+            if (!ctv_sync_folder_show_zip_password.isChecked()) {
+                String pswd=et_zip_pswd.getText().toString();
+                String pswd_conf=et_zip_conf_pswd.getText().toString();
+                if (!pswd.equals(pswd_conf)) ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
+            }
         }
-        if (!mGp.settingSecurityReinitZipPasswordValue) {
-            et_zip_pswd.setText(sfev.zip_file_password);
-            et_zip_conf_pswd.setText(sfev.zip_file_password);
-        }
+
         sp_zip_enc_method.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -1681,15 +1693,15 @@ public class TaskEditor extends DialogFragment {
             public void afterTextChanged(Editable s) {
                 if (s.length() > 0) {
                     if (s.toString().equals(sfev.zip_file_password)) {
-                        ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                        ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
                     } else {
-                        if (ctv_sync_folder_show_zip_password.isChecked()) ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                        if (ctv_sync_folder_show_zip_password.isChecked()) ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
                         else ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
                     }
 //                    CommonDialog.setViewEnabled(getActivity(), et_zip_conf_pswd, true);
 
                 } else {
-                    ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                    ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
 //                    CommonDialog.setViewEnabled(getActivity(), et_zip_conf_pswd, false);
                 }
                 checkSyncFolderValidation(dialog, sti, sfev);
@@ -2090,10 +2102,12 @@ public class TaskEditor extends DialogFragment {
         final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
         final Button btn_sync_folder_local_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_internal_directory_btn);
         final Button btn_sync_folder_smb_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_smb_directory_btn);
+        final CheckedTextView ctv_sync_folder_show_smb_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_smb_account_password);
 
         final EditText et_sync_folder_internal_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
         final EditText et_sync_folder_smb_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_directory_name);
 
+        final CheckedTextView ctv_sync_folder_edit_smb_detail = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_edit_smb_server_detail);
 
         final LinearLayout ll_dir_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_view);
         final LinearLayout ll_zip_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_view);
@@ -2104,6 +2118,8 @@ public class TaskEditor extends DialogFragment {
         final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
         final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
+        final LinearLayout ll_conf_pswd_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
+        final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
 
         final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_retention_period);
         final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_suffix_seqno);
@@ -2158,11 +2174,15 @@ public class TaskEditor extends DialogFragment {
 
             if (!nsfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
                 nsfev.zip_file_password = et_zip_pswd.getText().toString();
+                nsfev.zip_file_confirm_password = et_zip_conf_pswd.getText().toString();
             } else {
                 nsfev.zip_file_password = "";
+                nsfev.zip_file_confirm_password="";
             }
 
             if (mGp.settingSecurityReinitZipPasswordValue && et_zip_pswd.getText().toString().length()>0)  nsfev.isChanged=true;
+
+            nsfev.show_zip_passowrd=ctv_sync_folder_show_zip_password.isChecked();
 
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_ZIP;
         } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {//smb
@@ -2206,6 +2226,9 @@ public class TaskEditor extends DialogFragment {
                 nsfev.archive_file_name_suffix_digit=getArchiveSuffixOptionFromSpinner(sp_sync_suffix_option);
                 nsfev.archive_ignore_source_directory_hiearachy =ctv_ignore_source_directory_hierarchy.isChecked();
             }
+
+            nsfev.show_smb_detail_settings=ctv_sync_folder_edit_smb_detail.isChecked();
+            nsfev.show_smb_passowrd=ctv_sync_folder_show_smb_password.isChecked();
         }
         return nsfev;
     }
@@ -4011,6 +4034,7 @@ public class TaskEditor extends DialogFragment {
                 sfev.zip_enc_method = n_sti.getDestinationZipEncryptMethod();
                 sfev.zip_file_name = n_sti.getDestinationZipOutputFileName();
                 sfev.zip_file_password = n_sti.getDestinationZipPassword();
+                sfev.zip_file_confirm_password = n_sti.getDestinationZipPassword();
 
                 sfev.archive_file_name_template=n_sti.getDestinationArchiveRenameFileTemplate();
                 sfev.archive_retention_period=String.valueOf(n_sti.getDestinationArchiveRetentionPeriod());
@@ -5005,11 +5029,16 @@ public class TaskEditor extends DialogFragment {
         public boolean folder_smb_use_smb2_negotiation=false;
         public boolean folder_smb_use_port_number =false;
         public boolean folder_smb_use_account_name_password =false;
+        public boolean show_smb_detail_settings=false;
+        public boolean show_smb_passowrd=false;
 
         public String zip_comp_level = "";
         public String zip_enc_method = "";
         public String zip_file_name = "";
         public String zip_file_password = "";
+        public String zip_file_confirm_password = "";
+
+        public boolean show_zip_passowrd=false;
 
         public String archive_file_name_template= TEMPLATE_ORIGINAL_NAME;
         public String archive_retention_period=String.valueOf(ARCHIVE_RETAIN_FOR_A_DEFAULT);

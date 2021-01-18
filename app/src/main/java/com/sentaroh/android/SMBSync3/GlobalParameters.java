@@ -580,6 +580,31 @@ public class GlobalParameters {
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut3_confirmation_message), false);
     }
 
+    public void clearApplicationPasswordSetting(Context c) {
+        settingSecurityApplicationPasswordUseAppStartup = false;
+        settingSecurityApplicationPasswordUseEditTask = false;
+        settingSecurityApplicationPasswordUseExport = false;
+
+        settingSecurityHideShowSmbPasswordButton = false;
+        settingSecurityHideShowZipPasswordButton = false;
+
+        settingSecurityReinitSmbAccountPasswordValue=false;
+        settingSecurityReinitZipPasswordValue=false;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor editor=prefs.edit();
+        editor.putBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), settingSecurityApplicationPasswordUseAppStartup);
+        editor.putBoolean(c.getString(R.string.settings_security_application_password_use_edit_task), settingSecurityApplicationPasswordUseEditTask);
+        editor.putBoolean(c.getString(R.string.settings_security_application_password_use_export_task), settingSecurityApplicationPasswordUseExport);
+        editor.putBoolean(c.getString(R.string.settings_security_init_smb_account_password), settingSecurityReinitSmbAccountPasswordValue);
+        editor.putBoolean(c.getString(R.string.settings_security_init_zip_passowrd), settingSecurityReinitZipPasswordValue);
+
+        editor.putBoolean(c.getString(R.string.settings_security_hide_show_smb_passowrd), settingSecurityHideShowSmbPasswordButton);
+        editor.putBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), settingSecurityHideShowZipPasswordButton);
+        editor.commit();
+    }
+
+
     public void setScheduleEnabled(Context c, boolean enabled) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
         settingScheduleSyncEnabled=enabled;

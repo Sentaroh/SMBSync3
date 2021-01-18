@@ -165,8 +165,9 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/msgs_task_edit_sync_folder_dlg_zip_title_zip_password"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -181,12 +182,11 @@
             <LinearLayout
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:text="@string/msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password"
@@ -196,6 +196,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
                     android:ems="10"
                     android:inputType="textPassword" />
             </LinearLayout>

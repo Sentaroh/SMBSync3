@@ -296,6 +296,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                             public void positiveResponse(Context context, Object[] objects) {
                                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
                                 saveApplicationPasswordHashValue(prefs, "");
+                                mGp.clearApplicationPasswordSetting(context);
                                 setAppPswdStatus();
                             }
 
