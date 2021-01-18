@@ -63,7 +63,8 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     private CheckedTextView mCtvSettingInitSmbAccount=null;
 
     private CheckedTextView mCtvSettingInitZipPassword=null;
-    private CheckedTextView mCtvSettingHideShowPasswordButton=null;
+    private CheckedTextView mCtvSettingHideShowSmbPasswordButton =null;
+    private CheckedTextView mCtvSettingHideShowZipPasswordButton =null;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -108,7 +109,8 @@ public class ActivityPasswordSettings extends AppCompatActivity {
         mCtvSettingInitSmbAccount=(CheckedTextView)findViewById(R.id.preference_application_password_setting_init_smb_account_password);
 
         mCtvSettingInitZipPassword=(CheckedTextView)findViewById(R.id.preference_application_password_setting_init_zip_password);
-        mCtvSettingHideShowPasswordButton=(CheckedTextView)findViewById(R.id.preference_application_password_setting_init_hide_show_password);
+        mCtvSettingHideShowSmbPasswordButton =(CheckedTextView)findViewById(R.id.preference_application_password_setting_init_hide_smb_show_password);
+        mCtvSettingHideShowZipPasswordButton =(CheckedTextView)findViewById(R.id.preference_application_password_setting_init_hide_zip_show_password);
 
         mPreferenceView.setVisibility(LinearLayout.INVISIBLE);
     }
@@ -202,13 +204,23 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                 prefs.edit().putBoolean(mActivity.getString(R.string.settings_security_init_zip_passowrd), isChecked).commit();
             }
         });
-        mCtvSettingHideShowPasswordButton.setChecked(prefs.getBoolean(mActivity.getString(R.string.settings_security_hide_show_passowrd), false));
-        mCtvSettingHideShowPasswordButton.setOnClickListener(new View.OnClickListener() {
+        mCtvSettingHideShowSmbPasswordButton.setChecked(prefs.getBoolean(mActivity.getString(R.string.settings_security_hide_show_smb_passowrd), false));
+        mCtvSettingHideShowSmbPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean isChecked = !((CheckedTextView) v).isChecked();
                 ((CheckedTextView) v).setChecked(isChecked);
-                prefs.edit().putBoolean(mActivity.getString(R.string.settings_security_hide_show_passowrd), isChecked).commit();
+                prefs.edit().putBoolean(mActivity.getString(R.string.settings_security_hide_show_smb_passowrd), isChecked).commit();
+            }
+        });
+
+        mCtvSettingHideShowZipPasswordButton.setChecked(prefs.getBoolean(mActivity.getString(R.string.settings_security_hide_show_zip_passowrd), false));
+        mCtvSettingHideShowZipPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = !((CheckedTextView) v).isChecked();
+                ((CheckedTextView) v).setChecked(isChecked);
+                prefs.edit().putBoolean(mActivity.getString(R.string.settings_security_hide_show_zip_passowrd), isChecked).commit();
             }
         });
 
@@ -325,7 +337,8 @@ public class ActivityPasswordSettings extends AppCompatActivity {
             CommonDialog.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, false);
 
             CommonDialog.setViewEnabled(mActivity, mCtvSettingInitZipPassword, false);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowPasswordButton, false);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowSmbPasswordButton, false);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowZipPasswordButton, false);
         } else {
             mAppPswdMsg.setText(mActivity.getString(R.string.settings_security_application_password_created));
             CommonDialog.setViewEnabled(mActivity, mButtonCreate, false);
@@ -339,7 +352,8 @@ public class ActivityPasswordSettings extends AppCompatActivity {
             CommonDialog.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, true);
 
             CommonDialog.setViewEnabled(mActivity, mCtvSettingInitZipPassword, true);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowPasswordButton, true);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowSmbPasswordButton, true);
+            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowZipPasswordButton, true);
         }
     }
 

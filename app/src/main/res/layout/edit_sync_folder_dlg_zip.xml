@@ -150,6 +150,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <CheckedTextView
+                android:id="@+id/edit_sync_folder_dlg_ctv_show_zip_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_task_edit_sync_folder_dlg_show_password"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:ignore="RtlHardcoded" />
             <LinearLayout
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_password_view"
                 android:layout_width="match_parent"
@@ -190,15 +199,6 @@
                     android:ems="10"
                     android:inputType="textPassword" />
             </LinearLayout>
-            <CheckedTextView
-                android:id="@+id/edit_sync_folder_dlg_ctv_show_zip_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center_vertical"
-                android:text="@string/msgs_task_edit_sync_folder_dlg_show_password"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:ignore="RtlHardcoded" />
 
         </LinearLayout>
 

@@ -74,9 +74,7 @@
         <string name="msgs_log_management_title">Log-Verwaltung</string>
         <string name="settings_mgt_dir">einstellungen_mgt_dir</string>
         <string name="settings_mgt_dir_title">Standort der Verwaltungsdateien</string>
-    <!-- Main -->
-        <string name="msgs_auto_sync_task_not_found">Auto-Sync-Aufgabe nicht gefunden.</string>
-        <string name="msgs_add_sync_profile">Sync-Aufgabe hinzufügen</string>
+    <!-- Application passowrd -->
         <string name="msgs_security_application_password_create_title">Anwendungskennwort erstellen</string>
         <string name="msgs_security_application_password_create_min_length_is_4_digit">Das Passwort benötigt 4 Zeichen oder mehr.</string>
         <string name="msgs_security_application_password_create_forget_recovery">Wenn Sie Ihr Passwort vergessen haben, initialisieren Sie bitte die Anwendung oder installieren Sie sie neu.</string>
@@ -88,6 +86,11 @@
         <string name="msgs_security_application_password_auth_title">Passwortauthentifizierung der Anwendung</string>
         <string name="msgs_security_application_password_auth_specify_password">Bitte geben Sie das Passwort für die Anwendung an</string>
         <string name="msgs_security_application_password_auth_wrong_password_specified">Das Passwort ist falsch.</string>
+        <string name="msgs_security_application_password_authentaication_error">Application password authentication error</string>
+        <string name="msgs_security_application_password_creation_error">Application password creation error</string>
+    <!-- Main -->
+        <string name="msgs_auto_sync_task_not_found">Auto-Sync-Aufgabe nicht gefunden.</string>
+        <string name="msgs_add_sync_profile">Sync-Aufgabe hinzufügen</string>
         <string name="msgs_audit_hostname_not_spec">Geben Sie den Namen oder die IP-Adresse des Remote-Servers an.</string>
         <string name="msgs_audit_hostport_not_spec">Geben Sie die Port-Nummer des Remote-Servers an.</string>
         <string name="msgs_audit_msgs_local_dir">Der Verzeichnisname enthält das Zeichen %s.  Ungültiges Zeichen entfernt.</string>
@@ -716,6 +719,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Den Namen des Zeitplans duplizieren.</string>
         <string name="msgs_schedule_confirm_msg_nosave">Der Zeitplan hat sich geändert.  Beenden ohne zu speichern?</string>
         <string name="msgs_schedule_rename_schedule">Zeitplan umbenennen</string>
+        <string name="msgs_schedule_rename_schedule_error">renameSchedule error, schedule item can not be found.</string>
         <string name="msgs_schedule_list_edit_no_schedule">Drücken Sie die Schaltfläche Hinzufügen, um einen neuen Zeitplan zu erstellen.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Die Synchronisation des Zeitplans wird nicht durchgeführt, da der Zeitplan deaktiviert ist. Um die Synchronisation des Zeitplans durchzuführen, tippen Sie auf das Symbol für den Zeitplan oben auf dem Bildschirm, um ihn zu aktivieren.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Möchten Sie den Zeitplan aktivieren?</string>
@@ -914,14 +918,16 @@
         <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
         <string name="settings_security_application_password_use_export_task_title">Anwendungspasswort-Authentifizierung durchführen, wenn \"Aufgabenliste exportieren\".</string>
         <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
-        <string name="settings_security_init_smb_account_password_title">Ausblenden des gespeicherten Kontonamens und Passworts beim Bearbeiten des SMB-Ordners</string>
+        <string name="settings_security_init_smb_account_password_title">Geben Sie den Kontonamen und das Kennwort im Feld "SMB-Ordner bearbeiten" erneut ein</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
         <string name="settings_security_use_auth_timeout_title">Setzen Sie die Gültigkeitsdauer der Passwortauthentifizierung auf 30 Minuten</string>
         <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
-        <string name="settings_security_init_zip_passowrd_title">Gespeicherte Kennwörter beim Bearbeiten eines ZIP-Ordners ausblenden</string>
+        <string name="settings_security_init_zip_passowrd_title">Erneute Eingabe des Passworts beim Bearbeiten eines ZIP-Ordners</string>
         <string name="settings_security_init_zip_passowrd">settings_security_init_zip_passowrd</string>
-        <string name="settings_security_hide_show_passowrd_title">Zeigen Sie die Schaltfläche \"Passwort anzeigen\" auf dem Bildschirm \"Synchronisierungsaufgabe bearbeiten\" nicht an</string>
-        <string name="settings_security_hide_show_passowrd">settings_security_hide_show_passowrd</string>
+        <string name="settings_security_hide_show_smb_passowrd_title">Zeigen Sie die Schaltfläche \"Passwort anzeigen\" auf dem Bildschirm \"Synchronisierungsaufgabe bearbeiten\" nicht an</string>
+        <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
+        <string name="settings_security_hide_show_zip_passowrd_title">Zeigen Sie die Schaltfläche \"Passwort anzeigen\" auf dem Bildschirm \"Synchronisierungsaufgabe bearbeiten\" nicht an</string>
+        <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">App im Hochformat anzeigen</string>
         <string name="settings_device_orientation_portrait_title">Porträt-Orientierung erzwingen</string>

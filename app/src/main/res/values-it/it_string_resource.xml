@@ -74,9 +74,7 @@
         <string name="msgs_log_management_title">Gestire i file di registro</string>
         <string name="settings_mgt_dir">settings_mgt_dir</string>
         <string name="settings_mgt_dir_title">Posizione dei file di gestione</string>
-    <!-- Main -->
-        <string name="msgs_auto_sync_task_not_found">Auto sync task non trovato.</string>
-        <string name="msgs_add_sync_profile">Aggiungi Sync task</string>
+    <!-- Application passowrd -->
         <string name="msgs_security_application_password_create_title">Crea App password</string>
         <string name="msgs_security_application_password_create_min_length_is_4_digit">La password richiede 4 caratteri o più.</string>
         <string name="msgs_security_application_password_create_forget_recovery">Se dimentichi la password per favore resetta o reinstalla l\'applicazione.</string>
@@ -88,6 +86,11 @@
         <string name="msgs_security_application_password_auth_title">Password autenticazione app</string>
         <string name="msgs_security_application_password_auth_specify_password">Per favore specifica app password</string>
         <string name="msgs_security_application_password_auth_wrong_password_specified">Password non corretta.</string>
+        <string name="msgs_security_application_password_authentaication_error">Application password authentication error</string>
+        <string name="msgs_security_application_password_creation_error">Application password creation error</string>
+    <!-- Main -->
+        <string name="msgs_auto_sync_task_not_found">Auto sync task non trovato.</string>
+        <string name="msgs_add_sync_profile">Aggiungi Sync task</string>
         <string name="msgs_audit_hostname_not_spec">Specifica nome del server remoto o indirizzo IP.</string>
         <string name="msgs_audit_hostport_not_spec">Specifica numero porta del server remoto.</string>
         <string name="msgs_audit_msgs_local_dir">Il nome della cartella locale contiene il carattere %s. Carattere non valido rimosso.</string>
@@ -716,6 +719,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Duplicare il nome del programma.</string>
         <string name="msgs_schedule_confirm_msg_nosave">Il programma è cambiato. Uscire senza salvare?</string>
         <string name="msgs_schedule_rename_schedule">Rinominare il programma previsionale</string>
+        <string name="msgs_schedule_rename_schedule_error">renameSchedule error, schedule item can not be found.</string>
         <string name="msgs_schedule_list_edit_no_schedule">Premere il pulsante add per creare un nuovo programma.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">La sincronizzazione pianificata non è stata eseguita perché la pianificazione è disabilitata. Per attivare una sincronizzazione pianificata, toccare l\'interruttore a levetta davanti alla voce pianificata.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Si vuole abilitare la pianificazione?</string>
@@ -914,14 +918,16 @@
         <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
         <string name="settings_security_application_password_use_export_task_title">Richiesta di password per l\'esportazione delle impostazioni di sincronizzazione</string>
         <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
-        <string name="settings_security_init_smb_account_password_title">Nascondere il nome del conto e la password salvati durante la modifica delle impostazioni di sincronizzazione SMB</string>
+        <string name="settings_security_init_smb_account_password_title">Inserire nuovamente il nome del conto e la password nella cartella Modifica SMB</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
         <string name="settings_security_use_auth_timeout_title">Richiedere all\'utente di riautenticare dopo 30 minuti</string>
         <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
-        <string name="settings_security_init_zip_passowrd_title">Nascondere le password salvate durante la modifica di una cartella ZIP</string>
+        <string name="settings_security_init_zip_passowrd_title">Reinserire la password quando si modifica una cartella ZIP</string>
         <string name="settings_security_init_zip_passowrd">settings_security_init_zip_passowrd</string>
-        <string name="settings_security_hide_show_passowrd_title">Non visualizzare il pulsante \"Mostra password\" nella schermata Modifica sincronizzazione Attività</string>
-        <string name="settings_security_hide_show_passowrd">settings_security_hide_show_passowrd</string>
+        <string name="settings_security_hide_show_smb_passowrd_title">Non visualizzare il pulsante \"Mostra password\" nella schermata Modifica sincronizzazione Attività</string>
+        <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
+        <string name="settings_security_hide_show_zip_passowrd_title">Non visualizzare il pulsante \"Mostra password\" nella schermata Modifica sincronizzazione Attività</string>
+        <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Visualizzazione dell\'applicazione in modalità verticale</string>
         <string name="settings_device_orientation_portrait_title">Modalità Ritratto di forza</string>

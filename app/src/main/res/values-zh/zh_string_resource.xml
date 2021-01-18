@@ -74,9 +74,7 @@
         <string name="msgs_log_management_title">日志管理</string>
         <string name="settings_mgt_dir">设置_mgt_dir</string>
         <string name="settings_mgt_dir_title">管理文件的位置</string>
-    <!-- Main -->
-        <string name="msgs_auto_sync_task_not_found">未找到自动同步任务。</string>
-        <string name="msgs_add_sync_profile">添加同步任务</string>
+    <!-- Application passowrd -->
         <string name="msgs_security_application_password_create_title">创建应用密码</string>
         <string name="msgs_security_application_password_create_min_length_is_4_digit">密码要求4个字符或以上。</string>
         <string name="msgs_security_application_password_create_forget_recovery">如果您忘记密码，请初始化或重新安装应用程序。</string>
@@ -88,6 +86,11 @@
         <string name="msgs_security_application_password_auth_title">应用程序密码验证</string>
         <string name="msgs_security_application_password_auth_specify_password">请指定应用程序密码</string>
         <string name="msgs_security_application_password_auth_wrong_password_specified">密码不正确。</string>
+        <string name="msgs_security_application_password_authentaication_error">Application password authentication error</string>
+        <string name="msgs_security_application_password_creation_error">Application password creation error</string>
+    <!-- Main -->
+        <string name="msgs_auto_sync_task_not_found">未找到自动同步任务。</string>
+        <string name="msgs_add_sync_profile">添加同步任务</string>
         <string name="msgs_audit_hostname_not_spec">指定远程服务器的名称或IP地址。</string>
         <string name="msgs_audit_hostport_not_spec">指定远程服务器的端口号。</string>
         <string name="msgs_audit_msgs_local_dir">目录名包含%s字符。 删除无效字符。</string>
@@ -717,6 +720,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">复制计划表名称。</string>
         <string name="msgs_schedule_confirm_msg_nosave">计划表已更改。 不保存而退出？</string>
         <string name="msgs_schedule_rename_schedule">重命名计划表</string>
+        <string name="msgs_schedule_rename_schedule_error">renameSchedule error, schedule item can not be found.</string>
         <string name="msgs_schedule_list_edit_no_schedule">按添加按钮创建新的计划表。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">由于计划表被禁用，所以不会执行计划同步。要执行日程同步，请点击屏幕顶部的日程图标以启用它。</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">您要启用计划表吗？</string>
@@ -915,14 +919,16 @@
         <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
         <string name="settings_security_application_password_use_export_task_title">在 \"导出任务列表\" 时，进行应用密码认证</string>
         <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
-        <string name="settings_security_init_smb_account_password_title">隐藏保存的账户名和密码 当编辑SMB文件夹时</string>
+        <string name="settings_security_init_smb_account_password_title">在 "编辑SMB "文件夹中重新输入账户名和密码。</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
         <string name="settings_security_use_auth_timeout_title">设置密码验证的有效时间为30分钟</string>
         <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
-        <string name="settings_security_init_zip_passowrd_title">编辑ZIP文件夹时，隐藏保存的密码</string>
+        <string name="settings_security_init_zip_passowrd_title">编辑ZIP文件夹时重新输入密码。</string>
         <string name="settings_security_init_zip_passowrd">settings_security_init_zip_passowrd</string>
-        <string name="settings_security_hide_show_passowrd_title">不要在 \"编辑同步任务 \"屏幕上显示 \"显示密码 \"按钮。</string>
-        <string name="settings_security_hide_show_passowrd">settings_security_hide_show_passowrd</string>
+        <string name="settings_security_hide_show_smb_passowrd_title">不要在 \"编辑同步任务 \"屏幕上显示 \"显示密码 \"按钮。</string>
+        <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
+        <string name="settings_security_hide_show_zip_passowrd_title">不要在 \"编辑同步任务 \"屏幕上显示 \"显示密码 \"按钮。</string>
+        <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">以纵向显示应用程序</string>
         <string name="settings_device_orientation_portrait_title">逼真的人像方向</string>

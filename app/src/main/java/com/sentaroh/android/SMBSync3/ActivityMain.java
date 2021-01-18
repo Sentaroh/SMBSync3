@@ -3139,8 +3139,8 @@ public class ActivityMain extends AppCompatActivity {
                     }
                 }
                 if (si==null) {
-                    mUtil.addLogMsg("E","", "renameSchedule error, schedule item can not be found.");
-                    mUtil.showCommonDialog(false, "E", "renameSchedule error, schedule item can not be found.", "", null);
+                    mUtil.addLogMsg("E","", mContext.getString(R.string.msgs_schedule_rename_schedule_error));
+                    mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_rename_schedule_error), "", null);
                 } else {
                     renameSchedule(si, ntfy);
                 }

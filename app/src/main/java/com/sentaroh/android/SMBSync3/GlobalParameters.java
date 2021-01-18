@@ -24,7 +24,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
-import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -193,7 +192,8 @@ public class GlobalParameters {
     public boolean settingSecurityApplicationPasswordUseExport = false;
     public boolean settingSecurityReinitSmbAccountPasswordValue = false;
     public boolean settingSecurityReinitZipPasswordValue = false;
-    public boolean settingSecurityHideShowPasswordButton = false;
+    public boolean settingSecurityHideShowSmbPasswordButton = false;
+    public boolean settingSecurityHideShowZipPasswordButton = false;
 
     public boolean appPasswordAuthValidated=false;
     public long appPasswordAuthLastTime=0L;
@@ -484,8 +484,11 @@ public class GlobalParameters {
         if (!prefs.contains(c.getString(R.string.settings_security_init_zip_passowrd)))
             pe.putBoolean(c.getString(R.string.settings_security_init_zip_passowrd), false);
 
-        if (!prefs.contains(c.getString(R.string.settings_security_hide_show_passowrd)))
-            pe.putBoolean(c.getString(R.string.settings_security_hide_show_passowrd), false);
+        if (!prefs.contains(c.getString(R.string.settings_security_hide_show_smb_passowrd)))
+            pe.putBoolean(c.getString(R.string.settings_security_hide_show_smb_passowrd), false);
+
+        if (!prefs.contains(c.getString(R.string.settings_security_hide_show_zip_passowrd)))
+            pe.putBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), false);
 
         if (!prefs.contains(c.getString(R.string.settings_wifi_lock)))
             pe.putBoolean(c.getString(R.string.settings_wifi_lock), true);
@@ -558,7 +561,8 @@ public class GlobalParameters {
         settingSecurityReinitSmbAccountPasswordValue = prefs.getBoolean(c.getString(R.string.settings_security_init_smb_account_password), false);
 
         settingSecurityReinitZipPasswordValue = prefs.getBoolean(c.getString(R.string.settings_security_init_zip_passowrd), false);
-        settingSecurityHideShowPasswordButton = prefs.getBoolean(c.getString(R.string.settings_security_hide_show_passowrd), false);
+        settingSecurityHideShowSmbPasswordButton = prefs.getBoolean(c.getString(R.string.settings_security_hide_show_smb_passowrd), false);
+        settingSecurityHideShowZipPasswordButton = prefs.getBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), false);
 
         settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULE_ENABLED_KEY, true);
 

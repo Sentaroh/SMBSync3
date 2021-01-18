@@ -616,8 +616,10 @@ public class ActivitySettings extends PreferenceActivity {
                         contents_string+="\n-"+c.getString(R.string.settings_security_init_smb_account_password_title);
                     if (shared_pref.getBoolean(c.getString(R.string.settings_security_init_zip_passowrd), false))
                         contents_string+="\n-"+c.getString(R.string.settings_security_init_zip_passowrd_title);
-                    if (shared_pref.getBoolean(c.getString(R.string.settings_security_hide_show_passowrd), false))
-                        contents_string+="\n-"+c.getString(R.string.settings_security_hide_show_passowrd_title);
+                    if (shared_pref.getBoolean(c.getString(R.string.settings_security_hide_show_smb_passowrd), false))
+                        contents_string+="\n-"+c.getString(R.string.settings_security_hide_show_smb_passowrd_title);
+                    if (shared_pref.getBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), false))
+                        contents_string+="\n-"+c.getString(R.string.settings_security_hide_show_zip_passowrd_title);
                 }
                 pref_key.setSummary(contents_string);
             }

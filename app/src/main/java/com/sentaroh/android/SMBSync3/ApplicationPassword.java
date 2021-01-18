@@ -213,13 +213,18 @@ public class ApplicationPassword {
                     pw.flush();
                     pw.close();
 
-                    mUtil.showCommonDialog(false, "E","Application password authentication error",sw.toString(), null);
-                    mUtil.addLogMsg("E","", "Application password authentication error");
+                    mUtil.showCommonDialog(false, "E", mActivity.getString(R.string.msgs_security_application_password_authentaication_error), sw.toString(), null);
+                    mUtil.addLogMsg("E","", mActivity.getString(R.string.msgs_security_application_password_authentaication_error));
                     mUtil.addLogMsg("E","", sw.toString());
                 }
                 if (decrypted_hv!=null && decrypted_hv.equals(input_hv)) {
-                    gp.appPasswordAuthValidated=true;
-                    gp.appPasswordAuthLastTime= System.currentTimeMillis();
+                    if (resource_id==ApplicationPassword.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION) {
+                        gp.appPasswordAuthValidated=false;
+                        gp.appPasswordAuthLastTime= 0L;
+                    } else {
+                        gp.appPasswordAuthValidated=true;
+                        gp.appPasswordAuthLastTime= System.currentTimeMillis();
+                    }
                     dialog.dismiss();
                     if (notify_check!=null) notify_check.notifyToListener(true,null);
                 } else {
@@ -326,8 +331,8 @@ public class ApplicationPassword {
                     pw.flush();
                     pw.close();
 
-                    mUtil.showCommonDialog(false,"E","Application password creation error",sw.toString(), null);
-                    mUtil.addLogMsg("E","","Application password creation error");
+                    mUtil.showCommonDialog(false,"E",mActivity.getString(R.string.msgs_security_application_password_creation_error),sw.toString(), null);
+                    mUtil.addLogMsg("E","",mActivity.getString(R.string.msgs_security_application_password_creation_error));
                     mUtil.addLogMsg("E","",sw.toString());
 
                     ntfy_create.notifyToListener(false, null);

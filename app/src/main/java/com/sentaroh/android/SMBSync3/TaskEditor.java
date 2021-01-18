@@ -758,7 +758,7 @@ public class TaskEditor extends DialogFragment {
         });
 
         CommonDialog.setViewEnabled(getActivity(), ctv_show_password, ctv_sync_folder_use_pswd.isChecked());
-        if (mGp.settingSecurityHideShowPasswordButton) ctv_show_password.setVisibility(CheckedTextView.GONE);
+        if (mGp.settingSecurityHideShowSmbPasswordButton) ctv_show_password.setVisibility(CheckedTextView.GONE);
         else ctv_show_password.setVisibility(CheckedTextView.VISIBLE);
         ctv_show_password.setOnClickListener(new OnClickListener() {
             @Override
@@ -1463,7 +1463,7 @@ public class TaskEditor extends DialogFragment {
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
         final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
 
-        if (mGp.settingSecurityHideShowPasswordButton) ctv_sync_folder_show_zip_password.setVisibility(CheckedTextView.GONE);
+        if (mGp.settingSecurityHideShowZipPasswordButton) ctv_sync_folder_show_zip_password.setVisibility(CheckedTextView.GONE);
         else ctv_sync_folder_show_zip_password.setVisibility(CheckedTextView.VISIBLE);
 
         final Spinner sp_sync_folder_zip_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_storage_selector);
@@ -1554,6 +1554,7 @@ public class TaskEditor extends DialogFragment {
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
 //        final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
         final LinearLayout ll_conf_pswd_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
+        ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
 
         ctv_sync_folder_show_zip_password.setOnClickListener(new OnClickListener() {
             @Override
@@ -1565,7 +1566,13 @@ public class TaskEditor extends DialogFragment {
                     ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
                 } else {
                     et_zip_pswd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
+                    String pswd=et_zip_pswd.getText().toString();
+                    String conf_pswd=et_zip_conf_pswd.getText().toString();
+                    if (!pswd.equals(sfev.zip_file_password)) {
+                        ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
+                    } else {
+                        ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                    }
                 }
             }
         });
@@ -1672,8 +1679,19 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0) CommonDialog.setViewEnabled(getActivity(), et_zip_conf_pswd, true);
-                else CommonDialog.setViewEnabled(getActivity(), et_zip_conf_pswd, false);
+                if (s.length() > 0) {
+                    if (s.toString().equals(sfev.zip_file_password)) {
+                        ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                    } else {
+                        if (ctv_sync_folder_show_zip_password.isChecked()) ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+                        else ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
+                    }
+//                    CommonDialog.setViewEnabled(getActivity(), et_zip_conf_pswd, true);
+
+                } else {
+                    ll_conf_pswd_view.setVisibility(LinearLayout.GONE);
+//                    CommonDialog.setViewEnabled(getActivity(), et_zip_conf_pswd, false);
+                }
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
         });

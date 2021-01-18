@@ -74,9 +74,7 @@
         <string name="msgs_log_management_title">Manage Log Files</string>
         <string name="settings_mgt_dir">settings_mgt_dir</string>
         <string name="settings_mgt_dir_title">Location of Management Files</string>
-    <!-- Main -->
-        <string name="msgs_auto_sync_task_not_found">Auto sync task not found.</string>
-        <string name="msgs_add_sync_profile">Add Sync task</string>
+    <!-- Application passowrd -->
         <string name="msgs_security_application_password_create_title">Create App password</string>
         <string name="msgs_security_application_password_create_min_length_is_4_digit">Password requires 4 characters or more.</string>
         <string name="msgs_security_application_password_create_forget_recovery">If you forget your password please initialize or reinstall the application.</string>
@@ -89,6 +87,11 @@
         <string name="msgs_security_application_password_auth_title">App password authentication</string>
         <string name="msgs_security_application_password_auth_specify_password">Please specify app password</string>
         <string name="msgs_security_application_password_auth_wrong_password_specified">Password is incorrect.</string>
+        <string name="msgs_security_application_password_authentaication_error">Application password authentication error</string>
+        <string name="msgs_security_application_password_creation_error">Application password creation error</string>
+    <!-- Main -->
+        <string name="msgs_auto_sync_task_not_found">Auto sync task not found.</string>
+        <string name="msgs_add_sync_profile">Add Sync task</string>
         <string name="msgs_audit_hostname_not_spec">Specify remote server name or IP address.</string>
         <string name="msgs_audit_hostport_not_spec">Specify port number of remote server.</string>
         <string name="msgs_audit_msgs_local_dir">Local directory name contains the %s character. Invalid character removed.</string>
@@ -712,6 +715,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">Duplicate schedule name.</string>
         <string name="msgs_schedule_confirm_msg_nosave">The schedule has changed. Exit without saving?</string>
         <string name="msgs_schedule_rename_schedule">Rename schedule</string>
+        <string name="msgs_schedule_rename_schedule_error">renameSchedule error, schedule item can not be found.</string>
         <string name="msgs_schedule_list_edit_no_schedule">Press add button to create new schedule.</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">Scheduled sync was not performed because the schedule is disabled. To enable a scheduled sync, tap the toggle switch in front of the scheduled item.</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">Do you want to enable the schedule?</string>
@@ -910,14 +914,16 @@
         <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
         <string name="settings_security_application_password_use_export_task_title">Prompt for password when exporting sync settings</string>
         <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
-        <string name="settings_security_init_smb_account_password_title">Hide the saved account name and password when editing the SMB sync settings</string>
+        <string name="settings_security_init_smb_account_password_title">Re-enter the account name and password in the Edit SMB folder.</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
         <string name="settings_security_use_auth_timeout_title">Require user to reauthenticate after 30 minutes</string>
         <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
-        <string name="settings_security_init_zip_passowrd_title">Hide saved passwords when editing a ZIP folder</string>
+        <string name="settings_security_init_zip_passowrd_title">Re-enter the password when editing a ZIP folder.</string>
         <string name="settings_security_init_zip_passowrd">settings_security_init_zip_passowrd</string>
-        <string name="settings_security_hide_show_passowrd_title">Do not display the \"Show Password\" button on the Edit Synchronization Task screen</string>
-        <string name="settings_security_hide_show_passowrd">settings_security_hide_show_passowrd</string>
+        <string name="settings_security_hide_show_smb_passowrd_title">Do not display the \"Show Password\" button on the Edit SMB folder screen</string>
+        <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
+        <string name="settings_security_hide_show_zip_passowrd_title">Do not display the \"Show Password\" button on the Edit ZIP folder screen</string>
+        <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Display app in portrait mode</string>
         <string name="settings_device_orientation_portrait_title">Force Portrait Mode</string>

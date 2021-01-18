@@ -74,9 +74,7 @@
         <string name="msgs_log_management_title">Log管理</string>
         <string name="settings_mgt_dir">settings_mgt_dir</string>
         <string name="settings_mgt_dir_title">管理ファイルの保存ディレクトリ</string>
-    <!-- Main -->
-        <string name="msgs_auto_sync_task_not_found">自動同期タスクがありません。</string>
-        <string name="msgs_add_sync_profile">同期タスクの追加</string>
+    <!-- Application passowrd -->
         <string name="msgs_security_application_password_create_title">アプリケーションパスワードの作成</string>
         <string name="msgs_security_application_password_create_min_length_is_4_digit">パスワードは４文字以上必要です</string>
         <string name="msgs_security_application_password_create_forget_recovery">パスワードを忘れた場合はアプリケーションの初期化または再インストールしてください。</string>
@@ -88,6 +86,11 @@
         <string name="msgs_security_application_password_auth_title">アプリケーションパスワード認証</string>
         <string name="msgs_security_application_password_auth_specify_password">パスワードを入力してください</string>
         <string name="msgs_security_application_password_auth_wrong_password_specified">パスワードが違っています</string>
+        <string name="msgs_security_application_password_authentaication_error">Application password authentication error</string>
+        <string name="msgs_security_application_password_creation_error">Application password creation error</string>
+    <!-- Main -->
+        <string name="msgs_auto_sync_task_not_found">自動同期タスクがありません。</string>
+        <string name="msgs_add_sync_profile">同期タスクの追加</string>
         <string name="msgs_audit_hostname_not_spec">名前またはアドレスを入力してください。</string>
         <string name="msgs_audit_hostport_not_spec">ポート番号を入力してください。</string>
         <string name="msgs_audit_msgs_local_dir">ディレクトリに%s文字が含まれています、無効な文字を消しました。</string>
@@ -519,7 +522,7 @@
         <string name="msgs_menu_kill">強制終了</string>
         <string name="msgs_menu_list_storage_info">システム情報</string>
         <string name="msgs_menu_request_all_file_access">All File Access許可</string>
-        <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化の表示</string>
+        <string name="msgs_menu_show_battery_optimization_screen">バッテリー最適化</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[アーカイブがユーザーによりキャンセルされました]</string>
         <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">ファイルの撮影日時がExif情報から取得できませんでした。ファイルの最終更新時刻(%1$s)を撮影日時として処理を継続してよろしいでしょうか？ ファイル=%2$s\n(確認が不要な場合は同期タスクのアーカイブオプションで「確認」のチェックを外してください)</string>
@@ -711,6 +714,7 @@
         <string name="msgs_schedule_confirm_msg_rename_duplicate_name">スケジュール名が重複しています。</string>
         <string name="msgs_schedule_confirm_msg_nosave">スケジュールが変更されています、保存せず終了しますか。</string>
         <string name="msgs_schedule_rename_schedule">スケジュールの改名</string>
+        <string name="msgs_schedule_rename_schedule_error">renameSchedule error, schedule item can not be found.</string>
         <string name="msgs_schedule_list_edit_no_schedule">追加ボタンを押してスケジュールを作成してください。</string>
         <string name="msgs_schedule_list_edit_scheduler_disabled">スケジュールが無効になっているためスケジュール同期は実行されません。スケジュール同期を行うには画面上部のスケジュールアイコンをタップして有効にしてください。</string>
         <string name="msgs_schedule_list_edit_confirm_scheduler_to_enabled">スケジュールを有効にしますか？</string>
@@ -904,14 +908,16 @@
         <string name="settings_security_application_password_use_edit_task">settings_security_application_password_use_edit_task</string>
         <string name="settings_security_application_password_use_export_task_title">「タスクリスト保存」する時にパスワード認証を行う</string>
         <string name="settings_security_application_password_use_export_task">settings_security_application_password_use_export_task</string>
-        <string name="settings_security_init_smb_account_password_title">SMBフォルダーの編集で保存されたアカウント名とパスワードを非表示にする</string>
+        <string name="settings_security_init_smb_account_password_title">SMBフォルダーの編集でアカウント名とパスワードを再入力する</string>
         <string name="settings_security_init_smb_account_password">settings_security_init_smb_account_password</string>
         <string name="settings_security_use_auth_timeout_title">認証の有効時間を３０分にする</string>
         <string name="settings_security_use_auth_timeout">settings_security_use_auth_timeout</string>
-        <string name="settings_security_init_zip_passowrd_title">ZIPフォルダーの編集で保存されたパスワードを非表示にする</string>
+        <string name="settings_security_init_zip_passowrd_title">ZIPフォルダーの編集でパスワードを再入力する</string>
         <string name="settings_security_init_zip_passowrd">settings_security_init_zip_passowrd</string>
-        <string name="settings_security_hide_show_passowrd_title">同期タスク編集画面の「パスワードを表示」ボタンを表示しない</string>
-        <string name="settings_security_hide_show_passowrd">settings_security_hide_show_passowrd</string>
+        <string name="settings_security_hide_show_smb_passowrd_title">SMBフォルダー編集画面の「パスワードの表示」ボタンを表示しない</string>
+        <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
+        <string name="settings_security_hide_show_zip_passowrd_title">ZIPフォルダー編集画面の「パスワードの表示」ボタンを表示しない</string>
+        <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">端末の向きをポートレイトに固定する</string>
         <string name="settings_device_orientation_portrait_title">端末の向き</string>
