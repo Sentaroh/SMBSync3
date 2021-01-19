@@ -149,9 +149,9 @@ public class SmbServerScan {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (isValidScanAddress(dialog)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
                 }
             }
         });
@@ -164,9 +164,9 @@ public class SmbServerScan {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (isValidScanAddress(dialog)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
                 }
             }
         });
@@ -179,9 +179,9 @@ public class SmbServerScan {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (isValidScanAddress(dialog)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
                 }
             }
         });
@@ -194,9 +194,9 @@ public class SmbServerScan {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (isValidScanAddress(dialog)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
                 }
             }
         });
@@ -209,14 +209,14 @@ public class SmbServerScan {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (isValidScanAddress(dialog)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_scan, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
                 }
             }
         });
 
-        CommonDialog.setViewEnabled(mActivity, btn_scan, true);
+        CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
         tvmsg.setText("");
 
         final ListView lv = (ListView) dialog.findViewById(R.id.scan_remote_ntwk_scan_result_list);
@@ -324,14 +324,14 @@ public class SmbServerScan {
         final Button btn_refresh=(Button)dialog.findViewById(R.id.scan_smb_server_selector_dlg_btn_refresh_share_list);
 
         final Button btn_ok=(Button)dialog.findViewById(R.id.scan_smb_server_selector_dlg_btn_ok);
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.scan_smb_server_selector_dlg_btn_cancel);
 
         CommonDialog.setDlgBoxSizeLimit(dialog,true);
 
         dlg_use_ip_addr.setChecked(true);
         if (scan_result.server_smb_name.equals("")) {
-            CommonDialog.setViewEnabled(mActivity, dlg_use_host_name, false);
+            CommonUtilities.setViewEnabled(mActivity, dlg_use_host_name, false);
         }
         dlg_smb_host_selcted.setText(scan_result.server_smb_ip_addr);
         dlg_smb_host_rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -346,18 +346,18 @@ public class SmbServerScan {
         if (scan_result.smb23_available) dlg_use_smb23.setChecked(true);
         else {
             if (scan_result.smb1_available) {
-                CommonDialog.setViewEnabled(mActivity, dlg_use_smb1, true);
+                CommonUtilities.setViewEnabled(mActivity, dlg_use_smb1, true);
                 dlg_use_smb1.setChecked(true);
             }
-            if (!scan_result.smb23_available) CommonDialog.setViewEnabled(mActivity, dlg_use_smb23, false);
+            if (!scan_result.smb23_available) CommonUtilities.setViewEnabled(mActivity, dlg_use_smb23, false);
         }
         scanSmbServerSelectSmbServerCreateShareSelector(dialog, scan_result, share_list_adapter);
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         dlg_smb_share_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 dlg_msg.setText("");
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -365,7 +365,7 @@ public class SmbServerScan {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 dlg_use_smb23.setChecked(!b);
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 scanSmbServerSelectSmbServerCreateShareSelector(dialog, scan_result, share_list_adapter);
             }
         });
@@ -374,7 +374,7 @@ public class SmbServerScan {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 dlg_use_smb1.setChecked(!b);
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 scanSmbServerSelectSmbServerCreateShareSelector(dialog, scan_result, share_list_adapter);
             }
         });
@@ -387,7 +387,7 @@ public class SmbServerScan {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         scanSmbServerSelectSmbServerCreateShareSelector(dialog, scan_result, share_list_adapter);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
 
                     @Override
@@ -457,8 +457,8 @@ public class SmbServerScan {
 //        final TextView dlg_msg=(TextView)dialog.findViewById(R.id.scan_smb_server_selector_dlg_msg);
 //        final Button btn_ok=(Button)dialog.findViewById(R.id.scan_smb_server_selector_dlg_btn_ok);
 //
-//        if (dlg_msg.getText().toString().length()>0) CommonDialog.setViewEnabled(mActivity, btn_ok, false);
-//        else CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+//        if (dlg_msg.getText().toString().length()>0) CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+//        else CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
 //    }
 
     private void scanSmbServerSelectSmbServerCreateShareSelector(Dialog dialog, SmbServerScanResult scan_result, ArrayAdapter adapter) {
@@ -537,7 +537,7 @@ public class SmbServerScan {
         btn_scan.setVisibility(Button.GONE);
         btn_cancel.setVisibility(Button.GONE);
         adap.setButtonEnabled(false);
-        CommonDialog.setViewEnabled(mActivity, scan_cancel, true);
+        CommonUtilities.setViewEnabled(mActivity, scan_cancel, true);
         dialog.setOnKeyListener(new DialogBackKeyListener(mContext));
         dialog.setCancelable(false);
 
@@ -546,7 +546,7 @@ public class SmbServerScan {
         scan_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 scan_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
-                CommonDialog.setViewEnabled(mActivity, scan_cancel, false);
+                CommonUtilities.setViewEnabled(mActivity, scan_cancel, false);
                 mUtil.addDebugMsg(1, "W", "IP Address list creation was cancelled");
                 tc.setDisabled();
             }

@@ -58,6 +58,7 @@ import com.sentaroh.android.SMBSync3.Log.LogUtil;
 
 import com.sentaroh.android.Utilities3.Base64Compat;
 import com.sentaroh.android.Utilities3.CallBackListener;
+import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities3.EncryptUtilV3;
 import com.sentaroh.android.Utilities3.MiscUtil;
@@ -124,6 +125,16 @@ public final class CommonUtilities {
 
     public LogUtil getLogUtil() {
         return mLog;
+    }
+
+    static public void setViewEnabled(Activity a, View v, boolean enabled) {
+        GlobalParameters gp=GlobalWorkArea.getGlobalParameter(a);
+        CommonDialog.setViewEnabled(gp.themeColorList.theme_is_light, v, enabled);
+    }
+
+    static public void setViewEnabled(Context a, View v, boolean enabled) {
+        GlobalParameters gp=GlobalWorkArea.getGlobalParameter(a);
+        CommonDialog.setViewEnabled(gp.themeColorList.theme_is_light, v, enabled);
     }
 
     final public SharedPreferences getPrefMgr() {

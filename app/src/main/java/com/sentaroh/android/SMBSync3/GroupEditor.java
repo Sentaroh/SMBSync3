@@ -594,7 +594,7 @@ class GroupEditor {
                 adapter.notifyItemMoved(fromPos, toPos);
                 adapter.recyclerViewDataList.remove(fromPos);
                 adapter.recyclerViewDataList.add(toPos, fromTask);
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                 return true;// true if moved, false otherwise
             }
 
@@ -608,7 +608,7 @@ class GroupEditor {
         ItemTouchHelper ith  = new ItemTouchHelper(scb);
         ith.attachToRecyclerView(rv_task_list);
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
         ib_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -705,7 +705,7 @@ class GroupEditor {
                         }
                         adapter.notifyDataSetChanged();
                         setOkButtonEnabledEditSyncTaskList(dialog, curr_task_list, adapter);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
 
                         final String curr_task_list=buildSyncTaskList(adapter);
                         ArrayList<AddSyncTaskItem>add_task_list=getAddTaskList(curr_task_list);
@@ -776,7 +776,7 @@ class GroupEditor {
                     adapter.recyclerViewDataList.remove(etli);
                 }
                 adapter.notifyDataSetChanged();
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
 
                 final String curr_task_list=buildSyncTaskList(adapter);
                 ArrayList<AddSyncTaskItem>add_task_list=getAddTaskList(curr_task_list);
@@ -834,14 +834,14 @@ class GroupEditor {
         }
         if (task_list.equals("")) {
             dlg_msg.setText(mContext.getString(R.string.msgs_group_info_sync_task_list_was_empty));
-            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             return;
         }
         dlg_msg.setText("");
         if (!task_list.equals(org_task_list)) {
-            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
         } else {
-            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         }
     }
 
@@ -907,16 +907,16 @@ class GroupEditor {
         final AddSyncTaskAdapter adapter = new AddSyncTaskAdapter(mActivity, R.layout.group_item_add_task_list_item_view, add_task_list);
         lv_sync_list.setAdapter(adapter);
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
         NotifyEvent ntfy_check=new NotifyEvent(mContext);
         ntfy_check.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 for(int i=0;i<adapter.getCount();i++) {
                     if (adapter.getItem(i).checked) {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         break;
                     }
                 }
@@ -933,10 +933,10 @@ class GroupEditor {
                 AddSyncTaskItem atli=adapter.getItem(position);
                 atli.checked=!atli.checked;
                 adapter.notifyDataSetChanged();
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 for(int i=0;i<adapter.getCount();i++) {
                     if (adapter.getItem(i).checked) {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         break;
                     }
                 }
@@ -950,7 +950,7 @@ class GroupEditor {
                     adapter.getItem(i).checked=true;
                 }
                 adapter.notifyDataSetChanged();
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, ib_select_all, mContext.getString(R.string.msgs_group_cont_label_select_all));
@@ -962,7 +962,7 @@ class GroupEditor {
                     adapter.getItem(i).checked=false;
                 }
                 adapter.notifyDataSetChanged();
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, ib_unselect_all, mContext.getString(R.string.msgs_group_cont_label_unselect_all));

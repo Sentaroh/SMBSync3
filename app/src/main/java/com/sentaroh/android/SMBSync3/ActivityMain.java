@@ -432,12 +432,12 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 boolean checked=!ct_agree.isChecked();
                 ct_agree.setChecked(checked);
-                if (checked) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                if (checked) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         btn_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -890,7 +890,7 @@ public class ActivityMain extends AppCompatActivity {
     private void restoreButtonStatus(Button btn, ButtonViewContent sv, OnClickListener ocl) {
         btn.setText(sv.button_text);
         btn.setClickable(sv.button_clickable);
-        CommonDialog.setViewEnabled(mActivity, btn, sv.button_enabled);
+        CommonUtilities.setViewEnabled(mActivity, btn, sv.button_enabled);
         btn.setOnClickListener(ocl);
     }
 
@@ -1384,7 +1384,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setMenuItemEnabled(Menu menu, MenuItem menu_item, boolean enabled) {
-        CommonDialog.setMenuItemEnabled(mActivity, menu, menu_item, enabled);
+        CommonDialog.setMenuItemEnabled(mGp.themeColorList.theme_is_light, menu, menu_item, enabled);
     }
 
 
@@ -2864,20 +2864,20 @@ public class ActivityMain extends AppCompatActivity {
         etInput.setText(si.groupName);
 //        dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
 //        dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
 //                if (arg0.toString().startsWith(GROUP_SYSTEM_PREFIX)) {
-//                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+//                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 //                    dlg_msg.setText(mContext.getString(R.string.msgs_group_list_edit_dlg_error_group_name_not_allowed_asterisk_in_first_char));
 //                    return;
 //                }
                 if (!arg0.toString().equalsIgnoreCase(si.groupName)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
                 }
             }
@@ -3241,21 +3241,21 @@ public class ActivityMain extends AppCompatActivity {
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(si.scheduleName);
         dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
                 if (!arg0.toString().equalsIgnoreCase(si.scheduleName)) {
                     String e_msg=ScheduleEditor.hasScheduleNameUnusableCharacter(mContext, arg0.toString());
                     if (e_msg.equals("")) {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_warning));
                     } else {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         dlg_msg.setText(e_msg);
                     }
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     dlg_msg.setText(mContext.getString(R.string.msgs_schedule_confirm_msg_rename_duplicate_name));
                 }
             }
@@ -4303,11 +4303,11 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isUiEnabled()) {
-                    CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, false);
+                    CommonUtilities.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, false);
                     mUiHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, true);
+                            CommonUtilities.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, true);
                         }
                     }, 500);
                     for (int i = 0; i < mGp.syncTaskListAdapter.getCount(); i++) {
@@ -4354,11 +4354,11 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isUiEnabled()) {
-                    CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, false);
+                    CommonUtilities.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, false);
                     mUiHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            CommonDialog.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, true);
+                            CommonUtilities.setViewEnabled(mActivity, mContextSyncTaskButtonMoveToUp, true);
                         }
                     }, 500);
                     for (int i = 0; i < mGp.syncTaskListAdapter.getCount(); i++) {
@@ -4871,8 +4871,8 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        CommonDialog.setViewEnabled(mActivity, btn_find, false);
-        CommonDialog.setViewEnabled(mActivity, btn_reset, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_find, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_reset, false);
         et_find_string.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -4883,10 +4883,10 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length()>0) {
-                    CommonDialog.setViewEnabled(mActivity, btn_find, true);
-                    CommonDialog.setViewEnabled(mActivity, btn_reset, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_find, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_reset, true);
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_find, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_find, false);
                 }
             }
         });
@@ -4894,7 +4894,7 @@ public class ActivityMain extends AppCompatActivity {
         btn_reset.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommonDialog.setViewEnabled(mActivity, btn_reset, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_reset, false);
                 et_find_string.setText("");
                 mGp.syncMessageListAdapter.setFilterString("");
             }
@@ -4904,7 +4904,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mGp.syncMessageListAdapter.setFilterString(et_find_string.getText().toString(), cb_filter_case_sensitive.isChecked());
-//                CommonDialog.setViewEnabled(mActivity, btn_find, false);
+//                CommonUtilities.setViewEnabled(mActivity, btn_find, false);
             }
         });
     }

@@ -234,21 +234,21 @@ public class TaskListUtils {
         dlg_cmp.setText(mContext.getString(R.string.msgs_task_name_rename_with_schedule_group_task_list));
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(pli.getSyncTaskName());
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
                 if (!arg0.toString().equalsIgnoreCase(pli.getSyncTaskName())) {
                     if (arg0.length()>SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_sync_task_name_length_invalid, SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH));
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     } else {
                         dlg_msg.setText("");
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
                 } else {
                     dlg_msg.setText(mContext.getString(R.string.msgs_duplicate_task_name));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 }
             }
 
@@ -719,8 +719,8 @@ public class TaskListUtils {
         final Button btnTop = (Button)dialog.findViewById(R.id.common_file_selector_top_btn);
         final Button btnUp = (Button)dialog.findViewById(R.id.common_file_selector_up_btn);
 
-        CommonDialog.setViewEnabled(mActivity, btnUp, p);
-        CommonDialog.setViewEnabled(mActivity, btnTop, p);
+        CommonUtilities.setViewEnabled(mActivity, btnUp, p);
+        CommonUtilities.setViewEnabled(mActivity, btnTop, p);
     };
 
     private void createRemoteDirectoryDlg(SmbServerInfo ssi, final String c_dir, final NotifyEvent p_ntfy) {
@@ -749,7 +749,7 @@ public class TaskListUtils {
 
         CommonDialog.setDlgBoxSizeCompact(dialog);
 
-        CommonDialog.setViewEnabled(mActivity, btnOk, false);
+        CommonUtilities.setViewEnabled(mActivity, btnOk, false);
         final Handler hndl=new Handler();
         etDir.addTextChangedListener(new TextWatcher(){
             @Override
@@ -759,9 +759,9 @@ public class TaskListUtils {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()>0) {
-                    CommonDialog.setViewEnabled(mActivity, btnOk, true);
+                    CommonUtilities.setViewEnabled(mActivity, btnOk, true);
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btnOk, false);
+                    CommonUtilities.setViewEnabled(mActivity, btnOk, false);
                     dlg_msg.setText("");
                 }
             }
@@ -1032,7 +1032,7 @@ public class TaskListUtils {
         final RadioButton add_exclude_btn = (RadioButton) dialog.findViewById(R.id.filter_list_edit_add_include_exclude_radio_button_exclude);
         add_include_btn.setChecked(true);
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
         NotifyEvent ntfy_switch = new NotifyEvent(mContext);
         ntfy_switch.setListener(new NotifyEvent.NotifyEventListener() {
@@ -1041,15 +1041,15 @@ public class TaskListUtils {
                 FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
                 if (!hasEnabledFilters(filterAdapter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 }
                 String new_filter_string="";
                 if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     dlg_msg.setText("");
                 }
             }
@@ -1062,7 +1062,7 @@ public class TaskListUtils {
         ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
             @Override
@@ -1083,16 +1083,16 @@ public class TaskListUtils {
                         filterAdapter.notifyDataSetChanged();
                         dlg_msg.setText("");
                         if (!hasEnabledFilters(filterAdapter)) {
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                             dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
                         if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) {
                             dlg_msg.setText("");
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         } else {
                             dlg_msg.setText("");
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         }
                     }
                     @Override
@@ -1117,34 +1117,34 @@ public class TaskListUtils {
                     String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mContext, filter);
                     if (!err_msg.equals("")) {
                         dlg_msg.setText(err_msg);
-                        CommonDialog.setViewEnabled(mActivity, addbtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addbtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
                     String dup_filter=getDuplicateFilter(filter, filterAdapter);
                     if (!dup_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, dup_filter));
-                        CommonDialog.setViewEnabled(mActivity, addbtn, false);
-                        CommonDialog.setViewEnabled(mActivity, dirbtn, true);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addbtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, dirbtn, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     } else {
                         dlg_msg.setText("");
-                        CommonDialog.setViewEnabled(mActivity, addbtn, true);
-                        CommonDialog.setViewEnabled(mActivity, dirbtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addbtn, true);
+                        CommonUtilities.setViewEnabled(mActivity, dirbtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         if (FilterListAdapter.FilterListItem.hasMatchAnyWhereFilter(filter)) {
-                            CommonDialog.setViewEnabled(mActivity, add_include_btn, false);
+                            CommonUtilities.setViewEnabled(mActivity, add_include_btn, false);
                             if (!add_exclude_btn.isChecked()) {
                                 add_exclude_btn.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
                                         mContext.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, filter), "", null);
                             }
                         } else {
-                            CommonDialog.setViewEnabled(mActivity, add_include_btn, true);
+                            CommonUtilities.setViewEnabled(mActivity, add_include_btn, true);
                         }
                         if (!hasEnabledFilters(filterAdapter)) {
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                             dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
@@ -1155,10 +1155,10 @@ public class TaskListUtils {
                     dirbtn.setVisibility(Button.VISIBLE);
                     lv.setVisibility(ListView.VISIBLE);
                     parent_view.requestLayout();
-                    CommonDialog.setViewEnabled(mActivity, addbtn, false);
-                    CommonDialog.setViewEnabled(mActivity, dirbtn, true);
-                    if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                    else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, addbtn, false);
+                    CommonUtilities.setViewEnabled(mActivity, dirbtn, true);
+                    if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                    else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 }
             }
             @Override
@@ -1166,7 +1166,7 @@ public class TaskListUtils {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
         });
-        CommonDialog.setViewEnabled(mActivity, addbtn, false);
+        CommonUtilities.setViewEnabled(mActivity, addbtn, false);
         addbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String newfilter =StringUtil.removeRedundantCharacter(et_filter.getText().toString(), ";", true, true);
@@ -1181,8 +1181,8 @@ public class TaskListUtils {
                 filterAdapter.add(fli);
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                CommonDialog.setViewEnabled(mActivity, dirbtn, true);
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, dirbtn, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -1198,8 +1198,8 @@ public class TaskListUtils {
                         String new_filter_list="";
                         for(FilterListAdapter.FilterListItem fli:filterAdapter.getFilterList()) new_filter_list+=fli.toString();
 
-                        if (!org_filter_list.equals(new_filter_list)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                        else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        if (!org_filter_list.equals(new_filter_list)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                        else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         dlg_msg.setText("");
                     }
                     @Override
@@ -1319,10 +1319,10 @@ public class TaskListUtils {
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_list_edit_add_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_list_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_list_edit_ok_btn);
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
         if (!hasEnabledFilters(filterAdapter)) {
-            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
         }
 
@@ -1333,14 +1333,14 @@ public class TaskListUtils {
                 FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
                 if (!hasEnabledFilters(filterAdapter)) {
                     dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 }
                 if (isFilterListChanged(file_filter, filterAdapter)) {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     dlg_msg.setText("");
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     dlg_msg.setText("");
                 }
             }
@@ -1353,7 +1353,7 @@ public class TaskListUtils {
         ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
                 dlg_msg.setVisibility(TextView.GONE);
             }
@@ -1373,16 +1373,16 @@ public class TaskListUtils {
                     public void positiveResponse(Context c, Object[] o) {
                         filterAdapter.notifyDataSetChanged();
                         if (!hasEnabledFilters(filterAdapter)) {
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                             dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
                         if (isFilterListChanged(file_filter, filterAdapter)) {
                             dlg_msg.setText("");
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         } else {
                             dlg_msg.setText("");
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         }
                     }
                     @Override
@@ -1394,7 +1394,7 @@ public class TaskListUtils {
         });
 
         // Addボタンの指定
-        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -1404,30 +1404,30 @@ public class TaskListUtils {
                     String error_message= FilterListAdapter.FilterListItem.checkFileFilterError(mContext, new_filter);
                     if (!error_message.equals("")) {
                         dlg_msg.setText(error_message);
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
                     String dup_filter=getDuplicateFilter(new_filter, filterAdapter);
                     if (!dup_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, dup_filter));
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     } else {
                         if (!hasEnabledFilters(filterAdapter)) {
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                             dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
                         dlg_msg.setText("");
-                        CommonDialog.setViewEnabled(mActivity, addBtn, true);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                    if (isFilterListChanged(file_filter, filterAdapter)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                    else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                    if (isFilterListChanged(file_filter, filterAdapter)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                    else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     parent_view.requestLayout();
                 }
             }
@@ -1447,7 +1447,7 @@ public class TaskListUtils {
                 filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -1550,13 +1550,13 @@ public class TaskListUtils {
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_list_edit_add_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_list_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_list_edit_ok_btn);
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
         NotifyEvent ntfy_delete = new NotifyEvent(mContext);
         ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
 
@@ -1578,10 +1578,10 @@ public class TaskListUtils {
                         filterAdapter.notifyDataSetChanged();
                         if (isFilterListChanged(addr_list, filterAdapter)) {
                             dlg_msg.setText("");
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         } else {
                             dlg_msg.setText("");
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         }
                     }
                     @Override
@@ -1594,7 +1594,7 @@ public class TaskListUtils {
         });
 
         // Addボタンの指定
-        CommonDialog.setViewEnabled(mActivity, addBtn, false);
+        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
         et_filter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -1604,34 +1604,34 @@ public class TaskListUtils {
                     String error_message= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mContext, new_filter);
                     if (!error_message.equals("")) {
                         dlg_msg.setText(error_message);
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
                     if (!isValidIpV4Address(new_filter)) {
                         dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_ip_address));
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
                     String dup_filter=getDuplicateFilter(new_filter, filterAdapter);
                     if (!dup_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
                         dlg_msg.setText(String.format(mtxt, dup_filter));
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else {
                         dlg_msg.setText("");
-                        CommonDialog.setViewEnabled(mActivity, addBtn, true);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
                 } else {
                     dlg_msg.setText("");
                     lv.setVisibility(ListView.VISIBLE);
                     parent_view.requestLayout();
-                    CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                    if (isFilterListChanged(addr_list, filterAdapter)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                    else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                    if (isFilterListChanged(addr_list, filterAdapter)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                    else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 }
             }
 
@@ -1651,14 +1651,14 @@ public class TaskListUtils {
                     if (!dup_filter.equals("")) {
                         String mtxt = mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
                         dlg_msg.setText(String.format(mtxt, ip_addr));
-                        CommonDialog.setViewEnabled(mActivity, addBtn, false);
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, addBtn, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else {
                         dlg_msg.setText("");
                         filterAdapter.add(new FilterListAdapter.FilterListItem(ip_addr, true));
                         filterAdapter.setNotifyOnChange(true);
                         filterAdapter.sort();
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
                 } else {
                     String mtxt = mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_ap_not_connected);
@@ -1678,7 +1678,7 @@ public class TaskListUtils {
                 filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, true));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -1763,7 +1763,7 @@ public class TaskListUtils {
 
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_item_edit_dlg_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_item_edit_dlg_ok_btn);
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_item_edit_dlg_filter);
@@ -1790,7 +1790,7 @@ public class TaskListUtils {
         }
 
         if (filter.contains(DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX)) {
-            CommonDialog.setViewEnabled(mActivity, rb_include, false);
+            CommonUtilities.setViewEnabled(mActivity, rb_include, false);
             rb_exclude.setChecked(true);
         }
 
@@ -1798,8 +1798,8 @@ public class TaskListUtils {
             @Override
             public void onClick(View view) {
                 FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
-                if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
@@ -1807,8 +1807,8 @@ public class TaskListUtils {
             @Override
             public void onClick(View view) {
                 FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
-                if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
@@ -1816,8 +1816,8 @@ public class TaskListUtils {
             @Override
             public void onClick(View view) {
                 FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
-                if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                if (isFilterItemChanged(fli, new_fli) && dlg_msg.getText().length()==0) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
@@ -1828,11 +1828,11 @@ public class TaskListUtils {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                 if (s.length()==0) {
                     String mtxt = mContext.getString(R.string.msgs_filter_list_dlg_not_specified);
                     dlg_msg.setText(mtxt);
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 } else {
                     String newfilter =StringUtil.removeRedundantCharacter(s.toString(), ";", true, true);
@@ -1842,7 +1842,7 @@ public class TaskListUtils {
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                             return;
                         }
                         String changed_filter=getChangedFilter(filter, newfilter);
@@ -1851,29 +1851,29 @@ public class TaskListUtils {
                             if (!dup_filter.equals("")) {
                                 String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 dlg_msg.setText(String.format(mtxt, dup_filter));
-                                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 return;
                             }
                         }
-                        if (newfilter.equals(filter))CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        if (newfilter.equals(filter))CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         if (newfilter.contains(DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX)) {
-                            CommonDialog.setViewEnabled(mActivity, rb_include, false);
+                            CommonUtilities.setViewEnabled(mActivity, rb_include, false);
                             if (!rb_exclude.isChecked()) {
                                 rb_exclude.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
                                         mContext.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, newfilter), "", null);
                             }
                         } else {
-                            CommonDialog.setViewEnabled(mActivity, rb_include, true);
+                            CommonUtilities.setViewEnabled(mActivity, rb_include, true);
                         }
                         FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
-                        if (isFilterItemChanged(fli, new_fli)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        if (isFilterItemChanged(fli, new_fli)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else if (filter_type==FilterListAdapter.FILTER_TYPE_FILE) {
                         String err_msg= FilterListAdapter.FilterListItem.checkFileFilterError(mContext, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                             return;
                         }
                         String changed_filter=getChangedFilter(filter, newfilter);
@@ -1882,20 +1882,20 @@ public class TaskListUtils {
                             if (!dup_filter.equals("")) {
                                 String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 dlg_msg.setText(String.format(mtxt, dup_filter));
-                                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 return;
                             }
                             dlg_msg.setText("");
                         }
-                        if (newfilter.equals(filter))CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        if (newfilter.equals(filter))CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
-                        if (isFilterItemChanged(fli, new_fli)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        if (isFilterItemChanged(fli, new_fli)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else if (filter_type==FilterListAdapter.FILTER_TYPE_ACCESS_POINT || filter_type==FilterListAdapter.FILTER_TYPE_IP_ADDRESS) {
                         String err_msg= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mContext, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                             return;
                         }
                         String changed_filter=getChangedFilter(filter, newfilter);
@@ -1904,14 +1904,14 @@ public class TaskListUtils {
                             if (!dup_filter.equals("")) {
                                 String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 dlg_msg.setText(String.format(mtxt, dup_filter));
-                                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 return;
                             }
                             dlg_msg.setText("");
                         }
-                        if (newfilter.equals(filter))CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        if (newfilter.equals(filter))CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
-                        if (isFilterItemChanged(fli, new_fli)) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        if (isFilterItemChanged(fli, new_fli)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
                 }
             }
@@ -2213,7 +2213,7 @@ public class TaskListUtils {
                             if (!tfli.isHideListItem()) tfa.setDataItemIsSelected(i);
                         }
                         tfa.notifyDataSetChanged();
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
                 });
 
@@ -2224,18 +2224,18 @@ public class TaskListUtils {
                             tfa.setDataItemIsUnselected(i);
                         }
                         tfa.notifyDataSetChanged();
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
                 });
 
                 //OKボタンの指定
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
 
                     @Override
@@ -2247,8 +2247,8 @@ public class TaskListUtils {
                                 break;
                             }
                         }
-                        if (checked) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                        else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        if (checked) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                        else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
                 });
                 tfa.setCbCheckListener(ntfy);
@@ -2397,7 +2397,7 @@ public class TaskListUtils {
                     }
                 });
 
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
@@ -2413,7 +2413,7 @@ public class TaskListUtils {
                             sel = sel.substring(remdir.length());
                             String dup_filter=getDuplicateFilter(sel, fla);
                             if (!dup_filter.equals("")) {
-                                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 tfi.setChecked(false);
                                 tfa.notifyDataSetChanged();
                                 String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
@@ -2421,7 +2421,7 @@ public class TaskListUtils {
                                 Toast toast=CommonDialog.getToastLong(mActivity, dup_msg);
                                 toast.show();
                             } else {
-                                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                             }
                         } catch(Exception e) {
                             mUtil.showCommonDialog(false,"E","Error","sel="+sel+", remdir="+remdir+"\n"+
@@ -2431,8 +2431,8 @@ public class TaskListUtils {
 
                     @Override
                     public void negativeResponse(Context arg0, Object[] arg1) {
-                        if (tfa.isDataItemIsSelected()) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                        else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                        if (tfa.isDataItemIsSelected()) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                        else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
                 });
                 tfa.setCbCheckListener(ntfy);
@@ -2736,7 +2736,7 @@ public class TaskListUtils {
 
                 final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
                 CommonDialog.setDlgBoxSizeLimit(dialog, false);
 
@@ -2749,7 +2749,7 @@ public class TaskListUtils {
 
                 lv.setOnItemClickListener(new OnItemClickListener() {
                     public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
-                        CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
                 });
                 //CANCELボタンの指定

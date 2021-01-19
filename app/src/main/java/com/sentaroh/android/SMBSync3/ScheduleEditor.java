@@ -122,7 +122,7 @@ public class ScheduleEditor {
     private void setViewEnabled(Activity a, View v, boolean enabled) {
 //        mUtil.addDebugMsg(1, "I", "enabled="+enabled+", v="+v);
 //        Thread.dumpStack();
-        CommonDialog.setViewEnabled(a, v, enabled);
+        CommonUtilities.setViewEnabled(a, v, enabled);
     }
     
     private void initDialog() {

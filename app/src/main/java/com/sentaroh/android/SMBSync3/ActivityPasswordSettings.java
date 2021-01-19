@@ -327,34 +327,34 @@ public class ActivityPasswordSettings extends AppCompatActivity {
 
         if (hv.equals("")) {
             mAppPswdMsg.setText(mActivity.getString(R.string.settings_security_application_password_not_created));
-            CommonDialog.setViewEnabled(mActivity, mButtonCreate, true);
-            CommonDialog.setViewEnabled(mActivity, mButtonChange, false);
-            CommonDialog.setViewEnabled(mActivity, mButtonRemove, false);
+            CommonUtilities.setViewEnabled(mActivity, mButtonCreate, true);
+            CommonUtilities.setViewEnabled(mActivity, mButtonChange, false);
+            CommonUtilities.setViewEnabled(mActivity, mButtonRemove, false);
 
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingTimeOut, false);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingAppStartup, false);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseEditTask, false);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseExportTask, false);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingTimeOut, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingAppStartup, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingUseEditTask, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingUseExportTask, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, false);
 
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingInitZipPassword, false);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowSmbPasswordButton, false);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowZipPasswordButton, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingInitZipPassword, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingHideShowSmbPasswordButton, false);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingHideShowZipPasswordButton, false);
         } else {
             mAppPswdMsg.setText(mActivity.getString(R.string.settings_security_application_password_created));
-            CommonDialog.setViewEnabled(mActivity, mButtonCreate, false);
-            CommonDialog.setViewEnabled(mActivity, mButtonChange, true);
-            CommonDialog.setViewEnabled(mActivity, mButtonRemove, true);
+            CommonUtilities.setViewEnabled(mActivity, mButtonCreate, false);
+            CommonUtilities.setViewEnabled(mActivity, mButtonChange, true);
+            CommonUtilities.setViewEnabled(mActivity, mButtonRemove, true);
 
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingTimeOut, true);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingAppStartup, true);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseEditTask, true);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingUseExportTask, true);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingTimeOut, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingAppStartup, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingUseEditTask, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingUseExportTask, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingInitSmbAccount, true);
 
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingInitZipPassword, true);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowSmbPasswordButton, true);
-            CommonDialog.setViewEnabled(mActivity, mCtvSettingHideShowZipPasswordButton, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingInitZipPassword, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingHideShowSmbPasswordButton, true);
+            CommonUtilities.setViewEnabled(mActivity, mCtvSettingHideShowZipPasswordButton, true);
         }
     }
 

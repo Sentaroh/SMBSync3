@@ -309,7 +309,7 @@ public class TaskListImportExport {
 //        if (Build.VERSION.SDK_INT>=23) tv_msg.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
 
         final Button btn_ok=(Button)dialog.findViewById(R.id.import_autosave_dlg_btn_ok);
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.import_autosave_dlg_btn_cancel);
         final Button btn_select=(Button)dialog.findViewById(R.id.import_autosave_dlg_select_exported_file);
 
@@ -328,7 +328,7 @@ public class TaskListImportExport {
         manual_save_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 auto_save_list_view.setItemChecked(-1, true);
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -341,7 +341,7 @@ public class TaskListImportExport {
         auto_save_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> items, View view, int idx, long id) {
                 manual_save_list_view.setItemChecked(-1, true);
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
 
@@ -567,12 +567,12 @@ public class TaskListImportExport {
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         et_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                if (arg0.length() > 0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                if (arg0.length() > 0) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
 
             @Override
@@ -599,7 +599,7 @@ public class TaskListImportExport {
                 }
 
                 if (correct_password) {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     dialog.dismiss();
                     ntfy_pswd.notifyToListener(true, new Object[]{passwd});
                 } else {
@@ -668,12 +668,12 @@ public class TaskListImportExport {
         ctv_protect.setChecked(mGp.settingExportedTaskEncryptRequired);
         setPasswordFieldVisibility(mGp.settingExportedTaskEncryptRequired, et_password, et_confirm, btn_ok, dlg_msg);
 
-        CommonDialog.setViewEnabled(mActivity, et_password, true);
-        CommonDialog.setViewEnabled(mActivity, et_confirm, false);
+        CommonUtilities.setViewEnabled(mActivity, et_password, true);
+        CommonUtilities.setViewEnabled(mActivity, et_confirm, false);
         et_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 setPasswordPromptOkButton(et_password, et_confirm, btn_ok, dlg_msg);
             }
 
@@ -689,7 +689,7 @@ public class TaskListImportExport {
         et_confirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 setPasswordPromptOkButton(et_password, et_confirm, btn_ok, dlg_msg);
             }
 
@@ -757,7 +757,7 @@ public class TaskListImportExport {
             dlg_msg.setText("");
             et_password.setVisibility(EditText.GONE);
             et_confirm.setVisibility(EditText.GONE);
-            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
         }
     }
 
@@ -767,21 +767,21 @@ public class TaskListImportExport {
         String confirm = et_confirm.getText().toString();
         if (password.length() > 0 && et_confirm.getText().length() == 0) {
             dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
-            CommonDialog.setViewEnabled(mActivity, et_confirm, true);
+            CommonUtilities.setViewEnabled(mActivity, et_confirm, true);
         } else if (password.length() > 0 && et_confirm.getText().length() > 0) {
-            CommonDialog.setViewEnabled(mActivity, et_confirm, true);
+            CommonUtilities.setViewEnabled(mActivity, et_confirm, true);
             if (!password.equals(confirm)) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
             } else {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                 dlg_msg.setText("");
             }
         } else if (password.length() == 0 && confirm.length() == 0) {
-            CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_specify_password));
-            CommonDialog.setViewEnabled(mActivity, et_passwd, true);
-            CommonDialog.setViewEnabled(mActivity, et_confirm, false);
+            CommonUtilities.setViewEnabled(mActivity, et_passwd, true);
+            CommonUtilities.setViewEnabled(mActivity, et_confirm, false);
         } else if (password.length() == 0 && confirm.length() > 0) {
             dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
         }
@@ -832,32 +832,32 @@ public class TaskListImportExport {
         final Button rb_unselect_all = (Button) dialog.findViewById(R.id.export_import_profile_list_unselect_all);
         final CheckedTextView ctv_import_schedule = (CheckedTextView) dialog.findViewById(R.id.export_import_profile_list_ctv_restore_schedule);
         final CheckedTextView ctv_import_group = (CheckedTextView) dialog.findViewById(R.id.export_import_profile_list_ctv_restore_group);
-        if (sync_sched.size()==0) CommonDialog.setViewEnabled(mActivity, ctv_import_schedule, false);
+        if (sync_sched.size()==0) CommonUtilities.setViewEnabled(mActivity, ctv_import_schedule, false);
         ctv_import_schedule.setChecked(true);
         ctv_import_schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((CheckedTextView) v).toggle();
-                CommonDialog.setViewEnabled(mActivity, ok_btn, true);
+                CommonUtilities.setViewEnabled(mActivity, ok_btn, true);
             }
         });
-        if (sync_group.size()==0) CommonDialog.setViewEnabled(mActivity, ctv_import_group, false);
+        if (sync_group.size()==0) CommonUtilities.setViewEnabled(mActivity, ctv_import_group, false);
         ctv_import_group.setChecked(true);
         ctv_import_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((CheckedTextView) v).toggle();
-                CommonDialog.setViewEnabled(mActivity, ok_btn, true);
+                CommonUtilities.setViewEnabled(mActivity, ok_btn, true);
             }
         });
         final CheckedTextView ctv_import_setting = (CheckedTextView) dialog.findViewById(R.id.export_import_profile_list_ctv_restore_setting);
-        if (sync_setting.size()==0) CommonDialog.setViewEnabled(mActivity, ctv_import_setting, false);
+        if (sync_setting.size()==0) CommonUtilities.setViewEnabled(mActivity, ctv_import_setting, false);
         ctv_import_setting.setChecked(true);
         ctv_import_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((CheckedTextView) v).toggle();
-                CommonDialog.setViewEnabled(mActivity, ok_btn, true);
+                CommonUtilities.setViewEnabled(mActivity, ok_btn, true);
             }
         });
         final CheckedTextView ctv_reset_profile = (CheckedTextView) dialog.findViewById(R.id.export_import_profile_list_ctv_reset_profile);
@@ -886,7 +886,7 @@ public class TaskListImportExport {
                 ctv_import_group.setChecked(true);
                 ctv_import_schedule.setChecked(true);
                 ctv_import_setting.setChecked(true);
-                CommonDialog.setViewEnabled(mActivity, ok_btn, true);
+                CommonUtilities.setViewEnabled(mActivity, ok_btn, true);
             }
         });
         rb_unselect_all.setOnClickListener(new View.OnClickListener() {
@@ -898,7 +898,7 @@ public class TaskListImportExport {
                 ctv_import_group.setChecked(false);
                 ctv_import_schedule.setChecked(false);
                 ctv_import_setting.setChecked(false);
-                CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+                CommonUtilities.setViewEnabled(mActivity, ok_btn, false);
             }
         });
 
@@ -941,8 +941,8 @@ public class TaskListImportExport {
             final CheckedTextView ctv_reset_profile,
             final ImportTaskListItemAdapter imp_list_adapt,
             final Button ok_btn) {
-        if (imp_list_adapt.isItemSelected()) CommonDialog.setViewEnabled(mActivity, ok_btn, true);
-        else CommonDialog.setViewEnabled(mActivity, ok_btn, false);
+        if (imp_list_adapt.isItemSelected()) CommonUtilities.setViewEnabled(mActivity, ok_btn, true);
+        else CommonUtilities.setViewEnabled(mActivity, ok_btn, false);
     }
 
     private void importSelectedSyncTaskItem(final boolean from_smbsync2,

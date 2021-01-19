@@ -151,16 +151,16 @@ public class StoragePermission {
                     }
                 }
                 if (selected) {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     tv_msg.setText("");
                 } else {
-                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     tv_msg.setText(mContext.getString(R.string.msgs_storage_permission_msg_select_storage));
                 }
             }
         });
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

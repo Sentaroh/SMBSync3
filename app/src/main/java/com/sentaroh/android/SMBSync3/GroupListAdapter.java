@@ -169,8 +169,8 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
                 holder.ib_sync.setVisibility(CheckBox.VISIBLE);
             }
 
-            if(isEnabled(position)) CommonDialog.setViewEnabled(mContext, holder.ll_view, true);
-            else CommonDialog.setViewEnabled(mContext, holder.ll_view, false);
+            if(isEnabled(position)) CommonUtilities.setViewEnabled(mContext, holder.ll_view, true);
+            else CommonUtilities.setViewEnabled(mContext, holder.ll_view, false);
 
             holder.cb_checked.setOnClickListener(new View.OnClickListener() {
                 @Override

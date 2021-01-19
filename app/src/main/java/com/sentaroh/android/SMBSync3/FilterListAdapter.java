@@ -261,8 +261,8 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
                 }
             }
 
-            if (o.hasMatchAnyWhereFilter()) CommonDialog.setViewEnabled(c, holder.rb_row_include, false);
-            else CommonDialog.setViewEnabled(c, holder.rb_row_include, true);
+            if (o.hasMatchAnyWhereFilter()) CommonUtilities.setViewEnabled(c, holder.rb_row_include, false);
+            else CommonUtilities.setViewEnabled(c, holder.rb_row_include, true);
 
             holder.sw_row_enabled.setOnClickListener(new OnClickListener() {
                 @Override

@@ -176,8 +176,8 @@ public class ApplicationPassword {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                if (et_pswd1.length()>0) CommonDialog.setViewEnabled(mActivity, btn_ok, true);
-                else CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                if (et_pswd1.length()>0) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
@@ -189,11 +189,11 @@ public class ApplicationPassword {
             }
         });
 
-        CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CommonDialog.setViewEnabled(mActivity, btn_ok, false);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 final Handler hndl=new Handler();
                 String decrypted_hv="";
                 String input_hv="";
@@ -232,7 +232,7 @@ public class ApplicationPassword {
                     hndl.postDelayed(new Runnable(){
                         @Override
                         public void run() {
-                            CommonDialog.setViewEnabled(mActivity, btn_ok, true);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         }
                     },1000);
                 }
