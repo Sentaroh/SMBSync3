@@ -958,58 +958,60 @@ public final class CommonUtilities {
 
     final public void saveHistoryList(final ArrayList<HistoryListAdapter.HistoryListItem> hl) {
         if (hl == null || (hl!=null && hl.size()==0)) return;
-        try {
-            SafFile3 df =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName);
-            if (!df.exists()) df.mkdirs();
-            SafFile3 mf =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName + "/.history");
-            mf.deleteIfExists();
-            if (!mf.exists()) mf.createNewFile();
+        synchronized (hl) {
+            try {
+                SafFile3 df =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName);
+                if (!df.exists()) df.mkdirs();
+                SafFile3 mf =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName + "/.history");
+                mf.deleteIfExists();
+                if (!mf.exists()) mf.createNewFile();
 
-            OutputStream fos=mf.getOutputStream();
-            BufferedOutputStream bos=new BufferedOutputStream(fos, 1024*100);
-            PrintWriter bw=new PrintWriter(bos);
+                OutputStream fos=mf.getOutputStream();
+                BufferedOutputStream bos=new BufferedOutputStream(fos, 1024*100);
+                PrintWriter bw=new PrintWriter(bos);
 
-            int max = 500;
-            StringBuilder sb_buf = new StringBuilder(1024 * 2);
-            HistoryListAdapter.HistoryListItem shli = null;
-            final ArrayList<HistoryListAdapter.HistoryListItem> del_list = new ArrayList<HistoryListAdapter.HistoryListItem>();
-            for (int i = 0; i < hl.size(); i++) {
-                if (!hl.get(i).sync_task.equals("")) {
-                    shli = hl.get(i);
-                    if (i < max) {
-                        sb_buf.setLength(0);
-                        sb_buf.append(shli.sync_date).append(LIST_ITEM_SEPARATOR)                           //0
-                                .append(shli.sync_time).append(LIST_ITEM_SEPARATOR)                         //1
-                                .append(String.valueOf(shli.sync_elapsed_time)).append(LIST_ITEM_SEPARATOR) //2
-                                .append(shli.sync_task).append(LIST_ITEM_SEPARATOR)                         //3
-                                .append(shli.sync_status).append(LIST_ITEM_SEPARATOR)                       //4
-                                .append(shli.sync_test_mode ? "1" : "0").append(LIST_ITEM_SEPARATOR)        //5
-                                .append(shli.sync_result_no_of_copied).append(LIST_ITEM_SEPARATOR)          //6
-                                .append(shli.sync_result_no_of_deleted).append(LIST_ITEM_SEPARATOR)         //7
-                                .append(shli.sync_result_no_of_ignored).append(LIST_ITEM_SEPARATOR)         //8
-                                .append(shli.sync_result_no_of_moved).append(LIST_ITEM_SEPARATOR)           //9
-                                .append(shli.sync_result_no_of_replaced).append(LIST_ITEM_SEPARATOR)        //10
-                                .append(shli.sync_req).append(LIST_ITEM_SEPARATOR)                          //11
-                                .append(shli.sync_error_text.replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_SEPARATOR)//12
-                                .append(shli.sync_result_no_of_retry).append(LIST_ITEM_SEPARATOR)           //13
-                                .append(shli.sync_transfer_speed).append(LIST_ITEM_SEPARATOR)               //14
-                                .append(shli.sync_result_file_path)                                         //15
-                                .append("\n");
+                int max = 500;
+                StringBuilder sb_buf = new StringBuilder(1024 * 2);
+                HistoryListAdapter.HistoryListItem shli = null;
+                final ArrayList<HistoryListAdapter.HistoryListItem> del_list = new ArrayList<HistoryListAdapter.HistoryListItem>();
+                for (int i = 0; i < hl.size(); i++) {
+                    if (!hl.get(i).sync_task.equals("")) {
+                        shli = hl.get(i);
+                        if (i < max) {
+                            sb_buf.setLength(0);
+                            sb_buf.append(shli.sync_date).append(LIST_ITEM_SEPARATOR)                           //0
+                                    .append(shli.sync_time).append(LIST_ITEM_SEPARATOR)                         //1
+                                    .append(String.valueOf(shli.sync_elapsed_time)).append(LIST_ITEM_SEPARATOR) //2
+                                    .append(shli.sync_task).append(LIST_ITEM_SEPARATOR)                         //3
+                                    .append(shli.sync_status).append(LIST_ITEM_SEPARATOR)                       //4
+                                    .append(shli.sync_test_mode ? "1" : "0").append(LIST_ITEM_SEPARATOR)        //5
+                                    .append(shli.sync_result_no_of_copied).append(LIST_ITEM_SEPARATOR)          //6
+                                    .append(shli.sync_result_no_of_deleted).append(LIST_ITEM_SEPARATOR)         //7
+                                    .append(shli.sync_result_no_of_ignored).append(LIST_ITEM_SEPARATOR)         //8
+                                    .append(shli.sync_result_no_of_moved).append(LIST_ITEM_SEPARATOR)           //9
+                                    .append(shli.sync_result_no_of_replaced).append(LIST_ITEM_SEPARATOR)        //10
+                                    .append(shli.sync_req).append(LIST_ITEM_SEPARATOR)                          //11
+                                    .append(shli.sync_error_text.replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_SEPARATOR)//12
+                                    .append(shli.sync_result_no_of_retry).append(LIST_ITEM_SEPARATOR)           //13
+                                    .append(shli.sync_transfer_speed).append(LIST_ITEM_SEPARATOR)               //14
+                                    .append(shli.sync_result_file_path)                                         //15
+                                    .append("\n");
 
-                        bw.append(sb_buf.toString());
-                    } else {
-                        del_list.add(shli);
-                        if (!shli.sync_result_file_path.equals("")) {
-                            File tlf = new File(shli.sync_result_file_path);
-                            if (tlf.exists()) tlf.delete();
+                            bw.append(sb_buf.toString());
+                        } else {
+                            del_list.add(shli);
+                            if (!shli.sync_result_file_path.equals("")) {
+                                File tlf = new File(shli.sync_result_file_path);
+                                if (tlf.exists()) tlf.delete();
+                            }
                         }
                     }
                 }
+                bw.flush();
+                bw.close();
+            } catch (Exception e) {
+                log.error(CommonUtilities.getExecutedMethodName()+" error.", e);
             }
-            bw.flush();
-            bw.close();
-        } catch (Exception e) {
-            log.error(CommonUtilities.getExecutedMethodName()+" error.", e);
         }
     }
 

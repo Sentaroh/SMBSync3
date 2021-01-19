@@ -152,15 +152,20 @@ public class TaskEditor extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        mContext = getActivity();
+        if (mContext == null) mContext = getActivity();
         mFragment = this;
         mFragMgr = this.getFragmentManager();
         mActivity=(ActivityMain)getActivity();
-        mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp, getFragmentManager());
+        if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mContext);
+        if (mUtil == null) mUtil = new CommonUtilities(mContext, "TaskEditor", mGp, getFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mTerminateRequired) {
             this.dismiss();
         }
+    }
+
+    private void initFragment() {
+
     }
 
     @Override
@@ -173,8 +178,8 @@ public class TaskEditor extends DialogFragment {
     final public void onAttach(Activity activity) {
         super.onAttach(activity);
         if (mContext == null) mContext = getActivity();
-        mGp=GlobalWorkArea.getGlobalParameter(mContext);
-        if (mUtil == null) mUtil = new CommonUtilities(mContext, "SyncTaskEditor", mGp, getFragmentManager());
+        if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mContext);
+        if (mUtil == null) mUtil = new CommonUtilities(mContext, "TaskEditor", mGp, getFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 

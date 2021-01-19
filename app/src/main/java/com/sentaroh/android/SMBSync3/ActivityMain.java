@@ -600,6 +600,13 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, currentView=" + mCurrentTab +
                 ", getChangingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
         setActivityForeground(false);
+        Thread th=new Thread() {
+            @Override
+            public void run() {
+                CommonUtilities.saveMessageList(mContext, mGp);
+            }
+        };
+        th.start();
     }
 
     @Override
