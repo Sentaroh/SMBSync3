@@ -224,16 +224,24 @@ class SyncTaskItem implements Serializable, Cloneable {
     public int getSyncOptionDifferentFileAllowableTime() {return syncOptionDeterminChangedFileByTimeValue;}
     public void setSyncOptionDifferentFileAllowableTime(int p) {syncOptionDeterminChangedFileByTimeValue = p;}
 
-    public final static String WIFI_STATUS_WIFI_OFF = "OFF"; // list index 0
+    public final static String WIFI_STATUS_WIFI_OFF = "OFF";
+    public final static int WIFI_STATUS_INDEX_WIFI_OFF = 0;
     public final static String WIFI_STATUS_WIFI_CONNECT_ANY_AP = "ANY_AP"; // list index 1
+    public final static int WIFI_STATUS_INDEX_WIFI_CONNECT_ANY_AP = 1;
     public final static String WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS = "PRIVATE_IP_ADDRESS"; // list index 2
+    public final static int WIFI_STATUS_INDEX_WIFI_HAS_PRIVATE_IP_ADDRESS = 2;
     public final static String WIFI_STATUS_WIFI_IP_ADDRESS_LIST = "IP_ADDRESS_LIST"; // list index 3
+    public final static int WIFI_STATUS_INDEX_WIFI_IP_ADDRESS_LIST = 3;
     public final static String WIFI_STATUS_WIFI_DEFAULT = WIFI_STATUS_WIFI_CONNECT_ANY_AP;
     public final static String WIFI_STATUS_WIFI_DEFAULT_DESCRIPTION = "Conn any AP";
     public final static String[] WIFI_STATUS_WIFI_LIST = new String[]{WIFI_STATUS_WIFI_OFF , WIFI_STATUS_WIFI_CONNECT_ANY_AP,
             WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS, WIFI_STATUS_WIFI_IP_ADDRESS_LIST};
     private String syncOptionWifiStatus = WIFI_STATUS_WIFI_DEFAULT;
     public String getSyncOptionWifiStatusOption() {return syncOptionWifiStatus;}
+    static public String getSyncOptionWifiStatusOptionValueByIndex(int index) {
+        if (index>=0 && index<=3) return WIFI_STATUS_WIFI_LIST[index];
+        return WIFI_STATUS_WIFI_LIST[0];
+    }
     public void setSyncOptionWifiStatusOption(String p) {syncOptionWifiStatus = p;}
 
     private ArrayList<FilterListAdapter.FilterListItem> syncOptionWifiAccessPointGrantList = new ArrayList<FilterListAdapter.FilterListItem>();
@@ -301,12 +309,27 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty() {return syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty;}
     public void setSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty(boolean p) {syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty = p;}
 
-    final static public int SYNC_TASK_OPTION_ERROR_OPTION_STOP =0;
-    final static public int SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND =1;
-    final static public int SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK =2;
-    private int syncOptionTaskErrorOption= SYNC_TASK_OPTION_ERROR_OPTION_STOP;
-    public int getSyncTaskErrorOption() {return syncOptionTaskErrorOption;}
-    public void setSyncTaskErrorOption(int error_option) {syncOptionTaskErrorOption=error_option;}
+    final static public String SYNC_TASK_OPTION_ERROR_OPTION_STOP ="STOP";
+    final static public int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_STOP =0;
+    final static public String SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND ="SKIP_UNCOND";
+    final static public int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_UNCOND =1;
+    final static public String SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK ="SKIP_NETWORK";
+    final static public int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_NETWORK =2;
+    final static private String[] SYNC_OPTION_TASK_ERROR_VALUES=new String[]{SYNC_TASK_OPTION_ERROR_OPTION_STOP, SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND, SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK};
+    private String syncOptionTaskErrorOption= SYNC_TASK_OPTION_ERROR_OPTION_STOP;
+    public String getSyncTaskErrorOption() {return syncOptionTaskErrorOption;}
+    static public String getSyncTaskErrorOptionValueByIndex(int index) {
+        if (index>=0 && index<=2) return SYNC_OPTION_TASK_ERROR_VALUES[index];
+        else return SYNC_OPTION_TASK_ERROR_VALUES[0];
+    }
+    public int getSyncTaskErrorOptionIndex() {
+        int index=SYNC_TASK_OPTION_ERROR_OPTION_INDEX_STOP;
+        if (getSyncTaskErrorOption().equals(SYNC_TASK_OPTION_ERROR_OPTION_STOP)) index=SYNC_TASK_OPTION_ERROR_OPTION_INDEX_STOP;
+        else if (getSyncTaskErrorOption().equals(SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND)) index=SYNC_TASK_OPTION_ERROR_OPTION_INDEX_UNCOND;
+        else if (getSyncTaskErrorOption().equals(SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK)) index=SYNC_TASK_OPTION_ERROR_OPTION_INDEX_NETWORK;
+        return index;
+    }
+    public void setSyncTaskErrorOption(String error_option) {syncOptionTaskErrorOption=error_option;}
 
     private boolean syncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb =false;
     public boolean isSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb() {return syncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb;}
@@ -346,7 +369,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private String syncTaskSourceFolderSmbPassword = "";
     public void setSourceSmbPassword(String p) {syncTaskSourceFolderSmbPassword = p;}
-    public String getSourceSmbPassword() {return syncTaskSourceFolderSmbPassword;}
+    public String getSourceSmbAccountPassword() {return syncTaskSourceFolderSmbPassword;}
 
     private String syncTaskSourceFolderSmbShareName = "";
     public void setSourceSmbShareName(String p) {syncTaskSourceFolderSmbShareName = p;}
@@ -695,7 +718,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskSourceFolderSmbHostName.equals(sti.getSourceSmbHostName())) &&
                 (syncTaskSourceFolderSmbPortNumber.equals(sti.getSourceSmbPort())) &&
                 (syncTaskSourceFolderSmbAccountName.equals(sti.getSourceSmbAccountName())) &&
-                (syncTaskSourceFolderSmbPassword.equals(sti.getSourceSmbPassword())) &&
+                (syncTaskSourceFolderSmbPassword.equals(sti.getSourceSmbAccountPassword())) &&
                 (syncTaskSourceFolderSmbDomain.equals(sti.getSourceSmbDomain())) &&
                 (syncTaskSourceFolderSmbProtocol.equals(sti.getSourceSmbProtocol())) &&
 

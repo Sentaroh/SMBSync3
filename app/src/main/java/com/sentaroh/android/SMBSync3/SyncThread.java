@@ -400,7 +400,7 @@ public class SyncThread extends Thread {
                 ", Port=" + sti.getSourceSmbPort() +
                 ", SmbShare=" + sti.getSourceSmbShareName() +
                 ", Account name=" + (sti.getSourceSmbAccountName().equals("")?"":"????????")+
-//                ", Account password=" + (sti.getSourceSmbPassword().equals("")?"":"????????")+
+                ", Account password=" + (sti.getSourceSmbAccountPassword().equals("")?"":"********")+
                 ", Directory=" + sti.getSourceDirectoryName() +
                 ", SMB Protocol=" + sti.getSourceSmbProtocol() +
                 ", StorageUuid=" + sti.getSourceStorageUuid()+
@@ -411,7 +411,7 @@ public class SyncThread extends Thread {
                 ", Port=" + sti.getDestinationSmbPort() +
                 ", SmbShare=" + sti.getDestinationSmbShareName() +
                 ", Account name=" + (sti.getDestinationSmbAccountName().equals("")?"":"????????")+
-//                ", Account password=" + (sti.getDestinationSmbPassword().equals("")?"":"????????")+
+                ", Account password=" + (sti.getDestinationSmbPassword().equals("")?"":"********")+
                 ", Directory=" + sti.getDestinationDirectoryName() +
                 ", SMB Protocol=" + sti.getDestinationSmbProtocol() +
                 ", StorageUuid=" + sti.getDestinationStorageUuid() +
@@ -472,7 +472,7 @@ public class SyncThread extends Thread {
         String mst_dom=null, mst_user=null, mst_pass=null;
         mst_dom=sti.getSourceSmbDomain().equals("")?null:sti.getSourceSmbDomain();
         mst_user=sti.getSourceSmbAccountName().equals("")?null:sti.getSourceSmbAccountName();
-        mst_pass=sti.getSourceSmbPassword().equals("")?null:sti.getSourceSmbPassword();
+        mst_pass=sti.getSourceSmbAccountPassword().equals("")?null:sti.getSourceSmbAccountPassword();
         Properties prop=new Properties();
         prop.setProperty(JCIFS_OPTION_CLIENT_RESPONSE_TIMEOUT, mGp.settingsSmbClientResponseTimeout);
         if (sti.getSourceSmbProtocol().equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {

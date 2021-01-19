@@ -2820,7 +2820,7 @@ public class TaskEditor extends DialogFragment {
         else spinner.setSelection(1);
     }
 
-    private void setSpinnerSyncTaskErrorOption(SyncTaskItem sti, Spinner spinner, int cv) {
+    private void setSpinnerSyncTaskErrorOption(SyncTaskItem sti, Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
         adapter.setDropDownTextWordwrapEnabled(true);
@@ -2833,7 +2833,12 @@ public class TaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_option_error_ignore));
         adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_option_error_skip_network));
 
-        spinner.setSelection(cv, false);
+        int sel=0;
+        if (cv.equals(SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_STOP)) sel=0;
+        else if (cv.equals(SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND)) sel=1;
+        else if (cv.equals(SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK)) sel=2;
+
+        spinner.setSelection(sel, false);
     }
 
     private void setSpinnerSyncFolderType(SyncTaskItem sti, Spinner spinner, String cv, boolean source) {
@@ -2961,12 +2966,8 @@ public class TaskEditor extends DialogFragment {
     }
 
     private String getSpinnerSyncTaskWifiOptionValue(Spinner spinner) {
-        String value=SyncTaskItem.WIFI_STATUS_WIFI_OFF;
         int sel_pos=spinner.getSelectedItemPosition();
-        if (sel_pos==1) value=SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-        else if (sel_pos==2) value=SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS;
-        else if (sel_pos==3) value=SyncTaskItem.WIFI_STATUS_WIFI_IP_ADDRESS_LIST;
-        return value;
+        return SyncTaskItem.getSyncOptionWifiStatusOptionValueByIndex(sel_pos);
     }
 
     private void setSpinnerSyncTaskDiffTimeValue(Spinner spinner, int cv) {
@@ -3258,7 +3259,7 @@ public class TaskEditor extends DialogFragment {
                 sp_sync_task_option_error_option.setOnItemSelectedListener(new OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        if (position!=SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_STOP) {
+                        if (position!=SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_INDEX_STOP) {
                             NotifyEvent ntfy=new NotifyEvent(mContext);
                             ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                                 @Override
@@ -3268,7 +3269,7 @@ public class TaskEditor extends DialogFragment {
 
                                 @Override
                                 public void negativeResponse(Context context, Object[] objects) {
-                                    sp_sync_task_option_error_option.setSelection(n_sti.getSyncTaskErrorOption(), false);
+                                    sp_sync_task_option_error_option.setSelection(n_sti.getSyncTaskErrorOptionIndex(), false);
                                 }
                             });
                             mUtil.showCommonDialogWarn(true, mContext.getString(R.string.msgs_task_sync_task_sync_option_error_title),
@@ -3844,7 +3845,7 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_smb_domain = n_sti.getSourceSmbDomain();
                 sfev.folder_smb_hostname = n_sti.getSourceSmbHostName();
                 sfev.folder_smb_port = n_sti.getSourceSmbPort();
-                sfev.folder_smb_password = n_sti.getSourceSmbPassword();
+                sfev.folder_smb_password = n_sti.getSourceSmbAccountPassword();
                 sfev.folder_smb_share = n_sti.getSourceSmbShareName();
                 sfev.folder_smb_account = n_sti.getSourceSmbAccountName();
                 sfev.folder_smb_protocol=n_sti.getSourceSmbProtocol();
@@ -3893,7 +3894,7 @@ public class TaskEditor extends DialogFragment {
                         n_sti.setDestinationSmbAddr(t_sti.getSourceSmbAddr());
                         n_sti.setDestinationSmbDomain(t_sti.getSourceSmbDomain());
                         n_sti.setDestinationSmbHostname(t_sti.getSourceSmbHostName());
-                        n_sti.setDestinationSmbPassword(t_sti.getSourceSmbPassword());
+                        n_sti.setDestinationSmbPassword(t_sti.getSourceSmbAccountPassword());
                         n_sti.setDestinationSmbPort(t_sti.getSourceSmbPort());
                         n_sti.setDestinationSmbShareName(t_sti.getSourceSmbShareName());
                         n_sti.setDestinationSmbAccountName(t_sti.getSourceSmbAccountName());
@@ -4402,7 +4403,7 @@ public class TaskEditor extends DialogFragment {
 
         nstli.setSyncOptionDeleteFirstWhenMirror(ctvDeleteFirst.isChecked());
 
-        nstli.setSyncTaskErrorOption(sp_sync_task_option_error_option.getSelectedItemPosition());
+        nstli.setSyncTaskErrorOption(nstli.getSyncTaskErrorOptionValueByIndex(sp_sync_task_option_error_option.getSelectedItemPosition()));
 
         String wifi_sel = getSpinnerSyncTaskWifiOptionValue(spinnerSyncWifiStatus);
         nstli.setSyncOptionWifiStatusOption(wifi_sel);

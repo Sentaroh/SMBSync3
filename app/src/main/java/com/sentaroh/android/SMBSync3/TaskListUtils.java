@@ -2316,7 +2316,7 @@ public class TaskListUtils {
         ssi.serverPort=host_port;
         ssi.serverProtocol=smb_proto;
         ssi.serverAccountName=sti.getSourceSmbAccountName();
-        ssi.serverAccountPassword=sti.getSourceSmbPassword();
+        ssi.serverAccountPassword=sti.getSourceSmbAccountPassword();
 
         NotifyEvent ntfy = new NotifyEvent(mContext);
         // set thread response

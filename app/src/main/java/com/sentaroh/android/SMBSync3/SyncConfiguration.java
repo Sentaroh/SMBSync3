@@ -688,7 +688,7 @@ public class SyncConfiguration {
 
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_IGNORE_FILE_NAME_LENGTH_EXCEED_255_BYTE, String.valueOf(item.isSyncOptionIgnoreDestinationFileNameLengthExceed255Byte() ? "true" : "false"));
 
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_ERROR_OPTION, String.valueOf(item.getSyncTaskErrorOption()));
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_ERROR_OPTION, item.getSyncTaskErrorOption());
 
         task_tag.appendChild(option_tag);
     }
@@ -722,12 +722,12 @@ public class SyncConfiguration {
                     source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ACCOUNT_NAME, item.getSourceSmbAccountName());
                 }
             }
-            if (!item.getSourceSmbPassword().equals("")) {
+            if (!item.getSourceSmbAccountPassword().equals("")) {
                 if (cp_int != null && (enc_mode == ENCRYPT_MODE_ENCRYPT_VITAL_DATA)) {
-                    String enc_str = CommonUtilities.encryptUserData(c, cp_int, item.getSourceSmbPassword());
+                    String enc_str = CommonUtilities.encryptUserData(c, cp_int, item.getSourceSmbAccountPassword());
                     source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ENCRYPTED_ACCOUNT_PASSWORD, enc_str);
                 } else {
-                    source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ACCOUNT_PASSWORD, item.getSourceSmbPassword());
+                    source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ACCOUNT_PASSWORD, item.getSourceSmbAccountPassword());
                 }
             }
             source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME, item.getSourceSmbHostName());
@@ -1153,7 +1153,7 @@ public class SyncConfiguration {
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_IGNORE_FILE_NAME_LENGTH_EXCEED_255_BYTE)) {
                 sti.setSyncOptionIgnoreDestinationFileNameLengthExceed255Byte(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_ERROR_OPTION)) {
-                sti.setSyncTaskErrorOption(Integer.valueOf(xpp.getAttributeValue(i)));
+                sti.setSyncTaskErrorOption(xpp.getAttributeValue(i));
             }
         }
     }
