@@ -781,7 +781,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
                         (syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty ==sti.isSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty()) &&
 
-                        (syncOptionTaskErrorOption ==sti.getSyncTaskErrorOption()) &&
+                        (syncOptionTaskErrorOption.equals(sti.getSyncTaskErrorOption())) &&
 
                         (syncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb ==sti.isSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb()) &&
 
