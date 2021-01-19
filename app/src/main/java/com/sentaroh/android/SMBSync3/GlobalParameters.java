@@ -317,7 +317,9 @@ public class GlobalParameters {
 
 //    private Semaphore configSemaphore =new Semaphore(1);
     public void acquireConfigurationLock() {
+        if (log.isDebugEnabled()) log.debug("acquireConfigurationLock() entered");
         configurationLock.writeLock().lock();
+        if (log.isDebugEnabled()) log.debug("acquireConfigurationLock() ended");
 //        try {
 //            configSemaphore.acquire();
 //        } catch (InterruptedException e) {
@@ -326,7 +328,9 @@ public class GlobalParameters {
     }
 
     public void releaseConfigurationLock() {
+        if (log.isDebugEnabled()) log.debug("releaseConfigurationLock() entered");
         configurationLock.writeLock().unlock();
+        if (log.isDebugEnabled()) log.debug("releaseConfigurationLock() ended");
 //        configSemaphore.release();
     }
 
