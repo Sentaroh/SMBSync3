@@ -250,6 +250,12 @@ public class SyncThreadArchiveFile {
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_CANCEL;
                 break;
             }
+
+            if (!sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID) && !SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+            }
+
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", item.full_path, item.file_name,
@@ -441,6 +447,12 @@ public class SyncThreadArchiveFile {
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_CANCEL;
                 break;
             }
+
+            if (!SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
+                if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
+                else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+            }
+
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", item.full_path, item.file_name,
