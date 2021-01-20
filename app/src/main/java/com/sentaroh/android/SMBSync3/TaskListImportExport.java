@@ -686,6 +686,7 @@ public class TaskListImportExport {
             }
         });
 
+        CommonUtilities.setEditTextPasteCopyEnabled(et_confirm, false);
         et_confirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {

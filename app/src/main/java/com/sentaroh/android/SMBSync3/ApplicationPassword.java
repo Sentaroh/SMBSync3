@@ -293,6 +293,7 @@ public class ApplicationPassword {
                 checkNewPasswordSpecification(mActivity, gp, btn_ok, et_pswd1, et_pswd2, tv_msg);
             }
         });
+        CommonUtilities.setEditTextPasteCopyEnabled(et_pswd2, false);
         et_pswd2.addTextChangedListener(new TextWatcher(){
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

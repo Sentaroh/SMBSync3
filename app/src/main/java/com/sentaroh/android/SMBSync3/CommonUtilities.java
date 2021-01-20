@@ -43,10 +43,14 @@ import android.os.Build;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.util.TypedValue;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -1096,5 +1100,26 @@ public final class CommonUtilities {
         return result;
     }
 
+    public static void setEditTextPasteCopyEnabled(EditText et, boolean enabled) {
+        if (enabled) {
+            et.setCustomSelectionActionModeCallback(null);
+        } else {
+            et.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                public void onDestroyActionMode(ActionMode mode) {}
+
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    return false;
+                }
+            });
+        }
+    }
 }
 

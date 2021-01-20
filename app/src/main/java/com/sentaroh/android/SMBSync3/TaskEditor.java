@@ -1716,6 +1716,7 @@ public class TaskEditor extends DialogFragment {
         if (et_zip_pswd.getText().length() > 0) CommonUtilities.setViewEnabled(getActivity(), et_zip_conf_pswd, true);
         else CommonUtilities.setViewEnabled(getActivity(), et_zip_conf_pswd, false);
 
+        CommonUtilities.setEditTextPasteCopyEnabled(et_zip_conf_pswd, false);
         et_zip_conf_pswd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
