@@ -889,7 +889,7 @@ public class TaskEditor extends DialogFragment {
             }
         });
 
-        setSyncFolderSmbDetailView(dialog, false);
+//        setSyncFolderSmbDetailView(dialog, false);
         ctv_sync_folder_edit_smb_detail.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

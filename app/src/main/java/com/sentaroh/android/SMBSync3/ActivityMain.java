@@ -2036,7 +2036,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", "Option: " +
 //                ", settingErrorOption=" + mGp.settingErrorOption +
 
-                ", settingWifiLockRequired=" + mGp.settingWifiLockRequired +
+                "settingWifiLockRequired=" + mGp.settingWifiLockRequired +
                 ", settingNoCompressFileType=" + mGp.settingNoCompressFileType +
                 ", settingNotificationMessageWhenSyncEnded="+mGp.settingNotificationMessageWhenSyncEnded +
                 ", settingNotificationVibrateWhenSyncEnded=" + mGp.settingNotificationVibrateWhenSyncEnded +
@@ -2047,6 +2047,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingForceDeviceTabletViewInLandscape=" + mGp.settingForceDeviceTabletViewInLandscape +
                 ", settingApplicationLanguage=" + GlobalParameters.getLanguageCode(mContext) +
+                ", settingApplicationFontScale=" + GlobalParameters.getFontScaleFactor(mContext) +
 
                 ", settingExportedTaskEncryptRequired=" + mGp.settingExportedTaskEncryptRequired +
                 ", settingScreenTheme=" + mGp.applicationTheme+//.settingScreenTheme +
