@@ -79,10 +79,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -1978,17 +1974,15 @@ public class ActivityMain extends AppCompatActivity {
 
     private void invokeSettingsActivity() {
         mUtil.addDebugMsg(1, "I", "Invoke Setting activity.");
-        ActivityResultLauncher<Intent> activity_laucher =
-                mActivity.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        mPrevLanguageSetting=GlobalParameters.getLanguageCode(mContext);
+        Intent intent = new Intent(mContext, ActivitySettings.class);
+        launchActivity("Settings", intent, new CallBackListener() {
             @Override
-            public void onActivityResult(ActivityResult result) {
+            public void onCallBack(Context context, boolean b, Object[] objects) {
                 mUtil.addDebugMsg(1, "I", "Return from Setting activity.");
                 reloadSettingParms();
             }
         });
-        mPrevLanguageSetting=GlobalParameters.getLanguageCode(mContext);
-        Intent intent = new Intent(mContext, ActivitySettings.class);
-        activity_laucher.launch(intent);
     }
 
     private String mPrevLanguageSetting=APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
@@ -2072,10 +2066,10 @@ public class ActivityMain extends AppCompatActivity {
         ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-                ActivityResultLauncher<Intent> mStartForActivityResult =
-                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                launchActivity("ALL_FILE_ACCESS", intent, new CallBackListener() {
                     @Override
-                    public void onActivityResult(ActivityResult result) {
+                    public void onCallBack(Context context, boolean b, Object[] objects) {
                         if (isAllFileAccessPermissionGranted()) {
                             if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
                         } else {
@@ -2094,8 +2088,6 @@ public class ActivityMain extends AppCompatActivity {
                         }
                     }
                 });
-                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                mStartForActivityResult.launch(intent);
             }
 
             @Override
@@ -2312,23 +2304,25 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onCallBack(Context c, boolean positive, Object[] objects) {
                 if (positive) {
-                    ActivityResultLauncher<String> request_permission =mActivity.registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                        if (isGranted) {
-                            mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
-                            mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
-                            cbl.onCallBack(mContext, true, null);
-                        } else {
-                            mUtil.showCommonDialog(mContext, false, "W",
-                                    mContext.getString(R.string.msgs_main_permission_internal_storage_title),
-                                    mContext.getString(R.string.msgs_main_permission_internal_storage_denied_msg), new CallBackListener() {
-                                @Override
-                                public void onCallBack(Context c, boolean positive, Object[] objects) {
-                                    if (positive) finish();
-                                }
-                            });
+                    launchRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, new CallBackListener() {
+                        @Override
+                        public void onCallBack(Context context, boolean isGranted, Object[] objects) {
+                            if (isGranted) {
+                                mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
+                                mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
+                                cbl.onCallBack(mContext, true, null);
+                            } else {
+                                mUtil.showCommonDialog(mContext, false, "W",
+                                        mContext.getString(R.string.msgs_main_permission_internal_storage_title),
+                                        mContext.getString(R.string.msgs_main_permission_internal_storage_denied_msg), new CallBackListener() {
+                                            @Override
+                                            public void onCallBack(Context c, boolean positive, Object[] objects) {
+                                                if (positive) finish();
+                                            }
+                                        });
+                            }
                         }
                     });
-                    request_permission.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 } else {
                     mUtil.showCommonDialogWarn(mContext, false,
                             mContext.getString(R.string.msgs_main_permission_internal_storage_title),
@@ -2348,18 +2342,77 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
+    private class ActivityLauncherListItem {
+        private String requestorId=null;
+        private int requestCode=0;
+        private CallBackListener callBackListener=null;
+        public ActivityLauncherListItem(int req_code, String req_id, CallBackListener cbl) {
+            this.requestorId=req_id;
+            callBackListener=cbl;
+            requestCode=req_code;
+        }
+        public String getRequestorId() {return this.requestorId;}
+        public int getRequestCode() {return this.requestCode;}
+        public CallBackListener getCallBackListener() {return callBackListener;}
+    }
+
+    private ArrayList<ActivityLauncherListItem> mActivityLaunchList=new ArrayList<ActivityLauncherListItem>();
+
+    public void launchActivity(String req_id, Intent intent, CallBackListener cbl) {
+        int req_code=mActivityLaunchList.size()+1;
+        synchronized (mActivityLaunchList) {
+            mActivityLaunchList.add(new ActivityLauncherListItem(req_code, req_id, cbl));
+        }
+        startActivityForResult(intent, req_code);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //ActivityResultLauncherを使用する事
-        //コードを追加しない事
+        synchronized (mActivityLaunchList) {
+            ArrayList<ActivityLauncherListItem> remove_list=new ArrayList<ActivityLauncherListItem>();
+            for(ActivityLauncherListItem item:mActivityLaunchList) {
+                if (item.getRequestCode()==requestCode) {
+                    item.callBackListener.onCallBack(mContext, resultCode==0, new Object[]{data});
+                    remove_list.add(item);
+                }
+            }
+            mActivityLaunchList.removeAll(remove_list);
+        }
+
+    }
+
+    private class RequestPermissionListItem {
+        private String permission=null;
+        private CallBackListener callBackListener=null;
+        public RequestPermissionListItem(String permission, CallBackListener cbl) {
+            this.permission=permission;
+            callBackListener=cbl;
+        }
+        public String getPermission() {return this.permission;}
+        public CallBackListener getCallBackListener() {return callBackListener;}
+    }
+
+    private ArrayList<RequestPermissionListItem> mRequestPermissionList=new ArrayList<RequestPermissionListItem>();
+
+    public void launchRequestPermission(String permission, CallBackListener cbl) {
+        synchronized (mRequestPermissionList) {
+            mRequestPermissionList.add(new RequestPermissionListItem(permission, cbl));
+        }
+        requestPermissions(new String[]{permission}, mRequestPermissionList.size());
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        //ActivityResultLauncherを使用する事
-        //コードを追加しない事
+        synchronized (mRequestPermissionList) {
+            ArrayList<RequestPermissionListItem> remove_list=new ArrayList<RequestPermissionListItem>();
+            for(RequestPermissionListItem item:mRequestPermissionList) {
+                if (item.getPermission().equals(permissions[0])) {
+                    item.callBackListener.onCallBack(mContext, grantResults[0]==0, new Object[]{item.getPermission()});
+                    remove_list.add(item);
+                }
+            }
+            mRequestPermissionList.removeAll(remove_list);
+        }
     }
 
     private void setHistoryViewListener() {

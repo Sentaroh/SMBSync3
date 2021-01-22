@@ -61,10 +61,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -72,6 +68,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.sentaroh.android.SMBSync3.LocalStorageSelectorAdapter.LocalStorageSelectorItem;
 
+import com.sentaroh.android.Utilities3.CallBackListener;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.Dialog.CommonFileSelector2;
 import com.sentaroh.android.Utilities3.MiscUtil;
@@ -1312,13 +1309,12 @@ public class TaskEditor extends DialogFragment {
                 }
                 if (intent!=null) {
                     try {
-                        ActivityResultLauncher<Intent> activity_launcher = a.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                        a.launchActivity("UUID", intent, new CallBackListener() {
                             @Override
-                            public void onActivityResult(ActivityResult result) {
-                                ntfy.notifyToListener(true, new Object[]{result.getResultCode(), result.getData(), uuid});
+                            public void onCallBack(Context context, boolean positive, Object[] objects) {
+                                ntfy.notifyToListener(true, new Object[]{positive?0:-1, objects[0], uuid});
                             }
                         });
-                        activity_launcher.launch(intent);
                     } catch(Exception e) {
                         String st= MiscUtil.getStackTraceString(e);
                         cu.showCommonDialog(false, "E",

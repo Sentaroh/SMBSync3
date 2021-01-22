@@ -97,8 +97,10 @@ dependencies {
 
 //    implementation files('libs/markdownj-core-0.4.jar')
 
-    implementation 'androidx.activity:activity:1.2.0-alpha06'
-    implementation "androidx.fragment:fragment-ktx:1.3.0-alpha06"
-    implementation "androidx.core:core-ktx:+"
+//    implementation 'androidx.activity:activity:1.2.0-alpha06'
+//    implementation "androidx.fragment:fragment-ktx:1.3.0-alpha06"
+//    implementation 'androidx.activity:activity:1.2.0-rc01'
+//    implementation "androidx.fragment:fragment-ktx:1.3.0-rc01"
+//    implementation "androidx.core:core-ktx:+"
 
 }
