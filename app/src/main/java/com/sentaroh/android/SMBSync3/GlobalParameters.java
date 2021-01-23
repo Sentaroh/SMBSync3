@@ -131,7 +131,7 @@ public class GlobalParameters {
         return settingSupressAddExternalStorageNotification;
     }
     public void setSupressAddExternalStorageNotification(Context c, boolean suppress) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(c.getString(R.string.settings_suppress_add_external_storage_notification), suppress).commit();
         settingSupressAddExternalStorageNotification=suppress;
     }
@@ -141,7 +141,7 @@ public class GlobalParameters {
         return settingSupressStartSyncConfirmationMessage;
     }
     public void setSupressStartSyncConfirmationMessage(Context c, boolean suppress) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(c.getString(R.string.settings_suppress_start_sync_confirmation_message), suppress).commit();
         settingSupressStartSyncConfirmationMessage=suppress;
     }
@@ -149,7 +149,7 @@ public class GlobalParameters {
     public boolean settingSupressStartGroupConfirmationMessage =false;
     public boolean isSupressStartGroupConfirmationMessage() { return settingSupressStartGroupConfirmationMessage;}
     public void setSupressStartGroupConfirmationMessage(Context c, boolean suppress) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(c.getString(R.string.settings_suppress_start_group_confirmation_message), suppress).commit();
         settingSupressStartGroupConfirmationMessage=suppress;
     }
@@ -159,7 +159,7 @@ public class GlobalParameters {
         return settingSupressShortcut1ConfirmationMessage;
     }
     public void setSupressShortcut1ConfirmationMessage(Context c, boolean suppress) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(c.getString(R.string.settings_suppress_shortcut1_confirmation_message), suppress).commit();
         settingSupressShortcut1ConfirmationMessage =suppress;
     }
@@ -169,7 +169,7 @@ public class GlobalParameters {
         return settingSupressShortcut2ConfirmationMessage;
     }
     public void setSupressShortcut2ConfirmationMessage(Context c, boolean suppress) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(c.getString(R.string.settings_suppress_shortcut2_confirmation_message), suppress).commit();
         settingSupressShortcut2ConfirmationMessage =suppress;
     }
@@ -179,7 +179,7 @@ public class GlobalParameters {
         return settingSupressShortcut3ConfirmationMessage;
     }
     public void setSupressShortcut3ConfirmationMessage(Context c, boolean suppress) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(c.getString(R.string.settings_suppress_shortcut3_confirmation_message), suppress).commit();
         settingSupressShortcut3ConfirmationMessage =suppress;
     }
@@ -441,7 +441,7 @@ public class GlobalParameters {
 
     public void initSettingsParms(Context c) {
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         SharedPreferences.Editor pe = prefs.edit();
 
         if (!prefs.contains(c.getString(R.string.settings_exit_clean))) {
@@ -511,7 +511,7 @@ public class GlobalParameters {
     }
 
     public void loadSettingsParms(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
 
         settingExitClean=prefs.getBoolean(c.getString(R.string.settings_exit_clean), false);
 
@@ -595,7 +595,7 @@ public class GlobalParameters {
         settingSecurityReinitSmbAccountPasswordValue=false;
         settingSecurityReinitZipPasswordValue=false;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         SharedPreferences.Editor editor=prefs.edit();
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), settingSecurityApplicationPasswordUseAppStartup);
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_edit_task), settingSecurityApplicationPasswordUseEditTask);
@@ -610,7 +610,7 @@ public class GlobalParameters {
 
 
     public void setScheduleEnabled(Context c, boolean enabled) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         settingScheduleSyncEnabled=enabled;
         prefs.edit().putBoolean(SCHEDULE_ENABLED_KEY, enabled).commit();
     }
@@ -624,7 +624,7 @@ public class GlobalParameters {
     public static final String FONT_SCALE_FACTOR_LARGEST="3";
     public static final float FONT_SCALE_FACTOR_LARGEST_VALUE=1.6f;
     static public String getFontScaleFactor(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
         return fs;
     }
@@ -650,7 +650,7 @@ public class GlobalParameters {
     }
 
     static public void setDisplayFontScale(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
         setDisplayFontScale(c, fs);
     }
@@ -680,7 +680,7 @@ public class GlobalParameters {
     public static final String APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT = "system";
 
     static public String getLanguageCode(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         String lc=prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
         return lc;
     }
@@ -738,7 +738,7 @@ public class GlobalParameters {
             settingsSmbDisablePlainTextPasswords=SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT;
 
     final public void initJcifsOption(Context c) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
 
         settingsSmbLmCompatibility = prefs.getString(c.getString(R.string.settings_smb_lm_compatibility), SMB_LM_COMPATIBILITY_DEFAULT);
         boolean ues = prefs.getBoolean(c.getString(R.string.settings_smb_use_extended_security), true);

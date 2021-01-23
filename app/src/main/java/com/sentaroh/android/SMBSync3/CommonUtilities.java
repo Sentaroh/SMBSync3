@@ -40,6 +40,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.util.TypedValue;
@@ -143,17 +144,17 @@ public final class CommonUtilities {
         CommonDialog.setViewEnabled(gp.themeColorList.theme_is_light, v, enabled);
     }
 
-    final public SharedPreferences getPrefMgr() {
-        return getPrefMgr(mContext);
+    final public SharedPreferences getSharedPreference() {
+        return getSharedPreference(mContext);
+    }
+
+    final static public SharedPreferences getSharedPreference(Context c) {
+        return PreferenceManager.getDefaultSharedPreferences(c);
     }
 
     public static void setSpinnerBackground(Context c, Spinner spinner, boolean theme_is_light) {
         if (theme_is_light) spinner.setBackground(c.getDrawable(R.drawable.spinner_color_background_light));
         else spinner.setBackground(c.getDrawable(R.drawable.spinner_color_background));
-    }
-
-    final static public SharedPreferences getPrefMgr(Context c) {
-        return c.getSharedPreferences(DEFAULT_PREFS_FILENAME, Context.MODE_PRIVATE | Context.MODE_MULTI_PROCESS);
     }
 
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext, NotifyEvent ntfy) {

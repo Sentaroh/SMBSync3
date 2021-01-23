@@ -583,7 +583,7 @@ public class SyncConfiguration {
     }
 
     static private String getBooleanSettingParameter(Context c, String key, boolean default_value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return (prefs.getBoolean(key, default_value) ? "true" : "false");
     }
 
@@ -592,7 +592,7 @@ public class SyncConfiguration {
     }
 
     static private String getStringSettingParameter(Context c, String key, String default_value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return (prefs.getString(key, default_value));
     }
 
@@ -601,7 +601,7 @@ public class SyncConfiguration {
     }
 
     static private String getIntSettingParameter(Context c, String key, int default_value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return (String.valueOf(prefs.getInt(key, default_value)));
     }
 
@@ -610,7 +610,7 @@ public class SyncConfiguration {
     }
 
     static private String getLongSettingParameter(Context c, String key, long default_value) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return (String.valueOf(prefs.getLong(key, default_value)));
     }
 

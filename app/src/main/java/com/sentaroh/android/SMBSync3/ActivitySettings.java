@@ -52,6 +52,7 @@ import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_LM_COMPATIBILITY_DEFAULT;
+import static com.sentaroh.android.SMBSync3.GlobalParameters.getLanguageCode;
 
 public class ActivitySettings extends PreferenceActivity {
     static final private Logger log= LoggerFactory.getLogger(ActivitySettings.class);
@@ -78,7 +79,7 @@ public class ActivitySettings extends PreferenceActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mGp= GlobalWorkArea.getGlobalParameter(ActivitySettings.this);
-        SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(ActivitySettings.this);
+        SharedPreferences shared_pref = CommonUtilities.getSharedPreference(ActivitySettings.this);
         mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
         if (mCurrentScreenTheme.equals(SCREEN_THEME_STANDARD)) setTheme(R.style.Main);
         else if (mCurrentScreenTheme.equals(SCREEN_THEME_LIGHT)) setTheme(R.style.MainLight);
@@ -220,7 +221,7 @@ public class ActivitySettings extends PreferenceActivity {
 
             addPreferencesFromResource(R.xml.settings_frag_sync);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_wifi_lock), getContext());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_history_log), getContext());
@@ -284,7 +285,7 @@ public class ActivitySettings extends PreferenceActivity {
 
             addPreferencesFromResource(R.xml.settings_frag_misc);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
 
 //            shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), true).commit();
 //            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
@@ -335,7 +336,7 @@ public class ActivitySettings extends PreferenceActivity {
             addPreferencesFromResource(R.xml.settings_frag_smb);
 
 
-            final SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_use_extended_security), getContext());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_smb_lm_compatibility), getContext());
@@ -413,7 +414,7 @@ public class ActivitySettings extends PreferenceActivity {
 
             addPreferencesFromResource(R.xml.settings_frag_ui);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
 
             mInitVolume = shared_pref.getInt(getString(R.string.settings_playback_ringtone_volume), 100);
 
@@ -579,7 +580,7 @@ public class ActivitySettings extends PreferenceActivity {
 
             addPreferencesFromResource(R.xml.settings_frag_security);
 
-            SharedPreferences shared_pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_application_password), getContext());
 

@@ -100,7 +100,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
         mButtonCreate=(Button)findViewById(R.id.preference_application_password_create_button);
         mButtonChange=(Button)findViewById(R.id.preference_application_password_change_button);
         mButtonRemove=(Button)findViewById(R.id.preference_application_password_remove_button);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
 
         mCtvSettingTimeOut=(CheckedTextView)findViewById(R.id.preference_application_password_setting_time_out);
         mCtvSettingAppStartup=(CheckedTextView)findViewById(R.id.preference_application_password_setting_use_app_startup);
@@ -141,7 +141,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     }
 
     private void setProtectItemButtonListener() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        final SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
         mCtvSettingTimeOut.setChecked(prefs.getBoolean(mActivity.getString(R.string.settings_security_use_auth_timeout), true));
         mCtvSettingTimeOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,7 +235,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         String new_hv=(String)objects[0];
-                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+                        SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
                         saveApplicationPasswordHashValue(prefs, new_hv);
                         setAppPswdStatus();
                     }
@@ -262,7 +262,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                             @Override
                             public void positiveResponse(Context context, Object[] objects) {
                                 String new_hv=(String)objects[0];
-                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+                                SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
                                 saveApplicationPasswordHashValue(prefs, new_hv);
                             }
 
@@ -294,7 +294,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                         ntfy_confirm.setListener(new NotifyEvent.NotifyEventListener() {
                             @Override
                             public void positiveResponse(Context context, Object[] objects) {
-                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+                                SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
                                 saveApplicationPasswordHashValue(prefs, "");
                                 mGp.clearApplicationPasswordSetting(context);
                                 setAppPswdStatus();
@@ -322,7 +322,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     }
 
     private void setAppPswdStatus() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
         String hv= ApplicationPassword.getPasswordHashValue(prefs);
 
         if (hv.equals("")) {

@@ -465,7 +465,7 @@ public class ActivityMain extends AppCompatActivity {
     private void checkStoredKey(CallBackListener cbl) {
         mUtil.addDebugMsg(1, "I", "checkStoredKey entered");
         String result="key not changed";
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(mContext);
         String key_value=prefs.getString(STORED_SECRET_KEY_VALIDATION_KEY, "");
         if (!key_value.equals("")) {
             try {

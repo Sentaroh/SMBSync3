@@ -180,7 +180,7 @@ public class TaskListImportExport {
 
     private static final String SAVED_SYNC_TASK_FILE_LIST=".saved_sync_task_file_list";
     private void putExportedFileList(SafFile3 sf) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
         ArrayList<SafFile3> saved_file_list=getExportedFileList();
         boolean save_required=false;
         boolean found=false;
@@ -710,7 +710,7 @@ public class TaskListImportExport {
                 if ((ctv_protect.isChecked() && !mGp.settingExportedTaskEncryptRequired) ||
                         (!ctv_protect.isChecked() && mGp.settingExportedTaskEncryptRequired)) {
                     mGp.settingExportedTaskEncryptRequired = ctv_protect.isChecked();
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity);
+                    SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
                     prefs.edit().putBoolean(mActivity.getString(R.string.settings_exported_profile_encryption),
                             ctv_protect.isChecked()).commit();
                 }
@@ -1304,7 +1304,7 @@ public class TaskListImportExport {
 
     public static boolean putSettingParm(Context c, ArrayList<SettingParameterItem> setting_parm_list) {
         boolean result = true;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         try {
             SharedPreferences.Editor pe = prefs.edit();
             for (SettingParameterItem sp : setting_parm_list) {
