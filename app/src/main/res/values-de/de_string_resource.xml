@@ -357,9 +357,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_message">Das Austauschen des Inhalts der Quell- und Zielordner kann zum Löschen unbeabsichtigter Dateien oder Verzeichnisse führen.\nBitte richten Sie einen Testmodus ein oder erstellen Sie ein Testverzeichnis und testen Sie, ob keine unbeabsichtigten Dateien oder Verzeichnisse gelöscht werden.</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">Im Quellordner sind Variablen, die sich auf das Datum und die Uhrzeit der Aufnahme beziehen, nicht verfügbar und wurden entfernt.</string>
         <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">Verzeichnisfilter wurde nicht angegeben</string>
-        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Der Verzeichnisname enthielt ungültige Zeichen und wurde gelöscht(\", :, \\, *, &lt;, &gt;, \|).</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Der Verzeichnisname enthielt ungültige Zeichen und wurde gelöscht(\", :, \\, ?, *, &lt;, &gt;, \|).</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Dateifilter wurde nicht angegeben</string>
-        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Ungültige Zeichen(/, \", \", :, \\, *, &lt;, &gt;, \|)  wurden aus dem Dateinamen entfernt.</string>
+        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Ungültige Zeichen(/, \", :, \\, ?, *, &lt;, &gt;, \|)  wurden aus dem Dateinamen entfernt.</string>
+        <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Der Name der Freigabe enthielt Zeichen, die nicht verwendet werden konnten, daher wurden sie entfernt. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_source">Quellordner</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Sync-Typ</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archiv</string>
@@ -419,7 +420,7 @@
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog">Alle Dateien und Ordner, die im Quellverzeichnis nicht vorhanden sind und diejenigen, die nicht von den definierten Filtern eingeschlossen sind, werden aus dem Zielverzeichnis gelöscht !\nWir empfehlen Ihnen dringend, zu testen und sicherzustellen, dass keine unbeabsichtigten Dateien oder Verzeichnisse entfernt werden.</string>
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter">Entfernt Verzeichnisse und Dateien, die vom Filter ausgeschlossen wurden</string>
         <string name="msgs_task_sync_task_sync_option_ignore_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_option_enabled">Dateikopie nicht durchgeführt, weil die Option \"Zieldatei nie überschreiben, wenn sie neuer als die Quelldatei ist\" aktiviert ist.</string>
-        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Überspringen von Verzeichnis- und Dateinamen, die ungültige Zeichen enthalten (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Überspringen von Verzeichnis- und Dateinamen, die ungültige Zeichen enthalten (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_sync_option_source_root_dir_file">Synchronisieren Sie Dateien, die sich im Stammverzeichnis des Quellverzeichnisses befinden.</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file">Überschreiben Sie die Zieldatei nicht, wenn sie neuer als die Quelldatei ist.</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning">WARNUNG: Mögliche unerwartete Ergebnisse !\nWenn Sie in einer Zone mit Sommerzeit leben oder wenn Sie die Zeitzone wechseln, kann die Zieldatei fälschlicherweise eine ältere Zeit als die Quelle anzeigen, wenn sie innerhalb des Wechselintervalls Sommerzeit/Zeitzone geändert wurde. Es wird dringend empfohlen, die Option \"Bestätigen vor dem Überschreiben/Löschen\" zu aktivieren. Bitte überprüfen Sie den Inhalt der Datei, bevor Sie sie überschreiben/löschen.</string>

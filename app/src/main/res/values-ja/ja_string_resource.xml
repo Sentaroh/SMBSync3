@@ -352,9 +352,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_message">ソースフォルダーと宛先フォルダーの内容を入れ替えるとファイルやディレクトリーが削除される可能性があります。\nテストモードまたはテストディレクトリー作成してテストを行い意図しないファイルやディレクトリーが削除されない事を確認してください。</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">ソースフォルダーでは撮影日時に関する変数は使用できないため削除しました。</string>
         <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">ディレクトリフィルタ―は指定されてません</string>
-        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">ファイルフィルタ―は指定されてません</string>
-        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (/, \", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共有名に使用できない文字が含まれていましたので削除しました。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_source">ソースフォルダー</string>
         <string name="msgs_task_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">アーカイブ</string>
@@ -414,7 +415,7 @@
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog">ソースディレクトリに存在しないすべてのファイルとディレクトリー、およびフィルタにより除外されたファイルとディレクトリーは宛先ディレクトリーから削除されます。\nテストモードまたはテストディレクトリー作成してテストを行い、意図しないファイルやディレクトリーを削除しないことを確認してください。</string>
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter">フィルターにより除外されたディレクトリー/ファイルを削除する</string>
         <string name="msgs_task_sync_task_sync_option_ignore_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_option_enabled">\"宛先ファイルがソースファイルより新しい時は宛先ファイルを上書きしない\"オプションが有効なためファイルの上書きコピーを無視しました。</string>
-        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">ディレクトリ名またはファイル名に使用できない文字が含まれているディレクトリまたはファイルの処理をスキップする。 (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">ディレクトリ名またはファイル名に使用できない文字が含まれているディレクトリまたはファイルの処理をスキップする。 (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_sync_option_source_root_dir_file">ソースフォルダーで指定されたディレクトリの直下に存在するファイルを処理する</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file">宛先ファイルがソースファイルより新しい時は宛先ファイルを上書きしない</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning">夏時間のあるゾーンに住んでいたり、タイムゾーンを切り替えたりした場合、夏時間/タイムゾーンの間隔が変わっている間に変更された場合、宛先ファイルがソースよりも古い時刻を表示してしまうことがあります。\n「ファイルの上書きまたは削除前に確認する」オプションを有効にすることを強くお勧めします。\nファイルを上書きする前に、ファイルの内容を確認してください。</string>

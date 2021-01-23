@@ -352,9 +352,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_message">Замена содержимого исходной и конечной папок может привести к удалению непреднамеренных файлов или каталогов.\nНастройте тестовый режим или создайте тестовую директорию и проведите проверку, чтобы убедиться, что непреднамеренные файлы или каталоги не будут удалены.</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">В исходной папке переменные, связанные с датой и временем съемки, недоступны и были удалены.</string>
         <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">Фильтр каталога не был определен</string>
-        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\": \\, *, &lt; &gt;, \|).</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\", :, \\, ?, *, &lt;, &gt;, \|).</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Фильтр файла не был определен</string>
-        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Недопустимые символы (/, \": \\, *, &lt; &gt;, \|), были удалены из имени файла.</string>
+        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Недопустимые символы (/, \", :, \\, ?, *, &lt;, &gt;, \|), были удалены из имени файла.</string>
+        <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Имя ресурса содержало символы, которые нельзя было использовать, поэтому они были удалены. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_source">Папка-источник</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Тип синхронизации</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Архив</string>
@@ -414,7 +415,7 @@
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog">Предупреждение: все папки и файлы, которые не существуют в исходной папке, а также те, которые не включены в фильтры, будут удалены из папки назначения!\nНастоятельно рекомендуем протестировать и убедиться в том, что непреднамеренные файлы или каталоги не удалены.</string>
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter">Удаляет каталоги и файлы, исключенные фильтром</string>
         <string name="msgs_task_sync_task_sync_option_ignore_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_option_enabled">Копирование файла не выполнено, потому что включена опция «Никогда не перезаписывать конечный файл, если он новее исходного файла».</string>
-        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Пропуск каталогов и имен файлов, содержащих недопустимые символы (\": \\, *, &lt; &gt;, \|)</string>
+        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Пропуск каталогов и имен файлов, содержащих недопустимые символы (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_sync_option_source_root_dir_file">Синхронизировать файлы, расположенные в корне исходного каталога.</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file">Не перезаписывайте конечный файл, если он новее исходного файла</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning">ПРЕДУПРЕЖДЕНИЕ: возможные Неожиданные результаты\nЕсли вы живете в зоне с DST или при переключении часовых поясов, целевой файл может ошибочно показать более старое время, чем источник, если он был изменен в пределах интервала DST/TimeZone.\nНастоятельно рекомендуется включить опцию \"Подтвердить перед перезаписью/удалением\". \nПожалуйста, проверьте содержимое файла перед его перелистыванием.</string>

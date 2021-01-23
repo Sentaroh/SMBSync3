@@ -357,9 +357,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_message">L\'inversione della direzione di sincronizzazione può portare a cancellazioni inaspettate di file e directory.\nSi consiglia vivamente di attivare la modalità Test e di assicurarsi che nessun file o directory venga rimosso o sostituito inavvertitamente.</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">Nella cartella sorgente, le variabili relative alla data e all\'ora della ripresa non sono disponibili e sono state rimosse.</string>
         <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">Il filtro delle directory non è stato specificato</string>
-        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome della directory specificata (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome della directory specificata (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Il filtro file non è stato specificato</string>
-        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome del file specificato (\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome del file specificato (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Il nome della condivisione conteneva caratteri che non potevano essere utilizzati, quindi sono stati rimossi. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_source">Cartella di origine</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Tipo di sincronizzazione</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archivio</string>
@@ -419,7 +420,7 @@
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog">Attenzione: tutti i file e le cartelle che non esistono nella directory Source e quelli che non sono inclusi dai filtri definiti saranno cancellati dalla directory Target !\nSi consiglia vivamente di testare e assicurarsi che non vengano rimossi file o directory non intenzionali.</string>
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter">Rimuove le directory e i file esclusi dal filtro</string>
         <string name="msgs_task_sync_task_sync_option_ignore_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_option_enabled">La sincronizzazione dei file è saltata perché l\'opzione "Non sovrascrivere il file di destinazione se è più recente del file sorgente" è attivata.</string>
-        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Salta i nomi delle directory e dei file che contengono caratteri non validi(\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">Salta i nomi delle directory e dei file che contengono caratteri non validi(\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_sync_option_source_root_dir_file">La sincronizzazione include i file che si trovano direttamente nella root della directory di origine</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file">Non sovrascrivere il file di destinazione se è più recente del file sorgente</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning">ATTENZIONE: Possibili risultati inattesi Se si vive in una zona con DST o se si cambia TimeZones, il file di destinazione può mostrare erroneamente un tempo più vecchio della sorgente se è stato modificato all\'interno del cambio di intervallo DST/TimeZone. Si consiglia vivamente di attivare l\'opzione \"Conferma prima di sovrascrivere/cancellare \". Si prega di verificare il contenuto del file prima di sovrascrivere.</string>

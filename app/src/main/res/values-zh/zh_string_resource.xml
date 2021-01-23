@@ -358,9 +358,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_message">交换源文件夹和目的文件夹的内容可能会导致无意中删除文件或目录。\n请设置测试模式或创建测试目录，并进行测试，以确保不会删除非预期的文件或目录。</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">在源文件夹中，与拍摄日期和时间有关的变量不可用，已被删除。</string>
         <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
-        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">该目录名称包含无效字符，已被删除(\", :,\, *, &lt;, &gt;, \|)。</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">该目录名称包含无效字符，已被删除(\", :, \\, ?, *, &lt;, &gt;, \|)。</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">未指定文件过滤器</string>
-        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">文件名中的无效字符(/, \", :,\, *, &lt;, &gt;, \|) 已被删除。</string>
+        <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">文件名中的无效字符(/, \", :, \\, ?, *, &lt;, &gt;, \|) 已被删除。</string>
+        <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共享名称中含有不能使用的字符，因此已被删除。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_source">源文件夹</string>
         <string name="msgs_task_sync_task_dlg_sync_type">同步类型</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">档案</string>
@@ -420,7 +421,7 @@
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog">所有在源目录中不存在的文件和文件夹，以及那些没有被定义的过滤器所包含的文件和文件夹，都将从目标目录中被删除。\n强烈建议您进行测试，确保没有任何非预期的文件或目录被删除。</string>
         <string name="msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter">删除被过滤器排除的目录和文件</string>
         <string name="msgs_task_sync_task_sync_option_ignore_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_option_enabled">由于启用了 \"如果目标文件比源文件新，绝不覆盖目标文件\" 选项，所以没有进行文件复制。</string>
-        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">跳过包含无效字符的目录和文件名(\", :, \\, *, &lt;, &gt;, \|)</string>
+        <string name="msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name">跳过包含无效字符的目录和文件名(\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_sync_option_source_root_dir_file">同步位于源目录根部的文件。</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file">如果目标文件比源文件新，请不要覆盖目标文件。</string>
         <string name="msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning">警告：可能的意外结果 !\n如果你生活在一个有DST的区域，或者你切换了时区，如果目标文件是在DST/时区间隔内修改的，那么目标文件可能会错误地显示比源文件更旧的时间。强烈建议启用 \"覆盖/删除前确认 \" 选项。在覆盖文件之前，请确认文件的内容。</string>

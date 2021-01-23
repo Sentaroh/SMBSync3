@@ -639,7 +639,7 @@ public class TaskEditor extends DialogFragment {
         }
     }
 
-    public static String removeInvalidCharForFileDirName(String in_str) {
+    private static String removeInvalidCharForDirectoryName(String in_str) {
         String out = in_str
                 .replaceAll(":", "")
                 .replaceAll("\\\\", "")
@@ -652,7 +652,25 @@ public class TaskEditor extends DialogFragment {
         return out;
     }
 
-    public static String removeInvalidCharForFileName(String in_str) {
+    static private String removeInvalidCharForDirectoryName(Editable s) {
+        for(int i = s.length()-1; i >= 0; i--){
+            if (s.charAt(i)=='"'
+                    || s.charAt(i)==':'
+                    || s.charAt(i)=='\\'
+                    || s.charAt(i)=='?'
+                    || s.charAt(i)=='*'
+                    || s.charAt(i)=='<'
+                    || s.charAt(i)=='>'
+                    || s.charAt(i)=='|') {
+                String removed=String.valueOf(s.charAt(i));
+                s.delete(i, i+1);
+                return removed;
+            }
+        }
+        return null;
+    }
+
+    private static String removeInvalidCharForFileName(String in_str) {
         String out = in_str
                 .replaceAll(":", "")
                 .replaceAll("\\\\", "")
@@ -666,6 +684,49 @@ public class TaskEditor extends DialogFragment {
         return out;
     }
 
+    static private String removeInvalidCharForFileName(Editable s) {
+        for(int i = s.length()-1; i >= 0; i--){
+            if (s.charAt(i)=='/'
+                    || s.charAt(i)=='"'
+                    || s.charAt(i)==':'
+                    || s.charAt(i)=='\\'
+                    || s.charAt(i)=='?'
+                    || s.charAt(i)=='*'
+                    || s.charAt(i)=='<'
+                    || s.charAt(i)=='>'
+                    || s.charAt(i)=='|') {
+                String removed=String.valueOf(s.charAt(i));
+                s.delete(i, i+1);
+                return removed;
+            }
+        }
+        return null;
+    }
+
+    static private String removeInvalidCharForShareName(Editable s) {
+        for(int i = s.length()-1; i >= 0; i--){
+            if (s.charAt(i)=='"'
+                    ||s.charAt(i)=='/'
+                    || s.charAt(i)=='\\'
+                    || s.charAt(i)=='['
+                    || s.charAt(i)==']'
+                    || s.charAt(i)==':'
+                    || s.charAt(i)=='|'
+                    || s.charAt(i)=='<'
+                    || s.charAt(i)=='>'
+                    || s.charAt(i)=='+'
+                    || s.charAt(i)=='='
+                    || s.charAt(i)==';'
+                    || s.charAt(i)==','
+                    || s.charAt(i)=='?'
+                    || s.charAt(i)=='*') {
+                String removed=String.valueOf(s.charAt(i));
+                s.delete(i, i+1);
+                return removed;
+            }
+        }
+        return null;
+    }
 
     private void setSyncFolderSmbListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final SyncFolderEditValue org_sfev, final NotifyEvent ntfy) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
@@ -812,6 +873,10 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
+                String remove_char=removeInvalidCharForShareName(s);
+                if (remove_char!=null) {
+                    mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_share_name_has_invalid_char), "", null);
+                }
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
         });
@@ -927,16 +992,11 @@ public class TaskEditor extends DialogFragment {
                     }
                 }
                 if (s.length()>0) {
-                    String new_name = removeInvalidCharForFileDirName(s.toString());
-                    if (s.length() != new_name.length()) {
-                        //remove invalid char
-                        et_sync_folder_dir_name.setText(new_name);
-                        if (new_name.length() > 0)
-                            et_sync_folder_dir_name.setSelection(new_name.length());
+                    String remove_char = removeInvalidCharForDirectoryName(s);
+                    if (remove_char!=null) {
                         mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char), "", null);
-
                     }
-                    setSyncFolderArchiveFileImage(dialog, sti, new_name, true);
+                    setSyncFolderArchiveFileImage(dialog, sti, s.toString(), true);
                 }
                 String e_msg="";
                 if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR) && !sfev.is_source_folder) {
@@ -1053,28 +1113,6 @@ public class TaskEditor extends DialogFragment {
                             break;
                         }
                     }
-//                    if (sfev.is_source_folder) {
-//                        String new_dir=removeKeyword(s.toString());
-//                        if (!s.toString().equals(new_dir)) {
-//                            mUtil.showCommonDialogWarn(false,
-//                                    mContext.getString(R.string.msgs_task_sync_task_dlg_remove_directory_keyword),
-//                                    s.toString()+"\n"+new_dir, null);
-//                            s.clear();
-//                            s.append(new_dir);
-//                        }
-//                    } else {
-//                        if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
-//                            e_msg=checkTakenDateParameterUsed(et_sync_folder_dir_name.getText().toString());
-//                            if (!e_msg.equals("")) {
-//                                dlg_msg.setText(e_msg);
-//                                CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_ok, false);
-//                            } else {
-//                                dlg_msg.setText("");
-//                            }
-//                        } else {
-//                            dlg_msg.setText("");
-//                        }
-//                    }
                     if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                         e_msg=checkTakenDateParameterUsed(et_sync_folder_dir_name.getText().toString());
                         if (!e_msg.equals("")) {
@@ -1087,24 +1125,17 @@ public class TaskEditor extends DialogFragment {
                         dlg_msg.setText("");
                     }
 
-                    String new_name ="";
                     if (e_msg.equals("")) {
-                        new_name = removeInvalidCharForFileDirName(s.toString());
-                        if (s.length() != new_name.length()) {
-                            //remove invalid char
-                            et_sync_folder_dir_name.setText(new_name);
-                            if (new_name.length() > 0) et_sync_folder_dir_name.setSelection(new_name.length());
-                            mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char)
-                                    , "", null);
-                            s.clear();
-                            s.append(new_name);
+                        String remove_char = removeInvalidCharForDirectoryName(s);
+                        if (remove_char!=null) {
+                            mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char), "", null);
                         }
                     }
 
                     sfev.folder_directory=s.toString();
                     et_file_template.callOnClick();
 
-                    setSyncFolderArchiveFileImage(dialog, sti, new_name, true);
+                    setSyncFolderArchiveFileImage(dialog, sti, s.toString(), true);
                 }
                 if (e_msg.equals("")) setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
@@ -1405,19 +1436,11 @@ public class TaskEditor extends DialogFragment {
                         }
                     }
 
-                    int prev_length=s.length();
-                    for(int i = s.length()-1; i >= 0; i--){
-                        if(s.charAt(i) == '/' || s.charAt(i) == '"' || s.charAt(i) == ':' || s.charAt(i) == '\\' || s.charAt(i) == '*'
-                                || s.charAt(i) == '<' || s.charAt(i) == '>' || s.charAt(i) == '|'){
-                            s.delete(i, i + 1);
-                            break;
-                        }
+                    String remove_char=removeInvalidCharForFileName(s);
+                    if (remove_char!=null) {
+                        mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
                     }
 
-                    if (s.length()!=prev_length) {
-                        mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char)
-                                , "", null);
-                    }
                     tv_template.setText(getSyncTaskArchiveTemplateNewName(sp_sync_suffix_option.getSelectedItemPosition(),
                             et_file_template.getText().toString(), sfev.folder_directory, n_sti));
                     checkArchiveOkButtonEnabled(sfev, n_sti, dialog);
@@ -1655,20 +1678,14 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 for(int i = s.length()-1; i >= 0; i--){
-                    if(s.charAt(i) == '\n'){
+                    if (s.charAt(i) == '\n'){
                         s.delete(i, i + 1);
                         checkSyncFolderValidation(dialog, sti, sfev);
                         return;
                     }
                 }
-                if (s.charAt(s.length()-1)=='/' || s.charAt(s.length()-1)=='"'
-                        || s.charAt(s.length()-1)==':'
-                        || s.charAt(s.length()-1)=='\\'
-                        || s.charAt(s.length()-1)=='*'
-                        || s.charAt(s.length()-1)=='<'
-                        || s.charAt(s.length()-1)=='>'
-                        || s.charAt(s.length()-1)=='|') {
-                    s.delete(s.length()-1, s.length());
+                String remove_char=removeInvalidCharForFileName(s);
+                if (remove_char!=null) {
                     mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
                 }
                 checkSyncFolderValidation(dialog, sti, sfev);
@@ -1949,6 +1966,12 @@ public class TaskEditor extends DialogFragment {
                             break;
                         }
                     }
+
+                    String remove_char=removeInvalidCharForFileName(s);
+                    if (remove_char!=null) {
+                        mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
+                    }
+
                     String cv=getConvertedDirectoryFileName(s.toString(), System.currentTimeMillis(), "DSC-001");
                     dlg_image.setText(cv);
                     if (etInput.getText().toString().equals(dlg_keyword.getText().toString())) CommonUtilities.setViewEnabled(mActivity, dlg_ok, false);
