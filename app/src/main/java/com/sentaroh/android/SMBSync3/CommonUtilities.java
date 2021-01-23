@@ -132,11 +132,13 @@ public final class CommonUtilities {
     }
 
     static public void setViewEnabled(Activity a, View v, boolean enabled) {
+//        Thread.dumpStack();
         GlobalParameters gp=GlobalWorkArea.getGlobalParameter(a);
         CommonDialog.setViewEnabled(gp.themeColorList.theme_is_light, v, enabled);
     }
 
     static public void setViewEnabled(Context a, View v, boolean enabled) {
+//        Thread.dumpStack();
         GlobalParameters gp=GlobalWorkArea.getGlobalParameter(a);
         CommonDialog.setViewEnabled(gp.themeColorList.theme_is_light, v, enabled);
     }

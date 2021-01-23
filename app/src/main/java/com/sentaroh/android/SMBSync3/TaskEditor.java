@@ -565,16 +565,16 @@ public class TaskEditor extends DialogFragment {
             performClickNoSound(ct_specific_directory);
         }
 
-        Handler hndl2 = new Handler();
-        hndl2.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                CommonUtilities.setViewEnabled(getActivity(), edit_sync_task_ok_btn, sv.sync_task_edit_ok_button_enabled);
-                CommonUtilities.setViewEnabled(getActivity(), spinnerSyncOption, true);
-                CommonUtilities.setViewEnabled(getActivity(), spinnerSyncWifiStatus, true);
-                CommonUtilities.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
-            }
-        }, 500);
+//        Handler hndl2 = new Handler();
+//        hndl2.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                CommonUtilities.setViewEnabled(getActivity(), edit_sync_task_ok_btn, sv.sync_task_edit_ok_button_enabled);
+//                CommonUtilities.setViewEnabled(getActivity(), spinnerSyncOption, true);
+//                CommonUtilities.setViewEnabled(getActivity(), spinnerSyncWifiStatus, true);
+//                CommonUtilities.setViewEnabled(getActivity(), spinnerSyncDiffTimeValue, true);
+//            }
+//        }, 500);
 
     }
 
@@ -593,20 +593,7 @@ public class TaskEditor extends DialogFragment {
     private void restoreEditSyncFolderContents() {
         if (mEditFolderDialog!=null) {
             SyncFolderEditValue new_sfev=buildSyncFolderEditValue(mEditFolderDialog, mEditFolderSfev);
-            mEditFolderSfev=new_sfev;
-            final Button btn_sync_folder_ok = (Button) mEditFolderDialog.findViewById(R.id.edit_profile_remote_btn_ok);
-            final TextView dlg_msg = (TextView) mEditFolderDialog.findViewById(R.id.edit_sync_folder_dlg_msg);
-            final boolean ok_button_enabled=btn_sync_folder_ok.isEnabled();
-            editSyncFolder(true, mEditFolderSti, mEditFolderSfev, mEditFolderNotify);
-            Handler hndl=new Handler();
-            hndl.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    final Button new_btn_sync_folder_ok = (Button) mEditFolderDialog.findViewById(R.id.edit_profile_remote_btn_ok);
-                    final TextView new_dlg_msg = (TextView) mEditFolderDialog.findViewById(R.id.edit_sync_folder_dlg_msg);
-                    setSyncFolderOkButtonEnabled(new_btn_sync_folder_ok, ok_button_enabled);
-                }
-            }, 500);
+            editSyncFolder(true, mEditFolderSti, new_sfev, mEditFolderNotify);
         }
     }
 
@@ -680,7 +667,7 @@ public class TaskEditor extends DialogFragment {
     }
 
 
-    private void setSyncFolderSmbListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
+    private void setSyncFolderSmbListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final SyncFolderEditValue org_sfev, final NotifyEvent ntfy) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         dlg_msg.setVisibility(TextView.VISIBLE);
         final CheckedTextView ctv_sync_folder_edit_smb_detail = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_edit_smb_server_detail);
@@ -957,14 +944,14 @@ public class TaskEditor extends DialogFragment {
                     if (!e_msg.equals("")) {
                         dlg_msg.setVisibility(TextView.VISIBLE);
                         dlg_msg.setText(e_msg);
-                        CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_ok, false);
+                        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
                     } else {
                         dlg_msg.setText("");
                     }
                 } else {
                     dlg_msg.setText("");
                 }
-                if (e_msg.equals("")) setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                if (e_msg.equals("")) setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -973,7 +960,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 String sel = sp_sync_folder_type.getSelectedItem().toString();
                 mTaskUtil.selectRemoteDirectoryDlg(dialog, !sfev.is_source_folder);
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
     }
@@ -1031,7 +1018,8 @@ public class TaskEditor extends DialogFragment {
 
     }
 
-    private void setSyncFolderLocalListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
+    private void setSyncFolderLocalListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev,
+                                            final SyncFolderEditValue org_sfev,final NotifyEvent ntfy) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
@@ -1091,7 +1079,7 @@ public class TaskEditor extends DialogFragment {
                         e_msg=checkTakenDateParameterUsed(et_sync_folder_dir_name.getText().toString());
                         if (!e_msg.equals("")) {
                             dlg_msg.setText(e_msg);
-                            CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_ok, false);
+                            setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
                         } else {
                             dlg_msg.setText("");
                         }
@@ -1118,7 +1106,7 @@ public class TaskEditor extends DialogFragment {
 
                     setSyncFolderArchiveFileImage(dialog, sti, new_name, true);
                 }
-                if (e_msg.equals("")) setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                if (e_msg.equals("")) setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -1126,7 +1114,7 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 checkSyncFolderValidation(dialog, sti, sfev);
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
                 LocalStorageSelectorItem sl=(LocalStorageSelectorItem)sp_sync_folder_local_storage_selector.getSelectedItem();
                 mUtil.addDebugMsg(1,"I","isExfatFileSystem="+CommonUtilities.isExfatFileSystem(sl.uuid));
             }
@@ -1208,7 +1196,7 @@ public class TaskEditor extends DialogFragment {
                                 true, true, sel_item.uuid, "", "", mContext.getString(R.string.msgs_select_local_dir));
                 fsdf.showDialog(false, getActivity().getSupportFragmentManager(), fsdf, ntfy);
 
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
     }
@@ -1326,7 +1314,7 @@ public class TaskEditor extends DialogFragment {
         }
     }
 
-    private void setSyncFolderArchiveListener(final Dialog dialog, final SyncTaskItem n_sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
+    private void setSyncFolderArchiveListener(final Dialog dialog, final SyncTaskItem n_sti, final SyncFolderEditValue sfev, final SyncFolderEditValue org_sfev,final NotifyEvent ntfy) {
 
         final LinearLayout archive_option_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_view);
 
@@ -1351,7 +1339,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View view) {
                 boolean isChecked=!ctv_ignore_source_directory_hierarchy.isChecked();
                 ctv_ignore_source_directory_hierarchy.setChecked(isChecked);
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -1462,7 +1450,8 @@ public class TaskEditor extends DialogFragment {
         final TextView tv_template = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_new_name);
     }
 
-    private void setSyncFolderZipListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev, final NotifyEvent ntfy) {
+    private void setSyncFolderZipListener(final Dialog dialog, final SyncTaskItem sti, final SyncFolderEditValue sfev,
+                                          final SyncFolderEditValue org_sfev,final NotifyEvent ntfy) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
@@ -1480,7 +1469,7 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 checkSyncFolderValidation(dialog, sti, sfev);
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -1608,7 +1597,7 @@ public class TaskEditor extends DialogFragment {
                 } else {
                     ll_zip_password_view.setVisibility(LinearLayout.GONE);
                 }
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
 
@@ -1619,7 +1608,7 @@ public class TaskEditor extends DialogFragment {
         sp_comp_level.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -1640,7 +1629,7 @@ public class TaskEditor extends DialogFragment {
                         TextView tv_zip_dir = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_dir_name);
                         et_zip_file.setText(fn);
                         tv_zip_dir.setText(fd.equals("")?"/":fd);
-                        setSyncFolderOkButtonEnabledIfFolderChanged(dialog, sfev);
+                        setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
                     }
 
                     @Override
@@ -1739,7 +1728,7 @@ public class TaskEditor extends DialogFragment {
         } else {
             t_dialog = new Dialog(this.getActivity(), mGp.applicationTheme);
             mEditFolderDialog=t_dialog;
-            mEditFolderSfev=sfev;
+            mEditFolderSfev=sfev.clone();
             mEditFolderSti=sti;
             mEditFolderNotify=ntfy;
             t_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1774,10 +1763,10 @@ public class TaskEditor extends DialogFragment {
             }
         }
 
-        setSyncFolderSmbListener(dialog, sti, sfev, ntfy);
-        setSyncFolderLocalListener(dialog, sti, sfev, ntfy);
-        setSyncFolderArchiveListener(dialog, sti, sfev, ntfy);
-        setSyncFolderZipListener(dialog, sti, sfev, ntfy);
+        setSyncFolderSmbListener(dialog, sti, sfev, mEditFolderSfev, ntfy);
+        setSyncFolderLocalListener(dialog, sti, sfev, mEditFolderSfev, ntfy);
+        setSyncFolderArchiveListener(dialog, sti, sfev, mEditFolderSfev, ntfy);
+        setSyncFolderZipListener(dialog, sti, sfev, mEditFolderSfev, ntfy);
 
         setSyncFolderFieldHelpListener(dialog, sfev.folder_type);
 
@@ -1795,7 +1784,8 @@ public class TaskEditor extends DialogFragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
+//        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
+        setSyncFolderOkButtonEnabledIfFolderChanged(dialog, mEditFolderSfev);
         btn_sync_folder_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
