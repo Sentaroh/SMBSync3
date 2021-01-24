@@ -152,9 +152,6 @@ public class SyncThread extends Thread {
         public SafFile3 lastWriteSafFile=null;
         public long syncBeginTime=0L;
 
-        public SimpleDateFormat sdfLocalTime=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        public SimpleDateFormat sdfUTCTime=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
         public String currentRequestor ="";
         public String currentRequestorDisplay ="";
     }
@@ -168,7 +165,7 @@ public class SyncThread extends Thread {
         mStwa.util = new CommonUtilities(c, "SyncThread", mGp, null);
         mStwa.gp = mGp;
         mStwa.logLevel=mStwa.util.getLogLevel();
-        mStwa.sdfUTCTime.setTimeZone(TimeZone.getTimeZone("UTC"));
+
         mStwa.offsetOfDaylightSavingTime=TimeZone.getDefault().getDSTSavings();
         mStwa.uiHandler=new Handler();
 
