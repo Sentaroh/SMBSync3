@@ -441,37 +441,40 @@ public class ActivitySettings extends PreferenceActivity {
             Preference pref_key=findPreference(key_string);
             if (key_string.equals(c.getString(R.string.settings_playback_ringtone_when_sync_ended))) {
                 Preference rv = findPreference(c.getString(R.string.settings_playback_ringtone_volume));
-                if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS)) {
+                String kv=shared_pref.getString(key_string, NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS);
+                if (kv.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS)) {
                     pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_always));
                     rv.setEnabled(true);
-                } else if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ERROR)) {
+                } else if (kv.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ERROR)) {
                     pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_error));
                     rv.setEnabled(true);
-                } else if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_SUCCESS)) {
+                } else if (kv.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_SUCCESS)) {
                     pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_success));
                     rv.setEnabled(true);
-                } else if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_NO)) {
+                } else if (kv.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_NO)) {
                     pref_key.setSummary(c.getString(R.string.settings_playback_ringtone_when_sync_ended_summary_no));
                     rv.setEnabled(false);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_vibrate_when_sync_ended))) {
-                if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) {
+                String kv=shared_pref.getString(key_string, NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
+                if (kv.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) {
                     pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_always));
-                } else if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ERROR)) {
+                } else if (kv.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ERROR)) {
                     pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_error));
-                } else if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) {
+                } else if (kv.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) {
                     pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_success));
-                } else if (shared_pref.getString(key_string, "0").equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_NO)) {
+                } else if (kv.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_NO)) {
                     pref_key.setSummary(c.getString(R.string.settings_vibrate_when_sync_ended_summary_no));
                 }
             } else if (key_string.equals(c.getString(R.string.settings_notification_message_when_sync_ended))) {
-                if (shared_pref.getString(key_string, "1").equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS)) {
+                String kv=shared_pref.getString(key_string, NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS);
+                if (kv.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS)) {
                     pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_always));
-                } else if (shared_pref.getString(key_string, "1").equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
+                } else if (kv.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
                     pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_error));
-                } else if (shared_pref.getString(key_string, "1").equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
+                } else if (kv.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
                     pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_success));
-                } else if (shared_pref.getString(key_string, "1").equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_NO)) {
+                } else if (kv.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_NO)) {
                     pref_key.setSummary(c.getString(R.string.settings_notification_message_when_sync_ended_summary_no));
                 }
             } else if (key_string.equals(c.getString(R.string.settings_playback_ringtone_volume))) {
@@ -480,7 +483,7 @@ public class ActivitySettings extends PreferenceActivity {
                         String.format(c.getString(R.string.settings_playback_ringtone_volume_summary), vol));
                 if (mInitVolume != vol) playBackDefaultNotification(c, getFragmentManager(), vol);
             } else if (key_string.equals(c.getString(R.string.settings_screen_theme))) {
-                String tid=shared_pref.getString(key_string, "0");
+                String tid=shared_pref.getString(key_string, SCREEN_THEME_STANDARD);
                 String[] wl_label = c.getResources().getStringArray(R.array.settings_screen_theme_list_entries);
                 String sum_msg = wl_label[Integer.parseInt(tid)];
                 pref_key.setSummary(sum_msg);

@@ -525,9 +525,9 @@ public class GlobalParameters {
         }
         settingNoCompressFileType = prefs.getString(c.getString(R.string.settings_no_compress_file_type), DEFAULT_NOCOMPRESS_FILE_TYPE);
 
-        settingNotificationMessageWhenSyncEnded = prefs.getString(c.getString(R.string.settings_notification_message_when_sync_ended), "1");
-        settingNotificationSoundWhenSyncEnded = prefs.getString(c.getString(R.string.settings_playback_ringtone_when_sync_ended), "0");
-        settingNotificationVibrateWhenSyncEnded = prefs.getString(c.getString(R.string.settings_vibrate_when_sync_ended), "0");
+        settingNotificationMessageWhenSyncEnded = prefs.getString(c.getString(R.string.settings_notification_message_when_sync_ended), NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS);
+        settingNotificationSoundWhenSyncEnded = prefs.getString(c.getString(R.string.settings_playback_ringtone_when_sync_ended), NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS);
+        settingNotificationVibrateWhenSyncEnded = prefs.getString(c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
         settingExportedTaskEncryptRequired = prefs.getBoolean(c.getString(R.string.settings_exported_profile_encryption), true);
 
         settingScreenTheme =prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
