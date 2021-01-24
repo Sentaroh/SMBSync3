@@ -447,13 +447,13 @@ class SyncTaskItem implements Serializable, Cloneable {
     private String syncTaskDestinationZipFileName = "";
     public String getDestinationZipOutputFileName() {return syncTaskDestinationZipFileName;}
     public void setDestinationZipOutputFileName(String p) {syncTaskDestinationZipFileName = p;}
-    public final static String ZIP_OPTION_COMPRESS_LEVEL_FASTEST = "FASTEST";
-    public final static String ZIP_OPTION_COMPRESS_LEVEL_FAST = "FAST";
-    public final static String ZIP_OPTION_COMPRESS_LEVEL_NORMAL = "NORMAL";
-    public final static String ZIP_OPTION_COMPRESS_LEVEL_MAXIMUM = "MAXIMUM";
-    public final static String ZIP_OPTION_COMPRESS_LEVEL_DEFAULT = ZIP_OPTION_COMPRESS_LEVEL_NORMAL;
-    public final static String ZIP_OPTION_COMPRESS_LEVEL_DEFAULT_DESCRIPTION = ZIP_OPTION_COMPRESS_LEVEL_DEFAULT;
-    public final static String[] ZIP_OPTION_COMPRESSLEVEL_LIST =new String[]{ZIP_OPTION_COMPRESS_LEVEL_FASTEST, ZIP_OPTION_COMPRESS_LEVEL_FAST, ZIP_OPTION_COMPRESS_LEVEL_NORMAL, ZIP_OPTION_COMPRESS_LEVEL_MAXIMUM};
+    public final static String ZIP_OPTION_COMPRESSION_LEVEL_FASTEST = "FASTEST";
+    public final static String ZIP_OPTION_COMPRESSION_LEVEL_FAST = "FAST";
+    public final static String ZIP_OPTION_COMPRESSION_LEVEL_NORMAL = "NORMAL";
+    public final static String ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM = "MAXIMUM";
+    public final static String ZIP_OPTION_COMPRESSION_LEVEL_DEFAULT = ZIP_OPTION_COMPRESSION_LEVEL_NORMAL;
+    public final static String ZIP_OPTION_COMPRESSION_LEVEL_DEFAULT_DESCRIPTION = ZIP_OPTION_COMPRESSION_LEVEL_DEFAULT;
+    public final static String[] ZIP_OPTION_COMPRESSION_LEVEL_LIST =new String[]{ZIP_OPTION_COMPRESSION_LEVEL_FASTEST, ZIP_OPTION_COMPRESSION_LEVEL_FAST, ZIP_OPTION_COMPRESSION_LEVEL_NORMAL, ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM};
 
     public final static String ZIP_OPTION_COMPRESS_METHOD_STORE = "STORE";
     public final static String ZIP_OPTION_COMPRESS_METHOD_DEFLATE = "DEFLATE";
@@ -469,17 +469,17 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String ZIP_OPTION_ENCRYPT_DEFAULT_DECRIPTION = ZIP_OPTION_ENCRYPT_DEFAULT ;
     public final static String[] ZIP_OPTION_ENCRYPT_LIST=new String[]{ZIP_OPTION_ENCRYPT_NONE, ZIP_OPTION_ENCRYPT_STANDARD, ZIP_OPTION_ENCRYPT_AES128, ZIP_OPTION_ENCRYPT_AES256};
 
-    private String syncTaskDestinationZipCompOptionCompLevel = ZIP_OPTION_COMPRESS_LEVEL_DEFAULT;
-    public String getDestinationZipCompressionLevel() {return syncTaskDestinationZipCompOptionCompLevel;}
-    public void setDestinationZipCompressionLevel(String p) {syncTaskDestinationZipCompOptionCompLevel = p;}
+    private String syncTaskDestinationZipCompressionLevel = ZIP_OPTION_COMPRESSION_LEVEL_DEFAULT;
+    public String getDestinationZipCompressionLevel() {return syncTaskDestinationZipCompressionLevel;}
+    public void setDestinationZipCompressionLevel(String p) {syncTaskDestinationZipCompressionLevel = p;}
 
     private String syncTaskDestinationZipCompOptionCompMethod = ZIP_OPTION_COMPRESS_METHOD_DEFAULT;
     public String getDestinationZipCompressionMethod() {return syncTaskDestinationZipCompOptionCompMethod;}
     public void setDestinationZipCompressionMethod(String p) {syncTaskDestinationZipCompOptionCompMethod = p;}
 
-    private String syncTaskDestinationZipCompOptionEncrypt = ZIP_OPTION_ENCRYPT_DEFAULT;
-    public String getDestinationZipEncryptMethod() {return syncTaskDestinationZipCompOptionEncrypt;}
-    public void setDestinationZipEncryptMethod(String p) {syncTaskDestinationZipCompOptionEncrypt = p;}
+    private String syncTaskDestinationZipEncryptMethod = ZIP_OPTION_ENCRYPT_DEFAULT;
+    public String getDestinationZipEncryptMethod() {return syncTaskDestinationZipEncryptMethod;}
+    public void setDestinationZipEncryptMethod(String p) {syncTaskDestinationZipEncryptMethod = p;}
 
     private String syncTaskDestinationZipCompOptionPassword = "";
     public String getDestinationZipPassword() {return syncTaskDestinationZipCompOptionPassword;}
@@ -737,9 +737,9 @@ class SyncTaskItem implements Serializable, Cloneable {
                     (syncTaskDestinationFolderSmbProtocol.equals(sti.getDestinationSmbProtocol())) &&
                     (syncTaskDestinationFolderStorageUuid.equals(sti.getDestinationStorageUuid()))) {
                 if ((syncTaskDestinationZipFileName.equals(sti.getDestinationZipOutputFileName())) &&
-                        (syncTaskDestinationZipCompOptionCompLevel.equals(sti.getDestinationZipCompressionLevel())) &&
+                        (syncTaskDestinationZipCompressionLevel.equals(sti.getDestinationZipCompressionLevel())) &&
                         (syncTaskDestinationZipCompOptionCompMethod.equals(sti.getDestinationZipCompressionMethod())) &&
-                        (syncTaskDestinationZipCompOptionEncrypt.equals(sti.getDestinationZipEncryptMethod())) &&
+                        (syncTaskDestinationZipEncryptMethod.equals(sti.getDestinationZipEncryptMethod())) &&
                         (syncTaskDestinationZipCompOptionPassword.equals(sti.getDestinationZipPassword())) &&
                         (syncTaskDestinationZipCompOptionEncoding.equals(sti.getDestinationZipFileNameEncoding())) &&
                         (syncDestinationArchiveRenameFileTemplate.equals(sti.getDestinationArchiveRenameFileTemplate())) &&

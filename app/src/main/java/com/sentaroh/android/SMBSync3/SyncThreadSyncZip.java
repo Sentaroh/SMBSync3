@@ -55,15 +55,13 @@ public class SyncThreadSyncZip {
         String fp_prefix="";
         if (mf.getUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) fp_prefix=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
         else fp_prefix=SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+mf.getUuid();
+
         zp.setDefaultFolderPath(fp_prefix+"/");
-        if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_FASTEST))
-            zp.setCompressionLevel(CompressionLevel.FASTEST);
-        else if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_FAST))
-            zp.setCompressionLevel(CompressionLevel.FAST);
-        else if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_NORMAL))
-            zp.setCompressionLevel(CompressionLevel.NORMAL);
-        else if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_MAXIMUM))
-            zp.setCompressionLevel(CompressionLevel.MAXIMUM);
+
+        if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FASTEST)) zp.setCompressionLevel(CompressionLevel.FASTEST);
+        else if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FAST)) zp.setCompressionLevel(CompressionLevel.FAST);
+        else if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_NORMAL)) zp.setCompressionLevel(CompressionLevel.NORMAL);
+        else if (sti.getDestinationZipCompressionLevel().equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM)) zp.setCompressionLevel(CompressionLevel.MAXIMUM);
 
         zp.setCompressionMethod(CompressionMethod.DEFLATE);
 

@@ -2172,10 +2172,10 @@ public class TaskEditor extends DialogFragment {
             nsfev.folder_storage_uuid = uuid;
 
             String cl = sp_comp_level.getSelectedItem().toString();
-            if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_FASTEST;
-            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fast))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_FAST;
-            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_normal))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_NORMAL;
-            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_MAXIMUM;
+            if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FASTEST;
+            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fast))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FAST;
+            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_normal))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_NORMAL;
+            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM;
 //            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_ultra))) nsfev.zip_comp_level = TaskListItem.ZIP_OPTION_COMP_LEVEL_ULTRA;
 
             String zip_enc_method = sp_zip_enc_method.getSelectedItem().toString();
@@ -2713,10 +2713,10 @@ public class TaskEditor extends DialogFragment {
         adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum));
 
         int sel = 2;
-        if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_FASTEST)) sel = 0;
-        else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_FAST)) sel = 1;
-        else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_NORMAL)) sel = 2;
-        else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_MAXIMUM)) sel = 3;
+        if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FASTEST)) sel = 0;
+        else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FAST)) sel = 1;
+        else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_NORMAL)) sel = 2;
+        else if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM)) sel = 3;
 
         spinner.setSelection(sel);
         adapter.notifyDataSetChanged();

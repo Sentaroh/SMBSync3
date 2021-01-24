@@ -475,7 +475,7 @@ public class TaskListImportFromSMBSync2 {
                 else stli.setDestinationZipOutputFileName(parm[48]);
             }
             if (!parm[49].equals("") && !parm[49].equals(SMBSYNC2_TASK_END_MARK)) {
-                if (parm[49].equalsIgnoreCase("ULTRA")) stli.setDestinationZipCompressionLevel(SyncTaskItem.ZIP_OPTION_COMPRESS_LEVEL_MAXIMUM);
+                if (parm[49].equalsIgnoreCase("ULTRA")) stli.setDestinationZipCompressionLevel(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM);
                 else stli.setDestinationZipCompressionLevel(parm[49]);
             }
             if (!parm[50].equals("") && !parm[50].equals(SMBSYNC2_TASK_END_MARK))
