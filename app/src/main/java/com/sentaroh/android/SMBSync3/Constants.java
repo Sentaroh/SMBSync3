@@ -114,7 +114,7 @@ public class Constants {
     public static final String SCREEN_THEME_LIGHT = String.valueOf(ThemeUtil.THEME_LIGHT);
     public static final String SCREEN_THEME_BLACK = String.valueOf(ThemeUtil.THEME_BLACK);
 
-    public static final String STORED_SECRET_KEY_VALIDATION_KEY ="storeed_secret_key_validation_key";
+    public static final String STORED_SECRET_KEY_VALIDATION_KEY ="stored_secret_key_validation_key";
 
 	public static final String DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX ="\\";
 	public static final int DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX_LENGTH =DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX.length();
