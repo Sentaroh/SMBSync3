@@ -669,7 +669,6 @@ public class ActivityMain extends AppCompatActivity {
         tv_msg_old.setVisibility(TextView.GONE);
         final NonWordwrapTextView tv_msg=(NonWordwrapTextView)dialog.findViewById(R.id.common_dialog_custom_text_view);
         tv_msg.setVisibility(TextView.VISIBLE);
-        tv_msg.setWordWrapEnabled(mGp.settingSyncMessageUseStandardTextView);
 //        if (Build.VERSION.SDK_INT>=23) tv_msg.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
         final Button btn_copy=(Button)dialog.findViewById(R.id.common_dialog_btn_ok);
         final Button btn_close=(Button)dialog.findViewById(R.id.common_dialog_btn_cancel);

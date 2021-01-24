@@ -1044,9 +1044,6 @@
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">詳細ログを保存する</string>
         <string name="settings_sync_history_log_title">同期履歴</string>
-        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
-        <string name="settings_sync_message_use_standard_text_view_summary_ena">Android標準の処理を行う</string>
-        <string name="settings_sync_message_use_standard_text_view_title">同期メッセージのテキスト処理</string>
         <string name="settings_sync_title">同期</string>
         <string name="settings_ui_title">ユーザーインターフェース</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>

@@ -114,7 +114,6 @@ public class GlobalParameters {
 //    public String settingAppManagemsntDirectoryUuid ="primary";
     public String settingAppManagemsntDirectoryName = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
     public boolean settingExitClean = false;
-    public boolean settingSyncMessageUseStandardTextView =false;
 
     public boolean settingWriteSyncResultLog = true;
 
@@ -555,8 +554,6 @@ public class GlobalParameters {
         settingWriteSyncResultLog = prefs.getBoolean(c.getString(R.string.settings_sync_history_log), true);
 
         settingPreventSyncStartDelay =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), true);
-
-        settingSyncMessageUseStandardTextView =prefs.getBoolean(c.getString(R.string.settings_sync_message_use_standard_text_view), false);
 
         settingSecurityApplicationPasswordHashValue = ApplicationPassword.getPasswordHashValue(prefs);
         settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), false);

@@ -563,15 +563,7 @@ public class SyncConfiguration {
         setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_smb_disable_plain_text_passwords), false));//gp.settingsSmbDisablePlainTextPasswords);
         setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_smb_client_response_timeout), GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT));//gp.settingsSmbClientResponseTimeout);
 
-//        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_security_application_password_use_app_startup), false));//gp.settingSecurityApplicationPasswordUseAppStartup?"true":"false");
-//        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_security_application_password_use_edit_task), false));//gp.settingSecurityApplicationPasswordUseEditTask?"true":"false");
-//        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_security_application_password_use_export_task), false));//gp.settingSecurityApplicationPasswordUseExport?"true":"false");
-//        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_security_init_smb_account_password), false));//gp.settingSecurityReinitSmbAccountPasswordValue?"true":"false");
-//        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_security_init_zip_passowrd), false));
-//        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_security_hide_show_passowrd), false));
-
         setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_exit_clean), false));//gp.settingExitClean?"true":"false");
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_sync_message_use_standard_text_view), false));//gp.settingSyncMessageUseStandardTextView?"true":"false");
 
         setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, SCHEDULE_ENABLED_KEY, true));
 

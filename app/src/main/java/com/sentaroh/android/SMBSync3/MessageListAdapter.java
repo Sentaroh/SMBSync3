@@ -249,7 +249,6 @@ public class MessageListAdapter extends BaseAdapter {
 //            holder.tv_row_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, mGp.displayFontSizeMedium);
 
             holder.tv_row_path = (NonWordwrapTextView) v.findViewById(R.id.message_list_item_path);
-            holder.tv_row_path.setWordWrapEnabled(mGp.settingSyncMessageUseStandardTextView);
             holder.tv_row_type = (TextView) v.findViewById(R.id.message_list_item_type);
             holder.tv_row_title = (TextView) v.findViewById(R.id.message_list_tem_title);
 

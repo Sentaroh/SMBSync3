@@ -1045,9 +1045,6 @@
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Вести подробный журнал истории синхронизации</string>
         <string name="settings_sync_history_log_title">Синхронизация истории</string>
-        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
-        <string name="settings_sync_message_use_standard_text_view_summary_ena">Выполнить стандартную обработку Android</string>
-        <string name="settings_sync_message_use_standard_text_view_title">Обработка текста синхронизированных сообщений</string>
         <string name="settings_sync_title">Синхронизация</string>
         <string name="settings_ui_title">Пользовательский интерфейс</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>

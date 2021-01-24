@@ -1052,9 +1052,6 @@
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Journal de synchronisation détaillé</string>
         <string name="settings_sync_history_log_title">Historique des Synchronisations</string>
-        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
-        <string name="settings_sync_message_use_standard_text_view_summary_ena">Utiliser le processus standard Android</string>
-        <string name="settings_sync_message_use_standard_text_view_title">Traitement du Texte des Messages</string>
         <string name="settings_sync_title">Synchronisation</string>
         <string name="settings_ui_title">Interface Utilisateur</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>

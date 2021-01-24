@@ -1054,9 +1054,6 @@
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">Detailliertes Protokoll der Synchronisierungsvergangenheit führen</string>
         <string name="settings_sync_history_log_title">Sync-Geschichte</string>
-        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
-        <string name="settings_sync_message_use_standard_text_view_summary_ena">Ausführen der Standard-Android-Verarbeitung</string>
-        <string name="settings_sync_message_use_standard_text_view_title">Textverarbeitung von Sync-Nachrichten</string>
         <string name="settings_sync_title">Sync</string>
         <string name="settings_ui_title">Benutzerschnittstelle</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>

@@ -1055,9 +1055,6 @@
         <string name="settings_sync_history_log">settings_sync_history_log</string>
         <string name="settings_sync_history_log_summary_ena">保存详细的同步历史记录</string>
         <string name="settings_sync_history_log_title">同步历史</string>
-        <string name="settings_sync_message_use_standard_text_view">settings_sync_message_use_standard_text_view</string>
-        <string name="settings_sync_message_use_standard_text_view_summary_ena">执行标准的Android处理</string>
-        <string name="settings_sync_message_use_standard_text_view_title">同步信息的文本处理</string>
         <string name="settings_sync_title">同步</string>
         <string name="settings_ui_title">用户界面</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>

@@ -290,13 +290,11 @@ public class ActivitySettings extends PreferenceActivity {
 //            shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), true).commit();
 //            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_exit_clean), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_sync_message_use_standard_text_view), getContext());
         }
 
         private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
 
             if (key_string.equals(c.getString(R.string.settings_exit_clean))) {
-            } else if (key_string.equals(c.getString(R.string.settings_sync_message_use_standard_text_view))) {
             }
         }
 

@@ -426,7 +426,6 @@ public final class CommonUtilities {
         out.add("  Security re-init account and password="+gp.settingSecurityReinitSmbAccountPasswordValue);
 
         out.add("");
-        out.add("  Sync message use standard text view="+gp.settingSyncMessageUseStandardTextView);
         out.add("  Exit clean="+gp.settingExitClean);
 
         return out;
