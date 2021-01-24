@@ -1317,6 +1317,13 @@ public class TaskListUtils {
 
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_list_edit_new_filter);
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_list_edit_add_btn);
+
+        final LinearLayout add_include_select_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_include_exclude_view);
+        add_include_select_view.setVisibility(LinearLayout.VISIBLE);
+        final RadioButton add_include_btn = (RadioButton) dialog.findViewById(R.id.filter_list_edit_add_include_exclude_radio_button_include);
+        final RadioButton add_exclude_btn = (RadioButton) dialog.findViewById(R.id.filter_list_edit_add_include_exclude_radio_button_exclude);
+        add_include_btn.setChecked(true);
+
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_list_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_list_edit_ok_btn);
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
@@ -1444,7 +1451,7 @@ public class TaskListUtils {
                 dlg_msg.setText("");
                 String newfilter = et_filter.getText().toString().trim();
                 et_filter.setText("");
-                filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, true));
+                filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, add_include_btn.isChecked()));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
@@ -2499,7 +2506,7 @@ public class TaskListUtils {
                 if (!smb_filter) {
                 }
                 if (!check_only) {
-                    fla.add(new FilterListAdapter.FilterListItem(sel, true, true));
+                    fla.add(new FilterListAdapter.FilterListItem(sel, true));
                     if (add_msg.length() == 0) add_msg = sel;
                     else add_msg = add_msg + "," + sel;
                 }

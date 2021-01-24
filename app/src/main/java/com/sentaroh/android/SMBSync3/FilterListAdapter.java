@@ -331,12 +331,6 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
             this.deleted = false;
         }
 
-        public FilterListItem(String filter, boolean include, boolean match_from_begin) {
-            this.filter = filter;
-            this.includeFilter = include;
-            this.deleted = false;
-        }
-
         public boolean hasMatchAnyWhereFilter() {
             return hasMatchAnyWhereFilter(getFilter());
         }

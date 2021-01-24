@@ -891,7 +891,6 @@ public class SyncConfiguration {
                             buildSyncTaskDestinationFolderFromXml(c, xpp, cp_enc, sync_task_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_ITEM)) {
                             boolean include = false;
-                            boolean match_from_begin = false;
                             boolean migrate_from_smbsyn2 = false;
                             String filter_val = "", filter_type = "";
                             for (int i = 0; i < xpp.getAttributeCount(); i++) {
@@ -905,7 +904,7 @@ public class SyncConfiguration {
                                     filter_val = xpp.getAttributeValue(i);
                                 }
                             }
-                            FilterListAdapter.FilterListItem fli = new FilterListAdapter.FilterListItem(filter_val, include, match_from_begin);
+                            FilterListAdapter.FilterListItem fli = new FilterListAdapter.FilterListItem(filter_val, include);
                             fli.setMigrateFromSmbsync2(migrate_from_smbsyn2);
                             filter_list.add(fli);
                             if (log.isDebugEnabled())
