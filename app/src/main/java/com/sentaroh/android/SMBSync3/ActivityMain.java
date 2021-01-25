@@ -2070,6 +2070,8 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void onCallBack(Context context, boolean b, Object[] objects) {
                         if (isAllFileAccessPermissionGranted()) {
+                            mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
+                            mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
                             if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
                         } else {
                             NotifyEvent ntfy_denied=new NotifyEvent(mContext);
