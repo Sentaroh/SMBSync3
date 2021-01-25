@@ -15,12 +15,12 @@
         <string name="msgs_export_import_profile_schedule_parms">附表参数</string>
         <string name="msgs_export_import_profile_group_parms">恢复组设置</string>
         <string name="msgs_export_import_profile_select_all">选择所有</string>
-        <string name="msgs_export_import_profile_unselect_all">取消选择所有</string>
-        <string name="msgs_export_import_profile_confirm_override">导入文件包含的任务名称与现有任务名称相匹配。 用导入的任务覆盖以下任务？</string>
+        <string name="msgs_export_import_profile_unselect_all">取消全选</string>
+        <string name="msgs_export_import_profile_confirm_override">某些要还原的任务与当前已有任务具有相同的名称。是否用导入的任务覆盖以下任务？</string>
         <string name="msgs_export_import_profile_import_success">成功导入以下任务</string>
         <string name="msgs_export_import_profile_import_success_from_smbsync2">以下同步任务已作为测试模式导入。我们强烈建议您对它们进行测试，以确保没有无意的文件删除或文件覆盖。</string>
-        <string name="msgs_export_import_profile_import_failed">导入失败，请检查 \"消息 \"选项卡是否有错误。</string>
-        <string name="msgs_export_import_profile_reset_current_profile">在导入前删除所有现有任务</string>
+        <string name="msgs_export_import_profile_import_failed">导入失败，请检查"消息"选项卡上的错误信息。</string>
+        <string name="msgs_export_import_profile_reset_current_profile">导入前删除所有已有任务</string>
         <string name="msgs_export_import_profile_import_settings">包括任务设置</string>
         <string name="msgs_export_import_profile_import_schedule">包括任务时间表</string>
         <string name="msgs_export_import_profile_hdr_task_list">任务清单</string>
@@ -65,12 +65,7 @@
         <string name="msgs_help_group_title">团体帮助</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">启用后，以下数据将被记录在日志文件中。\nAndroid版本、设备名称、目录名称、文件名称、SMB账户名称、IP地址、网络接口名称、系统设置、应用程序信息。</string>
-        <string name="msgs_log_management_send_log_file_warning">通过E-Mail发送日志文件给开发者。该日志文件包含Android版本、设备名称、目录名称、文件名称、SMB账户名称、IP地址、网络接口名称、系统设置和App信息。\n1.按预览按钮可以看到temp_log.txt，然后请检查内容。(如果显示应用程序的选择界面，然后选择FAVORIT应用程序显示文本文件。)\n
-2.一旦你确认了你要提交的内容，按 \"发送 \"按钮来描述你的问题或难题。
-3.如果你想对ZIP文件进行密码保护，请输入密码和确认密码。
-4.按 \"发送 \"按钮，在 \"电子邮件选择 \"对话框中选择 \"电子邮件\"。
-5.请发送电子邮件。
-6.如果您对ZIP文件进行了密码保护，请点击 \"发送ZIP文件密码 \"按钮，通过电子邮件发送。</string>
+        <string name="msgs_log_management_send_log_file_warning">通过电子邮件将日志文件发送给开发人员。日志文件包含Android版本，设备名称，目录名称，文件名称，SMB帐户名称，IP地址，网络接口名称，系统设置和应用程序信息。\n1.点击"预览"按钮查看将会发送的temp_log.txt文件的内容。（如果点击后显示了应用程序的列表，则选择合适的应用程序以显示文本文件内容。） \n2。在阅读完要发送的文件后，在"电子邮件选择"对话框中选择"电子邮件"。\n3。请在电子邮件正文中输入问题/疑问并发送电子邮件（日志文件以zip格式附加）</string>
         <string name="msgs_log_management_title">日志管理</string>
         <string name="settings_mgt_dir">设置_mgt_dir</string>
         <string name="settings_mgt_dir_title">管理文件的位置</string>
@@ -106,9 +101,9 @@
         <string name="msgs_sync_task_name_length_invalid">任务名称的长度不应超过%s个字符。</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">重命名任务时，计划表/组中的任务名称也会改变。</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">删除任务时，计划表/组中的任务名称也会被删除。</string>
-        <string name="msgs_task_name_contains_invalid_character">The task name contains invalid characters: \"%s\"</string>
+        <string name="msgs_task_name_contains_invalid_character">任务名称包含无效字符：\"%s\"</string>
         <string name="msgs_edit_sync_profile">编辑同步任务</string>
-        <string name="msgs_export_prof_fail">导出任务列表失败。</string>
+        <string name="msgs_export_prof_fail">导出同步设置失败。</string>
         <string name="msgs_export_prof_success">成功导出任务列表。</string>
         <string name="msgs_export_prof_title">导出任务列表</string>
         <string name="msgs_extra_data_sync_profile_type_error">取消了同步，因为同步不是字符串。</string>
@@ -120,9 +115,9 @@
         <string name="msgs_filter_list_dlg_close">关闭</string>
         <string name="msgs_filter_list_dlg_dir_filter">目录过滤器</string>
         <string name="msgs_filter_list_dlg_file_filter">文件过滤器</string>
-        <string name="msgs_filter_list_dlg_filter_added">增加了过滤器\"%s\"。</string>
+        <string name="msgs_filter_list_dlg_filter_added">过滤器%s已添加。</string>
         <string name="msgs_filter_list_dlg_filter_hint">滤镜</string>
-        <string name="msgs_filter_list_dlg_not_specified">没有指定过滤器。</string>
+        <string name="msgs_filter_list_dlg_not_specified">未指定</string>
         <string name="msgs_filter_list_duplicate_filter_specified">\"%s\" 已经存在。</string>
         <string name="msgs_filter_list_filter_deleted">删去</string>
         <string name="msgs_filter_list_filter_was_changed">内容已经更改，要不要取消不保存？</string>
@@ -155,16 +150,16 @@
         <string name="msgs_import_prof_fail">导入任务列表失败</string>
         <string name="msgs_import_prof_fail_no_valid_item">%s不包含有效的任务项目。</string>
         <string name="msgs_info_storage_copy_clipboard">复制</string>
-        <string name="msgs_info_storage_copy_completed">复制到剪贴板</string>
+        <string name="msgs_info_storage_copy_completed">已复制到剪贴板</string>
         <string name="msgs_info_storage_send_btn_title">发送给开发者</string>
         <string name="msgs_info_storage_title">存储信息</string>
         <string name="msgs_your_problem_title">关于SMBSync3的问题/疑问</string>
-        <string name="msgs_your_problem_msg">请填写关于SMBSync3的详细问题或疑问。</string>
-        <string name="msgs_your_problem_hint">例子: sdcard不被识别。</string>
+        <string name="msgs_your_problem_msg">请填写您有关SMBSync2的问题/疑问的详细信息。</string>
+        <string name="msgs_your_problem_hint">例如：SMBSync2无法识别sdcard。</string>
         <string name="msgs_your_problem_no_desc">问题/疑问没有描述，除非描述SMBSync3的问题/疑问，否则我们无法回答。</string>
         <string name="msgs_log_activate_pinned">禁用自动滚动</string>
         <string name="msgs_log_confirm_clear_all_msg">删除所有信息条目 ?</string>
-        <string name="msgs_log_inactivate_pinned">启用自动滚动</string>
+        <string name="msgs_log_inactivate_pinned">自动滚动已启用</string>
         <string name="msgs_log_msg_cleared">日志信息已清除</string>
         <string name="msgs_log_msg_filter_title">滤波器</string>
         <string name="msgs_log_msg_filter_info">资讯</string>
@@ -189,24 +184,24 @@
         <string name="msgs_main_permission_internal_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
         <string name="msgs_main_permission_internal_storage_title">Storage Permission</string>
         <string name="msgs_main_sync_all_auto_tasks">执行所有配置为自动同步的任务。</string>
-        <string name="msgs_main_sync_can_not_sync_no_valid_profile">没有可执行的同步任务。 请创建一个同步任务。</string>
-        <string name="msgs_main_sync_cancel_confirm">取消同步？</string>
+        <string name="msgs_main_sync_can_not_sync_no_valid_profile">没有同步任务。请创建一个同步任务。</string>
+        <string name="msgs_main_sync_cancel_confirm">是否取消同步？</string>
         <string name="msgs_main_sync_history_copy_completed">所选项目复制到剪贴板。</string>
-        <string name="msgs_main_sync_history_count_copied">复制：</string>
-        <string name="msgs_main_sync_history_count_deleted">删除：</string>
-        <string name="msgs_main_sync_history_count_ignored">忽略：</string>
+        <string name="msgs_main_sync_history_count_copied">已复制：</string>
+        <string name="msgs_main_sync_history_count_deleted">已删除：</string>
+        <string name="msgs_main_sync_history_count_ignored">已忽略：</string>
         <string name="msgs_main_sync_history_count_moved">移动：</string>
         <string name="msgs_main_sync_history_count_replaced">替换:</string>
         <string name="msgs_main_sync_history_count_retry">重试。</string>
         <string name="msgs_main_sync_history_del_conf_all_history">你想删除所有历史记录吗？</string>
         <string name="msgs_main_sync_history_del_conf_selected_history">您要删除以下历史记录吗？</string>
-        <string name="msgs_main_sync_history_elapsed_time">处理时间(秒)：</string>
+        <string name="msgs_main_sync_history_elapsed_time">已用时间(秒)：</string>
         <string name="msgs_main_sync_history_transfer_speed">平均传输率 :</string>
         <string name="msgs_main_sync_history_mode">模式 :</string>
         <string name="msgs_main_sync_history_mode_normal">正常</string>
         <string name="msgs_main_sync_history_mode_test">测试</string>
         <string name="msgs_main_sync_history_result_log_not_found">找不到历史日志文件。</string>
-        <string name="msgs_main_sync_history_result_activity_not_found_for_log_display">由于找不到显示文本文件的应用程序，您将无法查看详细信息。</string>
+        <string name="msgs_main_sync_history_result_activity_not_found_for_log_display">由于没有应用程序可以显示文本文件，您将无法查看详细信息。</string>
         <string name="msgs_main_sync_history_status_cancel">已取消</string>
         <string name="msgs_main_sync_history_status_error">错误</string>
         <string name="msgs_main_sync_history_status_running">跑步</string>
@@ -214,7 +209,7 @@
         <string name="msgs_main_sync_history_status_warning">警告</string>
         <string name="msgs_main_sync_history_status_skip">跳过</string>
         <string name="msgs_main_sync_list_array_task_auto">自动</string>
-        <string name="msgs_main_sync_list_array_task_manual">手册</string>
+        <string name="msgs_main_sync_list_array_task_manual">手动</string>
         <string name="msgs_main_sync_list_array_task_test">测试</string>
         <string name="msgs_main_sync_list_array_last_sync_time">上次同步：</string>
         <string name="msgs_main_sync_list_array_mtype_archive">存档</string>
@@ -222,10 +217,10 @@
         <string name="msgs_main_sync_list_array_mtype_mirr">镜像</string>
         <string name="msgs_main_sync_list_array_mtype_move">移动</string>
         <string name="msgs_main_sync_list_array_mtype_sync">同步</string>
-        <string name="msgs_main_sync_list_array_no_last_sync_time">同步任务尚未执行。</string>
-        <string name="msgs_main_sync_task_name_list">开始同步任务：</string>
+        <string name="msgs_main_sync_list_array_no_last_sync_time">同步任务未执行。</string>
+        <string name="msgs_main_sync_task_name_list">已启动同步任务：</string>
         <string name="msgs_main_sync_profile">开始同步任务（%s）</string>
-        <string name="msgs_main_sync_profile_dlg_archive">封存</string>
+        <string name="msgs_main_sync_profile_dlg_archive">存档</string>
         <string name="msgs_main_sync_profile_dlg_copy">复制</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_1">1</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>

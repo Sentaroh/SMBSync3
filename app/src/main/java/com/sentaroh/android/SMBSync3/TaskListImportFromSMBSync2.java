@@ -119,6 +119,8 @@ public class TaskListImportFromSMBSync2 {
                                                     ArrayList<SettingParameterItem>sync_setting) {
         boolean result=false;
         try {
+            boolean auto_save=false;
+            if (sf.getName().toLowerCase().endsWith(".stf")) auto_save=true;
             InputStreamReader isr=new InputStreamReader(sf.getInputStream());
             BufferedReader br=new BufferedReader(isr, GENERAL_IO_BUFFER_SIZE);
             String pl=br.readLine();
@@ -133,7 +135,7 @@ public class TaskListImportFromSMBSync2 {
                         enc_str=pl.substring(6);
                         enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                         dec_str = EncryptUtilV1.decrypt(enc_array, cp);
-                        addSyncTaskListVer8(c, dec_str, sync_task, mUtil);
+                        addSyncTaskListVer8(c, dec_str, sync_task, mUtil, auto_save);
                         if (sync_setting != null) addImportSettingsParm(dec_str, sync_setting);
                         pl=br.readLine();
                     }
@@ -145,7 +147,7 @@ public class TaskListImportFromSMBSync2 {
                 pl=br.readLine();
                 while(pl!=null) {
                     String dec_str=pl.substring(6);
-                    addSyncTaskListVer8(c, dec_str, sync_task, mUtil);
+                    addSyncTaskListVer8(c, dec_str, sync_task, mUtil, auto_save);
                     if (sync_setting != null) addImportSettingsParm(pl.replace(SMBSYNC2_PROF_VER8, ""), sync_setting);
                     pl=br.readLine();
                 }
@@ -251,7 +253,7 @@ public class TaskListImportFromSMBSync2 {
 
     final private static String WHOLE_DIRECTORY_FILTER_PREFIX="\\\\";
     final private static String MATCH_ANY_WHERE_DIRECTORY_FILTER_PREFIX="\\";
-    private static void addSyncTaskListVer8(Context c, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util) {
+    private static void addSyncTaskListVer8(Context c, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util, boolean auto_save) {
         if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
         String list1 = "", list2 = "", list3 = "", list4="", npl = "";
         int ls = pl.indexOf("[");
@@ -383,9 +385,13 @@ public class TaskListImportFromSMBSync2 {
                 stli.setSourceFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP);
             } else if (parm[4].equals(SYNC_FOLDER_TYPE_SMB)) {
                 stli.setSourceFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
+                if (!auto_save) {
+                    stli.setSourceSmbAccountName(parm[5]);
+                    stli.setSourceSmbPassword(parm[6]);
+                } else {
+                    stli.setSourceFolderStatusError(stli.getSourceFolderStatusError()|SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_NAME|SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_PASSWORD);
+                }
             }
-            stli.setSourceSmbAccountName(parm[5]);
-            stli.setSourceSmbPassword(parm[6]);
             stli.setSourceSmbShareName(parm[7]);
             stli.setSourceDirectoryName(parm[8]);
             stli.setSourceSmbAddr(parm[9]);
@@ -407,9 +413,13 @@ public class TaskListImportFromSMBSync2 {
                 stli.setDestinationFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP);
             } else if (parm[13].equals(SYNC_FOLDER_TYPE_SMB)) {
                 stli.setDestinationFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
+                if (!auto_save) {
+                    stli.setDestinationSmbAccountName(parm[14]);
+                    stli.setDestinationSmbPassword(parm[15]);
+                } else {
+                    stli.setDestinationFolderStatusError(stli.getDestinationFolderStatusError()|SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_NAME|SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_PASSWORD);
+                }
             }
-            stli.setDestinationSmbAccountName(parm[14]);
-            stli.setDestinationSmbPassword(parm[15]);
             stli.setDestinationSmbShareName(parm[16]);
             stli.setDestinationDirectoryName(parm[17]);
             stli.setDestinationSmbAddr(parm[18]);
@@ -484,7 +494,12 @@ public class TaskListImportFromSMBSync2 {
                 stli.setDestinationZipEncryptMethod(parm[51]);
             if (!parm[52].equals("") && !parm[52].equals(SMBSYNC2_TASK_END_MARK)) {
                 if (!parm[52].equals("")) {
-                    stli.setDestinationZipPassword(parm[52]);
+                    if (parm[13].equals(SYNC_FOLDER_TYPE_ZIP)) {
+                        if (!auto_save) stli.setDestinationZipPassword(parm[52]);
+                        else {
+                            stli.setDestinationFolderStatusError(stli.getDestinationFolderStatusError()|SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ZIP_PASSWORD);
+                        }
+                    }
                 }
             }
             if (!parm[53].equals("") && !parm[53].equals(SMBSYNC2_TASK_END_MARK))

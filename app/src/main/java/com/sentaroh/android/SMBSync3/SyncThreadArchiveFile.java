@@ -322,16 +322,16 @@ public class SyncThreadArchiveFile {
 
         try {
             if (mf.exists()) {
-                if (!mf.canRead()) {
-                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
-                            "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
-                    stwa.totalIgnoreCount++;
-                    return sync_result;
-                }
                 String t_from_path = from_path.substring(from_base.length());
                 if (t_from_path.startsWith("/")) t_from_path = t_from_path.substring(1);
                 if (mf.isDirectory()) { // Directory copy
                     if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                        if (!mf.canRead()) {
+                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
+                                    "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
+                            stwa.totalIgnoreCount++;
+                            return sync_result;
+                        }
                         SafFile3[] children = mf.listFiles();
                         archiveFileLocalToLocal(stwa, sti, children, from_path, to_path);
                         if (children != null) {
@@ -505,16 +505,16 @@ public class SyncThreadArchiveFile {
 
         try {
             if (mf.exists()) {
-                if (!mf.canRead()) {
-                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
-                            "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
-                    stwa.totalIgnoreCount++;
-                    return sync_result;
-                }
                 String t_from_path = from_path.substring(from_base.length());
                 if (t_from_path.startsWith("/")) t_from_path = t_from_path.substring(1);
                 if (mf.isDirectory()) { // Directory copy
                     if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                        if (!mf.canRead()) {
+                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
+                                    "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
+                            stwa.totalIgnoreCount++;
+                            return sync_result;
+                        }
                         SafFile3[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileLocalToSmb(stwa, sti, children, from_path, to_path);
@@ -773,16 +773,16 @@ public class SyncThreadArchiveFile {
         File tf;
         try {
             if (mf.exists()) {
-                if (!mf.canRead()) {
-                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
-                            "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
-                    stwa.totalIgnoreCount++;
-                    return sync_result;
-                }
                 String t_from_path = from_path.substring(from_base.length());
                 if (t_from_path.startsWith("/")) t_from_path = t_from_path.substring(1);
                 if (mf.isDirectory()) { // Directory copy
                     if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                        if (!mf.canRead()) {
+                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
+                                    "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
+                            stwa.totalIgnoreCount++;
+                            return sync_result;
+                        }
                         JcifsFile[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileSmbToLocal(stwa, sti, children, from_path, to_path);
@@ -962,16 +962,16 @@ public class SyncThreadArchiveFile {
         JcifsFile tf;
         try {
             if (mf.exists()) {
-                if (!mf.canRead()) {
-                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
-                            "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
-                    stwa.totalIgnoreCount++;
-                    return sync_result;
-                }
                 String t_from_path = from_path.substring(from_base.length());
                 if (t_from_path.startsWith("/")) t_from_path = t_from_path.substring(1);
                 if (mf.isDirectory()) { // Directory copy
                     if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, t_from_path)) {
+                        if (!mf.canRead()) {
+                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
+                                    "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
+                            stwa.totalIgnoreCount++;
+                            return sync_result;
+                        }
                         JcifsFile[] children = mf.listFiles();
                         if (children != null) {
                             archiveFileSmbToSmb(stwa, sti, children, from_path, to_path);

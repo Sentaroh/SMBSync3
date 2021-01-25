@@ -420,14 +420,14 @@ public class SyncThreadSyncZip {
         try {
             String relative_from_dir = from_path.substring(from_base.length());
             if (mf.exists()) {
-                if (!mf.canRead()) {
-                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
-                            "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
-                    stwa.totalIgnoreCount++;
-                    return sync_result;
-                }
                 if (mf.isDirectory()) { // Directory copy
                     if (!SyncThread.isHiddenDirectory(stwa, sti, mf) && SyncThread.isDirectoryToBeProcessed(stwa, relative_from_dir)) {
+                        if (!mf.canRead()) {
+                            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "W", "", mf.getName(),
+                                    "", stwa.appContext.getString(R.string.msgs_mirror_directory_ignored_because_access_not_granted, mf.getPath()));
+                            stwa.totalIgnoreCount++;
+                            return sync_result;
+                        }
                         SafFile3[] children = mf.listFiles();
                         if (children != null) {
                             for (SafFile3 element : children) {

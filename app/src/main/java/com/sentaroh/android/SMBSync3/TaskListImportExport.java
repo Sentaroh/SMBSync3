@@ -129,7 +129,7 @@ public class TaskListImportExport {
         });
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String dt=sdf.format(System.currentTimeMillis());
-        String fn=APPLICATION_TAG+"_config_"+dt+".stf";
+        String fn=APPLICATION_TAG+"_config_"+dt+".xml";
 
         CommonFileSelector2 fsdf=
                 CommonFileSelector2.newInstance(true, true, false, CommonFileSelector2.DIALOG_SELECT_CATEGORY_FILE,
@@ -438,7 +438,8 @@ public class TaskListImportExport {
             public void positiveResponse(Context c, Object[] o) {
                 final Uri fpath = (Uri) o[0];
                 SafFile3 sf=new SafFile3(mActivity, fpath);
-                importSyncTaskList(p_ntfy, sf, false);
+                if (sf.getName().toLowerCase().endsWith(".stf")) importSyncTaskList(p_ntfy, sf, true);
+                else importSyncTaskList(p_ntfy, sf, false);
             }
 
             @Override
@@ -984,7 +985,7 @@ public class TaskListImportExport {
                             mGp.syncTaskListAdapter.add(ipfli);
                         }
                         if (ipfli.isSyncFolderStatusError()) {
-                            imp_error_temp+=ipfli.getSyncTaskName()+"\n";
+                            imp_error_temp+="-"+ipfli.getSyncTaskName()+"\n";
                         }
                     }
                 }
