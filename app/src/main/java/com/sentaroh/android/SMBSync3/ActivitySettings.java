@@ -228,7 +228,6 @@ public class ActivitySettings extends PreferenceActivity {
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_force_screen_on_while_sync), getContext());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_suppress_add_external_storage_notification), getContext());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_suppress_start_sync_confirmation_message), getContext());
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_suppress_start_group_confirmation_message), getContext());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_suppress_shortcut1_confirmation_message), getContext());
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_no_compress_file_type), getContext());
 
@@ -241,7 +240,6 @@ public class ActivitySettings extends PreferenceActivity {
             } else if (key_string.equals(c.getString(R.string.settings_sync_history_log))) {
             } else if (key_string.equals(c.getString(R.string.settings_suppress_add_external_storage_notification))) {
             } else if (key_string.equals(c.getString(R.string.settings_suppress_start_sync_confirmation_message))) {
-            } else if (key_string.equals(c.getString(R.string.settings_suppress_start_group_confirmation_message))) {
             } else if (key_string.equals(c.getString(R.string.settings_suppress_shortcut1_confirmation_message))) {
             } else if (key_string.equals(c.getString(R.string.settings_no_compress_file_type))) {
                 if (shared_pref.getString(key_string, "").equals("")) {

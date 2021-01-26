@@ -512,8 +512,6 @@
     <!-- Menu -->
         <string name="msgs_menu_sync_all_auto">Exécuter toutes les tâches configurées en mode Auto</string>
         <string name="msgs_menu_sync_selected">Synchroniser l\'exécution des tâches sélectionnées</string>
-        <string name="msgs_menu_exec_group_all_enabled">Exécuter tous les groupes activés</string>
-        <string name="msgs_menu_exec_group_selected">Exécuter le groupe sélectionné</string>
         <string name="msgs_menu_export">Exporter la configuration</string>
         <string name="msgs_menu_import">Importer la configuration</string>
         <string name="msgs_menu_log_management">Journalisation</string>
@@ -777,12 +775,6 @@
         <string name="msgs_group_confirm_msg_rename_warning">Changer le nom du groupe ? Les résultats sont immédiatement pris en compte et ne peuvent être annulés.</string>
         <string name="msgs_group_confirm_msg_nosave">Le groupe a changé. Sortir sans économiser ?</string>
         <string name="msgs_group_list_edit_no_group">Cliquez sur le bouton Ajouter pour créer un groupe.</string>
-        <string name="msgs_group_start_confirmation_message_title">Début du groupe</string>
-        <string name="msgs_group_start_confirmation_message_start_msg">Voulez-vous commencer les tâches suivantes ?</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_msg">Les tâches suivantes font double emploi.</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_item">- Groupe=%1$s, Tâche=%2$s</string>
-        <string name="msgs_group_start_confirmation_message_no_sync_task">Aucune tâche trouvée pour commencer.</string>
-        <string name="msgs_group_start_confirmation_message_suppress">Désactiver cette notification (peut être activée dans les paramètres de synchronisation)</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Voulez-vous activer le groupe ?</string>
         <string name="msgs_group_list_edit_confirm_group_to_disabled">Voulez-vous désactiver le groupe ?</string>
     <!-- Sync Button -->
@@ -1037,9 +1029,6 @@
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">Ne demandez pas le démarrage de la synchronisation avec le bouton de synchronisation.</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">bouton de sync</string>
-        <string name="settings_suppress_start_group_confirmation_message">settings_suppress_start_group_confirmation_message</string>
-        <string name="settings_suppress_start_group_confirmation_message_summary_ena">Ne pas demander quand commencer le groupe.</string>
-        <string name="settings_suppress_start_group_confirmation_message_title">Groupe de départ</string>
         <string name="settings_suppress_shortcut1_confirmation_message">settings_suppress_shortcut1_confirmation_message</string>
         <string name="settings_suppress_shortcut1_confirmation_message_summary_ena">Ne pas demander de lancer la synchronisation avec le raccourci</string>
         <string name="settings_suppress_shortcut1_confirmation_message_title">Bouton de raccourci1</string>

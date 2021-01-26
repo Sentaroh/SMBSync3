@@ -512,8 +512,6 @@
     <!-- Menu -->
         <string name="msgs_menu_sync_all_auto">执行所有自动同步任务</string>
         <string name="msgs_menu_sync_selected">同步执行所选任务</string>
-        <string name="msgs_menu_exec_group_all_enabled">执行所有启用的组</string>
-        <string name="msgs_menu_exec_group_selected">执行所选组别</string>
         <string name="msgs_menu_export">导出设置</string>
         <string name="msgs_menu_import">导入设置</string>
         <string name="msgs_menu_log_management">记录管理</string>
@@ -775,12 +773,6 @@
         <string name="msgs_group_confirm_msg_rename_warning">是否要更改组名？结果会立即反映出来，并且无法撤销。</string>
         <string name="msgs_group_confirm_msg_nosave">该组已更改。不保存就退出？</string>
         <string name="msgs_group_list_edit_no_group">单击 \"添加 \"按钮，创建一个组。</string>
-        <string name="msgs_group_start_confirmation_message_title">组别开始</string>
-        <string name="msgs_group_start_confirmation_message_start_msg">您是否要启动以下任务？</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_msg">下列任务是重复的。</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_item">- 组=%1$s，任务=%2$s。</string>
-        <string name="msgs_group_start_confirmation_message_no_sync_task">没有找到要开始的任务。</string>
-        <string name="msgs_group_start_confirmation_message_suppress">禁用此通知（可在同步设置中启用）。</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">您要启用组吗？</string>
         <string name="msgs_group_list_edit_confirm_group_to_disabled">您是否要禁用该组？</string>
     <!-- Sync Button -->
@@ -1035,9 +1027,6 @@
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">不要提示用同步按钮开始同步。</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">同步键</string>
-        <string name="settings_suppress_start_group_confirmation_message">settings_suppress_start_group_confirmation_message</string>
-        <string name="settings_suppress_start_group_confirmation_message_summary_ena">开始组队时不提示。</string>
-        <string name="settings_suppress_start_group_confirmation_message_title">开始组</string>
         <string name="settings_suppress_shortcut1_confirmation_message">settings_suppress_shortcut1_confirmation_message</string>
         <string name="settings_suppress_shortcut1_confirmation_message_summary_ena">不提示使用快捷方式开始同步。</string>
         <string name="settings_suppress_shortcut1_confirmation_message_title">快捷键1</string>

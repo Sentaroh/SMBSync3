@@ -516,8 +516,6 @@
     <!-- Menu -->
         <string name="msgs_menu_sync_all_auto">Eseguire tutti i compiti di sincronizzazione automatica</string>
         <string name="msgs_menu_sync_selected">Sincronizzare l\'esecuzione dei compiti selezionati</string>
-        <string name="msgs_menu_exec_group_all_enabled">Eseguire tutti i gruppi abilitati</string>
-        <string name="msgs_menu_exec_group_selected">Eseguire il gruppo selezionato</string>
         <string name="msgs_menu_export">Impostazioni di esportazione</string>
         <string name="msgs_menu_import">Importazione delle impostazioni</string>
         <string name="msgs_menu_log_management">Gestione dei log</string>
@@ -779,12 +777,6 @@
         <string name="msgs_group_confirm_msg_rename_warning">Cambiare il nome del gruppo? I risultati vengono riflessi immediatamente e non possono essere annullati.</string>
         <string name="msgs_group_confirm_msg_nosave">Il gruppo è cambiato. Uscire senza salvare?</string>
         <string name="msgs_group_list_edit_no_group">Fare clic sul pulsante Aggiungi per creare un gruppo.</string>
-        <string name="msgs_group_start_confirmation_message_title">Inizio del gruppo</string>
-        <string name="msgs_group_start_confirmation_message_start_msg">Volete iniziare i seguenti compiti?</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_msg">I seguenti compiti sono duplicati.</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_item">- Gruppo=%1$s, Attività=%2$s</string>
-        <string name="msgs_group_start_confirmation_message_no_sync_task">Nessun compito trovato per iniziare.</string>
-        <string name="msgs_group_start_confirmation_message_suppress">Disattivare questa notifica (può essere attivata nelle impostazioni di sincronizzazione)</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Volete attivare il gruppo?</string>
         <string name="msgs_group_list_edit_confirm_group_to_disabled">Vuoi disabilitare il gruppo?</string>
     <!-- Sync Button -->
@@ -1039,9 +1031,6 @@
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">Non richiedere l\'avvio della sincronizzazione con il tasto sync.</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">pulsante sync</string>
-        <string name="settings_suppress_start_group_confirmation_message">settings_suppress_start_group_confirmation_message</string>
-        <string name="settings_suppress_start_group_confirmation_message_summary_ena">Non chiedere quando si avvia il gruppo.</string>
-        <string name="settings_suppress_start_group_confirmation_message_title">Avviare il gruppo</string>
         <string name="settings_suppress_shortcut1_confirmation_message">settings_suppress_shortcut1_confirmation_message</string>
         <string name="settings_suppress_shortcut1_confirmation_message_summary_ena">Non richiedere l\'avvio della sincronizzazione con la scorciatoia</string>
         <string name="settings_suppress_shortcut1_confirmation_message_title">Tasto di scelta rapida1</string>

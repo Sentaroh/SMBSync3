@@ -511,8 +511,6 @@
     <!-- Menu -->
         <string name="msgs_menu_sync_all_auto">全ての自動タスクの同期実行</string>
         <string name="msgs_menu_sync_selected">選択したタスクの同期実行</string>
-        <string name="msgs_menu_exec_group_all_enabled">全ての有効なグループを実行</string>
-        <string name="msgs_menu_exec_group_selected">選択したグループを実行</string>
         <string name="msgs_menu_export">タスクリスト保存</string>
         <string name="msgs_menu_import">タスクリスト取込み</string>
         <string name="msgs_menu_log_management">ログ管理</string>
@@ -774,12 +772,6 @@
         <string name="msgs_group_confirm_msg_rename_warning">グループ名を変更します。結果は即座に反映され、取り消しできません。</string>
         <string name="msgs_group_confirm_msg_nosave">グループが変更されています、保存せず終了しますか。</string>
         <string name="msgs_group_list_edit_no_group">追加ボタンを押してグループを作成してください。</string>
-        <string name="msgs_group_start_confirmation_message_title">グループの開始</string>
-        <string name="msgs_group_start_confirmation_message_start_msg">下記タスクを開始しますか？</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_msg">下記タスクが重複しています。</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_item">- グループ=%1$s, タスク=%2$s</string>
-        <string name="msgs_group_start_confirmation_message_no_sync_task">開始できるタスクが見つかりませんでした。</string>
-        <string name="msgs_group_start_confirmation_message_suppress">この通知を次回以降表示しない （アプリ設定で再表示できます）</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">グループを有効にしますか？</string>
         <string name="msgs_group_list_edit_confirm_group_to_disabled">グループを無効にしますか？</string>
     <!-- Sync Button -->
@@ -1029,9 +1021,6 @@
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">同期開始の確認メッセージを表示しない</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">同期ボタン</string>
-        <string name="settings_suppress_start_group_confirmation_message">settings_suppress_start_group_confirmation_message</string>
-        <string name="settings_suppress_start_group_confirmation_message_summary_ena">グループ開始の確認メッセージを表示しない</string>
-        <string name="settings_suppress_start_group_confirmation_message_title">グループ開始</string>
         <string name="settings_suppress_shortcut1_confirmation_message">settings_suppress_shortcut1_confirmation_message</string>
         <string name="settings_suppress_shortcut1_confirmation_message_summary_ena">同期開始の確認メッセージを表示しない</string>
         <string name="settings_suppress_shortcut1_confirmation_message_title">ショートカットボタン1</string>

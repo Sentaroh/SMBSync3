@@ -1294,44 +1294,22 @@ public class ActivityMain extends AppCompatActivity {
         if (mCurrentTab.equals(mTabNameTask)) {
             menu.findItem(R.id.menu_top_sync).setVisible(true);
             menu.findItem(R.id.menu_top_scheduler).setVisible(false);
-            menu.findItem(R.id.menu_top_execute_group).setVisible(false);
             menu.findItem(R.id.menu_top_show_hide_filter).setVisible(false);
         } else if (mCurrentTab.equals(mTabNameSchedule)) {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             menu.findItem(R.id.menu_top_scheduler).setVisible(true);
-            menu.findItem(R.id.menu_top_execute_group).setVisible(false);
             menu.findItem(R.id.menu_top_show_hide_filter).setVisible(false);
         } else if (mCurrentTab.equals(mTabNameGroup)) {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             menu.findItem(R.id.menu_top_scheduler).setVisible(false);
-            menu.findItem(R.id.menu_top_execute_group).setVisible(false);
             menu.findItem(R.id.menu_top_show_hide_filter).setVisible(false);
-            if (mGp.syncGroupListAdapter.isSelectMode()) {
-                menu.findItem(R.id.menu_top_execute_group).setTitle(R.string.msgs_menu_exec_group_selected);
-                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                    if (gli.isChecked) {
-                        if (!gli.autoTaskOnly) {
-                            String valid=GroupEditor.hasValidSyncTaskList(mContext, gli, mGp.syncTaskList);
-                            if (!valid.equals("")) {
-                                menu.findItem(R.id.menu_top_execute_group).setVisible(false);
-                                break;
-                            }
-                        }
-                    }
-                }
-            } else {
-                if (mGp.syncGroupList.size()==0) menu.findItem(R.id.menu_top_execute_group).setVisible(false);
-                menu.findItem(R.id.menu_top_execute_group).setTitle(R.string.msgs_menu_exec_group_all_enabled);
-            }
         } else if (mCurrentTab.equals(mTabNameHistory)) {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             menu.findItem(R.id.menu_top_scheduler).setVisible(false);
-            menu.findItem(R.id.menu_top_execute_group).setVisible(false);
             menu.findItem(R.id.menu_top_show_hide_filter).setVisible(false);
         } else if (mCurrentTab.equals(mTabNameMessage)) {
             menu.findItem(R.id.menu_top_sync).setVisible(false);
             menu.findItem(R.id.menu_top_scheduler).setVisible(false);
-            menu.findItem(R.id.menu_top_execute_group).setVisible(false);
             menu.findItem(R.id.menu_top_show_hide_filter).setVisible(true);
         }
 
@@ -1393,9 +1371,6 @@ public class ActivityMain extends AppCompatActivity {
                 return true;
             case R.id.menu_top_sync:
                 confirmStartSync();
-                return true;
-            case R.id.menu_top_execute_group:
-                confirmGroupExecute();
                 return true;
             case R.id.menu_top_show_hide_filter:
                 showHideFilterView();
@@ -1549,108 +1524,6 @@ public class ActivityMain extends AppCompatActivity {
                             mContext.getString(R.string.msgs_main_sync_button_confirmation_message_title),
                             mContext.getString(R.string.msgs_main_sync_button_confirmation_message_msg)+"\n"+task_list,
                             mContext.getString(R.string.msgs_main_sync_button_confirmation_message_suppress), ntfy);
-                }
-            }
-        }
-    }
-
-    private void confirmGroupExecute() {
-        if (isUiEnabled()) {
-            String e_msg="";
-            ArrayList<String>exec_task_name_list=new ArrayList<String>();
-            ArrayList<String>duplicate_task_name_list=new ArrayList<String>();
-            if (mGp.syncGroupListAdapter.isSelectMode()) {
-                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                    if (gli.isChecked) {
-                        e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
-                        if (!e_msg.equals("")) break;
-                    }
-                }
-            } else {
-                for(GroupListAdapter.GroupListItem gli:mGp.syncGroupList) {
-                    e_msg=GroupEditor.buildGroupExecuteSyncTaskList(mContext, mGp, mUtil, gli, exec_task_name_list, duplicate_task_name_list);
-                    if (!e_msg.equals("")) break;
-                }
-            }
-            if (!e_msg.equals("")) mUtil.showCommonDialogError(false, mContext.getString(R.string.msgs_group_start_confirmation_message_title), e_msg, null);
-            else if (exec_task_name_list.size()==0) {
-                mUtil.showCommonDialogError(false, mContext.getString(R.string.msgs_group_start_confirmation_message_title),
-                        mContext.getString(R.string.msgs_group_start_confirmation_message_no_sync_task), null);
-            } else {
-                String w_msg="";
-                if (duplicate_task_name_list.size()>0) {
-                    w_msg=mContext.getString(R.string.msgs_group_start_confirmation_message_duplicate_msg)+"\n";
-                    String w_msg_list="";
-                    for(String item:duplicate_task_name_list) {
-                        String[] item_array=item.split(NAME_LIST_SEPARATOR);
-                        w_msg_list+=mContext.getString(R.string.msgs_group_start_confirmation_message_duplicate_item, item_array[0], item_array[1])+"\n";
-                    }
-                    w_msg+=w_msg_list;
-
-                    w_msg+="\n"+mContext.getString(R.string.msgs_group_start_confirmation_message_start_msg)+"\n";
-                    w_msg_list="";
-                    for(String item:exec_task_name_list) {
-                        w_msg_list+=String.format("- %1$s", item)+"\n";
-                    }
-                    w_msg+=w_msg_list;
-                } else {
-                    String w_msg_list="", sep="";
-                    w_msg+=mContext.getString(R.string.msgs_group_start_confirmation_message_start_msg)+"\n";
-                    for(String item:exec_task_name_list) {
-                        w_msg_list+=sep+String.format("- %1$s", item);
-                        sep="\n";
-                    }
-                    w_msg+=w_msg_list;
-                }
-
-                NotifyEvent ntfy_confirm_exec=new NotifyEvent(mContext);
-                ntfy_confirm_exec.setListener(new NotifyEvent.NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        ArrayList<SyncTaskItem>exec_task_item_list=new ArrayList<SyncTaskItem>();
-                        for(String item:exec_task_name_list) {
-                            exec_task_item_list.add(TaskListUtils.getSyncTaskByName(mGp.syncTaskList, item));
-                        }
-                        startSyncTask(exec_task_item_list);
-                    }
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {}
-                });
-
-
-                NotifyEvent ntfy=new NotifyEvent(mContext);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        if (objects!=null) {
-                            boolean suppress=(boolean)objects[0];
-                            mGp.setSupressStartGroupConfirmationMessage(mContext, suppress);
-                        }
-                        ArrayList<SyncTaskItem>exec_task_item_list=new ArrayList<SyncTaskItem>();
-                        for(String item:exec_task_name_list) {
-                            exec_task_item_list.add(TaskListUtils.getSyncTaskByName(mGp.syncTaskList, item));
-                        }
-                        startSyncTask(exec_task_item_list);
-                        setSyncTaskContextButtonNormalMode();
-                    }
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {
-//                        if (objects!=null) {
-//                            boolean suppress=(boolean)objects[0];
-//                            mGp.setSupressStartSyncConfirmationMessage(mContext, suppress);
-//                        }
-                    }
-                });
-
-                if (mGp.isSupressStartGroupConfirmationMessage()) {
-                    ntfy.notifyToListener(true, null);
-                } else {
-                    TaskEditor.showDialogWithHideOption(mActivity, mGp, mUtil,
-                            true, mContext.getString(R.string.msgs_common_dialog_ok),
-                            true, mContext.getString(R.string.msgs_common_dialog_cancel),
-                            mContext.getString(R.string.msgs_group_start_confirmation_message_title),
-                            w_msg,
-                            mContext.getString(R.string.msgs_group_start_confirmation_message_suppress), ntfy);
                 }
             }
         }

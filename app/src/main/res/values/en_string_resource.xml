@@ -512,8 +512,6 @@
     <!-- Menu -->
         <string name="msgs_menu_sync_all_auto">Execute all auto sync tasks</string>
         <string name="msgs_menu_sync_selected">Sync execution of selected tasks</string>
-        <string name="msgs_menu_exec_group_all_enabled">Execute all enabled groups</string>
-        <string name="msgs_menu_exec_group_selected">Execute the selected group</string>
         <string name="msgs_menu_export">Export settings</string>
         <string name="msgs_menu_import">Import settings</string>
         <string name="msgs_menu_log_management">Log management</string>
@@ -775,12 +773,6 @@
         <string name="msgs_group_confirm_msg_rename_warning">Change the group name? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_group_confirm_msg_nosave">The group has changed. Exit without saving?</string>
         <string name="msgs_group_list_edit_no_group">Click the Add button to create a group.</string>
-        <string name="msgs_group_start_confirmation_message_title">Start of group</string>
-        <string name="msgs_group_start_confirmation_message_start_msg">Do you want to start the following tasks?</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_msg">The following tasks are duplicated.</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_item">- Group=%1$s, Task=%2$s</string>
-        <string name="msgs_group_start_confirmation_message_no_sync_task">No tasks found to start.</string>
-        <string name="msgs_group_start_confirmation_message_suppress">Disable this notification (can be enabled in sync settings)</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Do you want to enable the group?</string>
         <string name="msgs_group_list_edit_confirm_group_to_disabled">Do you want to disable the group?</string>
     <!-- Sync Button -->
@@ -1035,9 +1027,6 @@
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">Do not prompt for sync start with sync button.</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">sync button</string>
-        <string name="settings_suppress_start_group_confirmation_message">settings_suppress_start_group_confirmation_message</string>
-        <string name="settings_suppress_start_group_confirmation_message_summary_ena">Do not prompt when start group.</string>
-        <string name="settings_suppress_start_group_confirmation_message_title">Start Group</string>
         <string name="settings_suppress_shortcut1_confirmation_message">settings_suppress_shortcut1_confirmation_message</string>
         <string name="settings_suppress_shortcut1_confirmation_message_summary_ena">Do not prompt to start sync with shortcut</string>
         <string name="settings_suppress_shortcut1_confirmation_message_title">Shortcut button1</string>

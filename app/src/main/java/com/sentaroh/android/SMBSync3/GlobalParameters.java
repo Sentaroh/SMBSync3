@@ -145,14 +145,6 @@ public class GlobalParameters {
         settingSupressStartSyncConfirmationMessage=suppress;
     }
 
-    public boolean settingSupressStartGroupConfirmationMessage =false;
-    public boolean isSupressStartGroupConfirmationMessage() { return settingSupressStartGroupConfirmationMessage;}
-    public void setSupressStartGroupConfirmationMessage(Context c, boolean suppress) {
-        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        prefs.edit().putBoolean(c.getString(R.string.settings_suppress_start_group_confirmation_message), suppress).commit();
-        settingSupressStartGroupConfirmationMessage=suppress;
-    }
-
     public boolean settingSupressShortcut1ConfirmationMessage =false;
     public boolean isSupressShortcut1ConfirmationMessage() {
         return settingSupressShortcut1ConfirmationMessage;
@@ -571,8 +563,6 @@ public class GlobalParameters {
             prefs.getBoolean(c.getString(R.string.settings_suppress_add_external_storage_notification), false);
         settingSupressStartSyncConfirmationMessage=
                 prefs.getBoolean(c.getString(R.string.settings_suppress_start_sync_confirmation_message), false);
-        settingSupressStartGroupConfirmationMessage=
-                prefs.getBoolean(c.getString(R.string.settings_suppress_start_group_confirmation_message), false);
         settingSupressShortcut1ConfirmationMessage =
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut1_confirmation_message), false);
         settingSupressShortcut2ConfirmationMessage =

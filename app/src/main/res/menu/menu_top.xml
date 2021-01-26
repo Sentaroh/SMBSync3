@@ -11,11 +11,6 @@
             android:icon="@drawable/ic_32_sync"
             appv7:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/menu_top_execute_group"
-        android:title="@string/msgs_menu_exec_group_all_enabled"
-        android:icon="@drawable/ic_32_player"
-        appv7:showAsAction="ifRoom"/>
-
     <item android:id="@+id/menu_top_show_hide_filter"
         android:title="@string/msgs_menu_show_hide_filter"
         android:icon="@drawable/search"

@@ -516,8 +516,6 @@
     <!-- Menu -->
         <string name="msgs_menu_sync_all_auto">Ausführen aller automatischen Synchronisierungsaufgaben</string>
         <string name="msgs_menu_sync_selected">Synchronisierung der Ausführung ausgewählter Aufgaben</string>
-        <string name="msgs_menu_exec_group_all_enabled">Alle aktivierten Gruppen ausführen</string>
-        <string name="msgs_menu_exec_group_selected">Ausführen der ausgewählten Gruppe</string>
         <string name="msgs_menu_export">Einstellungen exportieren</string>
         <string name="msgs_menu_import">Einstellungen importieren</string>
         <string name="msgs_menu_log_management">Log-Verwaltung</string>
@@ -779,12 +777,6 @@
         <string name="msgs_group_confirm_msg_rename_warning">Den Gruppennamen ändern? Die Ergebnisse werden sofort widergespiegelt und können nicht rückgängig gemacht werden.</string>
         <string name="msgs_group_confirm_msg_nosave">Die Gruppe hat sich geändert. Beenden ohne zu speichern?</string>
         <string name="msgs_group_list_edit_no_group">Klicken Sie auf die Schaltfläche Hinzufügen, um eine Gruppe zu erstellen.</string>
-        <string name="msgs_group_start_confirmation_message_title">Beginn der Gruppe</string>
-        <string name="msgs_group_start_confirmation_message_start_msg">Möchten Sie mit den folgenden Aufgaben beginnen?</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_msg">Die folgenden Aufgaben sind doppelt vorhanden.</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_item">- Gruppe=%1$s, Aufgabe=%2$s</string>
-        <string name="msgs_group_start_confirmation_message_no_sync_task">Es wurden keine Aufgaben zum Start gefunden.</string>
-        <string name="msgs_group_start_confirmation_message_suppress">Deaktivieren Sie diese Benachrichtigung (kann in den Synchronisierungseinstellungen aktiviert werden)</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Möchten Sie die Gruppe aktivieren?</string>
         <string name="msgs_group_list_edit_confirm_group_to_disabled">Wollen Sie die Gruppe deaktivieren?</string>
     <!-- Sync Button -->
@@ -1039,9 +1031,6 @@
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">Fordern Sie nicht mit der Sync-Taste zum Sync-Start auf.</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">Sync-Taste</string>
-        <string name="settings_suppress_start_group_confirmation_message">settings_suppress_start_group_confirmation_message</string>
-        <string name="settings_suppress_start_group_confirmation_message_summary_ena">Keine Eingabeaufforderung beim Start der Gruppe.</string>
-        <string name="settings_suppress_start_group_confirmation_message_title">Gruppe starten</string>
         <string name="settings_suppress_shortcut1_confirmation_message">settings_suppress_shortcut1_confirmation_message</string>
         <string name="settings_suppress_shortcut1_confirmation_message_summary_ena">Nicht zum Starten der Synchronisierung mit Verknüpfung auffordern</string>
         <string name="settings_suppress_shortcut1_confirmation_message_title">Verknüpfungstaste1</string>

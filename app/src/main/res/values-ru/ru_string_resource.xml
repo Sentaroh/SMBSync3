@@ -512,8 +512,6 @@
     <!-- Menu -->
         <string name="msgs_menu_sync_all_auto">Выполнить все задачи автосинхронизации</string>
         <string name="msgs_menu_sync_selected">Синхронное выполнение выбранных задач</string>
-        <string name="msgs_menu_exec_group_all_enabled">Выполнить все включенные группы</string>
-        <string name="msgs_menu_exec_group_selected">Выполнить выбранную группу</string>
         <string name="msgs_menu_export">Экспорт списка задач</string>
         <string name="msgs_menu_import">Импортировать список задач</string>
         <string name="msgs_menu_log_management">Управление файлами журналов</string>
@@ -775,12 +773,6 @@
         <string name="msgs_group_confirm_msg_rename_warning">Изменить название группы? Результаты отражаются немедленно и не могут быть отменены.</string>
         <string name="msgs_group_confirm_msg_nosave">Группа изменилась. Выход без экономии?</string>
         <string name="msgs_group_list_edit_no_group">Нажмите кнопку Добавить, чтобы создать группу.</string>
-        <string name="msgs_group_start_confirmation_message_title">Начало группы</string>
-        <string name="msgs_group_start_confirmation_message_start_msg">Вы хотите начать выполнение следующих задач?</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_msg">Следующие задачи дублируются.</string>
-        <string name="msgs_group_start_confirmation_message_duplicate_item">- Группа=%1$s, задача=%2$s</string>
-        <string name="msgs_group_start_confirmation_message_no_sync_task">Не найдено заданий для начала.</string>
-        <string name="msgs_group_start_confirmation_message_suppress">Отключите это оповещение (можно включить в настройках синхронизации).</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Ты хочешь включить группу?</string>
         <string name="msgs_group_list_edit_confirm_group_to_disabled">Ты хочешь отключить группу?</string>
     <!-- Sync Button -->
@@ -1030,9 +1022,6 @@
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">Не просите запускать синхронизацию с помощью кнопки синхронизации.</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">кнопка синхронизации</string>
-        <string name="settings_suppress_start_group_confirmation_message">settings_suppress_start_group_confirmation_message</string>
-        <string name="settings_suppress_start_group_confirmation_message_summary_ena">Не подскажите, когда начинать группу.</string>
-        <string name="settings_suppress_start_group_confirmation_message_title">стартовая группа</string>
         <string name="settings_suppress_shortcut1_confirmation_message">settings_suppress_shortcut1_confirmation_message</string>
         <string name="settings_suppress_shortcut1_confirmation_message_summary_ena">Не просите запускать синхронизацию с ярлыком.</string>
         <string name="settings_suppress_shortcut1_confirmation_message_title">кнопка быстрого доступа1</string>
