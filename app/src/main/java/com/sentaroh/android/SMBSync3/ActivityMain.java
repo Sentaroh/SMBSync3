@@ -1933,6 +1933,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void requestAllFileAccessPermission(NotifyEvent p_ntfy) {
 //        Enable "ALL_FILE_ACCESS"
+        final boolean reload_required=!isAllFileAccessPermissionGranted();
         NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
         ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
@@ -1942,8 +1943,10 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void onCallBack(Context context, boolean b, Object[] objects) {
                         if (isAllFileAccessPermissionGranted()) {
-                            mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
-                            mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
+                            if (reload_required) {
+                                mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
+                                mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
+                            }
                             if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
                         } else {
                             NotifyEvent ntfy_denied=new NotifyEvent(mContext);
@@ -2245,6 +2248,7 @@ public class ActivityMain extends AppCompatActivity {
     public void launchActivity(Activity a, String req_id, Intent intent, CallBackListener cbl) {
         int req_code=mActivityLaunchList.size()+1;
         synchronized (mActivityLaunchList) {
+            mUtil.addDebugMsg(1, "I", "launchActivity req_id="+req_id+", req_code="+req_code);
             mActivityLaunchList.add(new ActivityLaunchItem(req_code, req_id, cbl));
         }
         a.startActivityForResult(intent, req_code);
@@ -2252,10 +2256,12 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mUtil.addDebugMsg(1, "I", "onActivityResult requestCode="+requestCode+", resultCode="+resultCode+", data="+data);
         synchronized (mActivityLaunchList) {
             ArrayList<ActivityLaunchItem> remove_list=new ArrayList<ActivityLaunchItem>();
             for(ActivityLaunchItem item:mActivityLaunchList) {
                 if (item.getType()== ActivityLaunchItem.TYPE_ACTIVITY && item.getRequestCode()==requestCode) {
+                    mUtil.addDebugMsg(1, "I", "onActivityResult Notify to listener. requestCode="+requestCode);
                     item.callBackListener.onCallBack(mContext, resultCode==0, new Object[]{data});
                     remove_list.add(item);
                 }
@@ -2267,6 +2273,7 @@ public class ActivityMain extends AppCompatActivity {
 
     public void launchRequestPermission(Activity a, String permission, CallBackListener cbl) {
         synchronized (mActivityLaunchList) {
+            mUtil.addDebugMsg(1, "I", "launchRequestPermission permission="+permission);
             mActivityLaunchList.add(new ActivityLaunchItem(permission, cbl));
         }
         a.requestPermissions(new String[]{permission}, mActivityLaunchList.size());
@@ -2274,10 +2281,12 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        mUtil.addDebugMsg(1, "I", "onRequestPermissionsResult requestCode="+requestCode+", permission="+permissions[0]+", result="+grantResults[0]);
         synchronized (mActivityLaunchList) {
             ArrayList<ActivityLaunchItem> remove_list=new ArrayList<ActivityLaunchItem>();
             for(ActivityLaunchItem item:mActivityLaunchList) {
                 if (item.getType()== ActivityLaunchItem.TYPE_PERMISSION && item.getPermission().equals(permissions[0])) {
+                    mUtil.addDebugMsg(1, "I", "onRequestPermissionsResult notify to listener. permission="+permissions[0]);
                     item.callBackListener.onCallBack(mContext, grantResults[0]==0, new Object[]{item.getPermission()});
                     remove_list.add(item);
                 }
