@@ -521,7 +521,7 @@
         <string name="msgs_menu_housekeep">数据库维护</string>
         <string name="msgs_menu_kill">关闭应用程序</string>
         <string name="msgs_menu_list_storage_info">系统信息</string>
-        <string name="msgs_menu_request_all_file_access">申请所有文件访问</string>
+        <string name="msgs_menu_request_all_file_access">所有文件访问权限</string>
         <string name="msgs_menu_show_battery_optimization_screen">电池优化</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[用户取消的存档操作]</string>

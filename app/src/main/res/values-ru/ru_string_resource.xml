@@ -521,7 +521,7 @@
         <string name="msgs_menu_housekeep">Обслуживание файлов администратора</string>
         <string name="msgs_menu_kill">Убить приложение</string>
         <string name="msgs_menu_list_storage_info">Системная информация</string>
-        <string name="msgs_menu_request_all_file_access">Запрос \"Доступ ко всем файлам\"</string>
+        <string name="msgs_menu_request_all_file_access">Все разрешения на доступ к файлам</string>
         <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Архив отменен по запросу пользователя]</string>

@@ -521,7 +521,7 @@
         <string name="msgs_menu_housekeep">Database maintenance</string>
         <string name="msgs_menu_kill">Kill the application</string>
         <string name="msgs_menu_list_storage_info">System info</string>
-        <string name="msgs_menu_request_all_file_access">Request All File Access</string>
+        <string name="msgs_menu_request_all_file_access">All File Access permission</string>
         <string name="msgs_menu_show_battery_optimization_screen">Battery optimization</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archive operation cancelled by user]</string>

@@ -1328,7 +1328,7 @@ public class TaskEditor extends DialogFragment {
                 }
                 if (intent!=null) {
                     try {
-                        a.launchActivity("UUID", intent, new CallBackListener() {
+                        a.launchActivity(a, "UUID", intent, new CallBackListener() {
                             @Override
                             public void onCallBack(Context context, boolean positive, Object[] objects) {
                                 ntfy.notifyToListener(true, new Object[]{positive?0:-1, objects[0], uuid});

@@ -50,7 +50,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
@@ -1848,7 +1847,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", "Invoke Setting activity.");
         mPrevLanguageSetting=GlobalParameters.getLanguageCode(mContext);
         Intent intent = new Intent(mContext, ActivitySettings.class);
-        launchActivity("Settings", intent, new CallBackListener() {
+        launchActivity(mActivity, "Settings", intent, new CallBackListener() {
             @Override
             public void onCallBack(Context context, boolean b, Object[] objects) {
                 mUtil.addDebugMsg(1, "I", "Return from Setting activity.");
@@ -1939,7 +1938,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                launchActivity("ALL_FILE_ACCESS", intent, new CallBackListener() {
+                launchActivity(mActivity, "ALL_FILE_ACCESS", intent, new CallBackListener() {
                     @Override
                     public void onCallBack(Context context, boolean b, Object[] objects) {
                         if (isAllFileAccessPermissionGranted()) {
@@ -2178,7 +2177,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onCallBack(Context c, boolean positive, Object[] objects) {
                 if (positive) {
-                    launchRequestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, new CallBackListener() {
+                    launchRequestPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE, new CallBackListener() {
                         @Override
                         public void onCallBack(Context context, boolean isGranted, Object[] objects) {
                             if (isGranted) {
@@ -2216,36 +2215,47 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-    private class ActivityLauncherListItem {
+    private class ActivityLaunchItem {
         private String requestorId=null;
         private int requestCode=0;
         private CallBackListener callBackListener=null;
-        public ActivityLauncherListItem(int req_code, String req_id, CallBackListener cbl) {
+        private String permission=null;
+        final static public int TYPE_ACTIVITY=0;
+        final static public int TYPE_PERMISSION=1;
+        private int type=TYPE_ACTIVITY;
+        public ActivityLaunchItem(int req_code, String req_id, CallBackListener cbl) {
             this.requestorId=req_id;
             callBackListener=cbl;
             requestCode=req_code;
+            type=TYPE_ACTIVITY;
         }
+        public ActivityLaunchItem(String permission, CallBackListener cbl) {
+            this.permission=permission;
+            callBackListener=cbl;
+        }
+        public int getType() {return this.type;}
         public String getRequestorId() {return this.requestorId;}
         public int getRequestCode() {return this.requestCode;}
+        public String getPermission() {return this.permission;}
         public CallBackListener getCallBackListener() {return callBackListener;}
     }
 
-    private ArrayList<ActivityLauncherListItem> mActivityLaunchList=new ArrayList<ActivityLauncherListItem>();
+    private ArrayList<ActivityLaunchItem> mActivityLaunchList=new ArrayList<ActivityLaunchItem>();
 
-    public void launchActivity(String req_id, Intent intent, CallBackListener cbl) {
+    public void launchActivity(Activity a, String req_id, Intent intent, CallBackListener cbl) {
         int req_code=mActivityLaunchList.size()+1;
         synchronized (mActivityLaunchList) {
-            mActivityLaunchList.add(new ActivityLauncherListItem(req_code, req_id, cbl));
+            mActivityLaunchList.add(new ActivityLaunchItem(req_code, req_id, cbl));
         }
-        startActivityForResult(intent, req_code);
+        a.startActivityForResult(intent, req_code);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         synchronized (mActivityLaunchList) {
-            ArrayList<ActivityLauncherListItem> remove_list=new ArrayList<ActivityLauncherListItem>();
-            for(ActivityLauncherListItem item:mActivityLaunchList) {
-                if (item.getRequestCode()==requestCode) {
+            ArrayList<ActivityLaunchItem> remove_list=new ArrayList<ActivityLaunchItem>();
+            for(ActivityLaunchItem item:mActivityLaunchList) {
+                if (item.getType()== ActivityLaunchItem.TYPE_ACTIVITY && item.getRequestCode()==requestCode) {
                     item.callBackListener.onCallBack(mContext, resultCode==0, new Object[]{data});
                     remove_list.add(item);
                 }
@@ -2255,37 +2265,24 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    private class RequestPermissionListItem {
-        private String permission=null;
-        private CallBackListener callBackListener=null;
-        public RequestPermissionListItem(String permission, CallBackListener cbl) {
-            this.permission=permission;
-            callBackListener=cbl;
+    public void launchRequestPermission(Activity a, String permission, CallBackListener cbl) {
+        synchronized (mActivityLaunchList) {
+            mActivityLaunchList.add(new ActivityLaunchItem(permission, cbl));
         }
-        public String getPermission() {return this.permission;}
-        public CallBackListener getCallBackListener() {return callBackListener;}
-    }
-
-    private ArrayList<RequestPermissionListItem> mRequestPermissionList=new ArrayList<RequestPermissionListItem>();
-
-    public void launchRequestPermission(String permission, CallBackListener cbl) {
-        synchronized (mRequestPermissionList) {
-            mRequestPermissionList.add(new RequestPermissionListItem(permission, cbl));
-        }
-        requestPermissions(new String[]{permission}, mRequestPermissionList.size());
+        a.requestPermissions(new String[]{permission}, mActivityLaunchList.size());
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        synchronized (mRequestPermissionList) {
-            ArrayList<RequestPermissionListItem> remove_list=new ArrayList<RequestPermissionListItem>();
-            for(RequestPermissionListItem item:mRequestPermissionList) {
-                if (item.getPermission().equals(permissions[0])) {
+        synchronized (mActivityLaunchList) {
+            ArrayList<ActivityLaunchItem> remove_list=new ArrayList<ActivityLaunchItem>();
+            for(ActivityLaunchItem item:mActivityLaunchList) {
+                if (item.getType()== ActivityLaunchItem.TYPE_PERMISSION && item.getPermission().equals(permissions[0])) {
                     item.callBackListener.onCallBack(mContext, grantResults[0]==0, new Object[]{item.getPermission()});
                     remove_list.add(item);
                 }
             }
-            mRequestPermissionList.removeAll(remove_list);
+            mActivityLaunchList.removeAll(remove_list);
         }
     }
 

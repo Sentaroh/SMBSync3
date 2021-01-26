@@ -521,7 +521,7 @@
         <string name="msgs_menu_housekeep">Maintenance</string>
         <string name="msgs_menu_kill">Arrêt forcé</string>
         <string name="msgs_menu_list_storage_info">Infos système</string>
-        <string name="msgs_menu_request_all_file_access">Demande \"Accès à tous les dossiers\".</string>
+        <string name="msgs_menu_request_all_file_access">Autorisation d\'accès à tous les dossiers</string>
         <string name="msgs_menu_show_battery_optimization_screen">Optimiser la batterie</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivage annulé par l\'utilisateur]</string>

@@ -525,7 +525,7 @@
         <string name="msgs_menu_housekeep">Pflege der Datenbank</string>
         <string name="msgs_menu_kill">Beenden Sie die Anwendung</string>
         <string name="msgs_menu_list_storage_info">System-Info</string>
-        <string name="msgs_menu_request_all_file_access">Alle Dateizugriffe anfordern</string>
+        <string name="msgs_menu_request_all_file_access">Alle Dateizugriffsberechtigung</string>
         <string name="msgs_menu_show_battery_optimization_screen">Optimierung der Batterie</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivierungsvorgang vom Benutzer abgebrochen]</string>
