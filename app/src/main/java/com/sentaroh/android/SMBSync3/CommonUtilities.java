@@ -626,27 +626,15 @@ public final class CommonUtilities {
 
     public static String decryptUserData(Context c, EncryptUtilV3.CipherParms cp_int, String enc_str) {
         String dec_str = null;
-        try {
-            byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
-            dec_str = EncryptUtilV3.decrypt(dec_array, cp_int);
-        } catch (Exception e) {
-            log.error(CommonUtilities.getExecutedMethodName()+" error.", e);
-            e.printStackTrace();
-        }
+        byte[] dec_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
+        dec_str = EncryptUtilV3.decrypt(dec_array, cp_int);
         return dec_str;
     }
 
     public static String encryptUserData(Context c, EncryptUtilV3.CipherParms cp_int, String user_data) {
-        try {
-            byte[] enc_byte = EncryptUtilV3.encrypt(user_data, cp_int);
-            String enc_str = Base64Compat.encodeToString(enc_byte, Base64Compat.NO_WRAP);
-            return enc_str;
-        } catch (Exception e) {
-            String stm = MiscUtil.getStackTraceString(e);
-            log.error(CommonUtilities.getExecutedMethodName()+" error=" + e.getMessage() + "\n" + stm);
-            e.printStackTrace();
-            return "";
-        }
+        byte[] enc_byte = EncryptUtilV3.encrypt(user_data, cp_int);
+        String enc_str = Base64Compat.encodeToString(enc_byte, Base64Compat.NO_WRAP);
+        return enc_str;
     }
 
     public static boolean canSmbHostConnectable(String addr) {

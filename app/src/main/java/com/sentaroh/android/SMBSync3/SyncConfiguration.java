@@ -293,85 +293,69 @@ public class SyncConfiguration {
     public final static String CONFIG_LIST_VER1 = "1.0.1";
 
     synchronized public static String createXmlData(Context c,
-                                       ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ArrayList<GroupListAdapter.GroupListItem>group_list,
-                                       int enc_mode, CipherParms cp_enc) {
+              ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
+              ArrayList<GroupListAdapter.GroupListItem>group_list, int enc_mode, CipherParms cp_enc) {
         if (log.isDebugEnabled()) log.debug("buildConfigData enc_mode=" + enc_mode + ", cp_enc=" + cp_enc);
-        boolean result = true;
         String config_data = null;
         synchronized (sync_task_list) {
             try {
-                try {
-                    DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder dbuilder = dbfactory.newDocumentBuilder();
+                DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dbuilder = dbfactory.newDocumentBuilder();
 
-                    Document main_document = dbuilder.newDocument();
-                    Element config_tag = main_document.createElement(SYNC_TASK_XML_TAG_CONFIG);
-                    config_tag.setAttribute(SYNC_TASK_XML_TAG_CONFIG_VERSION, CONFIG_LIST_VER1);
+                Document main_document = dbuilder.newDocument();
+                Element config_tag = main_document.createElement(SYNC_TASK_XML_TAG_CONFIG);
+                config_tag.setAttribute(SYNC_TASK_XML_TAG_CONFIG_VERSION, CONFIG_LIST_VER1);
 
-                    for (SyncTaskItem item : sync_task_list) {
-                        Element task_tag = createXmlTaskElement(c, main_document, item);
-                        config_tag.appendChild(task_tag);
+                for (SyncTaskItem item : sync_task_list) {
+                    Element task_tag = createXmlTaskElement(c, main_document, item);
+                    config_tag.appendChild(task_tag);
 
-                        Element source_tag = createXmlSourceElement(c, main_document, item, enc_mode, cp_enc);
-                        task_tag.appendChild(source_tag);
+                    Element source_tag = createXmlSourceElement(c, main_document, item, enc_mode, cp_enc);
+                    task_tag.appendChild(source_tag);
 
-                        Element destination_tag = createXmlDestinationElement(c, main_document, item, enc_mode, cp_enc);
-                        task_tag.appendChild(destination_tag);
+                    Element destination_tag = createXmlDestinationElement(c, main_document, item, enc_mode, cp_enc);
+                    task_tag.appendChild(destination_tag);
 
-                    }
-
-                    for (ScheduleListAdapter.ScheduleListItem item : schedule_list) {
-                        Element schedule_tag = createXmlScheduleData(c, main_document, item);
-                        config_tag.appendChild(schedule_tag);
-                    }
-
-                    for (GroupListAdapter.GroupListItem item : group_list) {
-                        Element group_tag = createXmlGroupData(c, main_document, item);
-                        config_tag.appendChild(group_tag);
-                    }
-
-                    Element setting_tag = createXmlSettingsElement(c, main_document);
-                    config_tag.appendChild(setting_tag);
-
-                    main_document.appendChild(config_tag);
-
-                    TransformerFactory tffactory = TransformerFactory.newInstance();
-                    Transformer transformer = tffactory.newTransformer();
-                    transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-                    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount","5");
-                    StringWriter sw = new StringWriter();
-                    transformer.transform(new DOMSource(main_document), new StreamResult(sw));
-                    sw.flush();
-                    sw.close();
-                    String prof = sw.toString();
-                    if (enc_mode == ENCRYPT_MODE_ENCRYPT_WHOLE_DATA) {
-                        if (prof != null) {
-                            config_data = CommonUtilities.encryptUserData(c, cp_enc, prof);
-                        } else {
-                            log.error(CommonUtilities.getExecutedMethodName()+"  Sync task list not saved because null CipherParms supplied.");
-                        }
-                    } else {
-                        config_data = prof;
-                    }
-                } catch (TransformerConfigurationException e) {
-                    e.printStackTrace();
-                    log.error(CommonUtilities.getExecutedMethodName()+"  failed.", e);
-                    result = false;
-                } catch (TransformerException e) {
-                    e.printStackTrace();
-                    log.error(CommonUtilities.getExecutedMethodName()+"  failed.", e);
-                    result = false;
                 }
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                log.error(CommonUtilities.getExecutedMethodName()+"  failed.", e);
-                result = false;
+                for (ScheduleListAdapter.ScheduleListItem item : schedule_list) {
+                    Element schedule_tag = createXmlScheduleData(c, main_document, item);
+                    config_tag.appendChild(schedule_tag);
+                }
+
+                for (GroupListAdapter.GroupListItem item : group_list) {
+                    Element group_tag = createXmlGroupData(c, main_document, item);
+                    config_tag.appendChild(group_tag);
+                }
+
+                Element setting_tag = createXmlSettingsElement(c, main_document);
+                config_tag.appendChild(setting_tag);
+
+                main_document.appendChild(config_tag);
+
+                TransformerFactory tffactory = TransformerFactory.newInstance();
+                Transformer transformer = tffactory.newTransformer();
+                transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount","5");
+                StringWriter sw = new StringWriter();
+                transformer.transform(new DOMSource(main_document), new StreamResult(sw));
+                sw.flush();
+                sw.close();
+                String prof = sw.toString();
+                if (enc_mode == ENCRYPT_MODE_ENCRYPT_WHOLE_DATA) {
+                    if (prof != null) {
+                        config_data = CommonUtilities.encryptUserData(c, cp_enc, prof);
+                    } else {
+                        log.error(CommonUtilities.getExecutedMethodName()+"  Sync task list not saved because null CipherParms supplied.");
+                    }
+                } else {
+                    config_data = prof;
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 log.error(CommonUtilities.getExecutedMethodName()+"  failed.", e);
-                result = false;
+                config_data=null;
             }
             if (log.isDebugEnabled()) log.debug(CommonUtilities.getExecutedMethodName()+"  ended");
         }

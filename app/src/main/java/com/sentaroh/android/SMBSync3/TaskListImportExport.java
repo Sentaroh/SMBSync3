@@ -30,7 +30,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
@@ -63,7 +62,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -1087,17 +1085,18 @@ public class TaskListImportExport {
             EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(sk, KeyStoreUtils.KEY_STORE_ALIAS);
 
             String config_data = SyncConfiguration.createXmlData(c, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_ENCRYPT_VITAL_DATA, cp_int);
-
-            OutputStream os = c.openFileOutput(CONFIG_FILE_NAME, Context.MODE_PRIVATE);
-            BufferedOutputStream bos = new BufferedOutputStream(os, GENERAL_IO_BUFFER_SIZE);
-            PrintWriter pw = new PrintWriter(bos);
-            long cal_crc=SyncConfiguration.calculateSyncConfigCrc32(config_data.replaceAll("\n", ""));
+            if (config_data!=null) {
+                OutputStream os = c.openFileOutput(CONFIG_FILE_NAME, Context.MODE_PRIVATE);
+                BufferedOutputStream bos = new BufferedOutputStream(os, GENERAL_IO_BUFFER_SIZE);
+                PrintWriter pw = new PrintWriter(bos);
+                long cal_crc=SyncConfiguration.calculateSyncConfigCrc32(config_data.replaceAll("\n", ""));
 //            log.info("saved crc="+cal_crc);
-            pw.println(SYNC_TASK_CONFIG_FILE_IDENTIFIER_PREFIX+cal_crc+SYNC_TASK_CONFIG_FILE_IDENTIFIER_SUFFIX);
-            pw.println(config_data);
+                pw.println(SYNC_TASK_CONFIG_FILE_IDENTIFIER_PREFIX+cal_crc+SYNC_TASK_CONFIG_FILE_IDENTIFIER_SUFFIX);
+                pw.println(config_data);
 
-            pw.flush();
-            pw.close();
+                pw.flush();
+                pw.close();
+            }
             return config_data;
         } catch (Exception e) {
             e.printStackTrace();
@@ -1195,8 +1194,11 @@ public class TaskListImportExport {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                return true;
+            } else {
+                log.error(CommonUtilities.getExecutedMethodName()+"  failed. config_data is null.");
+                return false;
             }
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
             log.error(CommonUtilities.getExecutedMethodName()+"  failed.", e);
