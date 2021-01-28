@@ -93,6 +93,12 @@ public class SyncConfiguration {
     private static final String SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_AUDIO = "filter_file_name_preset_audio";
     private static final String SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_IMAGE = "filter_file_name_preset_image";
     private static final String SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO = "filter_file_name_preset_video";
+    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE = "filter_file_ignore_0_byte_file_size";
+    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE = "filter_file_size_type";
+    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE = "filter_file_size_value";
+    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_UNIT = "filter_file_size_unit";
+    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_DATE_TYPE = "filter_file_date_type";
+    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_DATE_VALUE = "filter_file_date_value";
     private static final String SYNC_TASK_XML_TAG_FILTER_IPADDR = "filter_ipaddr";
     private static final String SYNC_TASK_XML_TAG_FILTER_SSID = "filter_ssid";
 
@@ -626,6 +632,12 @@ public class SyncConfiguration {
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_AUDIO, item.isSyncFileTypeAudio() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_IMAGE, item.isSyncFileTypeImage() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO, item.isSyncFileTypeVideo() ? "true" : "false");
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE, item.isSyncFilterFileIgnoreFileSize0Byte()? "true" : "false");
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE, item.getSyncFilterFileSizeType());
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE, item.getSyncFilterFileSizeValue());
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_UNIT, item.getSyncFilterFileSizeUnit());
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_TYPE, item.getSyncFilterFileDateType());
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_VALUE, item.getSyncFilterFileDateValue());
 
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS, item.isSyncOptionSyncAllowGlobalIpAddress() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_CONFIIRM_OVERRIDE_OR_DELETE, item.isSyncConfirmOverrideOrDelete() ? "true" : "false");
@@ -1039,6 +1051,18 @@ public class SyncConfiguration {
                 sti.setSyncFileTypeImage(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO)) {
                 sti.setSyncFileTypeVideo(xpp.getAttributeValue(i).toLowerCase().equals("true"));
+            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE)) {
+                sti.setSyncFilterFileIgnoreFileSize0Byte(xpp.getAttributeValue(i).toLowerCase().equals("true"));
+            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE)) {
+                sti.setSyncFilterFileSizeType(xpp.getAttributeValue(i));
+            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE)) {
+                sti.setSyncFilterFileSizeValue(xpp.getAttributeValue(i));
+            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_UNIT)) {
+                sti.setSyncFilterFileSizeUnit(xpp.getAttributeValue(i));
+            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_TYPE)) {
+                sti.setSyncFilterFileDateType(xpp.getAttributeValue(i));
+            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_VALUE)) {
+                sti.setSyncFilterFileDateValue(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS)) {
                 sti.setSyncOptionSyncAllowGlobalIpAddress(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_CONFIIRM_OVERRIDE_OR_DELETE)) {

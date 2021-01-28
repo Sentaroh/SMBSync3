@@ -464,9 +464,11 @@ public class SyncThreadSyncZip {
                         }
                     }
                 } else { // file copy
+                    long mf_length=mf.length();
+                    long mf_last_modified=mf.lastModified();
                     if (//SyncThread.isDirectorySelectedByFileName(stwa, relative_from_dir) &&
                             !SyncThread.isHiddenFile(stwa, sti, mf) &&
-                            SyncThread.isFileSelected(stwa, sti, relative_from_dir)) {
+                            SyncThread.isFileSelected(stwa, sti, relative_from_dir, mf_length, mf_last_modified)) {
                         boolean tf_exists = false;
                         FileHeader fh = bzf.getFileHeader(from_path.replace(zp.getDefaultFolderPath(), ""));
                         tf_exists = fh == null ? false : true;

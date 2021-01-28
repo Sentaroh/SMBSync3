@@ -62,6 +62,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Properties;
@@ -89,6 +90,9 @@ public class SyncThread extends Thread {
 
         public ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry> currLastModifiedList = new ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry>();
         public ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry> newLastModifiedList = new ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry>();
+
+        public long fileSizeFilterValue=0L;
+        public long fileDateFilterValue=0L;
 
         public Pattern fileExcludeFilterFileNamePattern = null;
         public Pattern fileIncludeFilterFileNamePattern = null;
@@ -2201,6 +2205,50 @@ public class SyncThread extends Thread {
 
     final static int debug_level_2=2;
     final static int debug_level_3=3;
+    static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String relative_file_path, long file_size, long last_modified_time) {
+        boolean selected=true;
+        if (sti.isSyncFilterFileIgnoreFileSize0Byte()) {
+            if (file_size==0) {
+                selected=false;
+                stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file size 0. fp="+relative_file_path);
+            }
+        }
+        if (selected && !sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
+            if (sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
+                if (file_size<stwa.fileSizeFilterValue) selected=true;
+                else {
+                    selected=false;
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file size less than "+stwa.fileSizeFilterValue+". fp="+relative_file_path);
+                }
+            } else {
+                if (file_size>stwa.fileSizeFilterValue) selected=true;
+                else {
+                    selected=false;
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file size greater than "+stwa.fileSizeFilterValue+". fp="+relative_file_path);
+                }
+            }
+        }
+        if (selected && !sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
+            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER)) {
+                if (last_modified_time<stwa.fileDateFilterValue) selected=true;
+                else {
+                    selected=false;
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file date not older. file="+StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                            ", filter="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", fp="+relative_file_path);
+                }
+            } else {
+                if (last_modified_time>stwa.fileDateFilterValue) selected=true;
+                else {
+                    selected=false;
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file date not newer. file="+StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                            ", filter="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", fp="+relative_file_path);
+                }
+            }
+        }
+
+        if (selected) selected=isFileSelected(stwa, sti, relative_file_path);
+        return selected;
+    }
     static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String relative_file_path) {
         long b_time=System.currentTimeMillis();
         boolean included = false;
@@ -2474,6 +2522,35 @@ public class SyncThread extends Thread {
     }
 
     final private int compileFilter(SyncTaskItem sti, ArrayList<FilterListAdapter.FilterListItem> s_ff, ArrayList<FilterListAdapter.FilterListItem> s_df) {
+        mStwa.util.addDebugMsg(1, "I", "compileFilter Ignore 0 byte file="+sti.isSyncFilterFileIgnoreFileSize0Byte());
+        if (!sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
+            long filter_value=Long.parseLong(sti.getSyncFilterFileSizeValue());
+            if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_BYTE)) mStwa.fileSizeFilterValue=filter_value;
+            else if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_KIB)) mStwa.fileSizeFilterValue=filter_value*1024;
+            else if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_MIB)) mStwa.fileSizeFilterValue=filter_value*1024*1024;
+            else if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_GIB)) mStwa.fileSizeFilterValue=filter_value*1024*1024*1024;
+        } else {
+            mStwa.fileSizeFilterValue=-1;
+        }
+        mStwa.util.addDebugMsg(1, "I", "compileFilter file size filter="+mStwa.fileSizeFilterValue+", op="+sti.getSyncFilterFileSizeType()+", unit="+sti.getSyncFilterFileSizeUnit());
+        if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
+            int filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
+            Calendar curr_date=Calendar.getInstance();
+            curr_date.add(Calendar.DAY_OF_YEAR, filter_value);
+            int year=curr_date.get(Calendar.YEAR);
+            int month=curr_date.get(Calendar.MONTH);
+            int day=curr_date.get(Calendar.DAY_OF_MONTH);
+            curr_date.clear();
+            curr_date.set(year, month, day);
+            mStwa.fileDateFilterValue=curr_date.getTimeInMillis();
+            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter="+sti.getSyncFilterFileDateValue()+
+                    ", op="+sti.getSyncFilterFileDateType()+
+                    ", date="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mStwa.fileDateFilterValue));
+        } else {
+            mStwa.fileDateFilterValue=-1;
+            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter=-1");
+        }
+
         ArrayList<FilterListAdapter.FilterListItem> include_file_filter = new ArrayList<FilterListAdapter.FilterListItem>();
         ArrayList<FilterListAdapter.FilterListItem> exclude_file_filter = new ArrayList<FilterListAdapter.FilterListItem>();
         ArrayList<FilterListAdapter.FilterListItem> include_file_filter_with_directory_path = new ArrayList<FilterListAdapter.FilterListItem>();

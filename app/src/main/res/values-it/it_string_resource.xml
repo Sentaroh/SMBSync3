@@ -401,10 +401,35 @@
         <string name="msgs_task_sync_task_sync_direction_two_way">Utilizzare la sincronizzazione a due vie</string>
         <string name="msgs_task_sync_task_sync_file_type_add_filter_title">Includere i seguenti filtri:</string>
         <string name="msgs_task_sync_task_sync_file_type_audio">Sincronizzare i file audio</string>
-        <string name="msgs_task_sync_task_sync_file_type_detail_not_specified">È necessario specificare almeno un\'opzione di filtro per i file.</string>
+        <string name="msgs_task_sync_task_sync_file_type_detail_not_specified">È necessario specificare uno dei seguenti filtri: filtro del nome del file, filtro della dimensione del file o filtro della data di modifica del file</string>
         <string name="msgs_task_sync_task_sync_file_type_image">Sincronizzare i file immagine</string>
         <string name="msgs_task_sync_task_sync_file_type_specific">Selezionare i file per la sincronizzazione</string>
         <string name="msgs_task_sync_task_sync_file_type_video">Sincronizzare i file video</string>
+        <string name="msgs_task_sync_task_sync_file_name_filter">Filtro del nome del file</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter">Filtro dimensione file</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Seleziona il tipo di filtro per la dimensione dei file</string>
+        <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Ignora i file con una dimensione di 0 byte</string>
+        <string name="msgs_task_sync_task_sync_file_size_size_hint">Dimensione</string>
+        <string name="msgs_task_sync_task_sync_file_size_unit_dialog_title">Seleziona l\'unità del filtro sulla dimensione del file</string>
+        <string name="msgs_task_sync_task_sync_file_size_unit_byte">Bytes</string>
+        <string name="msgs_task_sync_task_sync_file_size_unit_kib">KiB</string>
+        <string name="msgs_task_sync_task_sync_file_size_unit_mib">MiB</string>
+        <string name="msgs_task_sync_task_sync_file_size_unit_gib">GiB</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_type_none">Nessuno</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">Meno di</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">Maggiore di</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">La dimensione del file non è specificata</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">La dimensione del file non può essere superiore a 5 cifre</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">La dimensione del file deve essere zero o superiore.</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter">Filtro data ultima modifica file</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Seleziona il tipo di data dell\'ultima modifica del file</string>
+        <string name="msgs_task_sync_task_sync_file_date_hint">Giorno</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_none">Nessuno</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_older">Più vecchio di</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_newer">Giorni prima</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">La data di aggiornamento non è specificata.</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Si prega di specificare una data di aggiornamento di 0 o più.</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">La data di aggiornamento non può essere più di 3 cifre.</string>
         <string name="msgs_task_sync_task_sync_option">Opzioni:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">Differenza di tempo minima consentita (in secondi) tra i file di origine e di destinazione</string>
         <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Permette la sincronizzazione con tutti gli indirizzi IP (includono pubblico)</string>
@@ -604,7 +629,7 @@
         <string name="msgs_mirror_task_file_failed">[Sincronizzazione fallita]</string>
         <string name="msgs_mirror_task_file_ignored">[Saltato]</string>
         <string name="msgs_mirror_task_dir_delete_failed">Non è riuscito a cancellare la directory.</string>
-        <string name="msgs_mirror_task_file_moving">Il file viene spostato. %s%%%finito.</string>
+        <string name="msgs_mirror_task_file_moving">Il file viene spostato. %s%%finito.</string>
         <string name="msgs_mirror_task_file_delete_failed">Non è stato possibile cancellare il file. File=%s</string>
         <string name="msgs_mirror_task_file_move_failed_delete">Impossibile spostare il file (il file sorgente non può essere cancellato). File=%s</string>
         <string name="msgs_mirror_task_source_not_found">File sorgente o directory non trovata. File=%s</string>
@@ -627,7 +652,7 @@
         <string name="msgs_scan_ip_address_not_detected">Nessun server SMB trovato.</string>
         <string name="msgs_scan_ip_address_select_detected_host">Selezionare il nome host o l\'indirizzo IP dai risultati della ricerca</string>
         <string name="msgs_scan_ip_address_scan_result_title">Risultati della ricerca</string>
-        <string name="msgs_ip_address_scan_progress">Ricerca host SMB... %s%s%s%s completato.</string>
+        <string name="msgs_ip_address_scan_progress">Ricerca host SMB... %s%% completato.</string>
         <string name="msgs_ip_address_range_dlg_begin">Inizio</string>
         <string name="msgs_ip_address_range_dlg_end">Fine</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">Specificare l\'inizio dell\'intervallo di indirizzi.</string>

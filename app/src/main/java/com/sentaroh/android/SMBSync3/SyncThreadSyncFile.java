@@ -510,9 +510,7 @@ public class SyncThreadSyncFile {
             } else {
                 sync_result = moveCopyLocalToLocal(stwa, sti, false, from_path, from_path, mf, to_path_converted, to_path_converted, cpc, isTakenDateUsed);
                 if (sync_result == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
-                    stwa.util.addDebugMsg(1, "I", "moveCopy ended");
                     sync_result = syncDeleteLocalToLocal(stwa, sti, from_path, from_path, to_path_converted, to_path_converted, tf, cpc, isTakenDateUsed);
-                    stwa.util.addDebugMsg(1, "I", "deleye ended");
                 }
             }
         } finally {
@@ -630,10 +628,12 @@ public class SyncThreadSyncFile {
                         }
                     }
                 } else { // file copy
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path)) {
+                    long mf_length=mf.length();
+                    long mf_last_modified=mf.lastModified();
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
-                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.lastModified(), from_path, to_path);
+                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
                         if (from_path.equals(parsed_to_path)) {
                             stwa.util.addLogMsg("W",stwa.appContext.getString(R.string.msgs_mirror_same_file_ignored,from_path));
                             stwa.totalIgnoreCount++;
@@ -1072,10 +1072,12 @@ public class SyncThreadSyncFile {
                         }
                     }
                 } else { // file copy
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path)) {
+                    long mf_length=mf.length();
+                    long mf_last_modified=mf.lastModified();
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
-                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.lastModified(), from_path, to_path);
+                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
                         JcifsFile tf = new JcifsFile(parsed_to_path, stwa.destinationAuth);
                         if (isTakenDateUsed){
                             SyncThread.createDirectoryToLocalStorage(stwa, sti, tf.getParent());
@@ -1087,7 +1089,7 @@ public class SyncThreadSyncFile {
                         if (SyncThread.isFileChangedForLocalToRemote(stwa, sti, from_path, mf, tf, stwa.ALL_COPY)){
                             if (tf_exists) {
                                 if (sti.isSyncOverrideCopyMoveFile()) {
-                                    if (SyncThread.checkSourceFileNewerThanDestinationFile(stwa, sti, parsed_to_path, mf.lastModified(), tf.getLastModified())) {
+                                    if (SyncThread.checkSourceFileNewerThanDestinationFile(stwa, sti, parsed_to_path, mf_last_modified, tf.getLastModified())) {
                                         if (SyncThread.sendConfirmRequest(stwa, sti, conf_type, from_path, parsed_to_path)) {
                                             sync_result= moveCopyLocalToSmbFile(stwa, sti,move_file, mf, tf, tf_exists) ;
                                         } else {
@@ -1311,10 +1313,12 @@ public class SyncThreadSyncFile {
                         }
                     }
                 } else { // file copy
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path)) {
+                    long mf_length=mf.length();
+                    long mf_last_modified=mf.getLastModified();
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
-                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
+                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
                         SafFile3 tf = new SafFile3(stwa.appContext, parsed_to_path);
                         if (isTakenDateUsed){
                             SyncThread.createDirectoryToLocalStorage(stwa, sti, tf.getParent());
@@ -1340,7 +1344,7 @@ public class SyncThreadSyncFile {
                         if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY)){
                             if (tf_exists) {
                                 if (sti.isSyncOverrideCopyMoveFile()) {
-                                    if (SyncThread.checkSourceFileNewerThanDestinationFile(stwa, sti, parsed_to_path, mf.getLastModified(), tf.lastModified())) {
+                                    if (SyncThread.checkSourceFileNewerThanDestinationFile(stwa, sti, parsed_to_path, mf_last_modified, tf.lastModified())) {
                                         if (SyncThread.sendConfirmRequest(stwa, sti, conf_type, from_path, parsed_to_path)) {
                                             sync_result= moveCopySmbToLocalFile(stwa, sti, move_file, mf, tf, tf_exists);
                                         } else {
@@ -1639,10 +1643,12 @@ public class SyncThreadSyncFile {
                         }
                     }
                 } else { // file copy
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path)) {
+                    long mf_length=mf.length();
+                    long mf_last_modified=mf.getLastModified();
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
-                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf.getLastModified(), from_path, to_path);
+                            parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
                         if (from_path.equals(parsed_to_path)) {
                             stwa.util.addLogMsg("W",stwa.appContext.getString(R.string.msgs_mirror_same_file_ignored,from_path));
                             stwa.totalIgnoreCount++;
@@ -1655,7 +1661,7 @@ public class SyncThreadSyncFile {
                                 if (SyncThread.isFileChanged(stwa, sti, parsed_to_path, tf, mf, stwa.ALL_COPY)){
                                     if (tf_exists) {
                                         if (sti.isSyncOverrideCopyMoveFile()) {
-                                            if (SyncThread.checkSourceFileNewerThanDestinationFile(stwa, sti, parsed_to_path, mf.getLastModified(), tf.getLastModified())){
+                                            if (SyncThread.checkSourceFileNewerThanDestinationFile(stwa, sti, parsed_to_path, mf_last_modified, tf.getLastModified())){
                                                 if (SyncThread.sendConfirmRequest(stwa, sti, conf_type, from_path, parsed_to_path)) {
                                                     sync_result= moveCopySmbToSmbFile(stwa, sti, move_file, mf, tf, tf_exists);
                                                 } else {
