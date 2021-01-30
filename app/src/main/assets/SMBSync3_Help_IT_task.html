@@ -38,11 +38,31 @@
 <p>Toccare il pulsante per modificare la cartella di destinazione</p>
 <h3>Selezionare i file per la sincronizzazione</h3>
 <p>Se non si controlla e poi si sincronizza tutto il file. Se si controlla per vedere i dettagli. </p>
+<h5><u>Filtro del nome del file</u></h5>
 <ul>
-<li>Sincronizzare i file audio<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  </li>
-<li>Sincronizzare i file di immagine<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</li>
-<li>Sincronizzare i file video<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
-<li>Filtro file<br/>È possibile selezionare il nome e l&#39;estensione del file con cui si desidera sincronizzarsi, oltre a quanto sopra.</li>
+<li><p>Sync file audio</p>
+<p>Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:<br/>aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
+</li>
+<li><p>Sync immagini</p>
+<p>Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</p>
+</li>
+<li><p>Sync file video</p>
+<p>Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv </p>
+</li>
+<li><p>Filtro file</p>
+<p>È un filtro di inclusione/esclusione dei file personalizzato. È possibile selezionare il nome e l&#39;estensione dei file che si desidera escludere o includere dal processo di sincronizzazione. </p>
+</li>
+
+</ul>
+<h5><u>Filtro dimensione file</u></h5>
+<p>Puoi scegliere quali file sincronizzare a seconda della loro dimensione.  </p>
+<ul>
+<li>Meno di/più grande di<br/>Puoi specificare qualsiasi dimensione di file. </li>
+
+</ul>
+<h5><u>Filtro data ultima modifica file</u></h5>
+<ul>
+<li>Puoi selezionare i file la cui ultima data di modifica è precedente o entro xx giorni dalla data di inizio della sincronizzazione.</li>
 
 </ul>
 <h3>Selezionare  le sottodirectory</h3>
@@ -121,5 +141,7 @@ Se la cartella di origine è SMB, il tempo di elaborazione sarà più lungo perc
 <p>Se l&#39;opzione è selezionata, è possibile evitare errori I/O durante la sincronizzazione su una scheda MicroSD ignorando i file sorgente di dimensioni superiori a 4 GB da sincronizzare sulla memoria locale.</p>
 <h3>Ignora i file il cui nome file supera i 255 byte</h3>
 <p>Se spuntata, ignorare i file con nomi di file più lunghi di 255 byte.</p>
+<h3>Ignora i file con una dimensione di 0 byte  </h3>
+<p>Se selezionata, i file con una dimensione di 0 byte saranno ignorati.  </p>
 </body>
 </html>

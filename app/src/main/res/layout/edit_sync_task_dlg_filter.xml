@@ -91,27 +91,23 @@
 				android:layout_height="wrap_content"
 				android:text="@string/msgs_task_sync_task_sync_file_size_filter"
 				android:textAppearance="?android:attr/textAppearanceMedium"/>
-			<CheckedTextView
-				android:id="@+id/sync_filter_file_size_ignore_0kb"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="15dp"
-				android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-				android:gravity="center_vertical"
-				android:text="@string/msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file"
-				android:textAppearance="?android:attr/textAppearanceMedium" />
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="10dp">
-				<EditText
-					android:id="@+id/sync_filter_file_size_value"
-					android:layout_width="80dp"
-					android:layout_height="wrap_content"
-					android:inputType="number"
-					android:hint="@string/msgs_task_sync_task_sync_file_size_size_hint"
-					android:layout_gravity="center_vertical"
-					android:layout_marginRight="5dp"/>
+				<com.google.android.material.textfield.TextInputLayout
+					android:id="@+id/sync_filter_file_size_value_view"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content">
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/sync_filter_file_size_value"
+						android:layout_width="80dp"
+						android:layout_height="wrap_content"
+						android:inputType="number"
+						android:hint="@string/msgs_task_sync_task_sync_file_size_size_hint"
+						android:layout_gravity="center_vertical"
+						android:layout_marginRight="5dp"/>
+				</com.google.android.material.textfield.TextInputLayout>
 				<Spinner
 					android:id="@+id/sync_filter_file_size_unit_spinner"
 					style="?android:attr/spinnerStyle"
@@ -142,14 +138,19 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="10dp">
-				<EditText
-					android:id="@+id/sync_filter_file_date_value"
-					android:layout_width="80dp"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"
-					android:layout_marginRight="5dp"
-					android:hint="@string/msgs_task_sync_task_sync_file_date_hint"
-					android:inputType="number" />
+				<com.google.android.material.textfield.TextInputLayout
+					android:id="@+id/sync_filter_file_date_value_view"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content">
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/sync_filter_file_date_value"
+						android:layout_width="80dp"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center_vertical"
+						android:layout_marginRight="5dp"
+						android:hint="@string/msgs_task_sync_task_sync_file_date_hint"
+						android:inputType="number" />
+				</com.google.android.material.textfield.TextInputLayout>
 				<Spinner
 					android:id="@+id/sync_filter_file_date_type_spinner"
 					style="?android:attr/spinnerStyle"

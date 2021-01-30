@@ -2207,7 +2207,7 @@ public class SyncThread extends Thread {
     final static int debug_level_3=3;
     static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String relative_file_path, long file_size, long last_modified_time) {
         boolean selected=true;
-        if (sti.isSyncFilterFileIgnoreFileSize0Byte()) {
+        if (sti.isSyncOptionIgnoreFileSize0ByteFile()) {
             if (file_size==0) {
                 selected=false;
                 stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file size 0. fp="+relative_file_path);
@@ -2522,7 +2522,7 @@ public class SyncThread extends Thread {
     }
 
     final private int compileFilter(SyncTaskItem sti, ArrayList<FilterListAdapter.FilterListItem> s_ff, ArrayList<FilterListAdapter.FilterListItem> s_df) {
-        mStwa.util.addDebugMsg(1, "I", "compileFilter Ignore 0 byte file="+sti.isSyncFilterFileIgnoreFileSize0Byte());
+        mStwa.util.addDebugMsg(1, "I", "compileFilter Ignore 0 byte file="+sti.isSyncOptionIgnoreFileSize0ByteFile());
         if (!sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
             long filter_value=Long.parseLong(sti.getSyncFilterFileSizeValue());
             if (sti.getSyncFilterFileSizeUnit().equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_BYTE)) mStwa.fileSizeFilterValue=filter_value;

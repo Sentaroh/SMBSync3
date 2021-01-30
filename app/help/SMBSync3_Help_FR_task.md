@@ -44,17 +44,37 @@ Appuyez sur le bouton pour modifier le dossier de destination
 
 ### Sélectionner les fichiers à synchroniser
 Si elle n'est pas cochée, tous les fichiers seront synchronisés. Si coché, vous pouvez sélectionner les fichiers à synchroniser.
-- Synchroniser les fichiers audio  
-Synchronisez les fichiers avec les extensions suivantes
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- Synchroniser les fichiers d'images  
-Synchronisez les fichiers avec les extensions suivantes
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- Synchroniser les fichiers vidéo  
-Synchronisez les fichiers avec les extensions suivantes
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- Filtre de fichiers  
-  Vous pouvez sélectionner le nom et l'extension du fichier avec lequel vous voulez synchroniser autre chose que ce qui précède.
+##### 		<u>Filtre sur les noms de fichiers</u>
+
+- Synchro des fichiers audio
+
+  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :  
+  aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
+
+- Synchro des fichiers images
+
+  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :  
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+
+- Synchro des fichiers vidéo
+
+  Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :  
+  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv 
+
+- Filtre de fichiers
+
+  Il s'agit d'un filtre personnalisé d'inclusion/exclusion de fichiers. Vous pouvez sélectionner le nom et l'extension des fichiers que vous voulez exclure ou inclure du processus de synchronisation. 
+
+##### 		<u>Filtre sur la taille des fichiers</u>
+
+Vous pouvez choisir les fichiers à synchroniser en fonction de leur taille.  
+
+- Moins de / Plus de  
+  Vous pouvez spécifier n'importe quelle taille de fichier.  
+  
+##### <u>Filtre de la date de dernière modification du fichier</u>
+
+- Vous pouvez sélectionner des fichiers dont la date de dernière modification est antérieure ou inférieure à xx jours à la date de début de la synchronisation.
 
 ### Sélectionner les sous-dossiers
 
@@ -167,3 +187,6 @@ Si cette case est cochée, vous pouvez éviter les erreurs d'entrée/sortie lors
 
 ### Ignorer les fichiers dont le nom dépasse 255 octets
 Si cette option est cochée, ignorez les fichiers dont le nom dépasse 255 octets.
+
+### Ignorer les fichiers d'une taille de 0 octet  
+Si cette option est cochée, les fichiers d'une taille de 0 octet seront ignorés.  

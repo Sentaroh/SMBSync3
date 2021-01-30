@@ -168,9 +168,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncFileTypeVideo() {return syncFileTypeVideo;}
     public void setSyncFileTypeVideo(boolean p) {syncFileTypeVideo = p;}
 
-    private boolean syncSyncFilterFileIgnoreFileSize0Byte = false;
-    public boolean isSyncFilterFileIgnoreFileSize0Byte() {return syncSyncFilterFileIgnoreFileSize0Byte;}
-    public void setSyncFilterFileIgnoreFileSize0Byte(boolean p) {syncSyncFilterFileIgnoreFileSize0Byte = p;}
+    private boolean syncSyncOptionIgnoreFileSize0ByteFile = false;
+    public boolean isSyncOptionIgnoreFileSize0ByteFile() {return syncSyncOptionIgnoreFileSize0ByteFile;}
+    public void setSyncOptionIgnoreFileSize0ByteFile(boolean p) {syncSyncOptionIgnoreFileSize0ByteFile = p;}
 
     private String syncFilterFileSizeValue = "0";
     public String getSyncFilterFileSizeValue() {return syncFilterFileSizeValue;}
@@ -799,7 +799,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncFileTypeImage==sti.isSyncFileTypeImage()) &&
                         (syncFileTypeVideo==sti.isSyncFileTypeVideo()) &&
 
-                        (syncSyncFilterFileIgnoreFileSize0Byte==sti.isSyncFilterFileIgnoreFileSize0Byte()) &&
+                        (syncSyncOptionIgnoreFileSize0ByteFile ==sti.isSyncOptionIgnoreFileSize0ByteFile()) &&
 
                         (syncFilterFileSizeValue.equals(sti.getSyncFilterFileSizeValue())) &&
 

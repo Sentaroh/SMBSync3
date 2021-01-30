@@ -38,14 +38,31 @@
 <p>Appuyez sur le bouton pour modifier le dossier de destination</p>
 <h3>Sélectionner les fichiers à synchroniser</h3>
 <p>Si elle n&#39;est pas cochée, tous les fichiers seront synchronisés. Si coché, vous pouvez sélectionner les fichiers à synchroniser.</p>
+<h5><u>Filtre sur les noms de fichiers</u></h5>
 <ul>
-<li>Synchroniser les fichiers audio<br/>Synchronisez les fichiers avec les extensions suivantes
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  </li>
-<li>Synchroniser les fichiers d&#39;images<br/>Synchronisez les fichiers avec les extensions suivantes
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</li>
-<li>Synchroniser les fichiers vidéo<br/>Synchronisez les fichiers avec les extensions suivantes
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
-<li>Filtre de fichiers<br/>Vous pouvez sélectionner le nom et l&#39;extension du fichier avec lequel vous voulez synchroniser autre chose que ce qui précède.</li>
+<li><p>Synchro des fichiers audio</p>
+<p>Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :<br/>aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
+</li>
+<li><p>Synchro des fichiers images</p>
+<p>Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</p>
+</li>
+<li><p>Synchro des fichiers vidéo</p>
+<p>Une fois vérifiée, la synchronisation inclura les fichiers avec les extensions suivantes :<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv </p>
+</li>
+<li><p>Filtre de fichiers</p>
+<p>Il s&#39;agit d&#39;un filtre personnalisé d&#39;inclusion/exclusion de fichiers. Vous pouvez sélectionner le nom et l&#39;extension des fichiers que vous voulez exclure ou inclure du processus de synchronisation. </p>
+</li>
+
+</ul>
+<h5><u>Filtre sur la taille des fichiers</u></h5>
+<p>Vous pouvez choisir les fichiers à synchroniser en fonction de leur taille.  </p>
+<ul>
+<li>Moins de / Plus de<br/>Vous pouvez spécifier n&#39;importe quelle taille de fichier.  </li>
+
+</ul>
+<h5><u>Filtre de la date de dernière modification du fichier</u></h5>
+<ul>
+<li>Vous pouvez sélectionner des fichiers dont la date de dernière modification est antérieure ou inférieure à xx jours à la date de début de la synchronisation.</li>
 
 </ul>
 <h3>Sélectionner les sous-dossiers</h3>
@@ -124,5 +141,7 @@ Si le dossier source est SMB, le temps de traitement sera plus long car la struc
 <p>Si cette case est cochée, vous pouvez éviter les erreurs d&#39;entrée/sortie lors de la synchronisation avec une carte MicroSD en ignorant les fichiers sources de plus de 4 Go à synchroniser avec le stockage local.</p>
 <h3>Ignorer les fichiers dont le nom dépasse 255 octets</h3>
 <p>Si cette option est cochée, ignorez les fichiers dont le nom dépasse 255 octets.</p>
+<h3>Ignorer les fichiers d&#39;une taille de 0 octet  </h3>
+<p>Si cette option est cochée, les fichiers d&#39;une taille de 0 octet seront ignorés.  </p>
 </body>
 </html>

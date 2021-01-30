@@ -38,11 +38,31 @@
 <p>Tap the button to edit destination folder</p>
 <h3>Select files for sync</h3>
 <p>If you do not check and then sync all of the file. If you check to see details. </p>
+<h5><u>File name filter</u></h5>
 <ul>
-<li>Sync audio files<br/>If you check to synchronize the files of the following extensions.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  </li>
-<li>Sync image files<br/>If you check to synchronize the files of the following extensions.<br/>bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</li>
-<li>Sync video files<br/>If you check to synchronize the files of the following extensions.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
-<li>File filter<br/>You can select the name and extension of the file you want to synchronize with other than the above.</li>
+<li><p>Sync audio files</p>
+<p>When checked, sync will include files with the following extensions:<br/>aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
+</li>
+<li><p>Sync image files</p>
+<p>When checked, sync will include files with the following extensions:<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</p>
+</li>
+<li><p>Sync video files</p>
+<p>When checked, sync will include files with the following extensions:<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv</p>
+</li>
+<li><p>File filter</p>
+<p>Is a custom include/exclude file filter. You can select the name and extension of the files you want to exclude or include from the synchronization process. </p>
+</li>
+
+</ul>
+<h5><u>File size filter</u></h5>
+<p>You can choose which files to sync depending on their size.  </p>
+<ul>
+<li>Less than/Greater than<br/>You can specify any file size.  </li>
+
+</ul>
+<h5><u>File last modified filter</u></h5>
+<ul>
+<li>You can select files whose last modification date is before or within xx days of the sync start date.</li>
 
 </ul>
 <h3>Select sub directories for sync</h3>
@@ -121,5 +141,7 @@ If the source folder is SMB, the processing time will be longer because the dire
 <p>If checked, you can prevent I/O errors when syncing to a MicroSD card by ignoring source files larger than 4 GB in size to be synced to local storage.</p>
 <h3>Ignore files whose file name exceed 255 bytes</h3>
 <p>If checked, ignore files with file names longer than 255 bytes.</p>
+<h3>Ignore files with a file size of 0 Bytes  </h3>
+<p>If checked, files with a file size of 0 bytes will be ignored.  </p>
 </body>
 </html>

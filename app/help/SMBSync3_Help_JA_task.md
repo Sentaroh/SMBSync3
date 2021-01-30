@@ -44,17 +44,33 @@
 
 ### 同期するファイルを選択する  
 チェックしないと全てのファイルを同期します。チェックすると同期するファイルを選択することができます。  
+##### 		<u>ファイル名フィルター</u>
+
 - オーディオファイルを同期する  
   チェックすると下記の拡張子のファイルを同期します。  
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
+  aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
+
 - イメージファイルを同期する  
   チェックすると下記の拡張子のファイルを同期します。  
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+
 - ビデオファイルを同期する  
   チェックすると下記の拡張子のファイルを同期します。  
   avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
+
 - ファイルフィルター  
-  上記以外で同期するファイルの名前や拡張子を選択できます 
+  上記以外で同期するファイルの名前や拡張子を選択できます  
+
+##### 		<u>ファイルサイズフィルター</u>
+
+ファイルの大きさにより同期するファイルを選択できます。  
+
+- より小さい/より大きい  
+  任意のファイルサイズを指定できます。  
+
+##### <u>ファイル更新日フィルター</u>
+
+- 最終更新日が同期開始日よりxx日以前またはxx日以内のファイルを選択できます。0日以内を指定すると同期開始日だけとなります。
 
 ### 同期するサブディレクトリーを指定する  
 
@@ -167,3 +183,6 @@ SmbFile#setLastModified()やFile#setLastModified()が失敗する場合に有効
 
 ### ファイル名が255バイトを超えているファイルを無視する  
 チェックすると宛先ファイル名が255バイトを超えているファイルを無視します。
+
+### ファイルサイズが0バイトのファイルを無視する  
+チェックするとファイルサイズが0バイトのファイルを無視します。  

@@ -24,7 +24,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Xml;
 
 import org.slf4j.Logger;
@@ -35,7 +34,6 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -46,8 +44,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -632,7 +628,7 @@ public class SyncConfiguration {
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_AUDIO, item.isSyncFileTypeAudio() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_IMAGE, item.isSyncFileTypeImage() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO, item.isSyncFileTypeVideo() ? "true" : "false");
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE, item.isSyncFilterFileIgnoreFileSize0Byte()? "true" : "false");
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE, item.isSyncOptionIgnoreFileSize0ByteFile()? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE, item.getSyncFilterFileSizeType());
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE, item.getSyncFilterFileSizeValue());
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_UNIT, item.getSyncFilterFileSizeUnit());
@@ -1052,7 +1048,7 @@ public class SyncConfiguration {
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO)) {
                 sti.setSyncFileTypeVideo(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE)) {
-                sti.setSyncFilterFileIgnoreFileSize0Byte(xpp.getAttributeValue(i).toLowerCase().equals("true"));
+                sti.setSyncOptionIgnoreFileSize0ByteFile(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE)) {
                 sti.setSyncFilterFileSizeType(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE)) {

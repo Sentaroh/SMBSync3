@@ -44,17 +44,38 @@ Tap the button to edit destination folder
 
 ### Select files for sync
 If you do not check and then sync all of the file. If you check to see details. 
-- Sync audio files  
-If you check to synchronize the files of the following extensions.  
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- Sync image files  
-  If you check to synchronize the files of the following extensions.  
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- Sync video files  
-  If you check to synchronize the files of the following extensions.  
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- File filter  
-You can select the name and extension of the file you want to synchronize with other than the above.
+
+##### 		<u>File name filter</u>
+
+- Sync audio files
+
+  When checked, sync will include files with the following extensions:  
+  aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
+
+- Sync image files
+
+  When checked, sync will include files with the following extensions:  
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+
+- Sync video files
+
+  When checked, sync will include files with the following extensions:  
+  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
+
+- File filter
+
+  Is a custom include/exclude file filter. You can select the name and extension of the files you want to exclude or include from the synchronization process. 
+
+##### 		<u>File size filter</u>
+
+You can choose which files to sync depending on their size.  
+
+- Less than/Greater than  
+  You can specify any file size.  
+
+##### <u>File last modified filter</u>
+
+- You can select files whose last modification date is before or within xx days of the sync start date.
 
 ### Select sub directories for sync
 
@@ -167,3 +188,6 @@ If checked, you can prevent I/O errors when syncing to a MicroSD card by ignorin
 
 ### Ignore files whose file name exceed 255 bytes
 If checked, ignore files with file names longer than 255 bytes.
+
+### Ignore files with a file size of 0 Bytes  
+If checked, files with a file size of 0 bytes will be ignored.  

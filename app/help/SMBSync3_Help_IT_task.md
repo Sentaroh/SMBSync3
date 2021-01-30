@@ -44,17 +44,38 @@ Toccare il pulsante per modificare la cartella di destinazione
 
 ### Selezionare i file per la sincronizzazione
 Se non si controlla e poi si sincronizza tutto il file. Se si controlla per vedere i dettagli. 
-- Sincronizzare i file audio  
-  Se si verifica la sincronizzazione dei file delle seguenti estensioni.  
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- Sincronizzare i file di immagine  
-  Se si verifica la sincronizzazione dei file delle seguenti estensioni.  
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- Sincronizzare i file video  
-  Se si verifica la sincronizzazione dei file delle seguenti estensioni.  
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- Filtro file  
-  È possibile selezionare il nome e l'estensione del file con cui si desidera sincronizzarsi, oltre a quanto sopra.
+
+##### 		<u>Filtro del nome del file</u>
+
+- Sync file audio
+
+  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
+  aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
+
+- Sync immagini
+
+  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+
+- Sync file video
+
+  Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:  
+  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv 
+
+- Filtro file
+
+  È un filtro di inclusione/esclusione dei file personalizzato. È possibile selezionare il nome e l'estensione dei file che si desidera escludere o includere dal processo di sincronizzazione. 
+
+##### 		<u>Filtro dimensione file</u>
+
+Puoi scegliere quali file sincronizzare a seconda della loro dimensione.  
+
+- Meno di/più grande di  
+  Puoi specificare qualsiasi dimensione di file. 
+
+##### <u>Filtro data ultima modifica file</u>
+
+- Puoi selezionare i file la cui ultima data di modifica è precedente o entro xx giorni dalla data di inizio della sincronizzazione.
 
 ### Selezionare  le sottodirectory
 
@@ -167,3 +188,6 @@ Se l'opzione è selezionata, è possibile evitare errori I/O durante la sincroni
 
 ### Ignora i file il cui nome file supera i 255 byte
 Se spuntata, ignorare i file con nomi di file più lunghi di 255 byte.
+
+### Ignora i file con una dimensione di 0 byte  
+Se selezionata, i file con una dimensione di 0 byte saranno ignorati.  

@@ -44,17 +44,38 @@
 
 ### 选择要同步的文件。 
 如果不勾选，所有文件将被同步。 如果勾选，您可以选择要同步的文件。 
-- 同步音频文件  
-  如果勾选，具有以下扩展名的文件将被同步。   
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- 同步图像文件  
-  如果勾选，具有以下扩展名的文件将被同步。   
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- 同步视频文件  
-  如果勾选，具有以下扩展名的文件将被同步。   
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- 文件过滤器  
-  您可以选择要同步的文件的名称和扩展名，除了上面的之外 
+
+##### 		<u>文件名过滤器</u>
+
+- 同步音频文件
+
+  如果选中，以下文件扩展名将被同步。  
+  aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav
+
+- 同步图像文件
+
+  如果选中，以下文件扩展名将被同步。  
+  bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
+
+- 同步视频文件
+
+  如果选中，以下文件扩展名将被同步。  
+  avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
+
+- 档案过滤器
+
+  你也可以选择你要同步的文件的名称和扩展名，除了上述的
+
+ ##### 		<u>文件大小过滤器</u>
+
+您可以根据文件的大小选择要同步的文件。 
+
+- 小于/大于  
+  您可以指定任何文件大小。   
+
+##### <u>文件最后修改日期过滤器</u>
+
+- 您可以选择最后修改日期在同步开始日期之前或XX天之内的文件。 
 
 ### 指定要同步的子目录。 
 
@@ -167,3 +188,6 @@ avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv
 
 ### 忽略文件名超过255字节的文件 
 如果选中，则忽略目标文件名超过255字节的文件。
+
+### 忽略文件大小为0字节的文件。 
+如果选中，文件大小为0字节的文件将被忽略。 

@@ -44,6 +44,8 @@ Tippen Sie auf die Schaltfläche, um den Zielordner zu bearbeiten
 
 ### Dateien für die Synchronisierung auswählen
 Wenn Sie kein Häkchen setzen und dann alle Dateien synchronisieren. Wenn Sie ein Häkchen setzen, um Details zu sehen. 
+
+##### 		<u>Dateinamen-Filter</u>  
 - Audiodateien synchronisieren  
   Wenn Sie ein Häkchen setzen, um die Dateien mit den folgenden Erweiterungen zu synchronisieren.  
 aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
@@ -55,6 +57,17 @@ bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, 
 avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
 - Dateifilter  
   Sie können den Namen und die Erweiterung der Datei, die Sie synchronisieren möchten, mit anderen als den oben genannten auswählen.
+
+##### 		<u>Dateigrößenfilter</u>
+
+Sie können wählen, welche Dateien abhängig von ihrer Größe synchronisiert werden sollen.  
+
+- Kleiner als/Größer als  
+  Sie können eine beliebige Dateigröße angeben.  
+
+##### <u>Filter für das Datum der letzten Änderung einer Datei</u>
+
+- Sie können Dateien auswählen, deren letztes Änderungsdatum vor oder innerhalb von xx Tagen nach dem Startdatum der Synchronisierung liegt.
 
 ### Unterverzeichnisse auswählen
 
@@ -167,3 +180,6 @@ Wenn dieses Kontrollkästchen aktiviert ist, können Sie E/A-Fehler bei der Sync
 
 ### Ignoriere Dateien, deren Dateiname 255 Bytes überschreitet
 Wenn diese Option aktiviert ist, werden Dateien mit Dateinamen, die länger als 255 Byte sind, ignoriert.
+
+### Dateien mit einer Dateigröße von 0 Bytes ignorieren  
+Wenn dieses Kontrollkästchen aktiviert ist, werden Dateien mit einer Dateigröße von 0 Bytes ignoriert.  
