@@ -67,7 +67,10 @@ Sie können wählen, welche Dateien abhängig von ihrer Größe synchronisiert w
 
 ##### <u>Filter für das Datum der letzten Änderung einer Datei</u>
 
-- Sie können Dateien auswählen, deren letztes Änderungsdatum vor oder innerhalb von xx Tagen nach dem Startdatum der Synchronisierung liegt.
+Sie können Dateien auswählen, deren letztes Änderungsdatum vor oder innerhalb von xx Tagen nach dem Startdatum der Synchronisierung liegt.
+- Wenn Sie 0 Tage vorher angeben, wird das letzte Änderungsdatum nur für das Startdatum der Synchronisation ausgewählt.
+- Wenn Sie 1 Tag vorher angeben, werden Dateien ausgewählt, deren letztes Änderungsdatum zwischen dem Startdatum und dem Tag vor dem Startdatum liegt.
+- Wenn Sie Älter als 1 Tag angeben, werden Dateien ausgewählt, deren letztes Änderungsdatum vor dem Tag vor dem Start der Synchronisation liegt.  
 
 ### Unterverzeichnisse auswählen
 
