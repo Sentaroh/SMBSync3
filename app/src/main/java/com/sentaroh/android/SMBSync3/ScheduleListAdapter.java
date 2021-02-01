@@ -22,6 +22,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -52,7 +53,7 @@ import java.util.Comparator;
 class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListItem> {
     private static final Logger log= LoggerFactory.getLogger(ScheduleListAdapter.class);
     private int layout_id = 0;
-    private Context mContext = null;
+    private Activity mActivity = null;
     private int text_color = 0;
     private NotifyEvent mCbNotify = null;
     private NotifyEvent mSwNotify = null;
@@ -60,12 +61,12 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
     private ArrayList<ScheduleListItem> mScheduleList = null;
     private GlobalParameters mGp=null;
 
-    public ScheduleListAdapter(Context c, int textViewResourceId, ArrayList<ScheduleListItem> sl) {
-        super(c, textViewResourceId, sl);
+    public ScheduleListAdapter(Activity a, int textViewResourceId, ArrayList<ScheduleListItem> sl) {
+        super(a, textViewResourceId, sl);
         layout_id = textViewResourceId;
-        mContext = c;
+        mActivity = a;
         mScheduleList = sl;
-        mGp=GlobalWorkArea.getGlobalParameter(c);
+        mGp=GlobalWorkArea.getGlobalParameter(a);
     }
 
     public void setCbNotify(NotifyEvent ntfy) {
@@ -137,7 +138,7 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
         final ScheduleListItem o = getItem(position);
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(layout_id, null);
             holder = new ViewHolder();
             holder.ll_view=(LinearLayout)v.findViewById(R.id.schedule_sync_list_view);
@@ -157,7 +158,7 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
         }
         if (o != null) {
             holder.tv_name.setText(o.scheduleName);
-            holder.tv_info.setText(ScheduleUtils.buildScheduleNextInfo(mContext, o));
+            holder.tv_info.setText(ScheduleUtils.buildScheduleNextInfo(mActivity, o));
 
             if (mSelectMode) {
                 holder.cbChecked.setVisibility(CheckBox.VISIBLE);
@@ -178,69 +179,69 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
             }
             String time_info = "";
             if (o.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_HOURS)) {
-                time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour) + " " + o.scheduleMinutes + " " +
-                        mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
+                time_info = mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour) + " " + o.scheduleMinutes + " " +
+                        mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
             } else if (o.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_DAY)) {
-                time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_day) + " " + o.scheduleHours + ":" + o.scheduleMinutes;
+                time_info = mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_day) + " " + o.scheduleHours + ":" + o.scheduleMinutes;
             } else if (o.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_EVERY_MONTH)) {
-                String ld=o.scheduleDay.equals("99")?mContext.getString(R.string.msgs_scheduler_info_last_day_of_the_month):o.scheduleDay;
-                time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_month) + " " + ld + " " + o.scheduleHours + ":" + o.scheduleMinutes;
+                String ld=o.scheduleDay.equals("99")? mActivity.getString(R.string.msgs_scheduler_info_last_day_of_the_month):o.scheduleDay;
+                time_info = mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_month) + " " + ld + " " + o.scheduleHours + ":" + o.scheduleMinutes;
             } else if (o.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_DAY_OF_THE_WEEK)) {
                 String day_of_the_week = "";
                 if (o.scheduleDayOfTheWeek.substring(0, 1).equals("1")) {
                     if (day_of_the_week.length() == 0)
-                        day_of_the_week += mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_sun);
+                        day_of_the_week += mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_sun);
                     else
-                        day_of_the_week += "," + mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_sun);
+                        day_of_the_week += "," + mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_sun);
                 }
                 if (o.scheduleDayOfTheWeek.substring(1, 2).equals("1")) {
                     if (day_of_the_week.length() == 0)
-                        day_of_the_week += mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_mon);
+                        day_of_the_week += mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_mon);
                     else
-                        day_of_the_week += "," + mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_mon);
+                        day_of_the_week += "," + mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_mon);
                 }
                 if (o.scheduleDayOfTheWeek.substring(2, 3).equals("1")) {
                     if (day_of_the_week.length() == 0)
-                        day_of_the_week += mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_tue);
+                        day_of_the_week += mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_tue);
                     else
-                        day_of_the_week += "," + mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_tue);
+                        day_of_the_week += "," + mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_tue);
                 }
                 if (o.scheduleDayOfTheWeek.substring(3, 4).equals("1")) {
                     if (day_of_the_week.length() == 0)
-                        day_of_the_week += mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_wed);
+                        day_of_the_week += mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_wed);
                     else
-                        day_of_the_week += "," + mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_wed);
+                        day_of_the_week += "," + mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_wed);
                 }
                 if (o.scheduleDayOfTheWeek.substring(4, 5).equals("1")) {
                     if (day_of_the_week.length() == 0)
-                        day_of_the_week += mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_thu);
+                        day_of_the_week += mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_thu);
                     else
-                        day_of_the_week += "," + mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_thu);
+                        day_of_the_week += "," + mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_thu);
                 }
                 if (o.scheduleDayOfTheWeek.substring(5, 6).equals("1")) {
                     if (day_of_the_week.length() == 0)
-                        day_of_the_week += mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_fri);
+                        day_of_the_week += mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_fri);
                     else
-                        day_of_the_week += "," + mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_fri);
+                        day_of_the_week += "," + mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_fri);
                 }
                 if (o.scheduleDayOfTheWeek.substring(6, 7).equals("1")) {
                     if (day_of_the_week.length() == 0)
-                        day_of_the_week += mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_sat);
+                        day_of_the_week += mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_sat);
                     else
-                        day_of_the_week += "," + mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_sat);
+                        day_of_the_week += "," + mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_sat);
                 }
-                time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_day_of_week) +
+                time_info = mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_day_of_week) +
                         " " + day_of_the_week + " " + o.scheduleHours + ":" + o.scheduleMinutes;
             } else if (o.scheduleType.equals(ScheduleListItem.SCHEDULE_TYPE_INTERVAL)) {
-                time_info = mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_interval) + " " + o.scheduleMinutes + " " +
-                        mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
+                time_info = mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_interval) + " " + o.scheduleMinutes + " " +
+                        mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_minute);
             }
             String sync_prof = "";
             if (o.syncAutoSyncTask) {
-                sync_prof = mContext.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
+                sync_prof = mActivity.getString(R.string.msgs_scheduler_info_sync_all_active_profile);
                 holder.tv_error_info.setVisibility(TextView.GONE);
             } else {
-                String error_msg=isValidScheduleItem(mContext, mGp, o);
+                String error_msg=isValidScheduleItem(mActivity, mGp, o);
                 if (!error_msg.equals("")) {
                     holder.tv_error_info.setVisibility(TextView.VISIBLE);
                     holder.tv_error_info.setText(error_msg);
@@ -248,7 +249,7 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
                     holder.tv_error_info.setVisibility(TextView.GONE);
                     holder.tv_error_info.setText("");
                 }
-                sync_prof = String.format(mContext.getString(R.string.msgs_scheduler_info_sync_selected_profile),
+                sync_prof = String.format(mActivity.getString(R.string.msgs_scheduler_info_sync_selected_profile),
                         o.syncTaskList);
             }
             holder.tv_time_info.setText(time_info + " " + sync_prof);
@@ -283,7 +284,7 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
                     if (o.syncAutoSyncTask) {
                         if (mSyncNotify != null) mSyncNotify.notifyToListener(true, new Object[]{o});
                     } else {
-                        String error=isValidScheduleItem(mContext, mGp, o);
+                        String error=isValidScheduleItem(mActivity, mGp, o);
                         if (error.equals("")) {
                             if (mSyncNotify != null) mSyncNotify.notifyToListener(true, new Object[]{o});
                         }
@@ -295,7 +296,7 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
                 @Override
                 public boolean onLongClick(View v) {
                     CommonDialog.showPopupMessageAsUpAnchorView((ActivityMain)(parent.getContext()), v,
-                            mContext.getString(R.string.msgs_schedule_sync_task_start_label, o.scheduleName), 2);
+                            mActivity.getString(R.string.msgs_schedule_sync_task_start_label, o.scheduleName), 2);
                     return true;
                 }
             });

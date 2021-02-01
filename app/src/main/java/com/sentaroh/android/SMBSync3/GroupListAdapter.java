@@ -56,7 +56,7 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
     private static final Logger log= LoggerFactory.getLogger(GroupListAdapter.class);
 
     private int layout_id = 0;
-    private Context mContext = null;
+    private Activity mActivity = null;
     private int text_color = 0;
     private NotifyEvent mCbNotify = null;
     private NotifyEvent mSwNotify = null;
@@ -64,12 +64,12 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
     private ArrayList<GroupListItem> mGroupList = null;
     private GlobalParameters mGp=null;
 
-    public GroupListAdapter(Context c, int textViewResourceId, ArrayList<GroupListItem> sl) {
-        super(c, textViewResourceId, sl);
+    public GroupListAdapter(Activity a, int textViewResourceId, ArrayList<GroupListItem> sl) {
+        super(a, textViewResourceId, sl);
         layout_id = textViewResourceId;
-        mContext = c;
+        mActivity = a;
         mGroupList = sl;
-        mGp=GlobalWorkArea.getGlobalParameter(c);
+        mGp=GlobalWorkArea.getGlobalParameter(a);
     }
 
     public void setCbNotify(NotifyEvent ntfy) {
@@ -134,7 +134,7 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
         final GroupListItem o = getItem(position);
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(layout_id, null);
             holder = new ViewHolder();
             holder.ll_view=(LinearLayout)v.findViewById(R.id.group_list_item_view);
@@ -153,13 +153,13 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
         if (o != null) {
             holder.tv_name.setText(o.groupName);
             holder.tv_task_list.setText(o.taskList.replaceAll(NAME_LIST_SEPARATOR, ", "));
-            if (o.autoTaskOnly) holder.tv_task_list.setText(mContext.getString(R.string.msgs_group_main_dlg_hdr_auto_task_only));
+            if (o.autoTaskOnly) holder.tv_task_list.setText(mActivity.getString(R.string.msgs_group_main_dlg_hdr_auto_task_only));
 
-            if (o.button == GroupListItem.BUTTON_SHORTCUT1) holder.tv_button.setText(mContext.getString(R.string.msgs_group_name_for_shortcut1));
-            else if (o.button == GroupListItem.BUTTON_SHORTCUT2) holder.tv_button.setText(mContext.getString(R.string.msgs_group_name_for_shortcut2));
-            else if (o.button == GroupListItem.BUTTON_SHORTCUT3) holder.tv_button.setText(mContext.getString(R.string.msgs_group_name_for_shortcut3));
-            else if (o.button == GroupListItem.BUTTON_SYNC_BUTTON) holder.tv_button.setText(mContext.getString(R.string.msgs_group_name_for_sync_button));
-            else holder.tv_button.setText(mContext.getString(R.string.msgs_group_button_not_assigned));
+            if (o.button == GroupListItem.BUTTON_SHORTCUT1) holder.tv_button.setText(mActivity.getString(R.string.msgs_group_name_for_shortcut1));
+            else if (o.button == GroupListItem.BUTTON_SHORTCUT2) holder.tv_button.setText(mActivity.getString(R.string.msgs_group_name_for_shortcut2));
+            else if (o.button == GroupListItem.BUTTON_SHORTCUT3) holder.tv_button.setText(mActivity.getString(R.string.msgs_group_name_for_shortcut3));
+            else if (o.button == GroupListItem.BUTTON_SYNC_BUTTON) holder.tv_button.setText(mActivity.getString(R.string.msgs_group_name_for_sync_button));
+            else holder.tv_button.setText(mActivity.getString(R.string.msgs_group_button_not_assigned));
 
             if (mSelectMode) {
                 holder.cb_checked.setVisibility(CheckBox.VISIBLE);
@@ -169,8 +169,8 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
                 holder.ib_sync.setVisibility(CheckBox.VISIBLE);
             }
 
-            if(isEnabled(position)) CommonUtilities.setViewEnabled(mContext, holder.ll_view, true);
-            else CommonUtilities.setViewEnabled(mContext, holder.ll_view, false);
+            if(isEnabled(position)) CommonUtilities.setViewEnabled(mActivity, holder.ll_view, true);
+            else CommonUtilities.setViewEnabled(mActivity, holder.ll_view, false);
 
             holder.cb_checked.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -188,7 +188,7 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
             } else {
                 holder.tv_error_message.setText("");
                 holder.tv_error_message.setVisibility(TextView.GONE);
-                String e_msg=GroupEditor.hasValidSyncTaskList(mContext, o, mGp.syncTaskList);
+                String e_msg=GroupEditor.hasValidSyncTaskList(mActivity, o, mGp.syncTaskList);
                 if (!e_msg.equals("")) {
                     holder.tv_error_message.setVisibility(TextView.VISIBLE);
                     holder.tv_error_message.setText(e_msg);
@@ -199,9 +199,9 @@ class GroupListAdapter extends ArrayAdapter<GroupListAdapter.GroupListItem> {
             holder.ib_sync.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    CommonDialog.showPopupMessageAsUpAnchorView((Activity)mContext,
-                            holder.ib_sync, mContext.getString(R.string.msgs_task_cont_label_sync_specific,
-                                    GroupEditor.getSyncTaskList(mContext, o, mGp.syncTaskList)), 2);
+                    CommonDialog.showPopupMessageAsUpAnchorView((Activity) mActivity,
+                            holder.ib_sync, mActivity.getString(R.string.msgs_task_cont_label_sync_specific,
+                                    GroupEditor.getSyncTaskList(mActivity, o, mGp.syncTaskList)), 2);
                     return true;
                 }
             });

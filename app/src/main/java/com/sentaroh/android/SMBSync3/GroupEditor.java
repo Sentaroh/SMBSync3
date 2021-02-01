@@ -68,7 +68,6 @@ import static com.sentaroh.android.SMBSync3.Constants.NAME_UNUSABLE_CHARACTER;
 class GroupEditor {
     private GlobalParameters mGp = null;
 
-    private Context mContext = null;
     private AppCompatActivity mActivity = null;
 
     private CommonUtilities mUtil = null;
@@ -89,7 +88,6 @@ class GroupEditor {
     public GroupEditor(CommonUtilities mu, AppCompatActivity a, GlobalParameters gp,
                        boolean edit_mode, ArrayList<GroupListAdapter.GroupListItem> gl,
                        GroupListAdapter.GroupListItem gi, NotifyEvent ntfy) {
-        mContext = a;
         mActivity = a;
         mGp = gp;
         mUtil = mu;
@@ -163,8 +161,8 @@ class GroupEditor {
             @Override
             public void onClick(View v) {
                 TaskEditor.showFieldHelp(mActivity, mGp,
-                        mContext.getString(R.string.msgs_help_group_title),
-                        mContext.getString(R.string.msgs_help_group_file)) ;
+                        mActivity.getString(R.string.msgs_help_group_title),
+                        mActivity.getString(R.string.msgs_help_group_file)) ;
             }
         });
 
@@ -202,14 +200,14 @@ class GroupEditor {
             et_name.setVisibility(EditText.GONE);
             String subtitle=" ("+ mGroupListItem.groupName+")";
             dlg_subtitle.setText(subtitle);
-            dlg_title.setText(mContext.getString(R.string.msgs_group_edit_title_edit));
+            dlg_title.setText(mActivity.getString(R.string.msgs_group_edit_title_edit));
         } else {
-            dlg_title.setText(mContext.getString(R.string.msgs_group_edit_title_add));
+            dlg_title.setText(mActivity.getString(R.string.msgs_group_edit_title_add));
             dlg_subtitle.setVisibility(TextView.GONE);
             String new_name="";
             for(int i=0;i<10000;i++) {
-                if (i==0) new_name=mContext.getString(R.string.msgs_group_edit_title_new_group_name);
-                else new_name=mContext.getString(R.string.msgs_group_edit_title_new_group_name)+" ("+i+")";
+                if (i==0) new_name=mActivity.getString(R.string.msgs_group_edit_title_new_group_name);
+                else new_name=mActivity.getString(R.string.msgs_group_edit_title_new_group_name)+" ("+i+")";
                 if (!isGroupExists(mGroupList, new_name)) {
                     et_name.setText(new_name);
                     break;
@@ -231,7 +229,7 @@ class GroupEditor {
             public void afterTextChanged(Editable s) {
 //                if (s.length()>0) {
 //                    if (s.toString().startsWith(GROUP_SYSTEM_PREFIX)) {
-//                        tv_msg.setText(mContext.getString(R.string.msgs_group_list_edit_dlg_error_group_name_not_allowed_asterisk_in_first_char));
+//                        tv_msg.setText(mActivity.getString(R.string.msgs_group_list_edit_dlg_error_group_name_not_allowed_asterisk_in_first_char));
 //                        return;
 //                    }
 //                }
@@ -257,7 +255,7 @@ class GroupEditor {
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -289,7 +287,7 @@ class GroupEditor {
             @Override
             public void onClick(View v) {
                 if (btn_ok.isEnabled()) {//isGroupChanged(dialog)) {
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    NotifyEvent ntfy = new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -301,7 +299,7 @@ class GroupEditor {
                         }
                     });
                     mUtil.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_group_confirm_msg_nosave), "", ntfy);
+                            mActivity.getString(R.string.msgs_group_confirm_msg_nosave), "", ntfy);
                 } else {
                     dialog.dismiss();
                 }
@@ -352,28 +350,28 @@ class GroupEditor {
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_group_select_button_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_group_select_button_title));
         spinner.setAdapter(adapter);
 
-        adapter.add(mContext.getString(R.string.msgs_group_button_not_assigned));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut1));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut2));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) adapter.add(mContext.getString(R.string.msgs_group_name_for_shortcut3));
-        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) || button_id== GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) adapter.add(mContext.getString(R.string.msgs_group_name_for_sync_button));
+        adapter.add(mActivity.getString(R.string.msgs_group_button_not_assigned));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) adapter.add(mActivity.getString(R.string.msgs_group_name_for_shortcut1));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) adapter.add(mActivity.getString(R.string.msgs_group_name_for_shortcut2));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) || button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) adapter.add(mActivity.getString(R.string.msgs_group_name_for_shortcut3));
+        if (!isButtonAlreadyAssigned(gp, curr_item, GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) || button_id== GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) adapter.add(mActivity.getString(R.string.msgs_group_name_for_sync_button));
 
         int sel=0;
         for(int i=1;i<adapter.getCount();i++) {
             String item=adapter.getItem(i);
-            if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut1)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) {
+            if (item.equals(mActivity.getString(R.string.msgs_group_name_for_shortcut1)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1) {
                 sel=i;
             }
-            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut2)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) {
+            else if (item.equals(mActivity.getString(R.string.msgs_group_name_for_shortcut2)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2) {
                 sel=i;
             }
-            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_shortcut3)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) {
+            else if (item.equals(mActivity.getString(R.string.msgs_group_name_for_shortcut3)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3) {
                 sel=i;
             }
-            else if (item.equals(mContext.getString(R.string.msgs_group_name_for_sync_button)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) {
+            else if (item.equals(mActivity.getString(R.string.msgs_group_name_for_sync_button)) && button_id== GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON) {
                 sel=i;
             }
         }
@@ -384,11 +382,11 @@ class GroupEditor {
         String sel=(String)spinner.getSelectedItem();
         int result=0;
         if (sel==null) result= GroupListAdapter.GroupListItem.BUTTON_NOT_ASSIGNED;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_button_not_assigned))) result= GroupListAdapter.GroupListItem.BUTTON_NOT_ASSIGNED;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut1))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut2))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_shortcut3))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3;
-        else if (sel.equals(mContext.getString(R.string.msgs_group_name_for_sync_button))) result= GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON;
+        else if (sel.equals(mActivity.getString(R.string.msgs_group_button_not_assigned))) result= GroupListAdapter.GroupListItem.BUTTON_NOT_ASSIGNED;
+        else if (sel.equals(mActivity.getString(R.string.msgs_group_name_for_shortcut1))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT1;
+        else if (sel.equals(mActivity.getString(R.string.msgs_group_name_for_shortcut2))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT2;
+        else if (sel.equals(mActivity.getString(R.string.msgs_group_name_for_shortcut3))) result= GroupListAdapter.GroupListItem.BUTTON_SHORTCUT3;
+        else if (sel.equals(mActivity.getString(R.string.msgs_group_name_for_sync_button))) result= GroupListAdapter.GroupListItem.BUTTON_SYNC_BUTTON;
         return result;
     }
 
@@ -438,23 +436,23 @@ class GroupEditor {
         final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
         CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
         if (et_name.getText().length() == 0) {
-            tv_msg.setText(mContext.getString(R.string.msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified));
+            tv_msg.setText(mActivity.getString(R.string.msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified));
             CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
         } else {
-            String e_msg= hasGroupNameUnusableCharacter(mContext, et_name.getText().toString());
+            String e_msg= hasGroupNameUnusableCharacter(mActivity, et_name.getText().toString());
             if (!e_msg.equals("")) {
                 tv_msg.setText(e_msg);
                 CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                 return;
             } else if (!mEditMode && isGroupExists(mGroupList, et_name.getText().toString().trim())) {
                 //Name alread exists
-                tv_msg.setText(mContext.getString(R.string.msgs_group_list_edit_dlg_error_sync_list_name_already_exists));
+                tv_msg.setText(mActivity.getString(R.string.msgs_group_list_edit_dlg_error_sync_list_name_already_exists));
                 CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                 return;
             }
             if (!ctv_auto_task_only.isChecked()) {
                 if (mCurrentSyncTaskList.equals("")) {
-                    tv_msg.setText(mContext.getString(R.string.msgs_group_edit_sync_task_list_not_specified));
+                    tv_msg.setText(mActivity.getString(R.string.msgs_group_edit_sync_task_list_not_specified));
                     CommonDialog.setButtonEnabled(mActivity, btn_ok, false);
                     return;
                 }
@@ -468,13 +466,13 @@ class GroupEditor {
                     }
                 }
                 if (!nf_task.equals("")) {
-                    tv_msg.setText(mContext.getString(R.string.msgs_group_can_not_sync_specified_task_does_not_exists, nf_task));
+                    tv_msg.setText(mActivity.getString(R.string.msgs_group_can_not_sync_specified_task_does_not_exists, nf_task));
                     return;
                 }
             }
             if (ctv_auto_task_only.isChecked() && !isAutoTaskExists(dialog)) {
                 tv_msg.setVisibility(TextView.VISIBLE);
-                tv_msg.setText(mContext.getString(R.string.msgs_auto_sync_task_not_found));
+                tv_msg.setText(mActivity.getString(R.string.msgs_auto_sync_task_not_found));
                 return;
             }
             tv_msg.setText("");
@@ -650,7 +648,7 @@ class GroupEditor {
                 adapter.notifyDataSetChanged();
             }
         });
-        NotifyEvent ntfy_delete=new NotifyEvent(mContext);
+        NotifyEvent ntfy_delete=new NotifyEvent(mActivity);
         ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
@@ -665,7 +663,7 @@ class GroupEditor {
 
         dlg_normal_view.setVisibility(LinearLayout.VISIBLE);
         dlg_select_view.setVisibility(LinearLayout.GONE);
-        NotifyEvent ntfy_checked=new NotifyEvent(mContext);
+        NotifyEvent ntfy_checked=new NotifyEvent(mActivity);
         ntfy_checked.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
@@ -693,7 +691,7 @@ class GroupEditor {
             @Override
             public void onClick(View view) {
                 final String curr_task_list=buildSyncTaskList(adapter);
-                NotifyEvent ntfy=new NotifyEvent(mContext);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -738,7 +736,7 @@ class GroupEditor {
             @Override
             public void onClick(View v) {
                 if (isSyncTaskListChanged(prof_list, adapter)) {
-                    NotifyEvent ntfy=new NotifyEvent(mContext);
+                    NotifyEvent ntfy=new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -751,7 +749,7 @@ class GroupEditor {
                         }
                     });
                     mUtil.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_group_confirm_msg_nosave), "", ntfy);
+                            mActivity.getString(R.string.msgs_group_confirm_msg_nosave), "", ntfy);
                     return;
                 }
                 dialog.dismiss();
@@ -768,7 +766,7 @@ class GroupEditor {
         final Button btn_ok = (Button) dialog.findViewById(R.id.group_item_edit_task_list_dlg_ok);
         final Button btn_task_list = (Button) dialog.findViewById(R.id.group_item_edit_task_list_dlg_add_task_list);
         final ArrayList<EditSyncTaskListItem> del_task=new ArrayList<EditSyncTaskListItem>();
-        NotifyEvent ntfy_conf=new NotifyEvent(mContext);
+        NotifyEvent ntfy_conf=new NotifyEvent(mActivity);
         ntfy_conf.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
@@ -799,10 +797,10 @@ class GroupEditor {
                     del_task.add(etli);
                 }
             }
-            mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_group_edit_delete_sync_task), del_list, ntfy_conf);
+            mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_group_edit_delete_sync_task), del_list, ntfy_conf);
         } else {
             del_task.add(task);
-            mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_group_edit_delete_sync_task), task.taskName, ntfy_conf);
+            mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_group_edit_delete_sync_task), task.taskName, ntfy_conf);
         }
 
     }
@@ -833,7 +831,7 @@ class GroupEditor {
             sep= NAME_LIST_SEPARATOR;
         }
         if (task_list.equals("")) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_group_info_sync_task_list_was_empty));
+            dlg_msg.setText(mActivity.getString(R.string.msgs_group_info_sync_task_list_was_empty));
             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             return;
         }
@@ -856,7 +854,7 @@ class GroupEditor {
         ArrayList<AddSyncTaskItem>add_task_list=new ArrayList<AddSyncTaskItem>();
         String[] curr_task_list_array=current_task_list.split(NAME_LIST_SEPARATOR);
         for(SyncTaskItem item:mGp.syncTaskList) {
-            String e_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mContext, item.getSyncTaskName());
+            String e_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mActivity, item.getSyncTaskName());
             if (e_msg.equals("")) {
                 boolean found=false;
                 for(String curr_item:curr_task_list_array) {
@@ -879,7 +877,7 @@ class GroupEditor {
 
         ArrayList<AddSyncTaskItem>add_task_list=getAddTaskList(current_task_list);
         if (add_task_list.size()==0) {
-            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_group_add_sync_task_no_task_exists_for_add), "", null);
+            mUtil.showCommonDialog(false, "W", mActivity.getString(R.string.msgs_group_add_sync_task_no_task_exists_for_add), "", null);
             return;
         }
 
@@ -909,7 +907,7 @@ class GroupEditor {
 
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
-        NotifyEvent ntfy_check=new NotifyEvent(mContext);
+        NotifyEvent ntfy_check=new NotifyEvent(mActivity);
         ntfy_check.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
@@ -953,7 +951,7 @@ class GroupEditor {
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, ib_select_all, mContext.getString(R.string.msgs_group_cont_label_select_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, ib_select_all, mActivity.getString(R.string.msgs_group_cont_label_select_all));
 
         ib_unselect_all.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -965,7 +963,7 @@ class GroupEditor {
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, ib_unselect_all, mContext.getString(R.string.msgs_group_cont_label_unselect_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, ib_unselect_all, mActivity.getString(R.string.msgs_group_cont_label_unselect_all));
 
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1101,7 +1099,7 @@ class GroupEditor {
             for(String item:task_array) {
                 SyncTaskItem sti= TaskListUtils.getSyncTaskByName(mGp.syncTaskList, item);
                 if (sti==null) {
-                    holder.mErrorMessage.setText(mContext.getString(R.string.msgs_group_error_specified_task_does_not_exists));
+                    holder.mErrorMessage.setText(mActivity.getString(R.string.msgs_group_error_specified_task_does_not_exists));
                     break;
                 }
             }

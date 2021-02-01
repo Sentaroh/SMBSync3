@@ -68,20 +68,18 @@ public class SmbServerScan {
     private ActivityMain mActivity=null;
     private CommonUtilities mUtil=null;
     private GlobalParameters mGp=null;
-    private Context mContext=null;
 
     public SmbServerScan(ActivityMain a, GlobalParameters gp, CommonUtilities cu) {
         mActivity=a;
         mUtil=cu;
         mGp=gp;
-        mContext=a;
     }
 
     public void scanSmbServerDlg(final NotifyEvent p_ntfy,
                                  String port_number, boolean scan_start, final String smb_protocol) {
-        if (!SyncThread.isWifiOn(mContext)) {
-            mUtil.showCommonDialog(false, "W", mContext.getString(R.string.msgs_scan_ip_address_select_title),
-                    mContext.getString(R.string.msgs_scan_not_started_because_wifi_off), null);
+        if (!SyncThread.isWifiOn(mActivity)) {
+            mUtil.showCommonDialog(false, "W", mActivity.getString(R.string.msgs_scan_ip_address_select_title),
+                    mActivity.getString(R.string.msgs_scan_not_started_because_wifi_off), null);
             return;
         }
         //カスタムダイアログの生成
@@ -102,7 +100,7 @@ public class SmbServerScan {
         final Button btn_cancel = (Button) dialog.findViewById(R.id.scan_remote_ntwk_btn_cancel);
         final TextView tvmsg = (TextView) dialog.findViewById(R.id.scan_remote_ntwk_msg);
         final TextView tv_result = (TextView) dialog.findViewById(R.id.scan_remote_ntwk_scan_result_title);
-        tvmsg.setText(mContext.getString(R.string.msgs_scan_ip_address_press_scan_btn));
+        tvmsg.setText(mActivity.getString(R.string.msgs_scan_ip_address_press_scan_btn));
         tv_result.setVisibility(TextView.GONE);
 
         final String from = CommonUtilities.getIfIpAddress(mUtil).equals("")?"192.168.0.1":CommonUtilities.getIfIpAddress(mUtil);
@@ -128,7 +126,7 @@ public class SmbServerScan {
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
-        final NotifyEvent ntfy_lv_click = new NotifyEvent(mContext);
+        final NotifyEvent ntfy_lv_click = new NotifyEvent(mActivity);
         ntfy_lv_click.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -239,7 +237,7 @@ public class SmbServerScan {
         btn_scan.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mScanResultList.clear();
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -248,10 +246,10 @@ public class SmbServerScan {
                             tvmsg.setText(mScanSmbErrorMessage);
                         } else {
                             if (mScanResultList.size() < 1) {
-                                tvmsg.setText(mContext.getString(R.string.msgs_scan_ip_address_not_detected));
+                                tvmsg.setText(mActivity.getString(R.string.msgs_scan_ip_address_not_detected));
                                 tv_result.setVisibility(TextView.GONE);
                             } else {
-                                tvmsg.setText(mContext.getString(R.string.msgs_scan_ip_address_select_detected_host));
+                                tvmsg.setText(mActivity.getString(R.string.msgs_scan_ip_address_select_detected_host));
                                 tv_result.setVisibility(TextView.VISIBLE);
                             }
                         }
@@ -382,7 +380,7 @@ public class SmbServerScan {
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final NotifyEvent ntfy=new NotifyEvent(mContext);
+                final NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -481,7 +479,7 @@ public class SmbServerScan {
 //        scanSmbServerEnableSmbScanSelectorOkButton(dialog);
 
         if (dlg_msg.getText().length()==0 && adapter.getCount()>0) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name));
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name));
         }
 
         dlg_smb_share_name.setAdapter(adapter);
@@ -491,11 +489,11 @@ public class SmbServerScan {
     private void scanSmbServerSelectSmbServerCreateSelectorShareList(String smb_level,
                                                                      TextView dlg_msg, ArrayAdapter adapter, String nt_status_desc, ArrayList<SmbServerScanShareInfo>sl) {
         if (nt_status_desc.equals(SMB_STATUS_ACCESS_DENIED)) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account));
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account));
         } else if (nt_status_desc.equals(SMB_STATUS_INVALID_LOGON_TYPE)) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account));
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account));
         } else if (nt_status_desc.equals(SMB_STATUS_UNKNOWN_ACCOUNT)) {
-            dlg_msg.setText(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password));
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password));
         } else {
             dlg_msg.setText("");
         }
@@ -538,14 +536,14 @@ public class SmbServerScan {
         btn_cancel.setVisibility(Button.GONE);
         adap.setButtonEnabled(false);
         CommonUtilities.setViewEnabled(mActivity, scan_cancel, true);
-        dialog.setOnKeyListener(new DialogBackKeyListener(mContext));
+        dialog.setOnKeyListener(new DialogBackKeyListener(mActivity));
         dialog.setCancelable(false);
 
         mScanResultList.clear();
         // CANCELボタンの指定
         scan_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                scan_cancel.setText(mContext.getString(R.string.msgs_progress_dlg_canceling));
+                scan_cancel.setText(mActivity.getString(R.string.msgs_progress_dlg_canceling));
                 CommonUtilities.setViewEnabled(mActivity, scan_cancel, false);
                 mUtil.addDebugMsg(1, "W", "IP Address list creation was cancelled");
                 tc.setDisabled();
@@ -557,7 +555,7 @@ public class SmbServerScan {
 
         mScanRequestedAddrList.clear();
 
-        final String scan_prog = mContext.getString(R.string.msgs_ip_address_scan_progress);
+        final String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress);
         String p_txt = String.format(scan_prog, 0);
         tvmsg.setText(p_txt);
 
@@ -661,7 +659,7 @@ public class SmbServerScan {
                                                            final String addr,
 //                                              final ArrayList<SmbServerScanAdapter.NetworkScanListItem> ipAddressList,
                                                            final String scan_port, final String smb_level) {
-        final String scan_prog = mContext.getString(R.string.msgs_ip_address_scan_progress);
+        final String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress);
         if (!tc.isEnabled()) return;
         Thread th = new Thread(new Runnable() {
             @Override
@@ -829,23 +827,23 @@ public class SmbServerScan {
 
         tvmsg.setText("");
         if (ba1.equals("")) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
             baEt1.requestFocus();
             return false;
         } else if (ba2.equals("")) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
             baEt2.requestFocus();
             return false;
         } else if (ba3.equals("")) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
             baEt3.requestFocus();
             return false;
         } else if (ba4.equals("")) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_begin_notspecified));
             baEt4.requestFocus();
             return false;
         } else if (ea5.equals("")) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_end_notspecified));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_end_notspecified));
             eaEt5.requestFocus();
             return false;
         }
@@ -853,12 +851,12 @@ public class SmbServerScan {
         try {
             iba1 = Integer.parseInt(ba1);
             if (iba1 > 255) {
-                tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+                tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
                 baEt1.requestFocus();
                 return false;
             }
         } catch(Exception e) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
             baEt1.requestFocus();
             return false;
         }
@@ -866,38 +864,38 @@ public class SmbServerScan {
         try {
             iba2 = Integer.parseInt(ba2);
             if (iba2 > 255) {
-                tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+                tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
                 baEt2.requestFocus();
                 return false;
             }
         } catch(Exception e) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
             baEt2.requestFocus();
             return false;
         }
         try {
             iba3 = Integer.parseInt(ba3);
             if (iba3 > 255) {
-                tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+                tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
                 baEt3.requestFocus();
                 return false;
             }
         } catch(Exception e) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
             baEt3.requestFocus();
             return false;
         }
         try {
             iba4 = Integer.parseInt(ba4);
         } catch(Exception e) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
             baEt4.requestFocus();
             return false;
         }
         try {
             iea5 = Integer.parseInt(ea5);
         } catch(Exception e) {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_addr_range_error));
             eaEt5.requestFocus();
             return false;
         }
@@ -908,13 +906,13 @@ public class SmbServerScan {
             if (iba2>=16 && iba2<=31) {
                 //NOP
             } else {
-                tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_not_private));
+                tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_not_private));
                 return false;
             }
         } else if (iba1==192 && iba2==168) {
             //NOP
         } else {
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_not_private));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_not_private));
             return false;
         }
 
@@ -924,23 +922,23 @@ public class SmbServerScan {
                     result = true;
                 } else {
                     baEt4.requestFocus();
-                    tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_end_range_error));
+                    tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_end_range_error));
                     return false;
                 }
             } else {
                 eaEt5.requestFocus();
-                tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_begin_addr_gt_end_addr));
+                tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_begin_addr_gt_end_addr));
                 return false;
             }
         } else {
             baEt4.requestFocus();
-            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_begin_range_error));
+            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_begin_range_error));
             return false;
         }
 
 //        if (!CommonUtilities.isIpV4PrivateAddress(ba1+"."+ba2+"."+ba3+"."+ba4)) {
 //            result = false;
-//            tvmsg.setText(mContext.getString(R.string.msgs_ip_address_range_dlg_not_private));
+//            tvmsg.setText(mActivity.getString(R.string.msgs_ip_address_range_dlg_not_private));
 //        }
 
         return result;
@@ -985,7 +983,7 @@ public class SmbServerScan {
 
         private ArrayList<SmbServerScanResult> mResultList = null;
         private int mResourceId = 0;
-        private Context mContext;
+        private Context mActivity;
         private NotifyEvent mNtfyEvent = null;
         private boolean mButtonEnabled = true;
 
@@ -994,7 +992,7 @@ public class SmbServerScan {
             super(context, resource, objects);
             mResultList = objects;
             mResourceId = resource;
-            mContext = context;
+            mActivity = context;
             mNtfyEvent = ntfy;
         }
 
@@ -1033,7 +1031,7 @@ public class SmbServerScan {
             final SmbServerScanResult o = getItem(position);
             View v = convertView;
             if (v == null) {
-                LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LayoutInflater vi = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(mResourceId, null);
                 holder = new ViewHolder();
                 holder.tv_name = (TextView) v.findViewById(R.id.scan_result_list_item_server_name);

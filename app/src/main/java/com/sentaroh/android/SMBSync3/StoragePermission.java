@@ -51,7 +51,6 @@ import java.util.ArrayList;
 
 public class StoragePermission {
 
-    private Context mContext=null;
     private ActivityMain mActivity=null;
 //    private CommonDialog commonDlg=null;
     
@@ -64,7 +63,6 @@ public class StoragePermission {
     private NotifyEvent mNtfyGrantRequest=null;
 
     public StoragePermission(ActivityMain a, NotifyEvent ntfy_request) {
-        mContext = a;
         mActivity = a;
         mSafMgr =new SafManager3(a);
 //        commonDlg = cd;
@@ -78,7 +76,7 @@ public class StoragePermission {
     }
 
     private ArrayList<String> buildStoragePermissionRequiredList() {
-        final ArrayList<SafManager3.StorageVolumeInfo> svi_list= SafManager3.getStorageVolumeInfo(mContext);
+        final ArrayList<SafManager3.StorageVolumeInfo> svi_list= SafManager3.getStorageVolumeInfo(mActivity);
         final ArrayList<String> rows=new ArrayList<String>();
 
         for(SafManager3.StorageVolumeInfo ssi:svi_list) {
@@ -123,12 +121,12 @@ public class StoragePermission {
         final TextView tv_msg = (TextView) mDialog.findViewById(R.id.storage_permission_dlg_msg);
 
         final ListView lv = (ListView) mDialog.findViewById(R.id.storage_permission_dlg_storage_list);
-        final ArrayList<SafManager3.StorageVolumeInfo> svi_list= SafManager3.getStorageVolumeInfo(mContext);
+        final ArrayList<SafManager3.StorageVolumeInfo> svi_list= SafManager3.getStorageVolumeInfo(mActivity);
 
         final ArrayList<String> rows=buildStoragePermissionRequiredList();
         if (rows.size()==0) {
             CommonDialog.showCommonDialog(mActivity.getSupportFragmentManager(), false, "W",
-                    mContext.getString(R.string.msgs_storage_permission_msg_no_storage_requiring_permissions), "", null);
+                    mActivity.getString(R.string.msgs_storage_permission_msg_no_storage_requiring_permissions), "", null);
             return;
         }
 
@@ -137,7 +135,7 @@ public class StoragePermission {
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
 
-        tv_msg.setText(mContext.getString(R.string.msgs_storage_permission_msg_select_storage));
+        tv_msg.setText(mActivity.getString(R.string.msgs_storage_permission_msg_select_storage));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
@@ -155,7 +153,7 @@ public class StoragePermission {
                     tv_msg.setText("");
                 } else {
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                    tv_msg.setText(mContext.getString(R.string.msgs_storage_permission_msg_select_storage));
+                    tv_msg.setText(mActivity.getString(R.string.msgs_storage_permission_msg_select_storage));
                 }
             }
         });

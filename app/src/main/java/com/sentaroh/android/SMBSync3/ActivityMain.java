@@ -2943,7 +2943,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void negativeResponse(Context context, Object[] objects) {
                     }
                 });
-                ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mContext, mGp, false, mGp.syncScheduleList, new ScheduleListAdapter.ScheduleListItem(), ntfy);
+                ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mGp, false, mGp.syncScheduleList, new ScheduleListAdapter.ScheduleListItem(), ntfy);
             }
         });
         ContextButtonUtil.setButtonLabelListener(mActivity, mContextScheduleButtonAdd, mContext.getString(R.string.msgs_schedule_cont_label_add));
@@ -3112,7 +3112,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (mGp.syncScheduleListAdapter.getItem(i).isChecked) {
                         si = mGp.syncScheduleListAdapter.getItem(i);
                         ScheduleListAdapter.ScheduleListItem new_si = si.clone();
-                        ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mContext, mGp, false, mGp.syncScheduleList, new_si, ntfy);
+                        ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mGp, false, mGp.syncScheduleList, new_si, ntfy);
                         break;
                     }
                 }
@@ -3315,7 +3315,7 @@ public class ActivityMain extends AppCompatActivity {
                             public void negativeResponse(Context context, Object[] objects) {
                             }
                         });
-                        ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mContext, mGp, true, mGp.syncScheduleList, mGp.syncScheduleList.get(i), ntfy);
+                        ScheduleEditor sm = new ScheduleEditor(mUtil, mActivity, mGp, true, mGp.syncScheduleList, mGp.syncScheduleList.get(i), ntfy);
                     }
                 }
             }

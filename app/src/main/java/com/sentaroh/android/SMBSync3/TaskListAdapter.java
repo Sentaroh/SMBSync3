@@ -56,7 +56,7 @@ import java.util.logging.Handler;
 public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
     private static Logger log= LoggerFactory.getLogger(TaskListAdapter.class);
 
-    private Context mContext;
+    private Activity mActivity;
     private Handler mUiHandler;
     private int id;
     private ArrayList<SyncTaskItem> items;
@@ -69,29 +69,29 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
 
     String mMirrorTypeMirror, mMirrorTypeMove, mMirrorTypeCopy, mMirrorTypeSync, mMirrorTypeArchive;
 
-    public TaskListAdapter(Context c, int textViewResourceId, ArrayList<SyncTaskItem> objects, GlobalParameters gp) {
-        super(c, textViewResourceId, objects);
-        mContext = c;
+    public TaskListAdapter(Activity a, int textViewResourceId, ArrayList<SyncTaskItem> objects, GlobalParameters gp) {
+        super(a, textViewResourceId, objects);
+        mActivity = a;
         id = textViewResourceId;
         items = objects;
         mGp = gp;
 
-        mTaskTypeAuto = mContext.getString(R.string.msgs_main_sync_list_array_task_auto);
-        mTaskTypeTest = mContext.getString(R.string.msgs_main_sync_list_array_task_test);
-        mTaskTypeManual = mContext.getString(R.string.msgs_main_sync_list_array_task_manual);
-        mTaskNoExec = mContext.getString(R.string.msgs_main_sync_list_array_no_last_sync_time);
-        mTaskStatusRunning = mContext.getString(R.string.msgs_main_sync_history_status_running);
-        mTaskStatusSuccess = mContext.getString(R.string.msgs_main_sync_history_status_success);
-        mTaskStatusError = mContext.getString(R.string.msgs_main_sync_history_status_error);
-        mTaskSttatusCancel = mContext.getString(R.string.msgs_main_sync_history_status_cancel);
-        mTaskStatusWarning = mContext.getString(R.string.msgs_main_sync_history_status_warning);
-        mTaskStatusSkip = mContext.getString(R.string.msgs_main_sync_history_status_skip);
+        mTaskTypeAuto = mActivity.getString(R.string.msgs_main_sync_list_array_task_auto);
+        mTaskTypeTest = mActivity.getString(R.string.msgs_main_sync_list_array_task_test);
+        mTaskTypeManual = mActivity.getString(R.string.msgs_main_sync_list_array_task_manual);
+        mTaskNoExec = mActivity.getString(R.string.msgs_main_sync_list_array_no_last_sync_time);
+        mTaskStatusRunning = mActivity.getString(R.string.msgs_main_sync_history_status_running);
+        mTaskStatusSuccess = mActivity.getString(R.string.msgs_main_sync_history_status_success);
+        mTaskStatusError = mActivity.getString(R.string.msgs_main_sync_history_status_error);
+        mTaskSttatusCancel = mActivity.getString(R.string.msgs_main_sync_history_status_cancel);
+        mTaskStatusWarning = mActivity.getString(R.string.msgs_main_sync_history_status_warning);
+        mTaskStatusSkip = mActivity.getString(R.string.msgs_main_sync_history_status_skip);
 
-        mMirrorTypeMirror = mContext.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
-        mMirrorTypeCopy = mContext.getString(R.string.msgs_main_sync_list_array_mtype_copy);
-        mMirrorTypeMove = mContext.getString(R.string.msgs_main_sync_list_array_mtype_move);
-        mMirrorTypeSync = mContext.getString(R.string.msgs_main_sync_list_array_mtype_sync);
-        mMirrorTypeArchive = mContext.getString(R.string.msgs_main_sync_list_array_mtype_archive);
+        mMirrorTypeMirror = mActivity.getString(R.string.msgs_main_sync_list_array_mtype_mirr);
+        mMirrorTypeCopy = mActivity.getString(R.string.msgs_main_sync_list_array_mtype_copy);
+        mMirrorTypeMove = mActivity.getString(R.string.msgs_main_sync_list_array_mtype_move);
+        mMirrorTypeSync = mActivity.getString(R.string.msgs_main_sync_list_array_mtype_sync);
+        mMirrorTypeArchive = mActivity.getString(R.string.msgs_main_sync_list_array_mtype_archive);
 
     }
 
@@ -180,7 +180,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
 
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(id, null);
             holder_tmp = new ViewHolder();
             holder_tmp.tv_row_name = (TextView) v.findViewById(R.id.sync_task_name);
@@ -249,7 +249,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
             String result = "";
             if (o.isSyncTaskRunning()) {
                 result = mTaskStatusRunning;
-                if (ThemeUtil.isLightThemeUsed(mContext)) holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
+                if (ThemeUtil.isLightThemeUsed(mActivity)) holder.ll_view.setBackgroundColor(Color.argb(255, 0, 192, 192));
                 else holder.ll_view.setBackgroundColor(Color.argb(255, 0, 128, 128));
             } else {
                 if (o.getLastSyncResult() == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SUCCESS) {
@@ -265,11 +265,11 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
                 }
             }
             if (o.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_STOP) {
-                holder_tmp.tv_stop_condition.setText(mContext.getString(R.string.msgs_task_sync_task_dlg_task_stop_condition_stop));
+                holder_tmp.tv_stop_condition.setText(mActivity.getString(R.string.msgs_task_sync_task_dlg_task_stop_condition_stop));
             } else if (o.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND) {
-                holder_tmp.tv_stop_condition.setText(mContext.getString(R.string.msgs_task_sync_task_dlg_task_stop_condition_skip_uncondition));
+                holder_tmp.tv_stop_condition.setText(mActivity.getString(R.string.msgs_task_sync_task_dlg_task_stop_condition_skip_uncondition));
             } else if (o.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK) {
-                holder_tmp.tv_stop_condition.setText(mContext.getString(R.string.msgs_task_sync_task_dlg_task_stop_condition_skip_network));
+                holder_tmp.tv_stop_condition.setText(mActivity.getString(R.string.msgs_task_sync_task_dlg_task_stop_condition_skip_network));
             }
             if (!o.getLastSyncTime().equals("")) {
                 holder.tv_last_sync_result.setTextColor(mTextColor);
@@ -283,7 +283,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
             }
             if (!o.isSyncFolderStatusError()) {
                 if (o.isSyncTestMode()) {
-                    if (ThemeUtil.isLightThemeUsed(mContext)) holder.ll_view.setBackgroundColor(Color.argb(64, 255, 32, 255));
+                    if (ThemeUtil.isLightThemeUsed(mActivity)) holder.ll_view.setBackgroundColor(Color.argb(64, 255, 32, 255));
                     else holder.ll_view.setBackgroundColor(Color.argb(64, 255, 0, 128));
                 }
             } else {
@@ -295,7 +295,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
                 holder.tv_row_source.setText(CommonUtilities.getStoragePathFromUuid(o.getSourceStorageUuid())+"/"+dir);
                 if (o.getSourceStorageUuid().equals(SafManager3.SAF_FILE_PRIMARY_UUID)) img_res=R.drawable.ic_32_mobile;
                 else {
-                    if (SafManager3.isUuidRegistered(mContext, o.getSourceStorageUuid())) img_res=R.drawable.ic_32_external_media;
+                    if (SafManager3.isUuidRegistered(mActivity, o.getSourceStorageUuid())) img_res=R.drawable.ic_32_external_media;
                     else {
                         img_res=R.drawable.ic_32_external_media_bad;
                         sync_btn_disable=true;
@@ -322,7 +322,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
                 holder.tv_row_destination.setText(CommonUtilities.getStoragePathFromUuid(o.getDestinationStorageUuid())+"/"+dir);
                 if (o.getDestinationStorageUuid().equals(SafManager3.SAF_FILE_PRIMARY_UUID)) img_res=R.drawable.ic_32_mobile;
                 else {
-                    if (SafManager3.isUuidRegistered(mContext, o.getDestinationStorageUuid())) img_res=R.drawable.ic_32_external_media;
+                    if (SafManager3.isUuidRegistered(mActivity, o.getDestinationStorageUuid())) img_res=R.drawable.ic_32_external_media;
                     else {
                         img_res=R.drawable.ic_32_external_media_bad;
                         sync_btn_disable=true;
@@ -334,7 +334,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
                 holder.tv_row_destination.setText(CommonUtilities.getStoragePathFromUuid(o.getDestinationStorageUuid())+"/"+o.getDestinationZipOutputFileName());
                 if (o.getDestinationStorageUuid().equals(SafManager3.SAF_FILE_PRIMARY_UUID)) img_res=R.drawable.ic_32_archive;
                 else {
-                    if (SafManager3.isUuidRegistered(mContext, o.getDestinationStorageUuid())) img_res=R.drawable.ic_32_archive;
+                    if (SafManager3.isUuidRegistered(mActivity, o.getDestinationStorageUuid())) img_res=R.drawable.ic_32_archive;
                     else {
                         img_res=R.drawable.ic_32_archive_bad;
                         sync_btn_disable=true;
@@ -356,7 +356,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
             holder.tv_row_source.requestLayout();
             holder.tv_row_destination.requestLayout();
 
-            String e_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mContext, o.getSyncTaskName());
+            String e_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mActivity, o.getSyncTaskName());
             if (!e_msg.equals("")) {
                 sync_btn_disable=true;
                 holder.ll_last_sync.setVisibility(LinearLayout.VISIBLE);
@@ -396,7 +396,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
             holder.ib_row_sync.setOnLongClickListener(new View.OnLongClickListener(){
                 @Override
                 public boolean onLongClick(View view) {
-                    CommonDialog.showPopupMessageAsUpAnchorView((Activity)mContext, holder.ib_row_sync, mContext.getString(R.string.msgs_task_cont_label_sync_specific, o.getSyncTaskName()), 2);
+                    CommonDialog.showPopupMessageAsUpAnchorView((Activity) mActivity, holder.ib_row_sync, mActivity.getString(R.string.msgs_task_cont_label_sync_specific, o.getSyncTaskName()), 2);
                     return true;
                 }
             });

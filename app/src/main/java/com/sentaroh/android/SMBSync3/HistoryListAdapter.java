@@ -53,7 +53,6 @@ import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_SHORTCUT;
 
 public class HistoryListAdapter extends ArrayAdapter<HistoryListAdapter.HistoryListItem> {
     private static final Logger log= LoggerFactory.getLogger(HistoryListAdapter.class);
-    private Context mContext;
     private Activity mActivity;
     private int id;
     private ArrayList<HistoryListItem> items;
@@ -73,7 +72,6 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryListAdapter.HistoryL
     public HistoryListAdapter(Activity a, int textViewResourceId,
                               ArrayList<HistoryListItem> objects) {
         super(a, textViewResourceId, objects);
-        mContext = a;
         mActivity = a;
         id = textViewResourceId;
         items = objects;
@@ -84,13 +82,13 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryListAdapter.HistoryL
         mModeNormal = a.getString(R.string.msgs_main_sync_history_mode_normal);
         mModeTest = a.getString(R.string.msgs_main_sync_history_mode_test);
 
-        mTitleMode=mContext.getString(R.string.msgs_main_sync_history_mode);
-        mTitleCopied=mContext.getString(R.string.msgs_main_sync_history_count_copied);
-        mTitleMoved=mContext.getString(R.string.msgs_main_sync_history_count_moved);
-        mTitleDeleted=mContext.getString(R.string.msgs_main_sync_history_count_deleted);
-        mTitleReplaced=mContext.getString(R.string.msgs_main_sync_history_count_replaced);
-        mTitleIgnored=mContext.getString(R.string.msgs_main_sync_history_count_ignored);
-        mTitleElapsed=mContext.getString(R.string.msgs_main_sync_history_elapsed_time);
+        mTitleMode=mActivity.getString(R.string.msgs_main_sync_history_mode);
+        mTitleCopied=mActivity.getString(R.string.msgs_main_sync_history_count_copied);
+        mTitleMoved=mActivity.getString(R.string.msgs_main_sync_history_count_moved);
+        mTitleDeleted=mActivity.getString(R.string.msgs_main_sync_history_count_deleted);
+        mTitleReplaced=mActivity.getString(R.string.msgs_main_sync_history_count_replaced);
+        mTitleIgnored=mActivity.getString(R.string.msgs_main_sync_history_count_ignored);
+        mTitleElapsed=mActivity.getString(R.string.msgs_main_sync_history_elapsed_time);
 
     }
 
@@ -227,25 +225,25 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryListAdapter.HistoryL
                 holder.tv_time.setText(o.sync_time);
                 holder.tv_prof.setText(o.sync_task);
 
-                holder.tv_req.setText(HistoryListItem.getSyncStartRequestorDisplayName(mContext, o.sync_req));
+                holder.tv_req.setText(HistoryListItem.getSyncStartRequestorDisplayName(mActivity, o.sync_req));
 
                 String st_text = "";
                 if (o.sync_status == HistoryListItem.SYNC_RESULT_STATUS_SUCCESS) {
-                    st_text = mContext.getString(R.string.msgs_main_sync_history_status_success);
+                    st_text = mActivity.getString(R.string.msgs_main_sync_history_status_success);
                     holder.tv_status.setTextColor(mTextColor);
                 } else if (o.sync_status == HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
-                    st_text = mContext.getString(R.string.msgs_main_sync_history_status_error);
+                    st_text = mActivity.getString(R.string.msgs_main_sync_history_status_error);
                     holder.tv_status.setTextColor(mThemeColorList.text_color_error);
                     holder.tv_error.setTextColor(mThemeColorList.text_color_error);
                 } else if (o.sync_status == HistoryListItem.SYNC_RESULT_STATUS_CANCEL) {
-                    st_text = mContext.getString(R.string.msgs_main_sync_history_status_cancel);
+                    st_text = mActivity.getString(R.string.msgs_main_sync_history_status_cancel);
                     holder.tv_status.setTextColor(mThemeColorList.text_color_warning);
                 } else if (o.sync_status == HistoryListItem.SYNC_RESULT_STATUS_WARNING) {
-                    st_text = mContext.getString(R.string.msgs_main_sync_history_status_warning);
+                    st_text = mActivity.getString(R.string.msgs_main_sync_history_status_warning);
                     holder.tv_status.setTextColor(mThemeColorList.text_color_warning);
                     holder.tv_error.setTextColor(mThemeColorList.text_color_warning);
                 } else if (o.sync_status == HistoryListItem.SYNC_RESULT_STATUS_SKIP) {
-                    st_text = mContext.getString(R.string.msgs_main_sync_history_status_skip);
+                    st_text = mActivity.getString(R.string.msgs_main_sync_history_status_skip);
                     holder.tv_status.setTextColor(mThemeColorList.text_color_warning);
                     holder.tv_error.setTextColor(mThemeColorList.text_color_warning);
                 }

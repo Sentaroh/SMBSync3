@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -38,7 +39,6 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 
 import org.slf4j.Logger;
@@ -62,7 +62,7 @@ import static com.sentaroh.android.SMBSync3.Constants.DIRECTORY_FILTER_MATCH_ANY
 
 public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterListItem> {
     private static final Logger log= LoggerFactory.getLogger(FilterListAdapter.class);
-    private Context c;
+    private Activity mActivity;
     private int id;
     private ArrayList<FilterListItem> items;
 
@@ -98,34 +98,32 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
 
     private String mStringEnabled="", mStringDisabled="", mStringInclude="", mStringExclude="";
 
-    public FilterListAdapter(Context context, int textViewResourceId,
-                             ArrayList<FilterListItem> objects, int filter_type) {
-        super(context, textViewResourceId, objects);
-        c = context;
+    public FilterListAdapter(Activity a, int textViewResourceId, ArrayList<FilterListItem> objects, int filter_type) {
+        super(a, textViewResourceId, objects);
+        mActivity = a;
         id = textViewResourceId;
         items = objects;
         mShowIncludeExclue = true;
 
-        mStringEnabled=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_enabled);
-        mStringDisabled=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_disabled);
-        mStringInclude=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_include);
-        mStringExclude=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_exclude);
+        mStringEnabled= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_enabled);
+        mStringDisabled= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_disabled);
+        mStringInclude= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_include);
+        mStringExclude= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_exclude);
 
         mFilterType=filter_type;
     }
 
-    public FilterListAdapter(Context context, int textViewResourceId,
-                             ArrayList<FilterListItem> objects, boolean show_inc_exc, int filter_type) {
-        super(context, textViewResourceId, objects);
-        c = context;
+    public FilterListAdapter(Activity a, int textViewResourceId, ArrayList<FilterListItem> objects, boolean show_inc_exc, int filter_type) {
+        super(a, textViewResourceId, objects);
+        mActivity = a;
         id = textViewResourceId;
         items = objects;
         mShowIncludeExclue = show_inc_exc;
 
-        mStringEnabled=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_enabled);
-        mStringDisabled=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_disabled);
-        mStringInclude=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_include);
-        mStringExclude=c.getString(R.string.msgs_task_sync_task_filter_list_dlg_exclude);
+        mStringEnabled= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_enabled);
+        mStringDisabled= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_disabled);
+        mStringInclude= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_include);
+        mStringExclude= mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_exclude);
 
         mFilterType=filter_type;
     }
@@ -176,14 +174,14 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
 
         View v = convertView;
         if (v == null) {
-            LayoutInflater vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater vi = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(id, null);
             holder = new ViewHolder();
             holder.ll_file_directory_only_view=(LinearLayout) v.findViewById(R.id.filter_list_item_file_directory_only_view);
             holder.btn_row_delbtn = (ImageButton) v.findViewById(R.id.filter_list_item_del_btn);
             holder.tv_row_filter = (TextView) v.findViewById(R.id.filter_list_item_filter);
 
-            holder.del_msg = c.getString(R.string.msgs_filter_list_filter_deleted);
+            holder.del_msg = mActivity.getString(R.string.msgs_filter_list_filter_deleted);
 
             holder.sw_row_enabled =(Switch) v.findViewById(R.id.filter_list_item_filter_enabled);
             holder.rb_row_include =(RadioButton) v.findViewById(R.id.filter_list_item_include);
@@ -236,7 +234,7 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
 
             });
             if (getFilterType()==FILTER_TYPE_DIRECTORY) {
-                String error_message=FilterListItem.checkDirectoryFilterError(c, o.getFilter());
+                String error_message=FilterListItem.checkDirectoryFilterError(mActivity, o.getFilter());
                 if (!error_message.equals("")) {
                     holder.tv_error_message.setVisibility(TextView.VISIBLE);
                     holder.tv_error_message.setText(error_message);
@@ -244,7 +242,7 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
                     holder.tv_error_message.setVisibility(TextView.GONE);
                 }
             } else if (getFilterType()==FILTER_TYPE_FILE) {
-                String error_message=FilterListItem.checkFileFilterError(c, o.getFilter());
+                String error_message=FilterListItem.checkFileFilterError(mActivity, o.getFilter());
                 if (!error_message.equals("")) {
                     holder.tv_error_message.setVisibility(TextView.VISIBLE);
                     holder.tv_error_message.setText(error_message);
@@ -252,7 +250,7 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
                     holder.tv_error_message.setVisibility(TextView.GONE);
                 }
             } else {
-                String error_message=FilterListItem.checkApAndAddressFilterError(c, o.getFilter());
+                String error_message=FilterListItem.checkApAndAddressFilterError(mActivity, o.getFilter());
                 if (!error_message.equals("")) {
                     holder.tv_error_message.setVisibility(TextView.VISIBLE);
                     holder.tv_error_message.setText(error_message);
@@ -261,8 +259,8 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
                 }
             }
 
-            if (o.hasMatchAnyWhereFilter()) CommonUtilities.setViewEnabled(c, holder.rb_row_include, false);
-            else CommonUtilities.setViewEnabled(c, holder.rb_row_include, true);
+            if (o.hasMatchAnyWhereFilter()) CommonUtilities.setViewEnabled(mActivity, holder.rb_row_include, false);
+            else CommonUtilities.setViewEnabled(mActivity, holder.rb_row_include, true);
 
             holder.sw_row_enabled.setOnClickListener(new OnClickListener() {
                 @Override

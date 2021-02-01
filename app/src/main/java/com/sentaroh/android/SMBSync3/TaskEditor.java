@@ -104,7 +104,6 @@ public class TaskEditor extends DialogFragment {
 
     private Dialog mDialog = null;
     private boolean mTerminateRequired = true;
-    private Context mContext = null;
     private ActivityMain mActivity=null;
     private TaskEditor mFragment = null;
     private GlobalParameters mGp = null;
@@ -150,12 +149,12 @@ public class TaskEditor extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        if (mContext == null) mContext = getActivity();
+        if (mActivity == null) mActivity = (ActivityMain)getActivity();
         mFragment = this;
         mFragMgr = this.getFragmentManager();
         mActivity=(ActivityMain)getActivity();
-        if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mContext);
-        if (mUtil == null) mUtil = new CommonUtilities(mContext, "TaskEditor", mGp, getFragmentManager());
+        if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mActivity);
+        if (mUtil == null) mUtil = new CommonUtilities(mActivity, "TaskEditor", mGp, getFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mTerminateRequired) {
             this.dismiss();
@@ -175,9 +174,9 @@ public class TaskEditor extends DialogFragment {
     @Override
     final public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (mContext == null) mContext = getActivity();
-        if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mContext);
-        if (mUtil == null) mUtil = new CommonUtilities(mContext, "TaskEditor", mGp, getFragmentManager());
+        if (mActivity == null) mActivity = (ActivityMain)getActivity();
+        if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mActivity);
+        if (mUtil == null) mUtil = new CommonUtilities(mActivity, "TaskEditor", mGp, getFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
@@ -589,12 +588,12 @@ public class TaskEditor extends DialogFragment {
         ct_specific_file_type_image.setChecked(sv.specific_file_type_image);
         ct_specific_file_type_video.setChecked(sv.specific_file_type_video);
         if (sv.specific_file_type || sv.specific_file_type_audio || sv.specific_file_type_image || sv.specific_file_type_video ||
-                !sv.sync_file_filter_info.equals(mContext.getString(R.string.msgs_task_sync_task_dlg_file_filter_not_specified))) {
+                !sv.sync_file_filter_info.equals(mActivity.getString(R.string.msgs_task_sync_task_dlg_file_filter_not_specified))) {
             performClickNoSound(ct_specific_file_type);
         }
 
         ct_specific_directory.setChecked(false);
-        if (sv.specific_diretory || !sv.sync_dir_filter_info.equals(mContext.getString(R.string.msgs_task_sync_task_dlg_dir_filter_not_specified))) {
+        if (sv.specific_diretory || !sv.sync_dir_filter_info.equals(mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_filter_not_specified))) {
             performClickNoSound(ct_specific_directory);
         }
 
@@ -905,7 +904,7 @@ public class TaskEditor extends DialogFragment {
             public void afterTextChanged(Editable s) {
                 String remove_char=removeInvalidCharForShareName(s);
                 if (remove_char!=null) {
-                    mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_share_name_has_invalid_char), "", null);
+                    mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_share_name_has_invalid_char), "", null);
                 }
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
@@ -924,7 +923,7 @@ public class TaskEditor extends DialogFragment {
         btn_search_host.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                final NotifyEvent ntfy_search_result=new NotifyEvent(mContext);
+                final NotifyEvent ntfy_search_result=new NotifyEvent(mActivity);
                 ntfy_search_result.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] o) {
@@ -986,7 +985,7 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_edit_dir_rule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy=new NotifyEvent(mContext);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -1001,7 +1000,7 @@ public class TaskEditor extends DialogFragment {
                 boolean disable_taken_date=false;
                 if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) disable_taken_date=true;
                 editDirectoryFileNameRule(true, disable_taken_date, sti, sfev, et_sync_folder_dir_name,
-                        mContext.getString(R.string.msgs_task_sync_task_edit_directory_name_keyword), ntfy);
+                        mActivity.getString(R.string.msgs_task_sync_task_edit_directory_name_keyword), ntfy);
             }
         });
 
@@ -1024,7 +1023,7 @@ public class TaskEditor extends DialogFragment {
                 if (s.length()>0) {
                     String remove_char = removeInvalidCharForDirectoryName(s);
                     if (remove_char!=null) {
-                        mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char), "", null);
+                        mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char), "", null);
                     }
                     setSyncFolderArchiveFileImage(dialog, sti, s.toString(), true);
                 }
@@ -1158,7 +1157,7 @@ public class TaskEditor extends DialogFragment {
                     if (e_msg.equals("")) {
                         String remove_char = removeInvalidCharForDirectoryName(s);
                         if (remove_char!=null) {
-                            mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char), "", null);
+                            mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char), "", null);
                         }
                     }
 
@@ -1188,7 +1187,7 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_permission.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy=new NotifyEvent(mContext);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -1209,7 +1208,7 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_edit_internal_dir_rule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy=new NotifyEvent(mContext);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -1223,7 +1222,7 @@ public class TaskEditor extends DialogFragment {
                 boolean disable_taken_date=false;
                 if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) disable_taken_date=true;
                 editDirectoryFileNameRule(true, disable_taken_date, sti, sfev, et_sync_folder_dir_name,
-                        mContext.getString(R.string.msgs_task_sync_task_edit_directory_name_keyword), ntfy);
+                        mActivity.getString(R.string.msgs_task_sync_task_edit_directory_name_keyword), ntfy);
             }
         });
 
@@ -1232,7 +1231,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 String sel = sp_sync_folder_type.getSelectedItem().toString();
 
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
@@ -1251,10 +1250,10 @@ public class TaskEditor extends DialogFragment {
                     }
                 });
                 LocalStorageSelectorItem sel_item=(LocalStorageSelectorItem)sp_sync_folder_local_storage_selector.getSelectedItem();
-//                SafFile3 sf=new SafFile3(mContext, sel_item.root_path);
+//                SafFile3 sf=new SafFile3(mActivity, sel_item.root_path);
                 CommonFileSelector2 fsdf=CommonFileSelector2.newInstance(true, !sfev.is_source_folder, true,
                                 CommonFileSelector2.DIALOG_SELECT_CATEGORY_DIRECTORY,
-                                true, true, sel_item.uuid, "", "", mContext.getString(R.string.msgs_select_local_dir));
+                                true, true, sel_item.uuid, "", "", mActivity.getString(R.string.msgs_select_local_dir));
                 fsdf.showDialog(false, getActivity().getSupportFragmentManager(), fsdf, ntfy);
 
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
@@ -1413,7 +1412,7 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_edit_file_rule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy=new NotifyEvent(mContext);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -1425,7 +1424,7 @@ public class TaskEditor extends DialogFragment {
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
                 editDirectoryFileNameRule(false, false, n_sti, sfev, et_file_template,
-                        mContext.getString(R.string.msgs_task_sync_task_edit_file_name_keyword), ntfy);
+                        mActivity.getString(R.string.msgs_task_sync_task_edit_file_name_keyword), ntfy);
             }
         });
 
@@ -1468,7 +1467,7 @@ public class TaskEditor extends DialogFragment {
 
                     String remove_char=removeInvalidCharForFileName(s);
                     if (remove_char!=null) {
-                        mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
+                        mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
                     }
 
                     tv_template.setText(getSyncTaskArchiveTemplateNewName(sp_sync_suffix_option.getSelectedItemPosition(),
@@ -1533,7 +1532,7 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_permission.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy=new NotifyEvent(mContext);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -1572,7 +1571,7 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_edit_zip_dir_rule.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy=new NotifyEvent(mContext);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -1586,7 +1585,7 @@ public class TaskEditor extends DialogFragment {
                 boolean disable_taken_date=false;
                 if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) disable_taken_date=true;
                 editDirectoryFileNameRule(true, disable_taken_date, sti, sfev, et_zip_file,
-                        mContext.getString(R.string.msgs_task_sync_task_edit_file_name_keyword), ntfy);
+                        mActivity.getString(R.string.msgs_task_sync_task_edit_file_name_keyword), ntfy);
             }
         });
 
@@ -1645,7 +1644,7 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String zip_enc_method=(String)sp_zip_enc_method.getSelectedItem();
-                if (!zip_enc_method.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none))) {
+                if (!zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none))) {
                     ll_zip_password_view.setVisibility(LinearLayout.VISIBLE);
                 } else {
                     ll_zip_password_view.setVisibility(LinearLayout.GONE);
@@ -1670,7 +1669,7 @@ public class TaskEditor extends DialogFragment {
         btn_zip_filelist.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -1692,7 +1691,7 @@ public class TaskEditor extends DialogFragment {
                 LocalStorageSelectorItem sel_item=(LocalStorageSelectorItem)sp_sync_folder_zip_storage_selector.getSelectedItem();
                 String uuid=sel_item.uuid;
 
-                String title = mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_select_file_title);
+                String title = mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_select_file_title);
                 CommonFileSelector2 fsdf=
                         CommonFileSelector2.newInstance(true, true, true, CommonFileSelector2.DIALOG_SELECT_CATEGORY_FILE, true, uuid, "", "", title);
                 fsdf.showDialog(false, getActivity().getSupportFragmentManager(), fsdf, ntfy);
@@ -1716,7 +1715,7 @@ public class TaskEditor extends DialogFragment {
                 }
                 String remove_char=removeInvalidCharForFileName(s);
                 if (remove_char!=null) {
-                    mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
+                    mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
                 }
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
@@ -1806,7 +1805,7 @@ public class TaskEditor extends DialogFragment {
         if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
             if (sfev.folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
                 mUtil.showCommonDialogWarn(false,
-                        mContext.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported), "", null);
+                        mActivity.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported), "", null);
             }
         }
 
@@ -1849,7 +1848,7 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (btn_sync_folder_ok.isEnabled()) {
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    NotifyEvent ntfy = new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -1860,7 +1859,7 @@ public class TaskEditor extends DialogFragment {
                         public void negativeResponse(Context context, Object[] objects) {}
                     });
                     mUtil.showCommonDialogWarn(true,
-                            mContext.getString(R.string.msgs_task_sync_folder_dlg_confirm_msg_nosave), "", ntfy);
+                            mActivity.getString(R.string.msgs_task_sync_folder_dlg_confirm_msg_nosave), "", ntfy);
                 } else {
                     ntfy.notifyToListener(false, null);
                     dialog.dismiss();
@@ -1921,9 +1920,9 @@ public class TaskEditor extends DialogFragment {
 
         final NonWordwrapTextView dlg_taken_title=(NonWordwrapTextView)dialog.findViewById(R.id.edit_sync_folder_edit_keywor_dlg_taken_title);
         final NonWordwrapTextView dlg_exec_title=(NonWordwrapTextView)dialog.findViewById(R.id.edit_sync_folder_edit_keywor_dlg_exec_title);
-        dlg_taken_title.setText(mContext.getString(R.string.msgs_sync_folder_archive_add_taken_date_button));
+        dlg_taken_title.setText(mActivity.getString(R.string.msgs_sync_folder_archive_add_taken_date_button));
         dlg_taken_title.setWordWrapEnabled(true);
-        dlg_exec_title.setText(mContext.getString(R.string.msgs_sync_folder_archive_add_sync_begin_date_button));
+        dlg_exec_title.setText(mActivity.getString(R.string.msgs_sync_folder_archive_add_sync_begin_date_button));
         dlg_exec_title.setWordWrapEnabled(true);
 
         final LinearLayout dlg_ll_taken = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_edit_keywor_dlg_btn_taken_view);
@@ -1999,7 +1998,7 @@ public class TaskEditor extends DialogFragment {
 
                     String remove_char=removeInvalidCharForFileName(s);
                     if (remove_char!=null) {
-                        mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
+                        mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
                     }
 
                     String cv=getConvertedDirectoryFileName(s.toString(), System.currentTimeMillis(), "DSC-001");
@@ -2049,11 +2048,11 @@ public class TaskEditor extends DialogFragment {
         setSyncFolderKeywordButtonListener(dialog, dlg_exec_week_day_long, dlg_keyword, SyncTaskItem.TEMPLATE_EXEC_WEEK_DAY_LONG, etInput.getText().toString());
 
         setWeekDayButtonLabel(dlg_taken_week_day, dlg_taken_week_day_long,
-                mContext.getString(R.string.msgs_sync_folder_archive_btn_title_week_day),
-                mContext.getString(R.string.msgs_sync_folder_archive_btn_title_week_day_long));
+                mActivity.getString(R.string.msgs_sync_folder_archive_btn_title_week_day),
+                mActivity.getString(R.string.msgs_sync_folder_archive_btn_title_week_day_long));
         setWeekDayButtonLabel(dlg_exec_week_day, dlg_exec_week_day_long,
-                mContext.getString(R.string.msgs_sync_folder_archive_btn_title_week_day),
-                mContext.getString(R.string.msgs_sync_folder_archive_btn_title_week_day_long));
+                mActivity.getString(R.string.msgs_sync_folder_archive_btn_title_week_day),
+                mActivity.getString(R.string.msgs_sync_folder_archive_btn_title_week_day_long));
 
         setSyncFolderKeywordButtonListener(dialog, dlg_org_name, dlg_keyword, TEMPLATE_ORIGINAL_NAME, etInput.getText().toString());
 
@@ -2074,7 +2073,7 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if (dlg_ok.isEnabled()) {
-                    NotifyEvent ntfy=new NotifyEvent(mContext);
+                    NotifyEvent ntfy=new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -2084,7 +2083,7 @@ public class TaskEditor extends DialogFragment {
                         @Override
                         public void negativeResponse(Context context, Object[] objects) {}
                     });
-                    mUtil.showCommonDialogWarn(true, mContext.getString(R.string.msgs_task_sync_task_edit_keyword_quit_warning), "", ntfy);
+                    mUtil.showCommonDialogWarn(true, mActivity.getString(R.string.msgs_task_sync_task_edit_keyword_quit_warning), "", ntfy);
                 } else {
                     dialog.dismiss();
                 }
@@ -2175,7 +2174,7 @@ public class TaskEditor extends DialogFragment {
         SyncFolderEditValue nsfev = org_sfev.clone();
 
         String sel = sp_sync_folder_type.getSelectedItem().toString();
-        if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {//Internal
+        if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {//Internal
             String dir=et_sync_folder_internal_dir_name.getText().toString().trim().startsWith("/")?
                     et_sync_folder_internal_dir_name.getText().toString().trim().substring(1):
                     et_sync_folder_internal_dir_name.getText().toString().trim();
@@ -2185,7 +2184,7 @@ public class TaskEditor extends DialogFragment {
             }
             LocalStorageSelectorItem sel_item=(LocalStorageSelectorItem)sp_sync_folder_local_storage_selector.getSelectedItem();
             if (sel_item.mounted) {
-                SafFile3 sf=new SafFile3(mContext, sel_item.root_path);
+                SafFile3 sf=new SafFile3(mActivity, sel_item.root_path);
                 String uuid=sf.getUuid();
                 nsfev.folder_storage_uuid = uuid;
             }
@@ -2196,23 +2195,23 @@ public class TaskEditor extends DialogFragment {
                 nsfev.archive_file_name_suffix_digit=getArchiveSuffixOptionFromSpinner(sp_sync_suffix_option);
                 nsfev.archive_ignore_source_directory_hiearachy =ctv_ignore_source_directory_hierarchy.isChecked();
             }
-        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {//ZIP
+        } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {//ZIP
             LocalStorageSelectorItem sel_item=(LocalStorageSelectorItem)sp_sync_folder_zip_storage_selector.getSelectedItem();
             String uuid=sel_item.uuid;
             nsfev.folder_storage_uuid = uuid;
 
             String cl = sp_comp_level.getSelectedItem().toString();
-            if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FASTEST;
-            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fast))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FAST;
-            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_normal))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_NORMAL;
-            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM;
-//            else if (cl.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_ultra))) nsfev.zip_comp_level = TaskListItem.ZIP_OPTION_COMP_LEVEL_ULTRA;
+            if (cl.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FASTEST;
+            else if (cl.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fast))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FAST;
+            else if (cl.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_normal))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_NORMAL;
+            else if (cl.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum))) nsfev.zip_comp_level = SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_MAXIMUM;
+//            else if (cl.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_ultra))) nsfev.zip_comp_level = TaskListItem.ZIP_OPTION_COMP_LEVEL_ULTRA;
 
             String zip_enc_method = sp_zip_enc_method.getSelectedItem().toString();
-            if (zip_enc_method.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE;
-            else if (zip_enc_method.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_zip_crypto))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
-            else if (zip_enc_method.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes128))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
-            else if (zip_enc_method.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes256))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
+            if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE;
+            else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_zip_crypto))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
+            else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes128))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
+            else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes256))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
 
             if (tv_zip_dir.getText().toString().trim().equals("/")) nsfev.zip_file_name=et_zip_file.getText().toString().trim();
             else nsfev.zip_file_name=tv_zip_dir.getText().toString().trim().substring(1)+"/"+et_zip_file.getText().toString().trim();
@@ -2230,7 +2229,7 @@ public class TaskEditor extends DialogFragment {
             nsfev.show_zip_passowrd=ctv_sync_folder_show_zip_password.isChecked();
 
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_ZIP;
-        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {//smb
+        } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {//smb
             String dir=et_sync_folder_smb_dir_name.getText().toString().trim().startsWith("/")?
                     et_sync_folder_smb_dir_name.getText().toString().trim().substring(1):
                     et_sync_folder_smb_dir_name.getText().toString().trim();
@@ -2316,19 +2315,19 @@ public class TaskEditor extends DialogFragment {
 //            ll_internal_keyword_view.setVisibility(LinearLayout.VISIBLE);
 //            ll_smb_keyword_view.setVisibility(LinearLayout.VISIBLE);
 //        }
-        if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {
+        if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {
             ll_sync_folder_internal_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.VISIBLE);
             ll_sync_folder_zip_view.setVisibility(LinearLayout.GONE);
             checkSyncFolderValidation(dialog, sti, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
-        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {
+        } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {
             ll_sync_folder_internal_view.setVisibility(LinearLayout.VISIBLE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_zip_view.setVisibility(LinearLayout.GONE);
             checkSyncFolderValidation(dialog, sti, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL);
-        } else if (sel.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
+        } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
             ll_sync_folder_internal_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_zip_view.setVisibility(LinearLayout.VISIBLE);
@@ -2388,37 +2387,37 @@ public class TaskEditor extends DialogFragment {
         final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
 
         String sel_type = sp_sync_folder_type.getSelectedItem().toString();
-        if (sel_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {
+        if (sel_type.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {
             LocalStorageSelectorItem sel_item=(LocalStorageSelectorItem)sp_sync_folder_local_storage_selector.getSelectedItem();
             String uuid=sel_item.uuid;
             if (Build.VERSION.SDK_INT<=28) {
                 if (!uuid.equals(SAF_FILE_PRIMARY_UUID)) {
-                    if (SafManager3.isUuidMounted(mContext, uuid)) {
-                        if (!SafManager3.isUuidRegistered(mContext, uuid)) {
+                    if (SafManager3.isUuidMounted(mActivity, uuid)) {
+                        if (!SafManager3.isUuidRegistered(mActivity, uuid)) {
                             result = false;
-                            setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                            setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
                             CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_local_list_dir, false);
                         } else {
                             CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_local_list_dir, true);
                         }
                     } else {
                         result = false;
-                        setDialogMsg(dlg_msg, String.format(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), uuid));
+                        setDialogMsg(dlg_msg, String.format(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), uuid));
                         CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_local_list_dir, false);
                     }
                 }
             } else {
-                if (SafManager3.isUuidMounted(mContext, uuid)) {
-                    if (!SafManager3.isUuidRegistered(mContext, uuid)) {
+                if (SafManager3.isUuidMounted(mActivity, uuid)) {
+                    if (!SafManager3.isUuidRegistered(mActivity, uuid)) {
                         result = false;
-                        setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
+                        setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn));
                         CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_local_list_dir, false);
                     } else {
                         CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_local_list_dir, true);
                     }
                 } else {
                     result = false;
-                    setDialogMsg(dlg_msg, String.format(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), uuid));
+                    setDialogMsg(dlg_msg, String.format(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), uuid));
                     CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_local_list_dir, false);
                 }
             }
@@ -2432,7 +2431,7 @@ public class TaskEditor extends DialogFragment {
                     }
                 }
             }
-        } else if (sel_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {
+        } else if (sel_type.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {
             String remote_host = et_remote_host.getText().toString().trim();
 
             String sync_folder_port = et_sync_folder_port.getText().toString().trim();
@@ -2444,7 +2443,7 @@ public class TaskEditor extends DialogFragment {
 
             if (remote_host.equals("")) {
                 result = false;
-                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_address_or_name));
+                setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_specify_host_address_or_name));
                 CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_smb_list_share, false);
                 CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_smb_list_dir, false);
                 CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_edit_smb_dir_rule, false);
@@ -2455,7 +2454,7 @@ public class TaskEditor extends DialogFragment {
                     CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_smb_list_dir, false);
                     CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_edit_smb_dir_rule, false);
                     setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
-                    setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_port_number));
+                    setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_specify_host_port_number));
                 } else {
                     if (ctv_sync_folder_use_pswd.isChecked()) {
                         if (sync_folder_user.equals("") && sync_folder_pswd.equals("")) {
@@ -2464,11 +2463,11 @@ public class TaskEditor extends DialogFragment {
                             CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_smb_list_dir, false);
                             CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_edit_smb_dir_rule, false);
                             setSyncFolderSmbListDirectoryButtonEnabled(dialog, false);
-                            setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_userid_pswd));
+                            setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_specify_host_userid_pswd));
                         }
                     }
                     if (result && folder_share_name.equals("")) {
-                        setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_main_sync_profile_dlg_specify_host_share_name));
+                        setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_specify_host_share_name));
                         CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_smb_list_share, ctv_sync_folder_edit_smb_detail.isChecked());
                         CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_smb_list_dir, false);
                         CommonUtilities.setViewEnabled(getActivity(), btn_sync_folder_edit_smb_dir_rule, false);
@@ -2505,12 +2504,12 @@ public class TaskEditor extends DialogFragment {
                 if (et_sync_folder_port.getText().toString().equals("")) enabled = false;
             }
             if (et_remote_host.getText().toString().equals("")) enabled = false;
-        } else if (sel_type.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
+        } else if (sel_type.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
             result = false;
 
             if (et_sync_folder_zip_file_name.getText().length() > 0) {
                 String zip_enc_method=(String)sp_zip_enc_method.getSelectedItem();
-                if (zip_enc_method.equals(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none))) {
+                if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none))) {
                     result = true;
                 } else {
                     if (et_zip_pswd.getText().length() > 0) {
@@ -2518,17 +2517,17 @@ public class TaskEditor extends DialogFragment {
                             if (et_zip_pswd.getText().toString().equals(et_zip_conf_pswd.getText().toString())) {
                                 result = true;
                             } else {
-                                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_diff_zip_password));
+                                setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_diff_zip_password));
                             }
                         } else {
                             result = true;
                         }
                     } else {
-                        setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_specify_zip_password));
+                        setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_specify_zip_password));
                     }
                 }
             } else {
-                setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_specify_zip_file_name));
+                setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_specify_zip_file_name));
             }
         }
         if (result) {
@@ -2543,7 +2542,7 @@ public class TaskEditor extends DialogFragment {
     private String checkTakenDateParameterUsed(String dir_name) {
         String item=SyncThread.getTakenDateConversionItem(dir_name);
         if (!item.equals("")) {
-            return mContext.getString(R.string.msgs_task_sync_task_edit_keyword_mirror_can_not_used_taken_date, item);
+            return mActivity.getString(R.string.msgs_task_sync_task_edit_keyword_mirror_can_not_used_taken_date, item);
         }
         return  "";
     }
@@ -2617,7 +2616,7 @@ public class TaskEditor extends DialogFragment {
 
     private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
         final TextView dlg_dir_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_dir_filter_btn);
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         //Listen setRemoteShare response
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
@@ -2637,7 +2636,7 @@ public class TaskEditor extends DialogFragment {
 
     private void invokeEditFileFilterDlg(Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
         final TextView dlg_file_filter = (TextView) dialog.findViewById(R.id.sync_filter_edit_file_filter_btn);
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         //Listen setRemoteShare response
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
@@ -2667,10 +2666,10 @@ public class TaskEditor extends DialogFragment {
             int img_res=0;
             if (sti.getSourceStorageUuid().equals(SAF_FILE_PRIMARY_UUID)) img_res=R.drawable.ic_32_mobile;
             else {
-                if (SafManager3.isUuidRegistered(mContext, sti.getSourceStorageUuid())) img_res=R.drawable.ic_32_external_media;
+                if (SafManager3.isUuidRegistered(mActivity, sti.getSourceStorageUuid())) img_res=R.drawable.ic_32_external_media;
                 else img_res=R.drawable.ic_32_external_media_bad;
             }
-            info_icon.setImageDrawable(mContext.getResources().getDrawable(img_res, null));
+            info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
         } else if (sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String host = sti.getSourceSmbAddr();
             if (sti.getSourceSmbAddr().equals("")) host = sti.getSourceSmbHostName();
@@ -2681,7 +2680,7 @@ public class TaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
                 else info = "smb://" + host + "/" + share + "/" + dir;
             }
-            info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_server, null));
+            info_icon.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_32_server, null));
         }
         return info;
     }
@@ -2698,10 +2697,10 @@ public class TaskEditor extends DialogFragment {
             int img_res=0;
             if (sti.getDestinationStorageUuid().equals(SAF_FILE_PRIMARY_UUID)) img_res=R.drawable.ic_32_mobile;
             else {
-                if (SafManager3.isUuidRegistered(mContext, sti.getDestinationStorageUuid())) img_res=R.drawable.ic_32_external_media;
+                if (SafManager3.isUuidRegistered(mActivity, sti.getDestinationStorageUuid())) img_res=R.drawable.ic_32_external_media;
                 else img_res=R.drawable.ic_32_external_media_bad;
             }
-            info_icon.setImageDrawable(mContext.getResources().getDrawable(img_res, null));
+            info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
         } else if (sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
             info = CommonUtilities.getStoragePathFromUuid(sti.getDestinationStorageUuid())+"/"+ sti.getDestinationZipOutputFileName();
             int img_res=0;
@@ -2713,7 +2712,7 @@ public class TaskEditor extends DialogFragment {
                     img_res=R.drawable.ic_32_archive_bad;
                 }
             }
-            info_icon.setImageDrawable(mContext.getResources().getDrawable(img_res, null));
+            info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
         } else if (sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String host = sti.getDestinationSmbAddr();
             if (sti.getDestinationSmbAddr().equals("")) host = sti.getDestinationSmbHostName();
@@ -2724,7 +2723,7 @@ public class TaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
                 else info = "smb://" + host + "/" + share + "/" + dir;
             }
-            info_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_32_server, null));
+            info_icon.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_32_server, null));
         }
         return info;
     }
@@ -2735,12 +2734,12 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_title));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest));
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fast));
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_normal));
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_fast));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_normal));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum));
 
         int sel = 2;
         if (cv.equals(SyncTaskItem.ZIP_OPTION_COMPRESSION_LEVEL_FASTEST)) sel = 0;
@@ -2757,12 +2756,12 @@ public class TaskEditor extends DialogFragment {
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_select_msg));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_select_msg));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none));
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_zip_crypto));
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes128));
-        adapter.add(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes256));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_zip_crypto));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes128));
+        adapter.add(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes256));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) sel = 0;
@@ -2775,12 +2774,12 @@ public class TaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderStorageSelector(SyncTaskItem sti, Spinner spinner, String cv) {
-        CommonUtilities.setSpinnerBackground(mContext, spinner, mGp.isScreenThemeIsLight());
+        CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         ArrayList<LocalStorageSelectorItem> selector_list=new ArrayList<LocalStorageSelectorItem>();
         final LocalStorageSelectorAdapter adapter = new LocalStorageSelectorAdapter(mActivity, android.R.layout.simple_spinner_item, selector_list);
         mGp.safMgr.refreshSafList();
         adapter.setDropDownViewResource(R.layout.non_wordwrap_simple_spinner_item);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_select_local_storage));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_select_local_storage));
         spinner.setAdapter(adapter);
 
         int sel_no = -1;
@@ -2795,13 +2794,13 @@ public class TaskEditor extends DialogFragment {
                     sl_item.root_path=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
                     adapter.add(sl_item);
                 } else {
-                    if (SafManager3.isUuidRegistered(mContext, ss.uuid)) {
+                    if (SafManager3.isUuidRegistered(mActivity, ss.uuid)) {
                         sl_item.root_path=SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+ss.uuid;
                         adapter.add(sl_item);
                     }
                 }
             } else {
-                if (SafManager3.isUuidRegistered(mContext, ss.uuid)) {
+                if (SafManager3.isUuidRegistered(mActivity, ss.uuid)) {
                     if (ss.uuid.equals(SAF_FILE_PRIMARY_UUID)) {
                         sl_item.root_path=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
                         adapter.add(sl_item);
@@ -2849,7 +2848,7 @@ public class TaskEditor extends DialogFragment {
         adapter.setSpinner(spinner);
         mGp.safMgr.refreshSafList();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_smb_protocol_select_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_smb_protocol_select_title));
         spinner.setAdapter(adapter);
 
         adapter.add(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
@@ -2866,12 +2865,12 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_option_error_prompt));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_sync_task_sync_option_error_prompt));
         spinner.setAdapter(adapter);
 
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_option_error_stop));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_option_error_ignore));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_option_error_skip_network));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_option_error_stop));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_option_error_ignore));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_option_error_skip_network));
 
         int sel=0;
         if (cv.equals(SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_STOP)) sel=0;
@@ -2890,40 +2889,40 @@ public class TaskEditor extends DialogFragment {
         adapter.setSpinner(spinner);
         mGp.safMgr.refreshSafList();
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_prompt));
         spinner.setAdapter(adapter);
         int sel = 0;
         if (source) {
             if (!sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
                 if (sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                    adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
-                    adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                    adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
+                    adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                     if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) sel = 0;
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
                 } else {
-                    adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
-                    adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                    adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
+                    adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                     if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) sel = 0;
                     else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
                 }
             } else {
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
+                adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                 if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) sel = 0;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
             }
         } else {
             if (sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
+                adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                 if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) sel = 0;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
             } else {
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
-                adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
+                adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local));
+                adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb));
                 if (!sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE) &&
                         !sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC))
-                    adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip));
+                    adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip));
                 if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) sel = 0;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) sel = 1;
                 else if (cv.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
@@ -2942,13 +2941,13 @@ public class TaskEditor extends DialogFragment {
 //        adapterSyncOption.setDebug(true);
         adapterSyncOption.setSpinner(spinnerSyncOption);
         adapterSyncOption.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinnerSyncOption.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_syncopt_prompt));
+        spinnerSyncOption.setPrompt(mActivity.getString(R.string.msgs_main_sync_profile_dlg_syncopt_prompt));
         spinnerSyncOption.setAdapter(adapterSyncOption);
-        adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror));
-        adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy));
-        adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_move));
-        adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive));
-//        if (mGp.debuggable) adapterSyncOption.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync));
+        adapterSyncOption.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_mirror));
+        adapterSyncOption.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_copy));
+        adapterSyncOption.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_move));
+        adapterSyncOption.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_archive));
+//        if (mGp.debuggable) adapterSyncOption.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync));
 
         int sel=0;
         if (prof_syncopt.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) sel=0;
@@ -2968,13 +2967,13 @@ public class TaskEditor extends DialogFragment {
 //        adapter.setDebug(true, "SpinnerTwoWaySyncConflictRule");
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_prompt));
-        adapter.add(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_ask_user));
-        adapter.add(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer));
-        adapter.add(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_older));
-        adapter.add(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_source_to_destination));
-        adapter.add(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_destination_to_source));
-        adapter.add(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_skip_sync_file));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_prompt));
+        adapter.add(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_ask_user));
+        adapter.add(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer));
+        adapter.add(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_older));
+        adapter.add(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_source_to_destination));
+        adapter.add(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_destination_to_source));
+        adapter.add(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_skip_sync_file));
         spinner.setAdapter(adapter);
 
         int sel=Integer.parseInt(cv);
@@ -2987,11 +2986,11 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_dialog_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_dialog_title));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_type_none));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_type_less_than));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_type_greater_than));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_type_none));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_type_less_than));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_type_greater_than));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) sel = 0;
@@ -3009,12 +3008,12 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_unit_dialog_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_unit_dialog_title));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_unit_byte));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_unit_kib));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_unit_mib));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_size_unit_gib));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_unit_byte));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_unit_kib));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_unit_mib));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_unit_gib));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.FILTER_FILE_SIZE_UNIT_BYTE)) sel = 0;
@@ -3033,11 +3032,11 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_dialog_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_dialog_title));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_none));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_older));
-        adapter.add(mContext.getString(R.string.msgs_task_sync_task_sync_file_date_type_newer));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_type_none));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_type_older));
+        adapter.add(mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_type_newer));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) sel = 0;
@@ -3055,12 +3054,12 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_prompt));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_prompt));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_off));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
+        adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_off));
+        adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_any_ap));
+        adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address));
+        adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address));
 
         int sel = 0;
         if (cv.equals(SyncTaskItem.WIFI_STATUS_WIFI_OFF)) sel = 0;
@@ -3084,11 +3083,11 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_prompt));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_prompt));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_1));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_3));
-        adapter.add(mContext.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_10));
+        adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_1));
+        adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_3));
+        adapter.add(mActivity.getString(R.string.msgs_main_sync_profile_dlg_diff_time_value_option_10));
 
         int sel = 0;
         if (cv == 1) sel = 0;
@@ -3105,7 +3104,7 @@ public class TaskEditor extends DialogFragment {
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_task_sync_task_sync_option_offset_of_dst_time_value_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_task_sync_task_sync_option_offset_of_dst_time_value_title));
         spinner.setAdapter(adapter);
         for(int i=10;i<121;i+=10) adapter.add(String.valueOf(i));
         if (cv>=10 && cv<=120) {
@@ -3119,9 +3118,9 @@ public class TaskEditor extends DialogFragment {
         String info=buildFilterInfo(filter_list);
         if (info.equals("")) {
             if (filter_list.size()>0) {
-                return mContext.getString(R.string.msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists);
+                return mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists);
             } else {
-                return mContext.getString(R.string.msgs_task_sync_task_dlg_dir_filter_not_specified);
+                return mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_filter_not_specified);
             }
         }
         return info;
@@ -3131,9 +3130,9 @@ public class TaskEditor extends DialogFragment {
         String info=buildFilterInfo(filter_list);
         if (info.equals("")) {
             if (filter_list.size()>0) {
-                return mContext.getString(R.string.msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists);
+                return mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists);
             } else {
-                return mContext.getString(R.string.msgs_task_sync_task_dlg_file_filter_not_specified);
+                return mActivity.getString(R.string.msgs_task_sync_task_dlg_file_filter_not_specified);
             }
         }
         return info;
@@ -3166,10 +3165,10 @@ public class TaskEditor extends DialogFragment {
                 if (TaskListUtils.getSyncTaskByName(mGp.syncTaskListAdapter, t_name) == null) {
                     result = "";
                 } else {
-                    result = mContext.getString(R.string.msgs_duplicate_task_name);
+                    result = mActivity.getString(R.string.msgs_duplicate_task_name);
                 }
             } else {
-                result = mContext.getString(R.string.msgs_specify_task_name);
+                result = mActivity.getString(R.string.msgs_specify_task_name);
             }
         }
         return result;
@@ -3214,14 +3213,14 @@ public class TaskEditor extends DialogFragment {
         if (type.equals(TASK_EDIT_METHOD_EDIT)) {
             et_sync_main_task_name.setText(n_sti.getSyncTaskName());
             et_sync_main_task_name.setVisibility(EditText.GONE);
-            dlg_title.setText(mContext.getString(R.string.msgs_edit_sync_profile));
+            dlg_title.setText(mActivity.getString(R.string.msgs_edit_sync_profile));
             dlg_title_sub.setText(" (" + n_sti.getSyncTaskName() + ")");
         } else if (type.equals(TASK_EDIT_METHOD_COPY)) {
             et_sync_main_task_name.setText(n_sti.getSyncTaskName());
-            dlg_title.setText(mContext.getString(R.string.msgs_copy_sync_profile));
+            dlg_title.setText(mActivity.getString(R.string.msgs_copy_sync_profile));
             dlg_title_sub.setText(" (" + n_sti.getSyncTaskName() + ")");
         } else if (type.equals(TASK_EDIT_METHOD_ADD)) {
-            dlg_title.setText(mContext.getString(R.string.msgs_add_sync_profile));
+            dlg_title.setText(mActivity.getString(R.string.msgs_add_sync_profile));
             dlg_title_sub.setVisibility(TextView.GONE);
             n_sti.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_OFF);
         }
@@ -3285,11 +3284,11 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setSyncTaskTypeFromSpinnere(spinnerSyncType, n_sti);
-                if (spinnerSyncType.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive))) {
+                if (spinnerSyncType.getSelectedItem().toString().equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_archive))) {
                     if (n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
                         n_sti.setDestinationFolderType(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL);
                         mUtil.showCommonDialogWarn(false,
-                                mContext.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported), "", null);
+                                mActivity.getString(R.string.msgs_sync_folder_archive_zip_folder_not_supported), "", null);
                         destination_folder_info.setText(buildDestinationSyncFolderInfo(n_sti, destination_folder_info, destination_folder_icon));
                         destination_folder_info.requestLayout();
                     }
@@ -3322,7 +3321,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 boolean isChecked = !ctv_never_overwrite_destination_file_newer_than_the_source_file.isChecked();
                 if (isChecked) {
-                    NotifyEvent ntfy=new NotifyEvent(mContext);
+                    NotifyEvent ntfy=new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -3334,10 +3333,10 @@ public class TaskEditor extends DialogFragment {
                         public void negativeResponse(Context context, Object[] objects) {}
                     });
                     mUtil.showCommonDialogDanger(true,
-                            mContext.getString(R.string.msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file),
-                            mContext.getString(R.string.msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning),
-                            mContext.getString(R.string.msgs_common_dialog_confirm),
-                            mContext.getString(R.string.msgs_common_dialog_cancel),
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file),
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_warning),
+                            mActivity.getString(R.string.msgs_common_dialog_confirm),
+                            mActivity.getString(R.string.msgs_common_dialog_cancel),
                             ntfy );
                 } else {
                     checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -3368,7 +3367,7 @@ public class TaskEditor extends DialogFragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if (position!=SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_INDEX_STOP) {
-                            NotifyEvent ntfy=new NotifyEvent(mContext);
+                            NotifyEvent ntfy=new NotifyEvent(mActivity);
                             ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                                 @Override
                                 public void positiveResponse(Context context, Object[] objects) {
@@ -3380,8 +3379,8 @@ public class TaskEditor extends DialogFragment {
                                     sp_sync_task_option_error_option.setSelection(n_sti.getSyncTaskErrorOptionIndex(), false);
                                 }
                             });
-                            mUtil.showCommonDialogWarn(true, mContext.getString(R.string.msgs_task_sync_task_sync_option_error_title),
-                                    mContext.getString(R.string.msgs_task_sync_task_sync_option_error_ignore_warning_message), ntfy);
+                            mUtil.showCommonDialogWarn(true, mActivity.getString(R.string.msgs_task_sync_task_sync_option_error_title),
+                                    mActivity.getString(R.string.msgs_task_sync_task_sync_option_error_ignore_warning_message), ntfy);
                         } else {
                             checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                         }
@@ -3481,7 +3480,7 @@ public class TaskEditor extends DialogFragment {
                         sep=", ";
                     }
                     mUtil.showCommonDialogInfo(false,
-                            mContext.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3501,7 +3500,7 @@ public class TaskEditor extends DialogFragment {
                         sep=", ";
                     }
                     mUtil.showCommonDialogInfo(false,
-                            mContext.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3521,7 +3520,7 @@ public class TaskEditor extends DialogFragment {
                         sep=", ";
                     }
                     mUtil.showCommonDialogInfo(false,
-                            mContext.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
                 }
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
@@ -3688,7 +3687,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 boolean isChecked = !ctvIgnoreFilterRemoveDirFileDesNotExistsInSource.isChecked();
                 if (isChecked) {//if checked, display warning that also files not matching the filters will be removed from the destination
-                    NotifyEvent ntfy=new NotifyEvent(mContext);
+                    NotifyEvent ntfy=new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -3701,10 +3700,10 @@ public class TaskEditor extends DialogFragment {
                         }
                     });
                     mUtil.showCommonDialogDanger(true,
-                            mContext.getString(R.string.msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog_title),
-                            mContext.getString(R.string.msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog),
-                            mContext.getString(R.string.msgs_common_dialog_confirm),
-                            mContext.getString(R.string.msgs_common_dialog_cancel),
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog_title),
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_option_remove_dir_file_excluded_by_filter_warn_dialog),
+                            mActivity.getString(R.string.msgs_common_dialog_confirm),
+                            mActivity.getString(R.string.msgs_common_dialog_cancel),
                             ntfy);
                 } else {
                     ctvIgnoreFilterRemoveDirFileDesNotExistsInSource.setChecked(isChecked);
@@ -3736,7 +3735,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View view) {
                 boolean isChecked=!((CheckedTextView)view).isChecked();
                 if (isChecked) {
-                    NotifyEvent ntfy=new NotifyEvent(mContext);
+                    NotifyEvent ntfy=new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -3748,10 +3747,10 @@ public class TaskEditor extends DialogFragment {
                         public void negativeResponse(Context context, Object[] objects) {}
                     });
                     mUtil.showCommonDialogDanger(true,
-                            mContext.getString(R.string.msgs_task_sync_task_sync_option_not_set_file_last_modified),
-                            mContext.getString(R.string.msgs_task_sync_task_sync_option_not_set_file_last_modified_warning),
-                            mContext.getString(R.string.msgs_common_dialog_confirm),
-                            mContext.getString(R.string.msgs_common_dialog_cancel),
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_option_not_set_file_last_modified),
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_option_not_set_file_last_modified_warning),
+                            mActivity.getString(R.string.msgs_common_dialog_confirm),
+                            mActivity.getString(R.string.msgs_common_dialog_cancel),
                             ntfy );
                 } else {
                     ((CheckedTextView)view).setChecked(isChecked);
@@ -3802,7 +3801,7 @@ public class TaskEditor extends DialogFragment {
                     ctvDeterminChangedFileSizeGtDestination.setEnabled(true);
                 } else {
                     if (!ctDeterminChangedFileByTime.isChecked()) {
-                        NotifyEvent ntfy=new NotifyEvent(mContext);
+                        NotifyEvent ntfy=new NotifyEvent(mActivity);
                         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                             @Override
                             public void positiveResponse(Context context, Object[] objects) {
@@ -3815,10 +3814,10 @@ public class TaskEditor extends DialogFragment {
                             public void negativeResponse(Context context, Object[] objects) {}
                         });
                         mUtil.showCommonDialogDanger(true,
-                                mContext.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_title),
-                                mContext.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_warning),
-                                mContext.getString(R.string.msgs_common_dialog_confirm),
-                                mContext.getString(R.string.msgs_common_dialog_cancel),
+                                mActivity.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_title),
+                                mActivity.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_warning),
+                                mActivity.getString(R.string.msgs_common_dialog_confirm),
+                                mActivity.getString(R.string.msgs_common_dialog_cancel),
                                 ntfy );
                     } else {
                         ((CheckedTextView) v).setChecked(isChecked);
@@ -3871,7 +3870,7 @@ public class TaskEditor extends DialogFragment {
                     }
                 } else {
                     if (!ctvDiffUseFileSize.isChecked()) {
-                        NotifyEvent ntfy=new NotifyEvent(mContext);
+                        NotifyEvent ntfy=new NotifyEvent(mActivity);
                         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                             @Override
                             public void positiveResponse(Context context, Object[] objects) {
@@ -3886,10 +3885,10 @@ public class TaskEditor extends DialogFragment {
                             public void negativeResponse(Context context, Object[] objects) {}
                         });
                         mUtil.showCommonDialogDanger(true,
-                                mContext.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_title),
-                                mContext.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_warning),
-                                mContext.getString(R.string.msgs_common_dialog_confirm),
-                                mContext.getString(R.string.msgs_common_dialog_cancel),
+                                mActivity.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_title),
+                                mActivity.getString(R.string.msgs_task_sync_task_sync_option_copy_no_compare_warning),
+                                mActivity.getString(R.string.msgs_common_dialog_confirm),
+                                mActivity.getString(R.string.msgs_common_dialog_cancel),
                                 ntfy );
                     } else {
                         ((CheckedTextView) v).setChecked(isChecked);
@@ -3958,7 +3957,7 @@ public class TaskEditor extends DialogFragment {
         source_folder_info.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -3998,7 +3997,7 @@ public class TaskEditor extends DialogFragment {
                                 ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
                                 destination_folder_info.setText(buildDestinationSyncFolderInfo(n_sti, destination_folder_info, destination_folder_icon));
                                 destination_folder_info.requestLayout();
-                                String msg=mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_change_destination_folder_to_local);
+                                String msg=mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_change_destination_folder_to_local);
                                 mUtil.showCommonDialogWarn(true, msg, "", null);
                             } else if (n_sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB) ||
                                     n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
@@ -4007,9 +4006,9 @@ public class TaskEditor extends DialogFragment {
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_OFF)) {
                                     String msg="", opt_temp="";
                                     opt_temp= SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-                                    msg=mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_to_any);
+                                    msg=mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_to_any);
                                     final String option=opt_temp;
-                                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                                    NotifyEvent ntfy = new NotifyEvent(mActivity);
                                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                                         @Override
                                         public void positiveResponse(Context context, Object[] objects) {
@@ -4040,7 +4039,7 @@ public class TaskEditor extends DialogFragment {
                 SyncFolderEditValue sfev = new SyncFolderEditValue();
                 sfev.task_type=n_sti.getSyncTaskType();
                 sfev.is_source_folder = true;
-                sfev.folder_title = mContext.getString(R.string.msgs_main_sync_profile_dlg_title_source);
+                sfev.folder_title = mActivity.getString(R.string.msgs_main_sync_profile_dlg_title_source);
                 sfev.folder_directory = n_sti.getSourceDirectoryName();
                 sfev.folder_storage_uuid = n_sti.getSourceStorageUuid();
                 sfev.folder_smb_addr = n_sti.getSourceSmbAddr();
@@ -4065,7 +4064,7 @@ public class TaskEditor extends DialogFragment {
         swap_source_destination.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                NotifyEvent ntfy_swap=new NotifyEvent(mContext);
+                NotifyEvent ntfy_swap=new NotifyEvent(mActivity);
                 ntfy_swap.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -4074,8 +4073,8 @@ public class TaskEditor extends DialogFragment {
                         String new_dir=t_sti.getDestinationDirectoryName();
                         if (SyncThread.isTakenDateConvertRequired(new_dir)) {
                             new_dir=SyncThread.removeTakenDateParameter(new_dir);
-                            mUtil.showCommonDialogWarn(false, mContext.getString(R.string.msgs_task_sync_task_dlg_swap_warning_title),
-                                    mContext.getString(R.string.msgs_task_sync_task_dlg_swap_directory_name_parameter_removed), null);
+                            mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_swap_warning_title),
+                                    mActivity.getString(R.string.msgs_task_sync_task_dlg_swap_directory_name_parameter_removed), null);
                         }
                         n_sti.setSourceDirectoryName(new_dir);
                         n_sti.setSourceStorageUuid(t_sti.getDestinationStorageUuid());
@@ -4116,10 +4115,10 @@ public class TaskEditor extends DialogFragment {
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
                 mUtil.showCommonDialogDanger(true,
-                        mContext.getString(R.string.msgs_task_sync_task_dlg_swap_warning_title),
-                        mContext.getString(R.string.msgs_task_sync_task_dlg_swap_warning_message),
-                        mContext.getString(R.string.msgs_common_dialog_confirm),
-                        mContext.getString(R.string.msgs_common_dialog_cancel),
+                        mActivity.getString(R.string.msgs_task_sync_task_dlg_swap_warning_title),
+                        mActivity.getString(R.string.msgs_task_sync_task_dlg_swap_warning_message),
+                        mActivity.getString(R.string.msgs_common_dialog_confirm),
+                        mActivity.getString(R.string.msgs_common_dialog_cancel),
                         ntfy_swap);
             }
         });
@@ -4127,7 +4126,7 @@ public class TaskEditor extends DialogFragment {
         destination_folder_info.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -4180,15 +4179,15 @@ public class TaskEditor extends DialogFragment {
                                 ll_advanced_network_option_view.setVisibility(LinearLayout.VISIBLE);
                                 if (n_sti.getSyncOptionWifiStatusOption().equals(SyncTaskItem.WIFI_STATUS_WIFI_OFF)) {
                                     String msg="", opt_temp="";
-                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mContext, mGp)) ) {
+                                    if ((Build.VERSION.SDK_INT>=27 && CommonUtilities.isLocationServiceEnabled(mActivity, mGp)) ) {
                                         opt_temp= SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP;
-                                        msg=mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_to_any);
+                                        msg=mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_to_any);
                                     } else {
                                         opt_temp= SyncTaskItem.WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS;
-                                        msg=mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_has_private);
+                                        msg=mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_change_wifi_confition_has_private);
                                     }
                                     final String option=opt_temp;
-                                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                                    NotifyEvent ntfy = new NotifyEvent(mActivity);
                                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                                         @Override
                                         public void positiveResponse(Context context, Object[] objects) {
@@ -4219,7 +4218,7 @@ public class TaskEditor extends DialogFragment {
                 SyncFolderEditValue sfev = new SyncFolderEditValue();
                 sfev.task_type=n_sti.getSyncTaskType();
                 sfev.is_source_folder = false;
-                sfev.folder_title = mContext.getString(R.string.msgs_main_sync_profile_dlg_title_destination);
+                sfev.folder_title = mActivity.getString(R.string.msgs_main_sync_profile_dlg_title_destination);
                 sfev.folder_directory = n_sti.getDestinationDirectoryName();
                 sfev.folder_storage_uuid = n_sti.getDestinationStorageUuid();
                 sfev.folder_smb_addr = n_sti.getDestinationSmbAddr();
@@ -4257,7 +4256,7 @@ public class TaskEditor extends DialogFragment {
         // wifi address listボタンの指定
         edit_wifi_addr_list.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
@@ -4294,7 +4293,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 mGp.syncTaskListAdapter.notifyDataSetChanged();
                 if (btn_ok.isEnabled()) {
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    NotifyEvent ntfy = new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -4309,7 +4308,7 @@ public class TaskEditor extends DialogFragment {
                         }
                     });
                     mUtil.showCommonDialogWarn(true,
-                            mContext.getString(R.string.msgs_task_sync_folder_dlg_confirm_msg_nosave), "", ntfy);
+                            mActivity.getString(R.string.msgs_task_sync_folder_dlg_confirm_msg_nosave), "", ntfy);
                 } else {
                     mUtil.addDebugMsg(1,"I","editSyncTask edit cancelled");
                     mFragment.dismiss();
@@ -4340,7 +4339,7 @@ public class TaskEditor extends DialogFragment {
         btn_ok.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 final SyncTaskItem new_stli = buildSyncTaskListItem(mDialog, n_sti);
-                NotifyEvent ntfy_destination_dir_not_specified = new NotifyEvent(mContext);
+                NotifyEvent ntfy_destination_dir_not_specified = new NotifyEvent(mActivity);
                 ntfy_destination_dir_not_specified.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -4365,7 +4364,7 @@ public class TaskEditor extends DialogFragment {
                             mGp.syncTaskView.setSelection(mGp.syncTaskListAdapter.getCount() - 1);
                         }
                         if (mNotifyComplete != null) mNotifyComplete.notifyToListener(true, null);
-                        mTaskUtil.saveConfigListWithAutosave(mContext, mGp, mUtil);
+                        mTaskUtil.saveConfigListWithAutosave(mActivity, mGp, mUtil);
                         mFragment.dismissAllowingStateLoss();
                         mUtil.addDebugMsg(1,"I","editSyncTask edit saved, type="+type+", task="+new_stli.getSyncTaskName());
                         ((ActivityMain)getActivity()).refreshOptionMenu();
@@ -4375,7 +4374,7 @@ public class TaskEditor extends DialogFragment {
                 });
                 if (!new_stli.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP) && new_stli.getDestinationDirectoryName().equals("")) {
                     mUtil.showCommonDialogWarn(true,
-                            mContext.getString(R.string.msgs_main_sync_profile_dlg_destination_directory_not_specified), "",
+                            mActivity.getString(R.string.msgs_main_sync_profile_dlg_destination_directory_not_specified), "",
                             ntfy_destination_dir_not_specified);
                 } else {
                     ntfy_destination_dir_not_specified.notifyToListener(true, null);
@@ -4439,12 +4438,12 @@ public class TaskEditor extends DialogFragment {
         String result="4";
         String sel=spinner.getSelectedItem().toString();
 
-        if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_0))) result="0";
-        else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_2))) result="2";
-        else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_3))) result="3";
-        else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_4))) result="4";
-        else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_5))) result="5";
-        else if (sel.equals(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_6))) result="6";
+        if (sel.equals(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_0))) result="0";
+        else if (sel.equals(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_2))) result="2";
+        else if (sel.equals(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_3))) result="3";
+        else if (sel.equals(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_4))) result="4";
+        else if (sel.equals(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_5))) result="5";
+        else if (sel.equals(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_6))) result="6";
 
         return result;
     }
@@ -4485,14 +4484,14 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_prompt_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_prompt_title));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_0));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_2));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_3));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_4));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_5));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_6));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_0));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_2));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_3));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_4));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_5));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_suffix_seq_digit_6));
 
         int sel=0;
         if (cv.equals("0")) sel=0;
@@ -4511,15 +4510,15 @@ public class TaskEditor extends DialogFragment {
         adapter.setDropDownTextWordwrapEnabled(true);
         adapter.setSpinner(spinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        spinner.setPrompt(mContext.getString(R.string.msgs_sync_folder_archive_period_prompt_title));
+        spinner.setPrompt(mActivity.getString(R.string.msgs_sync_folder_archive_period_prompt_title));
         spinner.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_period_0_days));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_period_7_days));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_period_30_days));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_period_60_days));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_period_90_days));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_period_180_days));
-        adapter.add(mContext.getString(R.string.msgs_sync_folder_archive_period_1_years));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_period_0_days));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_period_7_days));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_period_30_days));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_period_60_days));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_period_90_days));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_period_180_days));
+        adapter.add(mActivity.getString(R.string.msgs_sync_folder_archive_period_1_years));
         spinner.setSelection(cv);
     }
 
@@ -4778,34 +4777,34 @@ public class TaskEditor extends DialogFragment {
     }
 
     private void setTwoWaySyncConflictRuleFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
-        String so = mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer);
+        String so = mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer);
         if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();
-        if (so.equals(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_ask_user)))
+        if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_ask_user)))
             n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_ASK_USER);
-        else if (so.equals(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer)))
+        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer)))
             n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER);
-        else if (so.equals(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_older)))
+        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_older)))
             n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER);
-        else if (so.equals(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_source_to_destination)))
+        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_source_to_destination)))
             n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_SOURCE_TO_DESTINATION);
-        else if (so.equals(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_destination_to_source)))
+        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_destination_to_source)))
             n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_DESTINATION_TO_SOURCE);
-        else if (so.equals(mContext.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_skip_sync_file)))
+        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_skip_sync_file)))
             n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE);
     }
 
     private void setSyncTaskTypeFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
-        String so = mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror);
+        String so = mActivity.getString(R.string.msgs_main_sync_profile_dlg_mirror);
         if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();
-        if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_mirror)))
+        if (so.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_mirror)))
             n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_MIRROR);
-        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_copy)))
+        else if (so.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_copy)))
             n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_COPY);
-        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_move)))
+        else if (so.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_move)))
             n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_MOVE);
-        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync)))
+        else if (so.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync)))
             n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_SYNC);
-        else if (so.equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_archive)))
+        else if (so.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_archive)))
             n_stli.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE);
     }
 
@@ -4814,8 +4813,8 @@ public class TaskEditor extends DialogFragment {
         help_sync_option.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFieldHelp(mActivity, mGp, mContext.getString(R.string.msgs_help_sync_task_title),
-                        mContext.getString(R.string.msgs_help_sync_task_file));
+                showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_task_title),
+                        mActivity.getString(R.string.msgs_help_sync_task_file));
             }
         });
     }
@@ -4826,14 +4825,14 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) {
-                    showFieldHelp(mActivity, mGp, mContext.getString(R.string.msgs_help_sync_folder_internal_title),
-                            mContext.getString(R.string.msgs_help_sync_folder_internal_file));
+                    showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_folder_internal_title),
+                            mActivity.getString(R.string.msgs_help_sync_folder_internal_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                    showFieldHelp(mActivity, mGp, mContext.getString(R.string.msgs_help_sync_folder_smb_title),
-                            mContext.getString(R.string.msgs_help_sync_folder_smb_file));
+                    showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_folder_smb_title),
+                            mActivity.getString(R.string.msgs_help_sync_folder_smb_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
-                    showFieldHelp(mActivity, mGp, mContext.getString(R.string.msgs_help_sync_folder_zip_title),
-                            mContext.getString(R.string.msgs_help_sync_folder_zip_file));
+                    showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_folder_zip_title),
+                            mActivity.getString(R.string.msgs_help_sync_folder_zip_file));
                 }
             }
         });
@@ -4844,8 +4843,8 @@ public class TaskEditor extends DialogFragment {
         ib_help.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFieldHelp(mActivity, mGp, mContext.getString(R.string.msgs_help_sync_folder_keyword_title),
-                        mContext.getString(R.string.msgs_help_sync_folder_keyword));
+                showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_folder_keyword_title),
+                        mActivity.getString(R.string.msgs_help_sync_folder_keyword));
             }
         });
     }
@@ -4923,9 +4922,9 @@ public class TaskEditor extends DialogFragment {
         ll_wifi_wl_view.setVisibility(Button.GONE);
         ll_wifi_wl_address_view.setVisibility(Button.GONE);
         ctv_sync_allow_global_ip_addr.setVisibility(CheckedTextView.VISIBLE);
-        if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address))) {
+        if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_private_address))) {
             ctv_sync_allow_global_ip_addr.setVisibility(CheckedTextView.GONE);
-        } else if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
+        } else if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
             ll_wifi_wl_view.setVisibility(Button.VISIBLE);
             ll_wifi_wl_address_view.setVisibility(Button.VISIBLE);
         } else {
@@ -4998,10 +4997,10 @@ public class TaskEditor extends DialogFragment {
         }
 
         if (t_name_msg.equals("")) {
-            t_name_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mContext, et_sync_main_task_name.getText().toString());
+            t_name_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mActivity, et_sync_main_task_name.getText().toString());
         }
         if (t_name_msg.equals("")) {
-            if (et_sync_main_task_name.getText().length()>SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH) t_name_msg=mContext.getString(R.string.msgs_sync_task_name_length_invalid, SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH);
+            if (et_sync_main_task_name.getText().length()>SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH) t_name_msg=mActivity.getString(R.string.msgs_sync_task_name_length_invalid, SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH);
         }
 
         if (t_name_msg.equals("")) {
@@ -5010,10 +5009,10 @@ public class TaskEditor extends DialogFragment {
                 CommonUtilities.setViewEnabled(getActivity(), btn_ok, false);
                 setDialogMsg(dlg_msg, e_msg);
             } else {
-                if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mContext.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
+                if (spinnerSyncWifiStatus.getSelectedItem().toString().equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_wifi_option_wifi_connect_specific_address))) {
                         if (n_sti.getSyncOptionWifiIPAddressGrantList().size() == 0) {
                             CommonUtilities.setViewEnabled(getActivity(), btn_ok, false);
-                            setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_address_not_specified));
+                            setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_address_not_specified));
                             error_detected = true;
                         }
                 }
@@ -5027,14 +5026,14 @@ public class TaskEditor extends DialogFragment {
                                 if (n_sti.getSourceFolderStatusError() != SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR) {
                                     if ((n_sti.getSourceFolderStatusError()&SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_NAME)!=0 ||
                                             (n_sti.getSourceFolderStatusError()&SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_PASSWORD)!=0) {
-                                        setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_import_failed_source_folder_smb_account_password));
+                                        setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_import_failed_source_folder_smb_account_password));
                                     }
                                 } else if (n_sti.getDestinationFolderStatusError() != SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR) {
                                     if ((n_sti.getDestinationFolderStatusError()&SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_NAME)!=0 ||
                                             (n_sti.getDestinationFolderStatusError()&SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ACCOUNT_PASSWORD)!=0) {
-                                        setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password));
+                                        setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password));
                                     } else if ((n_sti.getDestinationFolderStatusError()&SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_ZIP_PASSWORD)!=0) {
-                                        setDialogMsg(dlg_msg, mContext.getString(R.string.msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password));
+                                        setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password));
                                     }
                                 }
                             } else {
@@ -5092,14 +5091,14 @@ public class TaskEditor extends DialogFragment {
                     sp_file_size_type.getSelectedItemPosition()!=0 || sp_file_date_type.getSelectedItemPosition()!=0) {
                 if (sp_file_size_type.getSelectedItemPosition()!=0) {
                     if (et_file_size_value.getText().length()==0) {
-                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
+                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
                         error_detected = true;
                     } else if (et_file_size_value.getText().length()>5) {
-                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit);
+                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit);
                         error_detected = true;
                     } else if (SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition()).equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
                         if (Integer.parseInt(et_file_size_value.getText().toString())==0) {
-                            result=mContext.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
+                            result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
                             error_detected = true;
                         }
                     }
@@ -5107,19 +5106,19 @@ public class TaskEditor extends DialogFragment {
                 if (!error_detected && sp_file_date_type.getSelectedItemPosition()!=0) {
                     String sel=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
                     if (et_file_date_value.getText().length()==0) {
-                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
+                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
                         error_detected = true;
                     } else if (sel.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER) && Integer.parseInt(et_file_date_value.getText().toString())==0) {
-                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
+                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
                         error_detected = true;
                     } else if (et_file_date_value.getText().length()>3) {
-                        result=mContext.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
+                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
                         error_detected = true;
                     }
                 }
             } else {
                 if (n_sti.getFileNameFilter().size() == 0) {
-                    result = mContext.getString(R.string.msgs_task_sync_task_sync_file_type_detail_not_specified);
+                    result = mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_detail_not_specified);
                     error_detected = true;
                 }
             }
@@ -5128,7 +5127,7 @@ public class TaskEditor extends DialogFragment {
         if (!error_detected) {
             if (ctvSyncSpecificSubDir.isChecked()) {
                 if (n_sti.getDirectoryFilter().size() == 0) {
-                    result = mContext.getString(R.string.msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified);
+                    result = mActivity.getString(R.string.msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified);
                 } else {
                     int enabled_count=0;
                     for(FilterListAdapter.FilterListItem fli:n_sti.getDirectoryFilter()) {
@@ -5137,7 +5136,7 @@ public class TaskEditor extends DialogFragment {
                         }
                     }
                     if (enabled_count==0) {
-                        result = mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists);
+                        result = mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists);
                     }
                 }
             }
@@ -5149,23 +5148,23 @@ public class TaskEditor extends DialogFragment {
         String emsg = "";
         if (n_sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) {
             if (!n_sti.getSourceStorageUuid().equals(SAF_FILE_PRIMARY_UUID)) {
-                if (SafManager3.isUuidMounted(mContext, n_sti.getSourceStorageUuid())) {
-                    if (!SafManager3.isUuidRegistered(mContext, n_sti.getSourceStorageUuid())) {
-                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_source);
+                if (SafManager3.isUuidMounted(mActivity, n_sti.getSourceStorageUuid())) {
+                    if (!SafManager3.isUuidRegistered(mActivity, n_sti.getSourceStorageUuid())) {
+                        emsg = mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_source);
                     }
                 } else {
-                    emsg=String.format(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), n_sti.getSourceStorageUuid());
+                    emsg=String.format(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), n_sti.getSourceStorageUuid());
                 }
             }
         }
         if (emsg.equals("") && n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) {
             if (!n_sti.getDestinationStorageUuid().equals(SAF_FILE_PRIMARY_UUID)) {
-                if (SafManager3.isUuidMounted(mContext, n_sti.getDestinationStorageUuid())) {
-                    if (!SafManager3.isUuidRegistered(mContext, n_sti.getDestinationStorageUuid())) {
-                        emsg = mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination);
+                if (SafManager3.isUuidMounted(mActivity, n_sti.getDestinationStorageUuid())) {
+                    if (!SafManager3.isUuidRegistered(mActivity, n_sti.getDestinationStorageUuid())) {
+                        emsg = mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination);
                     }
                 } else {
-                    emsg=String.format(mContext.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), n_sti.getDestinationStorageUuid());
+                    emsg=String.format(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted), n_sti.getDestinationStorageUuid());
                 }
             }
         }
@@ -5181,7 +5180,7 @@ public class TaskEditor extends DialogFragment {
             }
             edit_wifi_ap_list.setText(ap_list);
         } else {
-            edit_wifi_ap_list.setText(mContext.getString(R.string.msgs_filter_list_dlg_not_specified));
+            edit_wifi_ap_list.setText(mActivity.getString(R.string.msgs_filter_list_dlg_not_specified));
         }
     }
 
@@ -5232,23 +5231,23 @@ public class TaskEditor extends DialogFragment {
         String msg="";
         if (sti.getSourceDirectoryName().equals("")) {
             if (sti.getDestinationDirectoryName().equals("")) {
-                msg=mContext.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal);
+                msg=mActivity.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal);
             } else {
                 //Sourceが上位
-                msg= checkDirectoryFilterForSameDirectoryAccess(mContext, sti);
+                msg= checkDirectoryFilterForSameDirectoryAccess(mActivity, sti);
             }
         } else {
             if (sti.getDestinationDirectoryName().equals("")) {
                 //Valid combination
             } else {
                 if (sti.getSourceDirectoryName().toLowerCase().equals(sti.getDestinationDirectoryName().toLowerCase())) {
-                    msg=mContext.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal);
+                    msg=mActivity.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal);
                 } else {
                     if (!sti.getDestinationDirectoryName().toLowerCase().equals(sti.getSourceDirectoryName().toLowerCase())) {
                         //Valid combination
                     } else  if (sti.getDestinationDirectoryName().toLowerCase().startsWith(sti.getSourceDirectoryName().toLowerCase())) {
                         //Sourceが上位
-                        msg= checkDirectoryFilterForSameDirectoryAccess(mContext, sti);
+                        msg= checkDirectoryFilterForSameDirectoryAccess(mActivity, sti);
                     }
                 }
             }

@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -49,7 +50,7 @@ import java.util.regex.Pattern;
 
 public class MessageListAdapter extends BaseAdapter {
     private static final Logger log= LoggerFactory.getLogger(MessageListAdapter.class);
-    private Context c;
+    private Activity mActivity;
     private int id;
     private ArrayList<MessageListItem> showList;
     private ArrayList<MessageListItem> messageList;
@@ -66,23 +67,23 @@ public class MessageListAdapter extends BaseAdapter {
     private static final int FOREST_GREEN = 0xff228B22;//rgb(34,139,34)
     private static final int DKCYAN = 0xff0088ff;//rgb(0, 136, 255)
 
-    public MessageListAdapter(Context context, int textViewResourceId, ArrayList<MessageListItem> objects, GlobalParameters gp) {
-        c = context;
+    public MessageListAdapter(Activity a, int textViewResourceId, ArrayList<MessageListItem> objects, GlobalParameters gp) {
+        mActivity = a;
         id = textViewResourceId;
         messageList = objects;
         showList=new ArrayList<MessageListItem>(5500);
         mGp=gp;
-        vi = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        vi = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mThemeColorList = gp.themeColorList;
 
-        if (ThemeUtil.getAppTheme(c)==ThemeUtil.THEME_DEFAULT) {
+        if (ThemeUtil.getAppTheme(mActivity)==ThemeUtil.THEME_DEFAULT) {
             mTextColorSyncStarted = Color.WHITE;
             mTextColorSyncSuccess = Color.GREEN;
             mTextColorSyncCancel = mThemeColorList.text_color_warning;//Color.YELLOW
             mTextColorSyncDelete = mThemeColorList.text_color_error;//Color.RED
             mTextColorSyncReplace = mThemeColorList.text_color_warning;//Color.YELLOW
-        } else if (ThemeUtil.getAppTheme(c)==ThemeUtil.THEME_BLACK) {
+        } else if (ThemeUtil.getAppTheme(mActivity)==ThemeUtil.THEME_BLACK) {
             mTextColorSyncStarted = Color.WHITE;
             mTextColorSyncSuccess = Color.GREEN;
             mTextColorSyncCancel = mThemeColorList.text_color_warning;//Color.YELLOW
@@ -309,26 +310,26 @@ public class MessageListAdapter extends BaseAdapter {
                 col_header = mThemeColorList.text_color_error;
                 col_type = col_header;
             } else {//CAT=I
-                if (message.endsWith(c.getString(R.string.msgs_mirror_task_started))) {
+                if (message.endsWith(mActivity.getString(R.string.msgs_mirror_task_started))) {
                     col_header = mTextColorSyncStarted;
-                } else if (message.endsWith(c.getString(R.string.msgs_mirror_task_result_ok))) {
+                } else if (message.endsWith(mActivity.getString(R.string.msgs_mirror_task_result_ok))) {
                     col_header = mTextColorSyncSuccess;
-                } else if (message.endsWith(c.getString(R.string.msgs_mirror_task_result_cancel))) {
+                } else if (message.endsWith(mActivity.getString(R.string.msgs_mirror_task_result_cancel))) {
                     col_header = mTextColorSyncCancel;
                 }
             }
 
             if (show_type) {
-                if (o.getType().equals(c.getString(R.string.msgs_mirror_task_file_deleted))
-                        || o.getType().equals(c.getString(R.string.msgs_mirror_task_dir_deleted))) {
+                if (o.getType().equals(mActivity.getString(R.string.msgs_mirror_task_file_deleted))
+                        || o.getType().equals(mActivity.getString(R.string.msgs_mirror_task_dir_deleted))) {
                     col_type = mTextColorSyncDelete;
-                } else if (o.getType().equals(c.getString(R.string.msgs_mirror_task_file_replaced))) {
+                } else if (o.getType().equals(mActivity.getString(R.string.msgs_mirror_task_file_replaced))) {
                     col_type = mTextColorSyncReplace;
-                } else if (o.getType().equals(c.getString(R.string.msgs_mirror_confirm_move_cancel)) ||
-                        o.getType().equals(c.getString(R.string.msgs_mirror_confirm_copy_cancel)) ||
-                        o.getType().equals(c.getString(R.string.msgs_mirror_confirm_delete_cancel)) ||
-                        o.getType().equals(c.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel)) ||
-                        o.getType().equals(c.getString(R.string.msgs_mirror_task_file_ignored))) {
+                } else if (o.getType().equals(mActivity.getString(R.string.msgs_mirror_confirm_move_cancel)) ||
+                        o.getType().equals(mActivity.getString(R.string.msgs_mirror_confirm_copy_cancel)) ||
+                        o.getType().equals(mActivity.getString(R.string.msgs_mirror_confirm_delete_cancel)) ||
+                        o.getType().equals(mActivity.getString(R.string.msgs_mirror_confirm_archive_date_time_from_file_cancel)) ||
+                        o.getType().equals(mActivity.getString(R.string.msgs_mirror_task_file_ignored))) {
                     col_type = mTextColorSyncCancel;
                 }
             }

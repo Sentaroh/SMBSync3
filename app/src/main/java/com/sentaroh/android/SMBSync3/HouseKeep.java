@@ -38,7 +38,6 @@ import java.util.ArrayList;
 class HouseKeep {
 
     private CommonUtilities mUtil=null;
-    private Context mContext=null;
     private ActivityMain mActivity=null;
     private GlobalParameters mGp=null;
     private Handler mUiHandler=null;
@@ -46,7 +45,6 @@ class HouseKeep {
 
     public HouseKeep(ActivityMain a, GlobalParameters gp, CommonUtilities cu) {
         mActivity=a;
-        mContext=a;
         mGp=gp;
         mUtil=cu;
         mUiHandler=new Handler();
@@ -54,7 +52,7 @@ class HouseKeep {
     }
 
     private void performHouseKeep() {
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -62,7 +60,7 @@ class HouseKeep {
                 Thread th2 = new Thread() {
                     @Override
                     public void run() {
-                        mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_maintenance_last_mod_list_start_msg));
+                        mUtil.addLogMsg("I", "", mActivity.getString(R.string.msgs_maintenance_last_mod_list_start_msg));
                         if (!mGp.syncThreadActive) {
                             mGp.syncThreadEnabled = false;
                             mUiHandler.post(new Runnable() {
@@ -78,11 +76,11 @@ class HouseKeep {
 
                             String msg_txt = "";
                             if (mTcHousekeep.isEnabled()) {
-                                msg_txt = mContext.getString(R.string.msgs_maintenance_last_mod_list_end_msg);
+                                msg_txt = mActivity.getString(R.string.msgs_maintenance_last_mod_list_end_msg);
                                 mUtil.addLogMsg("I", "", msg_txt);
                                 mUtil.showCommonDialogInfo(false, msg_txt, "", null);
                             } else {
-                                msg_txt = mContext.getString(R.string.msgs_maintenance_last_mod_list_cancel_msg);
+                                msg_txt = mActivity.getString(R.string.msgs_maintenance_last_mod_list_cancel_msg);
                                 mUtil.addLogMsg("W", "", msg_txt);
                                 mUtil.showCommonDialogWarn(false, msg_txt, "", null);
                             }
@@ -95,9 +93,9 @@ class HouseKeep {
                             });
 
                         } else {
-                            mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg));
+                            mUtil.addLogMsg("I", "", mActivity.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg));
                             mUtil.showCommonDialogWarn(false,
-                                    mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg), "", null);
+                                    mActivity.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg), "", null);
                         }
                     }
                 };
@@ -109,11 +107,11 @@ class HouseKeep {
         });
         if (!mGp.syncThreadActive) {
             mUtil.showCommonDialogWarn(true,
-                    mContext.getString(R.string.msgs_maintenance_last_mod_list_confirm_start_msg), "", ntfy);
+                    mActivity.getString(R.string.msgs_maintenance_last_mod_list_confirm_start_msg), "", ntfy);
         } else {
-            mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg));
+            mUtil.addLogMsg("W", "", mActivity.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg));
             mUtil.showCommonDialogWarn(false,
-                    mContext.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg), "", null);
+                    mActivity.getString(R.string.msgs_maintenance_last_mod_list_can_not_start_msg), "", null);
         }
     }
 
@@ -124,13 +122,13 @@ class HouseKeep {
 //        mGp.progressSpinView.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
         mGp.progressSpinView.bringToFront();
         mGp.progressSpinSynctask.setVisibility(TextView.GONE);
-        mGp.progressSpinMsg.setText(mContext.getString(R.string.msgs_progress_spin_dlg_housekeep_running));
-        mGp.progressSpinCancel.setText(mContext.getString(R.string.msgs_progress_spin_dlg_housekeep_cancel));
+        mGp.progressSpinMsg.setText(mActivity.getString(R.string.msgs_progress_spin_dlg_housekeep_running));
+        mGp.progressSpinCancel.setText(mActivity.getString(R.string.msgs_progress_spin_dlg_housekeep_cancel));
         mGp.progressSpinCancel.setEnabled(true);
         // CANCELボタンの指定
         mGp.progressSpinCancelListener = new View.OnClickListener() {
             public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -140,17 +138,17 @@ class HouseKeep {
                     @Override
                     public void negativeResponse(Context c, Object[] o) {}
                 });
-                mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_progress_spin_dlg_housekeep_cancel_confirm), "", ntfy);
+                mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_progress_spin_dlg_housekeep_cancel_confirm), "", ntfy);
             }
         };
         mGp.progressSpinCancel.setOnClickListener(mGp.progressSpinCancelListener);
 
-        LogUtil.flushLog(mContext);
+        LogUtil.flushLog(mActivity);
     }
 
     private void houseKeepThreadCloseDialog() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " ended");
-        LogUtil.flushLog(mContext);
+        LogUtil.flushLog(mActivity);
 
         mGp.progressSpinCancelListener = null;
         mGp.progressSpinCancel.setOnClickListener(null);
@@ -165,7 +163,7 @@ class HouseKeep {
     private void houseKeepResultLog() {
         final ArrayList<String> del_list = new ArrayList<String>();
         mResultLogDeleteCount = 0;
-        SafFile3 rlf = new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName + "/result_log");
+        SafFile3 rlf = new SafFile3(mActivity, mGp.settingAppManagemsntDirectoryName + "/result_log");
         if (!rlf.exists()) rlf.mkdirs();
         SafFile3[] fl = rlf.listFiles();
         if (fl != null && fl.length > 0) {
@@ -187,7 +185,7 @@ class HouseKeep {
                 }
             }
             if (del_list.size() > 0) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -196,7 +194,7 @@ class HouseKeep {
                                 break;
                             }
                         }
-                        mUtil.addLogMsg("I", "", String.format(mContext.getString(R.string.msgs_maintenance_result_log_list_del_count), mResultLogDeleteCount));
+                        mUtil.addLogMsg("I", "", String.format(mActivity.getString(R.string.msgs_maintenance_result_log_list_del_count), mResultLogDeleteCount));
                         synchronized (mTcHousekeep) {
                             mTcHousekeep.notify();
                         }
@@ -204,13 +202,13 @@ class HouseKeep {
 
                     @Override
                     public void negativeResponse(Context c, Object[] o) {
-                        mUtil.addLogMsg("I", "", String.format(mContext.getString(R.string.msgs_maintenance_result_log_list_del_count), mResultLogDeleteCount));
+                        mUtil.addLogMsg("I", "", String.format(mActivity.getString(R.string.msgs_maintenance_result_log_list_del_count), mResultLogDeleteCount));
                         synchronized (mTcHousekeep) {
                             mTcHousekeep.notify();
                         }
                     }
                 });
-                mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_maintenance_result_log_list_del_title), del_msg, ntfy);
+                mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_maintenance_result_log_list_del_title), del_msg, ntfy);
                 synchronized (mTcHousekeep) {
                     try {
                         mTcHousekeep.wait();
@@ -224,7 +222,7 @@ class HouseKeep {
 
     private boolean deleteResultLogFile(String fp) {
         boolean result = false;
-        SafFile3 lf = new SafFile3(mContext, fp);
+        SafFile3 lf = new SafFile3(mActivity, fp);
         if (lf.isDirectory()) {
             SafFile3[] fl = lf.listFiles();
             for (SafFile3 item : fl) {
@@ -237,7 +235,7 @@ class HouseKeep {
                     result = item.delete();
                     if (result) {
                         mResultLogDeleteCount++;
-                        String msg = String.format(mContext.getString(R.string.msgs_maintenance_result_log_list_del_file), item.getPath());
+                        String msg = String.format(mActivity.getString(R.string.msgs_maintenance_result_log_list_del_file), item.getPath());
                         mUtil.addLogMsg("I", "", msg);
                     } else {
                         mUtil.addLogMsg("I", "", "Delete file failed, path=" + item.getPath());
@@ -247,7 +245,7 @@ class HouseKeep {
             result = lf.delete();
             if (result) {
                 mResultLogDeleteCount++;
-                String msg = String.format(mContext.getString(R.string.msgs_maintenance_result_log_list_del_file), lf.getPath());
+                String msg = String.format(mActivity.getString(R.string.msgs_maintenance_result_log_list_del_file), lf.getPath());
                 mUtil.addLogMsg("I", "", msg);
             } else {
                 mUtil.addLogMsg("I", "", "Delete directory failed, path=" + lf.getPath());
@@ -256,7 +254,7 @@ class HouseKeep {
             result = lf.delete();
             if (result) {
                 mResultLogDeleteCount++;
-                String msg = String.format(mContext.getString(R.string.msgs_maintenance_result_log_list_del_file), lf.getPath());
+                String msg = String.format(mActivity.getString(R.string.msgs_maintenance_result_log_list_del_file), lf.getPath());
                 mUtil.addLogMsg("I", "", msg);
             } else {
                 mUtil.addLogMsg("I", "", "Delete file failed, path=" + lf.getPath());
@@ -269,7 +267,7 @@ class HouseKeep {
         ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry> mCurrLastModifiedList = new ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry>();
         ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry> mNewLastModifiedList = new ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry>();
         ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry> del_list = new ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry>();
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {}
@@ -280,12 +278,12 @@ class HouseKeep {
                 mUtil.addLogMsg("I", "", "Duplicate local file last modified entry was ignored, name=" + en);
             }
         });
-        FileLastModifiedTime.loadLastModifiedList(mContext, mGp.settingAppManagemsntDirectoryName, mCurrLastModifiedList, mNewLastModifiedList, ntfy);
+        FileLastModifiedTime.loadLastModifiedList(mActivity, mGp.settingAppManagemsntDirectoryName, mCurrLastModifiedList, mNewLastModifiedList, ntfy);
         if (mCurrLastModifiedList.size() > 0) {
             for (FileLastModifiedTime.FileLastModifiedTimeEntry li : mCurrLastModifiedList) {
                 if (!mTcHousekeep.isEnabled()) break;
                 if (li.getFilePath().startsWith("/storage/")) {
-                    SafFile3 lf = new SafFile3(mContext, li.getFilePath());
+                    SafFile3 lf = new SafFile3(mActivity, li.getFilePath());
                     if (!lf.exists()) {
                         del_list.add(li);
                         mUtil.addDebugMsg(1, "I", "Entery was deleted, fp=" + li.getFilePath());
@@ -299,9 +297,9 @@ class HouseKeep {
         }
         if (mTcHousekeep.isEnabled()) {
             mUtil.addLogMsg("I", "",
-                    String.format(mContext.getString(R.string.msgs_maintenance_last_mod_list_del_count), del_list.size()));
+                    String.format(mActivity.getString(R.string.msgs_maintenance_last_mod_list_del_count), del_list.size()));
             if (del_list.size() > 0)
-                FileLastModifiedTime.saveLastModifiedList(mContext, mGp.settingAppManagemsntDirectoryName, mCurrLastModifiedList, mNewLastModifiedList);
+                FileLastModifiedTime.saveLastModifiedList(mActivity, mGp.settingAppManagemsntDirectoryName, mCurrLastModifiedList, mNewLastModifiedList);
         }
     }
 

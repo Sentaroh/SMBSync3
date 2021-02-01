@@ -75,7 +75,6 @@ public class ScheduleEditor {
 
     private GlobalParameters mGp = null;
 
-    private Context mContext = null;
     private AppCompatActivity mActivity = null;
 
     private CommonUtilities mUtil = null;
@@ -91,9 +90,8 @@ public class ScheduleEditor {
 
     private ThemeColorList mThemeColorList = null;
 
-    public ScheduleEditor(CommonUtilities mu, AppCompatActivity a, Context c, GlobalParameters gp,
+    public ScheduleEditor(CommonUtilities mu, AppCompatActivity a, GlobalParameters gp,
            boolean edit_mode, ArrayList<ScheduleListAdapter.ScheduleListItem> sl, ScheduleListAdapter.ScheduleListItem si, NotifyEvent ntfy) {
-        mContext = c;
         mActivity = a;
         mGp = gp;
         mUtil = mu;
@@ -143,8 +141,8 @@ public class ScheduleEditor {
             @Override
             public void onClick(View v) {
                 TaskEditor.showFieldHelp(mActivity, mGp,
-                        mContext.getString(R.string.msgs_help_schedule_title),
-                        mContext.getString(R.string.msgs_help_schedule_file)) ;
+                        mActivity.getString(R.string.msgs_help_schedule_title),
+                        mActivity.getString(R.string.msgs_help_schedule_file)) ;
             }
         });
 
@@ -237,11 +235,11 @@ public class ScheduleEditor {
 
         if (!mEditMode) {
             setViewEnabled(mActivity, btn_ok, true);
-            dlg_title.setText(mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_title_add));
+            dlg_title.setText(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_title_add));
             String new_name="";
             for(int i=0;i<1000;i++) {
-                if (i==0) new_name=mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name);
-                else new_name=mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name)+" ("+i+")";
+                if (i==0) new_name=mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name);
+                else new_name=mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name)+" ("+i+")";
                 if (!ScheduleUtils.isScheduleExists(mScheduleList,new_name)) {
                     et_name.setText(new_name);
 //                    mSched.scheduleName=new_name;
@@ -250,7 +248,7 @@ public class ScheduleEditor {
             }
         } else {
             setViewEnabled(mActivity, btn_ok, false);
-            dlg_title.setText(mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_title_edit));
+            dlg_title.setText(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_title_edit));
             et_name.setText(mSched.scheduleName);
         }
         if (mEditMode) {
@@ -523,7 +521,7 @@ public class ScheduleEditor {
                             tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
                             if (tv_sync_prof.getText().equals("")) {
                                 setViewEnabled(mActivity, btn_ok, false);
-                                tv_msg.setText(mContext.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
+                                tv_msg.setText(mActivity.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             } else {
                                 setViewEnabled(mActivity, btn_ok, isScheduleChanged(dialog,mSched));
                                 tv_msg.setText("");
@@ -544,7 +542,7 @@ public class ScheduleEditor {
                         btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
                         tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
                         if (tv_sync_prof.getText().equals("")) {
-                            tv_msg.setText(mContext.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
+                            tv_msg.setText(mActivity.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             setViewEnabled(mActivity, btn_ok, false);
                         } else {
                             setViewEnabled(mActivity, btn_ok, isScheduleChanged(dialog,mSched));
@@ -559,14 +557,14 @@ public class ScheduleEditor {
         btn_edit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         String prof_list = (String) o[0];
                         tv_sync_prof.setText(prof_list);
                         if (prof_list.equals("")) {
-                            tv_msg.setText(mContext.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
+                            tv_msg.setText(mActivity.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             setViewEnabled(mActivity, btn_ok, false);
                         } else {
                             setViewEnabled(mActivity, btn_ok, isScheduleChanged(dialog, mSched));
@@ -599,7 +597,7 @@ public class ScheduleEditor {
             @Override
             public void onClick(View v) {
                 if (isScheduleChanged(dialog, mSched)) {
-                    NotifyEvent ntfy = new NotifyEvent(mContext);
+                    NotifyEvent ntfy = new NotifyEvent(mActivity);
                     ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -611,7 +609,7 @@ public class ScheduleEditor {
                         }
                     });
                     mUtil.showCommonDialog(true, "W",
-                            mContext.getString(R.string.msgs_schedule_confirm_msg_nosave), "", ntfy);
+                            mActivity.getString(R.string.msgs_schedule_confirm_msg_nosave), "", ntfy);
                 } else {
                     dialog.dismiss();
                 }
@@ -655,10 +653,10 @@ public class ScheduleEditor {
             ScheduleListAdapter.ScheduleListItem n_sp = sli.clone();
             buildSchedParms(dialog, n_sp);
             tv_schedule_time.setText(
-                    String.format(mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time),
+                    String.format(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time),
                             StringUtil.convDateTimeTo_YearMonthDayHourMinSec(ScheduleUtils.getNextScheduleTime(n_sp))));
         } else {
-            tv_schedule_time.setText(mContext.getString(R.string.msgs_scheduler_info_schedule_disabled));
+            tv_schedule_time.setText(mActivity.getString(R.string.msgs_scheduler_info_schedule_disabled));
         }
     }
 
@@ -675,22 +673,22 @@ public class ScheduleEditor {
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_msg);
         setViewEnabled(mActivity, btn_ok, !mEditMode);
         if (et_name.getText().length() == 0) {
-            tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
+            tv_msg.setText(mActivity.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_does_not_specified));
             setViewEnabled(mActivity, btn_ok, false);
         } else {
-            String e_msg= hasScheduleNameUnusableCharacter(mContext, et_name.getText().toString());
+            String e_msg= hasScheduleNameUnusableCharacter(mActivity, et_name.getText().toString());
             if (!e_msg.equals("")) {
                 tv_msg.setText(e_msg);
                 setViewEnabled(mActivity, btn_ok, false);
             } else if (!mEditMode && ScheduleUtils.isScheduleExists(mScheduleList, et_name.getText().toString())) {
                 //Name alread exists
-                tv_msg.setText(mContext.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists));
+                tv_msg.setText(mActivity.getString(R.string.msgs_schedule_list_edit_dlg_error_sync_list_name_already_exists));
                 setViewEnabled(mActivity, btn_ok, false);
             } else {
                 if (!mSched.syncAutoSyncTask) {
                     String error_task_name=getNotExistsSyncTaskName(mSched.syncTaskList);
                     if (!error_task_name.equals("")) {
-                        tv_msg.setText(String.format(mContext.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
+                        tv_msg.setText(String.format(mActivity.getString(R.string.msgs_scheduler_info_sync_task_was_not_found), error_task_name));
                     } else {
                         tv_msg.setText("");
                         setViewEnabled(mActivity, btn_ok, isScheduleChanged(dialog, mSched));
@@ -765,15 +763,15 @@ public class ScheduleEditor {
             ScheduleListAdapter.ScheduleListItem n_sp = mSched.clone();
             buildSchedParms(dialog, n_sp);
             tv_schedule_time.setText(
-                    String.format(mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time),
+                    String.format(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time),
                             StringUtil.convDateTimeTo_YearMonthDayHourMinSec(ScheduleUtils.getNextScheduleTime(n_sp))));
             setOkButtonEnabledDisabled(dialog);
         } else {
             setViewEnabled(mActivity, ctv_sync_all_prof, false);
             setViewEnabled(mActivity, btn_edit, false);
-            tv_msg.setText(mContext.getString(R.string.msgs_scheduler_main_dw_not_selected));
+            tv_msg.setText(mActivity.getString(R.string.msgs_scheduler_main_dw_not_selected));
             tv_schedule_time.setText(
-                    String.format(mContext.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time), ""));
+                    String.format(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_schedule_time), ""));
         }
     }
 
@@ -976,7 +974,7 @@ public class ScheduleEditor {
 
         for (int i = 0; i < mGp.syncTaskListAdapter.getCount(); i++) {
             SyncTaskItem pfli = mGp.syncTaskListAdapter.getItem(i);
-            String e_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mContext, pfli.getSyncTaskName());
+            String e_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mActivity, pfli.getSyncTaskName());
             if (e_msg.equals("")) adapter.add(SYNC_TASK_ENABLED + pfli.getSyncTaskName());
             else mUtil.addDebugMsg(1, "I", "Invalid sync task name, Task="+pfli.getSyncTaskName());
         }
@@ -1135,18 +1133,18 @@ public class ScheduleEditor {
 
     private void setScheduleTypeSpinner(Dialog dialog, String type) {
         final Spinner sp_sched_type = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_date_time_type);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_type, mGp.isScreenThemeIsLight());
+        CommonUtilities.setSpinnerBackground(mActivity, sp_sched_type, mGp.isScreenThemeIsLight());
 
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        sp_sched_type.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_prompt));
+        sp_sched_type.setPrompt(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_prompt));
         sp_sched_type.setAdapter(adapter);
-        adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour));
-        adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_day));
-        adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_month));
-        adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_day_of_week));
-        adapter.add(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_type_interval));
+        adapter.add(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_hour));
+        adapter.add(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_day));
+        adapter.add(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_every_month));
+        adapter.add(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_day_of_week));
+        adapter.add(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_type_interval));
 
         if (!type.equals("")) {
             int sel = -1;
@@ -1177,11 +1175,11 @@ public class ScheduleEditor {
 
     private void setScheduleDaySpinner(Dialog dialog, String dd) {
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_day);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.isScreenThemeIsLight());
+        CommonUtilities.setSpinnerBackground(mActivity, sp_sched_hours, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        sp_sched_hours.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_day_prompt));
+        sp_sched_hours.setPrompt(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_day_prompt));
         sp_sched_hours.setAdapter(adapter);
 
         int sel = -1, s_hh = Integer.parseInt(dd);
@@ -1196,11 +1194,11 @@ public class ScheduleEditor {
 
     private void setScheduleHoursSpinner(Dialog dialog, String hh) {
         final Spinner sp_sched_hours = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_hours);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_hours, mGp.isScreenThemeIsLight());
+        CommonUtilities.setSpinnerBackground(mActivity, sp_sched_hours, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        sp_sched_hours.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_hours_prompt));
+        sp_sched_hours.setPrompt(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_hours_prompt));
         sp_sched_hours.setAdapter(adapter);
 
         int sel = -1, s_hh = Integer.parseInt(hh);
@@ -1215,11 +1213,11 @@ public class ScheduleEditor {
 
     private void setScheduleMinutesSpinner(Dialog dialog, String sched_type, String mm) {
         final Spinner sp_sched_minutes = (Spinner) dialog.findViewById(R.id.scheduler_main_dlg_exec_minutes);
-        CommonUtilities.setSpinnerBackground(mContext, sp_sched_minutes, mGp.isScreenThemeIsLight());
+        CommonUtilities.setSpinnerBackground(mActivity, sp_sched_minutes, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        sp_sched_minutes.setPrompt(mContext.getString(R.string.msgs_scheduler_main_spinner_sched_hours_prompt));
+        sp_sched_minutes.setPrompt(mActivity.getString(R.string.msgs_scheduler_main_spinner_sched_hours_prompt));
         sp_sched_minutes.setAdapter(adapter);
 
         int sel = 0, s_mm = Integer.parseInt(mm);
@@ -1272,7 +1270,7 @@ public class ScheduleEditor {
             }
             if (o != null) {
                 if (o.substring(0, 1).equals(SYNC_TASK_DISABLED)) {
-                    holder.tv_name.setText(o.substring(1)+"\n"+mContext.getString(R.string.msgs_scheduler_info_sync_task_was_deleted_or_renamed));
+                    holder.tv_name.setText(o.substring(1)+"\n"+mActivity.getString(R.string.msgs_scheduler_info_sync_task_was_deleted_or_renamed));
                     holder.tv_name.setTextColor(mThemeColorList.text_color_warning);
                     holder.tv_name.setChecked(false);
                 } else {

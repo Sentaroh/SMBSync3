@@ -84,7 +84,6 @@ public class TaskListUtils {
 
     //	private CustomContextMenu ccMenu=null;
 
-    private Context mContext;
     private ActivityMain mActivity;
 
     private CommonUtilities mUtil;
@@ -93,7 +92,6 @@ public class TaskListUtils {
     private FragmentManager mFragMgr = null;
 
     public TaskListUtils(CommonUtilities mu, ActivityMain a, GlobalParameters gp, FragmentManager fm) {
-        mContext = a;
         mGp = gp;
         mUtil = mu;
 		mActivity=a;
@@ -116,7 +114,7 @@ public class TaskListUtils {
             }
         }
 
-        saveConfigListWithAutosave(mContext, gp, mUtil);
+        saveConfigListWithAutosave(mActivity, gp, mUtil);
         mGp.syncTaskListAdapter.notifyDataSetChanged();
         gp.syncTaskListAdapter.setNotifyOnChange(true);
     }
@@ -146,7 +144,7 @@ public class TaskListUtils {
             }
         }
 
-        saveConfigListWithAutosave(mContext, mGp, mUtil);
+        saveConfigListWithAutosave(mActivity, mGp, mUtil);
         mGp.syncTaskListAdapter.notifyDataSetChanged();
         mGp.syncTaskListAdapter.setNotifyOnChange(true);
         mGp.syncTaskView.setSelectionFromTop(pos, posTop);
@@ -164,7 +162,7 @@ public class TaskListUtils {
             } else dpnum[i] = -1;
         }
 
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -180,7 +178,7 @@ public class TaskListUtils {
                     ScheduleEditor.removeSyncTaskFromSchedule(mGp, mUtil, mGp.syncScheduleList, dpItemList.get(i).getSyncTaskName());
                     GroupEditor.removeSyncTaskFromGroup(mGp, mUtil, dpItemList.get(i).getSyncTaskName());
                 }
-                if (mGp.syncTaskListAdapter.getCount()>0) saveConfigListWithAutosave(mContext, mGp, mUtil);
+                if (mGp.syncTaskListAdapter.getCount()>0) saveConfigListWithAutosave(mActivity, mGp, mUtil);
 
                 mGp.syncTaskListAdapter.setNotifyOnChange(true);
                 mGp.syncTaskView.setSelection(pos);
@@ -200,8 +198,8 @@ public class TaskListUtils {
             }
         });
         mUtil.showCommonDialog(true, "W",
-                mContext.getString(R.string.msgs_delete_following_profile),
-                mContext.getString(R.string.msgs_task_name_remove_with_schedule_group_task_list)+"\n\n"+dpmsg+"\n", ntfy);
+                mActivity.getString(R.string.msgs_delete_following_profile),
+                mActivity.getString(R.string.msgs_task_name_remove_with_schedule_group_task_list)+"\n\n"+dpmsg+"\n", ntfy);
     }
 
     public void renameSyncTask(final SyncTaskItem pli, final NotifyEvent p_ntfy) {
@@ -214,7 +212,7 @@ public class TaskListUtils {
         dialog.setContentView(R.layout.single_item_input_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
-        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mActivity, ll_dlg_view);
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
@@ -228,10 +226,10 @@ public class TaskListUtils {
         final Button btn_cancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
         final EditText etInput = (EditText) dialog.findViewById(R.id.single_item_input_dir);
 
-        title.setText(mContext.getString(R.string.msgs_rename_profile));
+        title.setText(mActivity.getString(R.string.msgs_rename_profile));
 
         dlg_cmp.setVisibility(TextView.VISIBLE);
-        dlg_cmp.setText(mContext.getString(R.string.msgs_task_name_rename_with_schedule_group_task_list));
+        dlg_cmp.setText(mActivity.getString(R.string.msgs_task_name_rename_with_schedule_group_task_list));
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
         etInput.setText(pli.getSyncTaskName());
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
@@ -240,14 +238,14 @@ public class TaskListUtils {
             public void afterTextChanged(Editable arg0) {
                 if (!arg0.toString().equalsIgnoreCase(pli.getSyncTaskName())) {
                     if (arg0.length()>SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH) {
-                        dlg_msg.setText(mContext.getString(R.string.msgs_sync_task_name_length_invalid, SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH));
+                        dlg_msg.setText(mActivity.getString(R.string.msgs_sync_task_name_length_invalid, SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH));
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     } else {
                         dlg_msg.setText("");
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
                 } else {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_duplicate_task_name));
+                    dlg_msg.setText(mActivity.getString(R.string.msgs_duplicate_task_name));
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 }
             }
@@ -276,7 +274,7 @@ public class TaskListUtils {
                 mGp.syncTaskListAdapter.sort();
                 mGp.syncTaskListAdapter.notifyDataSetChanged();
 
-                saveConfigListWithAutosave(mContext, mGp, mUtil);
+                saveConfigListWithAutosave(mActivity, mGp, mUtil);
 
                 TaskListUtils.setAllSyncTaskToUnchecked(true, mGp.syncTaskListAdapter);
 
@@ -343,7 +341,7 @@ public class TaskListUtils {
         ssi.serverAccountName=remote_user;
         ssi.serverAccountPassword=remote_pass;
 
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         //Listen setRemoteShare response
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
@@ -415,7 +413,7 @@ public class TaskListUtils {
         ssi.serverAccountPassword=remote_pass;
 
         final ArrayList<TreeFilelistItem> rows = new ArrayList<TreeFilelistItem>();
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -425,7 +423,7 @@ public class TaskListUtils {
                     if (rfl.get(i).isDir() && rfl.get(i).canRead()) rows.add(rfl.get(i));
                 }
                 Collections.sort(rows);
-                NotifyEvent ntfy_sel=new NotifyEvent(mContext);
+                NotifyEvent ntfy_sel=new NotifyEvent(mActivity);
                 ntfy_sel.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
@@ -484,7 +482,7 @@ public class TaskListUtils {
         final Button btn_create = (Button) dialog.findViewById(R.id.common_file_selector_create_btn);
         if (show_create) btn_create.setVisibility(Button.VISIBLE);
         else btn_create.setVisibility(Button.GONE);
-        title.setText(mContext.getString(R.string.msgs_select_remote_dir));
+        title.setText(mActivity.getString(R.string.msgs_select_remote_dir));
         final Button btn_ok = (Button) dialog.findViewById(R.id.common_file_selector_btn_ok);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.common_file_selector_btn_cancel);
         final Button btn_up = (Button) dialog.findViewById(R.id.common_file_selector_up_btn);
@@ -524,7 +522,7 @@ public class TaskListUtils {
                 if (tfi.isDir()) {
                     final String n_dir=tfi.getPath()+tfi.getName()+"/";
                     if (tfi.getSubDirItemCount()>=0) {
-                        NotifyEvent ntfy = new NotifyEvent(mContext);
+                        NotifyEvent ntfy = new NotifyEvent(mActivity);
                         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                             @Override
                             public void positiveResponse(Context c, Object[] o) {
@@ -570,7 +568,7 @@ public class TaskListUtils {
             }
         });
 
-        NotifyEvent ctv_ntfy = new NotifyEvent(mContext);
+        NotifyEvent ctv_ntfy = new NotifyEvent(mActivity);
         ctv_ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -588,7 +586,7 @@ public class TaskListUtils {
         btn_create.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotifyEvent ne=new NotifyEvent(mContext);
+                NotifyEvent ne=new NotifyEvent(mActivity);
                 ne.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -604,7 +602,7 @@ public class TaskListUtils {
         btn_refresh.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotifyEvent ntfy_refresh=new NotifyEvent(mContext);
+                NotifyEvent ntfy_refresh=new NotifyEvent(mActivity);
                 ntfy_refresh.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
@@ -636,7 +634,7 @@ public class TaskListUtils {
                 String t_dir=c_dir.substring(0,c_dir.lastIndexOf("/"));
                 final String n_dir=t_dir.lastIndexOf("/")>0?t_dir.substring(0,t_dir.lastIndexOf("/"))+"/":"";
 
-                NotifyEvent ntfy_refresh=new NotifyEvent(mContext);
+                NotifyEvent ntfy_refresh=new NotifyEvent(mActivity);
                 ntfy_refresh.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
@@ -664,7 +662,7 @@ public class TaskListUtils {
         btn_top.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotifyEvent ntfy_refresh=new NotifyEvent(mContext);
+                NotifyEvent ntfy_refresh=new NotifyEvent(mActivity);
                 ntfy_refresh.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
@@ -730,14 +728,14 @@ public class TaskListUtils {
         dialog.setContentView(R.layout.single_item_input_dlg);
 
         final LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
-        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mActivity, ll_dlg_view);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
 
         final TextView dlg_title = (TextView) dialog.findViewById(R.id.single_item_input_title);
         dlg_title.setTextColor(mGp.themeColorList.title_text_color);
-        dlg_title.setText(mContext.getString(R.string.msgs_file_select_edit_dlg_create));
+        dlg_title.setText(mActivity.getString(R.string.msgs_file_select_edit_dlg_create));
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
         final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
 //        dlg_cmp.setTextColor(mGp.themeColorList.text_color_primary);
@@ -745,7 +743,7 @@ public class TaskListUtils {
         final Button btnCancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
         final EditText etDir=(EditText) dialog.findViewById(R.id.single_item_input_dir);
 
-        dlg_cmp.setText(mContext.getString(R.string.msgs_file_select_edit_parent_directory)+":"+c_dir);
+        dlg_cmp.setText(mActivity.getString(R.string.msgs_file_select_edit_parent_directory)+":"+c_dir);
 
         CommonDialog.setDlgBoxSizeCompact(dialog);
 
@@ -772,7 +770,7 @@ public class TaskListUtils {
             public void onClick(View v) {
                 final String creat_dir=etDir.getText().toString();
                 final String n_path=c_dir+"/"+creat_dir+"/";
-                NotifyEvent ne_exists=new NotifyEvent(mContext);
+                NotifyEvent ne_exists=new NotifyEvent(mActivity);
                 ne_exists.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
@@ -781,16 +779,16 @@ public class TaskListUtils {
                             hndl.post(new Runnable() {
                                   @Override
                                   public void run() {
-                                      dlg_msg.setText(mContext.getString(R.string.msgs_single_item_input_dlg_duplicate_dir));
+                                      dlg_msg.setText(mActivity.getString(R.string.msgs_single_item_input_dlg_duplicate_dir));
                                   }
                             });
                             return;
                         }
-                        NotifyEvent ntfy_confirm=new NotifyEvent(mContext);
+                        NotifyEvent ntfy_confirm=new NotifyEvent(mActivity);
                         ntfy_confirm.setListener(new NotifyEvent.NotifyEventListener(){
                             @Override
                             public void positiveResponse(Context c, final Object[] o) {
-                                NotifyEvent notify_create=new NotifyEvent(mContext);
+                                NotifyEvent notify_create=new NotifyEvent(mActivity);
                                 notify_create.setListener(new NotifyEvent.NotifyEventListener() {
                                     @Override
                                     public void positiveResponse(Context context, final Object[] objects) {
@@ -826,8 +824,8 @@ public class TaskListUtils {
                             @Override
                             public void negativeResponse(Context c, Object[] o) {}
                         });
-                        CommonDialog cd=new CommonDialog(mContext, mFragMgr);
-                        cd.showCommonDialog(true, "W", mContext.getString(R.string.msgs_file_select_edit_confirm_create_directory), n_path, ntfy_confirm);
+                        CommonDialog cd=new CommonDialog(mActivity, mFragMgr);
+                        cd.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_file_select_edit_confirm_create_directory), n_path, ntfy_confirm);
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {
@@ -868,7 +866,7 @@ public class TaskListUtils {
                       p_ntfy.notifyToListener(false, new Object[]{e.toString()});
                   } catch (JcifsException e) {
                       e.printStackTrace();
-                      String suggest_msg=getJcifsErrorSugestionMessage(mContext, MiscUtil.getStackTraceString(e));
+                      String suggest_msg=getJcifsErrorSugestionMessage(mActivity, MiscUtil.getStackTraceString(e));
                       String cause="";
                       String un="";
                       if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
@@ -943,7 +941,7 @@ public class TaskListUtils {
                     p_ntfy.notifyToListener(false, new Object[]{e.toString()});
                 } catch (JcifsException e) {
                     e.printStackTrace();
-                    String suggest_msg=getJcifsErrorSugestionMessage(mContext, MiscUtil.getStackTraceString(e));
+                    String suggest_msg=getJcifsErrorSugestionMessage(mActivity, MiscUtil.getStackTraceString(e));
                     String cause="";
                     String un="";
                     if (mGp.settingSecurityReinitSmbAccountPasswordValue) {
@@ -985,13 +983,13 @@ public class TaskListUtils {
         dlg_help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskEditor.showFieldHelp(mActivity, mGp, mContext.getString(R.string.msgs_help_directory_filter_title),
-                        mContext.getString(R.string.msgs_help_directory_filter_file));
+                TaskEditor.showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_directory_filter_title),
+                        mActivity.getString(R.string.msgs_help_directory_filter_file));
             }
         });
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_list_edit_msg);
         final TextView dlg_add_guide=(TextView)dialog.findViewById(R.id.filter_list_edit_add_guide);
-        dlg_add_guide.setText(mContext.getString(R.string.msgs_filter_list_guide_directory));
+        dlg_add_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_directory));
         final LinearLayout guide_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_guide_view);
         guide_view.setVisibility(LinearLayout.VISIBLE);
         final LinearLayout parent_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_parent_view);
@@ -1014,9 +1012,9 @@ public class TaskListUtils {
         lv.setScrollbarFadingEnabled(false);
 
         if (!hasEnabledFilters(filterAdapter))
-            dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
 
-        title.setText(mContext.getString(R.string.msgs_filter_list_dlg_dir_filter));
+        title.setText(mActivity.getString(R.string.msgs_filter_list_dlg_dir_filter));
         final Button dirbtn = (Button) dialog.findViewById(R.id.filter_list_edit_list_dir_btn);
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
@@ -1034,13 +1032,13 @@ public class TaskListUtils {
 
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
-        NotifyEvent ntfy_switch = new NotifyEvent(mContext);
+        NotifyEvent ntfy_switch = new NotifyEvent(mActivity);
         ntfy_switch.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
                 if (!hasEnabledFilters(filterAdapter)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+                    dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 }
@@ -1058,7 +1056,7 @@ public class TaskListUtils {
         });
         filterAdapter.setNotifyIncExcListener(ntfy_switch);
 
-        NotifyEvent ntfy_delete = new NotifyEvent(mContext);
+        NotifyEvent ntfy_delete = new NotifyEvent(mActivity);
         ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -1075,7 +1073,7 @@ public class TaskListUtils {
                 FilterListAdapter.FilterListItem fli = filterAdapter.getItem(idx);
                 if (fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -1084,7 +1082,7 @@ public class TaskListUtils {
                         dlg_msg.setText("");
                         if (!hasEnabledFilters(filterAdapter)) {
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
                         if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) {
@@ -1114,7 +1112,7 @@ public class TaskListUtils {
                     ll_dlg_view.requestLayout();
                     String filter= StringUtil.removeRedundantCharacter(s.toString(), ";", true, true);
                     String[]filter_array=filter.split(";");
-                    String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mContext, filter);
+                    String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mActivity, filter);
                     if (!err_msg.equals("")) {
                         dlg_msg.setText(err_msg);
                         CommonUtilities.setViewEnabled(mActivity, addbtn, false);
@@ -1123,7 +1121,7 @@ public class TaskListUtils {
                     }
                     String dup_filter=getDuplicateFilter(filter, filterAdapter);
                     if (!dup_filter.equals("")) {
-                        String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                        String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, dup_filter));
                         CommonUtilities.setViewEnabled(mActivity, addbtn, false);
                         CommonUtilities.setViewEnabled(mActivity, dirbtn, true);
@@ -1138,14 +1136,14 @@ public class TaskListUtils {
                             if (!add_exclude_btn.isChecked()) {
                                 add_exclude_btn.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
-                                        mContext.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, filter), "", null);
+                                        mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, filter), "", null);
                             }
                         } else {
                             CommonUtilities.setViewEnabled(mActivity, add_include_btn, true);
                         }
                         if (!hasEnabledFilters(filterAdapter)) {
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
                     }
@@ -1189,7 +1187,7 @@ public class TaskListUtils {
         // Directoryボタンの指定
         dirbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context arg0, Object[] arg1) {
@@ -1218,7 +1216,7 @@ public class TaskListUtils {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) {
-                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mContext);
+                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mActivity);
                     ntfy_cancel_confirm.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -1229,7 +1227,7 @@ public class TaskListUtils {
                         @Override
                         public void negativeResponse(Context context, Object[] objects) { }
                     });
-                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
+                    mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
                 } else {
                     dialog.dismiss();
                     p_ntfy.notifyToListener(false, null);
@@ -1291,7 +1289,7 @@ public class TaskListUtils {
         title.setTextColor(mGp.themeColorList.title_text_color);
 
         final TextView dlg_add_guide=(TextView)dialog.findViewById(R.id.filter_list_edit_add_guide);
-        dlg_add_guide.setText(mContext.getString(R.string.msgs_filter_list_guide_file));
+        dlg_add_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_file));
         final LinearLayout guide_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_guide_view);
         guide_view.setVisibility(LinearLayout.VISIBLE);
         final LinearLayout parent_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_parent_view);
@@ -1309,7 +1307,7 @@ public class TaskListUtils {
         lv.setAdapter(filterAdapter);
         filterAdapter.setNotifyOnChange(true);
 
-        title.setText(mContext.getString(R.string.msgs_filter_list_dlg_file_filter));
+        title.setText(mActivity.getString(R.string.msgs_filter_list_dlg_file_filter));
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_list_edit_msg);
         dlg_msg.setText("");
 
@@ -1330,16 +1328,16 @@ public class TaskListUtils {
 
         if (!hasEnabledFilters(filterAdapter)) {
             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-            dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
         }
 
-        NotifyEvent ntfy_switch = new NotifyEvent(mContext);
+        NotifyEvent ntfy_switch = new NotifyEvent(mActivity);
         ntfy_switch.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
                 if (!hasEnabledFilters(filterAdapter)) {
-                    dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+                    dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     return;
                 }
@@ -1356,7 +1354,7 @@ public class TaskListUtils {
         });
         filterAdapter.setNotifyIncExcListener(ntfy_switch);
 
-        NotifyEvent ntfy_delete = new NotifyEvent(mContext);
+        NotifyEvent ntfy_delete = new NotifyEvent(mActivity);
         ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -1374,14 +1372,14 @@ public class TaskListUtils {
                 FilterListAdapter.FilterListItem fli = filterAdapter.getItem(idx);
                 if (fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         filterAdapter.notifyDataSetChanged();
                         if (!hasEnabledFilters(filterAdapter)) {
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
                         if (isFilterListChanged(file_filter, filterAdapter)) {
@@ -1408,7 +1406,7 @@ public class TaskListUtils {
                 if (s.length() != 0) {
                     parent_view.requestLayout();
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
-                    String error_message= FilterListAdapter.FilterListItem.checkFileFilterError(mContext, new_filter);
+                    String error_message= FilterListAdapter.FilterListItem.checkFileFilterError(mActivity, new_filter);
                     if (!error_message.equals("")) {
                         dlg_msg.setText(error_message);
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
@@ -1417,14 +1415,14 @@ public class TaskListUtils {
                     }
                     String dup_filter=getDuplicateFilter(new_filter, filterAdapter);
                     if (!dup_filter.equals("")) {
-                        String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                        String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                         dlg_msg.setText(String.format(mtxt, dup_filter));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     } else {
                         if (!hasEnabledFilters(filterAdapter)) {
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
+                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
                             return;
                         }
                         dlg_msg.setText("");
@@ -1462,7 +1460,7 @@ public class TaskListUtils {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (isFilterListChanged(file_filter, filterAdapter)) {
-                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mContext);
+                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mActivity);
                     ntfy_cancel_confirm.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -1471,7 +1469,7 @@ public class TaskListUtils {
                         @Override
                         public void negativeResponse(Context context, Object[] objects) { }
                     });
-                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
+                    mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
                 } else {
                     dialog.dismiss();
                 }
@@ -1525,16 +1523,16 @@ public class TaskListUtils {
         final TextView title = (TextView) dialog.findViewById(R.id.filter_list_edit_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
-        title.setText(mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_title));
+        title.setText(mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_title));
 
         final TextView dlg_add_guide=(TextView)dialog.findViewById(R.id.filter_list_edit_add_guide);
-        dlg_add_guide.setText(mContext.getString(R.string.msgs_filter_list_guide_ip_address));
+        dlg_add_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_ip_address));
         final LinearLayout guide_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_guide_view);
         final LinearLayout parent_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_parent_view);
         guide_view.setVisibility(LinearLayout.VISIBLE);
 
         Button add_current_addr = (Button) dialog.findViewById(R.id.filter_list_edit_list_dir_btn);
-        add_current_addr.setText(mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_add_current_addr));
+        add_current_addr.setText(mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_add_current_addr));
 
         filterAdapter = new FilterListAdapter(mActivity,
                 R.layout.filter_list_item_view, filterList, false, FilterListAdapter.FILTER_TYPE_IP_ADDRESS);
@@ -1551,7 +1549,7 @@ public class TaskListUtils {
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_list_edit_new_filter);
-        et_filter.setHint(mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_hint));
+        et_filter.setHint(mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_hint));
         et_filter.setKeyListener(DigitsKeyListener.getInstance("0123456789.*"));
 
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_list_edit_add_btn);
@@ -1559,7 +1557,7 @@ public class TaskListUtils {
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_list_edit_ok_btn);
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
-        NotifyEvent ntfy_delete = new NotifyEvent(mContext);
+        NotifyEvent ntfy_delete = new NotifyEvent(mActivity);
         ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -1578,7 +1576,7 @@ public class TaskListUtils {
                 FilterListAdapter.FilterListItem fli = filterAdapter.getItem(idx);
                 if (fli.isDeleted()) return;
                 // リストアイテムを選択したときの処理
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -1596,7 +1594,7 @@ public class TaskListUtils {
 
                 });
                 editFilterItem(idx, filterAdapter, fli, fli.getFilter(),
-                        mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_edit_title), ntfy, FilterListAdapter.FILTER_TYPE_IP_ADDRESS);
+                        mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_edit_title), ntfy, FilterListAdapter.FILTER_TYPE_IP_ADDRESS);
             }
         });
 
@@ -1608,7 +1606,7 @@ public class TaskListUtils {
                 if (s.length() != 0) {
                     parent_view.requestLayout();
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
-                    String error_message= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mContext, new_filter);
+                    String error_message= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mActivity, new_filter);
                     if (!error_message.equals("")) {
                         dlg_msg.setText(error_message);
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
@@ -1616,14 +1614,14 @@ public class TaskListUtils {
                         return;
                     }
                     if (!isValidIpV4Address(new_filter)) {
-                        dlg_msg.setText(mContext.getString(R.string.msgs_filter_list_invalid_ip_address));
+                        dlg_msg.setText(mActivity.getString(R.string.msgs_filter_list_invalid_ip_address));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
                     String dup_filter=getDuplicateFilter(new_filter, filterAdapter);
                     if (!dup_filter.equals("")) {
-                        String mtxt = mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
+                        String mtxt = mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
                         dlg_msg.setText(String.format(mtxt, dup_filter));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
@@ -1651,12 +1649,12 @@ public class TaskListUtils {
         add_current_addr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WifiManager wm = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+                WifiManager wm = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
                 String ip_addr = CommonUtilities.getIfIpAddress(mUtil);
                 if (!ip_addr.equals("")) {
                     String dup_filter=getDuplicateFilter(ip_addr, filterAdapter);
                     if (!dup_filter.equals("")) {
-                        String mtxt = mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
+                        String mtxt = mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
                         dlg_msg.setText(String.format(mtxt, ip_addr));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
@@ -1668,7 +1666,7 @@ public class TaskListUtils {
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     }
                 } else {
-                    String mtxt = mContext.getString(R.string.msgs_task_sync_task_dlg_wifi_ap_not_connected);
+                    String mtxt = mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_ap_not_connected);
                     dlg_msg.setText(mtxt);
                 }
             }
@@ -1693,7 +1691,7 @@ public class TaskListUtils {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (isFilterListChanged(addr_list, filterAdapter)) {
-                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mContext);
+                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mActivity);
                     ntfy_cancel_confirm.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -1702,7 +1700,7 @@ public class TaskListUtils {
                         @Override
                         public void negativeResponse(Context context, Object[] objects) { }
                     });
-                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
+                    mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
                 } else {
                     dialog.dismiss();
                 }
@@ -1751,7 +1749,7 @@ public class TaskListUtils {
         dialog.setContentView(R.layout.filter_item_edit_dlg);
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.filter_item_edit_dlg_view);
-        CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+        CommonUtilities.setDialogBoxOutline(mActivity, ll_dlg_view);
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.filter_item_edit_dlg_title_view);
@@ -1763,10 +1761,10 @@ public class TaskListUtils {
         dlg_msg.setVisibility(TextView.VISIBLE);
 
         final TextView dlg_guide=(TextView)dialog.findViewById(R.id.filter_item_edit_dlg_guide);
-        if (filter_type==FilterListAdapter.FILTER_TYPE_DIRECTORY) dlg_guide.setText(mContext.getString(R.string.msgs_filter_list_guide_directory));
-        else if (filter_type==FilterListAdapter.FILTER_TYPE_FILE) dlg_guide.setText(mContext.getString(R.string.msgs_filter_list_guide_file));
-        else if (filter_type==FilterListAdapter.FILTER_TYPE_ACCESS_POINT) dlg_guide.setText(mContext.getString(R.string.msgs_filter_list_guide_access_point));
-        else if (filter_type==FilterListAdapter.FILTER_TYPE_IP_ADDRESS) dlg_guide.setText(mContext.getString(R.string.msgs_filter_list_guide_ip_address));
+        if (filter_type==FilterListAdapter.FILTER_TYPE_DIRECTORY) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_directory));
+        else if (filter_type==FilterListAdapter.FILTER_TYPE_FILE) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_file));
+        else if (filter_type==FilterListAdapter.FILTER_TYPE_ACCESS_POINT) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_access_point));
+        else if (filter_type==FilterListAdapter.FILTER_TYPE_IP_ADDRESS) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_ip_address));
 
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_item_edit_dlg_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_item_edit_dlg_ok_btn);
@@ -1837,7 +1835,7 @@ public class TaskListUtils {
             public void afterTextChanged(Editable s) {
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                 if (s.length()==0) {
-                    String mtxt = mContext.getString(R.string.msgs_filter_list_dlg_not_specified);
+                    String mtxt = mActivity.getString(R.string.msgs_filter_list_dlg_not_specified);
                     dlg_msg.setText(mtxt);
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     return;
@@ -1845,7 +1843,7 @@ public class TaskListUtils {
                     String newfilter =StringUtil.removeRedundantCharacter(s.toString(), ";", true, true);
                     if (filter_type==FilterListAdapter.FILTER_TYPE_DIRECTORY) {
                         dlg_msg.setText("");
-                        String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mContext, newfilter);
+                        String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mActivity, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
@@ -1856,7 +1854,7 @@ public class TaskListUtils {
                         if (!changed_filter.equals("")) {
                             String dup_filter=getDuplicateFilter(newfilter, current_fl_exclude_edit_item);
                             if (!dup_filter.equals("")) {
-                                String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                                String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 dlg_msg.setText(String.format(mtxt, dup_filter));
                                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 return;
@@ -1868,7 +1866,7 @@ public class TaskListUtils {
                             if (!rb_exclude.isChecked()) {
                                 rb_exclude.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
-                                        mContext.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, newfilter), "", null);
+                                        mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, newfilter), "", null);
                             }
                         } else {
                             CommonUtilities.setViewEnabled(mActivity, rb_include, true);
@@ -1876,7 +1874,7 @@ public class TaskListUtils {
                         FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                         if (isFilterItemChanged(fli, new_fli)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else if (filter_type==FilterListAdapter.FILTER_TYPE_FILE) {
-                        String err_msg= FilterListAdapter.FilterListItem.checkFileFilterError(mContext, newfilter);
+                        String err_msg= FilterListAdapter.FilterListItem.checkFileFilterError(mActivity, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
@@ -1887,7 +1885,7 @@ public class TaskListUtils {
                         if (!changed_filter.equals("")) {
                             String dup_filter=getDuplicateFilter(newfilter, current_fl_exclude_edit_item);
                             if (!dup_filter.equals("")) {
-                                String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                                String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 dlg_msg.setText(String.format(mtxt, dup_filter));
                                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 return;
@@ -1898,7 +1896,7 @@ public class TaskListUtils {
                         FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                         if (isFilterItemChanged(fli, new_fli)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else if (filter_type==FilterListAdapter.FILTER_TYPE_ACCESS_POINT || filter_type==FilterListAdapter.FILTER_TYPE_IP_ADDRESS) {
-                        String err_msg= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mContext, newfilter);
+                        String err_msg= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mActivity, newfilter);
                         if (!err_msg.equals("")) {
                             dlg_msg.setVisibility(TextView.VISIBLE);
                             dlg_msg.setText(err_msg);
@@ -1909,7 +1907,7 @@ public class TaskListUtils {
                         if (!changed_filter.equals("")) {
                             String dup_filter=getDuplicateFilter(newfilter, current_fl_exclude_edit_item);
                             if (!dup_filter.equals("")) {
-                                String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                                String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 dlg_msg.setText(String.format(mtxt, dup_filter));
                                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 return;
@@ -1929,7 +1927,7 @@ public class TaskListUtils {
             public void onClick(View v) {
                 FilterListAdapter.FilterListItem new_fli=buildFilterItem(dialog);
                 if (isFilterItemChanged(fli, new_fli)) {
-                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mContext);
+                    NotifyEvent ntfy_cancel_confirm=new NotifyEvent(mActivity);
                     ntfy_cancel_confirm.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context context, Object[] objects) {
@@ -1939,7 +1937,7 @@ public class TaskListUtils {
                         @Override
                         public void negativeResponse(Context context, Object[] objects) { }
                     });
-                    mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
+                    mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_filter_list_filter_was_changed), "", ntfy_cancel_confirm);
                 } else {
                     dialog.dismiss();
                 }
@@ -1967,8 +1965,8 @@ public class TaskListUtils {
                     fli.setInclude(false);
                     if (org_inc) {
                         CommonDialog.showCommonDialog(mActivity.getSupportFragmentManager(), false, "W",
-                                mContext.getString(R.string.msgs_filter_edit_dlg_title),
-                                mContext.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, fli.getFilter()), null);
+                                mActivity.getString(R.string.msgs_filter_edit_dlg_title),
+                                mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, fli.getFilter()), null);
                     }
                 }
 
@@ -2132,13 +2130,13 @@ public class TaskListUtils {
         final String c_dir =
                 sti.getSourceDirectoryName().equals("")?CommonUtilities.getStoragePathFromUuid(m_uuid):CommonUtilities.getStoragePathFromUuid(m_uuid)+"/"+sti.getSourceDirectoryName();
 
-        NotifyEvent ntfy=new NotifyEvent(mContext);
+        NotifyEvent ntfy=new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 ArrayList<TreeFilelistItem> tfl=(ArrayList<TreeFilelistItem>)objects[0];
                 if (tfl.size()==0) {
-                    String msg=mContext.getString(R.string.msgs_dir_empty);
+                    String msg=mActivity.getString(R.string.msgs_dir_empty);
                     mUtil.showCommonDialog(false,"W",msg,"",null);
                     return;
                 }
@@ -2158,9 +2156,9 @@ public class TaskListUtils {
                 title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
                 title.setTextColor(mGp.themeColorList.title_text_color);
 
-                title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
+                title.setText(mActivity.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
 
-                subtitle.setText(mContext.getString(R.string.msgs_current_dir) + " " + c_dir);
+                subtitle.setText(mActivity.getString(R.string.msgs_current_dir) + " " + c_dir);
                 final TextView dlg_msg = (TextView) dialog.findViewById(R.id.item_select_list_dlg_msg);
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
 
@@ -2180,7 +2178,7 @@ public class TaskListUtils {
                 lv.setScrollingCacheEnabled(false);
                 lv.setScrollbarFadingEnabled(false);
 
-                NotifyEvent ntfy_expand_close = new NotifyEvent(mContext);
+                NotifyEvent ntfy_expand_close = new NotifyEvent(mActivity);
                 ntfy_expand_close.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -2237,7 +2235,7 @@ public class TaskListUtils {
 
                 //OKボタンの指定
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
@@ -2260,7 +2258,7 @@ public class TaskListUtils {
                 });
                 tfa.setCbCheckListener(ntfy);
 
-                btn_ok.setText(mContext.getString(R.string.msgs_filter_list_dlg_add));
+                btn_ok.setText(mActivity.getString(R.string.msgs_filter_list_dlg_add));
                 btn_ok.setVisibility(Button.VISIBLE);
                 btn_ok.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
@@ -2273,7 +2271,7 @@ public class TaskListUtils {
 
                 //CANCELボタンの指定
                 final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
-                btn_cancel.setText(mContext.getString(R.string.msgs_filter_list_dlg_close));
+                btn_cancel.setText(mActivity.getString(R.string.msgs_filter_list_dlg_close));
                 btn_cancel.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
                         dialog.dismiss();
@@ -2325,7 +2323,7 @@ public class TaskListUtils {
         ssi.serverAccountName=sti.getSourceSmbAccountName();
         ssi.serverAccountPassword=sti.getSourceSmbAccountPassword();
 
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         // set thread response
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
@@ -2333,7 +2331,7 @@ public class TaskListUtils {
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
 
                 if (rfl.size()==0) {
-                    String msg=mContext.getString(R.string.msgs_dir_empty);
+                    String msg=mActivity.getString(R.string.msgs_dir_empty);
                     mUtil.showCommonDialog(false,"W",msg,"",null);
                     return;
                 }
@@ -2353,7 +2351,7 @@ public class TaskListUtils {
                 title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
                 title.setTextColor(mGp.themeColorList.title_text_color);
 
-                title.setText(mContext.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
+                title.setText(mActivity.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
                 subtitle.setText((remdir.equals("//")) ? host_name+host_addr+"/"+host_share : host_name+host_addr+"/"+host_share+  remdir);
                 final TextView dlg_msg = (TextView) dialog.findViewById(R.id.item_select_list_dlg_msg);
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
@@ -2374,7 +2372,7 @@ public class TaskListUtils {
                 lv.setScrollingCacheEnabled(false);
                 lv.setScrollbarFadingEnabled(false);
 
-                NotifyEvent ntfy_expand_close = new NotifyEvent(mContext);
+                NotifyEvent ntfy_expand_close = new NotifyEvent(mActivity);
                 ntfy_expand_close.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
@@ -2405,7 +2403,7 @@ public class TaskListUtils {
                 });
 
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                NotifyEvent ntfy = new NotifyEvent(mContext);
+                NotifyEvent ntfy = new NotifyEvent(mActivity);
                 //Listen setRemoteShare response
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
@@ -2423,7 +2421,7 @@ public class TaskListUtils {
                                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                                 tfi.setChecked(false);
                                 tfa.notifyDataSetChanged();
-                                String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                                String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                                 String dup_msg= String.format(mtxt, sel);
                                 Toast toast=CommonDialog.getToastLong(mActivity, dup_msg);
                                 toast.show();
@@ -2444,7 +2442,7 @@ public class TaskListUtils {
                 });
                 tfa.setCbCheckListener(ntfy);
 
-                btn_ok.setText(mContext.getString(R.string.msgs_filter_list_dlg_add));
+                btn_ok.setText(mActivity.getString(R.string.msgs_filter_list_dlg_add));
                 btn_ok.setVisibility(Button.VISIBLE);
                 btn_ok.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
@@ -2456,7 +2454,7 @@ public class TaskListUtils {
                 });
 
                 final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
-                btn_cancel.setText(mContext.getString(R.string.msgs_filter_list_dlg_close));
+                btn_cancel.setText(mActivity.getString(R.string.msgs_filter_list_dlg_close));
                 btn_cancel.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
                         dialog.dismiss();
@@ -2497,7 +2495,7 @@ public class TaskListUtils {
                 }
                 String dup_filter=getDuplicateFilter(sel, fla);
                 if (!dup_filter.equals("")) {
-                    String mtxt = mContext.getString(R.string.msgs_filter_list_duplicate_filter_specified);
+                    String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
                     dlg_msg.setText(String.format(mtxt, sel));
                     return false;
                 } else {
@@ -2515,7 +2513,7 @@ public class TaskListUtils {
         if (!check_only) {
             fla.setNotifyOnChange(true);
             fla.sort();
-            dlg_msg.setText(String.format(mContext.getString(R.string.msgs_filter_list_dlg_filter_added),
+            dlg_msg.setText(String.format(mActivity.getString(R.string.msgs_filter_list_dlg_filter_added),
                     add_msg));
         }
         return true;
@@ -2601,7 +2599,7 @@ public class TaskListUtils {
                       fp = dir + "/";
                   }
 
-                  SafFile3 lf =new SafFile3(mContext, dir);
+                  SafFile3 lf =new SafFile3(mActivity, dir);
                   final SafFile3[] ff = lf.listFiles();
                   TreeFilelistItem tfi = null;
                   if (ff != null) {
@@ -2669,7 +2667,7 @@ public class TaskListUtils {
         });
 
         final Handler hndl = new Handler();
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
@@ -2685,9 +2683,9 @@ public class TaskListUtils {
                             p_event.notifyToListener(true, new Object[]{remoteFileList});
                         } else {
                             if (tc.isThreadResultError()) {
-                                String suggest_msg=getJcifsErrorSugestionMessage(mContext, tc.getThreadMessage());
-                                if (suggest_msg.equals("")) err = mContext.getString(R.string.msgs_filelist_error) + "\n" + tc.getThreadMessage();
-                                else err = mContext.getString(R.string.msgs_filelist_error)+"\n"+suggest_msg+"\n" + tc.getThreadMessage();
+                                String suggest_msg=getJcifsErrorSugestionMessage(mActivity, tc.getThreadMessage());
+                                if (suggest_msg.equals("")) err = mActivity.getString(R.string.msgs_filelist_error) + "\n" + tc.getThreadMessage();
+                                else err = mActivity.getString(R.string.msgs_filelist_error)+"\n"+suggest_msg+"\n" + tc.getThreadMessage();
                                 p_event.notifyToListener(false, new Object[]{err});
                             }
                         }
@@ -2699,7 +2697,7 @@ public class TaskListUtils {
             public void negativeResponse(Context c, Object[] o) {}
         });
 
-        Thread tf = new Thread(new ReadSmbFilelist(mContext, tc, opcd, ssi, remdir, remoteFileList, ntfy, true, readSubDirCnt, mGp));
+        Thread tf = new Thread(new ReadSmbFilelist(mActivity, tc, opcd, ssi, remdir, remoteFileList, ntfy, true, readSubDirCnt, mGp));
         tf.start();
 
         dialog.show();
@@ -2707,7 +2705,7 @@ public class TaskListUtils {
 
     public void selectRemoteShareDlg(SmbServerInfo ssi, final NotifyEvent p_ntfy) {
 
-        NotifyEvent ntfy = new NotifyEvent(mContext);
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         // set thread response
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
@@ -2717,7 +2715,7 @@ public class TaskListUtils {
                 for (TreeFilelistItem item:rfl) rows.add(item.getName());
                 if (rows.size() < 1) {
                     mUtil.showCommonDialog(false, "W",
-                            mContext.getString(R.string.msgs_share_list_not_obtained), "", null);
+                            mActivity.getString(R.string.msgs_share_list_not_obtained), "", null);
                     return;
                 }
                 Collections.sort(rows, String.CASE_INSENSITIVE_ORDER);
@@ -2728,7 +2726,7 @@ public class TaskListUtils {
                 dialog.setContentView(R.layout.item_select_list_dlg);
 
                 LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_view);
-                CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
+                CommonUtilities.setDialogBoxOutline(mActivity, ll_dlg_view);
 //                ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
                 final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.item_select_list_dlg_title_view);
@@ -2738,7 +2736,7 @@ public class TaskListUtils {
                 title.setTextColor(mGp.themeColorList.title_text_color);
 //                subtitle.setTextColor(mGp.themeColorList.text_color_dialog_title);
 
-                title.setText(mContext.getString(R.string.msgs_select_remote_share));
+                title.setText(mActivity.getString(R.string.msgs_select_remote_share));
                 subtitle.setVisibility(TextView.GONE);
 
                 final Button btn_cancel = (Button) dialog.findViewById(R.id.item_select_list_dlg_cancel_btn);
@@ -2810,7 +2808,7 @@ public class TaskListUtils {
                 if (tfi.isSubDirLoaded())
                     tfa.reshowChildItem(tfi, pos);
                 else {
-                    NotifyEvent ne = new NotifyEvent(mContext);
+                    NotifyEvent ne = new NotifyEvent(mActivity);
                     ne.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context c, Object[] o) {
@@ -2837,7 +2835,7 @@ public class TaskListUtils {
             else {
                 if (tfi.isSubDirLoaded()) tfa.reshowChildItem(tfi, pos);
                 else {
-                    NotifyEvent ne = new NotifyEvent(mContext);
+                    NotifyEvent ne = new NotifyEvent(mActivity);
                     ne.setListener(new NotifyEvent.NotifyEventListener() {
                         @Override
                         public void positiveResponse(Context c, Object[] o) {
