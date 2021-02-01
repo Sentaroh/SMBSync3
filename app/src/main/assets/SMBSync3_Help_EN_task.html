@@ -3,13 +3,13 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync3_Help_EN_task</title></head>
-<body><h3>Test mode</h3>
+<body><h2>Test mode</h2>
 <p>It does not perform overwrite and delete the file if you check. Please be tested when you create a synchronization task, files that are copied or deleted can be found in the message tab.</p>
-<h3>Auto sync task</h3>
+<h2>Auto sync task</h2>
 <p>If checked the task to the automatic. Tasks that are set to automatic synchronization will start when you press the sync button.</p>
-<h3>Task name</h3>
+<h2>Task name</h2>
 <p>Specify task name.</p>
-<h3>Sync type</h3>
+<h2>Sync type</h2>
 <p>Select a method from Mirror, Copy, Move and Archive. <span style="color: red;"><u>Synchronization is done in one direction, from the source folder to the destination folder.</u></span>   </p>
 <ul>
 <li><p>Mirror<br/>Make a differential copy (<strong><u>*1</u></strong>) of directories and files on the source side to the destination side, and delete files and directories on the destination side that do not exist on the source side after the copy is completed.</p>
@@ -30,15 +30,15 @@
 <li>last modified date and time is different by more than 3 seconds (the number of seconds can be changed by the option of the synchronization task)</li>
 
 </ol>
-<h3>Swap the source and destination</h3>
+<h2>Swap the source and destination</h2>
 <p>Swap the contents of the source folder and the destination folder </p>
-<h3>Source folder</h3>
+<h2>Source folder</h2>
 <p>Tap the button to edit source folder</p>
-<h3>Destination folder</h3>
+<h2>Destination folder</h2>
 <p>Tap the button to edit destination folder</p>
-<h3>Select files for sync</h3>
+<h2>Select files for sync</h2>
 <p>If you do not check and then sync all of the file. If you check to see details. </p>
-<h5><u>File name filter</u></h5>
+<h3>File name filter</h3>
 <ul>
 <li><p>Sync audio files</p>
 <p>When checked, sync will include files with the following extensions:<br/>aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
@@ -54,13 +54,13 @@
 </li>
 
 </ul>
-<h5><u>File size filter</u></h5>
+<h3>File size filter</h3>
 <p>You can choose which files to sync depending on their size.  </p>
 <ul>
 <li>Less than/Greater than<br/>You can specify any file size.  </li>
 
 </ul>
-<h5><u>File last modified filter</u></h5>
+<h3>File last modified filter</h3>
 <p>You can select files whose last modification date is before or within xx days of the sync start date.</p>
 <ul>
 <li>If you specify 0 days before, the last update date will be selected only for the start date of synchronization.</li>
@@ -68,20 +68,20 @@
 <li>If you specify Older than 1 day selects files whose last modification date is before the day before the start of synchronization.  </li>
 
 </ul>
-<h3>Select sub directories for sync</h3>
+<h2>Select sub directories for sync</h2>
 <p>If you do not check and then sync all of the sub directory. If you check to show directory filter button.</p>
 <ul>
 <li>Directory filter
 You can select the name of the directory you want to synchronize.</li>
 
 </ul>
-<h3>Execute sync task only when charging</h3>
+<h2>Execute sync task only when charging</h2>
 <p>If checked, you can start sync only while charging. If sync is started when not charging it will result in an error.</p>
-<h3>Sync  includes the files located directly in root of the source directory </h3>
+<h2>Sync  includes the files located directly in root of the source directory </h2>
 <p>If  unchecked, only folders and their files/subfolders are synchronized</p>
-<h3>Confirm before override copy or delete</h3>
+<h2>Confirm before override copy or delete</h2>
 <p>It will display a confirmation dialog when you want to overwrite and delete the file if you have checked.</p>
-<h3>Error Options  </h3>
+<h2>Error Options  </h2>
 <p>You can specify the behavior when an error occurs.</p>
 <ul>
 <li>Stop synchronization</li>
@@ -89,7 +89,7 @@ You can select the name of the directory you want to synchronize.</li>
 <li>Start subsequent tasks if network options result in errors<br/>Use this if you want to run subsequent tasks when the address is not private or when it is not the specified IP address.  </li>
 
 </ul>
-<h3>Network</h3>
+<h2>Network</h2>
 <ul>
 <li>Run even when off<br/>You can always start syncing</li>
 <li>When connected to AP<br/>Sync can start if the wireless LAN is connected to the any access point.</li>
@@ -97,54 +97,54 @@ You can select the name of the directory you want to synchronize.</li>
 <li>Registered in the IP address list<br/>You can start synchronization when the IP address is registered in the IP address list.<br/>You can use wildcards for the filter. (e.g: 192.168.100.*, 192.168.*.*.)</li>
 
 </ul>
-<h3>Allow  sync with all IP addresses (include public)  </h3>
+<h2>Allow  sync with all IP addresses (include public)  </h2>
 <p>Enables synchronization on all IP addresses. However, SMB server scan cannot be performed. </p>
-<h3>Shows advanced options</h3>
+<h2>Shows advanced options</h2>
 <p><strong>Please use it when setting detailed options.</strong></p>
-<h3>Include subdirectories</h3>
+<h2>Include subdirectories</h2>
 <p>It will recursively include subdirectories under the specified source folder. </p>
-<h3>Include empty directories</h3>
+<h2>Include empty directories</h2>
 <p>Synchronizes the empty directories (even if a directory is empty on the source, it will be created on the destination). If unchecked, empty directories on the source are ignored. </p>
-<h3>Include hidden directories</h3>
+<h2>Include hidden directories</h2>
 <p>When checked, Sync will include the hidden linux folders (those with a name starting with a dot). Note that in Windows and Samba, the hidden attribute is not set by the folder name. Thus, the synchronized folder on the SMB/Windows destination won’t have the host hidden attribute. </p>
-<h3>Include hidden files</h3>
+<h2>Include hidden files</h2>
 <p>When checked, Sync will include the hidden linux files (those with a name starting with a dot). Note that in Windows and Samba, the hidden attribute is not set by the file name. Thus, the synchronized file on the SMB/Windows destination won’t have the host hidden attribute.</p>
-<h3>Overwrite destination files</h3>
+<h2>Overwrite destination files</h2>
 <p>If unchecked, files on the destination will never be overwritten even if the compare criteria by size and time are different. </p>
-<h3>Retry on network error (only for SMB shares)</h3>
+<h2>Retry on network error (only for SMB shares)</h2>
 <p>On server-side connection errors, SMBSync3 will try again the synchronization for a maximum of 3 times at a 30 seconds interval. </p>
-<h3>Limit SMB I/O write buffer to 16KB (only for SMB shares)</h3>
+<h2>Limit SMB I/O write buffer to 16KB (only for SMB shares)</h2>
 <p>Please try if you get an &quot;Access is denied&quot; error when writing to the PC/NAS folder. When checked, it will limit I/O buffer to 16KB for writing operations to the SMB host. </p>
-<h3>Delete files prior to sync (Mirror mode only)</h3>
+<h2>Delete files prior to sync (Mirror mode only)</h2>
 <p>When checked, the directories and files that are present on the destination folder but that do not exist on the source, will be first deleted. After that, files and folders that are different will be copied to the destination.
 If the source folder is SMB, the processing time will be longer because the directory structure and their contents is scanned through the network. It is strongly recommended to enable the option &quot; Use SMB2 negotiation&quot; because SMB1 will be very slow.</p>
-<h3>Remove directories and files excluded by the filters</h3>
+<h2>Remove directories and files excluded by the filters</h2>
 <p>If enabled, <strong>it removes directories/files that are excluded from the filter.</strong> </p>
-<h3>Do not set last modified time of destination file to match source file</h3>
+<h2>Do not set last modified time of destination file to match source file</h2>
 <p>Please enable if you get an error like SmbFile#setLastModified()/File#setLastModified() fails. It means that the remote host doesn’t allow setting file last modified time. If unchecked, the last modified time of the copied file on the destination will be set to the time it was copied / synchronized. This means that the destination file will appear newer than the source. </p>
-<h3>Use file size to determine if files are different</h3>
+<h2>Use file size to determine if files are different</h2>
 <p>When checked, files are considered different if they differ by size. </p>
-<h3>Size only compare</h3>
+<h2>Size only compare</h2>
 <p>Files are considered different only if size of the source is larger than the destination. This will disable compare by file time. </p>
-<h3>Use time of last modification to determine if files are different </h3>
+<h2>Use time of last modification to determine if files are different </h2>
 <p>When checked, files are considered different based on their last modification time </p>
-<h3>Min allowed time difference (in seconds) between source and destination files</h3>
+<h2>Min allowed time difference (in seconds) between source and destination files</h2>
 <p>Files are considered identical if the difference between their last modified times is less or equal to the selected time in seconds. They are considered different if the time difference between the files is superior to the selected time. FAT and ExFAT need a minimum of 2 seconds tolerance. If 0 seconds is selected, the files must have exactly the same time to be considered similar.</p>
-<h3>Do not overwrite destination file if it is newer than source file</h3>
+<h2>Do not overwrite destination file if it is newer than source file</h2>
 <p>If checked, the file will be overwritten only when the source file is newer than the destination file even if the file sizes and the last update times are different. Keep in mind that if you change time zones or if the files are modified during the interval period of the Day Light Saving Time change, the last modified file could appear older than the non-updated file. This is related to the file system differences and only a manual check before overwriting the file will avoid data loss. It is generally recommended to not modify files during the interval of day light saving time change if they are meant to be auto-synchronized. </p>
-<h3>Ignore Day Light Saving Time difference between files</h3>
+<h2>Ignore Day Light Saving Time difference between files</h2>
 <p>Let you select the time difference in minutes between summer and winter time. Files are considered different if the time difference is not exactly equal to the specified interval (+/- the “Min allowed time difference (in seconds)” specified in previous option)</p>
-<h3>Skip directory and file names that contain invalid characters(&quot;, :, \, *, &lt;, &gt;, |)</h3>
+<h2>Skip directory and file names that contain invalid characters(&quot;, :, \, *, &lt;, &gt;, |)</h2>
 <p>If checked, it will display a warning message and the sync will continue without processing the directories/files containing invalid characters. </p>
-<h3>Delete the source directory when it is empty (only when Sync option is Move)</h3>
+<h2>Delete the source directory when it is empty (only when Sync option is Move)</h2>
 <p>When sync mode is Move, after the files are moved to the destination, the Source folder is also deleted. </p>
-<h3>If the date and time cannot be determined by EXIF data, a confirmation message is displayed</h3>
+<h2>If the date and time cannot be determined by EXIF data, a confirmation message is displayed</h2>
 <p>Display a confirmation message when the taken date and time cannot be obtained from Exif.</p>
-<h3>Ignore source files that are larger than 4 GB when sync to external storage.</h3>
+<h2>Ignore source files that are larger than 4 GB when sync to external storage.</h2>
 <p>If checked, you can prevent I/O errors when syncing to a MicroSD card by ignoring source files larger than 4 GB in size to be synced to local storage.</p>
-<h3>Ignore files whose file name exceed 255 bytes</h3>
+<h2>Ignore files whose file name exceed 255 bytes</h2>
 <p>If checked, ignore files with file names longer than 255 bytes.</p>
-<h3>Ignore files with a file size of 0 Bytes  </h3>
+<h2>Ignore files with a file size of 0 Bytes  </h2>
 <p>If checked, files with a file size of 0 bytes will be ignored.  </p>
 </body>
 </html>
