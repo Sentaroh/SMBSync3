@@ -256,6 +256,10 @@ public class SyncThreadArchiveFile {
                 else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
             }
 
+            if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                continue;
+            }
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", item.full_path, item.file_name,
@@ -451,6 +455,11 @@ public class SyncThreadArchiveFile {
             if (!SyncThread.isValidFileDirectoryName(stwa, sti, from_path)) {
                 if (sti.isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters()) return sync_result;
                 else return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+            }
+
+            if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                continue;
             }
 
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
@@ -712,6 +721,10 @@ public class SyncThreadArchiveFile {
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_CANCEL;
                 break;
             }
+            if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                continue;
+            }
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
                     SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", item.full_path, item.file_name,
@@ -915,6 +928,10 @@ public class SyncThreadArchiveFile {
             if (SyncThread.isTaskCancelled(true, stwa.gp.syncThreadCtrl)) {
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_CANCEL;
                 break;
+            }
+            if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                continue;
             }
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
                 if (!SyncThread.sendArchiveConfirmRequest(stwa, sti, CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE, item.full_path)) {
