@@ -327,7 +327,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onCallBack(Context context, boolean positive, Object[] objects) {
                 //Service起動終了
-                ScheduleUtils.sendTimerRequest(mContext, SCHEDULE_INTENT_SET_TIMER);
+                ScheduleUtils.sendTimerRequest(mContext, SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET);
                 checkStoredKey(new CallBackListener(){
                     @Override
                     public void onCallBack(Context context, boolean positive, Object[] objects) {

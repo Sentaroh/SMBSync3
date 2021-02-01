@@ -114,7 +114,7 @@
         <string name="msgs_filter_list_dlg_add_dir_filter">添加目录过滤器</string>
         <string name="msgs_filter_list_dlg_close">关闭</string>
         <string name="msgs_filter_list_dlg_dir_filter">目录过滤器</string>
-        <string name="msgs_filter_list_dlg_file_filter">文件过滤器</string>
+        <string name="msgs_filter_list_dlg_file_filter">文件名过滤器</string>
         <string name="msgs_filter_list_dlg_filter_added">过滤器%s已添加。</string>
         <string name="msgs_filter_list_dlg_filter_hint">滤镜</string>
         <string name="msgs_filter_list_dlg_not_specified">未指定</string>
@@ -354,7 +354,7 @@
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">在源文件夹中，与拍摄日期和时间有关的变量不可用，已被删除。</string>
         <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">该目录名称包含无效字符，已被删除(\", :, \\, ?, *, &lt;, &gt;, \|)。</string>
-        <string name="msgs_task_sync_task_dlg_file_filter_not_specified">未指定文件过滤器</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_not_specified">未指定文件名过滤器</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">文件名中的无效字符(/, \", :, \\, ?, *, &lt;, &gt;, \|) 已被删除。</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共享名称中含有不能使用的字符，因此已被删除。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_source">源文件夹</string>
@@ -387,13 +387,13 @@
         <string name="msgs_task_sync_task_filter_list_dlg_filter_enabled">已启用</string>
         <string name="msgs_task_sync_task_filter_list_dlg_filter_disabled">残疾人</string>
         <string name="msgs_task_sync_task_filter_list_dlg_source_directory">源目录</string>
-        <string name="msgs_task_sync_task_filter_list_dlg_file_filter">文件过滤器</string>
+        <string name="msgs_task_sync_task_filter_list_dlg_file_filter">文件名过滤器</string>
         <string name="msgs_task_sync_task_filter_list_dlg_filter_hint">滤波器</string>
         <string name="msgs_task_sync_task_filter_list_enabled_filter_not_exists">没有找到有效的过滤器。在过滤器编辑器中启用它。</string>
         <string name="msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists">没有找到有效的过滤器</string>
         <string name="msgs_task_sync_task_filter_list_dlg_include">包括</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">未说明</string>
-        <string name="msgs_task_sync_task_filter_title">文件过滤器</string>
+        <string name="msgs_task_sync_task_filter_title">滤波器</string>
         <string name="msgs_task_sync_task_sync_direction_two_way">使用双向同步</string>
         <string name="msgs_task_sync_task_sync_file_type_add_filter_title">包括以下过滤器</string>
         <string name="msgs_task_sync_task_sync_file_type_audio">同步音频文件</string>
@@ -403,7 +403,7 @@
         <string name="msgs_task_sync_task_sync_file_type_video">同步视频文件</string>
         <string name="msgs_task_sync_task_sync_file_name_filter">文件名过滤器</string>
         <string name="msgs_task_sync_task_sync_file_size_filter">文件大小过滤器</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">选择文件大小过滤类型</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">选择文件大小比较方法</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">忽略文件大小为0字节的文件。</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">尺寸</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_dialog_title">选择文件大小过滤单位</string>
@@ -411,16 +411,16 @@
         <string name="msgs_task_sync_task_sync_file_size_unit_kib">KiB</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_mib">MiB</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_gib">GiB</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_type_none">无</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_type_none">未使用</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">低于</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">大于</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">未指定文件大小</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">文件大小不能超过5位数</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">文件大小必须大于或等于1。</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">文件最后修改日期过滤器</string>
-        <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">选择文件最后修改日期类型</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">选择文件更新日期比较方法</string>
         <string name="msgs_task_sync_task_sync_file_date_hint">日</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_none">无</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_none">未使用</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older">老于</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">几天前</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">更新日期未指定。</string>

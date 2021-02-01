@@ -119,7 +119,7 @@
         <string name="msgs_filter_list_dlg_add_dir_filter">Ajouter un filtre de dossier</string>
         <string name="msgs_filter_list_dlg_close">Quitter</string>
         <string name="msgs_filter_list_dlg_dir_filter">Filtre de dossiers</string>
-        <string name="msgs_filter_list_dlg_file_filter">Filtre de fichiers</string>
+        <string name="msgs_filter_list_dlg_file_filter">Filtre de nom de fichier</string>
         <string name="msgs_filter_list_dlg_filter_added">Le filtre \"%s\" a été ajouté.</string>
         <string name="msgs_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_filter_list_dlg_not_specified">Aucun filtre n\'est spécifié.</string>
@@ -353,7 +353,7 @@
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">Dans le dossier source, les variables relatives à la date et à l\'heure du tournage ne sont pas disponibles et ont été supprimées.</string>
         <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">Filtre de dossier non spécifié</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Des caractères invalides ont été supprimés du nom de dossier spécifié (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
-        <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Filtre de fichier non spécifié</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Filtre de nom fichier non spécifié</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Des caractères invalides ont été supprimés du nom de fichier spécifié (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Le nom de l\'action contenait des caractères qui ne pouvaient pas être utilisés, ils ont donc été supprimés. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_source">Dossier source</string>
@@ -386,13 +386,13 @@
         <string name="msgs_task_sync_task_filter_list_dlg_filter_enabled">Enabled</string>
         <string name="msgs_task_sync_task_filter_list_dlg_filter_disabled">Disabled</string>
         <string name="msgs_task_sync_task_filter_list_dlg_source_directory">Source directory:</string>
-        <string name="msgs_task_sync_task_filter_list_dlg_file_filter">Filtre de fichiers</string>
+        <string name="msgs_task_sync_task_filter_list_dlg_file_filter">Filtre de nom de fichier</string>
         <string name="msgs_task_sync_task_filter_list_dlg_filter_hint">Filtre</string>
         <string name="msgs_task_sync_task_filter_list_enabled_filter_not_exists">Aucun filtre valable n\'a été trouvé. Activez-le dans l\'éditeur de filtres.</string>
         <string name="msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists">Aucun filtre valide n\'a été trouvé.</string>
         <string name="msgs_task_sync_task_filter_list_dlg_include">Inclure</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">Non spécifié</string>
-        <string name="msgs_task_sync_task_filter_title">Filtres de fichiers:</string>
+        <string name="msgs_task_sync_task_filter_title">Filtres:</string>
         <string name="msgs_task_sync_task_sync_direction_two_way">Utiliser la synchronisation bidirectionnelle</string>
         <string name="msgs_task_sync_task_sync_file_type_add_filter_title">Inclure les filtres suivants:</string>
         <string name="msgs_task_sync_task_sync_file_type_audio">Synchro des fichiers audio</string>
@@ -402,7 +402,7 @@
         <string name="msgs_task_sync_task_sync_file_type_video">Synchro des fichiers vidéo</string>
         <string name="msgs_task_sync_task_sync_file_name_filter">Filtre sur les noms de fichiers</string>
         <string name="msgs_task_sync_task_sync_file_size_filter">Filtre sur la taille des fichiers</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Sélectionnez le type de filtre de la taille du fichier</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Sélection d\'une méthode de comparaison de la taille des fichiers</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Ignorer les fichiers d\'une taille de 0 octet</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">Taille</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_dialog_title">Sélectionnez l\'unité de filtrage de la taille du fichier</string>
@@ -410,16 +410,16 @@
         <string name="msgs_task_sync_task_sync_file_size_unit_kib">KiB</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_mib">MiB</string>
         <string name="msgs_task_sync_task_sync_file_size_unit_gib">GiB</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter_type_none">Aucune</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter_type_none">Non utilisé</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_less_than">Moins de</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_type_greater_than">Plus de</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">La taille du fichier n\'est pas précisée</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_less_5_digit">La taille du fichier ne doit pas dépasser 5 chiffres</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">La taille du fichier doit être supérieure ou égale à 1</string>
         <string name="msgs_task_sync_task_sync_file_date_filter">Filtre de la date de dernière modification du fichier</string>
-        <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Sélectionnez le type de date de dernière modification du fichier</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Sélectionnez la méthode de comparaison des dates de mise à jour des fichiers</string>
         <string name="msgs_task_sync_task_sync_file_date_hint">Journée</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_none">Aucune</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_none">Non utilisé</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older">Plus vieux que</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer">Quelques jours avant</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">La date de mise à jour n\'est pas précisée.</string>
