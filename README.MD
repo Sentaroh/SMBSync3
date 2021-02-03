@@ -9,8 +9,9 @@ Improved version of [SMBSync2](https://github.com/Sentaroh/SMBSync2)
 - Organized and concise options
 
 ### How to Build  
-- Clone or download from Github.
-- Open and Build by Android Studio.
+1. Clone or download from Github.
+1. Open and Build by Android Studio.
+1. Plase refer to "release/SMBSync3_debug.apk"
 
 ### License information
 - This software includes the work that is distributed in the Apache License 2.0.
