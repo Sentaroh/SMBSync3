@@ -257,7 +257,7 @@ public class SyncThreadArchiveFile {
             }
 
             if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
-                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" File was ignored, Reason=(File size equals 0), FP="+item.full_path);
                 continue;
             }
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
@@ -458,7 +458,7 @@ public class SyncThreadArchiveFile {
             }
 
             if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
-                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" File was ignored, Reason=(File size equals 0), FP="+item.full_path);
                 continue;
             }
 
@@ -722,7 +722,7 @@ public class SyncThreadArchiveFile {
                 break;
             }
             if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
-                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" File was ignored, Reason=(File size equals 0), FP="+item.full_path);
                 continue;
             }
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {
@@ -930,7 +930,7 @@ public class SyncThreadArchiveFile {
                 break;
             }
             if (sti.isSyncOptionIgnoreFileSize0ByteFile() && item.file_size==0) {
-                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" file ignored. reason=file size is 0. fp="+item.full_path);
+                stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" File was ignored, Reason=(File size equals 0), FP="+item.full_path);
                 continue;
             }
             if (!item.date_from_exif && sti.isSyncOptionConfirmNotExistsExifDate()) {

@@ -630,7 +630,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     long mf_length=mf.length();
                     long mf_last_modified=mf.lastModified();
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
@@ -1074,7 +1074,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     long mf_length=mf.length();
                     long mf_last_modified=mf.lastModified();
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
@@ -1315,7 +1315,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     long mf_length=mf.length();
                     long mf_last_modified=mf.getLastModified();
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
@@ -1645,7 +1645,7 @@ public class SyncThreadSyncFile {
                 } else { // file copy
                     long mf_length=mf.length();
                     long mf_last_modified=mf.getLastModified();
-                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, mf_length, mf_last_modified)) {
+                    if (!SyncThread.isHiddenFile(stwa, sti, mf) && SyncThread.isFileSelected(stwa, sti, relative_from_path, from_path, mf_length, mf_last_modified)) {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);

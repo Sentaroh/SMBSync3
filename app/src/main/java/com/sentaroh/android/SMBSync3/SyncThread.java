@@ -2205,12 +2205,13 @@ public class SyncThread extends Thread {
 
     final static int debug_level_2=2;
     final static int debug_level_3=3;
-    static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String relative_file_path, long file_size, long last_modified_time) {
+    static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String relative_file_path, String full_path,
+                                               long file_size, long last_modified_time) {
         boolean selected=true;
         if (sti.isSyncOptionIgnoreFileSize0ByteFile()) {
             if (file_size==0) {
                 selected=false;
-                stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file size 0. fp="+relative_file_path);
+                stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size equals 0), FP="+full_path);
             }
         }
         if (selected && !sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
@@ -2218,13 +2219,17 @@ public class SyncThread extends Thread {
                 if (file_size<stwa.fileSizeFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file size less than "+stwa.fileSizeFilterValue+". fp="+relative_file_path);
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size greater than "+
+                            (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
+                            "). FP="+full_path+", Size="+file_size);
                 }
             } else {
                 if (file_size>stwa.fileSizeFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file size greater than "+stwa.fileSizeFilterValue+". fp="+relative_file_path);
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size less than "+
+                            (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
+                            "). FP="+full_path+", Size="+file_size);
                 }
             }
         }
@@ -2233,22 +2238,26 @@ public class SyncThread extends Thread {
                 if (last_modified_time<stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file date not older. file="+StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
-                            ", filter="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", fp="+relative_file_path);
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File last modified date not older. File last modified date="+
+                            StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                            "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                 }
             } else {
                 if (last_modified_time>stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=file date not newer. file="+StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
-                            ", filter="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", fp="+relative_file_path);
+                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer. File last modified date="+
+                            StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
+                            "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
                 }
             }
         }
 
         if (selected) selected=isFileSelected(stwa, sti, relative_file_path);
         return selected;
+
     }
+
     static final public boolean isFileSelected(SyncThreadWorkArea stwa, SyncTaskItem sti, String relative_file_path) {
         long b_time=System.currentTimeMillis();
         boolean included = false;
