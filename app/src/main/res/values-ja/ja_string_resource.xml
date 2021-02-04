@@ -356,6 +356,7 @@
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">ファイル名フィルタ―は指定されてません</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共有名に使用できない文字が含まれていましたので削除しました。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">ディレクトリ名に余分なセパレータ「/」が含まれているので削除しました。</string>
         <string name="msgs_task_sync_task_dlg_source">ソースフォルダー</string>
         <string name="msgs_task_sync_task_dlg_sync_type">同期方式</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">アーカイブ</string>

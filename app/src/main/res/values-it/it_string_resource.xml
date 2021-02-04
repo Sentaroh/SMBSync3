@@ -361,6 +361,7 @@
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Filtro file nome non è stato specificato</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome del file specificato (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Il nome della condivisione conteneva caratteri che non potevano essere utilizzati, quindi sono stati rimossi. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">Rimosso il separatore extra \"/\" dal nome della directory.</string>
         <string name="msgs_task_sync_task_dlg_source">Cartella di origine</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Tipo di sincronizzazione</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archivio</string>

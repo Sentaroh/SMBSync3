@@ -357,6 +357,7 @@
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">File name filter has not been specified</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Invalid characters have been removed from the specified file name (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">The share name contained characters that could not be used, so they have been removed. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">Removed the extra separator \"/\" in the directory name.</string>
         <string name="msgs_task_sync_task_dlg_source">Source folder</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Sync type</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archive</string>

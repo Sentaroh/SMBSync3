@@ -2236,6 +2236,7 @@ public class ActivityMain extends AppCompatActivity {
         }
         public ActivityLaunchItem(String permission, CallBackListener cbl) {
             this.permission=permission;
+            type=TYPE_PERMISSION;
             callBackListener=cbl;
         }
         public int getType() {return this.type;}

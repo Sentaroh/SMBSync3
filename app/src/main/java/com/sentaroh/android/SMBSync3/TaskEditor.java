@@ -1584,7 +1584,7 @@ public class TaskEditor extends DialogFragment {
                 });
                 boolean disable_taken_date=false;
                 if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) disable_taken_date=true;
-                editDirectoryFileNameRule(true, disable_taken_date, sti, sfev, et_zip_file,
+                editDirectoryFileNameRule(false, disable_taken_date, sti, sfev, et_zip_file,
                         mActivity.getString(R.string.msgs_task_sync_task_edit_file_name_keyword), ntfy);
             }
         });
@@ -1996,10 +1996,30 @@ public class TaskEditor extends DialogFragment {
                         }
                     }
 
-                    String remove_char=removeInvalidCharForFileName(s);
-                    if (remove_char!=null) {
-                        mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
+                    if (edit_directory_rule) {
+                        String remove_char=removeInvalidCharForDirectoryName(s);
+                        if (remove_char!=null) {
+                            mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_name_has_invalid_char), "", null);
+                        }
+                    } else {
+                        String remove_char=removeInvalidCharForFileName(s);
+                        if (remove_char!=null) {
+                            mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
+                        }
                     }
+                    boolean loop_exit=false;
+                    while(!loop_exit) {
+                        String name_str=s.toString();
+                        if (name_str.indexOf("//")>=0) {
+                            int sp=name_str.indexOf("//");
+                            s.delete(sp, sp+1);
+                            loop_exit=true;
+                            mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_name_remove_redundant_separator),"",null);
+                        } else {
+                            loop_exit=true;
+                        }
+                    }
+
 
                     String cv=getConvertedDirectoryFileName(s.toString(), System.currentTimeMillis(), "DSC-001");
                     dlg_image.setText(cv);
@@ -2012,12 +2032,6 @@ public class TaskEditor extends DialogFragment {
         });
         String cv=getConvertedDirectoryFileName(dlg_keyword.getText().toString(), System.currentTimeMillis(), "DSC-001");
         dlg_image.setText(cv);
-
-        if (edit_directory_rule) {
-            dlg_const_slash.setVisibility(Button.VISIBLE);
-        } else {
-            dlg_const_slash.setVisibility(Button.GONE);
-        }
 
         setSyncFolderKeywordButtonListener(dialog, dlg_taken_date, dlg_keyword, SyncTaskItem.TEMPLATE_TAKEN_DATE, etInput.getText().toString());
         setSyncFolderKeywordButtonListener(dialog, dlg_taken_time, dlg_keyword, SyncTaskItem.TEMPLATE_TAKEN_TIME, etInput.getText().toString());
@@ -2059,6 +2073,12 @@ public class TaskEditor extends DialogFragment {
         setSyncFolderKeywordButtonListener(dialog, dlg_const_minus, dlg_keyword, "-", etInput.getText().toString());
         setSyncFolderKeywordButtonListener(dialog, dlg_const_slash, dlg_keyword, "/", etInput.getText().toString());
         setSyncFolderKeywordButtonListener(dialog, dlg_const_underbar, dlg_keyword, "_", etInput.getText().toString());
+
+        if (edit_directory_rule) {
+            dlg_const_slash.setVisibility(Button.VISIBLE);
+        } else {
+            dlg_const_slash.setVisibility(Button.GONE);
+        }
 
         final String init_dir=etInput.getText().toString();
         dlg_ok.setOnClickListener(new OnClickListener() {

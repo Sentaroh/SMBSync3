@@ -357,6 +357,7 @@
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">未指定文件名过滤器</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">文件名中的无效字符(/, \", :, \\, ?, *, &lt;, &gt;, \|) 已被删除。</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共享名称中含有不能使用的字符，因此已被删除。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">删除了目录名中多余的分隔符（/）。</string>
         <string name="msgs_task_sync_task_dlg_source">源文件夹</string>
         <string name="msgs_task_sync_task_dlg_sync_type">同步类型</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">档案</string>

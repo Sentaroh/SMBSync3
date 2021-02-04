@@ -361,6 +361,7 @@
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Dateinamensfilter wurde nicht angegeben</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Ungültige Zeichen(/, \", :, \\, ?, *, &lt;, &gt;, \|)  wurden aus dem Dateinamen entfernt.</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Der Name der Freigabe enthielt Zeichen, die nicht verwendet werden konnten, daher wurden sie entfernt. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
+        <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">Das zusätzliche Trennzeichen \"/\" wurde aus dem Verzeichnisnamen entfernt.</string>
         <string name="msgs_task_sync_task_dlg_source">Quellordner</string>
         <string name="msgs_task_sync_task_dlg_sync_type">Sync-Typ</string>
         <string name="msgs_task_sync_task_dlg_sync_type_archive">Archiv</string>
