@@ -85,8 +85,8 @@ public class LocalStorageSelectorAdapter extends ArrayAdapter<LocalStorageSelect
             convertView = inflater.inflate(R.layout.spinner_dropdown_single_choice, null);
         }
         LocalStorageSelectorItem ls_item=getItem(position);
-        String text = ls_item.description+"("+ls_item.root_path+")";
-        if (!ls_item.mounted) text = mActivity.getString(R.string.msgs_main_external_storage_uuid_unusable)+"("+ls_item.uuid+")";
+        String text = ls_item.description+" ("+ls_item.root_path+")";
+        if (!ls_item.mounted) text = mActivity.getString(R.string.msgs_main_external_storage_uuid_unusable)+" ("+ls_item.uuid+")";
         final NonWordwrapCheckedTextView text_view=(NonWordwrapCheckedTextView)convertView.findViewById(R.id.text1);
         SpannableStringBuilder sb=new SpannableStringBuilder(text);
         if (!ls_item.mounted) {

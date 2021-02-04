@@ -116,6 +116,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.crypto.SecretKey;
 
@@ -245,6 +246,7 @@ public class ActivityMain extends AppCompatActivity {
 
         addAppShortCut();
 
+        mUtil.addDebugMsg(1, "I", "lc="+Locale.getDefault().getLanguage());
     }
 
     private class MyUncaughtExceptionHandler extends AppUncaughtExceptionHandler {
