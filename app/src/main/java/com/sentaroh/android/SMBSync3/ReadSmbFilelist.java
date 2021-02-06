@@ -107,8 +107,10 @@ public class ReadSmbFilelist implements Runnable {
 
         boolean error_exit = false;
         String smb_addr=null;
+        int smb_port=remoteHostPort.equals("")?0:Integer.parseInt(remoteHostPort);
         if (remoteHostName.equals("")) {
-            if (!CommonUtilities.canSmbHostConnectable(remoteHostAddr)) {
+            boolean connected=smb_port==0?CommonUtilities.canSmbHostConnectable(remoteHostAddr):CommonUtilities.canSmbHostConnectable(remoteHostAddr, smb_port);
+            if (!connected) {
                 error_exit = true;
                 if (getFLCtrl.isEnabled()) {
                     getFLCtrl.setThreadResultError();
@@ -169,20 +171,20 @@ public class ReadSmbFilelist implements Runnable {
                         fp = "/" + fp.substring(0, fp.lastIndexOf("/") + 1);
                     } else fp = "/";
                     try {
-                        if (fl[i].isDirectory() &&
-                                !fn.equals("System Volume Information") &&
-                                fl[i].canRead()) {
+                        if (!fn.equals("System Volume Information") && fl[i].canRead()) {
                             if (readSubDirCnt) {
                                 JcifsFile tdf = new JcifsFile(fl[i].getPath(), auth);
                                 JcifsFile[] tfl = null;
                                 try {
-                                    tfl = tdf.listFiles();
-                                    if (readDirOnly) {
-                                        for (int j = 0; j < tfl.length; j++) {
-                                            if (tfl[j].isDirectory()) dirct++;
+                                    if (fl[i].isDirectory()) {
+                                        tfl = tdf.listFiles();
+                                        if (readDirOnly) {
+                                            for (int j = 0; j < tfl.length; j++) {
+                                                if (tfl[j].isDirectory()) dirct++;
+                                            }
+                                        } else {
+                                            dirct = tfl.length;
                                         }
-                                    } else {
-                                        dirct = tfl.length;
                                     }
                                     TreeFilelistItem fi = new TreeFilelistItem(
                                             fn,
@@ -202,6 +204,9 @@ public class ReadSmbFilelist implements Runnable {
                                             mUtil.addDebugMsg(2, "I", "filelist added :" + fn + ",isDir=" +
                                                     fl[i].isDirectory() + ", canRead=" + fl[i].canRead() +
                                                     ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
+                                        } else {
+                                            fi.setEnableItem(false);
+                                            remoteFileList.add(fi);
                                         }
                                     } else {
                                         remoteFileList.add(fi);
@@ -218,7 +223,6 @@ public class ReadSmbFilelist implements Runnable {
                                     ", canWrite=" + fl[i].canWrite() + ",fp=" + fp + ", dircnt=" + dirct);
                             mUtil.addDebugMsg(2, "I", "filelist ignored :" + fn);
                         }
-
                     } catch (JcifsException e) {
                         e.printStackTrace();
                     }

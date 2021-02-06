@@ -2211,15 +2211,15 @@ public class SyncThread extends Thread {
         if (sti.isSyncOptionIgnoreFileSize0ByteFile()) {
             if (file_size==0) {
                 selected=false;
-                stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size equals 0), FP="+full_path);
+                if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "W", "File was ignored, Reason=(File size equals 0), FP="+full_path);
             }
         }
         if (selected && !sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
-            if (sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LT)) {
+            if (sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LESS_THAN)) {
                 if (file_size<stwa.fileSizeFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size greater than "+
+                    if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "W", "File was ignored, Reason=(File size greater than "+
                             (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
                             "). FP="+full_path+", Size="+file_size);
                 }
@@ -2227,28 +2227,42 @@ public class SyncThread extends Thread {
                 if (file_size>stwa.fileSizeFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File size less than "+
+                    if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "W", "File was ignored, Reason=(File size less than "+
                             (sti.getSyncFilterFileSizeValue()+" "+sti.getSyncFilterFileSizeUnit())+
                             "). FP="+full_path+", Size="+file_size);
                 }
             }
         }
-        if (selected && !sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
-            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER)) {
+        if (selected) {
+            if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN)) {
                 if (last_modified_time<stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, Reason=(File last modified date not older. File last modified date="+
-                            StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
-                            "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
+                    if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "W",
+                            String.format("File was ignored, Reason=(File last modified date not older than %1$s. File last modified date=%2$s), FP=%3$s",
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(stwa.fileDateFilterValue),
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(last_modified_time),
+                                    full_path));
                 }
-            } else {
+            } else if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER_THAN)) {
                 if (last_modified_time>stwa.fileDateFilterValue) selected=true;
                 else {
                     selected=false;
-                    stwa.util.addDebugMsg(1, "I", "File was ignored, reason=(File last modified date not newer. File last modified date="+
-                            StringUtil.convDateTimeTo_YearMonthDayHourMin(last_modified_time)+
-                            "), Filter date="+StringUtil.convDateTimeTo_YearMonthDayHourMin(stwa.fileDateFilterValue)+", FP="+full_path);
+                    if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "W",
+                            String.format("File was ignored, Reason=(File last modified date not newer than %1$s. File last modified date=%2$s), FP=%3$s",
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(stwa.fileDateFilterValue),
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(last_modified_time),
+                                    full_path));
+                }
+            } else if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) {
+                if (last_modified_time>stwa.fileDateFilterValue) selected=true;
+                else {
+                    selected=false;
+                    if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "W",
+                            String.format("File was ignored, Reason=(File last modified date not \"after begin sync daty\" %1$s. File last modified date=%2$s), FP=%3$s",
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(stwa.fileDateFilterValue),
+                                    StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(last_modified_time),
+                                    full_path));
                 }
             }
         }
@@ -2541,8 +2555,19 @@ public class SyncThread extends Thread {
         } else {
             mStwa.fileSizeFilterValue=-1;
         }
-        mStwa.util.addDebugMsg(1, "I", "compileFilter file size filter="+mStwa.fileSizeFilterValue+", op="+sti.getSyncFilterFileSizeType()+", unit="+sti.getSyncFilterFileSizeUnit());
-        if (!sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
+        mStwa.util.addDebugMsg(1, "I", "compileFilter file size filter type="+sti.getSyncFilterFileSizeType()+
+                ", filter value="+sti.getSyncFilterFileSizeValue()+", filter unit="+sti.getSyncFilterFileSizeUnit()+", calc size="+mStwa.fileSizeFilterValue);
+        if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) {
+            Calendar curr_date=Calendar.getInstance();
+            int year=curr_date.get(Calendar.YEAR);
+            int month=curr_date.get(Calendar.MONTH);
+            int day=curr_date.get(Calendar.DAY_OF_MONTH);
+            curr_date.clear();
+            curr_date.set(year, month, day);
+            mStwa.fileDateFilterValue=curr_date.getTimeInMillis();
+            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter type="+sti.getSyncFilterFileDateType()+
+                    ", date="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mStwa.fileDateFilterValue));
+        } else if (sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER_THAN) || sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN)) {
             int filter_value=-1*Integer.parseInt(sti.getSyncFilterFileDateValue());
             Calendar curr_date=Calendar.getInstance();
             curr_date.add(Calendar.DAY_OF_YEAR, filter_value);
@@ -2552,12 +2577,12 @@ public class SyncThread extends Thread {
             curr_date.clear();
             curr_date.set(year, month, day);
             mStwa.fileDateFilterValue=curr_date.getTimeInMillis();
-            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter="+sti.getSyncFilterFileDateValue()+
-                    ", op="+sti.getSyncFilterFileDateType()+
+            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter type="+sti.getSyncFilterFileDateType()+
+                    ", value="+sti.getSyncFilterFileDateValue()+
                     ", date="+StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(mStwa.fileDateFilterValue));
         } else {
             mStwa.fileDateFilterValue=-1;
-            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter=-1");
+            mStwa.util.addDebugMsg(1, "I", "compileFilter file date filter=NONE");
         }
 
         ArrayList<FilterListAdapter.FilterListItem> include_file_filter = new ArrayList<FilterListAdapter.FilterListItem>();

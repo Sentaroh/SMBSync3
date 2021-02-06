@@ -50,6 +50,9 @@ import javax.xml.transform.stream.StreamResult;
 
 import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_ENABLED_KEY;
+import static com.sentaroh.android.SMBSync3.SyncTaskItem.syncFilterFileDateTypeValueArray;
+import static com.sentaroh.android.SMBSync3.SyncTaskItem.syncFilterFileSizeTypeValueArray;
+import static com.sentaroh.android.SMBSync3.SyncTaskItem.syncFilterFileSizeUnitValueArray;
 
 import  com.sentaroh.android.Utilities3.EncryptUtilV3.CipherParms;
 import com.sentaroh.android.Utilities3.SafFile3;
@@ -1050,15 +1053,37 @@ public class SyncConfiguration {
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE)) {
                 sti.setSyncOptionIgnoreFileSize0ByteFile(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE)) {
-                sti.setSyncFilterFileSizeType(xpp.getAttributeValue(i));
+                if (isValidTaskItemValue(syncFilterFileSizeTypeValueArray, xpp.getAttributeValue(i))) {
+                    sti.setSyncFilterFileSizeType(xpp.getAttributeValue(i));
+                } else {
+                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file size type error. Vallue=" + xpp.getAttributeValue(i));
+                }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE)) {
-                sti.setSyncFilterFileSizeValue(xpp.getAttributeValue(i));
+                try {
+                    int val=Integer.parseInt(xpp.getAttributeValue(i));
+                    sti.setSyncFilterFileSizeValue(xpp.getAttributeValue(i));
+                } catch (Exception e) {
+                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file size value error. Vallue=" + xpp.getAttributeValue(i));
+                }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_UNIT)) {
-                sti.setSyncFilterFileSizeUnit(xpp.getAttributeValue(i));
+                if (isValidTaskItemValue(syncFilterFileSizeUnitValueArray, xpp.getAttributeValue(i))) {
+                    sti.setSyncFilterFileSizeUnit(xpp.getAttributeValue(i));
+                } else {
+                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file size unit error. Vallue=" + xpp.getAttributeValue(i));
+                }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_TYPE)) {
-                sti.setSyncFilterFileDateType(xpp.getAttributeValue(i));
+                if (isValidTaskItemValue(syncFilterFileDateTypeValueArray, xpp.getAttributeValue(i))) {
+                    sti.setSyncFilterFileDateType(xpp.getAttributeValue(i));
+                } else {
+                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file date type error. Vallue=" + xpp.getAttributeValue(i));
+                }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_VALUE)) {
-                sti.setSyncFilterFileDateValue(xpp.getAttributeValue(i));
+                try {
+                    int val=Integer.parseInt(xpp.getAttributeValue(i));
+                    sti.setSyncFilterFileDateValue(xpp.getAttributeValue(i));
+                } catch (Exception e) {
+                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file date value error. Vallue=" + xpp.getAttributeValue(i));
+                }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS)) {
                 sti.setSyncOptionSyncAllowGlobalIpAddress(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_CONFIIRM_OVERRIDE_OR_DELETE)) {

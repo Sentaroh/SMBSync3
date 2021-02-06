@@ -95,7 +95,17 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="15dp"
-				android:layout_marginBottom="4dp">
+				android:layout_marginRight="5dp">
+				<Spinner
+					android:id="@+id/sync_filter_file_size_type_spinner"
+					style="?android:attr/spinnerStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:layout_gravity="center_vertical"
+					android:minHeight="36dp"
+					android:layout_marginLeft="3dp"
+					android:textAppearance="?android:attr/textAppearanceMedium"/>
 				<com.google.android.material.textfield.TextInputLayout
 					android:id="@+id/sync_filter_file_size_value_view"
 					android:layout_width="wrap_content"
@@ -105,9 +115,9 @@
 						android:layout_width="80dp"
 						android:layout_height="wrap_content"
 						android:inputType="number"
+						android:maxLength="5"
 						android:hint="@string/msgs_task_sync_task_sync_file_size_size_hint"
-						android:layout_gravity="center_vertical"
-						android:layout_marginRight="5dp"/>
+						android:layout_gravity="center_vertical"/>
 				</com.google.android.material.textfield.TextInputLayout>
 				<Spinner
 					android:id="@+id/sync_filter_file_size_unit_spinner"
@@ -116,17 +126,6 @@
 					android:layout_height="wrap_content"
 					android:layout_gravity="center_vertical"
 					android:minHeight="36dp"
-					android:textAppearance="?android:attr/textAppearanceMedium"/>
-				<Spinner
-					android:id="@+id/sync_filter_file_size_type_spinner"
-					style="?android:attr/spinnerStyle"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:layout_gravity="center_vertical"
-					android:layout_marginRight="5dp"
-					android:minHeight="36dp"
-					android:layout_marginLeft="3dp"
 					android:textAppearance="?android:attr/textAppearanceMedium"/>
 			</LinearLayout>
 			<include layout="@layout/divider_line1" />
@@ -139,7 +138,17 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginStart="15dp"
-				android:layout_marginBottom="4dp">
+				android:layout_marginRight="5dp">
+				<Spinner
+					android:id="@+id/sync_filter_file_date_type_spinner"
+					style="?android:attr/spinnerStyle"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:layout_gravity="center_vertical"
+					android:minHeight="36dp"
+					android:layout_marginLeft="3dp"
+					android:textAppearance="?android:attr/textAppearanceMedium"/>
 				<com.google.android.material.textfield.TextInputLayout
 					android:id="@+id/sync_filter_file_date_value_view"
 					android:layout_width="wrap_content"
@@ -149,21 +158,10 @@
 						android:layout_width="80dp"
 						android:layout_height="wrap_content"
 						android:layout_gravity="center_vertical"
-						android:layout_marginRight="5dp"
 						android:hint="@string/msgs_task_sync_task_sync_file_date_hint"
-						android:inputType="number" />
+						android:inputType="number"
+						android:maxLength="3" />
 				</com.google.android.material.textfield.TextInputLayout>
-				<Spinner
-					android:id="@+id/sync_filter_file_date_type_spinner"
-					style="?android:attr/spinnerStyle"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:layout_gravity="center_vertical"
-					android:layout_marginRight="5dp"
-					android:minHeight="36dp"
-					android:layout_marginLeft="3dp"
-					android:textAppearance="?android:attr/textAppearanceMedium"/>
 			</LinearLayout>
 			<include layout="@layout/divider_line1" />
 	    </LinearLayout>

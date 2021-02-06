@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.sentaroh.android.Utilities3.Base64Compat;
 import com.sentaroh.android.Utilities3.EncryptUtilV1;
@@ -52,7 +53,7 @@ public class TaskListImportFromSMBSync2 {
             InputStreamReader isr=new InputStreamReader(sf.getInputStream());
             br=new BufferedReader(isr, GENERAL_IO_BUFFER_SIZE);
             String pl=br.readLine();
-            if (pl.startsWith(SMBSYNC2_PROF_VER8+SMBSYNC2_PROF_ENC)) {
+            if (pl.startsWith(SMBSYNC2_PROF_VER8+SMBSYNC2_PROF_ENC) || pl.startsWith(SMBSYNC2_PROF_VER9+SMBSYNC2_PROF_ENC)) {
                 result=true;
             }
             br.close();
@@ -79,7 +80,7 @@ public class TaskListImportFromSMBSync2 {
 
     static public boolean isSMBSync2SyncTaskList(Context c, GlobalParameters gp, CommonUtilities mUtil, String prof_data) {
         boolean result=false;
-        if (prof_data.startsWith(SMBSYNC2_PROF_VER8)) {
+        if (prof_data.startsWith(SMBSYNC2_PROF_VER8) || prof_data.startsWith(SMBSYNC2_PROF_VER9)) {
             result=true;
         }
         return result;
@@ -124,7 +125,7 @@ public class TaskListImportFromSMBSync2 {
             InputStreamReader isr=new InputStreamReader(sf.getInputStream());
             BufferedReader br=new BufferedReader(isr, GENERAL_IO_BUFFER_SIZE);
             String pl=br.readLine();
-            if (pl.startsWith(SMBSYNC2_PROF_VER8+SMBSYNC2_PROF_ENC)) {
+            if (pl.startsWith(SMBSYNC2_PROF_VER8+SMBSYNC2_PROF_ENC) || pl.startsWith(SMBSYNC2_PROF_VER9+SMBSYNC2_PROF_ENC)) {
                 String enc_str=pl.substring(9);
                 EncryptUtilV1.CipherParms cp=EncryptUtilV1.initDecryptEnv(PROFILE_KEY_PREFIX +private_key);
                 byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
@@ -143,12 +144,15 @@ public class TaskListImportFromSMBSync2 {
                 } else {
                     mUtil.showCommonDialog(false,"W", "Import task list error", "Can not decrypt task list data.", null);
                 }
-            } else if (pl.startsWith(SMBSYNC2_PROF_VER8+SMBSYNC2_PROF_DEC)) {
+            } else if (pl.startsWith(SMBSYNC2_PROF_VER8+SMBSYNC2_PROF_DEC) || pl.startsWith(SMBSYNC2_PROF_VER9+SMBSYNC2_PROF_DEC)) {
                 pl=br.readLine();
                 while(pl!=null) {
                     String dec_str=pl.substring(6);
                     addSyncTaskListVer8(c, dec_str, sync_task, mUtil, auto_save);
-                    if (sync_setting != null) addImportSettingsParm(pl.replace(SMBSYNC2_PROF_VER8, ""), sync_setting);
+                    if (sync_setting != null) {
+                        String n_pl=pl.replace(SMBSYNC2_PROF_VER8, "").replace(SMBSYNC2_PROF_VER9, "");
+                        addImportSettingsParm(n_pl, sync_setting);
+                    }
                     pl=br.readLine();
                 }
                 result=true;
@@ -177,6 +181,7 @@ public class TaskListImportFromSMBSync2 {
     private static final String SCHEDULER_SCHEDULE_SAVED_DATA_V5 = "scheduler_schedule_saved_data_v5_key";
     private final static String SMBSYNC2_PROF_TYPE_SETTINGS="T";
     private final static String SMBSYNC2_PROF_VER8="PROF 8";
+    private final static String SMBSYNC2_PROF_VER9="PROF 9";
     private final static String SMBSYNC2_PROF_ENC="ENC";
     private final static String SMBSYNC2_PROF_DEC="DEC";
 
@@ -593,6 +598,56 @@ public class TaskListImportFromSMBSync2 {
 
             if (!parm[94].equals("") && !parm[94].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncOptionRemoveDirectoryFileThatExcludedByFilter((parm[94].equals("1") ? true : false));
 
+            if (!parm[95].equals("") && !parm[95].equals("end")) stli.setSyncOptionIgnoreFileSize0ByteFile((parm[95].equals("1") ? true : false));
+
+            if (!parm[96].equals("") && !parm[96].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.syncFilterFileSizeTypeValueArray, parm[96])) {
+                    stli.setSyncFilterFileSizeType(parm[96]);
+                } else {
+                    stli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Size Type", SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                }
+            }
+
+            if (!parm[97].equals("") && !parm[97].equals("end")) {
+                if (parm[97].length() <= 5 && TextUtils.isDigitsOnly(parm[97]) && Integer.parseInt(parm[97]) > 0) { //max 5 digits allowed and value > 1
+                    stli.setSyncFilterFileSizeValue(parm[97]);
+                } else {
+                    stli.setSyncFilterFileSizeValue(SyncTaskItem.FILTER_FILE_SIZE_VALUE_DEFAULT);
+                    stli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Size Value", SyncTaskItem.FILTER_FILE_SIZE_VALUE_DEFAULT);
+                }
+            }
+
+            if (!parm[98].equals("") && !parm[98].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.syncFilterFileSizeUnitValueArray, parm[98])) {
+                    stli.setSyncFilterFileSizeUnit(parm[98]);
+                } else {
+                    stli.setSyncFilterFileSizeUnit(SyncTaskItem.FILTER_FILE_SIZE_UNIT_DEFAULT);
+                    stli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Size Unit", SyncTaskItem.FILTER_FILE_SIZE_UNIT_DEFAULT);
+                }
+            }
+
+            if (!parm[99].equals("") && !parm[99].equals("end")) {
+                if (isValidTaskItemValue(SyncTaskItem.syncFilterFileDateTypeValueArray, parm[99])) {
+                    stli.setSyncFilterFileDateType(parm[99]);
+                } else {
+                    stli.setSyncFilterFileDateType(SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Date Type", SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
+                }
+            }
+
+            if (!parm[100].equals("") && !parm[100].equals("end")) {
+                if (parm[100].length() <= 3 && TextUtils.isDigitsOnly(parm[100]) && Integer.parseInt(parm[100]) > 0) { //max 3 digits allowed and value > 1
+                    stli.setSyncFilterFileDateValue(parm[100]);
+                } else {
+                    stli.setSyncFilterFileDateValue(SyncTaskItem.FILTER_FILE_DATE_VALUE_DEFAULT);
+                    stli.setSyncFilterFileDateType(SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
+                    putTaskListValueErrorMessage(util, "Filter File Date Value", SyncTaskItem.FILTER_FILE_DATE_VALUE_DEFAULT);
+                }
+            }
+
             String dir=convertDirectoryFileParameter(use_exif_date_time, stli.getDestinationDirectoryName());
             stli.setDestinationDirectoryName(dir);
             String file_template=convertDirectoryFileParameter(true, stli.getDestinationArchiveRenameFileTemplate());
@@ -604,6 +659,37 @@ public class TaskListImportFromSMBSync2 {
 
             sync.add(stli);
         }
+    }
+
+    private static boolean isValidTaskItemValue(String[] valid_value, String obtained_value) {
+        boolean result=false;
+        for(String item:valid_value) {
+            if (item.equals(obtained_value)) {
+                result=true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static boolean isValidTaskItemValue(int[] valid_value, int obtained_value) {
+        boolean result=false;
+        for(int item:valid_value) {
+            if (item==obtained_value) {
+                result=true;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private static void putTaskListValueErrorMessage(CommonUtilities cu, String item_name, Object assumed_value) {
+        String msg_template="Invalid \"%s\" was detected while reading the task list, so \"%s\" was set to \"%s\".";
+        String val="";
+        if (assumed_value instanceof String) val=(String)assumed_value;
+        else if (assumed_value instanceof Integer) val=String.valueOf((Integer)assumed_value);
+        else val="?????";
+        cu.addLogMsg("W", String.format(msg_template, item_name, val, item_name));
     }
 
     private static final String SMBSYNC2_REPLACEABLE_KEYWORD_YEAR="%YEAR%";
