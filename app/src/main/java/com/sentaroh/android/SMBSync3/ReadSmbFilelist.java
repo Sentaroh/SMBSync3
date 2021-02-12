@@ -148,12 +148,15 @@ public class ReadSmbFilelist implements Runnable {
         remoteFileList.clear();
         try {
             JcifsAuth auth=null;
+            String acct=mSmbServerInfo.serverAccountName.equals("")?null:mSmbServerInfo.serverAccountName;
+            String pswd=mSmbServerInfo.serverAccountPassword.equals("")?null:mSmbServerInfo.serverAccountPassword;
+            String dom=mSmbServerInfo.serverDomainName.equals("")?null:mSmbServerInfo.serverDomainName;
             if (mSmbServerInfo.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mSmbServerInfo.serverDomainName, mSmbServerInfo.serverAccountName, mSmbServerInfo.serverAccountPassword);
+                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, dom, acct, pswd);
             } else {
                 Properties prop=new Properties();
                 prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, mSmbServerInfo.serverDomainName, mSmbServerInfo.serverAccountName, mSmbServerInfo.serverAccountPassword, prop);
+                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd);
             }
             JcifsFile remoteFile = new JcifsFile(remoteUrl + remoteDir, auth);
 
@@ -292,12 +295,15 @@ public class ReadSmbFilelist implements Runnable {
         JcifsFile[] fl=null;
         try {
             JcifsAuth auth=null;
+            String acct=mSmbServerInfo.serverAccountName.equals("")?null:mSmbServerInfo.serverAccountName;
+            String pswd=mSmbServerInfo.serverAccountPassword.equals("")?null:mSmbServerInfo.serverAccountPassword;
+            String dom=mSmbServerInfo.serverDomainName.equals("")?null:mSmbServerInfo.serverDomainName;
             if (mSmbServerInfo.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, mSmbServerInfo.serverDomainName, mSmbServerInfo.serverAccountName, mSmbServerInfo.serverAccountPassword);
+                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, dom, acct, pswd);
             } else {
                 Properties prop=new Properties();
                 prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, mSmbServerInfo.serverDomainName, mSmbServerInfo.serverAccountName, mSmbServerInfo.serverAccountPassword, prop);
+                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd);
             }
 
             JcifsFile remoteFile = new JcifsFile(remoteUrl, auth);
