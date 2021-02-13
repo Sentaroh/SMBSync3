@@ -55,7 +55,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
-import com.sentaroh.android.SMBSync3.SmbServerScan.SmbServerInfo;
+import com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerInfo;
 
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
 import com.sentaroh.android.JcifsFile2.JcifsException;

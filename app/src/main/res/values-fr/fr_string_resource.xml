@@ -301,6 +301,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Autorisez le compte ou indiquez le nom correct du compte et appuyez sur le bouton \"Rafraîchir la liste des actions\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">Un nom de compte qui ne peut pas se connecter est spécifié. Indiquez le nom de compte correct et cliquez sur le bouton \"Rafraîchir la liste des actions\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">Le nom de compte ou le mot de passe est incorrect. Indiquez le nom de compte et le mot de passe corrects et cliquez sur le bouton \"Rafraîchir la liste des actions\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Le nom de compte ou le mot de passe n\'est pas précisé. Indiquez le nom de compte et le mot de passe corrects et cliquez sur le bouton \"Rafraîchir la liste des actions\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Choisir les paramètres du serveur SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Rafraîchir la liste des actions</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">Compte et mot de passe du serveur SMB</string>

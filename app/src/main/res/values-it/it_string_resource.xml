@@ -306,6 +306,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Autorizzare il conto o specificare il nome del conto corretto e premere il pulsante \"Aggiorna lista delle azioni\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">Viene specificato un nome di conto che non può accedere. Specificare il nome del conto corretto e fare clic sul pulsante \"Aggiorna elenco condivisioni \".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">Il nome del conto o la password non sono corretti. Specificare il nome del conto e la password corretti e fare clic sul pulsante \"Aggiorna elenco condivisioni \".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Il nome dell\'account o la password non sono specificati. Specificare il nome del conto e la password corretti e fare clic sul pulsante \"Aggiorna elenco condivisioni \".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Scelta dei parametri del server SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Aggiorna l\'elenco delle azioni</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">Account e password del server SMB</string>

@@ -93,7 +93,7 @@ import java.util.regex.Pattern;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.*;
-import static com.sentaroh.android.SMBSync3.SmbServerScan.SmbServerScanResult.SMB_LEVEL_SMB1;
+import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_LEVEL_SMB1;
 import static com.sentaroh.android.SMBSync3.SyncTaskItem.TEMPLATE_ORIGINAL_NAME;
 import static com.sentaroh.android.SMBSync3.SyncTaskItem.ARCHIVE_RETAIN_FOR_A_DEFAULT;
 import static com.sentaroh.android.SMBSync3.SyncTaskItem.ARCHIVE_SUFFIX_DIGIT_DEFAULT;
@@ -955,8 +955,7 @@ public class TaskEditor extends DialogFragment {
                 String port_num = "";
                 if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
                 final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-                SmbServerScan ss=new SmbServerScan(mActivity, mGp, mUtil);
-                ss.scanSmbServerDlg(ntfy_search_result, port_num, true, (String)sp_sync_folder_smb_proto.getSelectedItem());
+                SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, (String)sp_sync_folder_smb_proto.getSelectedItem());
             }
         });
 

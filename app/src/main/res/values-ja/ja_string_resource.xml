@@ -299,8 +299,9 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters">SMB設定を編集する</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name">共有名を選択してください</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">アカウントに権限を与えるか、正しいアカウント名を指定して「共有名の再読み込み」ボタンを押してください。</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">ログインできないアカウント名が指定されています、正しいアカウント名を指定して「Refresh share list」ボタンを押してください。</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">アカウント名またはパスワードが間違っています、正しいアカウント名とパスワードを指定して「Refresh share list」ボタンを押してください。</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">ログインできないアカウント名が指定されています、正しいアカウント名を指定して「共有名の再読み込み」ボタンを押してください。</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">アカウント名またはパスワードが間違っています、正しいアカウント名とパスワードを指定して「共有名の再読み込み」ボタンを押してください。</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">アカウント名またはパスワードが指定されていません、正しいアカウント名とパスワードを指定して「共有名の再読み込み」ボタンを押してください。</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">SMBサーバーの設定</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">共有名の再読み込み</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">アカウントとパスワード</string>

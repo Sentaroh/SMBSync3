@@ -645,13 +645,17 @@ public final class CommonUtilities {
     }
 
     static public boolean isSmbHost(CommonUtilities cu, String address, String scan_port) {
+        return isSmbHost(cu, address, scan_port, 3500);
+    }
+
+    static public boolean isSmbHost(CommonUtilities cu, String address, String scan_port, int time_out) {
         boolean smbhost = false;
         if (scan_port.equals("")) {
-            if (!JcifsUtil.canIpAddressAndPortConnectable(address, 445, 3500)) {
-                smbhost = JcifsUtil.canIpAddressAndPortConnectable(address, 139, 3500);
+            if (!JcifsUtil.canIpAddressAndPortConnectable(address, 445, time_out)) {
+                smbhost = JcifsUtil.canIpAddressAndPortConnectable(address, 139, time_out);
             } else smbhost = true;
         } else {
-            smbhost = JcifsUtil.canIpAddressAndPortConnectable(address, Integer.parseInt(scan_port), 3500);
+            smbhost = JcifsUtil.canIpAddressAndPortConnectable(address, Integer.parseInt(scan_port), time_out);
         }
         cu.addDebugMsg(2, "I", "isIpAddrSmbHost Address=" + address + ", port=" + scan_port + ", smbhost=" + smbhost);
         return smbhost;

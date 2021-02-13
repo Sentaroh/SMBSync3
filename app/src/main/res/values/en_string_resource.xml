@@ -302,6 +302,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Authorize the account or specify the correct account name and press the \"Refresh share list\" button.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">An account name that cannot log in is specified. Specify the correct account name and click the \"Refresh share list\" button.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">The account name or password is incorrect. Specify the correct account name and password and click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">The account name or password is not specified. Specify the correct account name and password and click the \"Refresh share list\" button.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Chose SMB server parameters</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Refresh Share list</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">SMB Server account and password</string>

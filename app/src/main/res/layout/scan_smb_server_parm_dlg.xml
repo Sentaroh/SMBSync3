@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/scan_smb_server_selector_dlg_view"
+        android:id="@+id/scan_smb_server_parm_dlg_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="HardcodedText,InefficientWeight,UselessParent,RtlHardcoded,LabelFor" >
 
     <LinearLayout
-            android:id="@+id/scan_smb_server_selector_dlg_title_view"
+            android:id="@+id/scan_smb_server_parm_dlg_title_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
         <TextView
-                android:id="@+id/scan_smb_server_selector_dlg_title"
+                android:id="@+id/scan_smb_server_parm_dlg_title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -32,7 +32,7 @@
             android:orientation="vertical" >
 
         <TextView
-                android:id="@+id/scan_smb_server_selector_dlg_msg"
+                android:id="@+id/scan_smb_server_parm_dlg_msg"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -52,26 +52,26 @@
                         android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_server"
                         android:textAppearance="?android:attr/textAppearanceLarge"/>
                 <RadioGroup
-                        android:id="@+id/scan_smb_server_selector_dlg_smb_server_id_rg"
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_rg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
                         android:orientation="horizontal">
                     <RadioButton
-                            android:id="@+id/scan_smb_server_selector_dlg_smb_server_id_address"
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_address"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="IP Address" />
                     <RadioButton
-                            android:id="@+id/scan_smb_server_selector_dlg_smb_server_id_hostname"
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_hostname"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Host name" />
                 </RadioGroup>
                 <TextView
-                        android:id="@+id/scan_smb_server_selector_dlg_smb_server_selected"
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_selected"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
@@ -101,13 +101,13 @@
                         android:layout_marginLeft="20dp"
                         android:orientation="horizontal">
                         <RadioButton
-                                android:id="@+id/scan_smb_server_selector_dlg_smb_server_smb_protocol_smb1"
+                                android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="SMBv1" />
                         <RadioButton
-                                android:id="@+id/scan_smb_server_selector_dlg_smb_server_smb_protocol_smb23"
+                                android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -132,7 +132,7 @@
                         android:orientation="horizontal">
 
                     <EditText
-                            android:id="@+id/scan_smb_server_selector_dlg_smb_server_port_number"
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_port_number"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -158,7 +158,7 @@
                         android:orientation="horizontal">
 
                     <EditText
-                            android:id="@+id/scan_smb_server_selector_dlg_smb_server_account_name"
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_name"
                             android:layout_width="145dp"
                             android:layout_height="wrap_content"
                             android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
@@ -166,7 +166,7 @@
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <EditText
-                            android:id="@+id/scan_smb_server_selector_dlg_smb_server_account_password"
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -175,14 +175,14 @@
                             android:textAppearance="?android:attr/textAppearanceMedium" />
                 </LinearLayout>
                 <Button
-                        android:id="@+id/scan_smb_server_selector_dlg_btn_refresh_share_list"
+                        android:id="@+id/scan_smb_server_parm_dlg_btn_refresh_share_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list" />
 
                 <LinearLayout
-                        android:id="@+id/scan_smb_server_selector_dlg_smb_server_share_view"
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_share_view"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
@@ -200,7 +200,7 @@
                             tools:ignore="HardcodedText,RtlHardcoded" />
 
                     <ListView
-                            android:id="@+id/scan_smb_server_selector_dlg_smb_server_share_name"
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_share_name"
                             android:layout_width="match_parent"
                             android:layout_height="135dp"
                             android:layout_marginLeft="5dp" />
@@ -215,7 +215,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
         <Button
-                android:id="@+id/scan_smb_server_selector_dlg_btn_cancel"
+                android:id="@+id/scan_smb_server_parm_dlg_btn_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -223,7 +223,7 @@
                 android:text="@string/msgs_common_dialog_cancel" />
 
         <Button
-                android:id="@+id/scan_smb_server_selector_dlg_btn_ok"
+                android:id="@+id/scan_smb_server_parm_dlg_btn_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

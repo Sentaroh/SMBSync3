@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.content.Context;
 
-import static com.sentaroh.android.SMBSync3.SmbServerScan.SmbServerInfo;
+import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerInfo;
 
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
 import com.sentaroh.android.JcifsFile2.JcifsException;

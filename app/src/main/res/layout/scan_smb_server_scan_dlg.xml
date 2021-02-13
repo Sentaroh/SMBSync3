@@ -8,13 +8,13 @@
     tools:ignore="HardcodedText,InefficientWeight,UselessParent,RtlHardcoded,LabelFor" >
 
     <LinearLayout
-        android:id="@+id/scan_remote_ntwk_title_view"
+        android:id="@+id/scan_smb_server_scan_dlg_title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/scan_remote_ntwk_title"
+            android:id="@+id/scan_smb_server_scan_dlg_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -31,7 +31,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/scan_remote_ntwk_msg"
+            android:id="@+id/scan_smb_server_scan_dlg_msg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -39,7 +39,7 @@
             android:textColor="#ff0000" />
 
         <LinearLayout
-            android:id="@+id/scan_remote_ntwk_scan_address"
+            android:id="@+id/scan_smb_server_scan_dlg_scan_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -51,7 +51,7 @@
                 android:layout_marginRight="5dp">
 
                 <EditText
-                    android:id="@+id/scan_remote_ntwk_begin_address_o1"
+                    android:id="@+id/scan_smb_server_scan_dlg_begin_address_o1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -66,7 +66,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
-                    android:id="@+id/scan_remote_ntwk_begin_address_o2"
+                    android:id="@+id/scan_smb_server_scan_dlg_begin_address_o2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -80,7 +80,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
-                    android:id="@+id/scan_remote_ntwk_begin_address_o3"
+                    android:id="@+id/scan_smb_server_scan_dlg_begin_address_o3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -94,7 +94,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
-                    android:id="@+id/scan_remote_ntwk_begin_address_o4"
+                    android:id="@+id/scan_smb_server_scan_dlg_begin_address_o4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -108,7 +108,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
                 <EditText
-                    android:id="@+id/scan_remote_ntwk_end_address_o4"
+                    android:id="@+id/scan_smb_server_scan_dlg_end_address_o4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -117,7 +117,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/scan_remote_ntwk_port_option"
+                android:id="@+id/scan_smb_server_scan_dlg_port_option"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -128,7 +128,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
 	                <EditText
-	                    android:id="@+id/scan_remote_ntwk_port_number"
+	                    android:id="@+id/scan_smb_server_scan_dlg_port_number"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:hint="Port number"
@@ -141,7 +141,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/scan_remote_ntwk_progress"
+            android:id="@+id/scan_smb_server_scan_dlg_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -158,7 +158,7 @@
                     android:indeterminateDrawable="@drawable/custom_progress_spin"/>
 
                 <TextView
-                    android:id="@+id/scan_remote_ntwk_progress_msg"
+                    android:id="@+id/scan_smb_server_scan_dlg_progress_msg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -167,7 +167,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/scan_remote_ntwk_progress_cancel"
+                android:id="@+id/scan_smb_server_scan_dlg_progress_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.20"
@@ -176,7 +176,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/scan_remote_ntwk_scan_result_title"
+            android:id="@+id/scan_smb_server_scan_dlg_scan_result_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -185,7 +185,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ListView
-            android:id="@+id/scan_remote_ntwk_scan_result_list"
+            android:id="@+id/scan_smb_server_scan_dlg_scan_result_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="15dp"
@@ -193,7 +193,28 @@
             android:layout_weight="1" >
         </ListView>
 
-        <include layout="@layout/scan_remote_ntwk_dlg_ok_cancel" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/scan_smb_server_scan_dlg_btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/msgs_common_dialog_cancel" />
+
+            <Button
+                android:id="@+id/scan_smb_server_scan_dlg_btn_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/msgs_scan_ip_address_scan_btn" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

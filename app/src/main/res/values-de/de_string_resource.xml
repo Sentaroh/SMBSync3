@@ -306,6 +306,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Autorisieren Sie das Konto oder geben Sie den korrekten Kontonamen an und drücken Sie die Schaltfläche \"Freigabeliste aktualisieren\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">Es wird ein Kontoname angegeben, der sich nicht anmelden kann. Geben Sie den korrekten Kontonamen an und klicken Sie auf die Schaltfläche \"Freigabeliste aktualisieren\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">Der Kontoname oder das Passwort ist falsch. Geben Sie den korrekten Kontonamen und das Passwort ein und klicken Sie auf die Schaltfläche \"Freigabeliste aktualisieren\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Der Kontoname oder das Passwort ist nicht angegeben. Geben Sie den korrekten Kontonamen und das Passwort ein und klicken Sie auf die Schaltfläche \"Freigabeliste aktualisieren\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Auswählen von SMB-Server-Parametern</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Freigabeliste aktualisieren</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">SMB-Server-Konto und -Passwort</string>

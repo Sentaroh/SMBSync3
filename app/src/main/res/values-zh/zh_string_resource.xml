@@ -302,6 +302,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">授权账户或指定正确的账户名，按 \"刷新共享列表 \"按钮。</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">指定了一个无法登录的账户名。指定正确的账户名，然后点击 \"刷新共享列表 \"按钮。</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">帐户名或密码不正确。指定正确的账户名和密码，然后点击 \"刷新共享列表 \"按钮。</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">未指定账户名或密码。指定正确的账户名和密码，然后点击 \"刷新共享列表 \"按钮。</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">选择SMB服务器参数</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">刷新分享列表</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">SMB服务器账户和密码</string>
