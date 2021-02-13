@@ -72,7 +72,12 @@ public class ReadSmbFilelist implements Runnable {
         mContext = c;
         mUtil = new CommonUtilities(mContext, "FileList", gp, null);
         remoteFileList = fl;
-        remoteHostAddr=rauth.serverHostAddress;
+        String conv_addr=CommonUtilities.addScopeidToIpv6Address(rauth.serverHostAddress);
+        if (conv_addr!=null && conv_addr.contains(":")) {
+            remoteHostAddr=conv_addr;
+        } else {
+            remoteHostAddr=rauth.serverHostAddress;
+        }
         remoteHostName=rauth.serverHostName;
         remoteHostshare=rauth.serverShareName;
         remoteHostPort=rauth.serverPort;
@@ -170,9 +175,8 @@ public class ReadSmbFilelist implements Runnable {
                     String fp = fl[i].getPath();
                     if (fp.endsWith("/")) fp = fp.substring(0, fp.lastIndexOf("/"));
                     fp = fp.substring(remoteUrl.length() + 1, fp.length());
-                    if (fp.lastIndexOf("/") > 0) {
-                        fp = "/" + fp.substring(0, fp.lastIndexOf("/") + 1);
-                    } else fp = "/";
+                    if (fp.lastIndexOf("/") > 0) fp = "/" + fp.substring(0, fp.lastIndexOf("/") + 1);
+                    else fp = "/";
                     try {
                         if (!fn.equals("System Volume Information") && fl[i].canRead()) {
                             if (readSubDirCnt) {
@@ -281,10 +285,10 @@ public class ReadSmbFilelist implements Runnable {
             else t_share=remoteHostshare;
         }
         if (remoteHostPort.equals("")) {
-            if (resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+"/"+t_share;
+            if (resolved_addr!=null && resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+"/"+t_share;
             else remoteUrl="smb://"+resolved_addr+"/"+t_share;
         } else {
-            if (resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+":"+remoteHostPort+"/"+t_share;
+            if (resolved_addr!=null && resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+":"+remoteHostPort+"/"+t_share;
             else remoteUrl="smb://"+resolved_addr+":"+remoteHostPort+"/"+t_share;
         }
         mUtil.addDebugMsg(1, "I", "buildRemoteUrl result="+remoteUrl);

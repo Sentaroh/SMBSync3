@@ -701,25 +701,30 @@ public class SyncThread extends Thread {
                 addr=sti.getSourceSmbAddr();
             }
             InetAddress ia=CommonUtilities.getInetAddress(addr);
-            if ((ia instanceof Inet6Address)) mStwa.sourceSmbAddress ="["+CommonUtilities.addScopeidToIpv6Address(addr)+"]";
-            else mStwa.sourceSmbAddress =addr;
+            if ((ia instanceof Inet6Address)) {
+                String conv_addr=CommonUtilities.addScopeidToIpv6Address(addr);
+                if (conv_addr!=null) mStwa.sourceSmbAddress ="["+conv_addr+"]";
+                else mStwa.sourceSmbAddress ="["+addr+"]";
+            } else {
+                mStwa.sourceSmbAddress =addr;
+            }
             boolean reachable=false;
             if (sti.getSourceSmbPort().equals("")) {
-                reachable=CommonUtilities.canSmbHostConnectable(addr);
+                reachable=CommonUtilities.canSmbHostConnectable(mStwa.sourceSmbAddress);
             } else {
                 try {
                     int port_no=Integer.valueOf(sti.getSourceSmbPort());
-                    reachable=CommonUtilities.canSmbHostConnectable(addr, port_no);
+                    reachable=CommonUtilities.canSmbHostConnectable(mStwa.sourceSmbAddress, port_no);
                 } catch(Exception e) {
                     mStwa.util.addDebugMsg(1,"I","Invalid Source SMB port number="+sti.getSourceSmbPort());
-                    reachable=CommonUtilities.canSmbHostConnectable(addr);
+                    reachable=CommonUtilities.canSmbHostConnectable(mStwa.sourceSmbAddress);
                 }
             }
-            mStwa.util.addDebugMsg(1,"I","Source SMB Address reachable="+reachable+", addr="+addr);
+            mStwa.util.addDebugMsg(1,"I","Source SMB Address reachable="+reachable+", addr="+mStwa.sourceSmbAddress);
             if (!reachable) {
                 String msg="";
-                if (sti.getSourceSmbPort().equals("")) msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, addr);
-                else msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, addr+":"+sti.getSourceSmbPort());
+                if (sti.getSourceSmbPort().equals("")) msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.sourceSmbAddress);
+                else msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.sourceSmbAddress+":"+sti.getSourceSmbPort());
                 showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", msg);
                 mGp.syncThreadCtrl.setThreadMessage(msg);
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -741,25 +746,30 @@ public class SyncThread extends Thread {
             } else {
                 addr=sti.getDestinationSmbAddr();
             }
-            if (CommonUtilities.isIpAddressV6(addr)) mStwa.destinationSmbAddress ="["+CommonUtilities.addScopeidToIpv6Address(addr)+"]";
-            else mStwa.destinationSmbAddress =addr;
+            if (CommonUtilities.isIpAddressV6(addr)) {
+                String conv_addr=CommonUtilities.addScopeidToIpv6Address(addr);
+                if (conv_addr!=null) mStwa.destinationSmbAddress ="["+conv_addr+"]";
+                else mStwa.destinationSmbAddress ="["+addr+"]";
+            } else {
+                mStwa.destinationSmbAddress =addr;
+            }
             boolean reachable=false;
             if (sti.getDestinationSmbPort().equals("")) {
-                reachable=CommonUtilities.canSmbHostConnectable(addr);
+                reachable=CommonUtilities.canSmbHostConnectable(mStwa.destinationSmbAddress);
             } else {
                 try {
                     int port_no=Integer.valueOf(sti.getDestinationSmbPort());
-                    reachable=CommonUtilities.canSmbHostConnectable(addr, port_no);
+                    reachable=CommonUtilities.canSmbHostConnectable(mStwa.destinationSmbAddress, port_no);
                 } catch(Exception e) {
                     mStwa.util.addDebugMsg(1,"I","Invalid Source SMB port number="+sti.getDestinationSmbPort());
-                    reachable=CommonUtilities.canSmbHostConnectable(addr);
+                    reachable=CommonUtilities.canSmbHostConnectable(mStwa.destinationSmbAddress);
                 }
             }
-            mStwa.util.addDebugMsg(1,"I","Destination SMB Address reachable="+reachable+", addr="+addr);
+            mStwa.util.addDebugMsg(1,"I","Destination SMB Address reachable="+reachable+", addr="+mStwa.destinationSmbAddress);
             if (!reachable) {
                 String msg="";
-                if (sti.getSourceSmbPort().equals("")) msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, addr);
-                else msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, addr+":"+sti.getDestinationSmbPort());
+                if (sti.getSourceSmbPort().equals("")) msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.destinationSmbAddress);
+                else msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.destinationSmbAddress+":"+sti.getDestinationSmbPort());
                 showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", msg);
                 mGp.syncThreadCtrl.setThreadMessage(msg);
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
