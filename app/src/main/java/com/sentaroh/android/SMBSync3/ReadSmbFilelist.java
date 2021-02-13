@@ -156,7 +156,7 @@ public class ReadSmbFilelist implements Runnable {
             } else {
                 Properties prop=new Properties();
                 prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd);
+                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd, prop);
             }
             JcifsFile remoteFile = new JcifsFile(remoteUrl + remoteDir, auth);
 
@@ -303,7 +303,7 @@ public class ReadSmbFilelist implements Runnable {
             } else {
                 Properties prop=new Properties();
                 prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd);
+                auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd, prop);
             }
 
             JcifsFile remoteFile = new JcifsFile(remoteUrl, auth);
