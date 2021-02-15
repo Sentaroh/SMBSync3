@@ -40,7 +40,7 @@ import com.sentaroh.android.Utilities3.ThemeUtil;
 import static com.sentaroh.android.SMBSync3.Constants.APP_SHORTCUT_ID_KEY;
 import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_REQUESTOR;
 import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT;
-import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_SYNC_PROFILE;
+import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_SYNC_TASK;
 import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_INTENT;
 
 public class ActivityShortcut extends FragmentActivity {
@@ -292,7 +292,7 @@ public class ActivityShortcut extends FragmentActivity {
     private void startSync() {
         Intent in = new Intent(mActivity, SyncService.class);
         in.setAction(START_SYNC_INTENT);
-        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_PROFILE, mSyncTaskList);
+        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_TASK, mSyncTaskList);
         in.putExtra(START_SYNC_EXTRA_PARM_REQUESTOR, START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT);
         in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         final FragmentManager fm=getFragmentManager();

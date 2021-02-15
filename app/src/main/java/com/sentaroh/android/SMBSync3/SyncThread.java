@@ -222,7 +222,7 @@ public class SyncThread extends Thread {
                          sync_result == SyncTaskItem.SYNC_RESULT_STATUS_WARNING ||
                          sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SKIP)) {
                     start_time = System.currentTimeMillis();
-                    sendStartNotificationIntent(sri.requestor, mStwa.currentSTI.getSyncTaskName());
+                    sendStartNotificationIntent(mStwa.appContext, mStwa.util, sri.requestor, mStwa.currentSTI.getSyncTaskName());
 
                     listSyncOption(mStwa.currentSTI);
                     setSyncTaskRunning(true);
@@ -242,7 +242,7 @@ public class SyncThread extends Thread {
                     CommonUtilities.saveMessageList(mStwa.appContext, mGp);
 
                     postProcessSyncResult(mStwa.currentSTI, sync_result, (System.currentTimeMillis() - start_time), sri.requestor);
-
+                    sendEndNotificationIntent(mStwa.appContext, mStwa.util, sri.requestor, mStwa.currentSTI.getSyncTaskName(), sync_result);
                     if ((mStwa.currentSTI != null || mGp.syncRequestQueue.size() > 0) &&
                             mStwa.currentSTI.getSyncTaskErrorOption()==SyncTaskItem.SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND &&
                             sync_result == HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR) {
@@ -251,7 +251,6 @@ public class SyncThread extends Thread {
                         sync_error_detected = true;
                         sync_result = SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
                     }
-                    sendEndNotificationIntent(sri.requestor, mStwa.currentSTI.getSyncTaskName(), sync_result);
                     mStwa.currentSTI = sri.sync_task_list.poll();
                 }
 
@@ -293,26 +292,27 @@ public class SyncThread extends Thread {
         System.gc();
     }
 
-    private void sendStartNotificationIntent(String requestor, String task_name) {
+    static public void sendStartNotificationIntent(Context c, CommonUtilities cu, String requestor, String task_name) {
         if (!requestor.equals(SYNC_REQUEST_EXTERNAL)) return ;
         Intent in = new Intent(BROADCAST_INTENT_SYNC_STARTED);
-        in.putExtra(START_SYNC_EXTRA_PARM_TASK_NAME, task_name);
-        mStwa.appContext.sendBroadcast(in, null);
-        mStwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Task="+task_name);
+        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_RESULT_TASK_NAME_KEY, task_name);
+        c.sendBroadcast(in, null);
+        cu.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Task="+task_name);
     }
 
-    private void sendEndNotificationIntent(String requestor, String task_name, int sync_result) {
+    static public void sendEndNotificationIntent(Context c, CommonUtilities cu, String requestor, String task_name, int sync_result) {
         if (!requestor.equals(SYNC_REQUEST_EXTERNAL)) return ;
         Intent in = new Intent(BROADCAST_INTENT_SYNC_ENDED);
         String rc="";
-        if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) rc="SUCCESS";
-        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_ERROR) rc="ERROR";
-        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) rc="CANCEL";
-        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_WARNING) rc="WARNING";
-        in.putExtra(START_SYNC_EXTRA_PARM_TASK_NAME, task_name);
-        in.putExtra("SYNC_RESULT",rc);
-        mStwa.appContext.sendBroadcast(in, null);
-        mStwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Task="+task_name+", result="+rc);
+        if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) rc= START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_SUCCESS;
+        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_ERROR) rc= START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_ERROR;
+        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) rc= START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_CANCEL;
+        else if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_WARNING) rc= START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_WARNING;
+        else rc= START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_NOT_FOUND;
+        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_RESULT_TASK_NAME_KEY, task_name);
+        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_KEY,rc);
+        c.sendBroadcast(in, null);
+        cu.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Task="+task_name+", result="+rc);
     }
 
     private boolean performWiFiOnIfRequired(SyncRequestItem sri) {
@@ -821,7 +821,7 @@ public class SyncThread extends Thread {
                             mStwa.appContext.getString(R.string.msgs_mirror_task_result_error_ended));
 
                     if (mStwa.currentSTI != null) {
-                        sendEndNotificationIntent(mStwa.currentRequestor, mStwa.currentSTI.getSyncTaskName(), HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR);
+                        sendEndNotificationIntent(mStwa.appContext, mStwa.util, mStwa.currentRequestor, mStwa.currentSTI.getSyncTaskName(), HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR);
                         addHistoryList(mStwa.currentSTI, HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR,
                                 mStwa.totalCopyCount, mStwa.totalDeleteCount, mStwa.totalIgnoreCount, mStwa.totalMoveCount, mStwa.totalRetryCount, mStwa.totalReplaceCount,
                                 end_msg, 0L, "", mStwa.currentRequestorDisplay);

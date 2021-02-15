@@ -333,6 +333,7 @@ public class SyncService extends Service {
             } else {
                 mUtil.addLogMsg("W", "", not_found_msg + sp[i]);
                 NotificationUtils.showOngoingMsg(mGp, mUtil, 0, not_found_msg + sp[i]);
+                SyncThread.sendEndNotificationIntent(mContext, mUtil, requestor, sp[i], 9);
             }
         }
         if (pl.size() > 0) {
@@ -350,14 +351,14 @@ public class SyncService extends Service {
         mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_svc_received_start_request_from_external));
         Bundle bundle = in.getExtras();
         if (bundle != null) {
-            if (bundle.containsKey(START_SYNC_EXTRA_PARM_SYNC_PROFILE)) {
-                if (!bundle.get(START_SYNC_EXTRA_PARM_SYNC_PROFILE).getClass().getSimpleName().equals("String")) {
+            if (bundle.containsKey(START_SYNC_EXTRA_PARM_SYNC_TASK)) {
+                if (!bundle.get(START_SYNC_EXTRA_PARM_SYNC_TASK).getClass().getSimpleName().equals("String")) {
                     NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                             mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                     mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_extra_data_sync_profile_type_error));
                     return;
                 }
-                String t_sp = bundle.getString(START_SYNC_EXTRA_PARM_SYNC_PROFILE);
+                String t_sp = bundle.getString(START_SYNC_EXTRA_PARM_SYNC_TASK);
                 checkAndQueueSyncTaskExists(SYNC_REQUEST_EXTERNAL,
                         t_sp, mContext.getString(R.string.msgs_svc_received_start_request_from_external_task_not_found),
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_list));
@@ -405,9 +406,9 @@ public class SyncService extends Service {
         mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_svc_received_start_request_from_shortcut));
 //        queueAutoSyncTask(SYNC_REQUEST_SHORTCUT);
         Bundle bundle = in.getExtras();
-        if (bundle.containsKey(START_SYNC_EXTRA_PARM_SYNC_PROFILE)) {
-            if (bundle.get(START_SYNC_EXTRA_PARM_SYNC_PROFILE).getClass().getSimpleName().equals("String")) {
-                String t_sp = bundle.getString(START_SYNC_EXTRA_PARM_SYNC_PROFILE);
+        if (bundle.containsKey(START_SYNC_EXTRA_PARM_SYNC_TASK)) {
+            if (bundle.get(START_SYNC_EXTRA_PARM_SYNC_TASK).getClass().getSimpleName().equals("String")) {
+                String t_sp = bundle.getString(START_SYNC_EXTRA_PARM_SYNC_TASK);
                 String[] sp = t_sp.split(NAME_LIST_SEPARATOR);
                 queueSpecificSyncTask(sp, SYNC_REQUEST_SHORTCUT);
                 if (!mGp.syncThreadActive) {

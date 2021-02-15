@@ -59,11 +59,17 @@ public class Constants {
 	public final static String LOCAL_FILE_LAST_MODIFIED_WAS_FORCE_LASTEST ="*";
 
 	public final static String START_SYNC_INTENT = APPLICATION_ID +".ACTION_START_SYNC";
-	public final static String START_SYNC_EXTRA_PARM_SYNC_PROFILE ="SyncProfile";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_TASK ="SyncTask";
 	public final static String START_SYNC_EXTRA_PARM_SYNC_GROUP ="SyncGroup";
 	public final static String START_SYNC_EXTRA_PARM_REQUESTOR ="Requestor";
 	public final static String START_SYNC_EXTRA_PARM_REQUEST_ID ="RequestID";
-	public final static String START_SYNC_EXTRA_PARM_TASK_NAME ="TaskName";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_KEY ="SYNC_RESULT";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_SUCCESS ="SUCCESS";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_ERROR ="ERROR";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_WARNING ="WARNING";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_CANCEL ="CANCEL";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_NOT_FOUND ="NOT_FOUND";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_TASK_NAME_KEY ="TASK_NAME";
 	public final static String START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT ="Shortcut";
 	public final static String START_SYNC_AUTO_INTENT = APPLICATION_ID +".ACTION_AUTO_SYNC";
 
