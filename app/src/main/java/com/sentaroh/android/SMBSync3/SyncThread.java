@@ -296,6 +296,7 @@ public class SyncThread extends Thread {
     private void sendStartNotificationIntent(String requestor, String task_name) {
         if (!requestor.equals(SYNC_REQUEST_EXTERNAL)) return ;
         Intent in = new Intent(BROADCAST_INTENT_SYNC_STARTED);
+        in.putExtra(START_SYNC_EXTRA_PARM_TASK_NAME, task_name);
         mStwa.appContext.sendBroadcast(in, null);
         mStwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " Task="+task_name);
     }
