@@ -304,8 +304,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
                 if (holder.resid_row_image_source!=img_res) holder.iv_row_image_source.setImageResource(img_res);
                 holder.resid_row_image_source=img_res;
             } else if (o.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                String host = o.getSourceSmbAddr();
-                if (o.getSourceSmbAddr().equals("")) host = o.getSourceSmbHostName();
+                String host = o.getSourceSmbHost();
                 String share = o.getSourceSmbShareName();
                 String dir = o.getSourceDirectoryName();
                 if (dir.equals("")) holder.tv_row_source.setText("smb://" + host + "/" + share);
@@ -343,8 +342,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
                 if (holder.resid_row_image_destination!=img_res) holder.iv_row_image_destination.setImageResource(img_res);
                 holder.resid_row_image_destination=img_res;
             } else if (o.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                String host = o.getDestinationSmbAddr();
-                if (o.getDestinationSmbAddr().equals("")) host = o.getDestinationSmbHostName();
+                String host = o.getDestinationSmbHost();
                 String share = o.getDestinationSmbShareName();
                 String dir = o.getDestinationDirectoryName();
                 if (dir.equals("")) holder.tv_row_destination.setText("smb://" + host + "/" + share);

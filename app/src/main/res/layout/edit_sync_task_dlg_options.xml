@@ -168,13 +168,13 @@
                 </LinearLayout>
             </LinearLayout>
             <CheckedTextView
-                android:id="@+id/edit_sync_task_option_sync_allow_global_ip_address"
+                android:id="@+id/edit_sync_task_option_sync_allow_all_ip_address"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                 android:gravity="center_vertical"
-                android:text="@string/msgs_task_sync_task_sync_option_sync_allow_global_ip_address"
+                android:text="@string/msgs_task_sync_task_sync_option_sync_allow_all_ip_address"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 

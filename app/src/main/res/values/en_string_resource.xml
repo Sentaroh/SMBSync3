@@ -431,7 +431,7 @@
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">The update date cannot be more than 3 digits.</string>
         <string name="msgs_task_sync_task_sync_option">Options:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">Min allowed time difference (in seconds) between source and destination files</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Allow sync with all IP addresses (include public)</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_all_ip_address">Allow sync with all IP addresses (include public)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">Confirm before overwrite/delete</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">Delete files prior to sync (Mirror mode only)</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">Size only compare (files are considered different only if size of the source is larger than the destination)</string>
@@ -591,15 +591,15 @@
         <string name="msgs_mirror_invalid_folder_combination">Invalid folder type combination. Source=%1$s, Destination=%2$s</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error">The source file or directory name contains invalid characters for the destination. Edit name to allow sync. Character: %1$s, Path: %2$s</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_skipped">File or directory excluded from sync process because source name contains characters not valid for the destination. Character: %1$s, Path:  %2$s</string>
-        <string name="msgs_mirror_remote_addr_not_connected">Unable to connect to SMB host address %s</string>
+        <string name="msgs_mirror_remote_addr_not_connected">Unable to connect to SMB host=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port">Unable to connect to SMB host %1$s on port %2$s</string>
-        <string name="msgs_mirror_remote_name_not_found">The SMB host name could not be found. Try to use its IP address. Host Name=</string>
+        <string name="msgs_mirror_remote_name_not_found">The SMB host name could not be found. Try to use its IP address. Host Name=%s</string>
         <string name="msgs_mirror_same_directory_ignored">Directory ignored because destination and source are the same. Directory=%s</string>
         <string name="msgs_mirror_same_file_ignored">The file was ignored because the same file could not be synchronized in the source and destination. File=%s</string>
-        <string name="msgs_mirror_smb_addr_not_connected">Unable to connect to the specified SMB server. IP address=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">Unable to connect to the specified SMB server. Server=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port">Unable to connect to the specified SMB server. IP address=%1$s, port=%2$s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">Invalid port number: %s</string>
-        <string name="msgs_mirror_smb_name_not_found">The specified SMB server host name could not be found. Host name=</string>
+        <string name="msgs_mirror_smb_name_not_found">The specified SMB server host name could not be found. Host name=%s</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">Sync aborted. Wireless adapter does not have the specified IP address.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">Sync aborted. Not connected to the specified wireless access point.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Sync aborted. Not connected to a WiFi access point.</string>

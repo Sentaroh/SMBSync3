@@ -430,7 +430,7 @@
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">La date de modification ne peut pas comporter plus de 3 chiffres.</string>
         <string name="msgs_task_sync_task_sync_option">Options:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">Différence de temps tolérée (sec) entre les fichiers source et destination</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Autoriser  la connexion aux addresses IP publiques(inclure le public)</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_all_ip_address">Autoriser  la connexion aux addresses IP publiques(inclure le public)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">Confirmer avant de remplacer/supprimer</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">Supprimer les fichiers avant la sync (mode Miroir uniquement)</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">Comparaison uniquement par la taille des fichiers (Les fichiers ne sont considérés comme différents que si la taille de la source est supérieure à celle de la destination</string>
@@ -592,15 +592,15 @@
         <string name="msgs_mirror_invalid_folder_combination">Invalid folder type combination. Source=%1$s, Destination=%2$s</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error">Le dossier ou fichier source contient des caractères invalides. Modifier son nom pour poursuivre la synchronisation. Caractère: %1$s, Emplacement: %2$s</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_skipped">Le dossier ou le fichier source contient des caractères invalides. Il a été exclu de la synchronisation. Caractère: %1$s, Emplacement: %2$s</string>
-        <string name="msgs_mirror_remote_addr_not_connected">Impossible de se connecter à l\'addresse SMB %s</string>
+        <string name="msgs_mirror_remote_addr_not_connected">Impossible de se connecter à SMB %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port">Impossible de se connecter à l\'addresse SMB %1$s sur le port %2$s</string>
-        <string name="msgs_mirror_remote_name_not_found">Nom d\'hôte SMB introuvable. Essayer avec son addresse IP. Nom d\'hôte=</string>
+        <string name="msgs_mirror_remote_name_not_found">Nom d\'hôte SMB introuvable. Essayer avec son addresse IP. Nom d\'hôte=%s</string>
         <string name="msgs_mirror_same_directory_ignored">Le dossier a été ignoré, car la source et la destination sont identiques. Dossier=%s</string>
         <string name="msgs_mirror_same_file_ignored">The file was ignored because the same file could not be synchronized in the source and destination. File=%s</string>
-        <string name="msgs_mirror_smb_addr_not_connected">Impossible de se connecter au serveur SMB. addresse IP=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">Impossible de se connecter au serveur SMB. Serveur IP=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port">Impossible de se connecter au serveur SMB. addresse IP=%1$s, port=%2$s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">Numéro de port invalide: %s</string>
-        <string name="msgs_mirror_smb_name_not_found">Le nom d\'hôte SMB spécifié n\'a pas pu être trouvé. Nom d\'hôte=</string>
+        <string name="msgs_mirror_smb_name_not_found">Le nom d\'hôte SMB spécifié n\'a pas pu être trouvé. Nom d\'hôte=%s</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">Synchronisation interrompue. L\'addresse du réseau Wifi ne correspond pas à l\'addresse IP spécifiée.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">Synchronisation interrompue. Le nom du réseau Wifi ne correspond pas au point d\'accès spécifié.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Synchronisation interrompue. Aucune connexion au réseau Wifi trouvée.</string>

@@ -638,7 +638,7 @@ public class SyncConfiguration {
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_TYPE, item.getSyncFilterFileDateType());
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_VALUE, item.getSyncFilterFileDateValue());
 
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS, item.isSyncOptionSyncAllowGlobalIpAddress() ? "true" : "false");
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS, item.isSyncOptionSyncAllowAllIpAddress() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_CONFIIRM_OVERRIDE_OR_DELETE, item.isSyncConfirmOverrideOrDelete() ? "true" : "false");
 
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_CONFIRM_NOT_EXIST_EXIF_DATE, item.isSyncOptionConfirmNotExistsExifDate() ? "true" : "false");
@@ -717,8 +717,8 @@ public class SyncConfiguration {
                     source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ACCOUNT_PASSWORD, item.getSourceSmbAccountPassword());
                 }
             }
-            source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME, item.getSourceSmbHostName());
-            source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ADDR, item.getSourceSmbAddr());
+            source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME, item.getSourceSmbHost());
+//            source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ADDR, item.getSourceSmbAddr());
 //            source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_IPC_SIGNIN_ENFORCED, item.isSourceSmbIpcSigningEnforced()?"true":"false");
             source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PORT, item.getSourceSmbPort());
             source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PROTOCOL, item.getSourceSmbProtocol());
@@ -754,8 +754,8 @@ public class SyncConfiguration {
                     destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ACCOUNT_PASSWORD, item.getDestinationSmbPassword());
                 }
             }
-            destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ADDR, item.getDestinationSmbAddr());
-            destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME, item.getDestinationSmbHostName());
+//            destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ADDR, item.getDestinationSmbAddr());
+            destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME, item.getDestinationSmbHost());
 //            destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_IPC_SIGNIN_ENFORCED, item.isDestinationSmbIpcSigningEnforced()?"true":"false");
             destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PORT, item.getDestinationSmbPort());
             destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PROTOCOL, item.getDestinationSmbProtocol());
@@ -1085,7 +1085,7 @@ public class SyncConfiguration {
                     log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file date value error. Vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS)) {
-                sti.setSyncOptionSyncAllowGlobalIpAddress(xpp.getAttributeValue(i).toLowerCase().equals("true"));
+                sti.setSyncOptionSyncAllowAllIpAddress(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_CONFIIRM_OVERRIDE_OR_DELETE)) {
                 sti.setSyncConfirmOverrideOrDelete(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_CONFIRM_NOT_EXIST_EXIF_DATE)) {
@@ -1205,9 +1205,9 @@ public class SyncConfiguration {
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ACCOUNT_PASSWORD)) {
                 sti.setSourceSmbPassword(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ADDR)) {
-                sti.setSourceSmbAddr(xpp.getAttributeValue(i));
+                if (sti.getSourceSmbHost().equals("")) sti.setSourceSmbHost(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME)) {
-                sti.setSourceSmbHostName(xpp.getAttributeValue(i));
+                if (sti.getSourceSmbHost().equals("")) sti.setSourceSmbHost(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PORT)) {
                 try {
                     if (!SyncTaskItem.SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT.equals(xpp.getAttributeValue(i))) {
@@ -1262,9 +1262,9 @@ public class SyncConfiguration {
                     else sti.setDestinationSmbPassword(dec_str);
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ADDR)) {
-                sti.setDestinationSmbAddr(xpp.getAttributeValue(i));
+                if (sti.getDestinationSmbHost().equals("")) sti.setDestinationSmbHost(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME)) {
-                sti.setDestinationSmbHostname(xpp.getAttributeValue(i));
+                if (sti.getDestinationSmbHost().equals("")) sti.setDestinationSmbHost(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PORT)) {
                 try {
                     if (!SyncTaskItem.SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT.equals(xpp.getAttributeValue(i))) {

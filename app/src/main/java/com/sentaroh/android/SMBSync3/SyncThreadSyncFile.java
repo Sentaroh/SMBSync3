@@ -438,7 +438,7 @@ public class SyncThreadSyncFile {
         boolean mf_exists = (Collections.binarySearch(stwa.smbFileList, fp) >= 0);
         if (!mf_exists) {
             if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " file list not found, fp=" + fp);
-            JcifsFile mf = new JcifsFile(fp, stwa.sourceAuth);
+            JcifsFile mf = new JcifsFile(fp, stwa.sourceSmbAuth);
             mf_exists = mf.exists();
         }
         return mf_exists;
@@ -959,7 +959,7 @@ public class SyncThreadSyncFile {
         int sync_result =0;
         JcifsFile tf = null;
         try {
-            tf = new JcifsFile(to_path, stwa.destinationAuth);
+            tf = new JcifsFile(to_path, stwa.destinationSmbAuth);
             if (sti.isSyncOptionDeleteFirstWhenMirror()) {
                 sync_result = syncDeleteLocalToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf);
                 if (sync_result == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
@@ -1050,7 +1050,7 @@ public class SyncThreadSyncFile {
                             }
                             if (sti.isSyncOptionSyncEmptyDirectory()) {
                                 if (!isTakenDateUsed && SyncThread.isDirectoryIncluded(stwa, relative_from_path)) {
-                                    SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.destinationAuth);
+                                    SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.destinationSmbAuth);
                                 }
                             }
                             if (sti.isSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty() && move_file) {
@@ -1078,7 +1078,7 @@ public class SyncThreadSyncFile {
                         String parsed_to_path=to_path;
                         if (isTakenDateUsed)
                             parsed_to_path=convertToExifDateTime(stwa, sti, mf.getInputStream(), mf_last_modified, from_path, to_path);
-                        JcifsFile tf = new JcifsFile(parsed_to_path, stwa.destinationAuth);
+                        JcifsFile tf = new JcifsFile(parsed_to_path, stwa.destinationSmbAuth);
                         if (isTakenDateUsed){
                             SyncThread.createDirectoryToLocalStorage(stwa, sti, tf.getParent());
                         }
@@ -1155,7 +1155,7 @@ public class SyncThreadSyncFile {
         try {
             SafFile3 tf = new SafFile3(stwa.appContext, to_path);
             cpc=(tf.isSafFile()?tf.getContentProviderClient():null);
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
             if (sti.isSyncOptionDeleteFirstWhenMirror()) {
                 sync_result =syncDeleteSmbToLocal(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList, cpc);
                 if (sync_result == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
@@ -1189,7 +1189,7 @@ public class SyncThreadSyncFile {
         stwa.lastWriteSafFile=null;
         int sync_result=0;
         try {
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
             sync_result= moveCopySmbToLocal(stwa, sti, false, from_path, from_path, mf, to_path, to_path, null, isTakenDateUsed);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", sti.getSyncTaskName(), CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
@@ -1216,7 +1216,7 @@ public class SyncThreadSyncFile {
         stwa.lastWriteSafFile=null;
         int sync_result=0;
         try {
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
             sync_result= moveCopySmbToLocal(stwa, sti, true, from_path, from_path, mf, to_path, to_path, null, isTakenDateUsed);
         } catch (MalformedURLException e) {
             putErrorMessage(stwa, sti, e, from_path, to_path);
@@ -1499,8 +1499,8 @@ public class SyncThreadSyncFile {
         stwa.smbFileList = new ArrayList<String>();
         int sync_result =0;
         try {
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
-            tf = new JcifsFile(to_path, stwa.destinationAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
+            tf = new JcifsFile(to_path, stwa.destinationSmbAuth);
             if (sti.isSyncOptionDeleteFirstWhenMirror()) {
                 sync_result = syncDeleteSmbToSmb(stwa, sti, from_path, from_path, to_path, to_path, tf, stwa.smbFileList);
                 if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS)
@@ -1529,7 +1529,7 @@ public class SyncThreadSyncFile {
         JcifsFile mf = null;
         int sr=0;
         try {
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
             sr = moveCopySmbToSmb(stwa, sti, false, from_path, from_path, mf, to_path, to_path, null, isTakenDateUsed);
         } catch (MalformedURLException e) {
             putErrorMessage(stwa, sti, e, from_path, to_path);
@@ -1547,7 +1547,7 @@ public class SyncThreadSyncFile {
 
         JcifsFile mf = null;
         try {
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
             return moveCopySmbToSmb(stwa, sti, true, from_path, from_path, mf, to_path, to_path, null, isTakenDateUsed);
         } catch (MalformedURLException e) {
             putErrorMessage(stwa, sti, e, from_path, to_path);
@@ -1621,7 +1621,7 @@ public class SyncThreadSyncFile {
                             }
                             if (sti.isSyncOptionSyncEmptyDirectory()) {
                                 if (!isTakenDateUsed && SyncThread.isDirectoryIncluded(stwa, relative_from_path)) {
-                                    SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.destinationAuth);
+                                    SyncThread.createDirectoryToSmb(stwa, sti, to_path, stwa.destinationSmbAuth);
                                 }
                             }
                             if (sti.isSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty() && move_file) {
@@ -1653,8 +1653,8 @@ public class SyncThreadSyncFile {
                             stwa.util.addLogMsg("W",stwa.appContext.getString(R.string.msgs_mirror_same_file_ignored,from_path));
                             stwa.totalIgnoreCount++;
                         } else {
-                            tf = new JcifsFile(parsed_to_path, stwa.destinationAuth);
-                            if (isTakenDateUsed) SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.destinationAuth);
+                            tf = new JcifsFile(parsed_to_path, stwa.destinationSmbAuth);
+                            if (isTakenDateUsed) SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.destinationSmbAuth);
                             boolean tf_exists = tf.exists();
                             if (!tf_exists || tf.isFile()) {
                                 String conf_type=move_file?CONFIRM_REQUEST_MOVE:CONFIRM_REQUEST_COPY;

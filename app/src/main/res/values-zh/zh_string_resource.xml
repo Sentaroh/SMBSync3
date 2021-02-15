@@ -431,7 +431,7 @@
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">更新日期不能超过3位数。</string>
         <string name="msgs_task_sync_task_sync_option">选项:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">同步的源文件和目标文件之间的最小允许时间差（秒）</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">允许与所有IP地址同步 (包括公众)</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_all_ip_address">允许与所有IP地址同步 (包括公众)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">覆盖/删除前确认</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">在同步前删除文件（仅镜像法）</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">只有当源文件大于目的文件时，文件才会不同</string>
@@ -593,13 +593,13 @@
         <string name="msgs_mirror_invalid_file_directory_name_character_skipped">文件或目录被排除在同步过程之外，因为源名称包含对目标无效的字符。 字符：%1$s，路径：%2$s</string>
         <string name="msgs_mirror_remote_addr_not_connected">无法连接到SMB主机地址%s。</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port">无法连接到端口%1$s的SMB主机%2$s。</string>
-        <string name="msgs_mirror_remote_name_not_found">找不到SMB主机名，用IP地址试试。主机名=</string>
+        <string name="msgs_mirror_remote_name_not_found">找不到SMB主机名，用IP地址试试。主机名=%s</string>
         <string name="msgs_mirror_same_directory_ignored">因为同一目录不能同步，所以目录被忽略。 目录=%s</string>
         <string name="msgs_mirror_same_file_ignored">该文件被忽略，因为同一个文件在源文件和目标文件中无法同步。文件=%s</string>
-        <string name="msgs_mirror_smb_addr_not_connected">无法连接到指定的SMB服务器。 IP地址=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">无法连接到指定的SMB服务器。 Server=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port">无法连接到指定的SMB服务器。 IP地址=%1$s，端口=%2$s。</string>
         <string name="msgs_mirror_smb_invalid_port_specified">无效端口号：%s</string>
-        <string name="msgs_mirror_smb_name_not_found">找不到指定的SMB服务器主机名。 主机名=</string>
+        <string name="msgs_mirror_smb_name_not_found">找不到指定的SMB服务器主机名。 主机名=%s</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">同步中止。 无线适配器没有指定的 IP 地址。</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">同步中止。 未连接到指定的无线接入点。</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">同步中止。 未连接到 WiFi 接入点。</string>

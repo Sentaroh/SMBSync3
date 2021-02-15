@@ -356,9 +356,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(boolean enabled) {syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters=enabled;}
     public boolean isSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters() {return syncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters;}
 
-    private boolean syncOptionSyncAllowGlobalIpAddress=false;
-    public boolean isSyncOptionSyncAllowGlobalIpAddress() {return syncOptionSyncAllowGlobalIpAddress;}
-    public void setSyncOptionSyncAllowGlobalIpAddress(boolean p) {syncOptionSyncAllowGlobalIpAddress = p;}
+    private boolean syncOptionSyncAllowAllIpAddress =false;
+    public boolean isSyncOptionSyncAllowAllIpAddress() {return syncOptionSyncAllowAllIpAddress;}
+    public void setSyncOptionSyncAllowAllIpAddress(boolean p) {
+        syncOptionSyncAllowAllIpAddress = p;}
 
     private boolean syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty =false;
     public boolean isSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty() {return syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty;}
@@ -434,17 +435,18 @@ class SyncTaskItem implements Serializable, Cloneable {
     public void setSourceDirectoryName(String p) {syncTaskSourceFolderDirName = p;}
     public String getSourceDirectoryName() {return syncTaskSourceFolderDirName;}
 
-    private String syncTaskSourceFolderSmbIpAddress = "";
-    public void setSourceSmbAddr(String p) {syncTaskSourceFolderSmbIpAddress = p;}
-    public String getSourceSmbAddr() {return syncTaskSourceFolderSmbIpAddress;}
+//    private String syncTaskSourceFolderSmbIpAddress = "";
+//    public void setSourceSmbAddr(String p) {syncTaskSourceFolderSmbIpAddress = p;}
+//    public String getSourceSmbAddr() {return syncTaskSourceFolderSmbIpAddress;}
 
     private String syncTaskSourceFolderSmbPortNumber = SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT;
     public void setSourceSmbPort(String p) {syncTaskSourceFolderSmbPortNumber = p;}
     public String getSourceSmbPort() {return syncTaskSourceFolderSmbPortNumber;}
 
-    private String syncTaskSourceFolderSmbHostName = "";
-    public void setSourceSmbHostName(String p) {syncTaskSourceFolderSmbHostName = p;}
-    public String getSourceSmbHostName() {return syncTaskSourceFolderSmbHostName;}
+    private String syncTaskSourceFolderSmbHost = "";
+    public void setSourceSmbHost(String p) {
+        syncTaskSourceFolderSmbHost = p;}
+    public String getSourceSmbHost() {return syncTaskSourceFolderSmbHost;}
 
     private String syncTaskSourceFolderSmbDomain = "";
     public void setSourceSmbDomain(String p) {syncTaskSourceFolderSmbDomain = p;}
@@ -471,17 +473,18 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getDestinationSmbShareName() {return syncTaskDestinationFolderSmbShareName;}
     public void setDestinationSmbShareName(String p) {syncTaskDestinationFolderSmbShareName = p;}
 
-    private String syncTaskDestinationFolderSmbIpAddress = "";
-    public String getDestinationSmbAddr() {return syncTaskDestinationFolderSmbIpAddress;}
-    public void setDestinationSmbAddr(String p) {syncTaskDestinationFolderSmbIpAddress = p;}
+//    private String syncTaskDestinationFolderSmbIpAddress = "";
+//    public String getDestinationSmbAddr() {return syncTaskDestinationFolderSmbIpAddress;}
+//    public void setDestinationSmbAddr(String p) {syncTaskDestinationFolderSmbIpAddress = p;}
 
     private String syncTaskDestinationFolderSmbPortNumber = SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT;
     public String getDestinationSmbPort() {return syncTaskDestinationFolderSmbPortNumber;}
     public void setDestinationSmbPort(String p) {syncTaskDestinationFolderSmbPortNumber = p;}
 
-    private String syncTaskDestinationFolderSmbHostName = "";
-    public String getDestinationSmbHostName() {return syncTaskDestinationFolderSmbHostName;}
-    public void setDestinationSmbHostname(String p) {syncTaskDestinationFolderSmbHostName = p;}
+    private String syncTaskDestinationFolderSmbHost = "";
+    public String getDestinationSmbHost() {return syncTaskDestinationFolderSmbHost;}
+    public void setDestinationSmbHost(String p) {
+        syncTaskDestinationFolderSmbHost = p;}
 
     private String syncTaskDestinationFolderSmbDomain = "";
     public String getDestinationSmbDomain() {return syncTaskDestinationFolderSmbDomain;}
@@ -769,8 +772,8 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskSourceFolderType.equals(sti.getSourceFolderType())) &&
                 (syncTaskSourceFolderDirName.equals(sti.getSourceDirectoryName())) &&
                 (syncTaskSourceFolderSmbShareName.equals(sti.getSourceSmbShareName())) &&
-                (syncTaskSourceFolderSmbIpAddress.equals(sti.getSourceSmbAddr())) &&
-                (syncTaskSourceFolderSmbHostName.equals(sti.getSourceSmbHostName())) &&
+//                (syncTaskSourceFolderSmbIpAddress.equals(sti.getSourceSmbAddr())) &&
+                (syncTaskSourceFolderSmbHost.equals(sti.getSourceSmbHost())) &&
                 (syncTaskSourceFolderSmbPortNumber.equals(sti.getSourceSmbPort())) &&
                 (syncTaskSourceFolderSmbAccountName.equals(sti.getSourceSmbAccountName())) &&
                 (syncTaskSourceFolderSmbPassword.equals(sti.getSourceSmbAccountPassword())) &&
@@ -783,8 +786,8 @@ class SyncTaskItem implements Serializable, Cloneable {
             if ((syncTaskDestinationFolderType.equals(sti.getDestinationFolderType())) &&
                     (syncTaskDestinationFolderDirName.equals(sti.getDestinationDirectoryName())) &&
                     (syncTaskDestinationFolderSmbShareName.equals(sti.getDestinationSmbShareName())) &&
-                    (syncTaskDestinationFolderSmbIpAddress.equals(sti.getDestinationSmbAddr())) &&
-                    (syncTaskDestinationFolderSmbHostName.equals(sti.getDestinationSmbHostName())) &&
+//                    (syncTaskDestinationFolderSmbIpAddress.equals(sti.getDestinationSmbAddr())) &&
+                    (syncTaskDestinationFolderSmbHost.equals(sti.getDestinationSmbHost())) &&
                     (syncTaskDestinationFolderSmbPortNumber.equals(sti.getDestinationSmbPort())) &&
                     (syncTaskDestinationFolderSmbAccountName.equals(sti.getDestinationSmbAccountName())) &&
                     (syncTaskDestinationFolderSmbPassword.equals(sti.getDestinationSmbPassword())) &&
@@ -845,7 +848,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
                         (syncOptionWifiStatus.equals(sti.getSyncOptionWifiStatusOption())) &&
 
-                        (syncOptionSyncAllowGlobalIpAddress==sti.isSyncOptionSyncAllowGlobalIpAddress()) &&
+                        (syncOptionSyncAllowAllIpAddress ==sti.isSyncOptionSyncAllowAllIpAddress()) &&
 
                         (syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty ==sti.isSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty()) &&
 

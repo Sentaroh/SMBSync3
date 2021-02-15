@@ -1119,7 +1119,10 @@ public class TaskListImportExport {
                     Collections.sort(sfl, new Comparator<SafFile3>() {
                         @Override
                         public int compare(SafFile3 l1, SafFile3 r1) {
-                            return (int) (l1.lastModified() - r1.lastModified());
+                            long comp=(l1.lastModified() - r1.lastModified());
+                            if (comp>0) return 1;
+                            else if (comp==0) return 0;
+                            else return -1;
                         }
                     });
                     if (sfl.size() >= (MAX_AUTOSAVE_FILE_COUNT - 1)) {

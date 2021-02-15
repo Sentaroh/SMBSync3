@@ -430,7 +430,7 @@
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">更新日は3桁以上は使用できません</string>
         <string name="msgs_task_sync_task_sync_option">オプション:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">許容するソースと宛先ファイルの最終更新時刻の差(秒)</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">全てのIPアドレスでの同期を許可する</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_all_ip_address">全てのIPアドレスでの同期を許可する</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">ファイルの上書または削除の前に確認する</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">ミラーの時は削除を最初に行う</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">ソースのファイルサイズが大きい時だけ差分ファイルとして判定する</string>
@@ -590,15 +590,15 @@
         <string name="msgs_mirror_invalid_folder_combination">無効なフォルダータイプの組み合わせです。ソース=%1$s, 宛先=%2$s</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_error">ソースのファイル名またはディレクトリ名に宛先フォルダーでは使用できない文字が含まれています。ソースのファイル名またはディレクトリ名を変更してください。文字=%1$s, パス=%2$s</string>
         <string name="msgs_mirror_invalid_file_directory_name_character_skipped">ソースのファイル名またはディレクトリ名に宛先フォルダーでは使用できない文字が含まれているためディレクトリーまたはファイルの処理をスキップします。文字=%1$s, パス=%2$s</string>
-        <string name="msgs_mirror_remote_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s</string>
+        <string name="msgs_mirror_remote_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 SMB Host=%s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%1$s, ポート=%2$s</string>
-        <string name="msgs_mirror_remote_name_not_found">SMBホスト名が発見できませんでした、IPアドレスで試してください。 ホスト名=</string>
+        <string name="msgs_mirror_remote_name_not_found">SMBホスト名が発見できませんでした、IPアドレスで試してください。 ホスト名=%s</string>
         <string name="msgs_mirror_same_directory_ignored">ソースフォルダーと宛先フォルダーで同じディレクトリを同期できないため、ディレクトリを無視しました。ディレクトリ=%s</string>
         <string name="msgs_mirror_same_file_ignored">ソースフォルダーと宛先フォルダーで同じファイルを同期できないため、ファイルを無視しました。ファイル=%s</string>
-        <string name="msgs_mirror_smb_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">SMBフォルダーで指定されているSMBホストに接続できませんでした。 SMBホスト=%s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port">SMBフォルダーで指定されているSMBホストに接続できませんでした。 IPアドレス=%1$s, ポート=%2$s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">無効なポート番号が指定されています。 ポート番号=%s</string>
-        <string name="msgs_mirror_smb_name_not_found">SMBフォルダーで指定されているSMBホスト名が発見できませんでした。 ホスト名=</string>
+        <string name="msgs_mirror_smb_name_not_found">SMBフォルダーで指定されているSMBホスト名が発見できませんでした。 ホスト名=%s</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">無線LANが指定されたIPアドレスに接続されていないため同期を終了します。</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">無線LANが指定されたアクセスポイントに接続されていないため同期を終了します。</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">無線LANがアクセスポイントに接続されていないため同期を終了します。</string>

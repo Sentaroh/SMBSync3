@@ -77,7 +77,7 @@ public class SyncThreadArchiveFile {
 
         for (int i=1;i<100000;i++) {
             String suffix_base= String.format("_%d", i);
-            JcifsFile jf=new JcifsFile(fn+suffix_base+fe, stwa.destinationAuth);
+            JcifsFile jf=new JcifsFile(fn+suffix_base+fe, stwa.destinationSmbAuth);
             if (!jf.exists()) {
                 result=fn+suffix_base+fe;
                 break;
@@ -108,7 +108,7 @@ public class SyncThreadArchiveFile {
         if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_MOVE, from_path, to_path)) {
             if (!sti.isSyncTestMode()) {
                 String dir=tf.getParent();
-                JcifsFile jf_dir=new JcifsFile(dir,stwa.destinationAuth);
+                JcifsFile jf_dir=new JcifsFile(dir,stwa.destinationSmbAuth);
                 if (!jf_dir.exists()) jf_dir.mkdirs();
                 while (stwa.retryCount > 0) {
                     sync_result= copyFile(stwa, sti, new FileInputStream(mf), tf.getOutputStream(), from_path, to_path,
@@ -400,7 +400,7 @@ public class SyncThreadArchiveFile {
         if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_MOVE, from_path, to_path)) {
             if (!sti.isSyncTestMode()) {
                 String dir=tf.getParent();
-                JcifsFile jf_dir=new JcifsFile(dir,stwa.destinationAuth);
+                JcifsFile jf_dir=new JcifsFile(dir,stwa.destinationSmbAuth);
                 if (!jf_dir.exists()) jf_dir.mkdirs();
                 while (stwa.retryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(),
@@ -480,7 +480,7 @@ public class SyncThreadArchiveFile {
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
             to_file_name= convertFileNameWithDate(stwa, sti, item, to_file_name)+to_file_seqno;
             String temp_dir= convertKeywordWithDate(stwa, sti, to_path, item);
-            JcifsFile tf=new JcifsFile(temp_dir+"/"+to_file_name+to_file_ext, stwa.destinationAuth);
+            JcifsFile tf=new JcifsFile(temp_dir+"/"+to_file_name+to_file_ext, stwa.destinationSmbAuth);
             if (tf.exists()) {
                 String new_name=createArchiveLocalNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+"/"+to_file_name+to_file_seqno,to_file_ext) ;
                 if (new_name.equals("")) {
@@ -488,7 +488,7 @@ public class SyncThreadArchiveFile {
                     sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
                     break;
                 } else {
-                    tf=new JcifsFile(new_name, stwa.destinationAuth);
+                    tf=new JcifsFile(new_name, stwa.destinationSmbAuth);
                     sync_result= moveFileLocalToSmb(stwa, sti, item.full_path, (SafFile3)item.file, tf, tf.getPath(), new_name);
                 }
             } else {
@@ -592,7 +592,7 @@ public class SyncThreadArchiveFile {
         stwa.smbFileList = new ArrayList<String>();
         JcifsFile mf = null;
         try {
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
         } catch (Exception e) {
             stwa.util.addLogMsg("E", sti.getSyncTaskName(), CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", To=" + to_path);
             stwa.util.addLogMsg("E", sti.getSyncTaskName(), e.getMessage());//e.toString());
@@ -858,7 +858,7 @@ public class SyncThreadArchiveFile {
                                           String from_path, String to_path) {
         JcifsFile mf = null;
         try {
-            mf = new JcifsFile(from_path, stwa.sourceAuth);
+            mf = new JcifsFile(from_path, stwa.sourceSmbAuth);
         } catch (MalformedURLException e) {
             stwa.util.addLogMsg("E", sti.getSyncTaskName(), CommonUtilities.getExecutedMethodName() + " From=" + from_path + ", Source file error");
             stwa.util.addLogMsg("E", sti.getSyncTaskName(), e.getMessage());//e.toString());
@@ -883,7 +883,7 @@ public class SyncThreadArchiveFile {
         if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_MOVE, from_path, to_path)) {
             if (!sti.isSyncTestMode()) {
                 String dir=tf.getParent();
-                JcifsFile jf_dir=new JcifsFile(dir,stwa.destinationAuth);
+                JcifsFile jf_dir=new JcifsFile(dir,stwa.destinationSmbAuth);
                 if (!jf_dir.exists()) jf_dir.mkdirs();
                 while (stwa.retryCount > 0) {
                     sync_result= copyFile(stwa, sti, mf.getInputStream(), tf.getOutputStream(), from_path, to_path, file_name, sti.isSyncOptionUseSmallIoBuffer());
@@ -951,7 +951,7 @@ public class SyncThreadArchiveFile {
             to_file_seqno=getFileSeqNumber(stwa, sti, file_seq_no);
             to_file_name= convertFileNameWithDate(stwa, sti, item, to_file_name)+to_file_seqno;
             String temp_dir= convertKeywordWithDate(stwa, sti, to_path, item);
-            JcifsFile tf=new JcifsFile(temp_dir+"/"+to_file_name+to_file_ext, stwa.destinationAuth);
+            JcifsFile tf=new JcifsFile(temp_dir+"/"+to_file_name+to_file_ext, stwa.destinationSmbAuth);
 
             if (tf.exists()) {
                 String new_name=createArchiveSmbNewFilePath(stwa, sti, to_path, to_path+"/"+temp_dir+"/"+to_file_name+to_file_seqno,to_file_ext) ;
@@ -960,7 +960,7 @@ public class SyncThreadArchiveFile {
                     sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
                     break;
                 } else {
-                    tf=new JcifsFile(new_name, stwa.destinationAuth);
+                    tf=new JcifsFile(new_name, stwa.destinationSmbAuth);
                     sync_result= moveFileSmbToSmb(stwa, sti, item.full_path, (JcifsFile)item.file, tf, tf.getPath(), new_name);
                 }
             } else {

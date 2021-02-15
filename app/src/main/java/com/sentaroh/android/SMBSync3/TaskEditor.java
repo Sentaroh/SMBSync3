@@ -342,7 +342,7 @@ public class TaskEditor extends DialogFragment {
         final CheckedTextView ctvProcessRootDirFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_source_root_dir_file);
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
-        final CheckedTextView ctv_sync_allow_global_ip_addr =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
+        final CheckedTextView ctv_sync_allow_global_ip_addr =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_all_ip_address);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
         final CheckedTextView ctvSyncSubDir = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_sub_dir);
         final CheckedTextView ctvSyncEmptyDir = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_empty_directory);
@@ -479,7 +479,7 @@ public class TaskEditor extends DialogFragment {
         final CheckedTextView ctvProcessRootDirFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_source_root_dir_file);
         final CheckedTextView ctvConfirmOverride = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_confirm_override_delete_file);
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
-        final CheckedTextView ctv_sync_allow_global_ip_addr =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
+        final CheckedTextView ctv_sync_allow_global_ip_addr =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_all_ip_address);
         final CheckedTextView ctvShowSpecialOption = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_show_special_option);
         final CheckedTextView ctvSyncSubDir = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_sub_dir);
         final CheckedTextView ctvSyncEmptyDir = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_empty_directory);
@@ -784,8 +784,7 @@ public class TaskEditor extends DialogFragment {
         sp_sync_folder_smb_proto.setOnItemSelectedListener(null);
         setSpinnerSyncFolderSmbProto(sti, sp_sync_folder_smb_proto, sfev.folder_smb_protocol);
 
-        if (!sfev.folder_smb_addr.equals("")) et_remote_host.setText(sfev.folder_smb_addr);
-        else et_remote_host.setText(sfev.folder_smb_hostname);
+        et_remote_host.setText(sfev.folder_smb_host);
 
         CommonUtilities.setCheckedTextViewListener(ctv_sync_folder_use_port);
         if (!sfev.folder_smb_port.equals("")) {
@@ -1081,7 +1080,12 @@ public class TaskEditor extends DialogFragment {
         CommonUtilities.setViewEnabled(mActivity, sp_sync_folder_smb_proto, enabled);
         CommonUtilities.setViewEnabled(mActivity, et_remote_host, enabled);
         CommonUtilities.setViewEnabled(mActivity, ctv_sync_folder_use_port, enabled);
-        CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, enabled);
+        if (enabled) {
+            if (ctv_sync_folder_use_port.isChecked()) CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, enabled);
+            else CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, false);
+        } else {
+            CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, false);
+        }
         CommonUtilities.setViewEnabled(mActivity, ctv_sync_folder_use_pswd, enabled);
         if (enabled) {
             if (ctv_sync_folder_use_pswd.isChecked()) {
@@ -2259,11 +2263,9 @@ public class TaskEditor extends DialogFragment {
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
             String host=et_remote_host.getText().toString();
             if (CommonUtilities.isIpAddressV6(host) || CommonUtilities.isIpAddressV4(host)) {
-                nsfev.folder_smb_addr = host;
-                nsfev.folder_smb_hostname ="";
+                nsfev.folder_smb_host =host;
             } else {
-                nsfev.folder_smb_hostname = host;
-                nsfev.folder_smb_addr ="";
+                nsfev.folder_smb_host = host;
             }
             nsfev.folder_smb_domain = et_sync_folder_domain.getText().toString().trim();
             if (ctv_sync_folder_use_port.isChecked())
@@ -2690,8 +2692,7 @@ public class TaskEditor extends DialogFragment {
             }
             info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
         } else if (sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            String host = sti.getSourceSmbAddr();
-            if (sti.getSourceSmbAddr().equals("")) host = sti.getSourceSmbHostName();
+            String host = sti.getSourceSmbHost();
             String share = sti.getSourceSmbShareName();
             String dir = sti.getSourceDirectoryName();
             if (dir.equals("")) info = "smb://" + host + "/" + share;
@@ -2733,8 +2734,7 @@ public class TaskEditor extends DialogFragment {
             }
             info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
         } else if (sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-            String host = sti.getDestinationSmbAddr();
-            if (sti.getDestinationSmbAddr().equals("")) host = sti.getDestinationSmbHostName();
+            String host = sti.getDestinationSmbHost();
             String share = sti.getDestinationSmbShareName();
             String dir = sti.getDestinationDirectoryName();
             if (dir.equals("")) info = "smb://" + host + "/" + share;
@@ -3326,8 +3326,8 @@ public class TaskEditor extends DialogFragment {
         final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);
         final Button edit_wifi_addr_list = (Button) mDialog.findViewById(R.id.edit_sync_task_option_btn_edit_address_white_list);
         setWifiApWhiteListInfo(n_sti.getSyncOptionWifiIPAddressGrantList(), edit_wifi_addr_list);
-        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
-        ctv_sync_allow_global_ip_addr.setChecked(n_sti.isSyncOptionSyncAllowGlobalIpAddress());
+        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_all_ip_address);
+        ctv_sync_allow_global_ip_addr.setChecked(n_sti.isSyncOptionSyncAllowAllIpAddress());
         setCtvListenerForEditSyncTask(ctv_sync_allow_global_ip_addr, type, n_sti, dlg_msg);
 
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
@@ -3990,9 +3990,8 @@ public class TaskEditor extends DialogFragment {
                         n_sti.setChanged(nsfev.isChanged);
                         n_sti.setSourceDirectoryName(nsfev.folder_directory);
                         n_sti.setSourceStorageUuid(nsfev.folder_storage_uuid);
-                        n_sti.setSourceSmbAddr(nsfev.folder_smb_addr);
                         n_sti.setSourceSmbDomain(nsfev.folder_smb_domain);
-                        n_sti.setSourceSmbHostName(nsfev.folder_smb_hostname);
+                        n_sti.setSourceSmbHost(nsfev.folder_smb_host);
                         n_sti.setSourceSmbPort(nsfev.folder_smb_port);
                         n_sti.setSourceSmbPassword(nsfev.folder_smb_password);
                         n_sti.setSourceSmbShareName(nsfev.folder_smb_share);
@@ -4065,9 +4064,8 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_title = mActivity.getString(R.string.msgs_main_sync_profile_dlg_title_source);
                 sfev.folder_directory = n_sti.getSourceDirectoryName();
                 sfev.folder_storage_uuid = n_sti.getSourceStorageUuid();
-                sfev.folder_smb_addr = n_sti.getSourceSmbAddr();
                 sfev.folder_smb_domain = n_sti.getSourceSmbDomain();
-                sfev.folder_smb_hostname = n_sti.getSourceSmbHostName();
+                sfev.folder_smb_host = n_sti.getSourceSmbHost();
                 sfev.folder_smb_port = n_sti.getSourceSmbPort();
                 sfev.folder_smb_password = n_sti.getSourceSmbAccountPassword();
                 sfev.folder_smb_share = n_sti.getSourceSmbShareName();
@@ -4102,9 +4100,8 @@ public class TaskEditor extends DialogFragment {
                         n_sti.setSourceDirectoryName(new_dir);
                         n_sti.setSourceStorageUuid(t_sti.getDestinationStorageUuid());
                         n_sti.setSourceFolderType(t_sti.getDestinationFolderType());
-                        n_sti.setSourceSmbAddr(t_sti.getDestinationSmbAddr());
                         n_sti.setSourceSmbDomain(t_sti.getDestinationSmbDomain());
-                        n_sti.setSourceSmbHostName(t_sti.getDestinationSmbHostName());
+                        n_sti.setSourceSmbHost(t_sti.getDestinationSmbHost());
                         n_sti.setSourceSmbPassword(t_sti.getDestinationSmbPassword());
                         n_sti.setSourceSmbPort(t_sti.getDestinationSmbPort());
                         n_sti.setSourceSmbShareName(t_sti.getDestinationSmbShareName());
@@ -4115,9 +4112,8 @@ public class TaskEditor extends DialogFragment {
                         n_sti.setDestinationDirectoryName(t_sti.getSourceDirectoryName());
                         n_sti.setDestinationStorageUuid(t_sti.getSourceStorageUuid());
                         n_sti.setDestinationFolderType(t_sti.getSourceFolderType());
-                        n_sti.setDestinationSmbAddr(t_sti.getSourceSmbAddr());
                         n_sti.setDestinationSmbDomain(t_sti.getSourceSmbDomain());
-                        n_sti.setDestinationSmbHostname(t_sti.getSourceSmbHostName());
+                        n_sti.setDestinationSmbHost(t_sti.getSourceSmbHost());
                         n_sti.setDestinationSmbPassword(t_sti.getSourceSmbAccountPassword());
                         n_sti.setDestinationSmbPort(t_sti.getSourceSmbPort());
                         n_sti.setDestinationSmbShareName(t_sti.getSourceSmbShareName());
@@ -4159,9 +4155,8 @@ public class TaskEditor extends DialogFragment {
                         n_sti.setChanged(nsfev.isChanged);
                         n_sti.setDestinationDirectoryName(nsfev.folder_directory);
                         n_sti.setDestinationStorageUuid(nsfev.folder_storage_uuid);
-                        n_sti.setDestinationSmbAddr(nsfev.folder_smb_addr);
                         n_sti.setDestinationSmbDomain(nsfev.folder_smb_domain);
-                        n_sti.setDestinationSmbHostname(nsfev.folder_smb_hostname);
+                        n_sti.setDestinationSmbHost(nsfev.folder_smb_host);
                         n_sti.setDestinationSmbPort(nsfev.folder_smb_port);
                         n_sti.setDestinationSmbPassword(nsfev.folder_smb_password);
                         n_sti.setDestinationSmbShareName(nsfev.folder_smb_share);
@@ -4244,9 +4239,8 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_title = mActivity.getString(R.string.msgs_main_sync_profile_dlg_title_destination);
                 sfev.folder_directory = n_sti.getDestinationDirectoryName();
                 sfev.folder_storage_uuid = n_sti.getDestinationStorageUuid();
-                sfev.folder_smb_addr = n_sti.getDestinationSmbAddr();
                 sfev.folder_smb_domain = n_sti.getDestinationSmbDomain();
-                sfev.folder_smb_hostname = n_sti.getDestinationSmbHostName();
+                sfev.folder_smb_host = n_sti.getDestinationSmbHost();
                 sfev.folder_smb_port = n_sti.getDestinationSmbPort();
                 sfev.folder_smb_password = n_sti.getDestinationSmbPassword();
                 sfev.folder_smb_share = n_sti.getDestinationSmbShareName();
@@ -4595,7 +4589,7 @@ public class TaskEditor extends DialogFragment {
         final CheckedTextView ctvDiffUseFileSize = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
         final CheckedTextView ctDeterminChangedFileByTime = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_last_mod_time);
 
-        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
+        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_all_ip_address);
 
         final CheckedTextView ctv_sync_remove_source_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
         final Spinner sp_sync_task_option_error_option=(Spinner)mDialog.findViewById(R.id.edit_sync_task_option_error_option_value);
@@ -4640,7 +4634,7 @@ public class TaskEditor extends DialogFragment {
 
         String wifi_sel = getSpinnerSyncTaskWifiOptionValue(spinnerSyncWifiStatus);
         nstli.setSyncOptionWifiStatusOption(wifi_sel);
-        nstli.setSyncOptionSyncAllowGlobalIpAddress(ctv_sync_allow_global_ip_addr.isChecked());
+        nstli.setSyncOptionSyncAllowAllIpAddress(ctv_sync_allow_global_ip_addr.isChecked());
 
         nstli.setSyncOptionSyncWhenCharging(ctv_task_sync_when_cahrging.isChecked());
 
@@ -4894,7 +4888,7 @@ public class TaskEditor extends DialogFragment {
         final LinearLayout ll_wifi_condition_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wifi_condition_view);
         final LinearLayout ll_wifi_wl_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_wl_view);
         final LinearLayout ll_wifi_wl_address_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_address_list_view);
-        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_global_ip_address);
+        final CheckedTextView ctv_sync_allow_global_ip_addr = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_sync_allow_all_ip_address);
         final Spinner spinnerSyncWifiStatus = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
 
         final LinearLayout ll_ctvDiffUseFileSize = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_diff_use_file_size);
@@ -5289,9 +5283,8 @@ public class TaskEditor extends DialogFragment {
             }
         } else if (sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             if (sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
-                if (sti.getSourceSmbAddr().equalsIgnoreCase(sti.getDestinationSmbAddr()) &&
-                        sti.getSourceSmbDomain().equalsIgnoreCase(sti.getDestinationSmbDomain()) &&
-                        sti.getSourceSmbHostName().equalsIgnoreCase(sti.getDestinationSmbHostName()) &&
+                if (sti.getSourceSmbDomain().equalsIgnoreCase(sti.getDestinationSmbDomain()) &&
+                        sti.getSourceSmbHost().equalsIgnoreCase(sti.getDestinationSmbHost()) &&
                         sti.getSourceSmbShareName().equalsIgnoreCase(sti.getDestinationSmbShareName())) {
                     result= isSameDirectoryAccess(dialog, sti);
                 }
@@ -5312,8 +5305,7 @@ public class TaskEditor extends DialogFragment {
         public String folder_smb_account = "";
         public String folder_smb_password = "";
         public String folder_smb_domain = "";
-        public String folder_smb_addr = "";
-        public String folder_smb_hostname = "";
+        public String folder_smb_host = "";
         public String folder_smb_share = "";
         public String folder_smb_port = "";
         public String folder_smb_protocol = "1";
@@ -5397,8 +5389,7 @@ public class TaskEditor extends DialogFragment {
                         folder_smb_account.equals(comp.folder_smb_account) &&
                         folder_smb_password.equals(comp.folder_smb_password) &&
                         folder_smb_domain.equals(comp.folder_smb_domain) &&
-                        folder_smb_addr.equals(comp.folder_smb_addr) &&
-                        folder_smb_hostname.equals(comp.folder_smb_hostname) &&
+                        folder_smb_host.equals(comp.folder_smb_host) &&
                         folder_smb_share.equals(comp.folder_smb_share) &&
                         folder_smb_port.equals(comp.folder_smb_port) &&
                         folder_smb_protocol.equals(comp.folder_smb_protocol) &&

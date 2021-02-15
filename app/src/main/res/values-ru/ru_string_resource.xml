@@ -430,7 +430,7 @@
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">Дата обновления не может быть больше 3-х цифр.</string>
         <string name="msgs_task_sync_task_sync_option">Опции:</string>
         <string name="msgs_task_sync_task_sync_option_allowance_last_mod_time">Минимально допустимая разница во времени (в секундах) между исходным и целевым файлами для синхронизации</string>
-        <string name="msgs_task_sync_task_sync_option_sync_allow_global_ip_address">Разрешить синхронизацию со всеми IP-адресами (привлекать публику)</string>
+        <string name="msgs_task_sync_task_sync_option_sync_allow_all_ip_address">Разрешить синхронизацию со всеми IP-адресами (привлекать публику)</string>
         <string name="msgs_task_sync_task_sync_option_confirm_required">Подтвердите, прежде чем перезаписать/удалить</string>
         <string name="msgs_task_sync_task_sync_option_delete_first_when_mirror">Удаление файлов перед синхронизацией (только в режиме зеркального отображения).</string>
         <string name="msgs_task_sync_task_sync_option_diff_file_size_greater_than_destination">Файлы считаются разными только в том случае, если размер источника больше, чем место назначения (только сравнение размеров, отключение разницы во времени).</string>
@@ -593,13 +593,13 @@
         <string name="msgs_mirror_invalid_file_directory_name_character_skipped">Файл или каталог исключены из процесса синхронизации, поскольку имя источника содержит символы, недопустимые для места назначения. Персонаж:%1$s, Путь:%2$s</string>
         <string name="msgs_mirror_remote_addr_not_connected">Невозможно подключиться к адресу хоста SMB %s</string>
         <string name="msgs_mirror_remote_addr_not_connected_with_port">Невозможно подключиться к узлу SMB %1$s через порт %2$s</string>
-        <string name="msgs_mirror_remote_name_not_found">Не удалось найти имя хоста SMB, попробуйте его с IP-адресом. Имя хоста =</string>
+        <string name="msgs_mirror_remote_name_not_found">Не удалось найти имя хоста SMB, попробуйте его с IP-адресом. Имя хоста =%s</string>
         <string name="msgs_mirror_same_directory_ignored">Каталог игнорируется, поскольку один и тот же каталог не может быть синхронизирован. Каталог = %s</string>
         <string name="msgs_mirror_same_file_ignored">The file was ignored because the same file could not be synchronized in the source and destination. File=%s</string>
-        <string name="msgs_mirror_smb_addr_not_connected">Невозможно подключиться к указанному серверу SMB. IP-адрес = %s</string>
+        <string name="msgs_mirror_smb_addr_not_connected">Невозможно подключиться к указанному серверу SMB. Server = %s</string>
         <string name="msgs_mirror_smb_addr_not_connected_with_port">Невозможно подключиться к указанному серверу SMB. IP-адрес = %1$s, порт = %2$s</string>
         <string name="msgs_mirror_smb_invalid_port_specified">Неверный номер порта: %s</string>
-        <string name="msgs_mirror_smb_name_not_found">Указанное имя хоста SMB-сервера не найдено. Имя хоста =</string>
+        <string name="msgs_mirror_smb_name_not_found">Указанное имя хоста SMB-сервера не найдено. Имя хоста =%s</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_address_conn_other">Синхронизация прервана. Беспроводной адаптер не имеет указанного IP-адреса.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_conn_other">Синхронизация прервана. Не подключен к указанной точке беспроводного доступа.</string>
         <string name="msgs_mirror_sync_can_not_start_wifi_ap_not_connected">Синхронизация прервана. Не подключен к точке доступа WiFi.</string>

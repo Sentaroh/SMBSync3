@@ -36,6 +36,7 @@ import com.sentaroh.android.Utilities3.ThreadCtrl;
 import com.sentaroh.android.Utilities3.TreeFilelist.TreeFilelistItem;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -45,7 +46,8 @@ public class ReadSmbFilelist implements Runnable {
     private GlobalParameters mGp=null;
 
     private ArrayList<TreeFilelistItem> remoteFileList;
-    private String remoteUrl, remoteDir, remoteHostName, remoteHostAddr, remoteHostshare, remoteHostPort;
+    private String smbUrl, remoteDir, remoteHost, remoteHostshare, remoteHostPort;
+    private boolean isIpV6Address=false;
 
     private NotifyEvent notifyEvent;
 
@@ -72,13 +74,7 @@ public class ReadSmbFilelist implements Runnable {
         mContext = c;
         mUtil = new CommonUtilities(mContext, "FileList", gp, null);
         remoteFileList = fl;
-        String conv_addr=CommonUtilities.addScopeidToIpv6Address(rauth.serverHostAddress);
-        if (conv_addr!=null && conv_addr.contains(":")) {
-            remoteHostAddr=conv_addr;
-        } else {
-            remoteHostAddr=rauth.serverHostAddress;
-        }
-        remoteHostName=rauth.serverHostName;
+        remoteHost =rauth.serverHostName;
         remoteHostshare=rauth.serverShareName;
         remoteHostPort=rauth.serverPort;
         remoteDir = rd;
@@ -95,7 +91,7 @@ public class ReadSmbFilelist implements Runnable {
         else mRemoteUserNameForLog=null;
         mSmbLevel = rauth.serverProtocol;
 
-        mUtil.addDebugMsg(1, "I", "ReadSmbFilelist Hostname=" + remoteHostName + ", Hostaddr="+remoteHostAddr+", HostShare="+remoteHostshare+", Port="+remoteHostPort,
+        mUtil.addDebugMsg(1, "I", "ReadSmbFilelist Host=" + remoteHost + ", HostShare="+remoteHostshare+", Port="+remoteHostPort,
                 ", Dir=" +remoteDir+", user="+mRemoteUserNameForLog+", smb_proto="+mSmbLevel+", OP="+op);
 
     }
@@ -111,34 +107,38 @@ public class ReadSmbFilelist implements Runnable {
         mUtil.addDebugMsg(1, "I", "ReadSmbFilelist started, readSubDirCnt=" + readSubDirCnt + ", readDirOnly=" + readDirOnly);
 
         boolean error_exit = false;
-        String smb_addr=null;
-        int smb_port=remoteHostPort.equals("")?0:Integer.parseInt(remoteHostPort);
-        if (remoteHostName.equals("")) {
-            boolean connected=smb_port==0?CommonUtilities.canSmbHostConnectable(remoteHostAddr):CommonUtilities.canSmbHostConnectable(remoteHostAddr, smb_port);
-            if (!connected) {
-                error_exit = true;
-                if (getFLCtrl.isEnabled()) {
-                    getFLCtrl.setThreadResultError();
-                    getFLCtrl.setThreadMessage(String.format(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected), remoteHostAddr));
-                } else {
-                    getFLCtrl.setThreadResultCancelled();
+
+        String w_addr=remoteHost;
+        if (CommonUtilities.isIpAddressV6(remoteHost)) {
+            isIpV6Address=true;
+            w_addr=CommonUtilities.addScopeidToIpv6Address(remoteHost);
+        }
+        InetAddress ia=CommonUtilities.getInetAddress(w_addr);
+        if (ia!=null) {
+            String addr=ia.getHostAddress();
+            if (addr!=null) {
+                boolean connected=remoteHostPort.equals("")?
+                        CommonUtilities.canSmbHostConnectable(w_addr):CommonUtilities.canSmbHostConnectable(w_addr, remoteHostPort);
+                if (!connected) {
+                    error_exit = true;
+                    if (getFLCtrl.isEnabled()) {
+                        getFLCtrl.setThreadResultError();
+                        getFLCtrl.setThreadMessage(mContext.getString(R.string.msgs_mirror_smb_addr_not_connected, w_addr));
+                    } else {
+                        getFLCtrl.setThreadResultCancelled();
+                    }
                 }
-            } else {
-                smb_addr=remoteHostAddr;
             }
         } else {
-            smb_addr=CommonUtilities.resolveHostName(mGp, mUtil, mSmbLevel, remoteHostName);
-            if (smb_addr == null) {
-                error_exit = true;
-                if (getFLCtrl.isEnabled()) {
-                    getFLCtrl.setThreadResultError();
-                    getFLCtrl.setThreadMessage(
-                            mContext.getString(R.string.msgs_mirror_smb_name_not_found) + remoteHostName);
-                } else {
-                    getFLCtrl.setThreadResultCancelled();
-                }
+            error_exit = true;
+            if (getFLCtrl.isEnabled()) {
+                getFLCtrl.setThreadResultError();
+                getFLCtrl.setThreadMessage(mContext.getString(R.string.msgs_mirror_remote_name_not_found, w_addr));
+            } else {
+                getFLCtrl.setThreadResultCancelled();
             }
         }
+
         if (!error_exit) {
             buildRemoteUrl();
             if (mOpCode.equals(OPCD_READ_FILELIST)) readFileList();
@@ -163,7 +163,7 @@ public class ReadSmbFilelist implements Runnable {
                 prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
                 auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd, prop);
             }
-            JcifsFile remoteFile = new JcifsFile(remoteUrl + remoteDir, auth);
+            JcifsFile remoteFile = new JcifsFile(smbUrl + remoteDir, auth);
 
             JcifsFile[] fl = remoteFile.listFiles();
 
@@ -174,7 +174,7 @@ public class ReadSmbFilelist implements Runnable {
                     int dirct = 0;
                     String fp = fl[i].getPath();
                     if (fp.endsWith("/")) fp = fp.substring(0, fp.lastIndexOf("/"));
-                    fp = fp.substring(remoteUrl.length() + 1, fp.length());
+                    fp = fp.substring(smbUrl.length() + 1, fp.length());
                     if (fp.lastIndexOf("/") > 0) fp = "/" + fp.substring(0, fp.lastIndexOf("/") + 1);
                     else fp = "/";
                     try {
@@ -243,7 +243,7 @@ public class ReadSmbFilelist implements Runnable {
         } catch (JcifsException e) {
             e.printStackTrace();
             String cause="";
-            String[] e_msg= JcifsUtil.analyzeNtStatusCode(e, remoteUrl + remoteDir, mRemoteUserNameForLog);
+            String[] e_msg= JcifsUtil.analyzeNtStatusCode(e, smbUrl + remoteDir, mRemoteUserNameForLog);
             if (e.getCause()!=null) {
                 String tc=e.getCause().toString();
                 cause=tc.substring(tc.indexOf(":")+1);
@@ -272,26 +272,19 @@ public class ReadSmbFilelist implements Runnable {
     }
 
     private void buildRemoteUrl() {
-        String t_addr="";
-        if (remoteHostName.equals("")) {
-            t_addr=remoteHostAddr;
-        } else {
-            t_addr=CommonUtilities.resolveHostName(mGp, mUtil, mSmbLevel, remoteHostName);
-        }
-        String resolved_addr=CommonUtilities.addScopeidToIpv6Address(t_addr);
         String t_share="";
         if (remoteDir!=null) {
             if (remoteDir.equals("")) t_share=remoteHostshare+"/";
             else t_share=remoteHostshare;
         }
-        if (remoteHostPort.equals("")) {
-            if (resolved_addr!=null && resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+"/"+t_share;
-            else remoteUrl="smb://"+resolved_addr+"/"+t_share;
-        } else {
-            if (resolved_addr!=null && resolved_addr.contains(":")) remoteUrl="smb://"+"["+resolved_addr+"]"+":"+remoteHostPort+"/"+t_share;
-            else remoteUrl="smb://"+resolved_addr+":"+remoteHostPort+"/"+t_share;
+        String w_addr =CommonUtilities.buildSmbUrlAddressElement(remoteHost, remoteHostPort);
+        smbUrl ="smb://"+ w_addr +"/"+t_share;
+        if (isIpV6Address) {
+            if (remoteHost.contains(":")) {
+                smbUrl ="smb://"+ w_addr +"/"+t_share;
+            }
         }
-        mUtil.addDebugMsg(1, "I", "buildRemoteUrl result="+remoteUrl);
+        mUtil.addDebugMsg(1, "I", "buildRemoteUrl result="+ smbUrl);
     }
 
     private void readShareList() {
@@ -310,7 +303,7 @@ public class ReadSmbFilelist implements Runnable {
                 auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, dom, acct, pswd, prop);
             }
 
-            JcifsFile remoteFile = new JcifsFile(remoteUrl, auth);
+            JcifsFile remoteFile = new JcifsFile(smbUrl, auth);
             fl = remoteFile.listFiles();
         } catch (JcifsException e) {
             e.printStackTrace();
@@ -321,7 +314,7 @@ public class ReadSmbFilelist implements Runnable {
             }
             mUtil.addDebugMsg(1, "E", e.toString());
             getFLCtrl.setThreadResultError();
-            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, remoteUrl, mRemoteUserNameForLog);
+            String[] e_msg = JcifsUtil.analyzeNtStatusCode(e, smbUrl, mRemoteUserNameForLog);
             if (!cause.equals("")) getFLCtrl.setThreadMessage(cause.substring(cause.indexOf(":")+1)+"\n"+e_msg[0]);
             else getFLCtrl.setThreadMessage(e_msg[0]);
 

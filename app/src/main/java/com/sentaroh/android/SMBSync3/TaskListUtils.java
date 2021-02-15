@@ -322,21 +322,11 @@ public class TaskListUtils {
 //        final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
 //        final boolean smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
         String host=edithost.getText().toString().trim();
-        if (JcifsUtil.isValidIpAddress(host)) {
-            remote_addr = host;
-        } else {
-            if (host.contains(":")) remote_addr=host;
-            else remote_host = host;
-        }
-        String remote_port = "";
-        if (ctv_use_port_number.isChecked() && editport.getText().length() > 0)
-            remote_port = editport.getText().toString();
 
         SmbServerInfo ssi=new SmbServerInfo();
-        ssi.serverHostName =remote_host;
-        ssi.serverHostAddress =remote_addr;
-        ssi.serverShareName="";
-        ssi.serverPort=remote_port;
+        ssi.serverHostName= edithost.getText().toString();
+        ssi.serverShareName=editshare.getText().toString();;
+        if (ctv_use_port_number.isChecked() && editport.getText().length() > 0) ssi.serverPort = editport.getText().toString();
         ssi.serverProtocol=smb_proto;
         ssi.serverAccountName=remote_user;
         ssi.serverAccountPassword=remote_pass;
@@ -388,26 +378,10 @@ public class TaskListUtils {
 
         final String p_dir = editdir.getText().toString();
 
-        String host = edithost.getText().toString();
-        if (JcifsUtil.isValidIpAddress(host)) {
-            t_remote_addr = host;
-        } else {
-            if (host.contains(":")) t_remote_addr = host;
-            else t_remote_host = host;
-        }
-        String t_remote_port = "";
-        if (ctv_use_port_number.isChecked() && editport.getText().length() > 0)
-            t_remote_port = editport.getText().toString();
-        final String remote_addr=t_remote_addr;
-        final String remote_host=t_remote_host;
-        final String remote_share = editshare.getText().toString();
-        final String remote_port=t_remote_port;
-
         SmbServerInfo ssi=new SmbServerInfo();
-        ssi.serverHostName =remote_host;
-        ssi.serverHostAddress =remote_addr;
-        ssi.serverShareName=remote_share;
-        ssi.serverPort=remote_port;
+        ssi.serverHostName= edithost.getText().toString();
+        ssi.serverShareName=editshare.getText().toString();;
+        if (ctv_use_port_number.isChecked() && editport.getText().length() > 0) ssi.serverPort = editport.getText().toString();
         ssi.serverProtocol=smb_proto;
         ssi.serverAccountName=remote_user;
         ssi.serverAccountPassword=remote_pass;
@@ -475,7 +449,8 @@ public class TaskListUtils {
         dir_name_view.setVisibility(LinearLayout.GONE);
         final EditText et_dir_name = (EditText) dialog.findViewById(R.id.common_file_selector_dir_name);
 
-        final String directory_pre="smb://"+ssi.serverHostAddress +"/"+ssi.serverShareName;
+        String url_prefix=CommonUtilities.buildSmbUrlAddressElement(ssi.serverHostName, ssi.serverPort);
+        final String directory_pre="smb://"+url_prefix +"/"+ssi.serverShareName;
 
         final NonWordwrapTextView tv_home = (NonWordwrapTextView) dialog.findViewById(R.id.common_file_selector_filepath);
         tv_home.setText(directory_pre);
@@ -2302,8 +2277,8 @@ public class TaskListUtils {
     }
 
     private void listSmbDirectoryFilter(final SyncTaskItem sti, final FilterListAdapter fla, final NotifyEvent p_ntfy) {
-        final String host_addr = sti.getSourceSmbAddr();
-        final String host_name = sti.getSourceSmbHostName();
+//        final String host_addr = sti.getSourceSmbAddr();
+        final String host_name = sti.getSourceSmbHost();
         final String host_share = sti.getSourceSmbShareName();
         final String h_port = !sti.getSourceSmbPort().equals("")?":"+sti.getSourceSmbPort() : "";
         final String host_port=h_port;
@@ -2318,7 +2293,7 @@ public class TaskListUtils {
 
         SmbServerInfo ssi=new SmbServerInfo();
         ssi.serverHostName =host_name;
-        ssi.serverHostAddress =host_addr;
+//        ssi.serverHostIpAddress =host_addr;
         ssi.serverShareName=host_share;
         ssi.serverPort=host_port;
         ssi.serverProtocol=smb_proto;
@@ -2354,7 +2329,7 @@ public class TaskListUtils {
                 title.setTextColor(mGp.themeColorList.title_text_color);
 
                 title.setText(mActivity.getString(R.string.msgs_filter_list_dlg_add_dir_filter));
-                subtitle.setText((remdir.equals("//")) ? host_name+host_addr+"/"+host_share : host_name+host_addr+"/"+host_share+  remdir);
+                subtitle.setText((remdir.equals("//")) ? host_name+host_name+"/"+host_share : host_name+host_name+"/"+host_share+  remdir);
                 final TextView dlg_msg = (TextView) dialog.findViewById(R.id.item_select_list_dlg_msg);
                 final Button btn_ok = (Button) dialog.findViewById(R.id.item_select_list_dlg_ok_btn);
                 dlg_msg.setVisibility(TextView.VISIBLE);

@@ -399,9 +399,9 @@ public class TaskListImportFromSMBSync2 {
             }
             stli.setSourceSmbShareName(parm[7]);
             stli.setSourceDirectoryName(parm[8]);
-            stli.setSourceSmbAddr(parm[9]);
+            if (stli.getSourceSmbHost().equals("")) stli.setSourceSmbHost(parm[9]);
             stli.setSourceSmbPort(parm[10]);
-            stli.setSourceSmbHostName(parm[11]);
+            if (stli.getSourceSmbHost().equals("")) stli.setSourceSmbHost(parm[11]);
             stli.setSourceSmbDomain(parm[12]);
 
             if (parm[13].equals(SYNC_FOLDER_TYPE_INTERNAL)) {
@@ -427,9 +427,9 @@ public class TaskListImportFromSMBSync2 {
             }
             stli.setDestinationSmbShareName(parm[16]);
             stli.setDestinationDirectoryName(parm[17]);
-            stli.setDestinationSmbAddr(parm[18]);
+            if (stli.getDestinationSmbHost().equals("")) stli.setDestinationSmbHost(parm[18]);
             stli.setDestinationSmbPort(parm[19]);
-            stli.setDestinationSmbHostname(parm[20]);
+            if (stli.getDestinationSmbHost().equals("")) stli.setDestinationSmbHost(parm[20]);
             stli.setDestinationSmbDomain(parm[21]);
 
             stli.setFileNameFilter(ff);
@@ -586,7 +586,7 @@ public class TaskListImportFromSMBSync2 {
 //            if (!parm[85].equals("") && !parm[85].equals(SMBSYNC2_TASK_END_MARK)) stli.setMasterSmbUseSmb2Negotiation((parm[85].equals("1") ? true : false));
 //            if (!parm[86].equals("") && !parm[86].equals(SMBSYNC2_TASK_END_MARK)) stli.setTargetSmbUseSmb2Negotiation((parm[86].equals("1") ? true : false));
 
-            if (!parm[87].equals("") && !parm[87].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncOptionSyncAllowGlobalIpAddress((parm[87].equals("1") ? true : false));
+            if (!parm[87].equals("") && !parm[87].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncOptionSyncAllowAllIpAddress((parm[87].equals("1") ? true : false));
 
             if (!parm[88].equals("") && !parm[88].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty((parm[88].equals("1") ? true : false));
 

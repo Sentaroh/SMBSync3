@@ -631,10 +631,32 @@ public final class CommonUtilities {
         return enc_str;
     }
 
+    static public String buildSmbUrlAddressElement(String host, String port) {
+        String url_port=port.equals("")?"":":"+port;
+        String url_address="";
+        if (CommonUtilities.isIpAddressV6(host)) {
+            if (host.contains(":")) {
+                String conv_address=addScopeidToIpv6Address(host);
+                url_address=conv_address==null?"["+host+url_port+"]":"["+conv_address+url_port+"]";
+            } else {
+                url_address=host+url_port;
+            }
+        } else {
+            url_address=host+url_port;
+        }
+        return url_address;
+    }
+
     public static boolean canSmbHostConnectable(String addr) {
         boolean result = false;
         if (JcifsUtil.canIpAddressAndPortConnectable(addr, 139, 3500) ||
                 JcifsUtil.canIpAddressAndPortConnectable(addr, 445, 3500)) result = true;
+        return result;
+    }
+
+    public static boolean canSmbHostConnectable(String addr, String port) {
+        boolean result = false;
+        result = JcifsUtil.canIpAddressAndPortConnectable(addr, Integer.parseInt(port), 3500);
         return result;
     }
 

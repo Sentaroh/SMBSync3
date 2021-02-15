@@ -959,7 +959,7 @@ public class SmbServerScanner {
     }
 
     static public class SmbServerInfo {
-        public String serverHostAddress ="";
+        public String serverHostIpAddress ="";
         public String serverHostName ="";
         public String serverProtocol="";
         public String serverPort="";

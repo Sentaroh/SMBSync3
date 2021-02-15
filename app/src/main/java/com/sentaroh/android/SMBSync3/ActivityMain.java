@@ -50,6 +50,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
@@ -183,8 +184,8 @@ public class ActivityMain extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 //        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
 //        StrictMode.setVmPolicy(builder.build());
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//        StrictMode.setThreadPolicy(policy);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 //        Log.v(APPLICATION_TAG, "onCreate entered");
         mActivity = ActivityMain.this;
         mContext = mActivity;

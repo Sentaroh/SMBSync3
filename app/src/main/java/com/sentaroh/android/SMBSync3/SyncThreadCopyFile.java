@@ -151,9 +151,9 @@ public class SyncThreadCopyFile {
         int sync_result= SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
         try {
             String to_file_temp = tf.getPath()+"."+ System.currentTimeMillis()+".tmp";//"/temp.tmp";
-            SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.destinationAuth);
+            SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.destinationSmbAuth);
 
-            JcifsFile temp_out=new JcifsFile(to_file_temp, stwa.destinationAuth);
+            JcifsFile temp_out=new JcifsFile(to_file_temp, stwa.destinationSmbAuth);
             InputStream is=mf.getInputStream();
             OutputStream os = temp_out.getOutputStream();
 
@@ -221,8 +221,8 @@ public class SyncThreadCopyFile {
 
         int sync_result= SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
         try {
-            JcifsFile temp_out = new JcifsFile(to_file_temp, stwa.destinationAuth);
-            SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.destinationAuth);
+            JcifsFile temp_out = new JcifsFile(to_file_temp, stwa.destinationSmbAuth);
+            SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.destinationSmbAuth);
 
             int result=copyFile(stwa, sti, mf.getParent(), tf.getParent(), mf.getName(),
                     mf.length(), mf.getInputStream(), temp_out.getOutputStream());
@@ -398,7 +398,8 @@ public class SyncThreadCopyFile {
 
         long file_read_time = System.currentTimeMillis() - read_begin_time;
 
-        stwa.util.addDebugMsg(1, "I", to_dir+"/"+file_name + " " + file_read_bytes + " bytes transfered in ",file_read_time + " mili seconds at " +
+        String msg_path=to_dir.endsWith("/")?to_dir+file_name:to_dir+"/"+file_name;
+        stwa.util.addDebugMsg(1, "I", msg_path + " " + file_read_bytes + " bytes transfered in ",file_read_time + " mili seconds at " +
                             SyncThread.calTransferRate(file_read_bytes, file_read_time));
         stwa.totalTransferByte += file_read_bytes;
         stwa.totalTransferTime += file_read_time;
