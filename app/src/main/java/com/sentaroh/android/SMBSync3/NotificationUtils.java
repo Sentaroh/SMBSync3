@@ -87,53 +87,25 @@ public class NotificationUtils {
                 .setBigContentTitle(gwa.notificationLastShowedTitle)
                 .bigText(gwa.notificationLastShowedMessage);
 
-        NotificationChannel def_ch = new NotificationChannel(
-                NOTIFICATION_CHANNEL_DEFAULT,
-                NOTIFICATION_CHANNEL_DEFAULT,
-                NotificationManager.IMPORTANCE_DEFAULT
-        );
-        def_ch.enableLights(false);
-        def_ch.setSound(null,null);
-        def_ch.enableVibration(false);
-        def_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_DEFAULT);
-        gwa.notificationManager.createNotificationChannel(def_ch);
+        initNotificationChannel(gwa, util, c, NOTIFICATION_CHANNEL_DEFAULT, false, false);
+        initNotificationChannel(gwa, util, c, NOTIFICATION_CHANNEL_SOUND, true, false);
+        initNotificationChannel(gwa, util, c, NOTIFICATION_CHANNEL_VIBRATE, false, true);
+        initNotificationChannel(gwa, util, c, NOTIFICATION_CHANNEL_BOTH, true, true);
 
-        NotificationChannel sound_ch = new NotificationChannel(
-                NOTIFICATION_CHANNEL_SOUND,
-                NOTIFICATION_CHANNEL_SOUND,
-                NotificationManager.IMPORTANCE_DEFAULT
-        );
-        sound_ch.enableLights(false);
-        sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
-        sound_ch.enableVibration(false);
-        sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_SOUND);
-        gwa.notificationManager.createNotificationChannel(sound_ch);
+    }
 
-        NotificationChannel vibrate_ch = new NotificationChannel(
-                NOTIFICATION_CHANNEL_VIBRATE,
-                NOTIFICATION_CHANNEL_VIBRATE,
-                NotificationManager.IMPORTANCE_DEFAULT
-        );
-        vibrate_ch.enableLights(false);
-        vibrate_ch.setSound(null, null);
-        vibrate_ch.enableVibration(true);
-        vibrate_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_VIBRATE);
-        gwa.notificationManager.createNotificationChannel(vibrate_ch);
-
-        NotificationChannel vibrate_sound_ch = new NotificationChannel(
-                NOTIFICATION_CHANNEL_BOTH,
-                NOTIFICATION_CHANNEL_BOTH,
-                NotificationManager.IMPORTANCE_DEFAULT
-        );
-        vibrate_sound_ch.enableLights(false);
-        vibrate_sound_ch.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
-        vibrate_sound_ch.enableVibration(true);
-        vibrate_sound_ch.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        gwa.notificationManager.deleteNotificationChannel(NOTIFICATION_CHANNEL_BOTH);
-        gwa.notificationManager.createNotificationChannel(vibrate_sound_ch);
+    static final private void initNotificationChannel(GlobalParameters gwa, CommonUtilities util, Context c, String ch_id, boolean sound, boolean vibration ) {
+        NotificationChannel notification_channel = new NotificationChannel(ch_id, ch_id, NotificationManager.IMPORTANCE_DEFAULT);
+        notification_channel.enableLights(false);
+        if (sound) {
+            notification_channel.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION), null);
+        } else {
+            notification_channel.setSound(null,null);
+        }
+        notification_channel.enableVibration(vibration);
+        notification_channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        gwa.notificationManager.deleteNotificationChannel(ch_id);
+        gwa.notificationManager.createNotificationChannel(notification_channel);
 
     }
 
@@ -233,36 +205,18 @@ public class NotificationUtils {
         return gwa.notification;
     }
 
-    final static public void showNoticeMsg(Context context, GlobalParameters gwa, CommonUtilities util, String msg) {
-        clearNotification(gwa, util);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setOngoing(false)
-                .setAutoCancel(true)
-                .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setContentTitle(context.getString(R.string.app_name))
-                .setContentText(msg)
-                .setWhen(System.currentTimeMillis())
-        ;
-        builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
-        if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
-            Intent activity_intent = new Intent(context, ActivityMain.class);
-            PendingIntent activity_pi = PendingIntent.getActivity(context, 0, activity_intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setContentIntent(activity_pi);
-        }
-        if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name, builder.build());
+    final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg) {
+        showNoticeMsg(c, gwa, util, msg, false, false);
     }
 
-    final static public void showNoticeMsg(Context context, GlobalParameters gwa, CommonUtilities util, String msg, boolean playback_sound, boolean vibration) {
+    final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg,
+                                           boolean playback_sound, boolean vibration) {
         clearNotification(gwa, util);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-//        Bitmap bm=BitmapFactory.decodeResource(gwa.appContext.getResources(), R.drawable.ic_48_smbsync_err);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(c);
         builder.setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-//                .setLargeIcon(bm)//smbsync_animation)
-                .setContentTitle(context.getString(R.string.app_name))
+                .setContentTitle(c.getString(R.string.app_name_notice_message))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
@@ -277,17 +231,18 @@ public class NotificationUtils {
         else builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
 
         if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
-            Intent activity_intent = new Intent(context, ActivityMain.class);
-            PendingIntent activity_pi = PendingIntent.getActivity(context, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent activity_intent = new Intent(c, ActivityMain.class);
+            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
         }
         if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name, builder.build());
+            gwa.notificationManager.notify(R.string.app_name_notice_message, builder.build());
     }
 
     final static public void clearNotification(GlobalParameters gwa, CommonUtilities util) {
         try {
             gwa.notificationManager.cancelAll();
+            util.addDebugMsg(1, "I", "clearNotification() issued");
         } catch(SecurityException e) {
             if (util!=null) {
                 final StringWriter sw = new StringWriter();

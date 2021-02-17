@@ -95,7 +95,6 @@ public class SyncService extends Service {
 
         NotificationUtils.initNotification(mGp, mUtil, mContext);
         NotificationUtils.clearNotification(mGp, mUtil);
-//        startForeground(R.string.app_name, mGp.notification);
 
         mUtil.addLogMsg("I", "", mContext.getString(R.string.msgs_smbsync_main_start) +
                 " API=" + Build.VERSION.SDK_INT +
@@ -194,7 +193,7 @@ public class SyncService extends Service {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mSleepReceiver);
 //        unregisterReceiver(mUsbReceiver);
-        stopForeground(true);
+//        stopForeground(true);
         if (mGp.notificationLastShowedMessage != null && !mGp.notificationLastShowedMessage.equals("")) {
             showSyncEndNotificationMessage();
             mGp.notificationLastShowedMessage = null;
@@ -504,14 +503,14 @@ public class SyncService extends Service {
     private void setActivityForeground() {
         mGp.activityIsBackground = false;
         NotificationUtils.setNotificationEnabled(mGp, false);
-        stopForeground(true);
+        issueStopForeground();
         NotificationUtils.clearNotification(mGp, mUtil);
     }
 
     private void setActivityBackground() {
         mGp.activityIsBackground = true;
         NotificationUtils.setNotificationEnabled(mGp, true);
-        if (mGp.syncThreadActive) startForeground(R.string.app_name, mGp.notification);
+        if (mGp.syncThreadActive) issueStartForeground();
     }
 
     private void cancelSyncTask() {
@@ -671,8 +670,7 @@ public class SyncService extends Service {
             mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_svc_can_not_start_sync_task_disabled));
             return;
         }
-        if (NotificationUtils.isNotificationEnabled(mGp))
-            startForeground(R.string.app_name, mGp.notification);
+        if (NotificationUtils.isNotificationEnabled(mGp)) issueStartForeground();
         if (mGp.syncRequestQueue.size() > 0) {
             mGp.acquireWakeLock(mContext, mUtil);
             NotifyEvent ntfy = new NotifyEvent(this);
@@ -687,12 +685,17 @@ public class SyncService extends Service {
                             showSyncEndNotificationMessage();
                             startSyncThread();
                         } else {
-                            if (mGp.callbackStub == null) {
-                                stopSelf();
+                            if (mGp.syncRequestQueue.size() > 0) {
+                                issueStopForeground();
+                                showSyncEndNotificationMessage();
+                                startSyncThread();
                             } else {
-                                stopForeground(true);
+                                issueStopForeground();
                                 showSyncEndNotificationMessage();
                                 mGp.notificationLastShowedMessage = "";
+                                if (mGp.callbackStub == null) {
+                                    stopSelf();
+                                }
                             }
                         }
                     }
@@ -708,9 +711,13 @@ public class SyncService extends Service {
                         if (mGp.callbackStub == null) {
                             stopSelf();
                         } else {
-                            stopForeground(true);
+                            mGp.syncRequestQueue.clear();
+                            issueStopForeground();
                             showSyncEndNotificationMessage();
                             mGp.notificationLastShowedMessage = "";
+                            if (mGp.callbackStub == null) {
+                                stopSelf();
+                            }
                         }
                     }
                 }
@@ -746,32 +753,17 @@ public class SyncService extends Service {
             if (mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
                     mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ERROR)) vibration=true;
         }
-        boolean is_notice_message_showed=false;
-        if (mGp.activityIsBackground) {
-            if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS || mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) {
-                if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
-                        mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
-                    NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
-                    is_notice_message_showed=true;
-                }
-            } else if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_ERROR) {
-                if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
-                        mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
-                    NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
-                    is_notice_message_showed=true;
-                }
-            }
-        }
-//        if (mGp.callbackStub != null && sound) playBackDefaultNotification();
-//        if (mGp.callbackStub != null && vibration) vibrateDefaultPattern();
-        if (!is_notice_message_showed) {
-            Intent na=new Intent(mContext, ActivityNotification.class);
-            na.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            na.putExtra("SOUND", sound);
-            na.putExtra("SOUND_VOLUME", mGp.settingNotificationVolume);
-            na.putExtra("VIBRATE", vibration);
-            startActivity(na);
-        }
+        NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
+    }
+
+    private void issueStartForeground() {
+        startForeground(R.string.app_name, mGp.notification);
+        mUtil.addDebugMsg(1, "I", "startForground(R.string.app_name, mGp.notification) issued");
+    }
+
+    private void issueStopForeground() {
+        stopForeground(false);
+        mUtil.addDebugMsg(1, "I", "stopForeground(false) issued");
     }
 
     private void showDialogWindow() {

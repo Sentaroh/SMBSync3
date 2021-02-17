@@ -59,8 +59,8 @@ public class Constants {
 	public final static String LOCAL_FILE_LAST_MODIFIED_WAS_FORCE_LASTEST ="*";
 
 	public final static String START_SYNC_INTENT = APPLICATION_ID +".ACTION_START_SYNC";
-	public final static String START_SYNC_EXTRA_PARM_SYNC_TASK ="SyncTask";
-	public final static String START_SYNC_EXTRA_PARM_SYNC_GROUP ="SyncGroup";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_TASK ="Task";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_GROUP ="Group";
 	public final static String START_SYNC_EXTRA_PARM_REQUESTOR ="Requestor";
 	public final static String START_SYNC_EXTRA_PARM_REQUEST_ID ="RequestID";
 	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_KEY ="SYNC_RESULT";
