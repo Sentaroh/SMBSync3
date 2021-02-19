@@ -429,7 +429,7 @@
         <string name="msgs_task_sync_task_sync_file_date_type_none">Nicht verwendet</string>
         <string name="msgs_task_sync_task_sync_file_date_type_older_than">Älter als</string>
         <string name="msgs_task_sync_task_sync_file_date_type_newer_than">Tage vorher</string>
-        <string name="msgs_task_sync_task_sync_file_date_type_after_sync_begin_day">Nach dem Sync-Startdatum</string>
+        <string name="msgs_task_sync_task_sync_file_date_type_after_sync_begin_day">Am Sync-Starttag oder später</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified">Das Aktualisierungsdatum wird nicht angegeben.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0">Bitte geben Sie das Aktualisierungsdatum mehr als 1 Tag an.</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit">Das Aktualisierungsdatum kann nicht mehr als 3 Ziffern haben.</string>
