@@ -52,7 +52,6 @@ import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_LM_COMPATIBILITY_DEFAULT;
-import static com.sentaroh.android.SMBSync3.GlobalParameters.getLanguageCode;
 
 public class ActivitySettings extends PreferenceActivity {
     static final private Logger log= LoggerFactory.getLogger(ActivitySettings.class);
@@ -596,7 +595,7 @@ public class ActivitySettings extends PreferenceActivity {
 
         private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
             Preference pref_key=findPreference(key_string);
-            String hv= ApplicationPassword.getPasswordHashValue(shared_pref);
+            String hv= ApplicationPasswordUtils.getPasswordHashValue(shared_pref);
 
             if (key_string.equals(c.getString(R.string.settings_security_application_password))) {
                 String contents_string="";

@@ -117,7 +117,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import javax.crypto.SecretKey;
 
@@ -334,7 +333,7 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void onCallBack(Context context, boolean positive, Object[] objects) {
                         setActivityForeground(true);
-                        ApplicationPassword.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ApplicationPassword.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION,
+                        ApplicationPasswordUtils.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION,
                             new CallBackListener() {
                             @Override
                             public void onCallBack(Context context, boolean positive, Object[] objects) {
@@ -475,7 +474,7 @@ public class ActivityMain extends AppCompatActivity {
                 String dec_str=CommonUtilities.decryptUserData(mContext, cp_int, key_value);
                 if (dec_str==null) {
                     //Stored key was changed
-                    if (!ApplicationPassword.getPasswordHashValue(prefs).equals("")) {
+                    if (!ApplicationPasswordUtils.getPasswordHashValue(prefs).equals("")) {
                         mUtil.showCommonDialogError(false,
                                 mContext.getString(R.string.msgs_security_stored_sectret_key_change_title),
                                 mContext.getString(R.string.msgs_security_stored_sectret_key_change_message),
@@ -1638,7 +1637,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void negativeResponse(Context context, Object[] objects) {}
         });
-        ApplicationPassword.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy, ApplicationPassword.APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST);
+        ApplicationPasswordUtils.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy, ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_EXPORT_TASK_LIST);
     }
 
     private void importSyncTaskAndParms() {
@@ -4195,8 +4194,8 @@ public class ActivityMain extends AppCompatActivity {
                                 @Override
                                 public void negativeResponse(Context c, Object[] o) {}
                             });
-                            ApplicationPassword.authentication(mGp, mActivity, mActivity.getSupportFragmentManager(),
-                                    mUtil, false, ntfy_check, ApplicationPassword.APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK);
+                            ApplicationPasswordUtils.authentication(mGp, mActivity, mActivity.getSupportFragmentManager(),
+                                    mUtil, false, ntfy_check, ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK);
                             break;
                         }
                     }
@@ -4880,7 +4879,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void negativeResponse(Context c, Object[] o) {}
         });
-        ApplicationPassword.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy_check, ApplicationPassword.APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK);
+        ApplicationPasswordUtils.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ntfy_check, ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_EDIT_SYNC_TASK);
      }
 
     private void syncSpecificSyncTask(SyncTaskItem sti) {

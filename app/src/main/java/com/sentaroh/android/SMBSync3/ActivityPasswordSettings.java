@@ -26,7 +26,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -37,7 +36,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.ThemeUtil;
 
@@ -135,8 +133,8 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                 finish();
             }
         });
-        ApplicationPassword.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil,
-                true, ntfy_auth, ApplicationPassword.APPLICATION_PASSWORD_RESOURCE_INVOKE_SECURITY_SETTINGS);
+        ApplicationPasswordUtils.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil,
+                true, ntfy_auth, ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_INVOKE_SECURITY_SETTINGS);
 
     }
 
@@ -245,7 +243,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                         setAppPswdStatus();
                     }
                 });
-                ApplicationPassword.createPassword(mGp, mActivity, getSupportFragmentManager(), mUtil,
+                ApplicationPasswordUtils.createPassword(mGp, mActivity, getSupportFragmentManager(), mUtil,
                         mActivity.getString(R.string.settings_security_application_password_desc_create), ntfy_create);
             }
         });
@@ -271,7 +269,7 @@ public class ActivityPasswordSettings extends AppCompatActivity {
                                 setAppPswdStatus();
                             }
                         });
-                        ApplicationPassword.createPassword(mGp, mActivity, getSupportFragmentManager(), mUtil,
+                        ApplicationPasswordUtils.createPassword(mGp, mActivity, getSupportFragmentManager(), mUtil,
                                 mActivity.getString(R.string.settings_security_application_password_desc_change), ntfy_create);
                     }
 
@@ -318,12 +316,12 @@ public class ActivityPasswordSettings extends AppCompatActivity {
     }
 
     public void saveApplicationPasswordHashValue(SharedPreferences prefs, String hv) {
-        ApplicationPassword.savePasswordHashValue(mGp, prefs,  hv) ;
+        ApplicationPasswordUtils.savePasswordHashValue(mGp, prefs,  hv) ;
     }
 
     private void setAppPswdStatus() {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
-        String hv= ApplicationPassword.getPasswordHashValue(prefs);
+        String hv= ApplicationPasswordUtils.getPasswordHashValue(prefs);
 
         if (hv.equals("")) {
             mAppPswdMsg.setText(mActivity.getString(R.string.settings_security_application_password_not_created));

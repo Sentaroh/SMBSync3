@@ -38,7 +38,6 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.LocaleList;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -547,7 +546,7 @@ public class GlobalParameters {
 
         settingPreventSyncStartDelay =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), true);
 
-        settingSecurityApplicationPasswordHashValue = ApplicationPassword.getPasswordHashValue(prefs);
+        settingSecurityApplicationPasswordHashValue = ApplicationPasswordUtils.getPasswordHashValue(prefs);
         settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), false);
         settingSecurityApplicationPasswordUseEditTask = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_edit_task), false);
         settingSecurityApplicationPasswordUseExport = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_export_task), false);

@@ -56,9 +56,9 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.SecretKey;
 
-public class ApplicationPassword {
+public class ApplicationPasswordUtils {
 
-    final private static Logger log= LoggerFactory.getLogger(ApplicationPassword.class);
+    final private static Logger log= LoggerFactory.getLogger(ApplicationPasswordUtils.class);
 
     final static private long APPLICATION_PASSWORD_VALIDITY_PERIOD =30*60*1000;//30 Min
 
@@ -218,7 +218,7 @@ public class ApplicationPassword {
                     mUtil.addLogMsg("E","", sw.toString());
                 }
                 if (decrypted_hv!=null && decrypted_hv.equals(input_hv)) {
-                    if (resource_id==ApplicationPassword.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION) {
+                    if (resource_id== ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION) {
                         gp.appPasswordAuthValidated=false;
                         gp.appPasswordAuthLastTime= 0L;
                     } else {
