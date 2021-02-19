@@ -129,9 +129,7 @@
             android:label="@string/app_name_auto_sync"
             android:launchMode="singleTop"
             android:exported="true"
-            android:taskAffinity=".ShortcutAutoSync"
             android:theme="@android:style/Theme.Translucent"
-            android:configChanges="orientation|keyboardHidden"
             android:excludeFromRecents="true">
             <intent-filter >
                 <action android:name="android.intent.action.VIEW" />

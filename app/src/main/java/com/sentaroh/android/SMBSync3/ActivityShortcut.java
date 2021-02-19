@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -124,7 +125,7 @@ public class ActivityShortcut extends FragmentActivity {
     final public void onResume() {
         super.onResume();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
-        if (restartStatus == 0) {
+        if (restartStatus == 0 || restartStatus == 2) {
             restartStatus = 1;
             if (!mGp.syncThreadActive) {
                 NotifyEvent ntfy_sync=new NotifyEvent(mActivity);
@@ -144,14 +145,6 @@ public class ActivityShortcut extends FragmentActivity {
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {
-//                        if (objects!=null) {
-//                            boolean suppress=(boolean)objects[0];
-//                            if (suppress) {
-//                                if (mShotcutId==1) mGp.setSupressShortcut1ConfirmationMessage(mActivity, true);
-//                                else if (mShotcutId==2) mGp.setSupressShortcut2ConfirmationMessage(mActivity, true);
-//                                else if (mShotcutId==3) mGp.setSupressShortcut3ConfirmationMessage(mActivity, true);
-//                            }
-//                        }
                         finish();
                     }
                 });
@@ -172,6 +165,7 @@ public class ActivityShortcut extends FragmentActivity {
         }
     }
 
+    private Dialog mDialog=null;
     private void confirmStartSync(NotifyEvent ntfy) {
         boolean suppress=false;
         if (mShotcutId==1 && mGp.isSupressShortcut1ConfirmationMessage()) suppress=true;
@@ -205,14 +199,14 @@ public class ActivityShortcut extends FragmentActivity {
             ntfy.notifyToListener(true, null);
         } else {
             if (group_item==null) {
-                TaskEditor.showDialogWithHideOption(mActivity, mGp, mUtil,
+                mDialog=TaskEditor.showDialogWithHideOption(mActivity, mGp, mUtil,
                         true, mActivity.getString(R.string.msgs_common_dialog_ok),
                         true, mActivity.getString(R.string.msgs_common_dialog_cancel),
                         mActivity.getString(R.string.msgs_main_shorcut_confirmation_message_title),
                         mActivity.getString(R.string.msgs_main_shortcut_not_assigned, mShortcutName) + "\n" + "-"+mSyncTaskList.replaceAll(",", "\n-"),
                         mActivity.getString(R.string.msgs_main_shorcut_confirmation_message_suppress), ntfy);
             } else {
-                TaskEditor.showDialogWithHideOption(mActivity, mGp, mUtil,
+                mDialog=TaskEditor.showDialogWithHideOption(mActivity, mGp, mUtil,
                         true, mActivity.getString(R.string.msgs_common_dialog_ok),
                         true, mActivity.getString(R.string.msgs_common_dialog_cancel),
                         mActivity.getString(R.string.msgs_main_shorcut_confirmation_message_title),
@@ -378,15 +372,11 @@ public class ActivityShortcut extends FragmentActivity {
     public void onDestroy() {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus);
-        // Application process is follow
+
+        if (mDialog!=null) mDialog.dismiss();
+
         System.gc();
 //		android.os.Process.killProcess(android.os.Process.myPid());
-    }
-
-    @Override
-    public void onConfigurationChanged(final Configuration newConfig) {
-        // Ignore orientation change to keep activity from restarting
-        super.onConfigurationChanged(newConfig);
     }
 
 }

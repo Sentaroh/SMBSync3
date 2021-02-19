@@ -2576,7 +2576,7 @@ public class TaskEditor extends DialogFragment {
         else setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
     }
 
-    static public void showDialogWithHideOption(final Activity activity, final GlobalParameters gp, CommonUtilities cu,
+    static public Dialog showDialogWithHideOption(final Activity activity, final GlobalParameters gp, CommonUtilities cu,
                                                 boolean ok_visible, String ok_label, boolean cancel_visible, String cancel_label,
                                                 String title_text, String msg_text, String suppress_text,
                                                 NotifyEvent p_ntfy) {
@@ -2633,6 +2633,8 @@ public class TaskEditor extends DialogFragment {
             }
         });
         dialog.show();
+
+        return dialog;
     }
 
     private void invokeEditDirFilterDlg(final Dialog dialog, final SyncTaskItem n_sti, final String type, final TextView dlg_msg) {
