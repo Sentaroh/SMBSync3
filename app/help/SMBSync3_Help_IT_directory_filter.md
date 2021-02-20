@@ -4,7 +4,10 @@ Nome della directory specificato nella cartella di origine.
 
 ### Filtro
 
-Nomi delle sottodirectory da selezionare o escludere.
+Il nome della directory da selezionare o escludere. 
+- wildcard : \"My*\"
+- Specificare un carattere specifico: \"fo?der\"
+- Escludi tutte le directory della cache: \"\\cache\"
 
 ### Includere/Escludere
 

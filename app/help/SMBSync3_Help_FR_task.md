@@ -42,19 +42,16 @@ Appuyez sur le bouton pour modifier le dossier source
 
 Appuyez sur le bouton pour modifier le dossier de destination
 
-### Sélectionner les fichiers à synchroniser
-Si elle n'est pas cochée, tous les fichiers seront synchronisés. Si coché, vous pouvez sélectionner les fichiers à synchroniser.
-- Synchroniser les fichiers audio  
-Synchronisez les fichiers avec les extensions suivantes
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- Synchroniser les fichiers d'images  
-Synchronisez les fichiers avec les extensions suivantes
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- Synchroniser les fichiers vidéo  
-Synchronisez les fichiers avec les extensions suivantes
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- Filtre de fichiers  
-  Vous pouvez sélectionner le nom et l'extension du fichier avec lequel vous voulez synchroniser autre chose que ce qui précède.
+### File name filter
+  You can register the names and extensions of files to be synchronized.
+
+### Filtre sur la taille des fichiers
+
+Vous pouvez enregistrer la taille du fichier à synchroniser.
+
+### Filtre de date de modification des fichiers
+
+Indiquez la date de dernière modification du fichier que vous souhaitez synchroniser.
 
 ### Sélectionnez ce que vous voulez archiver
 
@@ -68,14 +65,9 @@ Sélectionnez les critères pour les photos ou les vidéos à archiver.
 - Plus ancien que 180 jours
 - Plus ancien que 1 année
 
-### Sélectionner les sous-dossiers
-
-Si vous ne vérifiez pas et synchronisez ensuite tous les sous-répertoires. Si vous vérifiez que le bouton de filtrage des répertoires s'affiche.
-
-- Filtre de répertoire
+### Filtre de répertoire
   Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.
 ### Démarrer la synchronisation uniquement pendant la charge
-
 Si la case est cochée, vous ne pouvez démarrer la synchronisation que pendant la charge. Si la synchronisation est lancée alors que vous n'êtes pas en train de charger, cela entraînera une erreur.
 
 ### Synchroniser  les fichiers situés dans la racine du dossier source 

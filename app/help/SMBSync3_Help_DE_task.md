@@ -42,19 +42,18 @@ Tippen Sie auf die Schaltfläche, um den Quellordner zu bearbeiten
 
 Tippen Sie auf die Schaltfläche, um den Zielordner zu bearbeiten
 
-### Dateien für die Synchronisierung auswählen
-Wenn Sie kein Häkchen setzen und dann alle Dateien synchronisieren. Wenn Sie ein Häkchen setzen, um Details zu sehen. 
-- Audiodateien synchronisieren  
-  Wenn Sie ein Häkchen setzen, um die Dateien mit den folgenden Erweiterungen zu synchronisieren.  
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- Bilddateien synchronisieren  
-  Wenn Sie ankreuzen, die Dateien mit den folgenden Erweiterungen zu synchronisieren.  
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- Videodateien synchronisieren  
-  Wenn Sie ankreuzen, dass Sie die Dateien mit den folgenden Erweiterungen synchronisieren möchten.  
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- Dateifilter  
-  Sie können den Namen und die Erweiterung der Datei, die Sie synchronisieren möchten, mit anderen als den oben genannten auswählen.
+### File name filter
+  You can register the names and extensions of files to be synchronized.
+
+### Dateigrößenfilter
+
+Sie können die Größe der zu synchronisierenden Datei registrieren.
+
+### Filter für das Änderungsdatum der Datei
+
+Geben Sie das letzte Änderungsdatum der Datei an, die Sie synchronisieren möchten.
+
+### Zum Archivieren der
 
 Wählen Sie die Kriterien für die zu archivierenden Fotos oder Videos.
 
@@ -66,16 +65,9 @@ Wählen Sie die Kriterien für die zu archivierenden Fotos oder Videos.
 - Älter als 180 Tage
 - Älter als 1 Jahr
 
-### Unterverzeichnisse auswählen
-
-Wenn Sie das Kontrollkästchen nicht aktivieren, werden alle Unterverzeichnisse synchronisiert. Wenn Sie das Häkchen setzen, wird die Schaltfläche Verzeichnisfilter angezeigt.
-
-### Zum Archivieren der
-
-- Verzeichnisfilter
+### Verzeichnisfilter
   Sie können den Namen des Verzeichnisses auswählen, das Sie synchronisieren möchten.
 ### Starten Sie die Synchronisation nur, wenn der Akku geladen wird.
-
 Wenn diese Option aktiviert ist, kann die Synchronisation nur gestartet werden, wenn der Akku geladen wird. Wenn Sie die Synchronisation starten, wenn der Akku nicht geladen ist, tritt ein Fehler auf.
 
 ### Bestätigen  vor dem Überschreiben/Löschen

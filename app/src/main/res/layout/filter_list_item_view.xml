@@ -37,13 +37,14 @@
             android:id="@+id/filter_list_item_file_directory_only_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical">
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/filter_list_item_include"
                     android:layout_width="wrap_content"

@@ -59,6 +59,8 @@
         <string name="msgs_help_sync_folder_zip_title">ZIP文件帮助</string>
         <string name="msgs_help_directory_filter_file">SMBSync3_Help_ZH_directory_filter.html</string>
         <string name="msgs_help_directory_filter_title">目录过滤帮助</string>
+        <string name="msgs_help_file_filter_file">SMBSync3_Help_ZH_file_filter.html</string>
+        <string name="msgs_help_file_filter_title">文件过滤器帮助</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_ZH_schedule.html</string>
         <string name="msgs_help_schedule_title">安排帮助</string>
         <string name="msgs_help_group_file">SMBSync3_Help_ZH_group.html</string>
@@ -131,13 +133,8 @@
         <string name="msgs_filter_list_filter_contains_not_allowed_character">包含无法使用的字符。字符=\"%1$s\", 筛选器=%2$s。</string>
         <string name="msgs_filter_list_match_any_where_change_to_exclude">筛选器中含有 \"\\\"，因此将其改为不被选中。 过滤器=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">无效的IP地址。</string>
-        <string name="msgs_filter_list_guide_directory">- 包括exp：cache/temp;my*/fo?der/n。
-- 排除所有缓存/临时文件夹。\\缓存/tempn
-- 过滤器可以在同一行输入，用"/";"/"隔开。
-- 胜出</string>
-        <string name="msgs_filter_list_guide_file">- 过滤所有指定名称的文件：file1;*.txt;*.jpg;file*\n。
-- 也可以在同一行输入过滤器，用"; "隔开。
-- 胜出</string>
+        <string name="msgs_filter_list_guide_directory">- 过滤器可以在同一行输入，用"/";"/"隔开。\n- 胜出</string>
+        <string name="msgs_filter_list_guide_file">- 过滤器可以在同一行输入，用"/";"/"隔开。\n- 胜出</string>
         <string name="msgs_filter_list_guide_access_point">选择一个以 MY_HOME 开头的接入点。MY_HOME*的访问点</string>
         <string name="msgs_filter_list_guide_ip_address">Ex:\n192.168.100.*==192.168.100.0-192.168.100.255 允许\n10.*==10.0.0.0-10.255.255.255 允许</string>
         <string name="msgs_hist_cont_label_copy">复制到剪贴板</string>
@@ -353,9 +350,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_title">交换源和目的地</string>
         <string name="msgs_task_sync_task_dlg_swap_warning_message">交换源文件夹和目的文件夹的内容可能会导致无意中删除文件或目录。\n请设置测试模式或创建测试目录，并进行测试，以确保不会删除非预期的文件或目录。</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">在源文件夹中，与拍摄日期和时间有关的变量不可用，已被删除。</string>
-        <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
+        <string name="deleted_msgs_task_sync_task_dlg_dir_filter_not_specified">未指定目录过滤器</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">该目录名称包含无效字符，已被删除(\", :, \\, ?, *, &lt;, &gt;, \|)。</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">未指定文件名过滤器</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">文件名中的无效字符(/, \", :, \\, ?, *, &lt;, &gt;, \|) 已被删除。</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共享名称中含有不能使用的字符，因此已被删除。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">删除了目录名中多余的分隔符（/）。</string>
@@ -397,14 +395,15 @@
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">未说明</string>
         <string name="msgs_task_sync_task_filter_title">滤波器</string>
         <string name="msgs_task_sync_task_sync_direction_two_way">使用双向同步</string>
-        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">包括以下过滤器</string>
-        <string name="msgs_task_sync_task_sync_file_type_audio">同步音频文件</string>
-        <string name="msgs_task_sync_task_sync_file_type_detail_not_specified">您必须指定以下过滤器之一：文件名过滤器、文件大小过滤器或文件修改日期过滤器。</string>
-        <string name="msgs_task_sync_task_sync_file_type_image">同步图像文件</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_audio_title">添加音频</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_image_title">添加图片</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_video_title">添加视频</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">您是否想将以下内容添加到文件过滤器中？</string>
+        <string name="msgs_task_sync_task_sync_file_type_not_added">所有的扩展名都已注册。</string>
+        <string name="msgs_task_sync_task_sync_file_type_added_type">以下内容已被添加。</string>
         <string name="msgs_task_sync_task_sync_file_type_specific">选择要同步的文件</string>
-        <string name="msgs_task_sync_task_sync_file_type_video">同步视频文件</string>
         <string name="msgs_task_sync_task_sync_file_name_filter">文件名过滤器</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter">文件大小过滤器</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter">File size filter</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">选择文件大小比较方法</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">忽略文件大小为0字节的文件。</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">尺寸</string>
@@ -419,7 +418,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">未指定文件大小</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">文件大小不能超过5位数</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">文件大小必须大于或等于1。</string>
-        <string name="msgs_task_sync_task_sync_file_date_filter">文件最后修改日期过滤器</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter">File last modified filter</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">选择文件更新日期比较方法</string>
         <string name="msgs_task_sync_task_sync_file_date_hint">日</string>
         <string name="msgs_task_sync_task_sync_file_date_type_none">未使用</string>
@@ -469,7 +468,8 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">仅在充电时执行同步任务</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">测试模式(不复制或删除文件)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">网络选项</string>
-        <string name="msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">未指定目录过滤器。</string>
+        <string name="deleted_msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">未指定目录过滤器。</string>
+        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">当源目录为空时，删除源目录（仅当同步选项为移动时）。</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">选择子目录</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">限制SMB I/O写缓冲区为16KB。</string>

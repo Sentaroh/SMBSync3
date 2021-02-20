@@ -4,7 +4,10 @@ Nom du répertoire spécifié dans le dossier source.
 
 ### Filtre
 
-Noms de sous-répertoires à sélectionner ou à exclure.
+Le nom du répertoire à sélectionner ou à exclure. 
+- wildcard : \"Mon*\"
+- Spécifier un caractère spécifique : \"fo?der\".
+- Exclure tous les répertoires de cache : \"\\cache\"
 
 ### Inclure/Exclure
 

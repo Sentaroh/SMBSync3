@@ -42,6 +42,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import static com.sentaroh.android.SMBSync3.Constants.GENERAL_IO_BUFFER_SIZE;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_AUDIO;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_IMAGE;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_VIDEO;
 
 public class TaskListImportFromSMBSync2 {
     private static Logger log = LoggerFactory.getLogger(TaskListImportFromSMBSync2.class);
@@ -479,11 +482,14 @@ public class TaskListImportFromSMBSync2 {
 //                stli.setTargetRemovableStorageID(parm[44]);
 
             if (!parm[45].equals("") && !parm[45].equals(SMBSYNC2_TASK_END_MARK))
-                stli.setSyncFileTypeAudio(parm[45].equals("1") ? true : false);
+                if (parm[45].equals("1")) TaskListUtils.addPresetFileTypeToFilterList(stli.getFileNameFilter(), SYNC_FILE_TYPE_AUDIO);
+//                stli.setSyncFileTypeAudio(parm[45].equals("1") ? true : false);
             if (!parm[46].equals("") && !parm[46].equals(SMBSYNC2_TASK_END_MARK))
-                stli.setSyncFileTypeImage(parm[46].equals("1") ? true : false);
+                if (parm[46].equals("1")) TaskListUtils.addPresetFileTypeToFilterList(stli.getFileNameFilter(), SYNC_FILE_TYPE_IMAGE);
+//                stli.setSyncFileTypeImage(parm[46].equals("1") ? true : false);
             if (!parm[47].equals("") && !parm[47].equals(SMBSYNC2_TASK_END_MARK))
-                stli.setSyncFileTypeVideo(parm[47].equals("1") ? true : false);
+                if (parm[47].equals("1")) TaskListUtils.addPresetFileTypeToFilterList(stli.getFileNameFilter(), SYNC_FILE_TYPE_VIDEO);
+//                stli.setSyncFileTypeVideo(parm[47].equals("1") ? true : false);
 
             if (!parm[48].equals("") && !parm[48].equals(SMBSYNC2_TASK_END_MARK)) {
                 if (parm[48].startsWith("/")) stli.setDestinationZipOutputFileName(parm[48].substring(1));
