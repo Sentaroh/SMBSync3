@@ -19,17 +19,6 @@ Zur Angabe des Verzeichnisses für die lokale Speicherung. Wenn das Zielverzeich
 ### <u>Das Folgende wird nur angezeigt, wenn der Synchronisationstyp Archiv ist.</u>
 ### Alle Dateien im Zielverzeichnis speichern, ohne Unterverzeichnisse anzulegen
 Wenn diese Option aktiviert ist, wird im Zielverzeichnis kein Unterverzeichnis im Quellverzeichnis angelegt.
-### Zum Archivieren der
-
-Wählen Sie die Kriterien für die zu archivierenden Fotos oder Videos.
-
-- Sofort alle
-- Älter als 7 Tage
-- Älter als 30 Tage
-- Älter als 60 Tage
-- Älter als 90 Tage
-- Älter als 180 Tage
-- Älter als 1 Jahr
 
 ### Laufende  Nummer
 

@@ -19,17 +19,6 @@ To specify directory for local storage. If the target directory does not exist, 
 ### <u>The following is only displayed when the synchronization type is Archive.</u>
 ### Save all  files in the destination directory without creating subdirectories
 If checked, the destination directory will not create a subdirectory in the source directory.
-### To archive the
-
-Select the criteria for the photos or videos to be archived.
-
-- Any date (All)
-- Older than 7 days
-- Older than 30 days
-- Older than 60 days
-- Older than 90 days
-- Older than 180 days
-- Older than 1 year
 
 ### Sequence number
 

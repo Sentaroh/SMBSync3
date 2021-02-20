@@ -3,13 +3,13 @@
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
 <title>SMBSync3_Help_IT_task</title></head>
-<body><h2>Modalità di test</h2>
+<body><h3>Modalità di test</h3>
 <p>Non esegue la sovrascrittura e la cancellazione del file se si controlla. Si prega di essere testato quando si crea un&#39;attività di sincronizzazione, i file che vengono copiati o cancellati possono essere trovati nella scheda dei messaggi.</p>
-<h2>Sincronizzazione  automatica</h2>
+<h3>Sincronizzazione  automatica</h3>
 <p>Se si seleziona l&#39;attività all&#39;automatico. Le attività che sono impostate sulla sincronizzazione automatica si avvieranno quando si preme il pulsante sync.</p>
-<h2>Nome dell&#39;attività</h2>
+<h3>Nome dell&#39;attività</h3>
 <p>Specificare il nome dell&#39;attività.</p>
-<h2>Tipo di sincronizzazione</h2>
+<h3>Tipo di sincronizzazione</h3>
 <p>Selezionare un metodo tra Mirror, Copy, Move e Archive. <span style="color: red;"><u>La sincronizzazione viene effettuata in una direzione, dalla cartella sorgente alla cartella di destinazione.</u></span>&lt;/span   </p>
 <ul>
 <li><p>Mirror<br/>Fare una copia differenziale (<strong><u>*1</u></strong>) delle directory e dei file sul lato sorgente verso il lato destinazione, ed eliminare i file e le directory sul lato destinazione che non esistono sul lato sorgente dopo che la copia è stata completata.</p>
@@ -30,58 +30,47 @@
 <li>l&#39;ultima data e ora modificata è diversa di oltre 3 secondi (il numero di secondi può essere cambiato con l&#39;opzione del task di sincronizzazione)</li>
 
 </ol>
-<h2>Scambiare  fonte e destinazione</h2>
+<h3>Scambiare  fonte e destinazione</h3>
 <p>Scambiare il contenuto della cartella di origine e della cartella di destinazione </p>
-<h2>Cartella di origine</h2>
+<h3>Cartella di origine</h3>
 <p>Toccare il pulsante per modificare la cartella sorgente</p>
-<h2>Cartella di destinazione</h2>
+<h3>Cartella di destinazione</h3>
 <p>Toccare il pulsante per modificare la cartella di destinazione</p>
-<h2>Selezionare i file per la sincronizzazione</h2>
+<h3>Selezionare i file per la sincronizzazione</h3>
 <p>Se non si controlla e poi si sincronizza tutto il file. Se si controlla per vedere i dettagli. </p>
-<h3>Filtro del nome del file</h3>
 <ul>
-<li><p>Sync file audio</p>
-<p>Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:<br/>aac, aif, aifc, aiff, flac, kar, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, wav</p>
-</li>
-<li><p>Sync immagini</p>
-<p>Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:<br/>bmp, cgm, djv, djvu, gif, ico, ief, jpe, jpeg, jpg, pbm, pgm, png, pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</p>
-</li>
-<li><p>Sync file video</p>
-<p>Quando spuntata, la sincronizzazione includerà i file con le seguenti estensioni:<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv </p>
-</li>
-<li><p>Filtro file</p>
-<p>È un filtro di inclusione/esclusione dei file personalizzato. È possibile selezionare il nome e l&#39;estensione dei file che si desidera escludere o includere dal processo di sincronizzazione. </p>
-</li>
+<li>Sincronizzare i file audio<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  </li>
+<li>Sincronizzare i file di immagine<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd</li>
+<li>Sincronizzare i file video<br/>Se si verifica la sincronizzazione dei file delle seguenti estensioni.<br/>avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  </li>
+<li>Filtro file<br/>È possibile selezionare il nome e l&#39;estensione del file con cui si desidera sincronizzarsi, oltre a quanto sopra.</li>
 
 </ul>
-<h3>Filtro dimensione file</h3>
-<p>Puoi scegliere quali file sincronizzare a seconda della loro dimensione.  </p>
+<h3>Seleziona cosa archiviare</h3>
+<p>Selezionare i criteri per le foto o i video da archiviare.</p>
 <ul>
-<li>Meno di/più grande di<br/>Puoi specificare qualsiasi dimensione di file. </li>
+<li>Qualsiasi data (Tutti)</li>
+<li>Più vecchio di 7 giorni</li>
+<li>Più vecchio di 30 giorni</li>
+<li>Più vecchio di 60 giorni</li>
+<li>Più vecchio di 90 giorni</li>
+<li>Più di 180 giorni</li>
+<li>Più vecchio di 1 anno</li>
 
 </ul>
-<h3>Filtro data ultima modifica file</h3>
-<p>Puoi selezionare i file la cui ultima data di modifica è precedente o entro xx giorni dalla data di inizio della sincronizzazione.</p>
-<ul>
-<li>Se si specifica 0 giorni prima, la data dell&#39;ultimo aggiornamento sarà selezionata solo per la data di inizio della sincronizzazione.</li>
-<li>Se si specifica 1 giorno prima seleziona i file la cui ultima data di modifica è compresa tra la data di inizio e il giorno precedente la data di inizio.</li>
-<li>Se si specifica più di 1 giorno prima, seleziona i file la cui ultima data di modifica è precedente al giorno prima dell&#39;inizio della sincronizzazione.  </li>
-
-</ul>
-<h2>Selezionare  le sottodirectory</h2>
+<h3>Selezionare  le sottodirectory</h3>
 <p>Se non si controlla e poi si sincronizza tutta la sottocartella. Se si controlla per mostrare il pulsante del filtro della directory.</p>
 <ul>
 <li>Filtro della directory
 È possibile selezionare il nome della directory che si desidera sincronizzare.</li>
 
 </ul>
-<h2>Eseguire  le operazioni di sincronizzazione solo in fase di ricarica</h2>
+<h3>Eseguire  le operazioni di sincronizzazione solo in fase di ricarica</h3>
 <p>Se l&#39;opzione è selezionata, è possibile avviare la sincronizzazione solo durante la carica. Se la sincronizzazione viene avviata quando non è in carica, si verificherà un errore.</p>
-<h2>La  sincronizzazione include i file che si trovano direttamente nella root della  directory di origine  </h2>
+<h3>La  sincronizzazione include i file che si trovano direttamente nella root della  directory di origine  </h3>
 <p>si décoché, seuls les  dossiers et leurs fichiers/sous-dossiers seront synchronisés</p>
-<h2>Confermare  prima di sovrascrivere/cancellare</h2>
+<h3>Confermare  prima di sovrascrivere/cancellare</h3>
 <p>Quando si desidera sovrascrivere e cancellare il file, viene visualizzata una finestra di dialogo di conferma se è stato selezionato.</p>
-<h2>Opzioni di errore  </h2>
+<h3>Opzioni di errore  </h3>
 <p>È possibile specificare il comportamento quando si verifica un errore.</p>
 <ul>
 <li>Interrompere la sincronizzazione</li>
@@ -89,7 +78,7 @@
 <li>Avviare  le attività successive anche se non si adattano alle opzioni di rete<br/>Utilizzare questa funzione se si desidera eseguire attività successive quando l&#39;indirizzo non è privato o quando non è l&#39;indirizzo IP specificato.  </li>
 
 </ul>
-<h2>Rete</h2>
+<h3>Rete</h3>
 <ul>
 <li>Esegui anche quando sei fuori<br/>È sempre possibile iniziare la sincronizzazione</li>
 <li>Quando è collegato all&#39;AP<br/>La sincronizzazione può iniziare se la LAN wireless è collegata a qualsiasi punto di accesso.</li>
@@ -97,54 +86,52 @@
 <li>Registrato nell&#39;elenco degli indirizzi IP<br/>È possibile avviare la sincronizzazione quando l&#39;indirizzo IP è registrato nell&#39;elenco degli indirizzi IP.<br/>È possibile utilizzare i caratteri jolly per il filtro. (ad esempio: 192.168.100.*, 192.168.*.*.*).</li>
 
 </ul>
-<h2>Permette  la sincronizzazione con tutti gli indirizzi IP (includono pubblico) </h2>
+<h3>Permette  la sincronizzazione con tutti gli indirizzi IP (includono pubblico) </h3>
 <p>Permette la sincronizzazione su tutti gli indirizzi IP. Tuttavia, la scansione del server SMB non può essere eseguita.</p>
-<h2>Mostra le opzioni avanzate</h2>
+<h3>Mostra le opzioni avanzate</h3>
 <p><strong>Si prega di utilizzarlo quando si impostano opzioni dettagliate.</strong></p>
-<h2>Includi le sottodirectory</h2>
+<h3>Includi le sottodirectory</h3>
 <p>Includerà ricorsivamente le sottocartelle sotto la cartella sorgente specificata. </p>
-<h2>Includere le directory vuote</h2>
+<h3>Includere le directory vuote</h3>
 <p>Sincronizza le directory vuote (anche se una directory è vuota sul sorgente, verrà creata sulla destinazione). Se deselezionata, le directory vuote sul sorgente vengono ignorate. </p>
-<h2>Includi le directory nascoste</h2>
+<h3>Includi le directory nascoste</h3>
 <p>Quando spuntata, Sync includerà le cartelle linux nascoste (quelle con un nome che inizia con un punto). Si noti che in Windows e Samba, l&#39;attributo nascosto non è impostato dal nome della cartella. Pertanto, la cartella sincronizzata sulla destinazione SMB/Windows non avrà l&#39;attributo nascosto dell&#39;host. </p>
-<h2>Includere i file nascosti</h2>
+<h3>Includere i file nascosti</h3>
 <p>Quando spuntata, Sync includerà i file linux nascosti (quelli con un nome che inizia con un punto). Si noti che in Windows e Samba, l&#39;attributo nascosto non è impostato dal nome del file. Pertanto, il file sincronizzato sulla destinazione SMB/Windows non avrà l&#39;attributo nascosto dell&#39;host.</p>
-<h2>Sovrascrivere i file di destinazione</h2>
+<h3>Sovrascrivere i file di destinazione</h3>
 <p>Se deselezionati, i file sulla destinazione non verranno mai sovrascritti anche se i criteri di confronto per dimensioni e tempo sono diversi. </p>
-<h2>Riprova su errore di rete (solo per le condivisioni SMB)</h2>
+<h3>Riprova su errore di rete (solo per le condivisioni SMB)</h3>
 <p>In caso di errori di connessione lato server, SMBSync3 riproverà la sincronizzazione per un massimo di 3 volte ad un intervallo di 30 secondi. </p>
-<h2>Limitare il buffer di scrittura SMB I/O a 16KB (solo per le condivisioni SMB)</h2>
+<h3>Limitare il buffer di scrittura SMB I/O a 16KB (solo per le condivisioni SMB)</h3>
 <p>Provare se si ottiene un errore di &quot;Accesso negato&quot; quando si scrive nella cartella PC/NAS. Quando viene selezionato, limiterà il buffer I/O a 16KB per le operazioni di scrittura sull&#39;host SMB. </p>
-<h2>Cancellare i file prima della sincronizzazione (solo modalità Mirror)</h2>
+<h3>Cancellare i file prima della sincronizzazione (solo modalità Mirror)</h3>
 <p>Una volta spuntate, le directory e i file che sono presenti nella cartella di destinazione ma che non esistono nella sorgente, verranno prima cancellati. Dopo di che, i file e le cartelle che sono diversi saranno copiati nella destinazione.
 Se la cartella di origine è SMB, il tempo di elaborazione sarà più lungo perché la struttura delle directory e il loro contenuto viene scansionato attraverso la rete. Si raccomanda vivamente di abilitare l&#39;opzione &quot;Usa la negoziazione SMB2&quot; perché SMB1 sarà molto lenta.</p>
-<h2>Rimuovere le directory e i file esclusi dai filtri</h2>
+<h3>Rimuovere le directory e i file esclusi dai filtri</h3>
 <p>Se abilitato, <strong>rimuove le directory/file che sono escluse dal filtro.</strong> </p>
-<h2>Non impostare l&#39;ultimo orario modificato del file di destinazione per far corrispondere il file sorgente</h2>
+<h3>Non impostare l&#39;ultimo orario modificato del file di destinazione per far corrispondere il file sorgente</h3>
 <p>Si prega di abilitare se si ottiene un errore come SmbFile#setLastModified()/File#setLastModified() fallisce. Significa che l&#39;host remoto non permette l&#39;impostazione del file modificato l&#39;ultima volta. Se deselezionato, l&#39;ultimo orario modificato del file copiato sulla destinazione sarà impostato all&#39;orario in cui è stato copiato / sincronizzato. Ciò significa che il file di destinazione apparirà più nuovo del sorgente. </p>
-<h2>Utilizzare la dimensione del file per determinare se i file sono diversi</h2>
+<h3>Utilizzare la dimensione del file per determinare se i file sono diversi</h3>
 <p>Quando viene selezionato, i file sono considerati diversi se differiscono per dimensioni. </p>
-<h2>Solo le dimensioni confrontare</h2>
+<h3>Solo le dimensioni confrontare</h3>
 <p>I file sono considerati diversi solo se la dimensione della fonte è maggiore della destinazione. Questo disabiliterà il confronto in base al tempo del file. </p>
-<h2>Utilizzare il tempo dell&#39;ultima modifica per determinare se i file sono diversi </h2>
+<h3>Utilizzare il tempo dell&#39;ultima modifica per determinare se i file sono diversi </h3>
 <p>Quando si seleziona, i file sono considerati diversi in base al loro ultimo tempo di modifica </p>
-<h2>Differenza di tempo minima consentita (in secondi) tra i file sorgente e quelli di destinazione</h2>
+<h3>Differenza di tempo minima consentita (in secondi) tra i file sorgente e quelli di destinazione</h3>
 <p>I file sono considerati identici se la differenza tra i loro ultimi tempi modificati è inferiore o uguale al tempo selezionato in secondi. Sono considerati diversi se la differenza di tempo tra i file è superiore al tempo selezionato. FAT e ExFAT richiedono una tolleranza minima di 2 secondi. Se si seleziona 0 secondi, i file devono avere esattamente lo stesso tempo per essere considerati simili.</p>
-<h2>Non sovrascrivere il file di destinazione se è più nuovo del file sorgente</h2>
+<h3>Non sovrascrivere il file di destinazione se è più nuovo del file sorgente</h3>
 <p>Se spuntata, il file verrà sovrascritto solo quando il file di origine è più nuovo del file di destinazione, anche se le dimensioni del file e gli ultimi tempi di aggiornamento sono diversi. Tenere presente che se si cambiano i fusi orari o se i file vengono modificati durante il periodo di intervallo del cambio dell&#39;ora legale, l&#39;ultimo file modificato potrebbe apparire più vecchio del file non aggiornato. Ciò è legato alle differenze del file system e solo un controllo manuale prima di sovrascrivere il file eviterà la perdita di dati. Si raccomanda generalmente di non modificare i file durante l&#39;intervallo del cambio dell&#39;ora legale se sono destinati ad essere auto-sincronizzati. </p>
-<h2>Ignora la differenza di fuso orario tra i file</h2>
+<h3>Ignora la differenza di fuso orario tra i file</h3>
 <p>Permette di selezionare la differenza di fuso orario in minuti tra l&#39;ora legale e quella invernale. I file sono considerati diversi se la differenza di orario non è esattamente uguale all&#39;intervallo specificato (+/- la &quot;differenza di orario minima consentita (in secondi)&quot; specificata nell&#39;opzione precedente)</p>
-<h2>Salta i nomi di directory e file che contengono caratteri non validi(&quot;, :, \, \, *, &lt;, &gt;, |)</h2>
+<h3>Salta i nomi di directory e file che contengono caratteri non validi(&quot;, :, \, \, *, &lt;, &gt;, |)</h3>
 <p>Se spuntata, visualizzerà un messaggio di avviso e la sincronizzazione continuerà senza elaborare le directory/file contenenti caratteri non validi. </p>
-<h2>Cancellare la directory di origine quando è vuota (solo quando l&#39;opzione Sync è Move)</h2>
+<h3>Cancellare la directory di origine quando è vuota (solo quando l&#39;opzione Sync è Move)</h3>
 <p>Quando la modalità di sincronizzazione è &quot;Spostare&quot;, dopo che i file sono stati spostati nella destinazione, viene cancellata anche la cartella Source. </p>
-<h2>Se la data e l&#39;ora non possono essere determinate dai dati EXIF, viene visualizzato un messaggio di conferma</h2>
+<h3>Se la data e l&#39;ora non possono essere determinate dai dati EXIF, viene visualizzato un messaggio di conferma</h3>
 <p>Visualizzare un messaggio di conferma quando non è possibile ottenere da Exif la data e l&#39;ora prese.</p>
-<h2>Ignora i file sorgente che sono più grandi di 4 GB quando la sincronizzazione con la memoria esterna.</h2>
+<h3>Ignora i file sorgente che sono più grandi di 4 GB quando la sincronizzazione con la memoria esterna.</h3>
 <p>Se l&#39;opzione è selezionata, è possibile evitare errori I/O durante la sincronizzazione su una scheda MicroSD ignorando i file sorgente di dimensioni superiori a 4 GB da sincronizzare sulla memoria locale.</p>
-<h2>Ignora i file il cui nome file supera i 255 byte</h2>
+<h3>Ignora i file il cui nome file supera i 255 byte</h3>
 <p>Se spuntata, ignorare i file con nomi di file più lunghi di 255 byte.</p>
-<h2>Ignora i file con una dimensione di 0 byte  </h2>
-<p>Se selezionata, i file con una dimensione di 0 byte saranno ignorati.  </p>
 </body>
 </html>

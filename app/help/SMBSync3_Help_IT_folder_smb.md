@@ -60,18 +60,6 @@ Per specificare la directory per l'host SMB. Se la directory di destinazione non
 
 Se spuntata, la directory di destinazione non creerà una sottodirectory nella directory di origine.
 
-### Seleziona cosa archiviare
-
-Selezionare i criteri per le foto o i video da archiviare.
-
-- Qualsiasi data (Tutti)
-- Più vecchio di 7 giorni
-- Più vecchio di 30 giorni
-- Più vecchio di 60 giorni
-- Più vecchio di 90 giorni
-- Più di 180 giorni
-- Più vecchio di 1 anno
-
 ### Incrementare  i nomi dei file aggiungendo
 
 È possibile aggiungere un numero di sequenza al nome del file. 

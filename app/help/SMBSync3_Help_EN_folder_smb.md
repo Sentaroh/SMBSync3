@@ -60,18 +60,6 @@ To specify directory for SMB host. If the target directory does not exist, it wi
 
 If checked, the destination directory will not create a subdirectory in the source directory.
 
-### Select the target to archive
-
-Select the criteria for the photos or videos to be archived.
-
-- Any date (All)
-- Older than 7 days
-- Older than 30 days
-- Older than 60 days
-- Older than 90 days
-- Older than 180 days
-- Older than 1 year
-
 ### Increment  file names by appending
 
 You can add a sequence number to the file name. 

@@ -672,9 +672,10 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static int[] ARCHIVE_RETAIN_FOR_A_LIST = new int[]{ARCHIVE_RETAIN_FOR_A_0_DAYS,
             ARCHIVE_RETAIN_FOR_A_7_DAYS, ARCHIVE_RETAIN_FOR_A_30_DAYS, ARCHIVE_RETAIN_FOR_A_60_DAYS,
             ARCHIVE_RETAIN_FOR_A_90_DAYS, ARCHIVE_RETAIN_FOR_A_180_DAYS, ARCHIVE_RETAIN_FOR_A_1_YEARS};
-    private int syncDestinationArchiveRetentionPeriod = ARCHIVE_RETAIN_FOR_A_DEFAULT;
-    public int getDestinationArchiveRetentionPeriod() {return syncDestinationArchiveRetentionPeriod;}
-    public void setDestinationArchiveRetentionPeriod(int period) {syncDestinationArchiveRetentionPeriod =period;}
+    private int syncFilterArchiveRetentionPeriod = ARCHIVE_RETAIN_FOR_A_DEFAULT;
+    public int getSyncFilterArchiveRetentionPeriod() {return syncFilterArchiveRetentionPeriod;}
+    public void setSyncFilterArchiveRetentionPeriod(int period) {
+        syncFilterArchiveRetentionPeriod =period;}
 
     private boolean syncDestinationArchiveIgnoreSourceDirectory = false;
     public boolean isDestinationArchiveIgnoreSourceDirectory() {return syncDestinationArchiveIgnoreSourceDirectory;}
@@ -801,7 +802,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncTaskDestinationZipCompOptionPassword.equals(sti.getDestinationZipPassword())) &&
                         (syncTaskDestinationZipCompOptionEncoding.equals(sti.getDestinationZipFileNameEncoding())) &&
                         (syncDestinationArchiveRenameFileTemplate.equals(sti.getDestinationArchiveRenameFileTemplate())) &&
-                        (syncDestinationArchiveRetentionPeriod ==sti.getDestinationArchiveRetentionPeriod()) &&
+                        (syncFilterArchiveRetentionPeriod ==sti.getSyncFilterArchiveRetentionPeriod()) &&
                         (syncDestinationArchiveSuffixDigit.equals(sti.getDestinationArchiveSuffixOption())) &&
                         (syncDestinationArchiveIgnoreSourceDirectory==sti.isDestinationArchiveIgnoreSourceDirectory()) &&
                         (syncFileTypeAudio==sti.isSyncFileTypeAudio()) &&

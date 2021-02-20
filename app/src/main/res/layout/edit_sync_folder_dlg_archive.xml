@@ -7,38 +7,21 @@
         android:layout_marginTop="10dp">
 
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-            android:orientation="vertical" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/msgs_sync_folder_archive_option"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+<!--        <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/msgs_sync_folder_archive_option"-->
+<!--                android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="3dp"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:text="@string/msgs_sync_folder_archive_file_type"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-            <TextView
-                android:id="@+id/edit_sync_folder_dlg_archive_file_type_list"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="10dp"
-                android:text="gif, jpg, jpeg, jpe, mov, mp4, png"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,20 +42,6 @@
                         android:text="@string/msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/msgs_sync_folder_archive_retention_period"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <Spinner
-                        android:id="@+id/edit_sync_folder_dlg_archive_retention_period"
-                        style="?android:attr/spinnerStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="3dp"
-                        android:minHeight="36dp"
-                        android:paddingLeft="5dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

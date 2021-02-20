@@ -850,7 +850,7 @@
         <string name="msgs_svc_received_start_sync_task_request_intent_schedule">スケジュール</string>
     <!-- sync archive -->
         <string name="msgs_sync_folder_archive_option">アーカイブオプション</string>
-        <string name="msgs_sync_folder_archive_file_type">下記ファイル拡張子を対象としてアーカイブします。</string>
+        <string name="msgs_sync_folder_archive_file_type">下記ファイル拡張子のファイルをアーカイブします。</string>
         <string name="msgs_sync_folder_archive_retention_period">アーカイブする対象</string>
         <string name="msgs_sync_folder_archive_output_image">下記は保存されるディレクトリーとファイル名</string>
         <string name="msgs_sync_folder_archive_add_taken_date_button">下記ボタンは撮影日時に関する変数を追加します</string>

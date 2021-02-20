@@ -19,17 +19,6 @@ Per specificare la directory per la memorizzazione locale. Se la directory di de
 ### <u>Il seguente viene visualizzato solo quando il tipo di sincronizzazione è Archive.</u>
 ### Salvare tutti i file nella directory di destinazione senza creare sottodirectory
 Se spuntata, la directory di destinazione non creerà una sottodirectory nella directory di origine.
-### Seleziona cosa archiviare
-
-Selezionare i criteri per le foto o i video da archiviare.
-
-- Qualsiasi data (Tutti)
-- Più vecchio di 7 giorni
-- Più vecchio di 30 giorni
-- Più vecchio di 60 giorni
-- Più vecchio di 90 giorni
-- Più di 180 giorni
-- Più vecchio di 1 anno
 
 ### Incrementare  i nomi dei file aggiungendo
 

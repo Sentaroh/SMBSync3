@@ -19,17 +19,6 @@ Pour spécifier le répertoire pour le stockage local. Si le répertoire cible n
 ### <u> Ce qui suit n'est affiché que lorsque le type de synchronisation est Archive.</u>
 ### Enregistrer tous les fichiers dans le répertoire de destination sans créer de sous-répertoires
 Si cette case est cochée, le répertoire de destination ne créera pas de sous-répertoire dans le répertoire source.
-### Sélectionnez ce que vous voulez archiver
-
-Sélectionnez les critères pour les photos ou les vidéos à archiver.
-
-- Toutes les dates
-- Plus ancien que 7 jours
-- Plus ancien que 30 jours
-- Plus ancien que 60 jours
-- Plus ancien que 90 jours
-- Plus ancien que 180 jours
-- Plus ancien que 1 année
 
 ### Numéro de séquence
 

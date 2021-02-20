@@ -60,18 +60,6 @@ Zur Angabe des Verzeichnisses für den SMB-Host.Wenn das Zielverzeichnis nicht e
 
 Wenn diese Option aktiviert ist, wird im Zielverzeichnis kein Unterverzeichnis im Quellverzeichnis angelegt.
 
-### Wählen Sie aus, was archiviert werden soll
-
-Wählen Sie die Kriterien für die zu archivierenden Fotos oder Videos.
-
-- Sofort alle
-- Älter als 7 Tage
-- Älter als 30 Tage
-- Älter als 60 Tage
-- Älter als 90 Tage
-- Älter als 180 Tage
-- Älter als 1 Jahr
-
 ### Laufende  Nummer
 
 Sie können dem Dateinamen eine Sequenznummer hinzufügen. 

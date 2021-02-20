@@ -20,37 +20,37 @@
             android:orientation="vertical">
 
             <Button
-                    android:id="@+id/edit_sync_folder_dlg_search_remote_host"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
-                    android:layout_marginRight="1dp"
-                    android:text="@string/msgs_task_edit_sync_folder_dlg_search_smb_server_and_configure"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:id="@+id/edit_sync_folder_dlg_search_remote_host"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:text="@string/msgs_task_edit_sync_folder_dlg_search_smb_server_and_configure"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <CheckedTextView
-                    android:id="@+id/edit_sync_folder_dlg_ctv_edit_smb_server_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:id="@+id/edit_sync_folder_dlg_ctv_edit_smb_server_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:gravity="center_vertical"
+                android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <LinearLayout
-                    android:id="@+id/edit_sync_folder_dlg_smb_server_detail_view"
+                android:id="@+id/edit_sync_folder_dlg_smb_server_detail_view"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <EditText
+                    android:id="@+id/edit_sync_folder_dlg_remote_server"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                <EditText
-                        android:id="@+id/edit_sync_folder_dlg_remote_server"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_server"
-                        android:inputType="text"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_gravity="center_vertical"
+                    android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_server"
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <LinearLayout
                         android:layout_width="fill_parent"
@@ -105,107 +105,108 @@
                 <!--                tools:ignore="RtlHardcoded" />-->
 
                 <LinearLayout
-                        android:id="@+id/edit_sync_folder_dlg_port_option_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="visible">
+                    android:id="@+id/edit_sync_folder_dlg_port_option_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
                     <CheckedTextView
-                            android:id="@+id/edit_sync_folder_dlg_ctv_use_remote_port_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                            android:gravity="center_vertical"
-                            android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_use_port_number"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <EditText
-                            android:id="@+id/edit_sync_folder_dlg_remote_port"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_port"
-                            android:inputType="number"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                </LinearLayout>
-
-                <CheckedTextView
-                        android:id="@+id/edit_sync_folder_dlg_ctv_use_user_pass"
+                        android:id="@+id/edit_sync_folder_dlg_ctv_use_remote_port_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                         android:gravity="center_vertical"
-                        android:text="@string/msgs_task_edit_sync_folder_dlg_use_user_pass"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        tools:ignore="RtlHardcoded" />
+                        android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_use_port_number"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <EditText
+                        android:id="@+id/edit_sync_folder_dlg_remote_port"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_port"
+                        android:inputType="number"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                </LinearLayout>
+
+                <CheckedTextView
+                    android:id="@+id/edit_sync_folder_dlg_ctv_use_user_pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_edit_sync_folder_dlg_use_user_pass"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    tools:ignore="RtlHardcoded" />
 
                 <EditText
-                        android:id="@+id/edit_sync_folder_dlg_remote_domain"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="ドメイン"
-                        android:inputType="text"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:visibility="gone"
-                        tools:ignore="HardcodedText" />
+                    android:id="@+id/edit_sync_folder_dlg_remote_domain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ドメイン"
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility="gone"
+                    tools:ignore="HardcodedText" />
 
                 <LinearLayout
-                        android:layout_width="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/edit_sync_folder_dlg_remote_user"
+                        android:layout_width="145dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <EditText
-                            android:id="@+id/edit_sync_folder_dlg_remote_user"
-                            android:layout_width="145dp"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
-                            android:inputType="text"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <EditText
-                            android:id="@+id/edit_sync_folder_dlg_remote_pass"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_password"
-                            android:inputType="textPassword"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:id="@+id/edit_sync_folder_dlg_remote_pass"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_password"
+                        android:inputType="textPassword"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
                 </LinearLayout>
 
                 <CheckedTextView
-                        android:id="@+id/edit_sync_folder_dlg_ctv_show_smb_account_password"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                        android:gravity="center_vertical"
-                        android:text="@string/msgs_task_edit_sync_folder_dlg_show_password"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:visibility="gone"
-                        tools:ignore="RtlHardcoded" />
+                    android:id="@+id/edit_sync_folder_dlg_ctv_show_smb_account_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                    android:gravity="center_vertical"
+                    android:text="@string/msgs_task_edit_sync_folder_dlg_show_password"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:visibility="gone"
+                    tools:ignore="RtlHardcoded" />
 
                 <LinearLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:orientation="vertical">
 
                     <Button
-                            android:id="@+id/edit_sync_folder_dlg_list_share_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_share_list"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:id="@+id/edit_sync_folder_dlg_list_share_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_share_list"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <EditText
-                            android:id="@+id/edit_sync_folder_dlg_share_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_share"
-                            android:inputType="text"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:id="@+id/edit_sync_folder_dlg_share_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_share"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </LinearLayout>
 
@@ -233,6 +234,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
                 android:orientation="vertical">
 
                 <Button

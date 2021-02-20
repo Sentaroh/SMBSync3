@@ -554,7 +554,7 @@ public class TaskListImportFromSMBSync2 {
 
             if (!parm[68].equals("") && !parm[68].equals(SMBSYNC2_TASK_END_MARK)) stli.setDestinationArchiveRenameFileTemplate(parm[68]);
 //            if (!parm[69].equals("") && !parm[69].equals(SMBSYNC2_TASK_END_MARK)) stli.setArchiveUseRename((parm[69].equals("1") ? true : false));
-            try {if (!parm[70].equals("") && !parm[70].equals(SMBSYNC2_TASK_END_MARK)) stli.setDestinationArchiveRetentionPeriod(Integer.parseInt(parm[70]));} catch(Exception e) {}
+            try {if (!parm[70].equals("") && !parm[70].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncFilterArchiveRetentionPeriod(Integer.parseInt(parm[70]));} catch(Exception e) {}
 
 //            if (!parm[71].equals("") && !parm[71].equals(SMBSYNC2_TASK_END_MARK)) stli.setArchiveCreateDirectory((parm[71].equals("1") ? true : false));
             if (!parm[72].equals("") && !parm[72].equals(SMBSYNC2_TASK_END_MARK)) stli.setDestinationArchiveSuffixOption(parm[72]);

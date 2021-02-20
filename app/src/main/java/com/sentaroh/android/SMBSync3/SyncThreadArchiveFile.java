@@ -1198,12 +1198,12 @@ public class SyncThreadArchiveFile {
                 Integer.parseInt(tm[0]), Integer.parseInt(tm[1]), Integer.parseInt(tm[2]));
         String c_ft=StringUtil.convDateTimeTo_YearMonthDayHourMinSec(cal.getTimeInMillis());
         long exp_time=0, day_mili=1000L*60L*60L*24L;
-        if (sti.getDestinationArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_7_DAYS) exp_time=day_mili*7L;
-        else if (sti.getDestinationArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_30_DAYS) exp_time=day_mili*30L;
-        else if (sti.getDestinationArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_60_DAYS) exp_time=day_mili*60L;
-        else if (sti.getDestinationArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_90_DAYS) exp_time=day_mili*90L;
-        else if (sti.getDestinationArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_180_DAYS) exp_time=day_mili*180L;
-        else if (sti.getDestinationArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_1_YEARS) {
+        if (sti.getSyncFilterArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_7_DAYS) exp_time=day_mili*7L;
+        else if (sti.getSyncFilterArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_30_DAYS) exp_time=day_mili*30L;
+        else if (sti.getSyncFilterArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_60_DAYS) exp_time=day_mili*60L;
+        else if (sti.getSyncFilterArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_90_DAYS) exp_time=day_mili*90L;
+        else if (sti.getSyncFilterArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_180_DAYS) exp_time=day_mili*180L;
+        else if (sti.getSyncFilterArchiveRetentionPeriod()== SyncTaskItem.ARCHIVE_RETAIN_FOR_A_1_YEARS) {
             int n_year=cal.getTime().getYear();
             Calendar n_cal= Calendar.getInstance() ;
             n_cal.setTimeInMillis(cal.getTimeInMillis());
@@ -1215,7 +1215,7 @@ public class SyncThreadArchiveFile {
         boolean result=(System.currentTimeMillis()>(cal.getTimeInMillis()+exp_time));
         if (stwa.logLevel>=1) stwa.util.addDebugMsg(1,"I","isFileArchiveRequired path=",afli.full_path,", shoot date=",afli.shoot_date,
                 ", shoot time=", afli.shoot_time,", exif="+afli.date_from_exif,", archive required="+result, ", " +
-                "retention period="+sti.getDestinationArchiveRetentionPeriod(), ", expiration date=", n_exp, ", expiration period="+exp_time);
+                "retention period="+sti.getSyncFilterArchiveRetentionPeriod(), ", expiration date=", n_exp, ", expiration period="+exp_time);
         return result;
     }
 

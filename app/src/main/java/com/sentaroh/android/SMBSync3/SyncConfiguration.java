@@ -768,7 +768,7 @@ public class SyncConfiguration {
 //            destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_CREATE_DIRECTORY, item.isArchiveCreateDirectory()?"true":"false");
 //            destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_ENABLED, item.isArchiveEnabled()?"true":"false");
             destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_RENAME_FILE_TEMPLATE, item.getDestinationArchiveRenameFileTemplate());
-            destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_RETENTION_PERIOD, String.valueOf(item.getDestinationArchiveRetentionPeriod()));
+            destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_RETENTION_PERIOD, String.valueOf(item.getSyncFilterArchiveRetentionPeriod()));
             destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_SUFFIX_OPTION, item.getDestinationArchiveSuffixOption());
 //            destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_USE_RENAME, item.isArchiveUseRename()?"true":"false");
             destination_tag.setAttribute(SYNC_TASK_XML_TAG_ARCHIVE_IGNORE_SOURCE_DIRECTORY_HIEARACHY, item.isDestinationArchiveIgnoreSourceDirectory()?"true":"false");
@@ -1293,7 +1293,7 @@ public class SyncConfiguration {
                 sti.setDestinationArchiveRenameFileTemplate(xpp.getAttributeValue(i));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_ARCHIVE_RETENTION_PERIOD)) {
                 try {
-                    sti.setDestinationArchiveRetentionPeriod(Integer.valueOf(xpp.getAttributeValue(i)));
+                    sti.setSyncFilterArchiveRetentionPeriod(Integer.valueOf(xpp.getAttributeValue(i)));
                 } catch (Exception e) {
                     log.error(CommonUtilities.getExecutedMethodName()+" Invalid Archive retention vallue=" + xpp.getAttributeValue(i));
                 }

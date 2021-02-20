@@ -60,18 +60,6 @@ Si le répertoire cible n'existe pas, il sera créé au moment de la synchronisa
 
 Si cette case est cochée, le répertoire de destination ne créera pas de sous-répertoire dans le répertoire source.
 
-### Sélectionnez une cible à archiver
-
-Sélectionnez les critères pour les photos ou les vidéos à archiver.
-
-- Toutes les dates
-- Plus ancien que 7 jours
-- Plus ancien que 30 jours
-- Plus ancien que 60 jours
-- Plus ancien que 90 jours
-- Plus ancien que 180 jours
-- Plus ancien que 1 année
-
 ### Incrémenter  les noms de fichiers
 
 Vous pouvez ajouter un numéro de séquence au nom du fichier. 
