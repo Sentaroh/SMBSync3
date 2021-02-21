@@ -328,14 +328,7 @@ public class TaskEditor extends DialogFragment {
 
         final CheckedTextView ctvTestMode = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
 
-        final CheckedTextView ct_specific_file_type = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_specific);
         final LinearLayout ll_specific_file_type_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
-        final CheckedTextView ct_specific_file_type_audio = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_audio);
-        final CheckedTextView ct_specific_file_type_image = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_image);
-        final CheckedTextView ct_specific_file_type_video = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_video);
-
-        final CheckedTextView ct_specific_directory = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
-        final LinearLayout ll_specific_directory_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
 
         final CheckedTextView ctv_task_sync_when_cahrging =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
         final CheckedTextView ctvProcessRootDirFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_source_root_dir_file);
@@ -425,12 +418,6 @@ public class TaskEditor extends DialogFragment {
         sv.sync_remove_source_if_empty =ctv_sync_remove_source_if_empty.isChecked();
         sv.destination_directory_same_as_source_directory=ctvIgnoreFilterRemoveDirFileDesNotExistsInSource.isChecked();
 
-        sv.specific_file_type=ct_specific_file_type.isChecked();
-        sv.specific_file_type_audio=ct_specific_file_type_audio.isChecked();
-        sv.specific_file_type_image=ct_specific_file_type_image.isChecked();
-        sv.specific_file_type_video=ct_specific_file_type_video.isChecked();
-        sv.specific_diretory=ct_specific_directory.isChecked();
-
         sv.ignore_0_byte_file=ctvIgnore_0_byte_file.isChecked();
         sv.file_filter_file_size_type=sp_file_size_type.getSelectedItemPosition();
         sv.file_filter_file_size_value=et_file_size_value.getText().toString();
@@ -465,13 +452,8 @@ public class TaskEditor extends DialogFragment {
 
         final CheckedTextView ctvTestMode = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_test_mode);
 
-        final CheckedTextView ct_specific_file_type = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_specific);
         final LinearLayout ll_specific_file_type_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
-        final CheckedTextView ct_specific_file_type_audio = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_audio);
-        final CheckedTextView ct_specific_file_type_image = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_image);
-        final CheckedTextView ct_specific_file_type_video = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_video);
 
-        final CheckedTextView ct_specific_directory = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
         final LinearLayout ll_specific_directory_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
 
         final CheckedTextView ctv_task_sync_when_cahrging =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
@@ -581,20 +563,6 @@ public class TaskEditor extends DialogFragment {
         ctv_sync_remove_source_if_empty.setChecked(sv.sync_remove_source_if_empty);
 
         ctvIgnoreFilterRemoveDirFileDesNotExistsInSource.setChecked(sv.destination_directory_same_as_source_directory);
-
-        ct_specific_file_type.setChecked(false);
-        ct_specific_file_type_audio.setChecked(sv.specific_file_type_audio);
-        ct_specific_file_type_image.setChecked(sv.specific_file_type_image);
-        ct_specific_file_type_video.setChecked(sv.specific_file_type_video);
-        if (sv.specific_file_type || sv.specific_file_type_audio || sv.specific_file_type_image || sv.specific_file_type_video ||
-                !sv.sync_file_filter_info.equals(mActivity.getString(R.string.msgs_task_sync_task_dlg_file_filter_not_specified))) {
-            performClickNoSound(ct_specific_file_type);
-        }
-
-        ct_specific_directory.setChecked(false);
-        if (sv.specific_diretory || !sv.sync_dir_filter_info.equals(mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_filter_not_specified))) {
-            performClickNoSound(ct_specific_directory);
-        }
 
         ctvIgnore_0_byte_file.setChecked(sv.ignore_0_byte_file);
 
@@ -2649,7 +2617,7 @@ public class TaskEditor extends DialogFragment {
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context arg0, Object[] arg1) {
-                dlg_file_filter.setText(buildFilterInfo(n_sti.getFileNameFilter()));
+                dlg_file_filter.setText(buildFileFilterInfo(n_sti.getFileNameFilter()));
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
 
@@ -3128,7 +3096,7 @@ public class TaskEditor extends DialogFragment {
             if (filter_list.size()>0) {
                 return mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists);
             } else {
-                return mActivity.getString(R.string.msgs_task_sync_task_dlg_dir_filter_not_specified);
+                return mActivity.getString(R.string.msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory);
             }
         }
         return info;
@@ -3140,7 +3108,7 @@ public class TaskEditor extends DialogFragment {
             if (filter_list.size()>0) {
                 return mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists);
             } else {
-                return mActivity.getString(R.string.msgs_task_sync_task_dlg_file_filter_not_specified);
+                return mActivity.getString(R.string.msgs_task_sync_task_dlg_file_filter_sync_all_file);
             }
         }
         return info;
@@ -3441,16 +3409,6 @@ public class TaskEditor extends DialogFragment {
 
         final CheckedTextView ctvIgnore_0_byte_file=(CheckedTextView)mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_size_0_bytes_file);
 
-        boolean is_all_file_type = true;
-        if (n_sti.isSyncFileTypeAudio() || n_sti.isSyncFileTypeImage() || n_sti.isSyncFileTypeVideo() || n_sti.getFileNameFilter().size() != 0 ||
-                !n_sti.getSyncFilterFileSizeType().equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE) ||
-                !n_sti.getSyncFilterFileDateType().equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
-            is_all_file_type = false;
-        }
-
-        boolean is_all_sub_dir = false;
-        if (n_sti.getDirectoryFilter().size() == 0) is_all_sub_dir = true;
-
         final Button dir_filter_btn = (Button) mDialog.findViewById(R.id.sync_filter_edit_dir_filter_btn);
         final Button file_filter_btn = (Button) mDialog.findViewById(R.id.sync_filter_edit_file_filter_btn);
 //		final TextView dlg_file_filter=(TextView) mDialog.findViewById(R.id.sync_filter_summary_file_filter);
@@ -3461,86 +3419,6 @@ public class TaskEditor extends DialogFragment {
         final LinearLayout ll_file_filter_detail = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
         final LinearLayout ll_archive_filter_detail = (LinearLayout) mDialog.findViewById(R.id.edit_sync_filter_archive_file_type_view);
         final LinearLayout ll_dir_filter_detail = (LinearLayout) mDialog.findViewById(R.id.sync_filter_sub_directory_detail_view);
-
-        final CheckedTextView ctvSyncFileTypeSpecific = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_specific);
-        ctvSyncFileTypeSpecific.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctvSyncFileTypeSpecific.isChecked();
-                ctvSyncFileTypeSpecific.setChecked(isChecked);
-                if (isChecked) {
-                    ll_file_filter_detail.setVisibility(LinearLayout.VISIBLE);
-                    ll_archive_filter_detail.setVisibility(LinearLayout.GONE);
-                } else {
-                    ll_file_filter_detail.setVisibility(LinearLayout.GONE);
-                    ll_archive_filter_detail.setVisibility(LinearLayout.VISIBLE);
-                }
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-            }
-        });
-        ctvSyncFileTypeSpecific.setChecked(!is_all_file_type);
-        if (!is_all_file_type) ll_file_filter_detail.setVisibility(Button.VISIBLE);
-        else ll_file_filter_detail.setVisibility(Button.GONE);
-
-        final CheckedTextView ctvSyncFileTypeAudio = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_audio);
-        ctvSyncFileTypeAudio.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctvSyncFileTypeAudio.isChecked();
-                ctvSyncFileTypeAudio.setChecked(isChecked);
-                if (isChecked) {
-                    String f_ext="", sep="";
-                    for(String item:SYNC_FILE_TYPE_AUDIO) {
-                        f_ext+=sep+item;
-                        sep=", ";
-                    }
-                    mUtil.showCommonDialogInfo(false,
-                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
-                }
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-            }
-        });
-        ctvSyncFileTypeAudio.setChecked(n_sti.isSyncFileTypeAudio());
-
-        final CheckedTextView ctvSyncFileTypeImage = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_image);
-        ctvSyncFileTypeImage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctvSyncFileTypeImage.isChecked();
-                ctvSyncFileTypeImage.setChecked(isChecked);
-                if (isChecked) {
-                    String f_ext="", sep="";
-                    for(String item:SYNC_FILE_TYPE_IMAGE) {
-                        f_ext+=sep+item;
-                        sep=", ";
-                    }
-                    mUtil.showCommonDialogInfo(false,
-                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
-                }
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-            }
-        });
-        ctvSyncFileTypeImage.setChecked(n_sti.isSyncFileTypeImage());
-
-        final CheckedTextView ctvSyncFileTypeVideo = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_video);
-        ctvSyncFileTypeVideo.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctvSyncFileTypeVideo.isChecked();
-                ctvSyncFileTypeVideo.setChecked(isChecked);
-                if (isChecked) {
-                    String f_ext="", sep="";
-                    for(String item:SYNC_FILE_TYPE_VIDEO) {
-                        f_ext+=sep+item;
-                        sep=", ";
-                    }
-                    mUtil.showCommonDialogInfo(false,
-                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,null );
-                }
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-            }
-        });
-        ctvSyncFileTypeVideo.setChecked(n_sti.isSyncFileTypeVideo());
 
         sp_file_size_type.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -3632,21 +3510,6 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-
-        final CheckedTextView ctvSyncSpecificSubDir = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
-        ctvSyncSpecificSubDir.setChecked(!is_all_sub_dir);
-        ctvSyncSpecificSubDir.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = !ctvSyncSpecificSubDir.isChecked();
-                ctvSyncSpecificSubDir.setChecked(isChecked);
-                if (isChecked) ll_dir_filter_detail.setVisibility(Button.VISIBLE);
-                else ll_dir_filter_detail.setVisibility(Button.GONE);
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-            }
-        });
-        if (!is_all_sub_dir) ll_dir_filter_detail.setVisibility(Button.VISIBLE);
-        else ll_dir_filter_detail.setVisibility(Button.GONE);
 
         final CheckedTextView ctvProcessRootDirFile = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_source_root_dir_file);
         CommonUtilities.setCheckedTextViewListener(ctvProcessRootDirFile);
@@ -4569,12 +4432,6 @@ public class TaskEditor extends DialogFragment {
         final Button dir_filter_btn = (Button) dialog.findViewById(R.id.sync_filter_edit_dir_filter_btn);
         final Button file_filter_btn = (Button) dialog.findViewById(R.id.sync_filter_edit_file_filter_btn);
 
-        final CheckedTextView ctvSyncFileTypeSpecific = (CheckedTextView) dialog.findViewById(R.id.sync_filter_file_type_specific);
-
-        final CheckedTextView ctvSyncFileTypeAudio = (CheckedTextView) dialog.findViewById(R.id.sync_filter_file_type_audio);
-        final CheckedTextView ctvSyncFileTypeImage = (CheckedTextView) dialog.findViewById(R.id.sync_filter_file_type_image);
-        final CheckedTextView ctvSyncFileTypeVideo = (CheckedTextView) dialog.findViewById(R.id.sync_filter_file_type_video);
-        final CheckedTextView ctvSyncSpecificSubDir = (CheckedTextView) dialog.findViewById(R.id.sync_filter_sub_directory_specific);
         final CheckedTextView ctvProcessRootDirFile = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_source_root_dir_file);
         final CheckedTextView ctvSyncSubDir = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_sub_dir);
         final CheckedTextView ctvSyncEmptyDir = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_empty_directory);
@@ -4668,33 +4525,17 @@ public class TaskEditor extends DialogFragment {
 
         String diff_val = spinnerSyncDiffTimeValue.getSelectedItem().toString();
         nstli.setSyncOptionDifferentFileAllowableTime(Integer.valueOf(diff_val));
-        if (!ctvSyncFileTypeSpecific.isChecked()) {
-            nstli.getFileNameFilter().clear();
-            nstli.setSyncFileTypeAudio(false);
-            nstli.setSyncFileTypeImage(false);
-            nstli.setSyncFileTypeVideo(false);
-            nstli.setSyncFilterFileSizeType(SyncTaskItem.FILTER_FILE_SIZE_TYPE_DEFAULT);
-            nstli.setSyncFilterFileDateType(SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
-        } else {
-            nstli.setSyncFileTypeAudio(ctvSyncFileTypeAudio.isChecked());
-            nstli.setSyncFileTypeImage(ctvSyncFileTypeImage.isChecked());
-            nstli.setSyncFileTypeVideo(ctvSyncFileTypeVideo.isChecked());
-            String size_type=nstli.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
-            nstli.setSyncFilterFileSizeType(size_type);
-            String size_unit=nstli.getSyncFilterFileSizeUnitByIndex(sp_file_size_unit.getSelectedItemPosition());
-            nstli.setSyncFilterFileSizeUnit(size_unit);
+        String size_type=nstli.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
+        nstli.setSyncFilterFileSizeType(size_type);
+        String size_unit=nstli.getSyncFilterFileSizeUnitByIndex(sp_file_size_unit.getSelectedItemPosition());
+        nstli.setSyncFilterFileSizeUnit(size_unit);
 
-            nstli.setSyncFilterFileSizeValue(et_file_size_value.getText().toString());
+        nstli.setSyncFilterFileSizeValue(et_file_size_value.getText().toString());
 
-            String date_type=nstli.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
-            nstli.setSyncFilterFileDateType(date_type);
+        String date_type=nstli.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
+        nstli.setSyncFilterFileDateType(date_type);
 
-            nstli.setSyncFilterFileDateValue(et_file_date_value.getText().toString());
-        }
-
-        if (!ctvSyncSpecificSubDir.isChecked()) {
-            nstli.getDirectoryFilter().clear();
-        }
+        nstli.setSyncFilterFileDateValue(et_file_date_value.getText().toString());
 
         nstli.setSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty(ctv_sync_remove_source_if_empty.isChecked());
 
@@ -4878,8 +4719,6 @@ public class TaskEditor extends DialogFragment {
     }
 
     private void checkSyncTaskOkButtonEnabled(Dialog dialog, String type, SyncTaskItem n_sti, TextView dlg_msg) {
-        final LinearLayout ll_file_filter = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_detail_view);
-
 //        final CheckedTextView ctvSyncEmptyDir = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_empty_directory);
 //        final CheckedTextView ctvSyncHiddenDir = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_directory);
 //        final CheckedTextView ctvSyncHiddenFile = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_hidden_file);
@@ -4940,6 +4779,7 @@ public class TaskEditor extends DialogFragment {
 
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
 
+        final LinearLayout ll_file_filter_detail_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
         final LinearLayout ll_archive_detail_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_filter_archive_file_type_view);
 
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
@@ -4978,7 +4818,7 @@ public class TaskEditor extends DialogFragment {
         }
 
         if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
-            ll_file_filter.setVisibility(LinearLayout.GONE);
+            ll_file_filter_detail_view.setVisibility(LinearLayout.GONE);
 
             ll_ctvProcessOverride.setVisibility(CheckedTextView.GONE);
 //            ll_ctvConfirmOverride.setVisibility(CheckedTextView.GONE);
@@ -4992,7 +4832,7 @@ public class TaskEditor extends DialogFragment {
 
             ll_archive_detail_view.setVisibility(LinearLayout.VISIBLE);
         } else {
-            ll_file_filter.setVisibility(LinearLayout.VISIBLE);
+            ll_file_filter_detail_view.setVisibility(LinearLayout.VISIBLE);
 
             ll_ctvProcessOverride.setVisibility(CheckedTextView.VISIBLE);
 //            ll_ctvConfirmOverride.setVisibility(CheckedTextView.VISIBLE);
@@ -5103,11 +4943,6 @@ public class TaskEditor extends DialogFragment {
 
     private String checkFilter(Dialog dialog, String type, SyncTaskItem n_sti) {
         String result = "";
-        final CheckedTextView ctvSyncFileTypeSpecific = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_specific);
-        final CheckedTextView ctvSyncFileTypeAudio = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_audio);
-        final CheckedTextView ctvSyncFileTypeImage = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_image);
-        final CheckedTextView ctvSyncFileTypeVideo = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_file_type_video);
-        final CheckedTextView ctvSyncSpecificSubDir = (CheckedTextView) mDialog.findViewById(R.id.sync_filter_sub_directory_specific);
 
         final Spinner sp_file_size_type=(Spinner)mDialog.findViewById(R.id.sync_filter_file_size_type_spinner);
         final EditText et_file_size_value=(EditText)mDialog.findViewById(R.id.sync_filter_file_size_value);
@@ -5120,60 +4955,46 @@ public class TaskEditor extends DialogFragment {
 
         boolean error_detected = false;
 
-        if (ctvSyncFileTypeSpecific.isChecked()) {
-            String sel_size_type=SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
-            String sel_date_type=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
-            if (ctvSyncFileTypeAudio.isChecked() || ctvSyncFileTypeImage.isChecked() || ctvSyncFileTypeVideo.isChecked() ||
-                    !sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE) || !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE)) {
-                if (!sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
-                    if (et_file_size_value.getText().length()==0) {
-                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
-                        error_detected = true;
-                    } else if (et_file_size_value.getText().length()>5) {
-                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits);
-                        error_detected = true;
-                    } else if (sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LESS_THAN)) {
-                        if (Integer.parseInt(et_file_size_value.getText().toString())==0) {
-                            result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
-                            error_detected = true;
-                        }
-                    }
-                }
-                if (!error_detected && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) {
-                    if (et_file_date_value.getText().length()==0) {
-                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
-                        error_detected = true;
-                    } else if (et_file_date_value.getText().length()>3) {
-                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
-                        error_detected = true;
-                    } else if ((sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN) || sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER_THAN))
-                            && Integer.parseInt(et_file_date_value.getText().toString())==0) {
-                        result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
-                        error_detected = true;
-                    }
-                }
-            } else {
-                if (n_sti.getFileNameFilter().size() == 0) {
-                    result = mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_detail_not_specified);
+        String sel_size_type=SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
+        String sel_date_type=SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
+        if (!sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_NONE)) {
+            if (et_file_size_value.getText().length()==0) {
+                result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified);
+                error_detected = true;
+            } else if (et_file_size_value.getText().length()>5) {
+                result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits);
+                error_detected = true;
+            } else if (sel_size_type.equals(SyncTaskItem.FILTER_FILE_SIZE_TYPE_LESS_THAN)) {
+                if (Integer.parseInt(et_file_size_value.getText().toString())==0) {
+                    result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0);
                     error_detected = true;
                 }
             }
         }
+        if (!error_detected && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NONE) && !sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY)) {
+            if (et_file_date_value.getText().length()==0) {
+                result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_not_specified);
+                error_detected = true;
+            } else if (et_file_date_value.getText().length()>3) {
+                result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_less_3_digit);
+                error_detected = true;
+            } else if ((sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_OLDER_THAN) || sel_date_type.equals(SyncTaskItem.FILTER_FILE_DATE_TYPE_NEWER_THAN))
+                    && Integer.parseInt(et_file_date_value.getText().toString())==0) {
+                result=mActivity.getString(R.string.msgs_task_sync_task_sync_file_date_filter_error_update_date_must_be_greater_than_0);
+                error_detected = true;
+            }
+        }
 
         if (!error_detected) {
-            if (ctvSyncSpecificSubDir.isChecked()) {
-                if (n_sti.getDirectoryFilter().size() == 0) {
-                    result = mActivity.getString(R.string.msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified);
-                } else {
-                    int enabled_count=0;
-                    for(FilterListAdapter.FilterListItem fli:n_sti.getDirectoryFilter()) {
-                        if (fli.isEnabled()) {
-                            enabled_count++;
-                        }
+            if (n_sti.getDirectoryFilter().size() != 0) {
+                int enabled_count=0;
+                for(FilterListAdapter.FilterListItem fli:n_sti.getDirectoryFilter()) {
+                    if (fli.isEnabled()) {
+                        enabled_count++;
                     }
-                    if (enabled_count==0) {
-                        result = mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists);
-                    }
+                }
+                if (enabled_count==0) {
+                    result = mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists);
                 }
             }
         }

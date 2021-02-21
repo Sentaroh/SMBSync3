@@ -156,18 +156,6 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncDoNotResetFileLastModified() {return syncOptionNotUsedLastModifiedForRemote;}
     public void setSyncDoNotResetFileLastModified(boolean p) {syncOptionNotUsedLastModifiedForRemote = p;}
 
-    private boolean syncFileTypeAudio = false;
-    public boolean isSyncFileTypeAudio() {return syncFileTypeAudio;}
-    public void setSyncFileTypeAudio(boolean p) {syncFileTypeAudio = p;}
-
-    private boolean syncFileTypeImage = false;
-    public boolean isSyncFileTypeImage() {return syncFileTypeImage;}
-    public void setSyncFileTypeImage(boolean p) {syncFileTypeImage = p;}
-
-    private boolean syncFileTypeVideo = false;
-    public boolean isSyncFileTypeVideo() {return syncFileTypeVideo;}
-    public void setSyncFileTypeVideo(boolean p) {syncFileTypeVideo = p;}
-
     private boolean syncSyncOptionIgnoreFileSize0ByteFile = false;
     public boolean isSyncOptionIgnoreFileSize0ByteFile() {return syncSyncOptionIgnoreFileSize0ByteFile;}
     public void setSyncOptionIgnoreFileSize0ByteFile(boolean p) {syncSyncOptionIgnoreFileSize0ByteFile = p;}
@@ -805,9 +793,6 @@ class SyncTaskItem implements Serializable, Cloneable {
                         (syncFilterArchiveRetentionPeriod ==sti.getSyncFilterArchiveRetentionPeriod()) &&
                         (syncDestinationArchiveSuffixDigit.equals(sti.getDestinationArchiveSuffixOption())) &&
                         (syncDestinationArchiveIgnoreSourceDirectory==sti.isDestinationArchiveIgnoreSourceDirectory()) &&
-                        (syncFileTypeAudio==sti.isSyncFileTypeAudio()) &&
-                        (syncFileTypeImage==sti.isSyncFileTypeImage()) &&
-                        (syncFileTypeVideo==sti.isSyncFileTypeVideo()) &&
 
                         (syncSyncOptionIgnoreFileSize0ByteFile ==sti.isSyncOptionIgnoreFileSize0ByteFile()) &&
 

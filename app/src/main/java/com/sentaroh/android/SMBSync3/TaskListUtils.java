@@ -79,6 +79,9 @@ import java.util.Comparator;
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX;
 import static com.sentaroh.android.SMBSync3.Constants.NAME_UNUSABLE_CHARACTER;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_AUDIO;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_IMAGE;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_VIDEO;
 
 public class TaskListUtils {
 
@@ -1265,6 +1268,16 @@ public class TaskListUtils {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
+        final ImageButton dlg_help = (ImageButton) dialog.findViewById(R.id.filter_list_edit_help);
+        dlg_help.setVisibility(ImageButton.VISIBLE);
+        dlg_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TaskEditor.showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_file_filter_title),
+                        mActivity.getString(R.string.msgs_help_file_filter_file));
+            }
+        });
+
         final TextView dlg_add_guide=(TextView)dialog.findViewById(R.id.filter_list_edit_add_guide);
         dlg_add_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_file));
         final LinearLayout guide_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_guide_view);
@@ -1298,6 +1311,12 @@ public class TaskListUtils {
         final RadioButton add_include_btn = (RadioButton) dialog.findViewById(R.id.filter_list_edit_add_include_exclude_radio_button_include);
         final RadioButton add_exclude_btn = (RadioButton) dialog.findViewById(R.id.filter_list_edit_add_include_exclude_radio_button_exclude);
         add_include_btn.setChecked(true);
+
+        final LinearLayout ll_preset_view=(LinearLayout)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_view);
+//        ll_preset_view.setVisibility(LinearLayout.VISIBLE);
+        final Button btn_add_audio_file=(Button)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_audio);
+        final Button btn_add_image_file=(Button)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_image);
+        final Button btn_add_video_file=(Button)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_video);
 
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_list_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_list_edit_ok_btn);
@@ -1433,6 +1452,24 @@ public class TaskListUtils {
             }
         });
 
+        btn_add_audio_file.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addPresetFileFileType(filterAdapter, SYNC_FILE_TYPE_AUDIO, btn_ok);
+            }
+        });
+
+        btn_add_image_file.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addPresetFileFileType(filterAdapter, SYNC_FILE_TYPE_IMAGE, btn_ok);
+            }
+        });
+
+        btn_add_video_file.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addPresetFileFileType(filterAdapter, SYNC_FILE_TYPE_VIDEO, btn_ok);
+            }
+        });
+
         // CANCELボタンの指定
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -1483,6 +1520,63 @@ public class TaskListUtils {
         });
         dialog.show();
     }
+
+    private void addPresetFileFileType(final FilterListAdapter filterAdapter, final String[] preset_type, Button btn_ok) {
+        NotifyEvent ntfy_add=new NotifyEvent(mActivity);
+        ntfy_add.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                String added= addPresetFileTypeToFilterList(filterAdapter.getFilterList(), preset_type);
+                filterAdapter.notifyDataSetChanged();
+                if (added.equals("")) {
+                    mUtil.showCommonDialogInfo(false,
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_not_added), "", null );
+                } else {
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                    mUtil.showCommonDialogInfo(false,
+                            mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_added_type), added, null );
+                }
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        String f_ext="", sep="";
+        for(String item:preset_type) {
+            f_ext+=sep+item;
+            sep=", ";
+        }
+        mUtil.showCommonDialogInfo(true,
+                mActivity.getString(R.string.msgs_task_sync_task_sync_file_type_add_filter_title),f_ext,ntfy_add );
+
+    }
+
+    public static String addPresetFileTypeToFilterList(ArrayList<FilterListAdapter.FilterListItem> filter_list, String[] filter_type) {
+        String added_list="", sep="";
+        for(String add_item:filter_type) {
+            boolean found=false;
+            for(FilterListAdapter.FilterListItem filter_list_item:filter_list) {
+                if (filter_list_item.isInclude()) {
+                    if (!filter_list_item.hasMatchAnyWhereFilter()) {
+                        if (filter_list_item.getFilter().equals(add_item)) {
+                            found=true;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!found) {
+                FilterListAdapter.FilterListItem new_item=new FilterListAdapter.FilterListItem(add_item, true);
+                filter_list.add(new_item);
+                added_list+=sep+add_item;
+                sep=", ";
+            }
+        }
+        FilterListAdapter.sort(filter_list);
+
+        return added_list;
+    }
+
 
     public void editIPAddressFilterDlg(final ArrayList<FilterListAdapter.FilterListItem> addr_list, final NotifyEvent p_ntfy) {
         ArrayList<FilterListAdapter.FilterListItem> filterList = new ArrayList<FilterListAdapter.FilterListItem>();

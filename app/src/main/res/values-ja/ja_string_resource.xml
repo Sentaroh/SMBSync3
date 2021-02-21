@@ -59,6 +59,8 @@
         <string name="msgs_help_sync_folder_zip_title">ZIPのヘルプ</string>
         <string name="msgs_help_directory_filter_file">SMBSync3_Help_JA_directory_filter.html</string>
         <string name="msgs_help_directory_filter_title">ディレクトリーフィルターのヘルプ</string>
+        <string name="msgs_help_file_filter_file">SMBSync3_Help_JA_file_filter.html</string>
+        <string name="msgs_help_file_filter_title">ファイルフィルターのヘルプ</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_JA_schedule.html</string>
         <string name="msgs_help_schedule_title">スケジュールのヘルプ</string>
         <string name="msgs_help_group_file">SMBSync3_Help_JA_group.html</string>
@@ -136,8 +138,8 @@
         <string name="msgs_filter_list_filter_contains_not_allowed_character">使用できない文字が含まれています。文字=\"%1$s\"、フィルタ=%2$s</string>
         <string name="msgs_filter_list_match_any_where_change_to_exclude">フィルターに\"\\\"が含まれているため、選択から除外に変更しました。\nフィルター=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">無効なIPアドレスです。</string>
-        <string name="msgs_filter_list_guide_directory">例\n- 選択: cache/temp;my*/fo?der\n- 全ての cache/temp ディレクトリーを除外: \\cache/temp\n- フィルターは\";\"で区切り複数入力できます\n- 除外が優先されます</string>
-        <string name="msgs_filter_list_guide_file">例\n-ファイル名が対象です: file1;*.txt;*.jpg;file*\n-フィルターは\";\"で区切ることで複数入力できます\n-除外が優先されます</string>
+        <string name="msgs_filter_list_guide_directory">- フィルターは\";\"で区切り複数入力できます\n- 除外が優先されます</string>
+        <string name="msgs_filter_list_guide_file">- フィルターは\";\"で区切り複数入力できます\n- 除外が優先されます</string>
         <string name="msgs_filter_list_guide_access_point">例\nMY_HOMEで始まるアクセスポイントを選択する : MY_HOME*</string>
         <string name="msgs_filter_list_guide_ip_address">例:\n192.168.100.*==192.168.100.0-192.168.100.255 許可\n10.*==10.0.0.0-10.255.255.255 許可</string>
         <string name="msgs_hist_cont_label_copy">クリップボードにコピー</string>
@@ -352,9 +354,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_title">ソースと宛先フォルダーを入替える</string>
         <string name="msgs_task_sync_task_dlg_swap_warning_message">ソースフォルダーと宛先フォルダーの内容を入れ替えるとファイルやディレクトリーが削除される可能性があります。\nテストモードまたはテストディレクトリー作成してテストを行い意図しないファイルやディレクトリーが削除されない事を確認してください。</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">ソースフォルダーでは撮影日時に関する変数は使用できないため削除しました。</string>
-        <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">ディレクトリフィルタ―は指定されてません</string>
+        <string name="deleted_msgs_task_sync_task_dlg_dir_filter_not_specified">ディレクトリフィルタ―は指定されてません</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">ファイル名フィルタ―は指定されてません</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共有名に使用できない文字が含まれていましたので削除しました。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">ディレクトリ名に余分なセパレータ「/」が含まれているので削除しました。</string>
@@ -396,12 +399,13 @@
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_task_sync_task_filter_title">フィルター :</string>
         <string name="msgs_task_sync_task_sync_direction_two_way">Use Bi-directional sync</string>
-        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">下記を同期実行時にファイルフィルターとして追加します。</string>
-        <string name="msgs_task_sync_task_sync_file_type_audio">オーディオファイルを同期する</string>
-        <string name="msgs_task_sync_task_sync_file_type_detail_not_specified">ファイル名フィルタ、ファイルサイズフィルター、ファイル更新日フィルターの何れかを指定する必要があります</string>
-        <string name="msgs_task_sync_task_sync_file_type_image">イメージファイルを同期する</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_audio_title">オーディオの追加</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_image_title">イメージの追加</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_video_title">ビデオの追加</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">下記をファイルフィルターに追加してよろしいでしょうか。</string>
+        <string name="msgs_task_sync_task_sync_file_type_not_added">全ての拡張子が登録済みです。</string>
+        <string name="msgs_task_sync_task_sync_file_type_added_type">下記が追加されました。</string>
         <string name="msgs_task_sync_task_sync_file_type_specific">ファイルを選択する</string>
-        <string name="msgs_task_sync_task_sync_file_type_video">ビデオファイルを同期する</string>
         <string name="msgs_task_sync_task_sync_file_name_filter">ファイル名フィルター</string>
         <string name="msgs_task_sync_task_sync_file_size_filter">ファイルサイズフィルター</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">ファイルサイズ比較方法の選択</string>
@@ -468,7 +472,8 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">充電中の時だけ同期を開始する</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">ネットワークオプション</string>
-        <string name="msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
+        <string name="deleted_msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
+        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">ソースディレクトリーが空の時にソースディレクトリーを削除する。</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>

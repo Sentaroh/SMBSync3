@@ -59,6 +59,8 @@
         <string name="msgs_help_sync_folder_zip_title">Справка по ZIP файлу</string>
         <string name="msgs_help_directory_filter_file">SMBSync3_Help_RU_directory_filter.html</string>
         <string name="msgs_help_directory_filter_title">Справка по каталогу фильтрации</string>
+        <string name="msgs_help_file_filter_file">SMBSync3_Help_RU_file_filter.html</string>
+        <string name="msgs_help_file_filter_title">Помощь в фильтрации файлов</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_RU_schedule.html</string>
         <string name="msgs_help_schedule_title">Schedule help</string>
         <string name="msgs_help_group_file">SMBSync3_Help_RU_group.html</string>
@@ -136,8 +138,8 @@
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Содержит непригодные символы. Символы =\"%1$s\", Фильтр = %2$s.</string>
         <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\\\".\nФильтр=%</string>
         <string name="msgs_filter_list_invalid_ip_address">Недействительный IP-адрес.</string>
-        <string name="msgs_filter_list_guide_directory">- include exp: cache/temp;my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_filter_list_guide_file">- отфильтровать все файлы с именами: file1;*.txt;*.jpg;file*.\n- фильтры можно также вводить в той же строке, разделенной \"; \"; \n- фильтры можно также вводить в той же строке, разделенной \"; \".\n - исключить выигрыши фильтров</string>
+        <string name="msgs_filter_list_guide_directory">- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_filter_list_guide_file">- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_filter_list_guide_access_point">Выбор точки доступа, которая начинается с MY_HOME : MY_HOME*</string>
         <string name="msgs_filter_list_guide_ip_address">Ex:\n192.168.100.*==192.168.100.0-192.168.100.255 Allowed\n10.*==10.0.0.0-10.255.255.255 Allowed</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
@@ -352,9 +354,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_title">Источник подкачки и место назначения</string>
         <string name="msgs_task_sync_task_dlg_swap_warning_message">Замена содержимого исходной и конечной папок может привести к удалению непреднамеренных файлов или каталогов.\nНастройте тестовый режим или создайте тестовую директорию и проведите проверку, чтобы убедиться, что непреднамеренные файлы или каталоги не будут удалены.</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">В исходной папке переменные, связанные с датой и временем съемки, недоступны и были удалены.</string>
-        <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">Фильтр каталога не был определен</string>
+        <string name="deleted_msgs_task_sync_task_dlg_dir_filter_not_specified">Фильтр каталога не был определен</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\", :, \\, ?, *, &lt;, &gt;, \|).</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Фильтр по имени файла не указан</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Недопустимые символы (/, \", :, \\, ?, *, &lt;, &gt;, \|), были удалены из имени файла.</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Имя ресурса содержало символы, которые нельзя было использовать, поэтому они были удалены. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">Удален дополнительный разделитель \"/\" из имени каталога.</string>
@@ -396,14 +399,15 @@
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">Не определенный</string>
         <string name="msgs_task_sync_task_filter_title">Фильтр</string>
         <string name="msgs_task_sync_task_sync_direction_two_way">Используйте двунаправленную синхронизацию</string>
-        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">Включить следующие фильтры:</string>
-        <string name="msgs_task_sync_task_sync_file_type_audio">Синхронизировать аудио файлы</string>
-        <string name="msgs_task_sync_task_sync_file_type_detail_not_specified">Вы должны указать один из следующих фильтров: фильтр по имени файла, фильтр по размеру файла или фильтр по дате модификации файла</string>
-        <string name="msgs_task_sync_task_sync_file_type_image">Синхронизировать файлы изображений</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_audio_title">Добавить аудио</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_image_title">Добавить изображение</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_video_title">Добавить Видео</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">Вы хотите добавить в файловый фильтр следующее?</string>
+        <string name="msgs_task_sync_task_sync_file_type_not_added">Все расширения зарегистрированы.</string>
+        <string name="msgs_task_sync_task_sync_file_type_added_type">Были добавлены следующие.</string>
         <string name="msgs_task_sync_task_sync_file_type_specific">Выберите файлы для синхронизации</string>
-        <string name="msgs_task_sync_task_sync_file_type_video">Синхронизировать видеофайлы</string>
         <string name="msgs_task_sync_task_sync_file_name_filter">Фильтр по имени файла</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter">Фильтр размера файла</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter">File size filter</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Синхронизируйте файлы размером:</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Игнорировать файлы с размером файла 0 байт</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">Размер</string>
@@ -418,7 +422,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">Размер файла не указан</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">Размер файла не может превышать 5 цифр</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">Размер файла должен быть больше или равен 1</string>
-        <string name="msgs_task_sync_task_sync_file_date_filter">Синхронизировать файлы, если дата изменения: </string>
+        <string name="msgs_task_sync_task_sync_file_date_filter">File last modified filter</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Включите файлы, дата изменения которых:</string>
         <string name="msgs_task_sync_task_sync_file_date_hint">День</string>
         <string name="msgs_task_sync_task_sync_file_date_type_none">Нет</string>
@@ -469,7 +473,8 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">Выполнять синхронизирующие задачи только при зарядке</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">Тестовый режим (не копировать и не удалять файлы)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
-        <string name="msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
+        <string name="deleted_msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
+        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Удалить исходный каталог, когда он пуст (только если опция Sync - Переместить).</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Выберите подкаталоги</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Ограничить буфер записи ввода / вывода SMB 16 КБ</string>

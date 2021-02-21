@@ -89,9 +89,6 @@ public class SyncConfiguration {
 
     private static final String SYNC_TASK_XML_TAG_FILTER_DIRECTORY = "filter_directory";
     private static final String SYNC_TASK_XML_TAG_FILTER_FILE_NAME = "filter_file_name";
-    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_AUDIO = "filter_file_name_preset_audio";
-    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_IMAGE = "filter_file_name_preset_image";
-    private static final String SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO = "filter_file_name_preset_video";
     private static final String SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE = "filter_file_ignore_0_byte_file_size";
     private static final String SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE = "filter_file_size_type";
     private static final String SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE = "filter_file_size_value";
@@ -628,9 +625,6 @@ public class SyncConfiguration {
     private static void createXmlOptionElement(Context c, Document main_document, Element task_tag, SyncTaskItem item) {
         Element option_tag = main_document.createElement(SYNC_TASK_XML_TAG_OPTION);
 
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_AUDIO, item.isSyncFileTypeAudio() ? "true" : "false");
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_IMAGE, item.isSyncFileTypeImage() ? "true" : "false");
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO, item.isSyncFileTypeVideo() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE, item.isSyncOptionIgnoreFileSize0ByteFile()? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE, item.getSyncFilterFileSizeType());
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE, item.getSyncFilterFileSizeValue());
@@ -1044,13 +1038,7 @@ public class SyncConfiguration {
 
     private static void buildSyncTaskOptionFromXml(Context c, XmlPullParser xpp, SyncTaskItem sti) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
-            if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_AUDIO)) {
-                sti.setSyncFileTypeAudio(xpp.getAttributeValue(i).toLowerCase().equals("true"));
-            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_IMAGE)) {
-                sti.setSyncFileTypeImage(xpp.getAttributeValue(i).toLowerCase().equals("true"));
-            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_NAME_PRESET_VIDEO)) {
-                sti.setSyncFileTypeVideo(xpp.getAttributeValue(i).toLowerCase().equals("true"));
-            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE)) {
+            if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE)) {
                 sti.setSyncOptionIgnoreFileSize0ByteFile(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_TYPE)) {
                 if (isValidTaskItemValue(syncFilterFileSizeTypeValueArray, xpp.getAttributeValue(i))) {

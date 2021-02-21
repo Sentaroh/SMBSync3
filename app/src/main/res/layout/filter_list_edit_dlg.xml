@@ -87,6 +87,33 @@
             android:fadeScrollbars="false" >
         </ListView>
         <LinearLayout
+            android:id="@+id/filter_list_edit_add_preset_ft_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <Button
+                android:id="@+id/filter_list_edit_add_preset_ft_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/msgs_task_sync_task_sync_file_type_add_audio_title"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <Button
+                android:id="@+id/filter_list_edit_add_preset_ft_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/msgs_task_sync_task_sync_file_type_add_image_title"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <Button
+                android:id="@+id/filter_list_edit_add_preset_ft_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/msgs_task_sync_task_sync_file_type_add_video_title"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/filter_list_edit_add_guide_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

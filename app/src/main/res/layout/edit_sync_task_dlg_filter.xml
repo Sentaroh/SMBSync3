@@ -14,158 +14,112 @@
 		android:text="@string/msgs_task_sync_task_filter_title"
 		android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <LinearLayout
-        android:id="@+id/sync_filter_file_detail_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:orientation="vertical" >
+	<LinearLayout
+		android:id="@+id/sync_filter_file_type_detail_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="20dp"
+		android:orientation="vertical" >
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/msgs_task_sync_task_sync_file_name_filter"
+			android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-        <CheckedTextView
-            android:id="@+id/sync_filter_file_type_specific"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-            android:gravity="center_vertical"
-            android:text="@string/msgs_task_sync_task_sync_file_type_specific"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-        
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="15dp"
+			android:orientation="vertical" >
+			<Button
+				android:id="@+id/sync_filter_edit_file_filter_btn"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:ellipsize="end"
+				android:gravity="center_vertical|left"
+				android:text="None"
+				android:textAppearance="?android:attr/textAppearanceMedium" />
+		</LinearLayout>
 		<include layout="@layout/divider_line1" />
-	    <LinearLayout
-	        android:id="@+id/sync_filter_file_type_detail_view"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="15dp"
-	        android:orientation="vertical" >
-			<TextView
-				android:layout_width="match_parent"
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/msgs_task_sync_task_sync_file_size_filter"
+			android:textAppearance="?android:attr/textAppearanceMedium"/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="15dp"
+			android:layout_marginRight="5dp">
+			<Spinner
+				android:id="@+id/sync_filter_file_size_type_spinner"
+				style="?android:attr/spinnerStyle"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:text="@string/msgs_task_sync_task_sync_file_name_filter"
+				android:layout_weight="1"
+				android:layout_gravity="center_vertical"
+				android:minHeight="36dp"
+				android:layout_marginLeft="3dp"
 				android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-			<LinearLayout
-				android:layout_width="match_parent"
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/sync_filter_file_size_value_view"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/sync_filter_file_size_value"
+					android:layout_width="80dp"
+					android:layout_height="wrap_content"
+					android:inputType="number"
+					android:maxLength="5"
+					android:hint="@string/msgs_task_sync_task_sync_file_size_size_hint"
+					android:layout_gravity="center_vertical"/>
+			</com.google.android.material.textfield.TextInputLayout>
+			<Spinner
+				android:id="@+id/sync_filter_file_size_unit_spinner"
+				style="?android:attr/spinnerStyle"
+				android:layout_width="80dp"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="15dp"
-				android:orientation="vertical" >
-				<CheckedTextView
-					android:id="@+id/sync_filter_file_type_audio"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-					android:gravity="center_vertical"
-					android:text="@string/msgs_task_sync_task_sync_file_type_audio"
-					android:textAppearance="?android:attr/textAppearanceMedium" />
-				<include layout="@layout/divider_line1" />
-				<CheckedTextView
-					android:id="@+id/sync_filter_file_type_image"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-					android:gravity="center_vertical"
-					android:text="@string/msgs_task_sync_task_sync_file_type_image"
-					android:textAppearance="?android:attr/textAppearanceMedium" />
-				<include layout="@layout/divider_line1" />
-				<CheckedTextView
-					android:id="@+id/sync_filter_file_type_video"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-					android:gravity="center_vertical"
-					android:text="@string/msgs_task_sync_task_sync_file_type_video"
-					android:textAppearance="?android:attr/textAppearanceMedium" />
-				<include layout="@layout/divider_line1" />
-				<Button
-					android:id="@+id/sync_filter_edit_file_filter_btn"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:ellipsize="end"
-					android:gravity="center_vertical|left"
-					android:lines="1"
-					android:text="@string/msgs_task_sync_task_dlg_file_filter_not_specified"
-					android:textAppearance="?android:attr/textAppearanceMedium" />
-			</LinearLayout>
-			<include layout="@layout/divider_line1" />
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="@string/msgs_task_sync_task_sync_file_size_filter"
+				android:layout_gravity="center_vertical"
+				android:minHeight="36dp"
 				android:textAppearance="?android:attr/textAppearanceMedium"/>
-			<LinearLayout
-				android:layout_width="match_parent"
+		</LinearLayout>
+		<include layout="@layout/divider_line1" />
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/msgs_task_sync_task_sync_file_date_filter"
+			android:textAppearance="?android:attr/textAppearanceMedium"/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="15dp"
+			android:layout_marginRight="5dp">
+			<Spinner
+				android:id="@+id/sync_filter_file_date_type_spinner"
+				style="?android:attr/spinnerStyle"
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="15dp"
-				android:layout_marginRight="5dp">
-				<Spinner
-					android:id="@+id/sync_filter_file_size_type_spinner"
-					style="?android:attr/spinnerStyle"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:layout_gravity="center_vertical"
-					android:minHeight="36dp"
-					android:layout_marginLeft="3dp"
-					android:textAppearance="?android:attr/textAppearanceMedium"/>
-				<com.google.android.material.textfield.TextInputLayout
-					android:id="@+id/sync_filter_file_size_value_view"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/sync_filter_file_size_value"
-						android:layout_width="80dp"
-						android:layout_height="wrap_content"
-						android:inputType="number"
-						android:maxLength="5"
-						android:hint="@string/msgs_task_sync_task_sync_file_size_size_hint"
-						android:layout_gravity="center_vertical"/>
-				</com.google.android.material.textfield.TextInputLayout>
-				<Spinner
-					android:id="@+id/sync_filter_file_size_unit_spinner"
-					style="?android:attr/spinnerStyle"
+				android:layout_weight="1"
+				android:layout_gravity="center_vertical"
+				android:minHeight="36dp"
+				android:layout_marginLeft="3dp"
+				android:textAppearance="?android:attr/textAppearanceMedium"/>
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/sync_filter_file_date_value_view"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content">
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/sync_filter_file_date_value"
 					android:layout_width="80dp"
 					android:layout_height="wrap_content"
 					android:layout_gravity="center_vertical"
-					android:minHeight="36dp"
-					android:textAppearance="?android:attr/textAppearanceMedium"/>
-			</LinearLayout>
-			<include layout="@layout/divider_line1" />
-			<TextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="@string/msgs_task_sync_task_sync_file_date_filter"
-				android:textAppearance="?android:attr/textAppearanceMedium"/>
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="15dp"
-				android:layout_marginRight="5dp">
-				<Spinner
-					android:id="@+id/sync_filter_file_date_type_spinner"
-					style="?android:attr/spinnerStyle"
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:layout_gravity="center_vertical"
-					android:minHeight="36dp"
-					android:layout_marginLeft="3dp"
-					android:textAppearance="?android:attr/textAppearanceMedium"/>
-				<com.google.android.material.textfield.TextInputLayout
-					android:id="@+id/sync_filter_file_date_value_view"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content">
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/sync_filter_file_date_value"
-						android:layout_width="80dp"
-						android:layout_height="wrap_content"
-						android:layout_gravity="center_vertical"
-						android:hint="@string/msgs_task_sync_task_sync_file_date_hint"
-						android:inputType="number"
-						android:maxLength="3" />
-				</com.google.android.material.textfield.TextInputLayout>
-			</LinearLayout>
-			<include layout="@layout/divider_line1" />
-	    </LinearLayout>
-    </LinearLayout>
+					android:hint="@string/msgs_task_sync_task_sync_file_date_hint"
+					android:inputType="number"
+					android:maxLength="3" />
+			</com.google.android.material.textfield.TextInputLayout>
+		</LinearLayout>
+		<include layout="@layout/divider_line1" />
+	</LinearLayout>
 
 	<LinearLayout
 		android:id="@+id/edit_sync_filter_archive_file_type_view"
@@ -209,13 +163,11 @@
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="20dp"
 		android:orientation="vertical" >
-		<CheckedTextView
-			android:id="@+id/sync_filter_sub_directory_specific"
+		<TextView
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:checkMark="?android:attr/listChoiceIndicatorMultiple"
 			android:gravity="center_vertical"
-			android:text="@string/msgs_task_sync_task_sync_sub_directory_specific"
+			android:text="@string/msgs_filter_list_dlg_dir_filter"
 			android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	</LinearLayout>
@@ -224,7 +176,7 @@
         android:id="@+id/sync_filter_sub_directory_detail_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="38dp"
+        android:layout_marginLeft="35dp"
         android:orientation="vertical" >
 
 	    <Button
@@ -232,7 +184,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_vertical|left"
-	        android:text="@string/msgs_task_sync_task_dlg_dir_filter_not_specified"
+	        android:text="None"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     </LinearLayout>

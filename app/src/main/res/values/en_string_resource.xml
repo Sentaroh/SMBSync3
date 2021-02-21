@@ -59,6 +59,8 @@
         <string name="msgs_help_sync_folder_zip_title">ZIP File Help</string>
         <string name="msgs_help_directory_filter_file">SMBSync3_Help_EN_directory_filter.html</string>
         <string name="msgs_help_directory_filter_title">Directory filter help</string>
+        <string name="msgs_help_file_filter_file">SMBSync3_Help_EN_file_filter.html</string>
+        <string name="msgs_help_file_filter_title">File filter help</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_EN_schedule.html</string>
         <string name="msgs_help_schedule_title">Schedule help</string>
         <string name="msgs_help_group_file">SMBSync3_Help_EN_group.html</string>
@@ -137,8 +139,8 @@
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Contains unusable characters. Characters=\"%1$s\", Filter=%2$s</string>
         <string name="msgs_filter_list_match_any_where_change_to_exclude">Changed the filter to exclude it from being selected because it contains a \"\\".\nFilter=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">Invalid IP address.</string>
-        <string name="msgs_filter_list_guide_directory">- include exp: cache/temp;my*/fo?der\n- exclude all cache/temp folders: \\cache/temp\n- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_filter_list_guide_file">- filter all files with specific name: file1;*.txt;*.jpg;file*\n- filters can also be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_filter_list_guide_directory">- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
+        <string name="msgs_filter_list_guide_file">- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
         <string name="msgs_filter_list_guide_access_point">Selecting an access point that begins with MY_HOME : MY_HOME*</string>
         <string name="msgs_filter_list_guide_ip_address">Ex:\n192.168.100.*==192.168.100.0-192.168.100.255 Allowed\n10.*==10.0.0.0-10.255.255.255 Allowed</string>
         <string name="msgs_hist_cont_label_copy">Copy to clipboard</string>
@@ -353,9 +355,10 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_title">Swap source and destination</string>
         <string name="msgs_task_sync_task_dlg_swap_warning_message">Reversing the direction of synchronization may result in unexpected deletes of files and directories.\nIt is strongly recommend that you enable Test mode and ensure that no files or directories are removed or replaced unintentionally.</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">In the source folder, variables related to the date and time of the shooting are not available and have been removed.</string>
-        <string name="msgs_task_sync_task_dlg_dir_filter_not_specified">Directory filter has not been specified</string>
+        <string name="deleted_msgs_task_sync_task_dlg_dir_filter_not_specified">Directory filter has not been specified</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Invalid characters have been removed from the specified directory name (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">File name filter has not been specified</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Invalid characters have been removed from the specified file name (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">The share name contained characters that could not be used, so they have been removed. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">Removed the extra separator \"/\" in the directory name.</string>
@@ -397,14 +400,15 @@
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">Not specified</string>
         <string name="msgs_task_sync_task_filter_title">Filters:</string>
         <string name="msgs_task_sync_task_sync_direction_two_way">Use Two-Way sync</string>
-        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">Include the following filters:</string>
-        <string name="msgs_task_sync_task_sync_file_type_audio">Sync audio files</string>
-        <string name="msgs_task_sync_task_sync_file_type_detail_not_specified">You need to specify one of the following filters: File name filter, File size filter, File modification date filter.</string>
-        <string name="msgs_task_sync_task_sync_file_type_image">Sync image files</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_audio_title">Add audio</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_image_title">Add image</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_video_title">Add Video</string>
+        <string name="msgs_task_sync_task_sync_file_type_add_filter_title">Do you want to add the following to the file filter?</string>
+        <string name="msgs_task_sync_task_sync_file_type_not_added">All extensions have been registered.</string>
+        <string name="msgs_task_sync_task_sync_file_type_added_type">The following have been added.</string>
         <string name="msgs_task_sync_task_sync_file_type_specific">Select files for sync</string>
-        <string name="msgs_task_sync_task_sync_file_type_video">Sync video files</string>
         <string name="msgs_task_sync_task_sync_file_name_filter">File name filter</string>
-        <string name="msgs_task_sync_task_sync_file_size_filter">Sync files with a size:</string>
+        <string name="msgs_task_sync_task_sync_file_size_filter">File size filter</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_dialog_title">Sync files if their size is:</string>
         <string name="msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file">Ignore files with a file size of 0 Bytes</string>
         <string name="msgs_task_sync_task_sync_file_size_size_hint">Size</string>
@@ -419,7 +423,7 @@
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_not_specified">File size is not specified.</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_can_not_be_more_than_5_digits">File size cannot be more than 5 digits</string>
         <string name="msgs_task_sync_task_sync_file_size_filter_error_file_size_must_be_greater_than_0">The file size must be greater than or equal to 1</string>
-        <string name="msgs_task_sync_task_sync_file_date_filter">Sync files if modification date is:</string>
+        <string name="msgs_task_sync_task_sync_file_date_filter">File last modified filter</string>
         <string name="msgs_task_sync_task_sync_file_date_filter_dialog_title">Include files if modification date is:</string>
         <string name="msgs_task_sync_task_sync_file_date_hint">Day</string>
         <string name="msgs_task_sync_task_sync_file_date_type_none">Any</string>
@@ -469,7 +473,8 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">Execute sync tasks only when charging</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">Test mode (do not copy or delete files)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Network Option:</string>
-        <string name="msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
+        <string name="deleted_msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
+        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Delete the source directory when it is empty (only when Sync option is Move)</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Select subdirectories</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Limit SMB I/O write buffer to 16 KB</string>

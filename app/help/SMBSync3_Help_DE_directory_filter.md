@@ -4,7 +4,10 @@ Im Quellordner angegebener Verzeichnisname.
 
 ### Filter
 
-Namen der Unterverzeichnisse, die ausgewählt oder ausgeschlossen werden sollen.
+Der Name des Verzeichnisses, das ausgewählt oder ausgeschlossen werden soll. 
+- Wildcard : \"Mein*\"
+- Spezifizieren Sie ein bestimmtes Zeichen: \"fo?der\"
+- Schließen Sie alle Cache-Verzeichnisse aus: \"\\cache\"
 
 ### Einschließen/Ausschließen
 

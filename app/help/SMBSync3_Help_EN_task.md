@@ -42,19 +42,16 @@ Tap the button to edit source folder
 
 Tap the button to edit destination folder
 
-### Select files for sync
-If you do not check and then sync all of the file. If you check to see details. 
-- Sync audio files  
-If you check to synchronize the files of the following extensions.  
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- Sync image files  
-  If you check to synchronize the files of the following extensions.  
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- Sync video files  
-  If you check to synchronize the files of the following extensions.  
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- File filter  
-You can select the name and extension of the file you want to synchronize with other than the above.
+### File name filter
+  You can register the names and extensions of files to be synchronized.
+
+### File size filter
+
+You can register the size of the file to be synchronized.
+
+### File modification date filter
+
+Specify the last modified date of the file to be synchronized.
 
 ### To archive the
 
@@ -68,14 +65,9 @@ Select the criteria for the photos or videos to be archived.
 - Older than 180 days
 - Older than 1 year
 
-### Select sub directories for sync
-
-If you do not check and then sync all of the sub directory. If you check to show directory filter button.
-
-- Directory filter
+### Directory filter
 You can select the name of the directory you want to synchronize.
 ### Execute sync task only when charging
-
 If checked, you can start sync only while charging. If sync is started when not charging it will result in an error.
 
 ### Sync  includes the files located directly in root of the source directory 

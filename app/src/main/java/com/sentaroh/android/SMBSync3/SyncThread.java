@@ -415,10 +415,6 @@ public class SyncThread extends Thread {
                 ", Directory=" + sti.getDestinationDirectoryName() +
                 ", StorageUuid=" + sti.getDestinationStorageUuid() +
                 "");
-        mStwa.util.addDebugMsg(1, "I", "   File filter Audio=" + sti.isSyncFileTypeAudio() +
-                ", Image=" + sti.isSyncFileTypeImage() +
-                ", Video=" + sti.isSyncFileTypeVideo() +
-                "");
         mStwa.util.addDebugMsg(1, "I", "   Sync option :");
         mStwa.util.addDebugMsg(1, "I", "      Auto sync task=" + sti.isSyncTaskAuto());
         mStwa.util.addDebugMsg(1, "I", "      Test mode=" + sti.isSyncTestMode());
@@ -2599,9 +2595,6 @@ public class SyncThread extends Thread {
                 }
             }
         }
-        if (sti.isSyncFileTypeAudio()) addPresetFileFilter(include_file_filter, SYNC_FILE_TYPE_AUDIO);
-        if (sti.isSyncFileTypeImage()) addPresetFileFilter(include_file_filter, SYNC_FILE_TYPE_IMAGE);
-        if (sti.isSyncFileTypeVideo()) addPresetFileFilter(include_file_filter, SYNC_FILE_TYPE_VIDEO);
         Collections.sort(include_file_filter);
         Collections.sort(exclude_file_filter);
         Collections.sort(include_file_filter_with_directory_path);

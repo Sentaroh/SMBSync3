@@ -42,19 +42,16 @@ Toccare il pulsante per modificare la cartella sorgente
 
 Toccare il pulsante per modificare la cartella di destinazione
 
-### Selezionare i file per la sincronizzazione
-Se non si controlla e poi si sincronizza tutto il file. Se si controlla per vedere i dettagli. 
-- Sincronizzare i file audio  
-  Se si verifica la sincronizzazione dei file delle seguenti estensioni.  
-aac, aif, aifc, aiff, kar, flac, m3u, m4a, mid, midi, mp2, mp3, mpga, ogg, ra, ram, ram, wav  
-- Sincronizzare i file di immagine  
-  Se si verifica la sincronizzazione dei file delle seguenti estensioni.  
-bmp, cgm, djv, djvu, gif, ico,ief, jpe, jpeg, jpg, pbm, pgm, png,pnm, ppm, ras, rgb, svg, tif, tiff, wbmp, xbm, xpm, xwd
-- Sincronizzare i file video  
-  Se si verifica la sincronizzazione dei file delle seguenti estensioni.  
-avi, m4u, mov, mp4, movie, mpe, mpeg, mpg, mxu, qt, wmv  
-- Filtro file  
-  È possibile selezionare il nome e l'estensione del file con cui si desidera sincronizzarsi, oltre a quanto sopra.
+### File name filter
+  You can register the names and extensions of files to be synchronized.
+
+### Filtro dimensione file
+
+È possibile registrare la dimensione del file da sincronizzare.
+
+### Filtro della data di modifica del file
+
+Specifica la data dell'ultima modifica del file che vuoi sincronizzare.
 
 ### Seleziona cosa archiviare
 
@@ -68,14 +65,9 @@ Selezionare i criteri per le foto o i video da archiviare.
 - Più di 180 giorni
 - Più vecchio di 1 anno
 
-### Selezionare  le sottodirectory
-
-Se non si controlla e poi si sincronizza tutta la sottocartella. Se si controlla per mostrare il pulsante del filtro della directory.
-
-- Filtro della directory
+### Filtro della directory
   È possibile selezionare il nome della directory che si desidera sincronizzare.
 ### Eseguire  le operazioni di sincronizzazione solo in fase di ricarica
-
 Se l'opzione è selezionata, è possibile avviare la sincronizzazione solo durante la carica. Se la sincronizzazione viene avviata quando non è in carica, si verificherà un errore.
 
 ### La  sincronizzazione include i file che si trovano direttamente nella root della  directory di origine  
