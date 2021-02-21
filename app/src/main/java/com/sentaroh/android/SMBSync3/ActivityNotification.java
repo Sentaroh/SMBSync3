@@ -38,6 +38,10 @@ import android.view.Window;
 public class ActivityNotification extends Activity {
     private com.sentaroh.android.SMBSync3.ActivityNotification mActivity=null;
 
+    final public static String NOTIFICATION_SOUND_KEY ="SOUND";
+    final public static String NOTIFICATION_SOUND_VOLUME_KEY="SOUND_VOLUME";
+    final public static String NOTIFICATION_VIBRATION_KEY="VIBRATION_VOLUME";
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(new GlobalParameters().setNewLocale(base));
@@ -51,8 +55,8 @@ public class ActivityNotification extends Activity {
         mActivity= com.sentaroh.android.SMBSync3.ActivityNotification.this;
         Intent in=getIntent();
         if (in!=null) {
-            if (in.getBooleanExtra("SOUND",false)) playBackDefaultNotification(in.getIntExtra("SOUND_VOLUME",100));
-            if (in.getBooleanExtra("VIBRATE",false)) vibrateDefaultPattern();
+            if (in.getBooleanExtra(NOTIFICATION_SOUND_KEY,false)) playBackDefaultNotification(in.getIntExtra(NOTIFICATION_SOUND_VOLUME_KEY,100));
+            if (in.getBooleanExtra(NOTIFICATION_VIBRATION_KEY,false)) vibrateDefaultPattern();
         }
 
         Handler hndl = new Handler();

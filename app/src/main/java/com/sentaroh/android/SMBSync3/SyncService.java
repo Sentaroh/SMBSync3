@@ -778,9 +778,9 @@ public class SyncService extends Service {
         if (!is_notice_message_showed) {
             Intent na=new Intent(mContext, ActivityNotification.class);
             na.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            na.putExtra("SOUND", sound);
-            na.putExtra("SOUND_VOLUME", mGp.settingNotificationVolume);
-            na.putExtra("VIBRATE", vibration);
+            na.putExtra(ActivityNotification.NOTIFICATION_SOUND_KEY, sound);
+            na.putExtra(ActivityNotification.NOTIFICATION_SOUND_VOLUME_KEY, mGp.settingNotificationVolume);
+            na.putExtra(ActivityNotification.NOTIFICATION_VIBRATION_KEY, vibration);
             startActivity(na);
         }
 
