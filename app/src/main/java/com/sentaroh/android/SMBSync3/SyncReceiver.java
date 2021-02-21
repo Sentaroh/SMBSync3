@@ -88,7 +88,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 in.setData(received_intent.getData());
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
                 try {
-                    mContext.startService(in);
+                    mContext.startForegroundService(in);
                 } catch(Exception e) {
                     e.printStackTrace();
                     mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
@@ -107,7 +107,7 @@ public class SyncReceiver extends BroadcastReceiver {
                     send_intent.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
                     send_intent.putExtra(SCHEDULE_SCHEDULE_NAME_KEY, received_intent.getStringExtra(SCHEDULE_SCHEDULE_NAME_KEY));
                     try {
-                        mContext.startService(send_intent);
+                        mContext.startForegroundService(send_intent);
                     } catch(Exception e) {
                         mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
                         mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
@@ -127,7 +127,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 in.setAction(START_SYNC_INTENT);
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
                 try {
-                    mContext.startService(in);
+                    mContext.startForegroundService(in);
                 } catch(Exception e) {
                     mLog.addDebugMsg(1,"E", "Start intent error=" + e.getMessage());
                     mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
@@ -138,7 +138,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 in.setAction(START_SYNC_AUTO_INTENT);
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
                 try {
-                    mContext.startService(in);
+                    mContext.startForegroundService(in);
                 } catch(Exception e) {
                     mLog.addDebugMsg(1,"E", "Start intent error=" + e.getMessage());
                     mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
@@ -149,7 +149,7 @@ public class SyncReceiver extends BroadcastReceiver {
                 in.setAction(QUERY_SYNC_TASK_INTENT);
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
                 try {
-                    mContext.startService(in);
+                    mContext.startForegroundService(in);
                 } catch(Exception e) {
                     mLog.addDebugMsg(1,"E", "Start intent error=" + e.getMessage());
                     mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));

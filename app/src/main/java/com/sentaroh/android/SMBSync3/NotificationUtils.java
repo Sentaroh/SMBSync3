@@ -216,7 +216,7 @@ public class NotificationUtils {
         builder.setOngoing(false)
                 .setAutoCancel(true)
                 .setSmallIcon(gwa.notificationSmallIcon)//smbsync_animation)
-                .setContentTitle(c.getString(R.string.app_name_notice_message))
+                .setContentTitle(c.getString(R.string.app_name))
                 .setContentText(msg)
                 .setWhen(System.currentTimeMillis())
         ;
@@ -235,8 +235,10 @@ public class NotificationUtils {
             PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(activity_pi);
         }
-        if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name_notice_message, builder.build());
+        if (isNotificationEnabled(gwa)) {
+            gwa.notificationManager.notify(R.string.app_name, builder.build());
+            util.addDebugMsg(1, "I", "showNoticeMsg issued, msg="+msg);
+        }
     }
 
     final static public void clearNotification(GlobalParameters gwa, CommonUtilities util) {

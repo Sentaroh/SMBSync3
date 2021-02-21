@@ -59,7 +59,7 @@ public class ActivityIntentHandler extends Activity {
                 in.setAction(received_intent.getAction());
                 if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
 //                c.startForegroundService(in);
-                c.startService(in);
+                c.startForegroundService(in);
                 finish();
             }catch(Exception e){
                 e.printStackTrace();

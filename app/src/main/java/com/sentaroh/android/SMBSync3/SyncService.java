@@ -111,6 +111,8 @@ public class SyncService extends Service {
         int_filter.addAction(Intent.ACTION_SCREEN_ON);
         int_filter.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(mSleepReceiver, int_filter);
+
+        issueStartForeground();
     }
 
     @Override
@@ -121,6 +123,7 @@ public class SyncService extends Service {
         wl.acquire(1000);
         final String action = intent==null?"":(intent.getAction()!=null?intent.getAction():"");
         mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
+        issueStartForeground();
         mGp.waitConfigurationLock();
         if (action.equals(SCHEDULE_INTENT_TIMER_EXPIRED)) {
             if (mGp.settingScheduleSyncEnabled) startSyncByScheduler(intent);
@@ -192,8 +195,6 @@ public class SyncService extends Service {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mSleepReceiver);
-//        unregisterReceiver(mUsbReceiver);
-//        stopForeground(true);
         if (mGp.notificationLastShowedMessage != null && !mGp.notificationLastShowedMessage.equals("")) {
             showSyncEndNotificationMessage();
             mGp.notificationLastShowedMessage = null;
@@ -398,7 +399,11 @@ public class SyncService extends Service {
                 startSyncThread();
             }
         }
-        if (isServiceToBeStopped()) stopSelf();
+        if (isServiceToBeStopped()) {
+            issueStopForeground();
+//            NotificationUtil.clearNotification(mGp, mUtil);
+            stopSelf();
+        }
     }
 
     private void startSyncByShortcut(Intent in) {
@@ -731,7 +736,7 @@ public class SyncService extends Service {
             tm.start();
         } else {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " task has not started, queued task does not exist");
-            stopForeground(true);
+            issueStopForeground();
         }
     }
 
@@ -753,17 +758,56 @@ public class SyncService extends Service {
             if (mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
                     mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ERROR)) vibration=true;
         }
-        NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
-    }
 
-    private void issueStartForeground() {
-        startForeground(R.string.app_name, mGp.notification);
-        mUtil.addDebugMsg(1, "I", "startForground(R.string.app_name, mGp.notification) issued");
+        boolean is_notice_message_showed=false;
+        if (mGp.activityIsBackground) {
+            if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS || mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) {
+                if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
+                        mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
+                    NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
+                    is_notice_message_showed=true;
+                }
+            } else if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_ERROR) {
+                if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
+                        mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
+                    NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
+                    is_notice_message_showed=true;
+                }
+            }
+        }
+        if (!is_notice_message_showed) {
+            Intent na=new Intent(mContext, ActivityNotification.class);
+            na.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            na.putExtra("SOUND", sound);
+            na.putExtra("SOUND_VOLUME", mGp.settingNotificationVolume);
+            na.putExtra("VIBRATE", vibration);
+            startActivity(na);
+        }
+
     }
 
     private void issueStopForeground() {
-        stopForeground(false);
-        mUtil.addDebugMsg(1, "I", "stopForeground(false) issued");
+        if (Build.VERSION.SDK_INT>=26) {
+            mGp.notificationManager.cancel(R.string.app_name);
+            stopForeground(Service.STOP_FOREGROUND_DETACH);
+            mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_DETACH) issued");
+        } else {
+            stopForeground(true);
+            mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
+        }
+        mStartForegroundRequired=true;
+//        NotificationUtil.clearNotification(mGp, mUtil);
+    }
+
+    private boolean mStartForegroundRequired=true;
+    private void issueStartForeground() {
+        if (mStartForegroundRequired) {
+            mStartForegroundRequired=false;
+            startForeground(R.string.app_name, mGp.notification);
+            mUtil.addDebugMsg(1, "I", "startForeground(R.string.app_name, mGp.notification) issued.");
+        } else {
+            mUtil.addDebugMsg(1, "I", "startForeground() already issued.");
+        }
     }
 
     private void showDialogWindow() {
