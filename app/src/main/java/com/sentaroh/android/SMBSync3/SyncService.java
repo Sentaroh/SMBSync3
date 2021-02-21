@@ -112,7 +112,6 @@ public class SyncService extends Service {
         int_filter.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(mSleepReceiver, int_filter);
 
-        issueStartForeground();
     }
 
     @Override
@@ -293,8 +292,11 @@ public class SyncService extends Service {
 
             startSyncBySchedulerByNameList(schedule_list);
         }
-//        mUtil.addLogMsg("I", mContext.getString(R.string.msgs_svc_received_start_request_from_scheduler));
-        if (isServiceToBeStopped()) stopSelf();
+        if (isServiceToBeStopped()) {
+            issueStopForegroundWithDetach();
+            showSyncEndNotificationMessage();
+            stopSelf();
+        }
     }
 
     private void startSyncBySchedulerByNameList(String[] schedule_list) {
@@ -400,8 +402,8 @@ public class SyncService extends Service {
             }
         }
         if (isServiceToBeStopped()) {
-            issueStopForeground();
-//            NotificationUtil.clearNotification(mGp, mUtil);
+            issueStopForegroundWithDetach();
+            showSyncEndNotificationMessage();
             stopSelf();
         }
     }
@@ -430,8 +432,11 @@ public class SyncService extends Service {
             NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
         }
-
-        if (isServiceToBeStopped()) stopSelf();
+        if (isServiceToBeStopped()) {
+            issueStopForegroundWithDetach();
+            showSyncEndNotificationMessage();
+            stopSelf();
+        }
     }
 
     final private ISvcClient.Stub mSvcClientStub = new ISvcClient.Stub() {
@@ -508,7 +513,7 @@ public class SyncService extends Service {
     private void setActivityForeground() {
         mGp.activityIsBackground = false;
         NotificationUtils.setNotificationEnabled(mGp, false);
-        issueStopForeground();
+        issueStopForegroundWithRemove();
         NotificationUtils.clearNotification(mGp, mUtil);
     }
 
@@ -691,11 +696,11 @@ public class SyncService extends Service {
                             startSyncThread();
                         } else {
                             if (mGp.syncRequestQueue.size() > 0) {
-                                issueStopForeground();
+                                issueStopForegroundWithRemove();
                                 showSyncEndNotificationMessage();
                                 startSyncThread();
                             } else {
-                                issueStopForeground();
+                                issueStopForegroundWithRemove();
                                 showSyncEndNotificationMessage();
                                 mGp.notificationLastShowedMessage = "";
                                 if (mGp.callbackStub == null) {
@@ -717,7 +722,7 @@ public class SyncService extends Service {
                             stopSelf();
                         } else {
                             mGp.syncRequestQueue.clear();
-                            issueStopForeground();
+                            issueStopForegroundWithRemove();
                             showSyncEndNotificationMessage();
                             mGp.notificationLastShowedMessage = "";
                             if (mGp.callbackStub == null) {
@@ -736,7 +741,7 @@ public class SyncService extends Service {
             tm.start();
         } else {
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " task has not started, queued task does not exist");
-            issueStopForeground();
+            issueStopForegroundWithRemove();
         }
     }
 
@@ -786,17 +791,28 @@ public class SyncService extends Service {
 
     }
 
-    private void issueStopForeground() {
+    private void issueStopForegroundWithRemove() {
         if (Build.VERSION.SDK_INT>=26) {
+            stopForeground(Service.STOP_FOREGROUND_REMOVE);
             mGp.notificationManager.cancel(R.string.app_name);
+            mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_REMOVE) issued");
+        } else {
+            stopForeground(true);
+            mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
+        }
+        mStartForegroundRequired=true;
+    }
+
+    private void issueStopForegroundWithDetach() {
+        if (Build.VERSION.SDK_INT>=26) {
             stopForeground(Service.STOP_FOREGROUND_DETACH);
+            mGp.notificationManager.cancel(R.string.app_name);
             mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_DETACH) issued");
         } else {
             stopForeground(true);
             mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
         }
         mStartForegroundRequired=true;
-//        NotificationUtil.clearNotification(mGp, mUtil);
     }
 
     private boolean mStartForegroundRequired=true;
