@@ -125,16 +125,6 @@ public class Constants {
 	public static final String DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX ="\\";
 	public static final int DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX_LENGTH =DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX.length();
 
-	public static final String[] SYNC_FILE_TYPE_AUDIO=
-			new String[]{"*.aac","*.aif", "*.aifc", "*.aiff", "*.flac", "*.kar", "*.m3u", "*.m4a", "*.mid", "*.midi", "*.mp2",
-							"*.mp3", "*.mpga", "*.ogg", "*.ra", "*.ram", "*.wav"};
-	public static final String[] SYNC_FILE_TYPE_IMAGE=
-			new String[]{"*.bmp", "*.cgm", "*.djv", "*.djvu", "*.gif", "*.ico", "*.ief", "*.jpe", "*.jpeg", "*.jpg", "*.pbm",
-						"*.pgm", "*.png", "*.pnm", "*.ppm", "*.ras", "*.rgb", "*.svg", "*.tif", "*.tiff", "*.wbmp", "*.xbm", 
-						"*.xpm", "*.xwd"};
-	public static final String[] SYNC_FILE_TYPE_VIDEO=
-			new String[]{"*.avi", "*.m4u", "*.mov", "*.mp4", "*.movie", "*.mpe", "*.mpeg", "*.mpg", "*.mxu", "*.qt", "*.wmv"};
-
     public static final String[] ARCHIVE_FILE_TYPE=
 			new String[]{"gif", "jpg", "jpeg", "jpe", "png", "mp4", "mov"};
 

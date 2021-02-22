@@ -6,9 +6,11 @@ Directory name specified in the source folder.
 
 The name of the directory to select or exclude. 
 
-- wildcard : \"My*\"
-- Specify a character for a specific location: \"fo?der\"
-- Exclude all cache directories: \"\\cache\"
+- wildcard : My*
+- Specify a character for a specific location: fo?der
+- Exclude all cache directories: \\cache
+- filters can be entered in same line, separated by \";\": audio;video;
+- exclude filter wins
 
 ### Include/Exclude
 

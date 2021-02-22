@@ -54,6 +54,7 @@ import static com.sentaroh.android.SMBSync3.SyncTaskItem.syncFilterFileDateTypeV
 import static com.sentaroh.android.SMBSync3.SyncTaskItem.syncFilterFileSizeTypeValueArray;
 import static com.sentaroh.android.SMBSync3.SyncTaskItem.syncFilterFileSizeUnitValueArray;
 
+import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import  com.sentaroh.android.Utilities3.EncryptUtilV3.CipherParms;
 import com.sentaroh.android.Utilities3.SafFile3;
 
@@ -295,8 +296,8 @@ public class SyncConfiguration {
     public final static String CONFIG_LIST_VER1 = "1.0.1";
 
     synchronized public static String createXmlData(Context c,
-              ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
-              ArrayList<GroupListAdapter.GroupListItem>group_list, int enc_mode, CipherParms cp_enc) {
+                               ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
+                               ArrayList<GroupListAdapter.GroupListItem>group_list, int enc_mode, CipherParms cp_enc) {
         if (log.isDebugEnabled()) log.debug("buildConfigData enc_mode=" + enc_mode + ", cp_enc=" + cp_enc);
         String config_data = null;
         synchronized (sync_task_list) {
@@ -464,7 +465,7 @@ public class SyncConfiguration {
                 if (unusable.equals("")) {
                     if (!GroupEditor.isGroupExists(group_list, group_name)) item.groupName = group_name;
                     else {
-                        log.error("Sync task already exists : "+group_name);
+                        log.error("Sync group already exists : "+group_name);
                     }
                 } else {
                     item.groupName = xpp.getAttributeValue(i).trim().replaceAll(unusable, "");

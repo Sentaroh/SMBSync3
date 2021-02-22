@@ -26,6 +26,7 @@
         <string name="msgs_export_import_profile_hdr_task_list">Elenco dei compiti</string>
         <string name="msgs_export_import_profile_no_import_items">Nessun elemento importato.</string>
         <string name="msgs_export_import_profile_specified_file_was_not_sync_task_saved_file">The specified file is not a synchronous task list save file. File=%s</string>
+        <string name="msgs_export_import_profile_error_occured_while_import_task_list">Si è verificato un errore durante l\'importazione dell\'elenco delle attività. Si prega di controllare l\'errore nella scheda dei messaggi.</string>
         <string name="msgs_import_autosave_dlg_title">Import task list and app settings</string>
         <string name="msgs_import_autosave_dlg_select_exported_file">Selezionare un altro file</string>
         <string name="msgs_import_autosave_dlg_autosave_list">Autosalvataggio file impostazioni</string>
@@ -61,6 +62,8 @@
         <string name="msgs_help_directory_filter_title">Aiuto per il filtro di directory</string>
         <string name="msgs_help_file_filter_file">SMBSync3_Help_IT_file_filter.html</string>
         <string name="msgs_help_file_filter_title">Aiuto per il filtro dei file</string>
+        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_IT_ip_address_filter.html</string>
+        <string name="msgs_help_ip_address_filter_title">Aiuto filtro indirizzo IP</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_IT_schedule.html</string>
         <string name="msgs_help_schedule_title">Aiuto per la programmazione</string>
         <string name="msgs_help_group_file">SMBSync3_Help_IT_group.html</string>
@@ -138,10 +141,6 @@
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Contiene caratteri inutilizzabili. Characters=\"%1$s\", Filter=%2$s</string>
         <string name="msgs_filter_list_match_any_where_change_to_exclude">Cambiato il filtro per escluderlo dalla selezione perché contiene un \"\\\".\nFiltro=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">Indirizzo IP non valido.</string>
-        <string name="msgs_filter_list_guide_directory">- i filtri possono essere inseriti nella stessa riga, separati da \";\";\n- escludere le vittorie dei filtri</string>
-        <string name="msgs_filter_list_guide_file">- i filtri possono essere inseriti nella stessa riga, separati da \";\";\n- escludere le vittorie dei filtri</string>
-        <string name="msgs_filter_list_guide_access_point">Selezione di un punto di accesso che inizia con MY_HOME : MIA_CASA*</string>
-        <string name="msgs_filter_list_guide_ip_address">Ex:\n192.168.100.*==192.168.100.0-192.168.100.255 Allowed\n10.*==10.0.0.0-10.255.255.255 Allowed</string>
         <string name="msgs_hist_cont_label_copy">Copia negli appunti</string>
         <string name="msgs_hist_cont_label_delete">Cancellare la voce della cronologia</string>
         <string name="msgs_hist_cont_label_move_bottom">Spostati in basso</string>
@@ -354,7 +353,6 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_title">Scambiare fonte e destinazione</string>
         <string name="msgs_task_sync_task_dlg_swap_warning_message">L\'inversione della direzione di sincronizzazione può portare a cancellazioni inaspettate di file e directory.\nSi consiglia vivamente di attivare la modalità Test e di assicurarsi che nessun file o directory venga rimosso o sostituito inavvertitamente.</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">Nella cartella sorgente, le variabili relative alla data e all\'ora della ripresa non sono disponibili e sono state rimosse.</string>
-        <string name="deleted_msgs_task_sync_task_dlg_dir_filter_not_specified">Il filtro delle directory non è stato specificato</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">I caratteri non validi sono stati rimossi dal nome della directory specificata (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Filtro file nome non è stato specificato</string>
         <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
@@ -393,8 +391,6 @@
         <string name="msgs_task_sync_task_filter_list_dlg_source_directory">Elenco delle fonti:</string>
         <string name="msgs_task_sync_task_filter_list_dlg_file_filter">Filtro nome file</string>
         <string name="msgs_task_sync_task_filter_list_dlg_filter_hint">Filtro</string>
-        <string name="msgs_task_sync_task_filter_list_enabled_filter_not_exists">Non è stato trovato alcun filtro valido. Attivarlo nell\'editor dei filtri.</string>
-        <string name="msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists">Non è stato trovato nessun filtro valido.</string>
         <string name="msgs_task_sync_task_filter_list_dlg_include">Includi</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">Non specificato</string>
         <string name="msgs_task_sync_task_filter_title">Filtri:</string>
@@ -472,7 +468,6 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">Eseguire le operazioni di sincronizzazione solo in fase di ricarica</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">Modalità di test (non copiare o cancellare i file)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Opzione di rete:</string>
-        <string name="deleted_msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Il filtro di directory non è stato specificato.</string>
         <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Cancellare la directory di origine quando è vuota (solo quando l\'opzione Sync è Spostare)</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Selezionare le sottodirectory</string>

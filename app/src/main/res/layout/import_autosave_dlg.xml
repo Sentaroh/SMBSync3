@@ -82,8 +82,6 @@
         android:id="@+id/import_autosave_dlg_select_exported_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
         android:text="@string/msgs_import_autosave_dlg_select_exported_file"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 

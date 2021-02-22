@@ -5,9 +5,10 @@ Nome della directory specificato nella cartella di origine.
 ### Filtro
 
 Il nome della directory da selezionare o escludere. 
-- wildcard : \"My*\"
-- Specificare un carattere specifico: \"fo?der\"
-- Escludi tutte le directory della cache: \"\\cache\"
+- wildcard : My*.*
+- Specificare un carattere specifico: dsc_???.mov
+- i filtri possono essere inseriti nella stessa riga, separati da \";\": \*.jpg;*.mp3
+- escludere le vittorie dei filtri
 
 ### Includere/Escludere
 

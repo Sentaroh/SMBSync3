@@ -1,9 +1,10 @@
 ### Filtre
 
 Le nom du répertoire à sélectionner ou à exclure. 
-- wildcard : \"Mon*\"
-- Spécifier un caractère spécifique : \"dsc_???.mov\"
-- Multiple : \"\*.jpg;*.mp3\"
+- wildcard : Mon*.jpg
+- Spécifier un caractère spécifique : dsc_???.mov
+- les filtres peuvent être saisis en une seule ligne, séparés par \";\": \*.jpg;*.mp3
+- le filtre Exclure est prioritaire
 
 ### Inclure/Exclure
 

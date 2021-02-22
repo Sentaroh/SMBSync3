@@ -42,9 +42,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import static com.sentaroh.android.SMBSync3.Constants.GENERAL_IO_BUFFER_SIZE;
-import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_AUDIO;
-import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_IMAGE;
-import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_VIDEO;
 
 public class TaskListImportFromSMBSync2 {
     private static Logger log = LoggerFactory.getLogger(TaskListImportFromSMBSync2.class);
@@ -98,30 +95,29 @@ public class TaskListImportFromSMBSync2 {
         return dec_str==null?false:true;
     }
 
-    static public void buildSyncTaskList(Context c, GlobalParameters gp, CommonUtilities mUtil,
-                                         SafFile3 sf, String private_key, ArrayList<SyncTaskItem>sync_task, ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched) {
+    static public boolean buildSyncTaskList(Context c, GlobalParameters gp, CommonUtilities mUtil,
+                                         SafFile3 sf, String private_key, ArrayList<SyncTaskItem>sync_task,
+                                         ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched) {
+        ArrayList<SyncTaskItem>sync_task_temp=new ArrayList<SyncTaskItem>();
+        ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched_temp=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
         ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
-        boolean loaded=loadSyncTaskListFromFile(c, gp, mUtil, sf, private_key, sync_task, sync_setting);
+        boolean error=loadSyncTaskListFromFile(c, gp, mUtil, sf, private_key, sync_task_temp, sync_setting);
 
-        if (loaded) {
-            boolean error_opt=false;
+        if (!error) {
+            sync_task.addAll(sync_task_temp);
             for(SettingParameterItem spi:sync_setting) {
-                if (spi.key.equals(SCHEDULER_SCHEDULE_SAVED_DATA_V5)) loadScheduleListV5(gp, spi.value, sync_sched);
-//                if (spi.key.equals("settings_error_option")) {
-//                    if (spi.value.equals("true")) error_opt=true;
-//                }
+                if (spi.key.equals(SCHEDULER_SCHEDULE_SAVED_DATA_V5)) loadScheduleListV5(gp, spi.value, sync_sched_temp);
             }
-//            if (error_opt) {
-//                for(SyncTaskItem item:sync_task) item.setSyncOptionStopSyncWhenError(false);
-//            }
+            sync_sched.addAll(sync_sched_temp);
         }
+        return error;
     }
 
     static private final String PROFILE_KEY_PREFIX = "*SMBSync2*";
     static private boolean loadSyncTaskListFromFile(Context c, GlobalParameters gp, CommonUtilities mUtil,
                                                     SafFile3 sf, String private_key, ArrayList<SyncTaskItem>sync_task,
                                                     ArrayList<SettingParameterItem>sync_setting) {
-        boolean result=false;
+        boolean error=false;
         try {
             boolean auto_save=false;
             if (sf.getName().toLowerCase().endsWith(".stf")) auto_save=true;
@@ -139,11 +135,11 @@ public class TaskListImportFromSMBSync2 {
                         enc_str=pl.substring(6);
                         enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
                         dec_str = EncryptUtilV1.decrypt(enc_array, cp);
-                        addSyncTaskListVer8(c, dec_str, sync_task, mUtil, auto_save);
+                        error=addSyncTaskList(c, dec_str, sync_task, mUtil, auto_save);
+                        if (error) break;
                         if (sync_setting != null) addImportSettingsParm(dec_str, sync_setting);
                         pl=br.readLine();
                     }
-                    result=true;
                 } else {
                     mUtil.showCommonDialog(false,"W", "Import task list error", "Can not decrypt task list data.", null);
                 }
@@ -151,20 +147,20 @@ public class TaskListImportFromSMBSync2 {
                 pl=br.readLine();
                 while(pl!=null) {
                     String dec_str=pl.substring(6);
-                    addSyncTaskListVer8(c, dec_str, sync_task, mUtil, auto_save);
+                    error=addSyncTaskList(c, dec_str, sync_task, mUtil, auto_save);
+                    if (error) break;
                     if (sync_setting != null) {
                         String n_pl=pl.replace(SMBSYNC2_PROF_VER8, "").replace(SMBSYNC2_PROF_VER9, "");
                         addImportSettingsParm(n_pl, sync_setting);
                     }
                     pl=br.readLine();
                 }
-                result=true;
             }
             br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return result;
+        return error;
     }
 
     static private void addImportSettingsParm(String pl, ArrayList<SettingParameterItem> ispl) {
@@ -259,10 +255,22 @@ public class TaskListImportFromSMBSync2 {
         return uuid;
     }
 
+    private static final String[] SYNC_FILE_TYPE_AUDIO=
+            new String[]{"*.aac","*.aif", "*.aifc", "*.aiff", "*.flac", "*.kar", "*.m3u", "*.m4a", "*.mid", "*.midi", "*.mp2",
+                    "*.mp3", "*.mpga", "*.ogg", "*.ra", "*.ram", "*.wav"};
+    private static final String[] SYNC_FILE_TYPE_IMAGE=
+            new String[]{"*.bmp", "*.cgm", "*.djv", "*.djvu", "*.gif", "*.ico", "*.ief", "*.jpe", "*.jpeg", "*.jpg", "*.pbm",
+                    "*.pgm", "*.png", "*.pnm", "*.ppm", "*.ras", "*.rgb", "*.svg", "*.tif", "*.tiff", "*.wbmp", "*.xbm",
+                    "*.xpm", "*.xwd"};
+    private static final String[] SYNC_FILE_TYPE_VIDEO=
+            new String[]{"*.avi", "*.m4u", "*.mov", "*.mp4", "*.movie", "*.mpe", "*.mpeg", "*.mpg", "*.mxu", "*.qt", "*.wmv"};
+
+
     final private static String WHOLE_DIRECTORY_FILTER_PREFIX="\\\\";
     final private static String MATCH_ANY_WHERE_DIRECTORY_FILTER_PREFIX="\\";
-    private static void addSyncTaskListVer8(Context c, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util, boolean auto_save) {
-        if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return; //ignore settings entry
+    private static boolean addSyncTaskList(Context c, String pl, ArrayList<SyncTaskItem> sync, CommonUtilities util, boolean auto_save) {
+        if (!pl.startsWith(SMBSYNC2_PROF_TYPE_SYNC)) return false; //ignore settings entry
+        boolean error=false;
         String list1 = "", list2 = "", list3 = "", list4="", npl = "";
         int ls = pl.indexOf("[");
         int le = pl.lastIndexOf("]\t");
@@ -369,13 +377,15 @@ public class TaskListImportFromSMBSync2 {
             if (unusable.equals("")) {
                 if (sync_task_name.length()>SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH) {
                     stli.setSyncTaskName(sync_task_name.substring(0,SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH));
-                    log.info(String.format("SMBSync2 sync task name length is exceeds %s character", SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH));
+                    util.addLogMsg("E", String.format("SMBSync2 sync task name length is exceeds %1$s character, Name=%2$s",
+                            SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH, sync_task_name));
+                    error=true;
                 } else {
                     stli.setSyncTaskName(sync_task_name);
                 }
             } else {
                 stli.setSyncTaskName(sync_task_name.replaceAll(unusable, "_"));
-                log.info("SMBSync2 sync task name contains unusable chanaracter : \""+unusable+"\" replaced : \"_\"");
+                util.addLogMsg("W", "SMBSync2 sync task name contains unusable chanaracter : \""+unusable+"\" replaced : \"_\"");
             }
             stli.setSyncTaskType(parm[3]);
 
@@ -483,13 +493,10 @@ public class TaskListImportFromSMBSync2 {
 
             if (!parm[45].equals("") && !parm[45].equals(SMBSYNC2_TASK_END_MARK))
                 if (parm[45].equals("1")) TaskListUtils.addPresetFileTypeToFilterList(stli.getFileNameFilter(), SYNC_FILE_TYPE_AUDIO);
-//                stli.setSyncFileTypeAudio(parm[45].equals("1") ? true : false);
             if (!parm[46].equals("") && !parm[46].equals(SMBSYNC2_TASK_END_MARK))
                 if (parm[46].equals("1")) TaskListUtils.addPresetFileTypeToFilterList(stli.getFileNameFilter(), SYNC_FILE_TYPE_IMAGE);
-//                stli.setSyncFileTypeImage(parm[46].equals("1") ? true : false);
             if (!parm[47].equals("") && !parm[47].equals(SMBSYNC2_TASK_END_MARK))
                 if (parm[47].equals("1")) TaskListUtils.addPresetFileTypeToFilterList(stli.getFileNameFilter(), SYNC_FILE_TYPE_VIDEO);
-//                stli.setSyncFileTypeVideo(parm[47].equals("1") ? true : false);
 
             if (!parm[48].equals("") && !parm[48].equals(SMBSYNC2_TASK_END_MARK)) {
                 if (parm[48].startsWith("/")) stli.setDestinationZipOutputFileName(parm[48].substring(1));
@@ -616,7 +623,7 @@ public class TaskListImportFromSMBSync2 {
             }
 
             if (!parm[97].equals("") && !parm[97].equals("end")) {
-                if (parm[97].length() <= 5 && TextUtils.isDigitsOnly(parm[97]) && Integer.parseInt(parm[97]) > 0) { //max 5 digits allowed and value > 1
+                if (parm[97].length() <= 5 && TextUtils.isDigitsOnly(parm[97]) && Integer.parseInt(parm[97]) >= 0) { //max 5 digits allowed and value > 1
                     stli.setSyncFilterFileSizeValue(parm[97]);
                 } else {
                     stli.setSyncFilterFileSizeValue(SyncTaskItem.FILTER_FILE_SIZE_VALUE_DEFAULT);
@@ -665,6 +672,7 @@ public class TaskListImportFromSMBSync2 {
 
             sync.add(stli);
         }
+        return error;
     }
 
     private static boolean isValidTaskItemValue(String[] valid_value, String obtained_value) {

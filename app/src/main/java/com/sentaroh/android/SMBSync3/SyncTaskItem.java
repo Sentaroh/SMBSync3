@@ -691,6 +691,9 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     private int syncTaskStatusErrorCode =0;
     static public final int SYNC_TASK_STATUS_ERROR_NO_ERROR =0;
+    static public final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_AUDIO =1;
+    static public final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_IMAGE =2;
+    static public final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_VIDEO =4;
 //    static public final int SYNC_TASK_ERROR_DIRECTORY_FILTER=1;
     public boolean isSyncTaskError() {return !(syncTaskStatusErrorCode == SYNC_TASK_STATUS_ERROR_NO_ERROR);}
     public int getSyncTaskStatusErrorCode() {return syncTaskStatusErrorCode;}

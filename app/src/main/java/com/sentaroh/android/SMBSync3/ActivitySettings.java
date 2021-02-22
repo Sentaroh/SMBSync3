@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
@@ -58,6 +59,8 @@ public class ActivitySettings extends PreferenceActivity {
 
     private static GlobalParameters mGp = null;
 
+    private static Activity mActivity=null;
+
     private static String mCurrentScreenTheme=SCREEN_THEME_STANDARD;
 
     private CommonUtilities mUtil = null;
@@ -77,6 +80,7 @@ public class ActivitySettings extends PreferenceActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mActivity=ActivitySettings.this;
         mGp= GlobalWorkArea.getGlobalParameter(ActivitySettings.this);
         SharedPreferences shared_pref = CommonUtilities.getSharedPreference(ActivitySettings.this);
         mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
@@ -253,7 +257,7 @@ public class ActivitySettings extends PreferenceActivity {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
-            getActivity().setTitle(R.string.settings_sync_title);
+            mActivity.setTitle(R.string.settings_sync_title);
         }
 
         @Override
@@ -300,7 +304,7 @@ public class ActivitySettings extends PreferenceActivity {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
-            getActivity().setTitle(R.string.settings_misc_title);
+            mActivity.setTitle(R.string.settings_misc_title);
         }
 
         @Override
@@ -376,7 +380,7 @@ public class ActivitySettings extends PreferenceActivity {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
-            getActivity().setTitle(R.string.settings_smb_title);
+            mActivity.setTitle(R.string.settings_smb_title);
         }
 
         @Override
@@ -483,14 +487,14 @@ public class ActivitySettings extends PreferenceActivity {
                 String sum_msg = wl_label[Integer.parseInt(tid)];
                 pref_key.setSummary(sum_msg);
                 if (!mCurrentScreenTheme.equals(tid)) {
-                    if (tid.equals(SCREEN_THEME_STANDARD)) getActivity().setTheme(R.style.Main);
-                    else if (tid.equals(SCREEN_THEME_LIGHT)) getActivity().setTheme(R.style.MainLight);
-                    else if (tid.equals(SCREEN_THEME_BLACK)) getActivity().setTheme(R.style.MainBlack);
+                    if (tid.equals(SCREEN_THEME_STANDARD)) mActivity.setTheme(R.style.Main);
+                    else if (tid.equals(SCREEN_THEME_LIGHT)) mActivity.setTheme(R.style.MainLight);
+                    else if (tid.equals(SCREEN_THEME_BLACK)) mActivity.setTheme(R.style.MainBlack);
                     mCurrentScreenTheme=tid;
-                    getActivity().finish();
-                    Intent intent = new Intent(getActivity(), ActivitySettings.class);
+                    mActivity.finish();
+                    Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(intent);
+                    mActivity.startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_screen_theme_language))) {
                 String lang_value=shared_pref.getString(key_string, APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
@@ -506,11 +510,11 @@ public class ActivitySettings extends PreferenceActivity {
                 }
                 pref_key.setSummary(sum_msg);
                 if (!lang_value.equals(mCurrentLangaue)) {
-                    getActivity().finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
-                    GlobalParameters.setNewLocale(getActivity());
-                    Intent intent = new Intent(getActivity(), ActivitySettings.class);
+                    mActivity.finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
+                    GlobalParameters.setNewLocale(mActivity);
+                    Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(intent);
+                    mActivity.startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_display_font_scale_factor))) {
                 String font_scale_id=shared_pref.getString(key_string, GlobalParameters.FONT_SCALE_FACTOR_NORMAL);
@@ -520,10 +524,10 @@ public class ActivitySettings extends PreferenceActivity {
                 if (!mCurrentFontScaleFactor.equals(font_scale_id)) {
                     mCurrentFontScaleFactor=font_scale_id;
                     GlobalParameters.setDisplayFontScale(c, mCurrentFontScaleFactor);
-                    getActivity().finish();
-                    Intent intent = new Intent(getActivity(), ActivitySettings.class);
+                    mActivity.finish();
+                    Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(intent);
+                    mActivity.startActivity(intent);
                 }
             } else if (key_string.equals(c.getString(R.string.settings_device_orientation_landscape_tablet))) {
             } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
@@ -539,7 +543,7 @@ public class ActivitySettings extends PreferenceActivity {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
-            getActivity().setTitle(R.string.settings_ui_title);
+            mActivity.setTitle(R.string.settings_ui_title);
         }
 
         @Override
@@ -629,7 +633,7 @@ public class ActivitySettings extends PreferenceActivity {
             super.onStart();
             mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(listenerAfterHc);
-            getActivity().setTitle(R.string.settings_ui_title);
+            mActivity.setTitle(R.string.settings_ui_title);
         }
 
         @Override

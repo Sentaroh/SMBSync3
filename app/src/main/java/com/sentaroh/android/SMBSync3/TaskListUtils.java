@@ -79,9 +79,9 @@ import java.util.Comparator;
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX;
 import static com.sentaroh.android.SMBSync3.Constants.NAME_UNUSABLE_CHARACTER;
-import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_AUDIO;
-import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_IMAGE;
-import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_VIDEO;
+//import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_AUDIO;
+//import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_IMAGE;
+//import static com.sentaroh.android.SMBSync3.Constants.SYNC_FILE_TYPE_VIDEO;
 
 public class TaskListUtils {
 
@@ -128,6 +128,17 @@ public class TaskListUtils {
             public void run() {
                 String config_data= TaskListImportExport.saveTaskListToAppDirectory(c, gp.syncTaskList, gp.syncScheduleList, gp.syncGroupList);
                 if (config_data!=null) TaskListImportExport.saveTaskListToAutosave(mActivity, c, mGp.settingAppManagemsntDirectoryName, config_data);
+            }
+        };
+        th.setPriority(Thread.MAX_PRIORITY);
+        th.start();
+    }
+
+    public void saveConfigList(Context c, GlobalParameters gp, CommonUtilities cu) {
+        Thread th=new Thread(){
+            @Override
+            public void run() {
+                String config_data= TaskListImportExport.saveTaskListToAppDirectory(c, gp.syncTaskList, gp.syncScheduleList, gp.syncGroupList);
             }
         };
         th.setPriority(Thread.MAX_PRIORITY);
@@ -182,6 +193,7 @@ public class TaskListUtils {
                     GroupEditor.removeSyncTaskFromGroup(mGp, mUtil, dpItemList.get(i).getSyncTaskName());
                 }
                 if (mGp.syncTaskListAdapter.getCount()>0) saveConfigListWithAutosave(mActivity, mGp, mUtil);
+                else saveConfigList(mActivity, mGp, mUtil);
 
                 mGp.syncTaskListAdapter.setNotifyOnChange(true);
                 mGp.syncTaskView.setSelection(pos);
@@ -968,10 +980,7 @@ public class TaskListUtils {
             }
         });
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_list_edit_msg);
-        final TextView dlg_add_guide=(TextView)dialog.findViewById(R.id.filter_list_edit_add_guide);
-        dlg_add_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_directory));
-        final LinearLayout guide_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_guide_view);
-        guide_view.setVisibility(LinearLayout.VISIBLE);
+        putFilterErrorMessage(dlg_msg, "");
         final LinearLayout parent_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_parent_view);
         final NonWordwrapTextView dlg_parent_dir = (NonWordwrapTextView) dialog.findViewById(R.id.filter_list_edit_parent);
         parent_view.setVisibility(LinearLayout.VISIBLE);
@@ -990,9 +999,6 @@ public class TaskListUtils {
         lv.setAdapter(filterAdapter);
         lv.setScrollingCacheEnabled(false);
         lv.setScrollbarFadingEnabled(false);
-
-        if (!hasEnabledFilters(filterAdapter))
-            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
 
         title.setText(mActivity.getString(R.string.msgs_filter_list_dlg_dir_filter));
         final Button dirbtn = (Button) dialog.findViewById(R.id.filter_list_edit_list_dir_btn);
@@ -1017,18 +1023,13 @@ public class TaskListUtils {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
-                if (!hasEnabledFilters(filterAdapter)) {
-                    dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                    return;
-                }
                 String new_filter_string="";
                 if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) {
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                    dlg_msg.setText("");
+                    putFilterErrorMessage(dlg_msg, "");
                 } else {
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                    dlg_msg.setText("");
+                    putFilterErrorMessage(dlg_msg, "");
                 }
             }
             @Override
@@ -1041,7 +1042,7 @@ public class TaskListUtils {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                dlg_msg.setText("");
+                putFilterErrorMessage(dlg_msg, "");
             }
             @Override
             public void negativeResponse(Context c, Object[] o) { }
@@ -1059,17 +1060,10 @@ public class TaskListUtils {
                     public void positiveResponse(Context c, Object[] o) {
                         filterAdapter.sort();
                         filterAdapter.notifyDataSetChanged();
-                        dlg_msg.setText("");
-                        if (!hasEnabledFilters(filterAdapter)) {
-                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                            return;
-                        }
+                        putFilterErrorMessage(dlg_msg, "");
                         if (isFilterListChanged(sti.getDirectoryFilter(), filterAdapter)) {
-                            dlg_msg.setText("");
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         } else {
-                            dlg_msg.setText("");
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         }
                     }
@@ -1094,7 +1088,7 @@ public class TaskListUtils {
                     String[]filter_array=filter.split(";");
                     String err_msg= FilterListAdapter.FilterListItem.checkDirectoryFilterError(mActivity, filter);
                     if (!err_msg.equals("")) {
-                        dlg_msg.setText(err_msg);
+                        putFilterErrorMessage(dlg_msg, "");
                         CommonUtilities.setViewEnabled(mActivity, addbtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
@@ -1102,12 +1096,12 @@ public class TaskListUtils {
                     String dup_filter=getDuplicateFilter(filter, filterAdapter);
                     if (!dup_filter.equals("")) {
                         String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                        dlg_msg.setText(String.format(mtxt, dup_filter));
+                        putFilterErrorMessage(dlg_msg, String.format(mtxt, dup_filter));
                         CommonUtilities.setViewEnabled(mActivity, addbtn, false);
                         CommonUtilities.setViewEnabled(mActivity, dirbtn, true);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     } else {
-                        dlg_msg.setText("");
+                        putFilterErrorMessage(dlg_msg, "");
                         CommonUtilities.setViewEnabled(mActivity, addbtn, true);
                         CommonUtilities.setViewEnabled(mActivity, dirbtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
@@ -1121,15 +1115,11 @@ public class TaskListUtils {
                         } else {
                             CommonUtilities.setViewEnabled(mActivity, add_include_btn, true);
                         }
-                        if (!hasEnabledFilters(filterAdapter)) {
-                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                            return;
-                        }
                     }
                 } else {
 //                    guide_view.setVisibility(ScrollView.GONE);
                     dlg_msg.setText("");
+                    dlg_msg.setVisibility(TextView.GONE);
                     dirbtn.setVisibility(Button.VISIBLE);
                     lv.setVisibility(ListView.VISIBLE);
                     parent_view.requestLayout();
@@ -1148,7 +1138,7 @@ public class TaskListUtils {
         addbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String newfilter =StringUtil.removeRedundantCharacter(et_filter.getText().toString(), ";", true, true);
-                dlg_msg.setText("");
+                putFilterErrorMessage(dlg_msg, "");
                 et_filter.setText("");
 //                guide_view.setVisibility(ScrollView.GONE);
                 dirbtn.setVisibility(Button.VISIBLE);
@@ -1178,7 +1168,7 @@ public class TaskListUtils {
 
                         if (!org_filter_list.equals(new_filter_list)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                        dlg_msg.setText("");
+                        putFilterErrorMessage(dlg_msg, "");
                     }
                     @Override
                     public void negativeResponse(Context arg0, Object[] arg1) {
@@ -1251,6 +1241,17 @@ public class TaskListUtils {
 
     }
 
+    private void putFilterErrorMessage(TextView dlg_msg, String msg_text) {
+        if (msg_text==null || msg_text.length()==0) {
+            dlg_msg.setText("");
+            dlg_msg.setVisibility(TextView.GONE);
+            return;
+        } {
+            dlg_msg.setVisibility(TextView.VISIBLE);
+            dlg_msg.setText(msg_text);
+        }
+    }
+
     public void editFileFilterDlg(final ArrayList<FilterListAdapter.FilterListItem> file_filter, final NotifyEvent p_ntfy) {
         ArrayList<FilterListAdapter.FilterListItem> filterList = new ArrayList<FilterListAdapter.FilterListItem>();
         final FilterListAdapter filterAdapter;
@@ -1278,10 +1279,6 @@ public class TaskListUtils {
             }
         });
 
-        final TextView dlg_add_guide=(TextView)dialog.findViewById(R.id.filter_list_edit_add_guide);
-        dlg_add_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_file));
-        final LinearLayout guide_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_guide_view);
-        guide_view.setVisibility(LinearLayout.VISIBLE);
         final LinearLayout parent_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_parent_view);
 
         Button dirbtn = (Button) dialog.findViewById(R.id.filter_list_edit_list_dir_btn);
@@ -1299,7 +1296,7 @@ public class TaskListUtils {
 
         title.setText(mActivity.getString(R.string.msgs_filter_list_dlg_file_filter));
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_list_edit_msg);
-        dlg_msg.setText("");
+        putFilterErrorMessage(dlg_msg, "");
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
@@ -1312,37 +1309,20 @@ public class TaskListUtils {
         final RadioButton add_exclude_btn = (RadioButton) dialog.findViewById(R.id.filter_list_edit_add_include_exclude_radio_button_exclude);
         add_include_btn.setChecked(true);
 
-        final LinearLayout ll_preset_view=(LinearLayout)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_view);
-//        ll_preset_view.setVisibility(LinearLayout.VISIBLE);
-        final Button btn_add_audio_file=(Button)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_audio);
-        final Button btn_add_image_file=(Button)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_image);
-        final Button btn_add_video_file=(Button)dialog.findViewById(R.id.filter_list_edit_add_preset_ft_video);
-
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_list_edit_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_list_edit_ok_btn);
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-
-        if (!hasEnabledFilters(filterAdapter)) {
-            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-        }
 
         NotifyEvent ntfy_switch = new NotifyEvent(mActivity);
         ntfy_switch.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 FilterListAdapter.FilterListItem fli=(FilterListAdapter.FilterListItem)o[0];
-                if (!hasEnabledFilters(filterAdapter)) {
-                    dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                    return;
-                }
+                putFilterErrorMessage(dlg_msg, "");
                 if (isFilterListChanged(file_filter, filterAdapter)) {
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                    dlg_msg.setText("");
                 } else {
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                    dlg_msg.setText("");
                 }
             }
             @Override
@@ -1355,8 +1335,7 @@ public class TaskListUtils {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                dlg_msg.setText("");
-                dlg_msg.setVisibility(TextView.GONE);
+                putFilterErrorMessage(dlg_msg, "");
             }
             @Override
             public void negativeResponse(Context c, Object[] o) {}
@@ -1373,16 +1352,10 @@ public class TaskListUtils {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         filterAdapter.notifyDataSetChanged();
-                        if (!hasEnabledFilters(filterAdapter)) {
-                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                            return;
-                        }
+                        putFilterErrorMessage(dlg_msg, "");
                         if (isFilterListChanged(file_filter, filterAdapter)) {
-                            dlg_msg.setText("");
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         } else {
-                            dlg_msg.setText("");
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         }
                     }
@@ -1404,7 +1377,7 @@ public class TaskListUtils {
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
                     String error_message= FilterListAdapter.FilterListItem.checkFileFilterError(mActivity, new_filter);
                     if (!error_message.equals("")) {
-                        dlg_msg.setText(error_message);
+                        putFilterErrorMessage(dlg_msg, error_message);
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
@@ -1412,16 +1385,11 @@ public class TaskListUtils {
                     String dup_filter=getDuplicateFilter(new_filter, filterAdapter);
                     if (!dup_filter.equals("")) {
                         String mtxt = mActivity.getString(R.string.msgs_filter_list_duplicate_filter_specified);
-                        dlg_msg.setText(String.format(mtxt, dup_filter));
+                        putFilterErrorMessage(dlg_msg, String.format(mtxt, dup_filter));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     } else {
-                        if (!hasEnabledFilters(filterAdapter)) {
-                            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                            dlg_msg.setText(mActivity.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));
-                            return;
-                        }
-                        dlg_msg.setText("");
+                        putFilterErrorMessage(dlg_msg, "");
                         CommonUtilities.setViewEnabled(mActivity, addBtn, true);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
@@ -1442,31 +1410,13 @@ public class TaskListUtils {
             public void onClick(View v) {
                 lv.setVisibility(ListView.VISIBLE);
                 parent_view.requestLayout();
-                dlg_msg.setText("");
+                putFilterErrorMessage(dlg_msg, "");
                 String newfilter = et_filter.getText().toString().trim();
                 et_filter.setText("");
                 filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, add_include_btn.isChecked()));
                 filterAdapter.setNotifyOnChange(true);
                 filterAdapter.sort();
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-            }
-        });
-
-        btn_add_audio_file.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addPresetFileFileType(filterAdapter, SYNC_FILE_TYPE_AUDIO, btn_ok);
-            }
-        });
-
-        btn_add_image_file.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addPresetFileFileType(filterAdapter, SYNC_FILE_TYPE_IMAGE, btn_ok);
-            }
-        });
-
-        btn_add_video_file.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addPresetFileFileType(filterAdapter, SYNC_FILE_TYPE_VIDEO, btn_ok);
             }
         });
 
@@ -1596,11 +1546,17 @@ public class TaskListUtils {
         title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_title));
 
-        final TextView dlg_add_guide=(TextView)dialog.findViewById(R.id.filter_list_edit_add_guide);
-        dlg_add_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_ip_address));
-        final LinearLayout guide_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_add_guide_view);
+        final ImageButton dlg_help = (ImageButton) dialog.findViewById(R.id.filter_list_edit_help);
+        dlg_help.setVisibility(ImageButton.VISIBLE);
+        dlg_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TaskEditor.showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_ip_address_filter_title),
+                        mActivity.getString(R.string.msgs_help_ip_address_filter_file));
+            }
+        });
+
         final LinearLayout parent_view = (LinearLayout) dialog.findViewById(R.id.filter_list_edit_parent_view);
-        guide_view.setVisibility(LinearLayout.VISIBLE);
 
         Button add_current_addr = (Button) dialog.findViewById(R.id.filter_list_edit_list_dir_btn);
         add_current_addr.setText(mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_add_current_addr));
@@ -1616,6 +1572,7 @@ public class TaskListUtils {
         lv.setAdapter(filterAdapter);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_list_edit_msg);
+        putFilterErrorMessage(dlg_msg, "");
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
@@ -1633,7 +1590,7 @@ public class TaskListUtils {
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                dlg_msg.setText("");
+                putFilterErrorMessage(dlg_msg, "");
             }
 
             @Override
@@ -1653,10 +1610,10 @@ public class TaskListUtils {
                     public void positiveResponse(Context c, Object[] o) {
                         filterAdapter.notifyDataSetChanged();
                         if (isFilterListChanged(addr_list, filterAdapter)) {
-                            dlg_msg.setText("");
+                            putFilterErrorMessage(dlg_msg, "");
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                         } else {
-                            dlg_msg.setText("");
+                            putFilterErrorMessage(dlg_msg, "");
                             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         }
                     }
@@ -1679,13 +1636,13 @@ public class TaskListUtils {
                     String new_filter=StringUtil.removeRedundantCharacter(s.toString().trim(), ";", true, true);
                     String error_message= FilterListAdapter.FilterListItem.checkApAndAddressFilterError(mActivity, new_filter);
                     if (!error_message.equals("")) {
-                        dlg_msg.setText(error_message);
+                        putFilterErrorMessage(dlg_msg, error_message);
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
                     }
                     if (!isValidIpV4Address(new_filter)) {
-                        dlg_msg.setText(mActivity.getString(R.string.msgs_filter_list_invalid_ip_address));
+                        putFilterErrorMessage(dlg_msg, mActivity.getString(R.string.msgs_filter_list_invalid_ip_address));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                         return;
@@ -1693,16 +1650,16 @@ public class TaskListUtils {
                     String dup_filter=getDuplicateFilter(new_filter, filterAdapter);
                     if (!dup_filter.equals("")) {
                         String mtxt = mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
-                        dlg_msg.setText(String.format(mtxt, dup_filter));
+                        putFilterErrorMessage(dlg_msg, String.format(mtxt, dup_filter));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else {
-                        dlg_msg.setText("");
+                        putFilterErrorMessage(dlg_msg, "");
                         CommonUtilities.setViewEnabled(mActivity, addBtn, true);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
                 } else {
-                    dlg_msg.setText("");
+                    putFilterErrorMessage(dlg_msg, "");
                     lv.setVisibility(ListView.VISIBLE);
                     parent_view.requestLayout();
                     CommonUtilities.setViewEnabled(mActivity, addBtn, false);
@@ -1726,10 +1683,11 @@ public class TaskListUtils {
                     String dup_filter=getDuplicateFilter(ip_addr, filterAdapter);
                     if (!dup_filter.equals("")) {
                         String mtxt = mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_duplicate_addr_specified);
-                        dlg_msg.setText(String.format(mtxt, ip_addr));
+                        putFilterErrorMessage(dlg_msg, String.format(mtxt, ip_addr));
                         CommonUtilities.setViewEnabled(mActivity, addBtn, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
                     } else {
+                        putFilterErrorMessage(dlg_msg, "");
                         dlg_msg.setText("");
                         filterAdapter.add(new FilterListAdapter.FilterListItem(ip_addr, true));
                         filterAdapter.setNotifyOnChange(true);
@@ -1738,7 +1696,7 @@ public class TaskListUtils {
                     }
                 } else {
                     String mtxt = mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_ap_not_connected);
-                    dlg_msg.setText(mtxt);
+                    putFilterErrorMessage(dlg_msg, mtxt);
                 }
             }
         });
@@ -1748,7 +1706,7 @@ public class TaskListUtils {
                 lv.setVisibility(ListView.VISIBLE);
                 parent_view.requestLayout();
 
-                dlg_msg.setText("");
+                putFilterErrorMessage(dlg_msg, "");
                 String newfilter = et_filter.getText().toString().trim();
                 et_filter.setText("");
                 filterAdapter.add(new FilterListAdapter.FilterListItem(newfilter, true));
@@ -1830,12 +1788,6 @@ public class TaskListUtils {
         if (!title_text.equals("")) title.setText(title_text);
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.filter_item_edit_dlg_msg);
         dlg_msg.setVisibility(TextView.VISIBLE);
-
-        final TextView dlg_guide=(TextView)dialog.findViewById(R.id.filter_item_edit_dlg_guide);
-        if (filter_type==FilterListAdapter.FILTER_TYPE_DIRECTORY) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_directory));
-        else if (filter_type==FilterListAdapter.FILTER_TYPE_FILE) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_file));
-        else if (filter_type==FilterListAdapter.FILTER_TYPE_ACCESS_POINT) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_access_point));
-        else if (filter_type==FilterListAdapter.FILTER_TYPE_IP_ADDRESS) dlg_guide.setText(mActivity.getString(R.string.msgs_filter_list_guide_ip_address));
 
         final Button btn_cancel = (Button) dialog.findViewById(R.id.filter_item_edit_dlg_cancel_btn);
         final Button btn_ok = (Button) dialog.findViewById(R.id.filter_item_edit_dlg_ok_btn);

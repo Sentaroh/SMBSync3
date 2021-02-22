@@ -1,9 +1,10 @@
 ### Filtro
 
 Il nome della directory da selezionare o escludere. 
-- Wildcard : \"Mein*\"
-- Spezifizieren Sie ein bestimmtes Zeichen: \"dsc_???.mov\"
-- Mehrfach: \"\*.jpg;*.mp3\"
+- wildcard : My*.*
+- Specificare un carattere specifico: dsc_???.mov
+- i filtri possono essere inseriti nella stessa riga, separati da \";\": \*.jpg;*.mp3
+- escludere le vittorie dei filtri
 
 ### Includere/Escludere
 

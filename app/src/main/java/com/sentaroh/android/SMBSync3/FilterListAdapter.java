@@ -225,7 +225,8 @@ public class FilterListAdapter extends ArrayAdapter<FilterListAdapter.FilterList
             holder.btn_row_delbtn.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    o.delete();
+//                    o.delete();
+                    remove(o);
                     notifyDataSetChanged();
 
                     if (mNotifyDeleteListener != null)

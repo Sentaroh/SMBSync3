@@ -515,12 +515,17 @@ public class TaskListImportExport {
                 ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
                 ArrayList<GroupListAdapter.GroupListItem>sync_group=new ArrayList<GroupListAdapter.GroupListItem>();
                 ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
-                TaskListImportFromSMBSync2.buildSyncTaskList(mActivity, mGp, mUtil, sf, mGp.profilePassword, sync_task, sync_sched);
-                final TaskListAdapter tfl = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
-                if (tfl.getCount() > 0) {
-                    importSyncTaskItemSelector(true, tfl, sync_sched, sync_setting, sync_group, sf, p_ntfy, false);
+                boolean import_error=TaskListImportFromSMBSync2.buildSyncTaskList(mActivity, mGp, mUtil, sf, mGp.profilePassword, sync_task, sync_sched);
+                if (!import_error) {
+                    final TaskListAdapter tfl = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
+                    if (tfl.getCount() > 0) {
+                        importSyncTaskItemSelector(true, tfl, sync_sched, sync_setting, sync_group, sf, p_ntfy, false);
+                    } else {
+                        mUtil.showCommonDialog(false, "W", mActivity.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
+                        p_ntfy.notifyToListener(false, null);
+                    }
                 } else {
-                    mUtil.showCommonDialog(false, "W", mActivity.getString(R.string.msgs_export_import_profile_no_import_items), "", null);
+                    mUtil.showCommonDialog(false, "E", mActivity.getString(R.string.msgs_export_import_profile_error_occured_while_import_task_list), "", null);
                     p_ntfy.notifyToListener(false, null);
                 }
             }

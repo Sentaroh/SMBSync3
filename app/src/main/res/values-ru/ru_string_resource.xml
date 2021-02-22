@@ -26,6 +26,7 @@
         <string name="msgs_export_import_profile_hdr_task_list">Task list</string>
         <string name="msgs_export_import_profile_no_import_items">Элементы для импорта не выбраны.</string>
         <string name="msgs_export_import_profile_specified_file_was_not_sync_task_saved_file">Указанный файл не является синхронным файлом сохранения списка задач. Файл=%</string>
+        <string name="msgs_export_import_profile_error_occured_while_import_task_list">При импорте списка задач произошла ошибка. Пожалуйста, проверьте ошибку на вкладке "Сообщения".</string>
         <string name="msgs_import_autosave_dlg_title">Импортировать список задач</string>
         <string name="msgs_import_autosave_dlg_select_exported_file">Выберите другой файл</string>
         <string name="msgs_import_autosave_dlg_autosave_list">Список задач сохраненный автоматически</string>
@@ -61,6 +62,8 @@
         <string name="msgs_help_directory_filter_title">Справка по каталогу фильтрации</string>
         <string name="msgs_help_file_filter_file">SMBSync3_Help_RU_file_filter.html</string>
         <string name="msgs_help_file_filter_title">Помощь в фильтрации файлов</string>
+        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_RU_ip_address_filter.html</string>
+        <string name="msgs_help_ip_address_filter_title">Помощь фильтра IP-адресов</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_RU_schedule.html</string>
         <string name="msgs_help_schedule_title">Schedule help</string>
         <string name="msgs_help_group_file">SMBSync3_Help_RU_group.html</string>
@@ -138,10 +141,6 @@
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Содержит непригодные символы. Символы =\"%1$s\", Фильтр = %2$s.</string>
         <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\\\".\nФильтр=%</string>
         <string name="msgs_filter_list_invalid_ip_address">Недействительный IP-адрес.</string>
-        <string name="msgs_filter_list_guide_directory">- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_filter_list_guide_file">- filters can be entered in same line, separated by \";\"\n- exclude filter wins</string>
-        <string name="msgs_filter_list_guide_access_point">Выбор точки доступа, которая начинается с MY_HOME : MY_HOME*</string>
-        <string name="msgs_filter_list_guide_ip_address">Ex:\n192.168.100.*==192.168.100.0-192.168.100.255 Allowed\n10.*==10.0.0.0-10.255.255.255 Allowed</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
         <string name="msgs_hist_cont_label_move_bottom">Двигаться вниз</string>
@@ -354,7 +353,6 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_title">Источник подкачки и место назначения</string>
         <string name="msgs_task_sync_task_dlg_swap_warning_message">Замена содержимого исходной и конечной папок может привести к удалению непреднамеренных файлов или каталогов.\nНастройте тестовый режим или создайте тестовую директорию и проведите проверку, чтобы убедиться, что непреднамеренные файлы или каталоги не будут удалены.</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">В исходной папке переменные, связанные с датой и временем съемки, недоступны и были удалены.</string>
-        <string name="deleted_msgs_task_sync_task_dlg_dir_filter_not_specified">Фильтр каталога не был определен</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Имя каталога содержало недопустимые символы, и они былио удалены (\", :, \\, ?, *, &lt;, &gt;, \|).</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Фильтр по имени файла не указан</string>
         <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
@@ -393,8 +391,6 @@
         <string name="msgs_task_sync_task_filter_list_dlg_source_directory">Source directory:</string>
         <string name="msgs_task_sync_task_filter_list_dlg_file_filter">Фильтр по имени файла</string>
         <string name="msgs_task_sync_task_filter_list_dlg_filter_hint">Фильтр</string>
-        <string name="msgs_task_sync_task_filter_list_enabled_filter_not_exists">Действительный фильтр не найден. Включите его в редакторе фильтров.</string>
-        <string name="msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists">Действительный фильтр не найден.</string>
         <string name="msgs_task_sync_task_filter_list_dlg_include">Включать</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">Не определенный</string>
         <string name="msgs_task_sync_task_filter_title">Фильтр</string>
@@ -473,7 +469,6 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">Выполнять синхронизирующие задачи только при зарядке</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">Тестовый режим (не копировать и не удалять файлы)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Сетевые настройки</string>
-        <string name="deleted_msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">Directory filter has not been specified.</string>
         <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Удалить исходный каталог, когда он пуст (только если опция Sync - Переместить).</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Выберите подкаталоги</string>

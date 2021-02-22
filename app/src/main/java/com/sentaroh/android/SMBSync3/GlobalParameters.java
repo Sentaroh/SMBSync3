@@ -87,6 +87,8 @@ public class GlobalParameters {
     public boolean activityIsFinished = true;
     public boolean logCatActive=false;
 
+    public boolean serviceIsActive=false;
+
     public String profilePassword = "";
 
     private final static String SUPRESS_GRANT_LOCATION_PERMISSION_KEY ="settings_sync_supress_grant_location_permission";

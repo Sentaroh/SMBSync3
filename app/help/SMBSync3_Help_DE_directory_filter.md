@@ -5,9 +5,11 @@ Im Quellordner angegebener Verzeichnisname.
 ### Filter
 
 Der Name des Verzeichnisses, das ausgewählt oder ausgeschlossen werden soll. 
-- Wildcard : \"Mein*\"
-- Spezifizieren Sie ein bestimmtes Zeichen: \"fo?der\"
-- Schließen Sie alle Cache-Verzeichnisse aus: \"\\cache\"
+- Wildcard : Mein*
+- Spezifizieren Sie ein bestimmtes Zeichen: fo?der
+- Schließen Sie alle Cache-Verzeichnisse aus: \\cache
+- Filter können in derselben Zeile eingegeben werden, getrennt durch \";\": audio;video
+- ausschließender Filter gewinnt
 
 ### Einschließen/Ausschließen
 

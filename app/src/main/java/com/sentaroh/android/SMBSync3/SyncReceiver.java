@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.usb.UsbManager;
 import android.os.PowerManager;
+import android.os.SystemClock;
 
 import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import com.sentaroh.android.Utilities3.MiscUtil;
@@ -75,25 +76,6 @@ public class SyncReceiver extends BroadcastReceiver {
                 for (ScheduleListAdapter.ScheduleListItem si : mGp.syncScheduleList) si.scheduleLastExecTime = System.currentTimeMillis();
                 TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                 ScheduleUtils.setTimer(mContext, mGp, mLog);
-            } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) ||
-//                    action.equals(Intent.ACTION_MEDIA_EJECT) ||
-//                    action.equals(Intent.ACTION_MEDIA_REMOVED) ||
-                    action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
-                    || action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED) ||
-                    action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)
-                ) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                Intent in = new Intent(mContext, SyncService.class);
-                in.setAction(action);
-                in.setData(received_intent.getData());
-                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                try {
-                    mContext.startForegroundService(in);
-                } catch(Exception e) {
-                    e.printStackTrace();
-                    mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
-                    mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
-                }
             } else if (action.equals(SCHEDULE_INTENT_SET_TIMER)) {
                 if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 ScheduleUtils.setTimer(mContext, mGp, mLog);
@@ -120,39 +102,6 @@ public class SyncReceiver extends BroadcastReceiver {
                     }
                     TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                     ScheduleUtils.setTimer(mContext, mGp, mLog);
-                }
-            } else if (action.equals(START_SYNC_INTENT)) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                Intent in = new Intent(mContext, SyncService.class);
-                in.setAction(START_SYNC_INTENT);
-                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                try {
-                    mContext.startForegroundService(in);
-                } catch(Exception e) {
-                    mLog.addDebugMsg(1,"E", "Start intent error=" + e.getMessage());
-                    mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
-                }
-            } else if (action.equals(START_SYNC_AUTO_INTENT)) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                Intent in = new Intent(mContext, SyncService.class);
-                in.setAction(START_SYNC_AUTO_INTENT);
-                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                try {
-                    mContext.startForegroundService(in);
-                } catch(Exception e) {
-                    mLog.addDebugMsg(1,"E", "Start intent error=" + e.getMessage());
-                    mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
-                }
-            } else if (action.equals(QUERY_SYNC_TASK_INTENT)) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                Intent in = new Intent(mContext, SyncService.class);
-                in.setAction(QUERY_SYNC_TASK_INTENT);
-                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-                try {
-                    mContext.startForegroundService(in);
-                } catch(Exception e) {
-                    mLog.addDebugMsg(1,"E", "Start intent error=" + e.getMessage());
-                    mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
                 }
             } else {
                 mLog.addDebugMsg(1, "I", "Receiver action=" + action);

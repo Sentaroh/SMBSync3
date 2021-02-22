@@ -1,9 +1,10 @@
 ### Filter
 
 Der Name des Verzeichnisses, das ausgewählt oder ausgeschlossen werden soll. 
-- wildcard : \"My*\"
-- Specify a character for a specific location: \"dsc_???.mov\"
-- Multiple: \"\*.jpg;*.mp3\"
+- Wildcard : Mein*.jpg
+- Spezifizieren Sie ein bestimmtes Zeichen: dsc_???.mov
+- Filter können in derselben Zeile eingegeben werden, getrennt durch \";\": \*.jpg;*.mp3
+- ausschließender Filter gewinnt
 
 ### Einschließen/Ausschließen
 

@@ -41,6 +41,7 @@ import android.os.SystemClock;
 import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.SafManager3;
+import com.sentaroh.android.Utilities3.SafStorage3;
 import com.sentaroh.android.Utilities3.SystemInfo;
 
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_TI
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_SCHEDULE_NAME_KEY;
 
 public class SyncService extends Service {
-    final private static Logger log= LoggerFactory.getLogger(SyncService.class);
+    final private static Logger log = LoggerFactory.getLogger(SyncService.class);
     private GlobalParameters mGp = null;
 
     private CommonUtilities mUtil = null;
@@ -64,6 +65,7 @@ public class SyncService extends Service {
     private Context mContext = null;
 
     private SleepReceiver mSleepReceiver = new SleepReceiver();
+    private MediaStatusChangeReceiver mMediaStatusChangeReceiver = new MediaStatusChangeReceiver();
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -74,16 +76,18 @@ public class SyncService extends Service {
     public void onCreate() {
         super.onCreate();
         mContext = SyncService.this;
-        mGp= GlobalWorkArea.getGlobalParameter(mContext);
+        mGp = GlobalWorkArea.getGlobalParameter(mContext);
+
+        mGp.serviceIsActive = true;
 
         mUtil = new CommonUtilities(mContext, "Service", mGp, null);
 
         mUtil.addDebugMsg(1, "I", "onCreate entered");
 
-        Thread th=new Thread(){
+        Thread th = new Thread() {
             @Override
             public void run() {
-                if (mGp.syncTaskList.size()==0) {
+                if (mGp.syncTaskList.size() == 0) {
                     mUtil.addDebugMsg(1, "I", "Configuration load started");
                     mGp.loadConfigList(mContext);
                     mUtil.addDebugMsg(1, "I", "Configuration load ended");
@@ -112,65 +116,44 @@ public class SyncService extends Service {
         int_filter.addAction(Intent.ACTION_USER_PRESENT);
         registerReceiver(mSleepReceiver, int_filter);
 
+        IntentFilter media_filter = new IntentFilter();
+        media_filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+        media_filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+        media_filter.addAction(Intent.ACTION_MEDIA_EJECT);
+        media_filter.addAction(Intent.ACTION_MEDIA_REMOVED);
+        media_filter.addDataScheme("file");
+        registerReceiver(mMediaStatusChangeReceiver, media_filter);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         WakeLock wl = ((PowerManager) getSystemService(Context.POWER_SERVICE))
-                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP , "SMBSync-Service-1");
+                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync-Service-1");
         wl.acquire(1000);
-        final String action = intent==null?"":(intent.getAction()!=null?intent.getAction():"");
+        final String action = intent == null ? "" : (intent.getAction() != null ? intent.getAction() : "");
         mUtil.addDebugMsg(1, "I", "onStartCommand entered, action=" + action);
-        issueStartForeground();
         mGp.waitConfigurationLock();
         if (action.equals(SCHEDULE_INTENT_TIMER_EXPIRED)) {
+            issueStartForeground();
             if (mGp.settingScheduleSyncEnabled) startSyncByScheduler(intent);
             else {
-                mUtil.addDebugMsg(1,"I","Schedule sync request is ignored because scheduler is disabled");
+                mUtil.addDebugMsg(1, "I", "Schedule sync request is ignored because scheduler is disabled");
             }
         } else if (action.equals(START_SYNC_INTENT) || action.equals(START_SYNC_AUTO_INTENT)) {
+            issueStartForeground();
             Bundle bundle = intent.getExtras();
-            if (bundle!=null && bundle.containsKey(START_SYNC_EXTRA_PARM_REQUESTOR)) {
-                String req=bundle.getString(START_SYNC_EXTRA_PARM_REQUESTOR, "");
-                if (req.equals(START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT)) startSyncByShortcut(intent);
+            if (bundle != null && bundle.containsKey(START_SYNC_EXTRA_PARM_REQUESTOR)) {
+                String req = bundle.getString(START_SYNC_EXTRA_PARM_REQUESTOR, "");
+                if (req.equals(START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT))
+                    startSyncByShortcut(intent);
                 else startSyncByAnotherAppl(intent);
             } else {
                 startSyncByAnotherAppl(intent);
             }
         } else if (action.equals(QUERY_SYNC_TASK_INTENT)) {
+            issueStartForeground();
             processQuerySyncTask(intent);
-        } else if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED) ||
-                action.equals(UsbManager.ACTION_USB_DEVICE_ATTACHED) || action.equals(UsbManager.ACTION_USB_DEVICE_DETACHED)
-            ) {
-            String path = intent.getDataString();
-            Thread th = new Thread() {
-                @Override
-                public void run() {
-//                    SystemClock.sleep(3000);
-                    ArrayList<SafManager3.StorageVolumeInfo> svlist=mGp.safMgr.getStorageVolumeInfo(mContext);
-                    int prev_stor_info=mGp.safMgr.getLastStorageVolumeInfo().size();
-                    int prev_saf_count=mGp.safMgr.getSafStorageList().size();
-                    for(int i=0;i<30;i++) {
-                        mGp.refreshMediaDir(mContext);
-                        if (mGp.safMgr.getSafStorageList().size()!=prev_saf_count) {
-                            try {
-                                if (mGp.callbackStub!=null) {
-                                    mGp.callbackStub.cbMediaStatusChanged(action);
-                                    mUtil.addDebugMsg(1, "I", "Notify Media status change completed");
-                                }
-                            } catch (RemoteException e) {
-                                e.printStackTrace();
-                            }
-                            break;
-                        } else {
-                            SystemClock.sleep(500);
-                        }
-                    }
-                    mUtil.addDebugMsg(1, "I", "Media status change ended");
-                }
-            };
-            th.start();
         }
         return START_STICKY;
     }
@@ -194,6 +177,7 @@ public class SyncService extends Service {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         unregisterReceiver(mSleepReceiver);
+        unregisterReceiver(mMediaStatusChangeReceiver);
         if (mGp.notificationLastShowedMessage != null && !mGp.notificationLastShowedMessage.equals("")) {
             showSyncEndNotificationMessage();
             mGp.notificationLastShowedMessage = null;
@@ -203,8 +187,9 @@ public class SyncService extends Service {
         LogUtil.closeLog(mContext);
         NotificationUtils.setNotificationEnabled(mGp, true);
         CommonUtilities.saveMessageList(mContext, mGp);
+        mGp.serviceIsActive = false;
         if (mGp.activityRestartRequired) {
-            mGp.activityRestartRequired=false;
+            mGp.activityRestartRequired = false;
             mGp.clearParms(mContext);
             System.gc();
             Intent intent = new Intent(mContext, ActivityMain.class);
@@ -239,40 +224,41 @@ public class SyncService extends Service {
     }
 
     private void processQuerySyncTask(Intent in) {
-        String reply_list="", sep="";
-        String task_type=QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
-        if (in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE)!=null) task_type=in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE);
-        mUtil.addDebugMsg(1,"I","extra="+in.getExtras()+", str="+in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE));
-        int reply_count=0;
-        if (mGp.syncTaskList.size()>0) {
-            for(int i=0;i<mGp.syncTaskList.size();i++) {
-                SyncTaskItem sti=mGp.syncTaskList.get(i);
+        String reply_list = "", sep = "";
+        String task_type = QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
+        if (in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE) != null)
+            task_type = in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE);
+        mUtil.addDebugMsg(1, "I", "extra=" + in.getExtras() + ", str=" + in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE));
+        int reply_count = 0;
+        if (mGp.syncTaskList.size() > 0) {
+            for (int i = 0; i < mGp.syncTaskList.size(); i++) {
+                SyncTaskItem sti = mGp.syncTaskList.get(i);
                 if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST.toLowerCase())) {
                     if (sti.isSyncTestMode()) {
-                        reply_list+=sep+sti.getSyncTaskName();
-                        sep=NAME_LIST_SEPARATOR;
+                        reply_list += sep + sti.getSyncTaskName();
+                        sep = NAME_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO.toLowerCase())) {
                     if (sti.isSyncTaskAuto()) {
-                        reply_list+=sep+sti.getSyncTaskName();
-                        sep=NAME_LIST_SEPARATOR;
+                        reply_list += sep + sti.getSyncTaskName();
+                        sep = NAME_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL.toLowerCase())) {
                     if (!sti.isSyncTaskAuto()) {
-                        reply_list+=sep+sti.getSyncTaskName();
-                        sep=NAME_LIST_SEPARATOR;
+                        reply_list += sep + sti.getSyncTaskName();
+                        sep = NAME_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL.toLowerCase())) {
-                    reply_list+=sep+sti.getSyncTaskName();
-                    sep=NAME_LIST_SEPARATOR;
+                    reply_list += sep + sti.getSyncTaskName();
+                    sep = NAME_LIST_SEPARATOR;
                     reply_count++;
                 }
             }
         }
-        Intent reply=new Intent(REPLY_SYNC_TASK_INTENT);
+        Intent reply = new Intent(REPLY_SYNC_TASK_INTENT);
         reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT, reply_count);
         reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY, reply_list);
         mContext.sendBroadcast(reply);
@@ -286,9 +272,9 @@ public class SyncService extends Service {
         if (in.getExtras().containsKey(SCHEDULE_SCHEDULE_NAME_KEY)) {
             String schedule_name_list = in.getStringExtra(SCHEDULE_SCHEDULE_NAME_KEY);
 
-            mUtil.addDebugMsg(1,"I", "Schedule information, name=" + schedule_name_list);
+            mUtil.addDebugMsg(1, "I", "Schedule information, name=" + schedule_name_list);
 
-            String[] schedule_list=schedule_name_list.split(NAME_LIST_SEPARATOR);
+            String[] schedule_list = schedule_name_list.split(NAME_LIST_SEPARATOR);
 
             startSyncBySchedulerByNameList(schedule_list);
         }
@@ -302,10 +288,10 @@ public class SyncService extends Service {
     private void startSyncBySchedulerByNameList(String[] schedule_list) {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
-        for(String schedule_name:schedule_list) {
+        for (String schedule_name : schedule_list) {
             mUtil.addDebugMsg(1, "I", "Schedule start, name=" + schedule_name);
             ScheduleListAdapter.ScheduleListItem si = getScheduleInformation(mGp.syncScheduleList, schedule_name);
-            if (si!=null) {
+            if (si != null) {
                 if (si.syncAutoSyncTask) {
                     queueAutoSyncTask(SYNC_REQUEST_SCHEDULE, si);
                 } else {
@@ -318,7 +304,7 @@ public class SyncService extends Service {
                     }
                 }
             } else {
-                mUtil.addLogMsg("W","", "Specified schedule name was not found, name=",schedule_name);
+                mUtil.addLogMsg("W", "", "Specified schedule name was not found, name=", schedule_name);
             }
         }
         if (!mGp.syncThreadActive) {
@@ -372,10 +358,10 @@ public class SyncService extends Service {
                     return;
                 }
                 String t_sg = bundle.getString(START_SYNC_EXTRA_PARM_SYNC_GROUP);
-                String t_sp="";
-                for(GroupListAdapter.GroupListItem item:mGp.syncGroupList) {
+                String t_sp = "";
+                for (GroupListAdapter.GroupListItem item : mGp.syncGroupList) {
                     if (item.groupName.equalsIgnoreCase(t_sg)) {
-                        t_sp=item.taskList;
+                        t_sp = item.taskList;
                     }
                 }
                 if (!t_sp.equals("")) {
@@ -384,12 +370,12 @@ public class SyncService extends Service {
                             mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_list));
                 } else {
                     mUtil.addLogMsg("W", "",
-                            mContext.getString(R.string.msgs_svc_received_start_request_from_external_group_not_found)+ t_sg);
+                            mContext.getString(R.string.msgs_svc_received_start_request_from_external_group_not_found) + t_sg);
                     NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
-                            mContext.getString(R.string.msgs_svc_received_start_request_from_external_group_not_found)+ t_sg);
+                            mContext.getString(R.string.msgs_svc_received_start_request_from_external_group_not_found) + t_sg);
                 }
             } else {
-                mUtil.addLogMsg("W","",
+                mUtil.addLogMsg("W", "",
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
                 NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
@@ -421,13 +407,13 @@ public class SyncService extends Service {
                     startSyncThread();
                 }
             } else {
-                mUtil.addLogMsg("W","",
+                mUtil.addLogMsg("W", "",
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
                 NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                         mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
             }
         } else {
-            mUtil.addLogMsg("W","",
+            mUtil.addLogMsg("W", "",
                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
             NotificationUtils.showOngoingMsg(mGp, mUtil, 0,
                     mContext.getString(R.string.msgs_svc_received_start_request_from_external_no_task_specified));
@@ -540,11 +526,11 @@ public class SyncService extends Service {
     }
 
     private boolean isSyncTaskAlreadyScheduled(ArrayBlockingQueue<SyncRequestItem> srq, String task_name) {
-        boolean result=false;
-        for(SyncRequestItem sri:srq) {
-            for(SyncTaskItem sti:sri.sync_task_list) {
+        boolean result = false;
+        for (SyncRequestItem sri : srq) {
+            for (SyncTaskItem sti : sri.sync_task_list) {
                 if (sti.getSyncTaskName().equals(task_name)) {
-                    result=true;
+                    result = true;
                     break;
                 }
             }
@@ -555,11 +541,11 @@ public class SyncService extends Service {
 
     private void queueSpecificSyncTask(String job_name[], String req_id, ScheduleListAdapter.ScheduleListItem si) {
         SyncRequestItem sri = new SyncRequestItem();
-        sri.schedule_name=si.scheduleName;
+        sri.schedule_name = si.scheduleName;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
         sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
         sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
-        sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
+        sri.overrideSyncOptionCharge = si.syncOverrideOptionCharge;
         sri.requestor = req_id;
         sri.requestor_display = HistoryListAdapter.HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
         if (job_name != null && job_name.length > 0) {
@@ -604,12 +590,12 @@ public class SyncService extends Service {
     }
 
     private void queueSpecificSyncTask(String job_name[], String req_id) {
-        ScheduleListAdapter.ScheduleListItem si=new ScheduleListAdapter.ScheduleListItem();
-        si.scheduleName="";
-        si.syncWifiOnBeforeStart=false;
-        si.syncDelayAfterWifiOn=0;
-        si.syncWifiOffAfterEnd=false;
-        si.syncOverrideOptionCharge= ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        ScheduleListAdapter.ScheduleListItem si = new ScheduleListAdapter.ScheduleListItem();
+        si.scheduleName = "";
+        si.syncWifiOnBeforeStart = false;
+        si.syncDelayAfterWifiOn = 0;
+        si.syncWifiOffAfterEnd = false;
+        si.syncOverrideOptionCharge = ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
         queueSpecificSyncTask(job_name, req_id, si);
         if (!mGp.syncThreadActive) {
             startSyncThread();
@@ -621,35 +607,35 @@ public class SyncService extends Service {
         SyncRequestItem sri = new SyncRequestItem();
         sri.requestor = req_id;
         sri.requestor_display = HistoryListAdapter.HistoryListItem.getSyncStartRequestorDisplayName(mContext, req_id);
-        sri.schedule_name=si.scheduleName;
+        sri.schedule_name = si.scheduleName;
         sri.wifi_off_after_sync_ended = si.syncWifiOffAfterEnd;
         sri.wifi_on_before_sync_start = si.syncWifiOnBeforeStart;
         sri.start_delay_time_after_wifi_on = si.syncDelayAfterWifiOn;
-        sri.overrideSyncOptionCharge=si.syncOverrideOptionCharge;
+        sri.overrideSyncOptionCharge = si.syncOverrideOptionCharge;
         synchronized (mGp.syncRequestQueue) {
             for (SyncTaskItem sji : mGp.syncTaskList) {
                 if (sji.isSyncTaskAuto() && !sji.isSyncTestMode()) {
-                    String[] job_name=new String[]{sji.getSyncTaskName()};
+                    String[] job_name = new String[]{sji.getSyncTaskName()};
                     if (!sji.isSyncFolderStatusError()) {
                         if (isSyncTaskAlreadyScheduled(mGp.syncRequestQueue, job_name[0])) {
-                            mUtil.addLogMsg("W","",
+                            mUtil.addLogMsg("W", "",
                                     String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_already_task_queued_schedule),
                                             sri.schedule_name, job_name[0], sri.requestor));
                         } else {
                             cnt++;
                             if (si.scheduleName.equals("")) {
-                                mUtil.addLogMsg("I","",
+                                mUtil.addLogMsg("I", "",
                                         String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted),
                                                 job_name[0], sri.requestor));
                             } else {
-                                mUtil.addLogMsg("I","",
+                                mUtil.addLogMsg("I", "",
                                         String.format(mContext.getString(R.string.msgs_svc_received_start_sync_task_request_accepted_schedule),
                                                 sri.schedule_name, job_name[0], sri.requestor));
                             }
                             sri.sync_task_list.add(sji.clone());
                         }
                     } else {
-                        mUtil.addLogMsg("W","",
+                        mUtil.addLogMsg("W", "",
                                 String.format(mContext.getString(R.string.msgs_svc_received_start_request_ignored_task_is_error),
                                         job_name[0], sri.requestor));
                     }
@@ -666,12 +652,12 @@ public class SyncService extends Service {
     }
 
     private void queueAutoSyncTask(String req_id) {
-        ScheduleListAdapter.ScheduleListItem si=new ScheduleListAdapter.ScheduleListItem();
-        si.scheduleName="";
-        si.syncWifiOnBeforeStart=false;
-        si.syncDelayAfterWifiOn=0;
-        si.syncWifiOffAfterEnd=false;
-        si.syncOverrideOptionCharge= ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
+        ScheduleListAdapter.ScheduleListItem si = new ScheduleListAdapter.ScheduleListItem();
+        si.scheduleName = "";
+        si.syncWifiOnBeforeStart = false;
+        si.syncDelayAfterWifiOn = 0;
+        si.syncWifiOffAfterEnd = false;
+        si.syncOverrideOptionCharge = ScheduleListAdapter.ScheduleListItem.OVERRIDE_SYNC_OPTION_DO_NOT_CHANGE;
         queueAutoSyncTask(req_id, si);
     }
 
@@ -748,40 +734,46 @@ public class SyncService extends Service {
     private int mSyncThreadResult = 0;
 
     private void showSyncEndNotificationMessage() {
-        boolean sound=false, vibration=false;
+        boolean sound = false, vibration = false;
         if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
             if (mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS) ||
-                    mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_SUCCESS)) sound=true;
+                    mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_SUCCESS))
+                sound = true;
             if (mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
-                    mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_SUCCESS)) vibration=true;
+                    mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_SUCCESS))
+                vibration = true;
         } else if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) {
-            if (mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS)) sound=true;
-            if (mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS)) vibration=true;
+            if (mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS))
+                sound = true;
+            if (mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS))
+                vibration = true;
         } else if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_ERROR) {
             if (mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS) ||
-                    mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ERROR)) sound=true;
+                    mGp.settingNotificationSoundWhenSyncEnded.equals(NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ERROR))
+                sound = true;
             if (mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS) ||
-                    mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ERROR)) vibration=true;
+                    mGp.settingNotificationVibrateWhenSyncEnded.equals(NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ERROR))
+                vibration = true;
         }
 
-        boolean is_notice_message_showed=false;
+        boolean is_notice_message_showed = false;
         if (mGp.activityIsBackground) {
             if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS || mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_CANCEL) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_SUCCESS)) {
                     NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
-                    is_notice_message_showed=true;
+                    is_notice_message_showed = true;
                 }
             } else if (mSyncThreadResult == SyncTaskItem.SYNC_RESULT_STATUS_ERROR) {
                 if (mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS) ||
                         mGp.settingNotificationMessageWhenSyncEnded.equals(NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR)) {
                     NotificationUtils.showNoticeMsg(mContext, mGp, mUtil, mGp.notificationLastShowedMessage, sound, vibration);
-                    is_notice_message_showed=true;
+                    is_notice_message_showed = true;
                 }
             }
         }
         if (!is_notice_message_showed) {
-            Intent na=new Intent(mContext, ActivityNotification.class);
+            Intent na = new Intent(mContext, ActivityNotification.class);
             na.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             na.putExtra(ActivityNotification.NOTIFICATION_SOUND_KEY, sound);
             na.putExtra(ActivityNotification.NOTIFICATION_SOUND_VOLUME_KEY, mGp.settingNotificationVolume);
@@ -792,7 +784,7 @@ public class SyncService extends Service {
     }
 
     private void issueStopForegroundWithRemove() {
-        if (Build.VERSION.SDK_INT>=26) {
+        if (Build.VERSION.SDK_INT >= 26) {
             stopForeground(Service.STOP_FOREGROUND_REMOVE);
             mGp.notificationManager.cancel(R.string.app_name);
             mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_REMOVE) issued");
@@ -800,11 +792,11 @@ public class SyncService extends Service {
             stopForeground(true);
             mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
         }
-        mStartForegroundRequired=true;
+        mStartForegroundRequired = true;
     }
 
     private void issueStopForegroundWithDetach() {
-        if (Build.VERSION.SDK_INT>=26) {
+        if (Build.VERSION.SDK_INT >= 26) {
             stopForeground(Service.STOP_FOREGROUND_DETACH);
             mGp.notificationManager.cancel(R.string.app_name);
             mUtil.addDebugMsg(1, "I", "stopForeground(Service.STOP_FOREGROUND_DETACH) issued");
@@ -812,13 +804,14 @@ public class SyncService extends Service {
             stopForeground(true);
             mUtil.addDebugMsg(1, "I", "stopForeground(true) issued");
         }
-        mStartForegroundRequired=true;
+        mStartForegroundRequired = true;
     }
 
-    private boolean mStartForegroundRequired=true;
+    private boolean mStartForegroundRequired = true;
+
     private void issueStartForeground() {
         if (mStartForegroundRequired) {
-            mStartForegroundRequired=false;
+            mStartForegroundRequired = false;
             startForeground(R.string.app_name, mGp.notification);
             mUtil.addDebugMsg(1, "I", "startForeground(R.string.app_name, mGp.notification) issued.");
         } else {
@@ -850,10 +843,10 @@ public class SyncService extends Service {
             String action = in.getAction();
             if (action.equals(Intent.ACTION_SCREEN_ON)) {
             } else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
-//                if (mGp.settingScreenOnIfScreenOnAtStartOfSync && mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
-                if (Build.VERSION.SDK_INT<=28) {
+                if (Build.VERSION.SDK_INT <= 28) {
                     if (mGp.syncThreadActive && !mGp.syncThreadConfirmWait) {
-                        if (mGp.forceDimScreenWakelock.isHeld()) mGp.forceDimScreenWakelock.release();
+                        if (mGp.forceDimScreenWakelock.isHeld())
+                            mGp.forceDimScreenWakelock.release();
                         mGp.forceDimScreenWakelock.acquire();
                         mUtil.addDebugMsg(1, "I", "Sleep receiver, ForceDim wake lock acquired");
                     }
@@ -869,5 +862,27 @@ public class SyncService extends Service {
         }
     }
 
-}
+    final private class MediaStatusChangeReceiver extends BroadcastReceiver {
+        @Override
+        final public void onReceive(Context c, Intent in) {
+            String action = in.getAction();
+            mUtil.addDebugMsg(1, "I", "Media status change receiver, action=" + action);
+            if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
+                    || action.equals(Intent.ACTION_MEDIA_EJECT) || action.equals(Intent.ACTION_MEDIA_REMOVED)) {
+                mGp.refreshMediaDir(c);
+                try {
+                    if (mGp.callbackStub != null) {
+                        mGp.callbackStub.cbMediaStatusChanged(action);
+                        mUtil.addDebugMsg(1, "I", "Media status change was notified to activity");
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                mUtil.addDebugMsg(1, "I", "Media status change process ended, path=" + in.getDataString());
+//                issueStartForeground();
+//                issueStopForegroundWithDetach();
+            }
+        }
 
+    }
+}

@@ -2624,14 +2624,6 @@ public class SyncThread extends Thread {
         Collections.sort(mStwa.matchAnyWhereExcludeDirectoryList);
         Collections.sort(mStwa.matchFromBeginExcludeDirectoryList);
         Collections.sort(mStwa.matchFromBeginIncludeDirectoryList);
-        if (s_df.size()>0 &&
-                mStwa.matchAnyWhereExcludeDirectoryList.size()==0 &&
-                mStwa.matchFromBeginIncludeDirectoryList.size()==0 &&
-                mStwa.matchFromBeginExcludeDirectoryList.size()==0) {
-            showMsg(mStwa, false, mStwa.currentSTI.getSyncTaskName(), "E", "", "",
-                    mStwa.appContext.getString(R.string.msgs_task_sync_task_filter_list_enabled_filter_not_exists));//mStwa.appContext.getString(R.string.msgs_mirror_task_started));
-            return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
-        }
 
         int flags = Pattern.CASE_INSENSITIVE | Pattern.MULTILINE;
 

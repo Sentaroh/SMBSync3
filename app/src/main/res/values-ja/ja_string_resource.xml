@@ -26,6 +26,7 @@
         <string name="msgs_export_import_profile_hdr_task_list">タスクリスト</string>
         <string name="msgs_export_import_profile_no_import_items">タスクリストに取り込む項目がありません。</string>
         <string name="msgs_export_import_profile_specified_file_was_not_sync_task_saved_file">指定されたファイルは同期タスクリスト保存ファイルではありません。ファイル=%s</string>
+        <string name="msgs_export_import_profile_error_occured_while_import_task_list">タスクリスト取込み中にエラーが発生しました。メッセージタブのエラーを確認してください。</string>
         <string name="msgs_import_autosave_dlg_title">タスクリストの取込み</string>
         <string name="msgs_import_autosave_dlg_select_exported_file">取込むファイルの選択</string>
         <string name="msgs_import_autosave_dlg_autosave_list">自動保存したファイル</string>
@@ -61,6 +62,8 @@
         <string name="msgs_help_directory_filter_title">ディレクトリーフィルターのヘルプ</string>
         <string name="msgs_help_file_filter_file">SMBSync3_Help_JA_file_filter.html</string>
         <string name="msgs_help_file_filter_title">ファイルフィルターのヘルプ</string>
+        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_JA_ip_address_filter.html</string>
+        <string name="msgs_help_ip_address_filter_title">IPアドレスフィルターのヘルプ</string>
         <string name="msgs_help_schedule_file">SMBSync3_Help_JA_schedule.html</string>
         <string name="msgs_help_schedule_title">スケジュールのヘルプ</string>
         <string name="msgs_help_group_file">SMBSync3_Help_JA_group.html</string>
@@ -138,10 +141,6 @@
         <string name="msgs_filter_list_filter_contains_not_allowed_character">使用できない文字が含まれています。文字=\"%1$s\"、フィルタ=%2$s</string>
         <string name="msgs_filter_list_match_any_where_change_to_exclude">フィルターに\"\\\"が含まれているため、選択から除外に変更しました。\nフィルター=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">無効なIPアドレスです。</string>
-        <string name="msgs_filter_list_guide_directory">- フィルターは\";\"で区切り複数入力できます\n- 除外が優先されます</string>
-        <string name="msgs_filter_list_guide_file">- フィルターは\";\"で区切り複数入力できます\n- 除外が優先されます</string>
-        <string name="msgs_filter_list_guide_access_point">例\nMY_HOMEで始まるアクセスポイントを選択する : MY_HOME*</string>
-        <string name="msgs_filter_list_guide_ip_address">例:\n192.168.100.*==192.168.100.0-192.168.100.255 許可\n10.*==10.0.0.0-10.255.255.255 許可</string>
         <string name="msgs_hist_cont_label_copy">クリップボードにコピー</string>
         <string name="msgs_hist_cont_label_delete">履歴を削除する</string>
         <string name="msgs_hist_cont_label_move_bottom">最下部に移動</string>
@@ -354,7 +353,6 @@
         <string name="msgs_task_sync_task_dlg_swap_warning_title">ソースと宛先フォルダーを入替える</string>
         <string name="msgs_task_sync_task_dlg_swap_warning_message">ソースフォルダーと宛先フォルダーの内容を入れ替えるとファイルやディレクトリーが削除される可能性があります。\nテストモードまたはテストディレクトリー作成してテストを行い意図しないファイルやディレクトリーが削除されない事を確認してください。</string>
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">ソースフォルダーでは撮影日時に関する変数は使用できないため削除しました。</string>
-        <string name="deleted_msgs_task_sync_task_dlg_dir_filter_not_specified">ディレクトリフィルタ―は指定されてません</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">ファイル名フィルタ―は指定されてません</string>
         <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
@@ -393,8 +391,6 @@
         <string name="msgs_task_sync_task_filter_list_dlg_source_directory">ソースディレクトリー：</string>
         <string name="msgs_task_sync_task_filter_list_dlg_file_filter">ファイル名 フィルター</string>
         <string name="msgs_task_sync_task_filter_list_dlg_filter_hint">フィルター</string>
-        <string name="msgs_task_sync_task_filter_list_enabled_filter_not_exists">有効なフィルターが見つかりません。フィルター編集で有効にしてください。</string>
-        <string name="msgs_task_sync_task_filter_list_dlg_hint_enabled_filter_does_not_exists">有効なフィルターが見つかりません。</string>
         <string name="msgs_task_sync_task_filter_list_dlg_include">選択</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_task_sync_task_filter_title">フィルター :</string>
@@ -472,7 +468,6 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">充電中の時だけ同期を開始する</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">ネットワークオプション</string>
-        <string name="deleted_msgs_task_sync_task_sync_sub_directory_dir_filter_not_specified">ディレクトリーフィルタが指定されていません</string>
         <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">ソースディレクトリーが空の時にソースディレクトリーを削除する。</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
