@@ -78,8 +78,6 @@ public class SyncService extends Service {
         mContext = SyncService.this;
         mGp = GlobalWorkArea.getGlobalParameter(mContext);
 
-        mGp.serviceIsActive = true;
-
         mUtil = new CommonUtilities(mContext, "Service", mGp, null);
 
         mUtil.addDebugMsg(1, "I", "onCreate entered");
@@ -136,8 +134,9 @@ public class SyncService extends Service {
         mGp.waitConfigurationLock();
         if (action.equals(SCHEDULE_INTENT_TIMER_EXPIRED)) {
             issueStartForeground();
-            if (mGp.settingScheduleSyncEnabled) startSyncByScheduler(intent);
-            else {
+            if (mGp.settingScheduleSyncEnabled) {
+                startSyncByScheduler(intent);
+            } else {
                 mUtil.addDebugMsg(1, "I", "Schedule sync request is ignored because scheduler is disabled");
             }
         } else if (action.equals(START_SYNC_INTENT) || action.equals(START_SYNC_AUTO_INTENT)) {
@@ -145,8 +144,7 @@ public class SyncService extends Service {
             Bundle bundle = intent.getExtras();
             if (bundle != null && bundle.containsKey(START_SYNC_EXTRA_PARM_REQUESTOR)) {
                 String req = bundle.getString(START_SYNC_EXTRA_PARM_REQUESTOR, "");
-                if (req.equals(START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT))
-                    startSyncByShortcut(intent);
+                if (req.equals(START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT)) startSyncByShortcut(intent);
                 else startSyncByAnotherAppl(intent);
             } else {
                 startSyncByAnotherAppl(intent);
@@ -187,7 +185,6 @@ public class SyncService extends Service {
         LogUtil.closeLog(mContext);
         NotificationUtils.setNotificationEnabled(mGp, true);
         CommonUtilities.saveMessageList(mContext, mGp);
-        mGp.serviceIsActive = false;
         if (mGp.activityRestartRequired) {
             mGp.activityRestartRequired = false;
             mGp.clearParms(mContext);
@@ -867,8 +864,7 @@ public class SyncService extends Service {
         final public void onReceive(Context c, Intent in) {
             String action = in.getAction();
             mUtil.addDebugMsg(1, "I", "Media status change receiver, action=" + action);
-            if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
-                    || action.equals(Intent.ACTION_MEDIA_EJECT) || action.equals(Intent.ACTION_MEDIA_REMOVED)) {
+            if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
                 mGp.refreshMediaDir(c);
                 try {
                     if (mGp.callbackStub != null) {
@@ -879,9 +875,20 @@ public class SyncService extends Service {
                     e.printStackTrace();
                 }
                 mUtil.addDebugMsg(1, "I", "Media status change process ended, path=" + in.getDataString());
-//                issueStartForeground();
-//                issueStopForegroundWithDetach();
+            } else if (action.equals(Intent.ACTION_MEDIA_UNMOUNTED) || action.equals(Intent.ACTION_MEDIA_EJECT) || action.equals(Intent.ACTION_MEDIA_REMOVED)) {
+                SystemClock.sleep(1000);
+                mGp.refreshMediaDir(c);
+                try {
+                    if (mGp.callbackStub != null) {
+                        mGp.callbackStub.cbMediaStatusChanged(action);
+                        mUtil.addDebugMsg(1, "I", "Media status change was notified to activity");
+                    }
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                mUtil.addDebugMsg(1, "I", "Media status change process ended, path=" + in.getDataString());
             }
+
         }
 
     }

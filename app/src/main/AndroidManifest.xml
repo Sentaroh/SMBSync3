@@ -50,22 +50,6 @@
                 <action android:name="${applicationId}.ACTION_SET_TIMER" />
                 <action android:name="${applicationId}.ACTION_SET_TIMER_IF_NOT_SET" />
             </intent-filter>
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MEDIA_MOUNTED"></action>-->
-<!--                <data android:scheme="file" />-->
-<!--                <action android:name="android.intent.action.MEDIA_EJECT"></action>-->
-<!--                <data android:scheme="file" />-->
-<!--                <action android:name="android.intent.action.MEDIA_REMOVED"></action>-->
-<!--                <data android:scheme="file" />-->
-<!--                <action android:name="android.intent.action.MEDIA_UNMOUNTED"></action>-->
-<!--                <data android:scheme="file" />-->
-<!--            </intent-filter>-->
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
-<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />-->
-<!--            </intent-filter>-->
         </receiver>
 
         <activity
@@ -141,6 +125,7 @@
             android:launchMode="singleTop"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent"
+            android:taskAffinity=".ActivityShortcut"
             android:excludeFromRecents="true">
             <intent-filter >
                 <action android:name="android.intent.action.VIEW" />
