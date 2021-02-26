@@ -78,8 +78,6 @@ public class SyncService extends Service {
         mContext = SyncService.this;
         mGp = GlobalWorkArea.getGlobalParameter(mContext);
 
-        mGp.serviceIsActive = true;
-
         mUtil = new CommonUtilities(mContext, "Service", mGp, null);
 
         mUtil.addDebugMsg(1, "I", "onCreate entered");
@@ -187,7 +185,6 @@ public class SyncService extends Service {
         LogUtil.closeLog(mContext);
         NotificationUtils.setNotificationEnabled(mGp, true);
         CommonUtilities.saveMessageList(mContext, mGp);
-        mGp.serviceIsActive = false;
         if (mGp.activityRestartRequired) {
             mGp.activityRestartRequired = false;
             mGp.clearParms(mContext);
@@ -869,6 +866,7 @@ public class SyncService extends Service {
             mUtil.addDebugMsg(1, "I", "Media status change receiver, action=" + action);
             if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
                     || action.equals(Intent.ACTION_MEDIA_EJECT) || action.equals(Intent.ACTION_MEDIA_REMOVED)) {
+                if (action.equals(Intent.ACTION_MEDIA_EJECT)) SystemClock.sleep(1000);
                 mGp.refreshMediaDir(c);
                 try {
                     if (mGp.callbackStub != null) {
@@ -879,8 +877,6 @@ public class SyncService extends Service {
                     e.printStackTrace();
                 }
                 mUtil.addDebugMsg(1, "I", "Media status change process ended, path=" + in.getDataString());
-//                issueStartForeground();
-//                issueStopForegroundWithDetach();
             }
         }
 
