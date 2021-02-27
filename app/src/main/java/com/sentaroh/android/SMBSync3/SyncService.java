@@ -580,9 +580,11 @@ public class SyncService extends Service {
                 mGp.syncRequestQueue.add(sri);
             } else {
 //                mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_specified_sync_task_not_scheduled));
+                mUtil.addDebugMsg(1, "W", "queueSpecificSyncTask sync request not created.");
             }
         } else {
 //            mUtil.addLogMsg("E", mContext.getString(R.string.msgs_main_sync_specified_sync_task_not_scheduled));
+            mUtil.addDebugMsg(1, "W", "queueSpecificSyncTask invalid task name list received, name="+job_name);
         }
     }
 
