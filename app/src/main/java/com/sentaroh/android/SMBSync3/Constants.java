@@ -42,9 +42,9 @@ public class Constants {
     public static final String CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE ="Archive";
     public static final String CONFIRM_REQUEST_CONFLICT_FILE ="Conflict";
 	public static final int CONFIRM_RESP_YES = 1;
-	public static final int CONFIRM_RESP_YESALL = 2;
+	public static final int CONFIRM_RESP_YES_ALL = 2;
 	public static final int CONFIRM_RESP_NO = -1;
-	public static final int CONFIRM_RESP_NOALL = -2;
+	public static final int CONFIRM_RESP_NO_ALL = -2;
 	public static final int CONFIRM_RESP_CANCEL = -10;
 
     public static final int CONFIRM_CONFLICT_RESP_SELECT_A = 21;

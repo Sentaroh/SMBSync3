@@ -12,8 +12,6 @@ interface ISvcClient{
 	
 	void aidlStartSchedule(in String[] schedule_name_array) ;
 
-	void aidlReloadTaskList() ;
-	
 	void aidlConfirmReply(int confirmed) ;
 	
 	void aidlStopService() ;

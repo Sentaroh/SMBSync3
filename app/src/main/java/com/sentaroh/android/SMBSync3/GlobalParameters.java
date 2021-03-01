@@ -202,6 +202,8 @@ public class GlobalParameters {
     public boolean settingScheduleSyncEnabled=true;
 
     public NotificationManager notificationManager = null;
+    final static public int notificationOngoingMessageID=1;
+    final static public int notificationNoticeMessageID=2;
     public boolean notificationEnabled = true;
     public int notificationSmallIcon = R.drawable.ic_48_smbsync_wait;
     public Notification notification = null;

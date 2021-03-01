@@ -68,6 +68,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import static com.sentaroh.android.SMBSync3.Constants.NAME_UNUSABLE_CHARACTER;
+import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_LAST_DAY_OF_THE_MONTH;
 
 public class ScheduleEditor {
     private static Logger log = LoggerFactory.getLogger(ScheduleEditor.class);
@@ -259,7 +260,7 @@ public class ScheduleEditor {
 
         ctv_sched_enabled.setChecked(mSched.scheduleEnabled);
 
-        ctv_last_day.setChecked(mSched.scheduleDay.equals("99"));
+        ctv_last_day.setChecked(mSched.scheduleDay.equals(SCHEDULE_LAST_DAY_OF_THE_MONTH));
         if(ctv_last_day.isChecked()) {
             setViewEnabled(mActivity, sp_sched_day, false);
         } else {
@@ -856,7 +857,7 @@ public class ScheduleEditor {
         sp.scheduleType=getScheduleTypeFromSpinner(sp_sched_type);
 
         if (ctv_last_day.isChecked()) {
-            sp.scheduleDay = "99";
+            sp.scheduleDay = SCHEDULE_LAST_DAY_OF_THE_MONTH;
         } else {
             sp.scheduleDay = sp_sched_day.getSelectedItem().toString();
         }

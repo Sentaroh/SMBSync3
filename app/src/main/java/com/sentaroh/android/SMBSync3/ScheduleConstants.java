@@ -36,8 +36,11 @@ public class ScheduleConstants {
     public static final String SCHEDULE_ENABLED_KEY = "scheduler_enabled_key";
 
     public static final String SCHEDULE_INTENT_TIMER_EXPIRED = APPLICATION_ID + ".ACTION_TIMER_EXPIRED";
+
     public static final String SCHEDULE_INTENT_SET_TIMER = APPLICATION_ID + ".ACTION_SET_TIMER";
     public static final String SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET = APPLICATION_ID + ".ACTION_SET_TIMER_IF_NOT_SET";
+
+    public static final String SCHEDULE_LAST_DAY_OF_THE_MONTH = "99";
 
 
 }

@@ -29,15 +29,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogAppFragment;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
+import static com.sentaroh.android.SMBSync3.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE;
+import static com.sentaroh.android.SMBSync3.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL;
+import static com.sentaroh.android.SMBSync3.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
+import static com.sentaroh.android.SMBSync3.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL;
+import static com.sentaroh.android.SMBSync3.Constants.QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST;
+import static com.sentaroh.android.SMBSync3.Constants.QUERY_SYNC_TASK_INTENT;
+import static com.sentaroh.android.SMBSync3.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY;
+import static com.sentaroh.android.SMBSync3.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT;
+import static com.sentaroh.android.SMBSync3.Constants.REPLY_SYNC_TASK_INTENT;
+
 public class ActivityIntentHandler extends Activity {
     private static final Logger log= LoggerFactory.getLogger(ActivityIntentHandler.class);
     private GlobalParameters mGp=null;
+    private LogUtil mLog = null;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -51,35 +64,89 @@ public class ActivityIntentHandler extends Activity {
         setContentView(R.layout.activity_transrucent);
         final Context c=this;
 
+        if (mLog == null) mLog = new LogUtil(c, "IntentHandler");
+        if (mGp == null) {
+            mGp =GlobalWorkArea.getGlobalParameter(c);
+            mLog.addDebugMsg(1, "I", "config load started");
+            mGp.loadConfigList(c);
+            mLog.addDebugMsg(1, "I", "config load ended");
+        }
+
         final Intent received_intent=getIntent();
         if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {
             final FragmentManager fm=getFragmentManager();
-            try {
-                Intent in=new Intent(c, SyncService.class);
-                in.setAction(received_intent.getAction());
-                if (received_intent.getExtras() != null) in.putExtras(received_intent.getExtras());
-//                c.startForegroundService(in);
-                c.startForegroundService(in);
+
+            if (received_intent.getAction().equals(QUERY_SYNC_TASK_INTENT)) {
+                querySyncTask(c, received_intent);
                 finish();
-            }catch(Exception e){
-                e.printStackTrace();
-                NotifyEvent ntfy=new NotifyEvent(c);
-                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        finish();
-                    }
+            } else {
+                try {
+                    Intent in=new Intent(c, SyncService.class);
+                    in.setAction(received_intent.getAction());
+                    in.putExtras(received_intent.getExtras());
+                    c.startForegroundService(in);
+                    finish();
+                }catch(Exception e){
+                    e.printStackTrace();
+                    NotifyEvent ntfy=new NotifyEvent(c);
+                    ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context context, Object[] objects) {
+                            finish();
+                        }
 
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {
-
-                    }
-                });
-                MessageDialogAppFragment mdf=MessageDialogAppFragment.newInstance(false, "E",
-                        "SMBSync3", "ActivityIntentHandler start service error\n"+e.getMessage());
-                mdf.showDialog(fm, mdf, ntfy);
+                        @Override
+                        public void negativeResponse(Context context, Object[] objects) {}
+                    });
+                    MessageDialogAppFragment mdf=MessageDialogAppFragment.newInstance(false, "E",
+                            "SMBSync3", "ActivityIntentHandler start service error\n"+e.getMessage());
+                    mdf.showDialog(fm, mdf, ntfy);
+                    mLog.addLogMsg("E","ActivityIntentHandler start service error\n"+e.getMessage());
+                }
             }
-
         }
     }
+
+    private void querySyncTask(Context c, Intent in) {
+        String reply_list = "", sep = "";
+        String task_type = QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
+        if (in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE) != null)
+            task_type = in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE);
+        mLog.addDebugMsg(1, "I", "extra=" + in.getExtras() + ", str=" + in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE));
+        int reply_count = 0;
+        if (mGp.syncTaskList.size() > 0) {
+            for (int i = 0; i < mGp.syncTaskList.size(); i++) {
+                SyncTaskItem sti = mGp.syncTaskList.get(i);
+                if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST.toLowerCase())) {
+                    if (sti.isSyncTestMode()) {
+                        reply_list += sep + sti.getSyncTaskName();
+                        sep = NAME_LIST_SEPARATOR;
+                        reply_count++;
+                    }
+                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO.toLowerCase())) {
+                    if (sti.isSyncTaskAuto()) {
+                        reply_list += sep + sti.getSyncTaskName();
+                        sep = NAME_LIST_SEPARATOR;
+                        reply_count++;
+                    }
+                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL.toLowerCase())) {
+                    if (!sti.isSyncTaskAuto()) {
+                        reply_list += sep + sti.getSyncTaskName();
+                        sep = NAME_LIST_SEPARATOR;
+                        reply_count++;
+                    }
+                } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL.toLowerCase())) {
+                    reply_list += sep + sti.getSyncTaskName();
+                    sep = NAME_LIST_SEPARATOR;
+                    reply_count++;
+                }
+            }
+        }
+        Intent reply = new Intent(REPLY_SYNC_TASK_INTENT);
+        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT, reply_count);
+        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY, reply_list);
+        mLog.addDebugMsg(1, "I", "query result, count="+reply_count+", list=["+reply_list+"]");
+        c.sendBroadcast(reply);
+    }
+
 }

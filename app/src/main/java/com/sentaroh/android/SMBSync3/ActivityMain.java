@@ -328,7 +328,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onCallBack(Context context, boolean positive, Object[] objects) {
                 //Service起動終了
-                ScheduleUtils.sendTimerRequest(mContext, SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET);
+                ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET);
                 checkStoredKey(new CallBackListener(){
                     @Override
                     public void onCallBack(Context context, boolean positive, Object[] objects) {
@@ -595,7 +595,6 @@ public class ActivityMain extends AppCompatActivity {
         super.onPause();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, currentView=" + mCurrentTab +
                 ", getChangingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
-        setActivityForeground(false);
         Thread th=new Thread() {
             @Override
             public void run() {
@@ -609,6 +608,7 @@ public class ActivityMain extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        setActivityForeground(false);
     }
 
 //    @Override
@@ -1558,7 +1558,7 @@ public class ActivityMain extends AppCompatActivity {
                 mGp.setScheduleEnabled(mContext, !mGp.settingScheduleSyncEnabled);
                 invalidateOptionsMenu();
                 setScheduleTabMessage();
-                ScheduleUtils.sendTimerRequest(mContext, SCHEDULE_INTENT_SET_TIMER);
+                ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER);
                 ScheduleUtils.setScheduleInfo(mContext, mGp, mUtil);
             }
             @Override
@@ -1648,7 +1648,7 @@ public class ActivityMain extends AppCompatActivity {
                 if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
                 else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
                 reloadSettingParms();
-                ScheduleUtils.sendTimerRequest(mContext, SCHEDULE_INTENT_SET_TIMER);
+                ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER);
                 ScheduleUtils.setScheduleInfo(mContext, mGp, mUtil);
                 setSyncTaskContextButtonNormalMode();
                 mGp.syncTaskListAdapter.setShowCheckBox(false);
@@ -3348,7 +3348,7 @@ public class ActivityMain extends AppCompatActivity {
                 mUiHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        ScheduleUtils.sendTimerRequest(mContext, SCHEDULE_INTENT_SET_TIMER);
+                        ScheduleUtils.sendTimerRequest(mContext, mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER);
                         ScheduleUtils.setScheduleInfo(mContext, mGp, mUtil);
                     }
                 });
@@ -5139,6 +5139,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void openService(final CallBackListener cbl) {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+        mGp.activityIsBackground=false;
         mSvcConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName arg0, IBinder service) {
                 mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
@@ -5271,7 +5272,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
-                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_YESALL);
+                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_YES_ALL);
             }
         };
         mGp.confirmYesAll.setOnClickListener(mGp.confirmYesAllListener);
@@ -5289,7 +5290,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
-                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_NOALL);
+                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_NO_ALL);
             }
         };
         mGp.confirmNoAll.setOnClickListener(mGp.confirmNoAllListener);

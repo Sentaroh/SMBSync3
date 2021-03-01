@@ -1680,16 +1680,16 @@ public class SyncThread extends Thread {
             boolean ignore_confirm = true;
             if (type.equals(CONFIRM_REQUEST_DELETE_DIR) || type.equals(CONFIRM_REQUEST_DELETE_FILE) ||
                     type.equals(CONFIRM_REQUEST_DELETE_ZIP_ITEM_DIR) || type.equals(CONFIRM_REQUEST_DELETE_ZIP_ITEM_FILE) ) {
-                if (stwa.confirmDeleteResult == CONFIRM_RESP_YESALL) result = true;
-                else if (stwa.confirmDeleteResult == CONFIRM_RESP_NOALL) result = false;
+                if (stwa.confirmDeleteResult == CONFIRM_RESP_YES_ALL) result = true;
+                else if (stwa.confirmDeleteResult == CONFIRM_RESP_NO_ALL) result = false;
                 else ignore_confirm = false;
             } else if (type.equals(CONFIRM_REQUEST_COPY)) {
-                if (stwa.confirmCopyResult == CONFIRM_RESP_YESALL) result = true;
-                else if (stwa.confirmCopyResult == CONFIRM_RESP_NOALL) result = false;
+                if (stwa.confirmCopyResult == CONFIRM_RESP_YES_ALL) result = true;
+                else if (stwa.confirmCopyResult == CONFIRM_RESP_NO_ALL) result = false;
                 else ignore_confirm = false;
             } else if (type.equals(CONFIRM_REQUEST_MOVE)) {
-                if (stwa.confirmMoveResult == CONFIRM_RESP_YESALL) result = true;
-                else if (stwa.confirmMoveResult == CONFIRM_RESP_NOALL) result = false;
+                if (stwa.confirmMoveResult == CONFIRM_RESP_YES_ALL) result = true;
+                else if (stwa.confirmMoveResult == CONFIRM_RESP_NO_ALL) result = false;
                 else ignore_confirm = false;
             }
             if (!ignore_confirm) {
@@ -1758,8 +1758,8 @@ public class SyncThread extends Thread {
                 ", fp=", url);
         boolean ignore_confirm = true;
         if (type.equals(CONFIRM_REQUEST_ARCHIVE_DATE_FROM_FILE)) {
-            if (stwa.confirmArchiveResult == CONFIRM_RESP_YESALL) result = true;
-            else if (stwa.confirmArchiveResult == CONFIRM_RESP_NOALL) result = false;
+            if (stwa.confirmArchiveResult == CONFIRM_RESP_YES_ALL) result = true;
+            else if (stwa.confirmArchiveResult == CONFIRM_RESP_NO_ALL) result = false;
             else ignore_confirm = false;
         }
         if (!ignore_confirm) {

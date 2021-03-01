@@ -37,8 +37,6 @@ import org.slf4j.LoggerFactory;
 
 import static com.sentaroh.android.SMBSync3.Constants.*;
 
-import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_SET_TIMER;
-import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_TIMER_EXPIRED;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_SCHEDULE_NAME_KEY;
 
@@ -66,24 +64,21 @@ public class SyncReceiver extends BroadcastReceiver {
         }
 
         String action = received_intent.getAction();
+        mLog.addDebugMsg(1, "I", "Receiver received action=" + action);
         if (action != null) {
             if (action.equals(Intent.ACTION_BOOT_COMPLETED) ||
                     action.equals(Intent.ACTION_DATE_CHANGED) ||
                     action.equals(Intent.ACTION_TIMEZONE_CHANGED) ||
                     action.equals(Intent.ACTION_TIME_CHANGED) ||
                     action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 for (ScheduleListAdapter.ScheduleListItem si : mGp.syncScheduleList) si.scheduleLastExecTime = System.currentTimeMillis();
                 TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                 ScheduleUtils.setTimer(mContext, mGp, mLog);
-            } else if (action.equals(SCHEDULE_INTENT_SET_TIMER)) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                ScheduleUtils.setTimer(mContext, mGp, mLog);
-            } else if (action.equals(SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET)) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
-                ScheduleUtils.setTimerIfNotSet(mContext, mGp, mLog);
+//            } else if (action.equals(SCHEDULE_INTENT_SET_TIMER)) {
+//                ScheduleUtils.setTimer(mContext, mGp, mLog);
+//            } else if (action.equals(SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET)) {
+//                ScheduleUtils.setTimerIfNotSet(mContext, mGp, mLog);
             } else if (action.equals(SCHEDULE_INTENT_TIMER_EXPIRED)) {
-                if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "Receiver action=" + action);
                 if (received_intent.getExtras().containsKey(SCHEDULE_SCHEDULE_NAME_KEY)) {
                     Intent send_intent = new Intent(mContext, SyncService.class);
                     send_intent.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
@@ -104,7 +99,7 @@ public class SyncReceiver extends BroadcastReceiver {
                     ScheduleUtils.setTimer(mContext, mGp, mLog);
                 }
             } else {
-                mLog.addDebugMsg(1, "I", "Receiver action=" + action);
+                mLog.addDebugMsg(1, "I", "Receiver ignored action=" + action);
             }
         }
     }

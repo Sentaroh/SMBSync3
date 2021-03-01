@@ -47,8 +47,8 @@
                 <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
                 <action android:name="${applicationId}.ACTION_TIMER_EXPIRED" />
-                <action android:name="${applicationId}.ACTION_SET_TIMER" />
-                <action android:name="${applicationId}.ACTION_SET_TIMER_IF_NOT_SET" />
+<!--                <action android:name="${applicationId}.ACTION_SET_TIMER" />-->
+<!--                <action android:name="${applicationId}.ACTION_SET_TIMER_IF_NOT_SET" />-->
             </intent-filter>
         </receiver>
 
@@ -92,6 +92,7 @@
             android:name=".ActivityIntentHandler"
             android:theme="@android:style/Theme.Translucent"
             android:launchMode="singleTop"
+            android:taskAffinity=".ActivityIntentHandler"
             android:screenOrientation="unspecified"
             android:excludeFromRecents="true">
 
@@ -109,6 +110,7 @@
             android:name=".ActivityNotification"
             android:theme="@android:style/Theme.Translucent"
             android:launchMode="singleTop"
+            android:taskAffinity=".ActivityNotification"
             android:process=":Notify"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified"

@@ -178,7 +178,7 @@ public class NotificationUtils {
                 .bigText(gwa.notificationLastShowedMessage);
         gwa.notification = gwa.notificationBigTextStyle.build();
         if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name, gwa.notification);
+            gwa.notificationManager.notify(gwa.notificationOngoingMessageID, gwa.notification);
 
         return gwa.notification;
     }
@@ -199,7 +199,7 @@ public class NotificationUtils {
                 .bigText(gwa.notificationLastShowedMessage);
         gwa.notification = gwa.notificationBigTextStyle.build();
         if (isNotificationEnabled(gwa))
-            gwa.notificationManager.notify(R.string.app_name, gwa.notification);
+            gwa.notificationManager.notify(gwa.notificationOngoingMessageID, gwa.notification);
 //		}
 
         return gwa.notification;
@@ -230,13 +230,13 @@ public class NotificationUtils {
         else if (!playback_sound && vibration) builder.setChannelId(NOTIFICATION_CHANNEL_VIBRATE);
         else builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
 
-        if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
-            Intent activity_intent = new Intent(c, ActivityMain.class);
-            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setContentIntent(activity_pi);
-        }
+//        if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
+//            Intent activity_intent = new Intent(c, ActivityMain.class);
+//            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//            builder.setContentIntent(activity_pi);
+//        }
         if (isNotificationEnabled(gwa)) {
-            gwa.notificationManager.notify(R.string.app_name, builder.build());
+            gwa.notificationManager.notify(gwa.notificationNoticeMessageID, builder.build());
             util.addDebugMsg(1, "I", "showNoticeMsg issued, msg="+msg);
         }
     }

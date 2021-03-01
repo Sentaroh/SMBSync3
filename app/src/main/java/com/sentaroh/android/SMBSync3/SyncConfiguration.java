@@ -106,7 +106,7 @@ public class SyncConfiguration {
     private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ENCRYPTED_ACCOUNT_NAME = "smb_server_encrypted_account_name";
     private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ENCRYPTED_ACCOUNT_PASSWORD = "smb_server_encrypted_account_password";
     private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_ADDR = "smb_server_addr";
-    private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_IPC_SIGNIN_ENFORCED = "smb_server_ipc_signin_enforced";
+//    private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_IPC_SIGNIN_ENFORCED = "smb_server_ipc_signin_enforced";
     private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_NAME = "smb_server_name";
     private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PORT = "smb_server_port";
     private static final String SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PROTOCOL = "smb_server_protocol";
