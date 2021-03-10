@@ -137,8 +137,8 @@ public class ActivitySettings extends PreferenceActivity {
         float fs= GlobalParameters.getFontScaleFactorValue(context);
         int multiPaneDP=500;
         String lang_code=Locale.getDefault().getLanguage();
-        if (lang_code.equals("fr")) multiPaneDP=540;
-        else if (lang_code.equals("ru")) multiPaneDP=800;
+//        if (lang_code.equals("fr")) multiPaneDP=540;
+//        else if (lang_code.equals("ru")) multiPaneDP=800;
 
         multiPaneDP=(int)(((float)multiPaneDP)*fs);
 
@@ -288,8 +288,8 @@ public class ActivitySettings extends PreferenceActivity {
 
             SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
 
-//            shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), true).commit();
-//            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
+            shared_pref.edit().putBoolean(getString(R.string.settings_exit_clean), false).commit();
+            findPreference(getString(R.string.settings_exit_clean).toString()).setEnabled(false);
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_exit_clean), getContext());
         }
 

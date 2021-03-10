@@ -27,13 +27,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -48,9 +48,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.IBinder;
-import android.os.RemoteException;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
@@ -146,7 +145,6 @@ public class ActivityMain extends AppCompatActivity {
 
     private boolean appStartWithRestored =false;
 
-    private ServiceConnection mSvcConnection = null;
     private Handler mUiHandler = new Handler();
 
     private ActionBar mActionBar = null;
@@ -156,6 +154,8 @@ public class ActivityMain extends AppCompatActivity {
     private boolean enableMainUi = true;
 
     private String mTabNameTask="Task", mTabNameSchedule="Schedule", mTabNameHistory="History", mTabNameMessage="Message", mTabNameGroup="Group";
+
+    private MediaStatusChangeReceiver mMediaStatusChangeListener=new MediaStatusChangeReceiver();
 
     @Override
     protected void onSaveInstanceState(Bundle out) {
@@ -183,8 +183,8 @@ public class ActivityMain extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
 //        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
 //        StrictMode.setVmPolicy(builder.build());
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//        StrictMode.setThreadPolicy(policy);
 //        Log.v(APPLICATION_TAG, "onCreate entered");
         mActivity = ActivityMain.this;
         mContext = mActivity;
@@ -209,6 +209,9 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncHistoryListAdapter = new HistoryListAdapter(mActivity, R.layout.history_list_item, mGp.syncHistoryList);
 
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName(), " entered, appStartStaus="+appStartStaus);
+
+        mUtil.addLogMsg("I", "",
+                mContext.getString(R.string.msgs_smbsync_main_start) +" API=" + Build.VERSION.SDK_INT +", Version=" + SystemInfo.getApplVersionNameCode(mContext));
 
         mTabNameTask=getString(R.string.msgs_tab_name_task);
         mTabNameSchedule=getString(R.string.msgs_tab_name_schedule);
@@ -315,7 +318,12 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         } else if (appStartStaus == START_COMPLETED) {
-            mGp.safMgr.refreshSafList();
+            setMediaStatusListener();
+
+            mGp.refreshMediaDir(mContext);
+            refreshOptionMenu();
+            mGp.syncTaskListAdapter.notifyDataSetChanged();
+
             setActivityForeground(true);
             ScheduleUtils.setScheduleInfo(mContext, mGp, mUtil);
             mGp.progressSpinSynctask.setText(mGp.progressSpinSyncprofText);
@@ -324,17 +332,14 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void initApplication() {
-        openService(new CallBackListener(){
+        ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET);
+        setMediaStatusListener();
+        checkStoredKey(new CallBackListener(){
             @Override
             public void onCallBack(Context context, boolean positive, Object[] objects) {
-                //Service起動終了
-                ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET);
-                checkStoredKey(new CallBackListener(){
-                    @Override
-                    public void onCallBack(Context context, boolean positive, Object[] objects) {
-                        setActivityForeground(true);
-                        ApplicationPasswordUtils.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION,
-                            new CallBackListener() {
+                setActivityForeground(true);
+                ApplicationPasswordUtils.authentication(mGp, mActivity, getSupportFragmentManager(), mUtil, false, ApplicationPasswordUtils.APPLICATION_PASSWORD_RESOURCE_START_APPLICATION,
+                        new CallBackListener() {
                             @Override
                             public void onCallBack(Context context, boolean positive, Object[] objects) {
                                 if (positive) {
@@ -394,8 +399,6 @@ public class ActivityMain extends AppCompatActivity {
                                 }
                             }
                         });
-                    }
-                });
             }
         });
     }
@@ -543,6 +546,7 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.safMgr.isStoragePermissionRequired() && !mGp.isSupressAddExternalStorageNotification()) {
             NotifyEvent ntfy=new NotifyEvent(mContext);
             ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                @SuppressWarnings("unchecked")
                 @Override
                 public void positiveResponse(Context context, Object[] objects) {
                     boolean suppress=(boolean)objects[0];
@@ -561,6 +565,7 @@ public class ActivityMain extends AppCompatActivity {
                     TaskEditor.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy_add);
                 }
 
+                @SuppressWarnings("unchecked")
                 @Override
                 public void negativeResponse(Context context, Object[] objects) {
                     boolean suppress=(boolean)objects[0];
@@ -609,6 +614,7 @@ public class ActivityMain extends AppCompatActivity {
         super.onStop();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         setActivityForeground(false);
+        unsetMediaStatusListener();
     }
 
 //    @Override
@@ -622,18 +628,39 @@ public class ActivityMain extends AppCompatActivity {
         super.onDestroy();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, isFinishing=" + isFinishing() +
                 ", changingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
-//        setActivityForeground(false);
-        unsetCallbackListener();
 
-        if (isFinishing()) {
-            mGp.logCatActive=false;
-        }
         mGp.appPasswordAuthValidated=false;
         mGp.activityIsFinished = isFinishing();
-        closeService();
+
+        mGp.callbackShowDialogWindow =null;
+        mGp.callbackHideDialogWindow =null;
+        mGp.callbackShowConfirmDialog =null;
+        mGp.callbackHideConfirmDialog =null;
+
         LogUtil.flushLog(mContext);
 
         cleanupCacheFile();
+
+        mGp.clearParms(mContext);
+        System.gc();
+
+    }
+
+    static public void exitCleanly(Context c, GlobalParameters gp) {
+        if (gp.settingExitClean && !gp.activityRestartRequired) {
+            Handler hndl = new Handler();
+            hndl.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                }
+            }, 100);
+        } else {
+            gp.activityRestartRequired=false;
+            gp.clearParms(c);
+            System.gc();
+        }
+
     }
 
     @Override
@@ -646,14 +673,9 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setActivityForeground(boolean fore_ground) {
-        if (mSvcClient != null) {
-            try {
-                if (fore_ground) mSvcClient.aidlSetActivityInForeground();
-                else mSvcClient.aidlSetActivityInBackground();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-        }
+        mGp.activityIsForeground =fore_ground;
+        NotificationUtils.setNotificationEnabled(mGp, true);
+        mUtil.addDebugMsg(1, "I", "setActivityForeground fg="+fore_ground+", result="+mGp.activityIsForeground);
     }
 
     private void showSystemInfo() {
@@ -709,6 +731,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View view) {
                 NotifyEvent ntfy=new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         String desc=(String)objects[0];
@@ -1127,6 +1150,65 @@ public class ActivityMain extends AppCompatActivity {
         mGp.progressSpinMsg = (TextView) findViewById(R.id.main_dialog_progress_spin_syncmsg);
         mGp.progressSpinCancel = (Button) findViewById(R.id.main_dialog_progress_spin_btn_cancel);
 
+        mGp.callbackShowDialogWindow =new CallBackListener() {
+            @Override
+            public void onCallBack(Context context, boolean b, Object[] objects) {
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+                mUiHandler.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        syncThreadStarted();
+                    }
+                });
+            }
+        };
+        mGp.callbackHideDialogWindow =new CallBackListener() {
+            @Override
+            public void onCallBack(Context context, boolean b, Object[] objects) {
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+                mUiHandler.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        syncThreadEnded();
+                    }
+                });
+            }
+        };
+
+        mGp.callbackShowConfirmDialog =new CallBackListener() {
+            @Override
+            public void onCallBack(Context context, boolean b, Object[] objects) {
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+                mUiHandler.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        String method=(String)objects[0];
+                        String msg=(String)objects[1];
+                        String pair_a_path=(String)objects[2];
+                        long pair_a_length=(Long)objects[3];
+                        long pair_a_last_mod=(Long)objects[4];
+                        String pair_b_path=(String)objects[5];
+                        long pair_b_length=(Long)objects[6];
+                        long pair_b_last_mod=(Long)objects[7];
+                        showConfirmDialog(method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
+                    }
+                });
+            }
+        };
+
+        mGp.callbackHideConfirmDialog =new CallBackListener() {
+            @Override
+            public void onCallBack(Context context, boolean b, Object[] objects) {
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+                mUiHandler.post(new Runnable(){
+                    @Override
+                    public void run() {
+                        hideConfirmDialog();
+                    }
+                });
+            }
+        };
+
         mMainTabLayout = (CustomTabLayout) findViewById(R.id.main_tab_layout);
         mMainTabLayout.addTab(mTabNameTask);
         mMainTabLayout.addTab(mTabNameSchedule);
@@ -1496,6 +1578,7 @@ public class ActivityMain extends AppCompatActivity {
 
                 NotifyEvent ntfy=new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         if (objects!=null) {
@@ -1543,7 +1626,6 @@ public class ActivityMain extends AppCompatActivity {
                 invalidateOptionsMenu();
                 mGp.syncTaskListAdapter.notifyDataSetChanged();
             }
-
             @Override
             public void negativeResponse(Context context, Object[] objects) {}
         });
@@ -1881,6 +1963,17 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.activityRestartRequired=true;
                         mUtil.flushLog();
                         mGp.settingExitClean=false;
+
+                        Handler hndl = new Handler();
+                        hndl.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(mContext, ActivityMain.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }
+                        }, 200);
+
                         finish();
                     }
                 }
@@ -2486,6 +2579,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View view) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         GroupListAdapter.GroupListItem si = (GroupListAdapter.GroupListItem) objects[0];
@@ -2513,6 +2607,7 @@ public class ActivityMain extends AppCompatActivity {
                     if (item.isChecked) {
                         NotifyEvent ntfy = new NotifyEvent(mContext);
                         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                            @SuppressWarnings("unchecked")
                             @Override
                             public void positiveResponse(Context context, Object[] objects) {
                                 GroupListAdapter.GroupListItem si = (GroupListAdapter.GroupListItem) objects[0];
@@ -2645,6 +2740,7 @@ public class ActivityMain extends AppCompatActivity {
     private void setGroupListViewListener() {
         NotifyEvent ntfy_sync=new NotifyEvent(mContext);
         ntfy_sync.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context context, Object[] o) {
                 if (isUiEnabled()) {
@@ -2674,6 +2770,7 @@ public class ActivityMain extends AppCompatActivity {
 
         NotifyEvent ntfy_sw = new NotifyEvent(mContext);
         ntfy_sw.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 int pos=(int)objects[0];
@@ -2930,6 +3027,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         ScheduleListAdapter.ScheduleListItem si = (ScheduleListAdapter.ScheduleListItem) objects[0];
@@ -3096,6 +3194,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 NotifyEvent ntfy = new NotifyEvent(mContext);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
                         ScheduleListAdapter.ScheduleListItem si = (ScheduleListAdapter.ScheduleListItem) objects[0];
@@ -3256,6 +3355,7 @@ public class ActivityMain extends AppCompatActivity {
 
         NotifyEvent ntfy_sw = new NotifyEvent(mContext);
         ntfy_sw.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 int pos=(int)objects[0];
@@ -3272,16 +3372,13 @@ public class ActivityMain extends AppCompatActivity {
 
         NotifyEvent ntfy_sync = new NotifyEvent(mContext);
         ntfy_sync.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 ScheduleListAdapter.ScheduleListItem sched_item=(ScheduleListAdapter.ScheduleListItem)objects[0];
                 String e_msg= checkExecuteScheduleConditions(sched_item);
                 if (e_msg.equals("")) {
-                    try {
-                        mSvcClient.aidlStartSchedule(new String[]{sched_item.scheduleName});
-                    } catch (RemoteException e) {
-                        e.printStackTrace();
-                    }
+                    SyncWorker.startSpecificSchedule(mContext, mGp, mUtil, SYNC_REQUEST_ACTIVITY, sched_item.scheduleName);
                 } else {
                     mUtil.showCommonDialog(false, "E", mContext.getString(R.string.msgs_schedule_sync_task_start_error), e_msg, null);
                 }
@@ -3828,6 +3925,7 @@ public class ActivityMain extends AppCompatActivity {
 
         NotifyEvent ntfy_sync = new NotifyEvent(mContext);
         ntfy_sync.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 if (isUiEnabled()) {
@@ -5001,11 +5099,7 @@ public class ActivityMain extends AppCompatActivity {
     private void startSyncTask(ArrayList<SyncTaskItem> alp) {
         String[] task_name = new String[alp.size()];
         for (int i = 0; i < alp.size(); i++) task_name[i] = alp.get(i).getSyncTaskName();
-        try {
-            mSvcClient.aidlStartSpecificSyncTask(task_name);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        SyncWorker.startSpecificSyncTask(mContext, mGp, mUtil, SYNC_REQUEST_ACTIVITY, task_name);
     }
 
     private void syncThreadStarted() {
@@ -5057,142 +5151,86 @@ public class ActivityMain extends AppCompatActivity {
         setUiEnabled();
     }
 
-    private ISvcCallback mSvcCallbackStub = new ISvcCallback.Stub() {
-        @Override
-        public void cbThreadStarted() throws RemoteException {
-            mUiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    syncThreadStarted();
-                }
-            });
-        }
+//    private ISvcCallback mSvcCallbackStub = new ISvcCallback.Stub() {
+//        @Override
+//        public void cbThreadStarted() throws RemoteException {
+//            mUiHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    syncThreadStarted();
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void cbThreadEnded() throws RemoteException {
+//            mUiHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    syncThreadEnded();
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void cbShowConfirmDialog(final String method, final String msg,
+//                                        final String pair_a_path, final long pair_a_length, final long pair_a_last_mod,
+//                                        final String pair_b_path, final long pair_b_length, final long pair_b_last_mod) throws RemoteException {
+//            mUiHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    showConfirmDialog(method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void cbHideConfirmDialog() throws RemoteException {
+//            mUiHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    hideConfirmDialog();
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void cbWifiStatusChanged(String status, String ssid) throws RemoteException {
+//            mUiHandler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    refreshOptionMenu();
+//                    if (mGp.syncTaskListAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
+//                    else setSyncTaskContextButtonNormalMode();
+//                }
+//            });
+//        }
+//
+//        @Override
+//        public void cbMediaStatusChanged(String action) throws RemoteException {
+//            applyMediaStatusChanged(action);
+//        }
+//
+//    };
 
-        @Override
-        public void cbThreadEnded() throws RemoteException {
-            mUiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    syncThreadEnded();
-                }
-            });
-        }
-
-        @Override
-        public void cbShowConfirmDialog(final String method, final String msg,
-                                        final String pair_a_path, final long pair_a_length, final long pair_a_last_mod,
-                                        final String pair_b_path, final long pair_b_length, final long pair_b_last_mod) throws RemoteException {
-            mUiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    showConfirmDialog(method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
-                }
-            });
-        }
-
-        @Override
-        public void cbHideConfirmDialog() throws RemoteException {
-            mUiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    hideConfirmDialog();
-                }
-            });
-        }
-
-        @Override
-        public void cbWifiStatusChanged(String status, String ssid) throws RemoteException {
-            mUiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    refreshOptionMenu();
-                    if (mGp.syncTaskListAdapter.isShowCheckBox()) setSyncTaskContextButtonSelectMode();
-                    else setSyncTaskContextButtonNormalMode();
-                }
-            });
-        }
-
-        @Override
-        public void cbMediaStatusChanged(String action) throws RemoteException {
-            mUiHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, count="+mGp.safMgr.getSafStorageList().size());
-                    refreshOptionMenu();
-                    mGp.syncTaskListAdapter.notifyDataSetChanged();
-                    if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
-                        ArrayList<SafStorage3> dup_list=SafManager3.getDuplicateUuid(mContext);
-                        if (dup_list.size()>0) {
-                            String dup_info="";
-                            for(SafStorage3 item:dup_list) dup_info+="UUID="+item.uuid+" , Description="+item.description+"\n";
-                            mUtil.showCommonDialog(false, "W",
-                                    mContext.getString(R.string.msgs_main_external_storage_uuid_duplicated), dup_info, null);
-                        }
+    private void applyMediaStatusChanged(String action) {
+        mUiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, count="+mGp.safMgr.getSafStorageList().size());
+                refreshOptionMenu();
+                mGp.syncTaskListAdapter.notifyDataSetChanged();
+                if (action.equals(Intent.ACTION_MEDIA_MOUNTED)) {
+                    ArrayList<SafStorage3> dup_list=SafManager3.getDuplicateUuid(mContext);
+                    if (dup_list.size()>0) {
+                        String dup_info="";
+                        for(SafStorage3 item:dup_list) dup_info+="UUID="+item.uuid+" , Description="+item.description+"\n";
+                        mUtil.showCommonDialog(false, "W",
+                                mContext.getString(R.string.msgs_main_external_storage_uuid_duplicated), dup_info, null);
                     }
                 }
-            });
-        }
-
-    };
-
-    private ISvcClient mSvcClient = null;
-
-    private void openService(final CallBackListener cbl) {
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        mGp.activityIsBackground=false;
-        mSvcConnection = new ServiceConnection() {
-            public void onServiceConnected(ComponentName arg0, IBinder service) {
-                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-                mSvcClient = ISvcClient.Stub.asInterface(service);
-                setCallbackListener();
-                cbl.onCallBack(mContext, true, null);
             }
-
-            public void onServiceDisconnected(ComponentName name) {
-                mSvcConnection = null;
-                mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-            }
-        };
-
-        Intent intmsg = new Intent(mContext, SyncService.class);
-        bindService(intmsg, mSvcConnection, BIND_AUTO_CREATE);
-    }
-
-    private void closeService() {
-
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-
-        if (mSvcConnection != null) {
-            mSvcClient = null;
-            try {
-                unbindService(mSvcConnection);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            mSvcConnection = null;
-        }
-    }
-
-    final private void setCallbackListener() {
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        try {
-            mSvcClient.setCallBack(mSvcCallbackStub);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            mUtil.addDebugMsg(1, "E", "setCallbackListener error :" + e.toString());
-        }
-    }
-
-    final private void unsetCallbackListener() {
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        if (mSvcClient != null) {
-            try {
-                mSvcClient.removeCallBack(mSvcCallbackStub);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-                mUtil.addDebugMsg(1, "E", "unsetCallbackListener error :" + e.toString());
-            }
-        }
+        });
     }
 
     private void reshowDialogWindow() {
@@ -5215,8 +5253,8 @@ public class ActivityMain extends AppCompatActivity {
                                    final String pair_a_path, final long pair_a_length, final long pair_a_last_mod,
                                    final String pair_b_path, final long pair_b_length, final long pair_b_last_mod) {
         if (method.equals(CONFIRM_REQUEST_CONFLICT_FILE)) {
-            TwoWaySyncFile.showConfirmDialogConflict(mGp, mUtil, mSvcClient,
-                    method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
+//            TwoWaySyncFile.showConfirmDialogConflict(mGp, mUtil, mSvcClient,
+//                    method, msg, pair_a_path, pair_a_length, pair_a_last_mod, pair_b_path, pair_b_length, pair_b_last_mod);
         } else {
             showConfirmDialogOverride(method, msg, pair_a_path, pair_b_path);
         }
@@ -5263,7 +5301,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
-                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_YES);
+                sendConfirmResponse(mGp, CONFIRM_RESP_YES);
             }
         };
         mGp.confirmYes.setOnClickListener(mGp.confirmYesListener);
@@ -5272,7 +5310,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
-                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_YES_ALL);
+                sendConfirmResponse(mGp, CONFIRM_RESP_YES_ALL);
             }
         };
         mGp.confirmYesAll.setOnClickListener(mGp.confirmYesAllListener);
@@ -5281,7 +5319,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
-                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_NO);
+                sendConfirmResponse(mGp, CONFIRM_RESP_NO);
             }
         };
         mGp.confirmNo.setOnClickListener(mGp.confirmNoListener);
@@ -5290,7 +5328,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
-                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_NO_ALL);
+                sendConfirmResponse(mGp, CONFIRM_RESP_NO_ALL);
             }
         };
         mGp.confirmNoAll.setOnClickListener(mGp.confirmNoAllListener);
@@ -5299,18 +5337,17 @@ public class ActivityMain extends AppCompatActivity {
             public void onClick(View v) {
                 mGp.confirmView.setVisibility(LinearLayout.GONE);
                 mGp.progressSpinView.setVisibility(prog_view);
-                sendConfirmResponse(mGp, mSvcClient, CONFIRM_RESP_CANCEL);
+                sendConfirmResponse(mGp, CONFIRM_RESP_CANCEL);
             }
         };
         mGp.confirmCancel.setOnClickListener(mGp.confirmCancelListener);
     }
 
-    static public void sendConfirmResponse(GlobalParameters gp, ISvcClient sc, int response) {
+    static public void sendConfirmResponse(GlobalParameters gp, int response) {
         gp.confirmDialogShowed = false;
-        try {
-            sc.aidlConfirmReply(response);
-        } catch (RemoteException e) {
-            e.printStackTrace();
+        synchronized (gp.syncThreadConfirm) {
+            gp.syncThreadConfirm.setExtraDataInt(response);
+            gp.syncThreadConfirm.notify();
         }
         gp.confirmYesListener = null;
         gp.confirmYesAllListener = null;
@@ -5530,5 +5567,39 @@ public class ActivityMain extends AppCompatActivity {
             return false;
         }
     }
+
+    private void setMediaStatusListener() {
+        mUtil.addDebugMsg(1, "I", "setMediaStatusListener entered");
+        IntentFilter media_filter = new IntentFilter();
+        media_filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+        media_filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+        media_filter.addAction(Intent.ACTION_MEDIA_EJECT);
+        media_filter.addAction(Intent.ACTION_MEDIA_REMOVED);
+        media_filter.addDataScheme("file");
+        registerReceiver(mMediaStatusChangeListener, media_filter);
+    }
+
+    private void unsetMediaStatusListener() {
+        mUtil.addDebugMsg(1, "I", "unsetMediaStatusListener entered");
+        unregisterReceiver(mMediaStatusChangeListener);
+    }
+
+    final private class MediaStatusChangeReceiver extends BroadcastReceiver {
+        @Override
+        final public void onReceive(Context c, Intent in) {
+            String action = in.getAction();
+            mUtil.addDebugMsg(1, "I", "Media status change receiver, action=" + action);
+            if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
+                    || action.equals(Intent.ACTION_MEDIA_EJECT) || action.equals(Intent.ACTION_MEDIA_REMOVED)) {
+                if (action.equals(Intent.ACTION_MEDIA_EJECT)) SystemClock.sleep(1000);
+                mGp.refreshMediaDir(c);
+                refreshOptionMenu();
+                mGp.syncTaskListAdapter.notifyDataSetChanged();
+                mUtil.addDebugMsg(1, "I", "Media status change process ended, path=" + in.getDataString());
+            }
+        }
+
+    }
+
 
 }

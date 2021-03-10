@@ -718,6 +718,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isChanged() {return isChanged;}
     public void setChanged(boolean changed) {isChanged=changed;}
 
+    @SuppressWarnings("unchecked")
     @Override
     public SyncTaskItem clone() {
         SyncTaskItem npfli = null;

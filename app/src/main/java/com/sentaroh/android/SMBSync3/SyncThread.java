@@ -23,15 +23,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
-import android.os.RemoteException;
 import android.os.SystemClock;
 
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
@@ -84,8 +85,6 @@ public class SyncThread extends Thread {
         public int logLevel=0;
         public Context appContext=null;
         public Handler uiHandler=null;
-        public ArrayList<TwoWaySyncFileInfoItem> currSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
-        public ArrayList<TwoWaySyncFileInfoItem> newSyncFileInfoList = new ArrayList<TwoWaySyncFileInfoItem>();
 
         public ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry> currLastModifiedList = new ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry>();
         public ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry> newLastModifiedList = new ArrayList<FileLastModifiedTime.FileLastModifiedTimeEntry>();
@@ -135,7 +134,7 @@ public class SyncThread extends Thread {
 
         public CommonUtilities util = null;
 
-//        public MediaScannerConnection mediaScanner = null;
+        public MediaScannerConnection mediaScanner = null;
 
         public PrintWriter syncHistoryWriter = null;
 
@@ -190,6 +189,8 @@ public class SyncThread extends Thread {
             mGp.syncThreadActive = true;
             defaultUEH = Thread.currentThread().getUncaughtExceptionHandler();
             Thread.currentThread().setUncaughtExceptionHandler(unCaughtExceptionHandler);
+
+            prepareMediaScanner();
 
             listStorageInfo();
 
@@ -285,7 +286,7 @@ public class SyncThread extends Thread {
 
             mGp.syncThreadActive = false;
 
-//            mStwa.mediaScanner.disconnect();
+            closeMediaScanner();
 
             mNotifyToService.notifyToListener(true, new Object[]{sync_result});
         }
@@ -888,8 +889,6 @@ public class SyncThread extends Thread {
                 sync_result = SyncThreadSyncFile.syncMirrorLocalToLocal(mStwa, sti, from, to);
             } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
                 sync_result = SyncThreadArchiveFile.syncArchiveLocalToLocal(mStwa, sti, from, to);
-            } else if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {
-                sync_result = TwoWaySyncFile.syncTwowayInternalToInternal(mStwa, sti, from, to);
             }
         } else if (sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL) &&
                 sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
@@ -1533,7 +1532,7 @@ public class SyncThread extends Thread {
             stwa.gp.uiHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (stwa.gp.progressSpinSynctask != null && !stwa.gp.activityIsBackground) {
+                    if (stwa.gp.progressSpinSynctask != null && stwa.gp.activityIsForeground) {
                         stwa.gp.progressSpinSynctask.setText(stwa.gp.progressSpinSyncprofText);
                         stwa.gp.progressSpinMsg.setText(stwa.gp.progressSpinMsgText);
                     }
@@ -1570,7 +1569,7 @@ public class SyncThread extends Thread {
                 stwa.gp.uiHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        if (stwa.gp.progressSpinSynctask != null && !stwa.gp.activityIsBackground) {
+                        if (stwa.gp.progressSpinSynctask != null && stwa.gp.activityIsForeground) {
                             stwa.gp.progressSpinSynctask.setText(stwa.gp.progressSpinSyncprofText);
                             stwa.gp.progressSpinMsg.setText(stwa.gp.progressSpinMsgText);
                         }
@@ -1627,7 +1626,7 @@ public class SyncThread extends Thread {
                 stwa.gp.uiHandler.post(new Runnable() {//in app progress notification
                     @Override
                     public void run() {
-                        if (stwa.gp.progressSpinSynctask != null && !stwa.gp.activityIsBackground) {
+                        if (stwa.gp.progressSpinSynctask != null && stwa.gp.activityIsForeground) {
                             stwa.gp.progressSpinSynctask.setText(stwa.gp.progressSpinSyncprofText);
                             stwa.gp.progressSpinMsg.setText(stwa.gp.progressSpinMsgText);
                         }
@@ -1711,8 +1710,8 @@ public class SyncThread extends Thread {
                     stwa.gp.confirmDialogMethod = type;
                     stwa.gp.syncThreadConfirm.initThreadCtrl();
                     stwa.gp.releaseWakeLock(stwa.util);
-                    if (stwa.gp.callbackStub != null) {
-                        stwa.gp.callbackStub.cbShowConfirmDialog(type, "", from_path, 0,0,to_path,0,0);
+                    if (stwa.gp.callbackShowConfirmDialog != null) {
+                        stwa.gp.callbackShowConfirmDialog.onCallBack(stwa.appContext, true, new Object[]{type, "", from_path, 0L,0L,to_path,0L,0L});
                     }
                     synchronized (stwa.gp.syncThreadConfirm) {
                         stwa.gp.syncThreadConfirmWait = true;
@@ -1737,9 +1736,9 @@ public class SyncThread extends Thread {
                         else result = false;
                         if (stwa.confirmMoveResult == CONFIRM_RESP_CANCEL) cancelTask(stwa.gp.syncThreadCtrl);//stwa.gp.syncThreadCtrl.setDisabled();
                     }
-                } catch (RemoteException e) {
-                    stwa.util.addLogMsg("E", sti.getSyncTaskName(), "RemoteException occured");
-                    printStackTraceElement(stwa, e.getStackTrace());
+//                } catch (RemoteException e) {
+//                    stwa.util.addLogMsg("E", sti.getSyncTaskName(), "RemoteException occured");
+//                    printStackTraceElement(stwa, e.getStackTrace());
                 } catch (InterruptedException e) {
                     stwa.util.addLogMsg("E", sti.getSyncTaskName(), "InterruptedException occured");
                     printStackTraceElement(stwa, e.getStackTrace());
@@ -1774,8 +1773,8 @@ public class SyncThread extends Thread {
                 stwa.gp.confirmDialogMethod = type;
                 stwa.gp.syncThreadConfirm.initThreadCtrl();
                 stwa.gp.releaseWakeLock(stwa.util);
-                if (stwa.gp.callbackStub != null) {
-                    stwa.gp.callbackStub.cbShowConfirmDialog(type, "", url, 0,0,null,0,0);
+                if (stwa.gp.callbackShowConfirmDialog != null) {
+                    stwa.gp.callbackShowConfirmDialog.onCallBack(stwa.appContext, true, new Object[]{type, "", url, 0L,0L,null,0L,0L});
                 }
                 synchronized (stwa.gp.syncThreadConfirm) {
                     stwa.gp.syncThreadConfirmWait = true;
@@ -1789,9 +1788,9 @@ public class SyncThread extends Thread {
                     else result = false;
                     if (stwa.confirmArchiveResult == CONFIRM_RESP_CANCEL) cancelTask(stwa.gp.syncThreadCtrl);//stwa.gp.syncThreadCtrl.setDisabled();
                 }
-            } catch (RemoteException e) {
-                stwa.util.addLogMsg("E", sti.getSyncTaskName(), "RemoteException occured");
-                printStackTraceElement(stwa, e.getStackTrace());
+//            } catch (RemoteException e) {
+//                stwa.util.addLogMsg("E", sti.getSyncTaskName(), "RemoteException occured");
+//                printStackTraceElement(stwa, e.getStackTrace());
             } catch (InterruptedException e) {
                 stwa.util.addLogMsg("E", sti.getSyncTaskName(), "InterruptedException occured");
                 printStackTraceElement(stwa, e.getStackTrace());
@@ -2704,13 +2703,65 @@ public class SyncThread extends Thread {
         tc.releaseWriteLock();
     }
 
-    static final public void scanMediaFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp) {
-        try {
-            MediaScannerConnection.scanFile(stwa.appContext, new String[]{fp}, null, null);
-        } catch(Exception e) {
-            stwa.util.addLogMsg("W","Media scanner scan failed, fp="+fp);
-            stwa.util.addLogMsg("W",e.getMessage());
+    private void prepareMediaScanner() {
+        mStwa.mediaScanner = new MediaScannerConnection(mStwa.appContext, new MediaScannerConnection.MediaScannerConnectionClient() {
+            @Override
+            public void onMediaScannerConnected() {
+                if (mStwa.util.getLogLevel() >= 1)
+                    mStwa.util.addDebugMsg(1, "I", "MediaScanner connected.");
+                synchronized (mStwa.mediaScanner) {
+                    mStwa.mediaScanner.notify();
+                }
+            }
+            @Override
+            public void onScanCompleted(final String fp, final Uri uri) {
+                if (mStwa.util.getLogLevel() >= 1)
+                    mStwa.util.addDebugMsg(1, "I", "MediaScanner scan completed. fn=", fp, ", Uri=" + uri);
+            }
+        });
+        mStwa.mediaScanner.connect();
+
+        synchronized (mStwa.mediaScanner) {
+            try {
+                mStwa.mediaScanner.wait(1000*5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+    }
+
+    private void closeMediaScanner() {
+        mStwa.util.addDebugMsg(1, "I", "MediaScanner disconnect requested.");
+        mStwa.mediaScanner.disconnect();
+    }
+
+    static public void scanMediaFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp) {
+        if (getFileExtention(fp).equals("")) {
+            stwa.util.addDebugMsg(1, "I", "MediaScanner scan ignored because file extention does not exists. fp=", fp);
+            return;
+        }
+        if (!stwa.mediaScanner.isConnected()) {
+            stwa.util.addLogMsg("W", fp, "Media scanner not invoked, because mdeia scanner was not connected.");
+            return;
+        }
+        stwa.util.addDebugMsg(1, "I", "MediaScanner scan request issued. fp=", fp);
+        stwa.mediaScanner.scanFile(fp, null);
+    }
+
+    static public String getFileExtention(String fp) {
+        String ft="", fn="";
+        int sep_pos=fp.lastIndexOf("/");
+        if (sep_pos>=0) {
+            fn=fp.substring(sep_pos+1);
+        } else {
+            fn=fp;
+        }
+        int ext_pos=fn.lastIndexOf(".");
+        if (ext_pos >= 0) {
+            ft = fn.substring(ext_pos+1).toLowerCase();
+        }
+        return ft;
     }
 
     private String mSyncHistroryResultFilepath = "";

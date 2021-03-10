@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="@string/settings_misc_title">
+    <PreferenceCategory android:title="@string/settings_misc_title" android:layout="@layout/setting_preference_category_layout">
         <CheckBoxPreference
             android:key="settings_exit_clean"
             android:title="@string/settings_exit_clean_title"
-            android:summary="@string/settings_exit_clean_summary_ena" />
+            android:summary="@string/settings_exit_clean_summary_ena"
+            android:singleLineTitle="false"/>
     </PreferenceCategory>
 </PreferenceScreen>

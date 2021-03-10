@@ -211,7 +211,7 @@ public class NotificationUtils {
 
     final static public void showNoticeMsg(Context c, GlobalParameters gwa, CommonUtilities util, String msg,
                                            boolean playback_sound, boolean vibration) {
-        clearNotification(gwa, util);
+        clearAllNotification(gwa, util);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(c);
         builder.setOngoing(false)
                 .setAutoCancel(true)
@@ -230,21 +230,53 @@ public class NotificationUtils {
         else if (!playback_sound && vibration) builder.setChannelId(NOTIFICATION_CHANNEL_VIBRATE);
         else builder.setChannelId(NOTIFICATION_CHANNEL_DEFAULT);
 
-//        if (gwa.callbackStub != null || (gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
-//            Intent activity_intent = new Intent(c, ActivityMain.class);
-//            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            builder.setContentIntent(activity_pi);
-//        }
+        if ((gwa.syncMessageList != null && gwa.syncMessageList.size() > 0)) {
+            Intent activity_intent = new Intent(c, ActivityMain.class);
+            PendingIntent activity_pi = PendingIntent.getActivity(c, 0, activity_intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            builder.setContentIntent(activity_pi);
+        }
         if (isNotificationEnabled(gwa)) {
             gwa.notificationManager.notify(gwa.notificationNoticeMessageID, builder.build());
             util.addDebugMsg(1, "I", "showNoticeMsg issued, msg="+msg);
         }
     }
 
-    final static public void clearNotification(GlobalParameters gwa, CommonUtilities util) {
+    final static public void clearAllNotification(GlobalParameters gwa, CommonUtilities util) {
         try {
             gwa.notificationManager.cancelAll();
-            util.addDebugMsg(1, "I", "clearNotification() issued");
+            util.addDebugMsg(1, "I", "clearAllNotification() issued");
+        } catch(SecurityException e) {
+            if (util!=null) {
+                final StringWriter sw = new StringWriter();
+                final PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                pw.flush();
+                pw.close();
+                util.addLogMsg("E","","Error occured at clearNotification()","\n",sw.toString());
+            }
+        }
+    }
+
+    final static public void clearOngoingNotification(GlobalParameters gwa, CommonUtilities util) {
+        try {
+            gwa.notificationManager.cancel(gwa.notificationOngoingMessageID);
+            util.addDebugMsg(1, "I", "clearOngoingNotification() issued");
+        } catch(SecurityException e) {
+            if (util!=null) {
+                final StringWriter sw = new StringWriter();
+                final PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                pw.flush();
+                pw.close();
+                util.addLogMsg("E","","Error occured at clearNotification()","\n",sw.toString());
+            }
+        }
+    }
+
+    final static public void clearNoticeNotification(GlobalParameters gwa, CommonUtilities util) {
+        try {
+            gwa.notificationManager.cancel(gwa.notificationNoticeMessageID);
+            util.addDebugMsg(1, "I", "clearOngoingNotification() issued");
         } catch(SecurityException e) {
             if (util!=null) {
                 final StringWriter sw = new StringWriter();

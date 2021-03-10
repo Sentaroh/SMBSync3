@@ -489,6 +489,7 @@ public class SmbServerScanner {
         adapter.notifyDataSetChanged();
     }
 
+    @SuppressWarnings("unchecked")
     private void updateShareListSelectorAdapter(Dialog dialog, String smb_level,
                                                 TextView dlg_msg, ArrayAdapter adapter, String nt_status_desc, ArrayList<SmbServerScanShareInfo>sl) {
         if (nt_status_desc.equals(SMB_STATUS_ACCESS_DENIED)) {

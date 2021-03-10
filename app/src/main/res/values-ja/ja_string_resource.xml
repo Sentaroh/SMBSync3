@@ -355,7 +355,7 @@
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">ソースフォルダーでは撮影日時に関する変数は使用できないため削除しました。</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">ディレクトリ名に使用できない文字が含まれていましたので削除しました。 (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">ファイル名フィルタ―は指定されてません</string>
-        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">全てのファイル</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">ファイル名に使用できない文字が含まれていましたので削除しました。 (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">共有名に使用できない文字が含まれていましたので削除しました。 (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">ディレクトリ名に余分なセパレータ「/」が含まれているので削除しました。</string>
@@ -468,7 +468,7 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">充電中の時だけ同期を開始する</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">テストモード（ファイルのコピーや削除は行われません）</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">ネットワークオプション</string>
-        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
+        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">全てのサブディレクトリー</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">ソースディレクトリーが空の時にソースディレクトリーを削除する。</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>

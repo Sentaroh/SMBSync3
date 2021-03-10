@@ -534,6 +534,10 @@ public class SyncThreadSyncZip {
         return sync_result;
     }
 
+    static private boolean isSafFileExists(SafFile3 sf, ContentProviderClient cpc) {
+        return cpc!=null?sf.exists(cpc):sf.exists();
+    }
+
     static final private int syncDeleteLocalToLocalZip(SyncThreadWorkArea stwa, SyncTaskItem sti, String base_path, String from_path,
                                                        BufferedZipFile3 bzf, ZipParameters zp) {
         int sync_result = 0;
@@ -542,7 +546,7 @@ public class SyncThreadSyncZip {
         String zip_entry_path="";
         try {
             SafFile3 mf = new SafFile3(stwa.appContext, from_path);
-            mf_cpc = mf.getContentProviderClient();
+//            mf_cpc = mf.getContentProviderClient();
             String fp_prefix="";
             if (mf.getUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) fp_prefix=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/";
             else fp_prefix=SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+mf.getUuid()+"/";
@@ -556,7 +560,7 @@ public class SyncThreadSyncZip {
                     }
                     SafFile3 mf_check = new SafFile3(stwa.appContext, fp_prefix+fh_item.getFileName());
                     zip_entry_path=mf_check.getPath();
-                    boolean mf_exists = mf_check.exists(mf_cpc);
+                    boolean mf_exists = isSafFileExists(mf_check, mf_cpc);
                     boolean isFileSelected=SyncThread.isFileSelected(stwa, sti, fh_item.getFileName());
                     if (isFileSelected) {
                         if (!mf_exists) {

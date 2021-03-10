@@ -47,6 +47,10 @@ android {
                             include '*debug.apk'
                         }
 
+//                        tasks.withType(JavaCompile) {
+//                            options.compilerArgs << '-Xlint:unchecked,deprecation'
+//                        }
+
                         afterEvaluate {
                             packageDebug.finalizedBy(copyDebugApkRelease)
 //                            copyDebugApkRelease.finalizedBy(copyDebugApk)
@@ -94,6 +98,8 @@ dependencies {
     implementation files('libs/Utilities3-1.0.3.aar')
 
     implementation files('libs/metadata-extractor-2.11.0.jar')
+
+    implementation "androidx.work:work-runtime:2.5.0"
 
 //    implementation files('libs/markdownj-core-0.4.jar')
 

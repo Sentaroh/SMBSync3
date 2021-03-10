@@ -25,29 +25,37 @@ OTHER DEALINGS IN THE SOFTWARE.
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.usb.UsbManager;
 import android.os.PowerManager;
-import android.os.SystemClock;
 
-import com.sentaroh.android.SMBSync3.Log.LogUtil;
-import com.sentaroh.android.Utilities3.MiscUtil;
+import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
+import com.google.common.util.concurrent.ListenableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import static com.sentaroh.android.SMBSync3.Constants.*;
 
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_TIMER_EXPIRED;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_SCHEDULE_NAME_KEY;
+//import static com.sentaroh.android.SMBSync3.SyncWorker.WORKER_ACTION_KEY;
 
 public class SyncReceiver extends BroadcastReceiver {
-    private static Logger slf4jLog = LoggerFactory.getLogger(SyncReceiver.class);
+    final private static Logger log = LoggerFactory.getLogger(SyncReceiver.class);
 
-    private static Context mContext = null;
+    private Context mContext = null;
 
-    private static GlobalParameters mGp = null;
+    private GlobalParameters mGp = null;
 
-    private static LogUtil mLog = null;
+    private CommonUtilities mUtil = null;
 
     @Override
     final public void onReceive(Context c, Intent received_intent) {
@@ -55,16 +63,16 @@ public class SyncReceiver extends BroadcastReceiver {
                         .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ON_AFTER_RELEASE, "Receiver");
         try {wl.acquire(1000); } catch(Exception e) {};
         mContext = c;
-        if (mLog == null) mLog = new LogUtil(c, "Receiver");
         if (mGp == null) {
             mGp =GlobalWorkArea.getGlobalParameter(c);
-            if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "config load started");
-            mGp.loadConfigList(c);
-            if (mLog.getLogLevel()>0) mLog.addDebugMsg(1, "I", "config load ended");
         }
+        if (mUtil == null) mUtil = new CommonUtilities(c, "Receiver", mGp, null);
+        if (mUtil.getLogLevel()>0) mUtil.addDebugMsg(1, "I", "config load started");
+        mGp.loadConfigList(c);
+        if (mUtil.getLogLevel()>0) mUtil.addDebugMsg(1, "I", "config load ended");
 
         String action = received_intent.getAction();
-        mLog.addDebugMsg(1, "I", "Receiver received action=" + action);
+        mUtil.addDebugMsg(1, "I", "Receiver received action=" + action);
         if (action != null) {
             if (action.equals(Intent.ACTION_BOOT_COMPLETED) ||
                     action.equals(Intent.ACTION_DATE_CHANGED) ||
@@ -73,22 +81,11 @@ public class SyncReceiver extends BroadcastReceiver {
                     action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
                 for (ScheduleListAdapter.ScheduleListItem si : mGp.syncScheduleList) si.scheduleLastExecTime = System.currentTimeMillis();
                 TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
-                ScheduleUtils.setTimer(mContext, mGp, mLog);
-//            } else if (action.equals(SCHEDULE_INTENT_SET_TIMER)) {
-//                ScheduleUtils.setTimer(mContext, mGp, mLog);
-//            } else if (action.equals(SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET)) {
-//                ScheduleUtils.setTimerIfNotSet(mContext, mGp, mLog);
+                ScheduleUtils.setTimer(mContext, mGp, mUtil.getLogUtil());
             } else if (action.equals(SCHEDULE_INTENT_TIMER_EXPIRED)) {
                 if (received_intent.getExtras().containsKey(SCHEDULE_SCHEDULE_NAME_KEY)) {
-                    Intent send_intent = new Intent(mContext, SyncService.class);
-                    send_intent.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
-                    send_intent.putExtra(SCHEDULE_SCHEDULE_NAME_KEY, received_intent.getStringExtra(SCHEDULE_SCHEDULE_NAME_KEY));
-                    try {
-                        mContext.startForegroundService(send_intent);
-                    } catch(Exception e) {
-                        mLog.addDebugMsg(1,"E", "startService filed, action="+action+", error=" + e.getMessage());
-                        mLog.addDebugMsg(1,"E", MiscUtil.getStackTraceString(e));
-                    }
+                    SyncWorker.startSyncWorkerByAction(mContext, mGp, mUtil, SCHEDULE_INTENT_TIMER_EXPIRED,
+                            received_intent.getStringExtra(SCHEDULE_SCHEDULE_NAME_KEY), "");
                     String[] schedule_list=received_intent.getStringExtra(SCHEDULE_SCHEDULE_NAME_KEY).split(",");
                     for (String sched_name:schedule_list) {
                         if (ScheduleUtils.getScheduleItem(mGp.syncScheduleList, sched_name) != null) {
@@ -96,10 +93,10 @@ public class SyncReceiver extends BroadcastReceiver {
                         }
                     }
                     TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
-                    ScheduleUtils.setTimer(mContext, mGp, mLog);
+                    ScheduleUtils.setTimer(mContext, mGp, mUtil.getLogUtil());
                 }
             } else {
-                mLog.addDebugMsg(1, "I", "Receiver ignored action=" + action);
+                mUtil.addDebugMsg(1, "I", "Receiver ignored action=" + action);
             }
         }
     }

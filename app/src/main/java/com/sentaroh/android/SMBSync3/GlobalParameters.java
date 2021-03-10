@@ -37,6 +37,7 @@ import android.content.res.Resources;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.LocaleList;
+import android.os.Looper;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -50,6 +51,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.sentaroh.android.SMBSync3.Log.LogUtil;
 
+import com.sentaroh.android.Utilities3.CallBackListener;
 import com.sentaroh.android.Utilities3.SafFile3;
 import com.sentaroh.android.Utilities3.SafManager3;
 import com.sentaroh.android.Utilities3.ThemeColorList;
@@ -85,7 +87,6 @@ public class GlobalParameters {
     public boolean debuggable = false;
 
     public boolean activityIsFinished = true;
-    public boolean logCatActive=false;
 
     public String profilePassword = "";
 
@@ -97,12 +98,19 @@ public class GlobalParameters {
     public ThreadCtrl syncThreadCtrl = new ThreadCtrl();
 
     public boolean activityRestartRequired = false;
-    public boolean activityIsBackground = true;
+    public boolean activityIsForeground = true;
     public boolean syncThreadEnabled = true;
     public boolean syncThreadActive = false;
+    public boolean isSyncWorkerActive() {return syncWorkerIsActive;}
+
+    private boolean syncWorkerIsActive =false;
+    public void setSyncWorkerActive(boolean active) {syncWorkerIsActive =active;}
     public boolean syncThreadConfirmWait = false;
 
-    public ISvcCallback callbackStub = null;
+    public CallBackListener callbackShowDialogWindow =null;
+    public CallBackListener callbackHideDialogWindow =null;
+    public CallBackListener callbackShowConfirmDialog =null;
+    public CallBackListener callbackHideConfirmDialog =null;
 
 //    public boolean themeIsLight = true;
     public String settingScreenTheme = SCREEN_THEME_STANDARD;
@@ -112,7 +120,7 @@ public class GlobalParameters {
     //	Settings parameter
 //    public String settingAppManagemsntDirectoryUuid ="primary";
     public String settingAppManagemsntDirectoryName = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
-    public boolean settingExitClean = false;
+    public boolean settingExitClean = true;
 
     public boolean settingWriteSyncResultLog = true;
 
@@ -332,7 +340,7 @@ public class GlobalParameters {
     }
 
     synchronized public void initGlobalParamter(Context c) {
-        uiHandler = new Handler();
+        if (Looper.myLooper()!=null) uiHandler = new Handler();
 
         debuggable = isDebuggable(c);
 

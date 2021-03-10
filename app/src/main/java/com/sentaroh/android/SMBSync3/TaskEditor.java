@@ -1228,6 +1228,7 @@ public class TaskEditor extends DialogFragment {
 //        final Spinner sp_sync_folder_local_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_local_storage_selector);
         NotifyEvent ntfy=new NotifyEvent(activity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 ArrayList<String>uuid_list=(ArrayList<String>)objects[0];
@@ -2206,12 +2207,7 @@ public class TaskEditor extends DialogFragment {
                 nsfev.folder_directory=nsfev.folder_directory.substring(0, nsfev.folder_directory.length()-1);
             }
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
-            String host=et_remote_host.getText().toString();
-            if (CommonUtilities.isIpAddressV6(host) || CommonUtilities.isIpAddressV4(host)) {
-                nsfev.folder_smb_host =host;
-            } else {
-                nsfev.folder_smb_host = host;
-            }
+            nsfev.folder_smb_host =et_remote_host.getText().toString();
             nsfev.folder_smb_domain = et_sync_folder_domain.getText().toString().trim();
             if (ctv_sync_folder_use_port.isChecked())
                 nsfev.folder_smb_port = et_sync_folder_port.getText().toString();

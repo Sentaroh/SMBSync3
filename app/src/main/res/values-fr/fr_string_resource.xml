@@ -355,7 +355,7 @@
         <string name="msgs_task_sync_task_dlg_swap_directory_name_parameter_removed">Dans le dossier source, les variables relatives à la date et à l\'heure du tournage ne sont pas disponibles et ont été supprimées.</string>
         <string name="msgs_task_sync_task_dlg_dir_name_has_invalid_char">Des caractères invalides ont été supprimés du nom de dossier spécifié (\", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_file_filter_not_specified">Filtre de nom de fichier non spécifié</string>
-        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">使用しない</string>
+        <string name="msgs_task_sync_task_dlg_file_filter_sync_all_file">Tous les dossiers</string>
         <string name="msgs_task_sync_task_dlg_file_name_has_invalid_char">Des caractères invalides ont été supprimés du nom de fichier spécifié (/, \", :, \\, ?, *, &lt;, &gt;, \|)</string>
         <string name="msgs_task_sync_task_dlg_share_name_has_invalid_char">Le nom de l\'action contenait des caractères qui ne pouvaient pas être utilisés, ils ont donc été supprimés. (\" / \\ [ ] : | &lt;, &gt;, + = ; , ? *)</string>
         <string name="msgs_task_sync_task_dlg_dir_name_remove_redundant_separator">Suppression du séparateur supplémentaire \"/\" du nom du répertoire.</string>
@@ -469,7 +469,7 @@
         <string name="msgs_task_sync_task_sync_option_sync_when_charging">Démarrer la synchronisation seulement si l\'appareil est en charge</string>
         <string name="msgs_task_sync_task_sync_option_test_mode">Mode Test (aucune modification de fichier n\'aura lieu)</string>
         <string name="msgs_task_sync_task_sync_option_wifi_condition_title">Options réseau</string>
-        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">使用しない</string>
+        <string name="msgs_task_sync_task_sync_sub_directory_sync_all_sub_directory">Tous les sous-répertoires</string>
         <string name="msgs_task_sync_task_option_remove_directory_if_empty_when_move">Supprimez le répertoire source lorsqu\'il est vide (uniquement lorsque l\'option de synchronisation est Déplacer)</string>
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Sélectionner les sous-dossiers</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Limiter le cache SMB E/S en écriture à 16Ko</string>

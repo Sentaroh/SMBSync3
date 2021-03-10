@@ -24,6 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.app.Activity;
+import android.app.usage.UsageStatsManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -103,6 +104,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import static android.content.Context.USAGE_STATS_SERVICE;
 import static com.sentaroh.android.SMBSync3.Constants.DEFAULT_PREFS_FILENAME;
 import static com.sentaroh.android.SMBSync3.Constants.GENERAL_IO_BUFFER_SIZE;
 import static com.sentaroh.android.Utilities3.SafFile3.SAF_FILE_PRIMARY_UUID;
@@ -345,6 +347,13 @@ public final class CommonUtilities {
 
         ArrayList<String> out=SystemInfo.listSystemInfo(c, gp.safMgr);
 
+        if (Build.VERSION.SDK_INT >= 28) {
+            UsageStatsManager usageStatsManager = (UsageStatsManager) c.getSystemService(USAGE_STATS_SERVICE);
+            if (usageStatsManager != null) {
+                out.add("AppStnadbyBuket="+usageStatsManager.getAppStandbyBucket());
+            }
+        }
+
         try {
             ContentResolver contentResolver = c.getContentResolver();
             int policy = Settings.System.getInt(contentResolver, Settings.Global.WIFI_SLEEP_POLICY);
@@ -539,8 +548,12 @@ public final class CommonUtilities {
         StringBuilder log_msg = new StringBuilder(512);
         for (int i = 0; i < msg.length; i++) log_msg.append(msg[i]);
         if (!log_msg.toString().equals("")) finalMsg = log_msg.toString();
-        if (!title.equals("")) mLog.addLogMsg(cat, title.concat(": ").concat(finalMsg).concat(" ").concat(path).concat(result_type));
-        else mLog.addLogMsg(cat, finalMsg.concat(" ").concat(path).concat(result_type));
+        if (!title.equals("")) {
+            if (finalMsg.equals("")) mLog.addLogMsg(cat, title.concat(": ").concat(path).concat(result_type));
+            else mLog.addLogMsg(cat, title.concat(": ").concat(finalMsg).concat(" ").concat(path).concat(result_type));
+        } else {
+            mLog.addLogMsg(cat, finalMsg.concat(" ").concat(path).concat(result_type));
+        }
 
         String[] dt = StringUtil.convDateTimeTo_YearMonthDayHourMinSecMili(System.currentTimeMillis()).split(" ");
 

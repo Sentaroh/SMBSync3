@@ -63,6 +63,7 @@ public class Constants {
 	public final static String START_SYNC_EXTRA_PARM_SYNC_GROUP ="Group";
 	public final static String START_SYNC_EXTRA_PARM_REQUESTOR ="Requestor";
 	public final static String START_SYNC_EXTRA_PARM_REQUEST_ID ="RequestID";
+	public final static String START_SYNC_EXTRA_PARM_SYNC_TASK_NAME_LIST ="SynncTaskNameList";
 	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_KEY ="SYNC_RESULT";
 	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_SUCCESS ="SUCCESS";
 	public final static String START_SYNC_EXTRA_PARM_SYNC_RESULT_CODE_ERROR ="ERROR";

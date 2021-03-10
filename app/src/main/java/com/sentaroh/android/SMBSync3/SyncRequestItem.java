@@ -23,10 +23,16 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 
-class SyncRequestItem {
+class SyncRequestItem implements Serializable {
 
     public String request_id = "NONAME";
     public String requestor = "";
@@ -54,4 +60,32 @@ class SyncRequestItem {
 //    public ArrayList<String> overrideSyncOptionWifiIpAddressList=new ArrayList<String>();
     public ArrayBlockingQueue<SyncTaskItem> sync_task_list = new ArrayBlockingQueue<SyncTaskItem>(1000);
 
+    static public byte[] serialize(SyncRequestItem input) {
+        byte[] out=null;
+        try {
+            ByteArrayOutputStream baos=new ByteArrayOutputStream(1024*256);
+            ObjectOutputStream oo=new ObjectOutputStream(baos);
+            oo.writeObject(input);
+            oo.flush();
+            oo.close();
+            out=baos.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
+
+    @SuppressWarnings("unchecked")
+    static public SyncRequestItem deserialize(byte[]in_byte) {
+        SyncRequestItem out=null;
+        try {
+            ByteArrayInputStream bais=new ByteArrayInputStream(in_byte);
+            ObjectInputStream oi=new ObjectInputStream(bais);
+            out= (SyncRequestItem) oi.readObject();
+            oi.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return out;
+    }
 }

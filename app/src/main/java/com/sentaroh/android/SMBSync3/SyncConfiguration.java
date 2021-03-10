@@ -68,6 +68,7 @@ public class SyncConfiguration {
 
     private final static String SYNC_TASK_XML_TAG_FILTER_ITEM = "filter";
     private final static String SYNC_TASK_XML_TAG_FILTER_INCLUDE = "include";
+    private final static String SYNC_TASK_XML_TAG_FILTER_ENABLED = "enabled";
     private final static String SYNC_TASK_XML_TAG_FILTER_MIGRATE_FROM_SMBSYNC2 = "migrate_from_smbsync2";
     private final static String SYNC_TASK_XML_TAG_FILTER_VALUE = "value";
 
@@ -681,6 +682,7 @@ public class SyncConfiguration {
             for (FilterListAdapter.FilterListItem ff_item : filter_list) {
                 Element user_file_filter_entry_tag = main_document.createElement(SYNC_TASK_XML_TAG_FILTER_ITEM);
                 user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_INCLUDE, ff_item.isInclude() ? "true" : "false");
+                user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_ENABLED, ff_item.isEnabled() ? "true" : "false");
                 user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_MIGRATE_FROM_SMBSYNC2, ff_item.isMigrateFromSmbsync2() ? "true" : "false");
                 user_file_filter_entry_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_VALUE, ff_item.getFilter());
                 user_file_filter_tag.appendChild(user_file_filter_entry_tag);
@@ -873,20 +875,22 @@ public class SyncConfiguration {
                             buildSyncTaskDestinationFolderFromXml(c, xpp, cp_enc, sync_task_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_ITEM)) {
                             boolean include = false;
+                            boolean enabled = true;
                             boolean migrate_from_smbsyn2 = false;
                             String filter_val = "", filter_type = "";
                             for (int i = 0; i < xpp.getAttributeCount(); i++) {
                                 if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_INCLUDE)) {
-                                    if (xpp.getAttributeValue(i).toLowerCase().equals("true"))
-                                        include = true;
+                                    if (xpp.getAttributeValue(i).toLowerCase().equals("true")) include = true;
+                                } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_ENABLED)) {
+                                    if (xpp.getAttributeValue(i).toLowerCase().equals("false")) enabled = false;
                                 } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_MIGRATE_FROM_SMBSYNC2)) {
-                                    if (xpp.getAttributeValue(i).toLowerCase().equals("true"))
-                                        migrate_from_smbsyn2 = true;
+                                    if (xpp.getAttributeValue(i).toLowerCase().equals("true")) migrate_from_smbsyn2 = true;
                                 } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_VALUE)) {
                                     filter_val = xpp.getAttributeValue(i);
                                 }
                             }
                             FilterListAdapter.FilterListItem fli = new FilterListAdapter.FilterListItem(filter_val, include);
+                            fli.setEnabled(enabled);
                             fli.setMigrateFromSmbsync2(migrate_from_smbsyn2);
                             filter_list.add(fli);
                             if (log.isDebugEnabled())

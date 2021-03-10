@@ -96,7 +96,7 @@ public class MessageListAdapter extends BaseAdapter {
             mTextColorSyncDelete = mThemeColorList.text_color_error;//Color.RED
             mTextColorSyncReplace = mThemeColorList.text_color_warning;
         }
-        updateShowList();
+        if (objects!=null) updateShowList();
     }
 
 

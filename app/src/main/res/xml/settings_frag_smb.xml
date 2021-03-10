@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings_smb_title">
+    <PreferenceCategory android:title="@string/settings_smb_title" android:layout="@layout/setting_preference_category_layout">
         <PreferenceScreen
             android:key="@string/settings_smb_set_default_value_key"
             android:title="@string/settings_smb_set_default_value_text"/>
         <ListPreference
-                android:key="@string/settings_smb_lm_compatibility"
-                android:title="@string/settings_smb_lm_compatibility_title"
-                android:summary="@string/settings_smb_lm_compatibility_summary"
-                android:dialogTitle="@string/settings_smb_lm_compatibility_dialog_title"
-                android:entries="@array/settings_smb_lm_compatibility_list_entries"
-                android:entryValues="@array/settings_smb_lm_compatibility_list_values" />
+            android:key="@string/settings_smb_lm_compatibility"
+            android:title="@string/settings_smb_lm_compatibility_title"
+            android:summary="@string/settings_smb_lm_compatibility_summary"
+            android:dialogTitle="@string/settings_smb_lm_compatibility_dialog_title"
+            android:entries="@array/settings_smb_lm_compatibility_list_entries"
+            android:entryValues="@array/settings_smb_lm_compatibility_list_values"
+            android:singleLineTitle="false"/>
         <CheckBoxPreference
             android:key="@string/settings_smb_use_extended_security"
             android:title="@string/settings_smb_use_extended_security_title"
-            android:summary="@string/settings_smb_use_extended_security_summary_ena" />
+            android:summary="@string/settings_smb_use_extended_security_summary_ena"
+            android:singleLineTitle="false"/>
 
         <CheckBoxPreference
             android:key="@string/settings_smb_disable_plain_text_passwords"
             android:title="@string/settings_smb_disable_plain_text_passwords_title"
-            android:summary="@string/settings_smb_disable_plain_text_passwords_summary_ena" />
+            android:summary="@string/settings_smb_disable_plain_text_passwords_summary_ena"
+            android:singleLineTitle="false"/>
 
         <ListPreference
             android:key="settings_smb_client_reponse_timeout"
@@ -27,6 +30,7 @@
             android:summary="@string/settings_smb_client_response_timeout_summary"
             android:dialogTitle="@string/settings_smb_client_response_timeout_dialog_title"
             android:entries="@array/settings_smb_client_response_timeout_list_entries"
-            android:entryValues="@array/settings_smb_client_response_timeout_list_values" />
+            android:entryValues="@array/settings_smb_client_response_timeout_list_values"
+            android:singleLineTitle="false"/>
     </PreferenceCategory>
 </PreferenceScreen>

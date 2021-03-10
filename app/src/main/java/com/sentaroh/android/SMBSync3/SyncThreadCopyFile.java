@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.os.SystemClock;
+
 import com.sentaroh.android.JcifsFile2.JcifsException;
 import com.sentaroh.android.JcifsFile2.JcifsFile;
 
@@ -95,7 +97,7 @@ public class SyncThreadCopyFile {
 
         int sync_result= SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
         try {
-            String to_file_temp=tf.getAppDirectoryCache()+"/"+mf.getName();//System.currentTimeMillis();//mf.getName();
+            String to_file_temp=tf.getAppDirectoryCache()+"/"+System.currentTimeMillis();//mf.getName();
 
             SyncThread.createDirectoryToLocalStorage(stwa, sti, tf.getParentFile().getPath());
 
@@ -126,7 +128,7 @@ public class SyncThreadCopyFile {
                     ", m_saf_size="+m_saf_length);
 
             tf.deleteIfExists();
-            if (!temp_sf.moveTo(tf)){//WithRename(tf)) {
+            if (!temp_sf.moveToWithRename(tf)){
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), "SafFile3 moveTo Error="+temp_sf.getLastErrorMessage());
                 if (temp_file.exists()) temp_file.delete();
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -150,7 +152,7 @@ public class SyncThreadCopyFile {
 
         int sync_result= SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
         try {
-            String to_file_temp = tf.getPath()+"."+ System.currentTimeMillis()+".tmp";//"/temp.tmp";
+            String to_file_temp = tf.getParent()+"/"+ System.currentTimeMillis()+".tmp";//"/temp.tmp";
             SyncThread.createDirectoryToSmb(stwa, sti, tf.getParent(), stwa.destinationSmbAuth);
 
             JcifsFile temp_out=new JcifsFile(to_file_temp, stwa.destinationSmbAuth);
@@ -217,7 +219,7 @@ public class SyncThreadCopyFile {
 
         if (sti.isSyncTestMode()) return SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
 
-        String to_file_temp = tf.getPath()+"."+ System.currentTimeMillis()+".tmp";//"/temp.tmp";
+        String to_file_temp = tf.getParent()+"/"+ System.currentTimeMillis()+".tmp";//"/temp.tmp";
 
         int sync_result= SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
         try {
@@ -315,7 +317,7 @@ public class SyncThreadCopyFile {
 
         int sync_result= SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
         try {
-            String to_file_temp=tf.getAppDirectoryCache()+"/"+mf.getName();
+            String to_file_temp=tf.getAppDirectoryCache()+"/"+System.currentTimeMillis();//mf.getName();
 
             SyncThread.createDirectoryToLocalStorage(stwa, sti, tf.getParentFile().getPath());
 
@@ -338,7 +340,7 @@ public class SyncThreadCopyFile {
                     ", destination="+from_sf.lastModified()+", source="+mf.getLastModified()+", destination_size="+from_sf.length()+", source_size="+mf.length());
 
             tf.deleteIfExists();
-            if (!from_sf.moveTo(tf)) {//WithRename(tf)) {
+            if (!from_sf.moveToWithRename(tf)) {
                 stwa.util.addLogMsg("W", sti.getSyncTaskName(), "SafFile3 moveTo Error="+from_sf.getLastErrorMessage());
                 if (temp_file.exists()) temp_file.delete();
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -355,7 +357,7 @@ public class SyncThreadCopyFile {
             sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
         }
 
-        return SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
+        return sync_result;
     }
 
 

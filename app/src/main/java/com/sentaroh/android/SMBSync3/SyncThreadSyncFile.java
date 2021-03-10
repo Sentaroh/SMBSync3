@@ -45,15 +45,18 @@ import static com.sentaroh.android.SMBSync3.Constants.*;
 
 public class SyncThreadSyncFile {
     static private boolean isSafDirectory(SafFile3 sf, ContentProviderClient cpc) {
-        return cpc!=null?sf.isDirectory(cpc):sf.isDirectory();
+        return sf.isDirectory();
+//        return cpc!=null?sf.isDirectory(cpc):sf.isDirectory();
     }
 
     static private boolean isSafExists(SafFile3 sf, ContentProviderClient cpc) {
-        return cpc!=null?sf.exists(cpc):sf.exists();
+        return sf.exists();
+//        return cpc!=null?sf.exists(cpc):sf.exists();
     }
 
     static private SafFile3[] listSafFiles(SafFile3 sf, ContentProviderClient cpc) {
-        return cpc!=null?sf.listFiles(cpc):sf.listFiles();
+        return sf.listFiles();
+//        return cpc!=null?sf.listFiles(cpc):sf.listFiles();
     }
 
     static final private int syncDeleteLocalToLocal(SyncThreadWorkArea stwa, SyncTaskItem sti, String from_base,
@@ -391,6 +394,7 @@ public class SyncThreadSyncFile {
     }
 
     static private int deleteLocalItemForSyncDelete(SyncThreadWorkArea stwa, SyncTaskItem sti, String confirm_id, SafFile3 tf, String destination_dir) {
+//        stwa.util.addDebugMsg(1,"I","deleteLocalItemForSyncDelete entered="+tf.getPath());
         int sync_result=0;
         String msg="";
         if (SyncThread.sendConfirmRequest(stwa, sti, confirm_id, "", destination_dir)) {
@@ -441,6 +445,7 @@ public class SyncThreadSyncFile {
             JcifsFile mf = new JcifsFile(fp, stwa.sourceSmbAuth);
             mf_exists = mf.exists();
         }
+//        if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " result="+mf_exists+", fp=" + fp);
         return mf_exists;
     }
 
@@ -897,6 +902,7 @@ public class SyncThreadSyncFile {
     }
 
     static private int deleteLocalDirectoryForMove(SyncThreadWorkArea stwa, SyncTaskItem sti, boolean move_file, SafFile3 mf) {
+//        stwa.util.addDebugMsg(1,"I","deleteLocalDirectoryForMove entered="+mf.getPath());
         int sync_result=0;
         if (sti.isSyncConfirmOverrideOrDelete()) {
             if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_DELETE_DIR, "", mf.getPath())) {
@@ -1436,6 +1442,9 @@ public class SyncThreadSyncFile {
     }
 
     static public int deleteLocalItem(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile3 del_item) {
+//        stwa.util.addDebugMsg(1,"I","deleteLocalItem entered="+del_item.getPath());
+//        String st=MiscUtil.getStackTraceString(Thread.currentThread().getStackTrace());
+//        stwa.util.addDebugMsg(1,"I","deleteLocalItem stack trace=\n"+st);
         int sync_result=0;
         if (sti.isSyncTestMode()) {
             return sync_result;

@@ -404,6 +404,7 @@ public class TaskListUtils {
         final ArrayList<TreeFilelistItem> rows = new ArrayList<TreeFilelistItem>();
         NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
@@ -515,6 +516,7 @@ public class TaskListUtils {
                     if (tfi.getSubDirItemCount()>=0) {
                         NotifyEvent ntfy = new NotifyEvent(mActivity);
                         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                            @SuppressWarnings("unchecked")
                             @Override
                             public void positiveResponse(Context c, Object[] o) {
                                 setTopUpButtonEnabled(dialog, true);
@@ -596,6 +598,7 @@ public class TaskListUtils {
             public void onClick(View view) {
                 NotifyEvent ntfy_refresh=new NotifyEvent(mActivity);
                 ntfy_refresh.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
                         tv_home.setText(directory_pre+tv_home.getOriginalText().toString().replace(directory_pre,""));
@@ -628,6 +631,7 @@ public class TaskListUtils {
 
                 NotifyEvent ntfy_refresh=new NotifyEvent(mActivity);
                 ntfy_refresh.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
                         tv_home.setText(directory_pre+n_dir);
@@ -656,6 +660,7 @@ public class TaskListUtils {
             public void onClick(View view) {
                 NotifyEvent ntfy_refresh=new NotifyEvent(mActivity);
                 ntfy_refresh.setListener(new NotifyEvent.NotifyEventListener() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void positiveResponse(Context context, Object[] o) {
                         setTopUpButtonEnabled(dialog, false);
@@ -2155,6 +2160,7 @@ public class TaskListUtils {
 
         NotifyEvent ntfy=new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 ArrayList<TreeFilelistItem> tfl=(ArrayList<TreeFilelistItem>)objects[0];
@@ -2349,6 +2355,7 @@ public class TaskListUtils {
         NotifyEvent ntfy = new NotifyEvent(mActivity);
         // set thread response
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
@@ -2731,6 +2738,7 @@ public class TaskListUtils {
         NotifyEvent ntfy = new NotifyEvent(mActivity);
         // set thread response
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+            @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context c, Object[] o) {
                 final ArrayList<String> rows = new ArrayList<String>();
@@ -2833,6 +2841,7 @@ public class TaskListUtils {
                 else {
                     NotifyEvent ne = new NotifyEvent(mActivity);
                     ne.setListener(new NotifyEvent.NotifyEventListener() {
+                        @SuppressWarnings("unchecked")
                         @Override
                         public void positiveResponse(Context c, Object[] o) {
                             tfa.addChildItem(tfi, (ArrayList<TreeFilelistItem>) o[0], pos);
@@ -2860,6 +2869,7 @@ public class TaskListUtils {
                 else {
                     NotifyEvent ne = new NotifyEvent(mActivity);
                     ne.setListener(new NotifyEvent.NotifyEventListener() {
+                        @SuppressWarnings("unchecked")
                         @Override
                         public void positiveResponse(Context c, Object[] o) {
                             tfa.addChildItem(tfi, (ArrayList<TreeFilelistItem>) o[0], pos);

@@ -34,15 +34,18 @@ import android.view.Window;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogAppFragment;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.ThemeUtil;
 
 import static com.sentaroh.android.SMBSync3.Constants.APP_SHORTCUT_ID_KEY;
+import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_REQUESTOR;
 import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT;
 import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_SYNC_TASK;
 import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_INTENT;
+import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_SHORTCUT;
 
 public class ActivityShortcut extends FragmentActivity {
 
@@ -284,34 +287,8 @@ public class ActivityShortcut extends FragmentActivity {
     }
 
     private void startSync() {
-        Intent in = new Intent(mActivity, SyncService.class);
-        in.setAction(START_SYNC_INTENT);
-        in.putExtra(START_SYNC_EXTRA_PARM_SYNC_TASK, mSyncTaskList);
-        in.putExtra(START_SYNC_EXTRA_PARM_REQUESTOR, START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT);
-        in.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        final FragmentManager fm=getFragmentManager();
-
-        try {
-            mActivity.startForegroundService(in);
-            terminateShortcut();
-        }catch(Exception e){
-            e.printStackTrace();
-            NotifyEvent ntfy=new NotifyEvent(mActivity);
-            ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context context, Object[] objects) {
-                    terminateShortcut();
-                }
-
-                @Override
-                public void negativeResponse(Context context, Object[] objects) {}
-            });
-            MessageDialogAppFragment mdf=MessageDialogAppFragment.newInstance(false, "E",
-                    mActivity.getString(R.string.msgs_main_shortcut_title),
-                    "ShortcutAutoSync start service error\n"+e.getMessage());
-            mdf.showDialog(fm, mdf, ntfy);
-            mUtil.addDebugMsg(1,"E","ShortcutAutoSync start service error\n"+e.getMessage());
-        }
+        String[] task_list_array=mSyncTaskList.split(NAME_LIST_SEPARATOR);
+        SyncWorker.startSpecificSyncTask(mActivity, mGp, mUtil, SYNC_REQUEST_SHORTCUT, task_list_array);
     }
 
     private String getAutoTaskList() {
@@ -375,6 +352,8 @@ public class ActivityShortcut extends FragmentActivity {
 
         if (mDialog!=null) mDialog.dismiss();
 
+        mUtil.flushLog();
+        CommonUtilities.saveMessageList(mActivity, mGp);
         System.gc();
 //		android.os.Process.killProcess(android.os.Process.myPid());
     }

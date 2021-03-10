@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 public class GlobalWorkArea {
     static private GlobalParameters gp=null;
@@ -31,6 +33,10 @@ public class GlobalWorkArea {
             gp =new GlobalParameters();
             gp.initGlobalParamter(c);
         }
+        if (Looper.myLooper()!=null && gp.uiHandler==null) gp.uiHandler = new Handler(Looper.getMainLooper());
         return gp;
+    }
+    static public boolean isGlobalParameterCreated() {
+        return gp==null?false:true;
     }
 }

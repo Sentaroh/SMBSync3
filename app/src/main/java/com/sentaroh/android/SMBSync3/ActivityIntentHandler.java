@@ -29,10 +29,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.sentaroh.android.SMBSync3.Log.LogUtil;
-import com.sentaroh.android.Utilities3.Dialog.MessageDialogAppFragment;
-import com.sentaroh.android.Utilities3.NotifyEvent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,11 +42,13 @@ import static com.sentaroh.android.SMBSync3.Constants.QUERY_SYNC_TASK_INTENT;
 import static com.sentaroh.android.SMBSync3.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY;
 import static com.sentaroh.android.SMBSync3.Constants.REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT;
 import static com.sentaroh.android.SMBSync3.Constants.REPLY_SYNC_TASK_INTENT;
+import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_SYNC_TASK;
 
 public class ActivityIntentHandler extends Activity {
     private static final Logger log= LoggerFactory.getLogger(ActivityIntentHandler.class);
     private GlobalParameters mGp=null;
-    private LogUtil mLog = null;
+    private CommonUtilities mUtil = null;
+    private Context c;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -62,15 +60,16 @@ public class ActivityIntentHandler extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_transrucent);
-        final Context c=this;
+        c=ActivityIntentHandler.this;
 
-        if (mLog == null) mLog = new LogUtil(c, "IntentHandler");
         if (mGp == null) {
             mGp =GlobalWorkArea.getGlobalParameter(c);
-            mLog.addDebugMsg(1, "I", "config load started");
-            mGp.loadConfigList(c);
-            mLog.addDebugMsg(1, "I", "config load ended");
         }
+        if (mUtil == null) mUtil = mUtil = new CommonUtilities(c, "IntentHandler", mGp, null);
+
+        mUtil.addDebugMsg(1, "I", "config load started");
+        mGp.loadConfigList(c);
+        mUtil.addDebugMsg(1, "I", "config load ended");
 
         final Intent received_intent=getIntent();
         if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {
@@ -80,31 +79,27 @@ public class ActivityIntentHandler extends Activity {
                 querySyncTask(c, received_intent);
                 finish();
             } else {
-                try {
-                    Intent in=new Intent(c, SyncService.class);
-                    in.setAction(received_intent.getAction());
-                    in.putExtras(received_intent.getExtras());
-                    c.startForegroundService(in);
-                    finish();
-                }catch(Exception e){
-                    e.printStackTrace();
-                    NotifyEvent ntfy=new NotifyEvent(c);
-                    ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                        @Override
-                        public void positiveResponse(Context context, Object[] objects) {
-                            finish();
-                        }
-
-                        @Override
-                        public void negativeResponse(Context context, Object[] objects) {}
-                    });
-                    MessageDialogAppFragment mdf=MessageDialogAppFragment.newInstance(false, "E",
-                            "SMBSync3", "ActivityIntentHandler start service error\n"+e.getMessage());
-                    mdf.showDialog(fm, mdf, ntfy);
-                    mLog.addLogMsg("E","ActivityIntentHandler start service error\n"+e.getMessage());
+                String action=received_intent.getAction();
+                String task_list=received_intent.getStringExtra(START_SYNC_EXTRA_PARM_SYNC_TASK);
+                if (task_list==null) {
+                    SyncWorker.startSyncWorkerByAction(c, mGp, mUtil, action, "", "");
+                } else {
+                    SyncWorker.startSyncWorkerByAction(c, mGp, mUtil, action, "", task_list);
                 }
+                finish();
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
+
+        mUtil.flushLog();
+        CommonUtilities.saveMessageList(c, mGp);
+        System.gc();
+//		android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     private void querySyncTask(Context c, Intent in) {
@@ -112,7 +107,7 @@ public class ActivityIntentHandler extends Activity {
         String task_type = QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
         if (in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE) != null)
             task_type = in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE);
-        mLog.addDebugMsg(1, "I", "extra=" + in.getExtras() + ", str=" + in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE));
+        mUtil.addDebugMsg(1, "I", "extra=" + in.getExtras() + ", str=" + in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE));
         int reply_count = 0;
         if (mGp.syncTaskList.size() > 0) {
             for (int i = 0; i < mGp.syncTaskList.size(); i++) {
@@ -145,7 +140,7 @@ public class ActivityIntentHandler extends Activity {
         Intent reply = new Intent(REPLY_SYNC_TASK_INTENT);
         reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT, reply_count);
         reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY, reply_list);
-        mLog.addDebugMsg(1, "I", "query result, count="+reply_count+", list=["+reply_list+"]");
+        mUtil.addDebugMsg(1, "I", "query result, count="+reply_count+", list=["+reply_list+"]");
         c.sendBroadcast(reply);
     }
 
