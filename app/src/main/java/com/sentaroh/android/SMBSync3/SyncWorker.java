@@ -33,6 +33,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Vibrator;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.work.Data;
@@ -55,6 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import static com.sentaroh.android.SMBSync3.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync3.Constants.NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS;
 import static com.sentaroh.android.SMBSync3.Constants.NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ERROR;
@@ -208,6 +210,12 @@ public class SyncWorker extends Worker {
 //            }
 //        };
 //        th.start();
+
+        mGp.notificationLastShowedMessage="";
+        mGp.notificationLastShowedTitle="";
+        if (mGp.progressSpinSynctask!=null) mGp.progressSpinSynctask.setText(APPLICATION_TAG);
+        if (mGp.progressSpinMsg!=null) mGp.progressSpinMsg.setText("");
+
 
         return Result.success();
     }

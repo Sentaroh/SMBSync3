@@ -1147,6 +1147,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.progressSpinView = (LinearLayout) findViewById(R.id.main_dialog_progress_spin_view);
         mGp.progressSpinView.setVisibility(LinearLayout.GONE);
         mGp.progressSpinSynctask = (TextView) findViewById(R.id.main_dialog_progress_spin_synctask);
+        mGp.progressSpinSynctask.setText(APPLICATION_TAG);
         mGp.progressSpinMsg = (TextView) findViewById(R.id.main_dialog_progress_spin_syncmsg);
         mGp.progressSpinCancel = (Button) findViewById(R.id.main_dialog_progress_spin_btn_cancel);
 
