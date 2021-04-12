@@ -84,15 +84,11 @@ public class SyncWorker extends Worker {
 //    final static public String WORKER_ACTION_KEY="worker_action_key";
 //    final static public String WORKER_SYNC_REUEST_ITEM_KEY="worker_sync_request_key";
 
-    static public Context mContext=null;
-
-    static public void setContext(Context c) {
-        mContext=c;
-    }
+    public Context mContext=null;
 
     public SyncWorker (@NonNull Context c, @NonNull WorkerParameters workerParams) {
-        super(mContext==null?c:mContext, workerParams);
-        if (mContext==null) mContext=c;
+        super(c, workerParams);
+        mContext=c;
         if (!GlobalWorkArea.isGlobalParameterCreated()) {
             mGp=GlobalWorkArea.getGlobalParameter(mContext);
             mUtil = new CommonUtilities(mContext, "SyncWorker", mGp, null);
@@ -126,6 +122,7 @@ public class SyncWorker extends Worker {
 
     @Override
     public Result doWork() {
+//        mContext=getApplicationContext();
         mGp.setSyncWorkerActive(true);
 
         mUtil.addDebugMsg(1, "I", "doWork entered");
@@ -447,7 +444,6 @@ public class SyncWorker extends Worker {
             if (gp.isSyncWorkerActive()) {
                 lu.addDebugMsg(1, "I", "SyncWorker is already started.");
             } else {
-                SyncWorker.setContext(c);
                 WorkManager.getInstance().cancelAllWorkByTag(WORKER_TAG);
                 WorkManager.getInstance().pruneWork();
                 OneTimeWorkRequest req = new OneTimeWorkRequest.Builder(SyncWorker.class)
