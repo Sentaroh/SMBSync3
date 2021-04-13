@@ -126,8 +126,8 @@ public class TaskListUtils {
         Thread th=new Thread(){
             @Override
             public void run() {
-                String config_data= TaskListImportExport.saveTaskListToAppDirectory(c, gp.syncTaskList, gp.syncScheduleList, gp.syncGroupList);
-                if (config_data!=null) TaskListImportExport.saveTaskListToAutosave(mActivity, c, mGp.settingAppManagemsntDirectoryName, config_data);
+                String config_data= TaskListImportExport.saveTaskListToAppDirectory(c, gp, cu, gp.syncTaskList, gp.syncScheduleList, gp.syncGroupList);
+                if (config_data!=null) TaskListImportExport.saveTaskListToAutosave(mActivity, gp, cu, mGp.settingAppManagemsntDirectoryName, config_data);
             }
         };
         th.setPriority(Thread.MAX_PRIORITY);
@@ -138,7 +138,7 @@ public class TaskListUtils {
         Thread th=new Thread(){
             @Override
             public void run() {
-                String config_data= TaskListImportExport.saveTaskListToAppDirectory(c, gp.syncTaskList, gp.syncScheduleList, gp.syncGroupList);
+                String config_data= TaskListImportExport.saveTaskListToAppDirectory(c, gp, cu, gp.syncTaskList, gp.syncScheduleList, gp.syncGroupList);
             }
         };
         th.setPriority(Thread.MAX_PRIORITY);

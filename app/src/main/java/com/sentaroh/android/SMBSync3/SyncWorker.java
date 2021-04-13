@@ -94,7 +94,7 @@ public class SyncWorker extends Worker {
             mUtil = new CommonUtilities(mContext, "SyncWorker", mGp, null);
             NotificationUtils.initNotification(mGp, mUtil, mContext);
             mUtil.addDebugMsg(1, "I", "Configuration load started");
-            mGp.loadConfigList(mContext);
+            mGp.loadConfigList(mContext, mUtil);
             mUtil.addDebugMsg(1, "I", "Configuration load ended");
         } else {
             mGp=GlobalWorkArea.getGlobalParameter(mContext);

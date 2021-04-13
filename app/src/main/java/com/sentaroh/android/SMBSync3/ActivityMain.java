@@ -48,7 +48,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.Editable;
@@ -234,7 +233,7 @@ public class ActivityMain extends AppCompatActivity {
 //                makeCacheDirectory();
                 if (mGp.syncTaskList.size()==0) {
                     mUtil.addDebugMsg(1, "I", "Configuration load started");
-                    mGp.loadConfigList(mContext);
+                    mGp.loadConfigList(mContext, mUtil);
                     mUtil.addDebugMsg(1, "I", "Configuration load ended");
                 }
                 mTaskUtil = new TaskListUtils(mUtil, mActivity, mGp, getSupportFragmentManager());
@@ -332,7 +331,6 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void initApplication() {
-        ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET);
         setMediaStatusListener();
         checkStoredKey(new CallBackListener(){
             @Override
@@ -346,6 +344,7 @@ public class ActivityMain extends AppCompatActivity {
                                     mGp.waitConfigurationLock();
                                     appStartStaus = START_COMPLETED;
 
+                                    ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET);
                                     setMessageContextButtonListener();
                                     setMessageViewListener();
                                     setMessageFilterListener();
@@ -1931,7 +1930,7 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", "Invoke Setting activity.");
         mPrevLanguageSetting=GlobalParameters.getLanguageCode(mContext);
         Intent intent = new Intent(mContext, ActivitySettings.class);
-        launchActivity(mActivity, "Settings", intent, new CallBackListener() {
+        launchActivityResult(mActivity, "Settings", intent, new CallBackListener() {
             @Override
             public void onCallBack(Context context, boolean b, Object[] objects) {
                 mUtil.addDebugMsg(1, "I", "Return from Setting activity.");
@@ -2034,7 +2033,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void positiveResponse(Context context, Object[] objects) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
-                launchActivity(mActivity, "ALL_FILE_ACCESS", intent, new CallBackListener() {
+                launchActivityResult(mActivity, "ALL_FILE_ACCESS", intent, new CallBackListener() {
                     @Override
                     public void onCallBack(Context context, boolean b, Object[] objects) {
                         if (isAllFileAccessPermissionGranted()) {
@@ -2341,10 +2340,10 @@ public class ActivityMain extends AppCompatActivity {
 
     private ArrayList<ActivityLaunchItem> mActivityLaunchList=new ArrayList<ActivityLaunchItem>();
 
-    public void launchActivity(Activity a, String req_id, Intent intent, CallBackListener cbl) {
+    public void launchActivityResult(Activity a, String req_id, Intent intent, CallBackListener cbl) {
         int req_code=mActivityLaunchList.size()+1;
         synchronized (mActivityLaunchList) {
-            mUtil.addDebugMsg(1, "I", "launchActivity req_id="+req_id+", req_code="+req_code);
+            mUtil.addDebugMsg(1, "I", "launchActivityResult req_id="+req_id+", req_code="+req_code);
             mActivityLaunchList.add(new ActivityLaunchItem(req_code, req_id, cbl));
         }
         a.startActivityForResult(intent, req_code);
@@ -2566,8 +2565,8 @@ public class ActivityMain extends AppCompatActivity {
         Thread th=new Thread() {
             @Override
             public void run() {
-                String config_data= TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
-                if (config_data!=null) TaskListImportExport.saveTaskListToAutosave(mActivity, mContext, mGp.settingAppManagemsntDirectoryName, config_data);
+                String config_data= TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                if (config_data!=null) TaskListImportExport.saveTaskListToAutosave(mActivity, mGp, mUtil, mGp.settingAppManagemsntDirectoryName, config_data);
             }
         };
         th.setPriority(Thread.MAX_PRIORITY);
@@ -3441,8 +3440,8 @@ public class ActivityMain extends AppCompatActivity {
         Thread th=new Thread() {
             @Override
             public void run() {
-                String config_data= TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
-                if (config_data!=null) TaskListImportExport.saveTaskListToAutosave(mActivity, mContext, mGp.settingAppManagemsntDirectoryName, config_data);
+                String config_data= TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                if (config_data!=null) TaskListImportExport.saveTaskListToAutosave(mActivity, mGp, mUtil, mGp.settingAppManagemsntDirectoryName, config_data);
                 mUiHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -4360,7 +4359,7 @@ public class ActivityMain extends AppCompatActivity {
                                 Thread th=new Thread() {
                                     @Override
                                     public void run() {
-                                        TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                                        TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                                     }
                                 };
                                 th.start();
@@ -4411,7 +4410,7 @@ public class ActivityMain extends AppCompatActivity {
                                 Thread th=new Thread() {
                                     @Override
                                     public void run() {
-                                        TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                                        TaskListImportExport.saveTaskListToAppDirectory(mContext, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                                     }
                                 };
                                 th.start();

@@ -97,7 +97,7 @@ public class ActivityShortcut extends FragmentActivity {
 
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered restartStaus=" + restartStatus+", id="+mShotcutId);
 
-        mGp.loadConfigList(mActivity);
+        mGp.loadConfigList(mActivity, mUtil);
 
         mShotcutId=getIntent().getIntExtra(APP_SHORTCUT_ID_KEY, 0);
         if (mShotcutId==1) mShortcutName=mActivity.getString(R.string.msgs_group_name_for_shortcut1);

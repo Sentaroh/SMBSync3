@@ -68,7 +68,7 @@ public class SyncReceiver extends BroadcastReceiver {
         }
         if (mUtil == null) mUtil = new CommonUtilities(c, "Receiver", mGp, null);
         if (mUtil.getLogLevel()>0) mUtil.addDebugMsg(1, "I", "config load started");
-        mGp.loadConfigList(c);
+        mGp.loadConfigList(c, mUtil);
         if (mUtil.getLogLevel()>0) mUtil.addDebugMsg(1, "I", "config load ended");
 
         String action = received_intent.getAction();
@@ -80,7 +80,7 @@ public class SyncReceiver extends BroadcastReceiver {
                     action.equals(Intent.ACTION_TIME_CHANGED) ||
                     action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
                 for (ScheduleListAdapter.ScheduleListItem si : mGp.syncScheduleList) si.scheduleLastExecTime = System.currentTimeMillis();
-                TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                TaskListImportExport.saveTaskListToAppDirectory(c, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                 ScheduleUtils.setTimer(mContext, mGp, mUtil.getLogUtil());
             } else if (action.equals(SCHEDULE_INTENT_TIMER_EXPIRED)) {
                 if (received_intent.getExtras().containsKey(SCHEDULE_SCHEDULE_NAME_KEY)) {
@@ -92,7 +92,7 @@ public class SyncReceiver extends BroadcastReceiver {
                             ScheduleUtils.getScheduleItem(mGp.syncScheduleList, sched_name).scheduleLastExecTime = System.currentTimeMillis();
                         }
                     }
-                    TaskListImportExport.saveTaskListToAppDirectory(c, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                    TaskListImportExport.saveTaskListToAppDirectory(c, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                     ScheduleUtils.setTimer(mContext, mGp, mUtil.getLogUtil());
                 }
             } else {

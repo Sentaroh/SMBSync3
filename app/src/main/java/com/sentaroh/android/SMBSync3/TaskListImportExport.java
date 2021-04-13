@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
@@ -152,7 +153,7 @@ public class TaskListImportExport {
                     e.printStackTrace();
                     return;
                 }
-                boolean rc= saveTaskListToExportFile(mActivity, fsf, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList, pswd);
+                boolean rc= saveTaskListToExportFile(mActivity, mGp, mUtil, fsf, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList, pswd);
                 if (rc) {
                     mUtil.showCommonDialog(false, "I",
                             mActivity.getString(R.string.msgs_export_prof_success), "File=" + fsf.getPath(), null);
@@ -451,7 +452,7 @@ public class TaskListImportExport {
     }
 
     private void importSyncTaskList(final NotifyEvent p_ntfy, final SafFile3 sf, final boolean from_auto_save) {
-        if (isSavedSyncTaskListFile(mActivity, sf)) {
+        if (isSavedSyncTaskListFile(mActivity, mGp, mUtil, sf)) {
             importSMBSync3SyncTaskList(p_ntfy, sf, from_auto_save);
         } else {
             if (TaskListImportFromSMBSync2.isSMBSync2SyncTaskList(mActivity, mGp, mUtil, sf)) {
@@ -475,8 +476,8 @@ public class TaskListImportExport {
                 ArrayList<ScheduleListAdapter.ScheduleListItem>sync_sched=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
                 ArrayList<GroupListAdapter.GroupListItem>sync_group=new ArrayList<GroupListAdapter.GroupListItem>();
                 ArrayList<SettingParameterItem>sync_setting=new ArrayList<SettingParameterItem>();
-                if (from_auto_save) loadTaskListFromAutosaveFile(mActivity, sf, sync_task, sync_sched, sync_setting, sync_group);
-                else loadTaskListFromExportFile(mActivity, sf, sync_task, sync_sched, sync_setting, sync_group, mGp.profilePassword);
+                if (from_auto_save) loadTaskListFromAutosaveFile(mActivity, mGp, mUtil, sf, sync_task, sync_sched, sync_setting, sync_group);
+                else loadTaskListFromExportFile(mActivity, mGp, mUtil, sf, sync_task, sync_sched, sync_setting, sync_group, mGp.profilePassword);
                 final TaskListAdapter tfl = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, sync_task, mGp);
                 if (tfl.getCount() > 0) {
                     importSyncTaskItemSelector(false, tfl, sync_sched, sync_setting, sync_group, sf, p_ntfy, from_auto_save);
@@ -490,9 +491,9 @@ public class TaskListImportExport {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        String[] config_array= SyncConfiguration.createConfigurationDataArray(sf);
-        if (isSavedSyncTaskListFile(mActivity, sf)) {
-            if (isSavedSyncTaskListFileEncrypted(mActivity, sf)) {
+        String[] config_array= SyncConfiguration.createConfigurationDataArray(mActivity, mGp, mUtil, sf);
+        if (isSavedSyncTaskListFile(mActivity, mGp, mUtil, sf)) {
+            if (isSavedSyncTaskListFileEncrypted(mActivity, mGp, mUtil, sf)) {
                 promptPasswordForImport(sf, config_array[1], ntfy_pswd);
             } else {
                 ntfy_pswd.notifyToListener(true, new Object[]{""});
@@ -533,7 +534,7 @@ public class TaskListImportExport {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
-        String[] config_array= SyncConfiguration.createConfigurationDataArray(sf);
+        String[] config_array= SyncConfiguration.createConfigurationDataArray(mActivity, mGp, mUtil, sf);
         if (TaskListImportFromSMBSync2.isSyncTaskListEncrypted(mActivity, mGp, mUtil, sf)) {
             promptPasswordForImport(sf, config_array[0], ntfy_pswd);
         } else {
@@ -1016,7 +1017,7 @@ public class TaskListImportExport {
                 final String imp_list=imp_list_temp;
                 final String imp_smb=imp_error_temp;
 
-                final String config_data= saveTaskListToAppDirectory(mActivity, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                final String config_data= saveTaskListToAppDirectory(mActivity, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                 if (config_data!=null) {
                     NotifyEvent ntfy_success=new NotifyEvent(mActivity);
                     ntfy_success.setListener(new NotifyEvent.NotifyEventListener() {
@@ -1083,13 +1084,13 @@ public class TaskListImportExport {
     }
 
     final static private String CONFIG_FILE_NAME = "config.xml";
-    synchronized public static String saveTaskListToAppDirectory(Context c,
+    synchronized public static String saveTaskListToAppDirectory(Context c, GlobalParameters gp, CommonUtilities cu,
                                                     ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ArrayList<GroupListAdapter.GroupListItem>group_list) {
         try {
             SecretKey sk = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
             EncryptUtilV3.CipherParms cp_int = EncryptUtilV3.initCipherEnv(sk, KeyStoreUtils.KEY_STORE_ALIAS);
 
-            String config_data = SyncConfiguration.createXmlData(c, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_ENCRYPT_VITAL_DATA, cp_int);
+            String config_data = SyncConfiguration.createXmlData(c, gp, cu, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_ENCRYPT_VITAL_DATA, cp_int);
             if (config_data!=null) {
                 OutputStream os = c.openFileOutput(CONFIG_FILE_NAME, Context.MODE_PRIVATE);
                 BufferedOutputStream bos = new BufferedOutputStream(os, GENERAL_IO_BUFFER_SIZE);
@@ -1112,9 +1113,9 @@ public class TaskListImportExport {
 
     final static private int MAX_AUTOSAVE_FILE_COUNT = 50;
 
-    public static boolean saveTaskListToAutosave(Activity a, Context c, String management_directory, String config_data) {
+    public static boolean saveTaskListToAutosave(Activity a, GlobalParameters gp, CommonUtilities cu, String management_directory, String config_data) {
         try {
-            SafFile3 asd = new SafFile3(c, management_directory + "/autosave");
+            SafFile3 asd = new SafFile3(a, management_directory + "/autosave");
             if (asd != null) {
                 if (!asd.exists()) asd.mkdirs();
                 SafFile3[] fl = asd.listFiles();
@@ -1141,7 +1142,7 @@ public class TaskListImportExport {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String fn = "autosave_" + sdf.format(System.currentTimeMillis()) + ".stf";
 
-                SafFile3 asf = new SafFile3(c, management_directory + "/autosave/" + fn);
+                SafFile3 asf = new SafFile3(a, management_directory + "/autosave/" + fn);
                 if (asf != null) {
                     if (!asf.exists()) asf.createNewFile();
                     OutputStream os = asf.getOutputStream();
@@ -1155,7 +1156,7 @@ public class TaskListImportExport {
                     a.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast toast = CommonDialog.getToastShort(a, c.getString(R.string.msgs_import_autosave_dlg_autosave_completed));
+                            Toast toast = CommonDialog.getToastShort(a, a.getString(R.string.msgs_import_autosave_dlg_autosave_completed));
                             toast.setGravity(Gravity.BOTTOM, 0, (int) CommonUtilities.toPixel(a.getResources(), 150));
                             toast.show();
                         }
@@ -1169,13 +1170,13 @@ public class TaskListImportExport {
         return false;
     }
 
-    public static boolean saveTaskListToExportFile(Context c, Uri file_uri,
+    public static boolean saveTaskListToExportFile(Context c, GlobalParameters gp, CommonUtilities cu, Uri file_uri,
                                                    ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ArrayList<GroupListAdapter.GroupListItem>group_list, String priv_key) {
         SafFile3 sf = new SafFile3(c, file_uri);
-        return saveTaskListToExportFile(c, sf, sync_task_list, schedule_list, group_list, priv_key);
+        return saveTaskListToExportFile(c, gp, cu, sf, sync_task_list, schedule_list, group_list, priv_key);
     }
 
-    public static boolean saveTaskListToExportFile(Context c, SafFile3 sf,
+    public static boolean saveTaskListToExportFile(Context c, GlobalParameters gp, CommonUtilities cu, SafFile3 sf,
                                                    ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
                                                    ArrayList<GroupListAdapter.GroupListItem>group_list, String priv_key) {
         try {
@@ -1184,10 +1185,10 @@ public class TaskListImportExport {
             String file_id= "";
             if (priv_key != null && !priv_key.equals("")) {
                 cp_int = EncryptUtilV3.initCipherEnv(priv_key);
-                config_data = SyncConfiguration.createXmlData(c, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_ENCRYPT_WHOLE_DATA, cp_int);
+                config_data = SyncConfiguration.createXmlData(c, gp, cu, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_ENCRYPT_WHOLE_DATA, cp_int);
                 file_id=SYNC_TASK_ENCRYPTED_CONFIG_FILE_IDENTIFIER;
             } else {
-                config_data = SyncConfiguration.createXmlData(c, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_NO_ENCRYPT, null);
+                config_data = SyncConfiguration.createXmlData(c, gp, cu, sync_task_list, schedule_list, group_list, ENCRYPT_MODE_NO_ENCRYPT, null);
                 long cal_crc=SyncConfiguration.calculateSyncConfigCrc32(config_data.replaceAll("\n", ""));
                 file_id=SYNC_TASK_CONFIG_FILE_IDENTIFIER_PREFIX+cal_crc+SYNC_TASK_CONFIG_FILE_IDENTIFIER_SUFFIX;
             }
@@ -1214,7 +1215,7 @@ public class TaskListImportExport {
         }
     }
 
-    public static boolean loadTaskListFromAppDirectory(Context c,
+    public static boolean loadTaskListFromAppDirectory(Context c, GlobalParameters gp, CommonUtilities cu,
                                                        ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
                                                        ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListAdapter.GroupListItem> group_list) {
         boolean result = false;
@@ -1226,10 +1227,10 @@ public class TaskListImportExport {
 
                 InputStream fis = c.openFileInput(CONFIG_FILE_NAME);
 
-                String[] config_array = SyncConfiguration.createConfigurationDataArray(fis);
-                result=SyncConfiguration.isSavedSyncTaskListFile(c, config_array);
+                String[] config_array = SyncConfiguration.createConfigurationDataArray(c, gp, cu, fis);
+                result=SyncConfiguration.isSavedSyncTaskListFile(c, gp, cu, config_array);
                 if (result) {
-                    result = SyncConfiguration.buildConfigurationList(c, config_array[1], sync_task_list, schedule_list, setting_parm_list,
+                    result = SyncConfiguration.buildConfigurationList(c, gp, cu, config_array[1], sync_task_list, schedule_list, setting_parm_list,
                             group_list, ENCRYPT_MODE_ENCRYPT_VITAL_DATA, cp_int);
                 }
             }
@@ -1240,19 +1241,19 @@ public class TaskListImportExport {
         return result;
     }
 
-    public static boolean loadTaskListFromAutosaveFile(Context c, SafFile3 sf,
+    public static boolean loadTaskListFromAutosaveFile(Context c, GlobalParameters gp, CommonUtilities cu, SafFile3 sf,
                                                        ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
                                                        ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListAdapter.GroupListItem> group_list) {
         boolean result = false;
         try {
-            String[] config_array = SyncConfiguration.createConfigurationDataArray(sf);
+            String[] config_array = SyncConfiguration.createConfigurationDataArray(c, gp, cu, sf);
 
-            if (isSavedSyncTaskListFile(c, config_array)) {
+            if (isSavedSyncTaskListFile(c, gp, cu, config_array)) {
                 SecretKey priv_key = KeyStoreUtils.getStoredKey(c, KeyStoreUtils.KEY_STORE_ALIAS);
                 EncryptUtilV3.CipherParms cp_int = null;
                 if (priv_key != null) {
                     cp_int = EncryptUtilV3.initCipherEnv(priv_key, KeyStoreUtils.KEY_STORE_ALIAS);
-                    result = SyncConfiguration.buildConfigurationList(c, config_array[1], sync_task_list, schedule_list, setting_parm_list,
+                    result = SyncConfiguration.buildConfigurationList(c, gp, cu, config_array[1], sync_task_list, schedule_list, setting_parm_list,
                             group_list, ENCRYPT_MODE_ENCRYPT_VITAL_DATA, cp_int);
                 } else {
                     log.error(CommonUtilities.getExecutedMethodName()+" decrypt initialize failed.");
@@ -1282,24 +1283,24 @@ public class TaskListImportExport {
         return result;
     }
 
-    public static boolean loadTaskListFromExportFile(Context c, SafFile3 sf,
+    public static boolean loadTaskListFromExportFile(Context c, GlobalParameters gp, CommonUtilities cu, SafFile3 sf,
                                                      ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
                                                      ArrayList<SettingParameterItem> setting_parm_list, ArrayList<GroupListAdapter.GroupListItem> group_list,
                                                      String dec_key) {
         boolean result = false;
         try {
-            String[] config_array = SyncConfiguration.createConfigurationDataArray(sf);
+            String[] config_array = SyncConfiguration.createConfigurationDataArray(c, gp, cu, sf);
 
-            if (isSavedSyncTaskListFile(c, config_array)) {
-                if (isSavedSyncTaskListFileEncrypted(c, config_array)) {
+            if (isSavedSyncTaskListFile(c, gp, cu, config_array)) {
+                if (isSavedSyncTaskListFileEncrypted(c, gp, cu, config_array)) {
                     EncryptUtilV3.CipherParms cp_int = null;
                     if (dec_key != null && !dec_key.equals("")) {
                         cp_int = EncryptUtilV3.initCipherEnv(dec_key);
-                        result = SyncConfiguration.buildConfigurationList(c, config_array[1], sync_task_list, schedule_list, setting_parm_list,
+                        result = SyncConfiguration.buildConfigurationList(c, gp, cu, config_array[1], sync_task_list, schedule_list, setting_parm_list,
                                 group_list, ENCRYPT_MODE_ENCRYPT_WHOLE_DATA, cp_int);
                     }
                 } else {
-                    result = SyncConfiguration.buildConfigurationList(c, config_array[1], sync_task_list, schedule_list, setting_parm_list,
+                    result = SyncConfiguration.buildConfigurationList(c, gp, cu, config_array[1], sync_task_list, schedule_list, setting_parm_list,
                             group_list, ENCRYPT_MODE_NO_ENCRYPT, null);
                 }
             } else {

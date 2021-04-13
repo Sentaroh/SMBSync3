@@ -56,7 +56,9 @@ import static com.sentaroh.android.SMBSync3.SyncTaskItem.syncFilterFileSizeUnitV
 
 import com.sentaroh.android.SMBSync3.Log.LogUtil;
 import  com.sentaroh.android.Utilities3.EncryptUtilV3.CipherParms;
+import com.sentaroh.android.Utilities3.MiscUtil;
 import com.sentaroh.android.Utilities3.SafFile3;
+import com.sentaroh.android.Utilities3.StringUtil;
 
 public class SyncConfiguration {
     private static Logger log = LoggerFactory.getLogger(SyncConfiguration.class);
@@ -204,16 +206,16 @@ public class SyncConfiguration {
     private static final String GROUP_XML_TAG_TASK_LIST = "task_list";
     private static final String GROUP_XML_TAG_POSITION = "position";
 
-    public static String[] createConfigurationDataArray(SafFile3 sf) {
+    public static String[] createConfigurationDataArray(Context c, GlobalParameters gp, CommonUtilities cu, SafFile3 sf) {
         try {
-            return createConfigurationDataArray(sf.getInputStream());
+            return createConfigurationDataArray(c, gp, cu, sf.getInputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static String[] createConfigurationDataArray(InputStream is) {
+    public static String[] createConfigurationDataArray(Context c, GlobalParameters gp, CommonUtilities cu, InputStream is) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(is), GENERAL_IO_BUFFER_SIZE);
             String[] config_array = new String[2];
@@ -231,16 +233,15 @@ public class SyncConfiguration {
         return null;
     }
 
-    public static boolean isSavedSyncTaskListFile(Context c, SafFile3 sf) {
+    public static boolean isSavedSyncTaskListFile(Context c, GlobalParameters gp, CommonUtilities cu, SafFile3 sf) {
         try {
-            String[] config_array = createConfigurationDataArray(sf);
-            return isSavedSyncTaskListFile(c, config_array);
+            String[] config_array = createConfigurationDataArray(c, gp, cu, sf);
+            return isSavedSyncTaskListFile(c, gp, cu, config_array);
         } catch (Exception e) {
             e.printStackTrace();
-            log.error(CommonUtilities.getExecutedMethodName()+" failed.", e);
+            cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" failed.\n", MiscUtil.getStackTraceString(e));
             return false;
         }
-
     }
 
     public static long calculateSyncConfigCrc32(String input) {
@@ -249,7 +250,7 @@ public class SyncConfiguration {
         return crc.getValue();
     }
 
-    public static boolean isSavedSyncTaskListFile(Context c, String[] config_array) {
+    public static boolean isSavedSyncTaskListFile(Context c, GlobalParameters gp, CommonUtilities cu, String[] config_array) {
         boolean result = false;
         String id=SYNC_TASK_CONFIG_FILE_IDENTIFIER_PREFIX;//.substring(0, SYNC_TASK_CONFIG_FILE_IDENTIFIER_PREFIX.length()-1);
         if (config_array[0].startsWith(id)) {
@@ -258,29 +259,29 @@ public class SyncConfiguration {
             long cal_crc= calculateSyncConfigCrc32(config_array[1]);
             if (cal_crc==saved_crc) result=true;
             else {
-                log.info("isSavedSyncTaskListFile failed, CRC code unmatched.");
+                cu.addDebugMsg(1, "E", "isSavedSyncTaskListFile failed, CRC code unmatched.");
             }
         } else if (config_array[0].equals(SYNC_TASK_ENCRYPTED_CONFIG_FILE_IDENTIFIER)) {
             result = true;
         } else {
-            log.info("isSavedSyncTaskListFile failed, header record does not exists.");
+            cu.addDebugMsg(1, "E", "isSavedSyncTaskListFile failed, header record does not exists.");
         }
         return result;
     }
 
-    public static boolean isSavedSyncTaskListFileEncrypted(Context c, SafFile3 sf) {
+    public static boolean isSavedSyncTaskListFileEncrypted(Context c, GlobalParameters gp, CommonUtilities cu, SafFile3 sf) {
         try {
-            String[] config_array = createConfigurationDataArray(sf);
-            return isSavedSyncTaskListFileEncrypted(c, config_array);
+            String[] config_array = createConfigurationDataArray(c, gp, cu, sf);
+            return isSavedSyncTaskListFileEncrypted(c, gp, cu, config_array);
         } catch (Exception e) {
             e.printStackTrace();
-            log.error(CommonUtilities.getExecutedMethodName()+" failed.", e);
+            cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" failed.\n", MiscUtil.getStackTraceString(e));
             return false;
         }
 
     }
 
-    public static boolean isSavedSyncTaskListFileEncrypted(Context c, String[] config_array) {
+    public static boolean isSavedSyncTaskListFileEncrypted(Context c, GlobalParameters gp, CommonUtilities cu, String[] config_array) {
         boolean result = false;
         if (config_array[0].equals(SYNC_TASK_ENCRYPTED_CONFIG_FILE_IDENTIFIER)) {
             if (!config_array[1].startsWith("<?xml")) {
@@ -296,10 +297,10 @@ public class SyncConfiguration {
 
     public final static String CONFIG_LIST_VER1 = "1.0.1";
 
-    synchronized public static String createXmlData(Context c,
+    synchronized public static String createXmlData(Context c, GlobalParameters gp, CommonUtilities cu,
                                ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
                                ArrayList<GroupListAdapter.GroupListItem>group_list, int enc_mode, CipherParms cp_enc) {
-        if (log.isDebugEnabled()) log.debug("buildConfigData enc_mode=" + enc_mode + ", cp_enc=" + cp_enc);
+        cu.addDebugMsg(1, "I", "buildConfigData enc_mode=" + enc_mode + ", cp_enc=" + cp_enc);
         String config_data = null;
         synchronized (sync_task_list) {
             try {
@@ -311,28 +312,28 @@ public class SyncConfiguration {
                 config_tag.setAttribute(SYNC_TASK_XML_TAG_CONFIG_VERSION, CONFIG_LIST_VER1);
 
                 for (SyncTaskItem item : sync_task_list) {
-                    Element task_tag = createXmlTaskElement(c, main_document, item);
+                    Element task_tag = createXmlTaskElement(c, gp, cu, main_document, item);
                     config_tag.appendChild(task_tag);
 
-                    Element source_tag = createXmlSourceElement(c, main_document, item, enc_mode, cp_enc);
+                    Element source_tag = createXmlSourceElement(c, gp, cu, main_document, item, enc_mode, cp_enc);
                     task_tag.appendChild(source_tag);
 
-                    Element destination_tag = createXmlDestinationElement(c, main_document, item, enc_mode, cp_enc);
+                    Element destination_tag = createXmlDestinationElement(c, gp, cu, main_document, item, enc_mode, cp_enc);
                     task_tag.appendChild(destination_tag);
 
                 }
 
                 for (ScheduleListAdapter.ScheduleListItem item : schedule_list) {
-                    Element schedule_tag = createXmlScheduleData(c, main_document, item);
+                    Element schedule_tag = createXmlScheduleData(c, gp, cu, main_document, item);
                     config_tag.appendChild(schedule_tag);
                 }
 
                 for (GroupListAdapter.GroupListItem item : group_list) {
-                    Element group_tag = createXmlGroupData(c, main_document, item);
+                    Element group_tag = createXmlGroupData(c, gp, cu, main_document, item);
                     config_tag.appendChild(group_tag);
                 }
 
-                Element setting_tag = createXmlSettingsElement(c, main_document);
+                Element setting_tag = createXmlSettingsElement(c, gp, cu, main_document);
                 config_tag.appendChild(setting_tag);
 
                 main_document.appendChild(config_tag);
@@ -351,22 +352,22 @@ public class SyncConfiguration {
                     if (prof != null) {
                         config_data = CommonUtilities.encryptUserData(c, cp_enc, prof);
                     } else {
-                        log.error(CommonUtilities.getExecutedMethodName()+"  Sync task list not saved because null CipherParms supplied.");
+                        cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+"  Sync task list not saved because null CipherParms supplied.");
                     }
                 } else {
                     config_data = prof;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                log.error(CommonUtilities.getExecutedMethodName()+"  failed.", e);
+                cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+"  failed.", MiscUtil.getStackTraceString(e));
                 config_data=null;
             }
-            if (log.isDebugEnabled()) log.debug(CommonUtilities.getExecutedMethodName()+"  ended");
+            cu.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName(), "  ended");
         }
         return config_data;
     }
 
-    private static Element createXmlScheduleData(Context c, Document main_document, ScheduleListAdapter.ScheduleListItem item) {
+    private static Element createXmlScheduleData(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, ScheduleListAdapter.ScheduleListItem item) {
         Element schedule_tag = main_document.createElement(SYNC_TASK_XML_TAG_SCHEDULE);
         schedule_tag.setAttribute(SCHEDULE_XML_TAG_NAME, item.scheduleName);
         schedule_tag.setAttribute(SCHEDULE_XML_TAG_ENABLED, item.scheduleEnabled ? "true" : "false");
@@ -387,7 +388,8 @@ public class SyncConfiguration {
         return schedule_tag;
     }
 
-    private static void buildSyncTaskScheduleFromXml(Context c, XmlPullParser xpp, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ScheduleListAdapter.ScheduleListItem item) {
+    private static void buildSyncTaskScheduleFromXml(Context c, GlobalParameters gp, CommonUtilities cu,
+                      XmlPullParser xpp, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list, ScheduleListAdapter.ScheduleListItem item) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(SCHEDULE_XML_TAG_NAME)) {
                 String unusable=hasUnusableCharacter(xpp.getAttributeValue(i));
@@ -395,11 +397,11 @@ public class SyncConfiguration {
                 if (unusable.equals("")) {
                     if (!ScheduleUtils.isScheduleExists(schedule_list, schedule_name)) item.scheduleName = schedule_name;
                     else {
-                        log.error("Sync task already exists : "+schedule_name);
+                        cu.addDebugMsg(1, "E", "Sync task already exists : "+schedule_name);
                     }
                 } else {
                     item.scheduleName = xpp.getAttributeValue(i).replaceAll(unusable, "");
-                    log.error("Schudule name contains unusable chanaracter : "+unusable+", schedule name="+schedule_name);
+                    cu.addDebugMsg(1, "E", "Schudule name contains unusable chanaracter : "+unusable+", schedule name="+schedule_name);
                 }
             } else if (xpp.getAttributeName(i).equals(SCHEDULE_XML_TAG_ENABLED)) {
                 item.scheduleEnabled = xpp.getAttributeValue(i).equals("true");
@@ -423,13 +425,13 @@ public class SyncConfiguration {
                 try {
                     item.scheduleLastExecTime = Long.valueOf(xpp.getAttributeValue(i));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SCHEDULE_XML_TAG_POSITION)) {
                 try {
                     item.schedulePosition = Integer.valueOf(xpp.getAttributeValue(i));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SCHEDULE_XML_TAG_GROUP_LIST)) {
                 item.syncGroupList = xpp.getAttributeValue(i);
@@ -441,13 +443,13 @@ public class SyncConfiguration {
                 try {
                     item.syncDelayAfterWifiOn = Integer.valueOf(xpp.getAttributeValue(i));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
                 }
             }
         }
     }
 
-    private static Element createXmlGroupData(Context c, Document main_document, GroupListAdapter.GroupListItem item) {
+    private static Element createXmlGroupData(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, GroupListAdapter.GroupListItem item) {
         Element group_tag = main_document.createElement(SYNC_TASK_XML_TAG_GROUP);
         group_tag.setAttribute(GROUP_XML_TAG_GROUP_NAME, item.groupName);
         group_tag.setAttribute(GROUP_XML_TAG_ENABLED, item.enabled ? "true" : "false");
@@ -458,7 +460,7 @@ public class SyncConfiguration {
         return group_tag;
     }
 
-    private static void buildSyncTaskGroupFromXml(Context c, XmlPullParser xpp, ArrayList<GroupListAdapter.GroupListItem> group_list, GroupListAdapter.GroupListItem item) {
+    private static void buildSyncTaskGroupFromXml(Context c, GlobalParameters gp, CommonUtilities cu, XmlPullParser xpp, ArrayList<GroupListAdapter.GroupListItem> group_list, GroupListAdapter.GroupListItem item) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(GROUP_XML_TAG_GROUP_NAME)) {
                 String unusable=hasUnusableCharacter(xpp.getAttributeValue(i));
@@ -466,11 +468,11 @@ public class SyncConfiguration {
                 if (unusable.equals("")) {
                     if (!GroupEditor.isGroupExists(group_list, group_name)) item.groupName = group_name;
                     else {
-                        log.error("Sync group already exists : "+group_name);
+                        cu.addDebugMsg(1, "E", "Sync group already exists : "+group_name);
                     }
                 } else {
                     item.groupName = xpp.getAttributeValue(i).trim().replaceAll(unusable, "");
-                    log.error("Group name contains unusable chanaracter : "+unusable+", group name="+group_name);
+                    cu.addDebugMsg(1, "E", "Group name contains unusable chanaracter : "+unusable+", group name="+group_name);
                 }
             } else if (xpp.getAttributeName(i).equals(GROUP_XML_TAG_ENABLED)) {
                 item.enabled = xpp.getAttributeValue(i).equals("true");
@@ -482,19 +484,19 @@ public class SyncConfiguration {
                 try {
                     item.button = Integer.parseInt(xpp.getAttributeValue(i));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(GROUP_XML_TAG_POSITION)) {
                 try {
                     item.position = Integer.parseInt(xpp.getAttributeValue(i));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
                 }
             }
         }
     }
 
-    private static Element createXmlSettingDataItemString(Context c, Document main_document, String key, String def_value) {
+    private static Element createXmlSettingDataItemString(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, String key, String def_value) {
         Element setting_item = main_document.createElement(SYNC_TASK_XML_TAG_SETTINGS_ITEM);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_KEY, key);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_TYPE, SYNC_TASK_XML_TAG_SETTINGS_TYPE_STRING);
@@ -502,7 +504,7 @@ public class SyncConfiguration {
         return setting_item;
     }
 
-    private static Element createXmlSettingDataItemBoolean(Context c, Document main_document, String key, boolean def_value) {
+    private static Element createXmlSettingDataItemBoolean(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, String key, boolean def_value) {
         Element setting_item = main_document.createElement(SYNC_TASK_XML_TAG_SETTINGS_ITEM);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_KEY, key);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_TYPE, SYNC_TASK_XML_TAG_SETTINGS_TYPE_BOOLEAN);
@@ -510,7 +512,7 @@ public class SyncConfiguration {
         return setting_item;
     }
 
-    private static Element createXmlSettingDataItemInt(Context c, Document main_document, String key, int def_value) {
+    private static Element createXmlSettingDataItemInt(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, String key, int def_value) {
         Element setting_item = main_document.createElement(SYNC_TASK_XML_TAG_SETTINGS_ITEM);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_KEY, key);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_TYPE, SYNC_TASK_XML_TAG_SETTINGS_TYPE_INT);
@@ -518,7 +520,7 @@ public class SyncConfiguration {
         return setting_item;
     }
 
-    private static Element createXmlSettingDataItemLong(Context c, Document main_document, String key, long def_value) {
+    private static Element createXmlSettingDataItemLong(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, String key, long def_value) {
         Element setting_item = main_document.createElement(SYNC_TASK_XML_TAG_SETTINGS_ITEM);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_KEY, key);
         setting_item.setAttribute(SYNC_TASK_XML_TAG_SETTINGS_TYPE, SYNC_TASK_XML_TAG_SETTINGS_TYPE_LONG);
@@ -526,34 +528,34 @@ public class SyncConfiguration {
         return setting_item;
     }
 
-    private static Element createXmlSettingsElement(Context c, Document main_document) {
+    private static Element createXmlSettingsElement(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document) {
         Element setting_tag = main_document.createElement(SYNC_TASK_XML_TAG_SETTINGS);
 
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_wifi_lock), false));
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_wifi_lock), false));
 
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_sync_history_log), false));
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_force_screen_on_while_sync), false));
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_sync_history_log), false));
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_force_screen_on_while_sync), false));
 
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_no_compress_file_type), DEFAULT_NOCOMPRESS_FILE_TYPE));
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_no_compress_file_type), DEFAULT_NOCOMPRESS_FILE_TYPE));
 
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_notification_message_when_sync_ended), NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS));//gp.settingNotificationMessageWhenSyncEnded);
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_playback_ringtone_when_sync_ended), NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS));//gp.settingNotificationSoundWhenSyncEnded);
-        setting_tag.appendChild(createXmlSettingDataItemInt(c, main_document, c.getString(R.string.settings_playback_ringtone_volume), 100));//String.valueOf(gp.settingNotificationVolume));
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_notification_message_when_sync_ended), NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS));//gp.settingNotificationMessageWhenSyncEnded);
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_playback_ringtone_when_sync_ended), NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS));//gp.settingNotificationSoundWhenSyncEnded);
+        setting_tag.appendChild(createXmlSettingDataItemInt(c, gp, cu, main_document, c.getString(R.string.settings_playback_ringtone_volume), 100));//String.valueOf(gp.settingNotificationVolume));
 
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS));//gp.settingNotificationVibrateWhenSyncEnded);
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_device_orientation_portrait), false));//gp.settingFixDeviceOrientationToPortrait?"true":"false");
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD));//gp.settingScreenTheme);
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_screen_theme_language), GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT));
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_display_font_scale_factor), GlobalParameters.FONT_SCALE_FACTOR_NORMAL));
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS));//gp.settingNotificationVibrateWhenSyncEnded);
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_device_orientation_portrait), false));//gp.settingFixDeviceOrientationToPortrait?"true":"false");
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD));//gp.settingScreenTheme);
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_screen_theme_language), GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT));
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_display_font_scale_factor), GlobalParameters.FONT_SCALE_FACTOR_NORMAL));
 
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_smb_lm_compatibility), GlobalParameters.SMB_LM_COMPATIBILITY_DEFAULT));//gp.settingsSmbLmCompatibility);
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_smb_use_extended_security), true));//gp.settingsSmbUseExtendedSecurity);
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_smb_disable_plain_text_passwords), false));//gp.settingsSmbDisablePlainTextPasswords);
-        setting_tag.appendChild(createXmlSettingDataItemString(c, main_document, c.getString(R.string.settings_smb_client_response_timeout), GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT));//gp.settingsSmbClientResponseTimeout);
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_smb_lm_compatibility), GlobalParameters.SMB_LM_COMPATIBILITY_DEFAULT));//gp.settingsSmbLmCompatibility);
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_smb_use_extended_security), true));//gp.settingsSmbUseExtendedSecurity);
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_smb_disable_plain_text_passwords), false));//gp.settingsSmbDisablePlainTextPasswords);
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_smb_client_response_timeout), GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT));//gp.settingsSmbClientResponseTimeout);
 
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, c.getString(R.string.settings_exit_clean), false));//gp.settingExitClean?"true":"false");
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_exit_clean), false));//gp.settingExitClean?"true":"false");
 
-        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, main_document, SCHEDULE_ENABLED_KEY, true));
+        setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, SCHEDULE_ENABLED_KEY, true));
 
         return setting_tag;
     }
@@ -594,7 +596,7 @@ public class SyncConfiguration {
         return (String.valueOf(prefs.getLong(key, default_value)));
     }
 
-    private static Element createXmlTaskElement(Context c, Document main_document, SyncTaskItem item) {
+    private static Element createXmlTaskElement(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, SyncTaskItem item) {
         Element task_tag = main_document.createElement(SYNC_TASK_XML_TAG_TASK);
         task_tag.setAttribute(SYNC_TASK_XML_TAG_TASK_AUTO_TASK, item.isSyncTaskAuto() ? "true" : "false");
         task_tag.setAttribute(SYNC_TASK_XML_TAG_TASK_TEST_MODE, item.isSyncTestMode() ? "true" : "false");
@@ -610,21 +612,21 @@ public class SyncConfiguration {
 
         task_tag.setAttribute(SYNC_TASK_XML_TAG_TASK_ERROR, String.valueOf(item.getSyncTaskStatusErrorCode()));
 
-        createXmlOptionElement(c, main_document, task_tag, item);
+        createXmlOptionElement(c, gp, cu, main_document, task_tag, item);
 
         if (item.getDirectoryFilter().size() > 0)
-            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_DIRECTORY, item.getDirectoryFilter());
+            createXmlFilterElement(c, gp, cu, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_DIRECTORY, item.getDirectoryFilter());
         if (item.getFileNameFilter().size() > 0)
-            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_FILE_NAME, item.getFileNameFilter());
+            createXmlFilterElement(c, gp, cu, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_FILE_NAME, item.getFileNameFilter());
         if (item.getSyncOptionWifiAccessPointGrantList().size() > 0)
-            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_SSID, item.getSyncOptionWifiAccessPointGrantList());
+            createXmlFilterElement(c, gp, cu, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_SSID, item.getSyncOptionWifiAccessPointGrantList());
         if (item.getSyncOptionWifiIPAddressGrantList().size() > 0)
-            createXmlFilterElement(c, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_IPADDR, item.getSyncOptionWifiIPAddressGrantList());
+            createXmlFilterElement(c, gp, cu, main_document, task_tag, SYNC_TASK_XML_TAG_FILTER_IPADDR, item.getSyncOptionWifiIPAddressGrantList());
 
         return task_tag;
     }
 
-    private static void createXmlOptionElement(Context c, Document main_document, Element task_tag, SyncTaskItem item) {
+    private static void createXmlOptionElement(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, Element task_tag, SyncTaskItem item) {
         Element option_tag = main_document.createElement(SYNC_TASK_XML_TAG_OPTION);
 
         option_tag.setAttribute(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE, item.isSyncOptionIgnoreFileSize0ByteFile()? "true" : "false");
@@ -676,7 +678,7 @@ public class SyncConfiguration {
         task_tag.appendChild(option_tag);
     }
 
-    private static void createXmlFilterElement(Context c, Document main_document, Element task_tag, String filter_type, ArrayList<FilterListAdapter.FilterListItem> filter_list) {
+    private static void createXmlFilterElement(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, Element task_tag, String filter_type, ArrayList<FilterListAdapter.FilterListItem> filter_list) {
         if (filter_list.size() > 0) {
             Element user_file_filter_tag = main_document.createElement(filter_type);
             for (FilterListAdapter.FilterListItem ff_item : filter_list) {
@@ -691,7 +693,7 @@ public class SyncConfiguration {
         }
     }
 
-    private static Element createXmlSourceElement(Context c, Document main_document, SyncTaskItem item, int enc_mode, CipherParms cp_int) {
+    private static Element createXmlSourceElement(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, SyncTaskItem item, int enc_mode, CipherParms cp_int) {
         Element source_tag = main_document.createElement(SYNC_TASK_XML_TAG_SOURCE);
         source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_TYPE, item.getSourceFolderType());
         source_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_DIRECTORY, item.getSourceDirectoryName());
@@ -728,7 +730,7 @@ public class SyncConfiguration {
         return source_tag;
     }
 
-    private static Element createXmlDestinationElement(Context c, Document main_document, SyncTaskItem item, int enc_mode, CipherParms cp_int) {
+    private static Element createXmlDestinationElement(Context c, GlobalParameters gp, CommonUtilities cu, Document main_document, SyncTaskItem item, int enc_mode, CipherParms cp_int) {
         Element destination_tag = main_document.createElement(SYNC_TASK_XML_TAG_DESTINATION);
         destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_TYPE, item.getDestinationFolderType());
         destination_tag.setAttribute(SYNC_TASK_XML_TAG_FOLDER_DIRECTORY, item.getDestinationDirectoryName());
@@ -788,13 +790,13 @@ public class SyncConfiguration {
         return destination_tag;
     }
 
-    private static void putTaskListValueErrorMessage(String item_name, Object assumed_value) {
+    private static void putTaskListValueErrorMessage(CommonUtilities cu, String item_name, Object assumed_value) {
         String msg_template = "Invalid \"%s\" was detected while reading the task list, so \"%s\" was set to \"%s\".";
         String val = "";
         if (assumed_value instanceof String) val = (String) assumed_value;
         else if (assumed_value instanceof Integer) val = String.valueOf((Integer) assumed_value);
         else val = "?????";
-        log.error(String.format(msg_template, item_name, val, item_name));
+        cu.addDebugMsg(1, "E", String.format(msg_template, item_name, val, item_name));
     }
 
     private static boolean isValidTaskItemValue(String[] valid_value, String obtained_value) {
@@ -819,7 +821,7 @@ public class SyncConfiguration {
         return result;
     }
 
-    public static boolean buildConfigurationList(Context c, String config_data,
+    public static boolean buildConfigurationList(Context c, GlobalParameters gp, CommonUtilities cu, String config_data,
                                                  ArrayList<SyncTaskItem> sync_task_list, ArrayList<ScheduleListAdapter.ScheduleListItem> schedule_list,
                                                  ArrayList<SettingParameterItem> setting_parm_list,
                                                  ArrayList<GroupListAdapter.GroupListItem> group_list,
@@ -836,7 +838,7 @@ public class SyncConfiguration {
 //                    cu.addDebugMsg(1,"E","decrypt success, xml="+dec_str);
                     xpp.setInput(new BufferedReader(new InputStreamReader(new ByteArrayInputStream(dec_str.getBytes()))));
                 } else {
-                    log.error(CommonUtilities.getExecutedMethodName()+" decrypt failed");
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" decrypt failed");
                     return false;
                 }
             } else {
@@ -852,27 +854,24 @@ public class SyncConfiguration {
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 switch (eventType) {
                     case XmlPullParser.START_DOCUMENT:
-                        if (log.isDebugEnabled())
-                            log.trace(CommonUtilities.getExecutedMethodName()+" Start Document, name=" + xpp.getName());
+                        cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" Start Document, name=" + xpp.getName());
                         break;
                     case XmlPullParser.START_TAG:
-                        if (log.isDebugEnabled())
-                            log.trace(CommonUtilities.getExecutedMethodName()+" Start Tag=" + xpp.getName());
+                        cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" Start Tag=" + xpp.getName());
                         if (xpp.getName().equals(SYNC_TASK_XML_TAG_CONFIG)) {
                             if (xpp.getAttributeCount() == 1) {
                                 config_ver = xpp.getAttributeValue(0);
-                                if (log.isDebugEnabled())
-                                    log.trace(CommonUtilities.getExecutedMethodName()+" Version=" + xpp.getAttributeValue(0));
+                                cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" Version=" + xpp.getAttributeValue(0));
                             }
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_TASK)) {
                             sync_task_item = new SyncTaskItem();
-                            buildSyncTaskElementFromXml(c, xpp, sync_task_list, sync_task_item);
+                            buildSyncTaskElementFromXml(c, gp, cu, xpp, sync_task_list, sync_task_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_OPTION)) {
-                            buildSyncTaskOptionFromXml(c, xpp, sync_task_item);
+                            buildSyncTaskOptionFromXml(c, gp, cu, xpp, sync_task_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SOURCE)) {
-                            buildSyncTaskSourceFolderFromXml(c, xpp, cp_enc, sync_task_item);
+                            buildSyncTaskSourceFolderFromXml(c, gp, cu, xpp, cp_enc, sync_task_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_DESTINATION)) {
-                            buildSyncTaskDestinationFolderFromXml(c, xpp, cp_enc, sync_task_item);
+                            buildSyncTaskDestinationFolderFromXml(c, gp, cu, xpp, cp_enc, sync_task_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_ITEM)) {
                             boolean include = false;
                             boolean enabled = true;
@@ -893,8 +892,7 @@ public class SyncConfiguration {
                             fli.setEnabled(enabled);
                             fli.setMigrateFromSmbsync2(migrate_from_smbsyn2);
                             filter_list.add(fli);
-                            if (log.isDebugEnabled())
-                                log.trace(CommonUtilities.getExecutedMethodName()+" filter added=" + filter_list.get(filter_list.size() - 1));
+                            cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" filter added=" + filter_list.get(filter_list.size() - 1));
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_DIRECTORY)) {
                             filter_list = sync_task_item.getDirectoryFilter();
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_FILTER_FILE_NAME)) {
@@ -905,10 +903,10 @@ public class SyncConfiguration {
                             filter_list = sync_task_item.getSyncOptionWifiIPAddressGrantList();
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SCHEDULE)) {
                             schedule_item = new ScheduleListAdapter.ScheduleListItem();
-                            buildSyncTaskScheduleFromXml(c, xpp, schedule_list, schedule_item);
+                            buildSyncTaskScheduleFromXml(c, gp, cu, xpp, schedule_list, schedule_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_GROUP)) {
                             group_item = new GroupListAdapter.GroupListItem();
-                            buildSyncTaskGroupFromXml(c, xpp, group_list, group_item);
+                            buildSyncTaskGroupFromXml(c, gp, cu, xpp, group_list, group_item);
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SETTINGS)) {
                         } else if (xpp.getName().equals(SYNC_TASK_XML_TAG_SETTINGS_ITEM)) {
                             String key = "", type = "", value = "";
@@ -920,16 +918,14 @@ public class SyncConfiguration {
                                 else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_SETTINGS_VALUE))
                                     value = xpp.getAttributeValue(i);
                             }
-                            if (setting_parm_list!=null) setting_parm_list.add(createSettingParmItem(c, key, type, value));
+                            if (setting_parm_list!=null) setting_parm_list.add(createSettingParmItem(c, gp, cu, key, type, value));
                         }
                         break;
                     case XmlPullParser.TEXT:
-                        if (log.isDebugEnabled())
-                            log.trace(CommonUtilities.getExecutedMethodName()+" Text=" + xpp.getText() + ", name=" + xpp.getName());
+                        cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" Text=" + xpp.getText() + ", name=" + xpp.getName());
                         break;
                     case XmlPullParser.END_TAG:
-                        if (log.isDebugEnabled())
-                            log.trace(CommonUtilities.getExecutedMethodName()+" End Tag=" + xpp.getName());
+                        cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" End Tag=" + xpp.getName());
                         if (xpp.getName().equals(SYNC_TASK_XML_TAG_TASK)) {
 //                            log.trace("loadTaskList TAG="+xpp.getName());
                             sync_task_list.add(sync_task_item);
@@ -940,35 +936,34 @@ public class SyncConfiguration {
                         }
                         break;
                     case XmlPullParser.END_DOCUMENT:
-                        if (log.isDebugEnabled())
-                            log.trace(CommonUtilities.getExecutedMethodName()+" End Document=" + xpp.getName());
+                        cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" End Document=" + xpp.getName());
                         break;
                 }
                 eventType = xpp.next();
             }
-            log.trace(CommonUtilities.getExecutedMethodName()+" End of document");
-            log.trace(CommonUtilities.getExecutedMethodName()+" Task list size="+sync_task_list.size()+", Schedule list size="+schedule_list.size()+", Group list size="+group_list.size());
+            cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" End of document");
+            cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" Task list size="+sync_task_list.size()+", Schedule list size="+schedule_list.size()+", Group list size="+group_list.size());
 
         } catch (Exception e) {
             e.printStackTrace();
-            log.error(CommonUtilities.getExecutedMethodName()+" failed.", e);
+            cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" failed.", MiscUtil.getStackTraceString(e));
             result = false;
         }
         return result;
     }
 
 
-    private static SettingParameterItem createSettingParmItem(Context c, String key, String type, String value) {
+    private static SettingParameterItem createSettingParmItem(Context c, GlobalParameters gp, CommonUtilities cu, String key, String type, String value) {
         SettingParameterItem sp = new SettingParameterItem();
         sp.key = key;
         sp.type = type;
         sp.value = value;
-        log.trace(CommonUtilities.getExecutedMethodName()+" key=" + key + ", type=" + type + ", valu=" + value);
+        cu.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName()+" key=" + key + ", type=" + type + ", valu=" + value);
         return sp;
     }
 
-    private static SettingParameterItem createSettingParmItem(Context c, int key_res_id, String type, String value) {
-        return createSettingParmItem(c, c.getString(key_res_id), type, value);
+    private static SettingParameterItem createSettingParmItem(Context c, GlobalParameters gp, CommonUtilities cu, int key_res_id, String type, String value) {
+        return createSettingParmItem(c, gp, cu, c.getString(key_res_id), type, value);
     }
 
     public static String hasUnusableCharacter(String input) {
@@ -978,7 +973,8 @@ public class SyncConfiguration {
         return "";
     }
 
-    private static void buildSyncTaskElementFromXml(Context c, XmlPullParser xpp, ArrayList<SyncTaskItem> task_list, SyncTaskItem sti) {
+    private static void buildSyncTaskElementFromXml(Context c, GlobalParameters gp, CommonUtilities cu,
+                                                    XmlPullParser xpp, ArrayList<SyncTaskItem> task_list, SyncTaskItem sti) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_TASK_NAME)) {
                 String unusable=hasUnusableCharacter(xpp.getAttributeValue(i));
@@ -986,24 +982,24 @@ public class SyncConfiguration {
                 if (unusable.equals("")) {
                     if (!TaskListUtils.isSyncTaskExists(task_name, task_list)) sti.setSyncTaskName(xpp.getAttributeValue(i));
                     else {
-                        log.error("Sync task already exists : "+task_name);
+                        cu.addDebugMsg(1, "E", "Sync task already exists : "+task_name);
                     }
                 } else {
                     sti.setSyncTaskName(xpp.getAttributeValue(i).replaceAll(unusable, ""));
-                    log.error("Sync task name contains unusable chanaracter : "+unusable+", task name="+task_name);
+                    cu.addDebugMsg(1, "E", "Sync task name contains unusable chanaracter : "+unusable+", task name="+task_name);
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_TASK_TYPE)) {
                 if (isValidTaskItemValue(SyncTaskItem.SYNC_TASK_TYPE_LIST, xpp.getAttributeValue(i))) {
                     sti.setSyncTaskType(xpp.getAttributeValue(i));
                 } else {
                     sti.setSyncTaskType(SyncTaskItem.SYNC_TASK_TYPE_DEFAULT);
-                    putTaskListValueErrorMessage("Sync task type", SyncTaskItem.SYNC_TASK_TYPE_DEFAULT_DESCRIPTION);
+                    putTaskListValueErrorMessage(cu, "Sync task type", SyncTaskItem.SYNC_TASK_TYPE_DEFAULT_DESCRIPTION);
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_TASK_ERROR)) {
                 try {
                     sti.setSyncTaskStatusErrorCode(Integer.valueOf(xpp.getAttributeValue(i)));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid error code=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid error code=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_TASK_AUTO_TASK)) {
                 sti.setSyncTaskAuto(xpp.getAttributeValue(i).toLowerCase().equals("true") ? true : false);
@@ -1013,7 +1009,7 @@ public class SyncConfiguration {
                 try {
                     sti.setSyncTaskPosition(Integer.valueOf(xpp.getAttributeValue(i)));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid sync task position vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid sync task position vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_TASK_GROUP_NAME)) {
                 sti.setSyncTaskGroup(xpp.getAttributeValue(i));
@@ -1021,7 +1017,7 @@ public class SyncConfiguration {
                 try {
                     sti.setLastSyncResult(Integer.valueOf(xpp.getAttributeValue(i)));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_TASK_LAST_SYNC_TIME)) {
                 sti.setLastSyncTime(xpp.getAttributeValue(i));
@@ -1029,19 +1025,20 @@ public class SyncConfiguration {
                 try {
                     sti.setSourceFolderStatusError(Integer.valueOf(xpp.getAttributeValue(i)));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid source folder error vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid source folder error vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_TASK_ERROR_DESTINATION)) {
                 try {
                     sti.setDestinationFolderStatusError(Integer.valueOf(xpp.getAttributeValue(i)));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid destination folder error vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid destination folder error vallue=" + xpp.getAttributeValue(i));
                 }
             }
         }
     }
 
-    private static void buildSyncTaskOptionFromXml(Context c, XmlPullParser xpp, SyncTaskItem sti) {
+    private static void buildSyncTaskOptionFromXml(Context c, GlobalParameters gp, CommonUtilities cu,
+                                                   XmlPullParser xpp, SyncTaskItem sti) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_IGNORE_0_BYTE_FILE)) {
                 sti.setSyncOptionIgnoreFileSize0ByteFile(xpp.getAttributeValue(i).toLowerCase().equals("true"));
@@ -1049,33 +1046,33 @@ public class SyncConfiguration {
                 if (isValidTaskItemValue(syncFilterFileSizeTypeValueArray, xpp.getAttributeValue(i))) {
                     sti.setSyncFilterFileSizeType(xpp.getAttributeValue(i));
                 } else {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file size type error. Vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid Filter file size type error. Vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_VALUE)) {
                 try {
                     int val=Integer.parseInt(xpp.getAttributeValue(i));
                     sti.setSyncFilterFileSizeValue(xpp.getAttributeValue(i));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file size value error. Vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid Filter file size value error. Vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_SIZE_UNIT)) {
                 if (isValidTaskItemValue(syncFilterFileSizeUnitValueArray, xpp.getAttributeValue(i))) {
                     sti.setSyncFilterFileSizeUnit(xpp.getAttributeValue(i));
                 } else {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file size unit error. Vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid Filter file size unit error. Vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_TYPE)) {
                 if (isValidTaskItemValue(syncFilterFileDateTypeValueArray, xpp.getAttributeValue(i))) {
                     sti.setSyncFilterFileDateType(xpp.getAttributeValue(i));
                 } else {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file date type error. Vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid Filter file date type error. Vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FILTER_FILE_DATE_VALUE)) {
                 try {
                     int val=Integer.parseInt(xpp.getAttributeValue(i));
                     sti.setSyncFilterFileDateValue(xpp.getAttributeValue(i));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Filter file date value error. Vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid Filter file date value error. Vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_ALLOW_GLOBAL_IP_ADDRESS)) {
                 sti.setSyncOptionSyncAllowAllIpAddress(xpp.getAttributeValue(i).toLowerCase().equals("true"));
@@ -1103,11 +1100,11 @@ public class SyncConfiguration {
                         sti.setSyncOptionDifferentFileAllowableTime(Integer.valueOf(xpp.getAttributeValue(i)));
                     } else {
                         sti.setSyncOptionDifferentFileAllowableTime(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT);
-                        putTaskListValueErrorMessage("Min allowed time", String.valueOf(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT));
+                        putTaskListValueErrorMessage(cu, "Min allowed time", String.valueOf(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT));
                     }
                 } catch (Exception e) {
                     sti.setSyncOptionDifferentFileAllowableTime(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT);
-                    putTaskListValueErrorMessage("Min allowed time", String.valueOf(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT));
+                    putTaskListValueErrorMessage(cu, "Min allowed time", String.valueOf(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_IGNORE_FILE_DIRECTORY_THAT_CONTAIN_UNUSABLE_CHARACTER)) {
                 sti.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(xpp.getAttributeValue(i).toLowerCase().equals("true"));
@@ -1134,7 +1131,7 @@ public class SyncConfiguration {
                     sti.setSyncTwoWayConflictFileRule(xpp.getAttributeValue(i));
                 } else {
                     sti.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_DEFAULT);
-                    putTaskListValueErrorMessage("Twoway conflict file rule", String.valueOf(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT));
+                    putTaskListValueErrorMessage(cu, "Twoway conflict file rule", String.valueOf(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_TWO_WAY_KEEP_CONFLICT_FILE)) {
                 sti.setSyncTwoWayKeepConflictFile(xpp.getAttributeValue(i).toLowerCase().equals("true"));
@@ -1143,7 +1140,7 @@ public class SyncConfiguration {
                     sti.setSyncOptionWifiStatusOption(xpp.getAttributeValue(i));
                 } else {
                     sti.setSyncOptionWifiStatusOption(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP);
-                    putTaskListValueErrorMessage("WiFi status option", String.valueOf(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP));
+                    putTaskListValueErrorMessage(cu, "WiFi status option", String.valueOf(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_IGNORE_DST_DIFFERENCE)) {
                 sti.setSyncOptionIgnoreDstDifference(xpp.getAttributeValue(i).toLowerCase().equals("true"));
@@ -1153,11 +1150,11 @@ public class SyncConfiguration {
                         sti.setSyncOptionOffsetOfDst(Integer.valueOf(xpp.getAttributeValue(i)));
                     } else {
                         sti.setSyncOptionOffsetOfDst(SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
-                        putTaskListValueErrorMessage("Offset of DST", String.valueOf(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP));
+                        putTaskListValueErrorMessage(cu, "Offset of DST", String.valueOf(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP));
                     }
                 } catch (Exception e) {
                     sti.setSyncOptionOffsetOfDst(SyncTaskItem.SYNC_OPTION_OFFSET_OF_DST_DEFAULT);
-                    putTaskListValueErrorMessage("Offset of DST", String.valueOf(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP));
+                    putTaskListValueErrorMessage(cu, "Offset of DST", String.valueOf(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_IGNORE_SOURCE_FILE_THAT_FILE_SIZE_GT_4GB)) {
                 sti.setSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb(xpp.getAttributeValue(i).toLowerCase().equals("true"));
@@ -1171,7 +1168,8 @@ public class SyncConfiguration {
         }
     }
 
-    private static void buildSyncTaskSourceFolderFromXml(Context c, XmlPullParser xpp, CipherParms cp_int, SyncTaskItem sti) {
+    private static void buildSyncTaskSourceFolderFromXml(Context c, GlobalParameters gp, CommonUtilities cu,
+                                                         XmlPullParser xpp, CipherParms cp_int, SyncTaskItem sti) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_TYPE)) {
                 sti.setSourceFolderType(xpp.getAttributeValue(i));
@@ -1211,14 +1209,14 @@ public class SyncConfiguration {
                     }
                 } catch (Exception e) {
                     sti.setSourceSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT);
-                    putTaskListValueErrorMessage("Source SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
+                    putTaskListValueErrorMessage(cu, "Source SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PROTOCOL)) {
                 if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_LIST, xpp.getAttributeValue(i))) {
                     sti.setSourceSmbProtocol(xpp.getAttributeValue(i));
                 } else {
                     sti.setSourceSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT);
-                    putTaskListValueErrorMessage("Source SMB protocol", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT));
+                    putTaskListValueErrorMessage(cu, "Source SMB protocol", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_SHARE_NAME)) {
                 sti.setSourceSmbShareName(xpp.getAttributeValue(i));
@@ -1228,7 +1226,8 @@ public class SyncConfiguration {
         }
     }
 
-    private static void buildSyncTaskDestinationFolderFromXml(Context c, XmlPullParser xpp, CipherParms cp_int, SyncTaskItem sti) {
+    private static void buildSyncTaskDestinationFolderFromXml(Context c, GlobalParameters gp, CommonUtilities cu,
+                                                              XmlPullParser xpp, CipherParms cp_int, SyncTaskItem sti) {
         for (int i = 0; i < xpp.getAttributeCount(); i++) {
             if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_TYPE)) {
                 sti.setDestinationFolderType(xpp.getAttributeValue(i));
@@ -1268,14 +1267,14 @@ public class SyncConfiguration {
                     }
                 } catch (Exception e) {
                     sti.setDestinationSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT);
-                    putTaskListValueErrorMessage("Destination SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
+                    putTaskListValueErrorMessage(cu, "Destination SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PROTOCOL)) {
                 if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_LIST, xpp.getAttributeValue(i))) {
                     sti.setDestinationSmbProtocol(xpp.getAttributeValue(i));
                 } else {
                     sti.setDestinationSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT);
-                    putTaskListValueErrorMessage("Destination SMB protocol", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT));
+                    putTaskListValueErrorMessage(cu, "Destination SMB protocol", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT));
                 }
 
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_SHARE_NAME)) {
@@ -1288,7 +1287,7 @@ public class SyncConfiguration {
                 try {
                     sti.setSyncFilterArchiveRetentionPeriod(Integer.valueOf(xpp.getAttributeValue(i)));
                 } catch (Exception e) {
-                    log.error(CommonUtilities.getExecutedMethodName()+" Invalid Archive retention vallue=" + xpp.getAttributeValue(i));
+                    cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Invalid Archive retention vallue=" + xpp.getAttributeValue(i));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_ARCHIVE_SUFFIX_OPTION)) {
                 sti.setDestinationArchiveSuffixOption(xpp.getAttributeValue(i));

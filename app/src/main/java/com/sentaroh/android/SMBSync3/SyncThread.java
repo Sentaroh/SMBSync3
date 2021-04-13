@@ -601,7 +601,7 @@ public class SyncThread extends Thread {
         }
 
         setSyncTaskRunning(false);
-        TaskListImportExport.saveTaskListToAppDirectory(mStwa.appContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+        TaskListImportExport.saveTaskListToAppDirectory(mStwa.appContext, mGp, mStwa.util, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
     }
 
     private void loadLocalFileLastModList() {
@@ -832,7 +832,7 @@ public class SyncThread extends Thread {
                     mGp.syncRequestQueue.clear();
 
 //                    TaskListEditUtil.saveSyncTaskListToFile(mGp, mStwa.appContext, mStwa.util, false, "", "", mGp.syncTaskList, false);
-                    TaskListImportExport.saveTaskListToAppDirectory(mStwa.appContext, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
+                    TaskListImportExport.saveTaskListToAppDirectory(mStwa.appContext, mGp, mStwa.util, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
 
                     mNotifyToService.notifyToListener(false, null);
                     // re-throw critical exception further to the os (important)

@@ -364,14 +364,14 @@ public class GlobalParameters {
     }
 
     public boolean configListLoaded=false;
-    public void loadConfigList(Context c) {
+    public void loadConfigList(Context c, CommonUtilities cu) {
         acquireConfigurationLock();
         if (!configListLoaded) {
             configListLoaded=true;
             ArrayList<SyncTaskItem>stl=new ArrayList<SyncTaskItem>();
             ArrayList<ScheduleListAdapter.ScheduleListItem>sl=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
             ArrayList<GroupListAdapter.GroupListItem>gl=new ArrayList<GroupListAdapter.GroupListItem>();
-            TaskListImportExport.loadTaskListFromAppDirectory(c, stl, sl, null, gl);
+            TaskListImportExport.loadTaskListFromAppDirectory(c, this, cu, stl, sl, null, gl);
             syncTaskList.addAll(stl);
             syncScheduleList.addAll(sl);
             syncGroupList.addAll(gl);
