@@ -1211,7 +1211,7 @@ public class SyncConfiguration {
                     }
                 } catch (Exception e) {
                     sti.setSourceSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT);
-                    putTaskListValueErrorMessage("Targt SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
+                    putTaskListValueErrorMessage("Source SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PROTOCOL)) {
                 if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_LIST, xpp.getAttributeValue(i))) {
@@ -1268,7 +1268,7 @@ public class SyncConfiguration {
                     }
                 } catch (Exception e) {
                     sti.setDestinationSmbPort(SyncTaskItem.SYNC_FOLDER_SMB_PORT_NUMBER_DEFAULT);
-                    putTaskListValueErrorMessage("Targt SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
+                    putTaskListValueErrorMessage("Destination SMB port number", String.valueOf(SyncTaskItem.SYNC_FOLDER_SMB_PORT_DEFAULT_DESCRIPTION));
                 }
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_FOLDER_SMB_SERVER_PROTOCOL)) {
                 if (isValidTaskItemValue(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_LIST, xpp.getAttributeValue(i))) {
