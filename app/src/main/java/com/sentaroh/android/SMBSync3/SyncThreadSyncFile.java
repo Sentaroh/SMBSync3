@@ -725,7 +725,7 @@ public class SyncThreadSyncFile {
             } else {
                 SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, tf.getPath(), tf.lastModified(), mf.lastModified());
             }
-            SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+            SyncThread.scanMediaFile(stwa, sti, tf);
             stwa.lastWriteSafFile=tf;
         }
         if (move_file) {
@@ -780,7 +780,6 @@ public class SyncThreadSyncFile {
                 }
                 SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, tf.getPath(), tf_lmod, mf.lastModified());
             }
-            SyncThread.scanMediaFile(stwa, sti, tf.getPath());
         }
         if (move_file) {
             sync_result= deleteLocalItem(stwa, sti, mf);
@@ -789,6 +788,7 @@ public class SyncThreadSyncFile {
                 if (tf_exists) stwa.totalReplaceCount++;
                 SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", tf.getPath(), mf.getName(),
                         "", stwa.appContext.getString(R.string.msgs_mirror_task_file_moved));
+                SyncThread.scanMediaFile(stwa, sti, mf);
             } else {
                 SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", tf.getPath(), mf.getName(),
                         "", stwa.appContext.getString(R.string.msgs_mirror_task_file_move_failed_delete, mf.getPath()));
@@ -831,7 +831,7 @@ public class SyncThreadSyncFile {
                 } else {
                     SyncThread.updateLocalFileLastModifiedList(stwa, stwa.currLastModifiedList, stwa.newLastModifiedList, tf.getPath(), tf.lastModified(), mf.getLastModified());
                 }
-                SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+                SyncThread.scanMediaFile(stwa, sti, tf);
                 stwa.lastWriteSafFile=tf;
             }
             if (move_file) {
@@ -1467,7 +1467,6 @@ public class SyncThreadSyncFile {
                 }
                 if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
                     boolean del_rc=del_item.delete();
-                    SyncThread.scanMediaFile(stwa, sti, del_item.getPath());
                     if (!del_rc) {
                         stwa.util.addLogMsg("E",sti.getSyncTaskName(), stwa.appContext.getString(R.string.msgs_mirror_task_dir_delete_failed)+" "+del_item.getPath());
                         sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -1483,7 +1482,7 @@ public class SyncThreadSyncFile {
             try {
                 del_rc=del_item.delete();
                 if (del_rc) {
-                    SyncThread.scanMediaFile(stwa, sti, del_item.getPath());
+                    SyncThread.scanMediaFile(stwa, sti, del_item);
                     sync_result= SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
                 }
                 else {

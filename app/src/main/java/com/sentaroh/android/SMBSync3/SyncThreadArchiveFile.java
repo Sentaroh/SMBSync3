@@ -145,8 +145,8 @@ public class SyncThreadArchiveFile {
                             SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
                                     stwa.appContext.getString(R.string.msgs_mirror_task_file_archived));
                             stwa.totalDeleteCount++;
-                            SyncThread.scanMediaFile(stwa, sti, from_path);
-                            SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+                            SyncThread.scanMediaFile(stwa, sti, mf);
+                            SyncThread.scanMediaFile(stwa, sti, tf);
                         }
                     } else {
                         temp_file.delete();
@@ -188,8 +188,8 @@ public class SyncThreadArchiveFile {
                         SyncThread.showArchiveMsg(stwa, false, sti.getSyncTaskName(), "I", from_path, to_path, mf.getName(), tf.getName(),
                                 stwa.appContext.getString(R.string.msgs_mirror_task_file_archived));
                         stwa.totalDeleteCount++;
-                        SyncThread.scanMediaFile(stwa, sti, from_path);
-                        SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+                        SyncThread.scanMediaFile(stwa, sti, mf);
+                        SyncThread.scanMediaFile(stwa, sti, tf);
                     } else {
                         temp_file.delete();
                         stwa.util.addLogMsg("W", sti.getSyncTaskName(), from_path, " ",
@@ -393,7 +393,7 @@ public class SyncThreadArchiveFile {
                                 // nop
                             }
                             stwa.totalDeleteCount++;
-                            SyncThread.scanMediaFile(stwa, sti, from_path);
+                            SyncThread.scanMediaFile(stwa, sti, mf);
                         }
                     } else {
                         tf.delete();
@@ -615,7 +615,7 @@ public class SyncThreadArchiveFile {
                             stwa.appContext.getString(R.string.msgs_mirror_task_file_archived));
                     mf.delete();
                     stwa.totalDeleteCount++;
-                    SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+                    SyncThread.scanMediaFile(stwa, sti, tf);
                 }
             }
         } else {
@@ -662,7 +662,7 @@ public class SyncThreadArchiveFile {
                             stwa.appContext.getString(R.string.msgs_mirror_task_file_archived));
                     mf.delete();
                     stwa.totalDeleteCount++;
-                    SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+                    SyncThread.scanMediaFile(stwa, sti, tf);
                 }
             }
         } else {

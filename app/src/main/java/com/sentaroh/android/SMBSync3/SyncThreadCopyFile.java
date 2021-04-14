@@ -77,7 +77,7 @@ public class SyncThreadCopyFile {
                 t_df.deleteIfExists();
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
             }
-            SyncThread.scanMediaFile(stwa, sti, mf.getPath());
+            SyncThread.scanMediaFile(stwa, sti, mf);
         } catch(IOException e) {
             putErrorMessage(stwa, sti, e, mf.getPath(), tf.getPath());
             sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -133,7 +133,7 @@ public class SyncThreadCopyFile {
                 if (temp_file.exists()) temp_file.delete();
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
             }
-            SyncThread.scanMediaFile(stwa, sti, mf.getPath());
+            SyncThread.scanMediaFile(stwa, sti, mf);
         } catch(IOException e) {
             putErrorMessage(stwa, sti, e, mf.getPath(), tf.getPath());
             sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -296,7 +296,7 @@ public class SyncThreadCopyFile {
                 t_df.deleteIfExists();
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
             }
-            SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+            SyncThread.scanMediaFile(stwa, sti, tf);
         } catch(IOException e) {
             putErrorMessage(stwa, sti, e, mf.getPath(), tf.getPath());
             sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -345,7 +345,7 @@ public class SyncThreadCopyFile {
                 if (temp_file.exists()) temp_file.delete();
                 return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
             }
-            SyncThread.scanMediaFile(stwa, sti, tf.getPath());
+            SyncThread.scanMediaFile(stwa, sti, tf);
         } catch(IOException e) {
             putErrorMessage(stwa, sti, e, mf.getPath(), tf.getPath());
             sync_result= SyncTaskItem.SYNC_RESULT_STATUS_ERROR;

@@ -2720,15 +2720,15 @@ public class SyncThread extends Thread {
             }
         });
         mStwa.mediaScanner.connect();
-
-        synchronized (mStwa.mediaScanner) {
-            try {
-                mStwa.mediaScanner.wait(1000*5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (!mStwa.mediaScanner.isConnected()) {
+            synchronized (mStwa.mediaScanner) {
+                try {
+                    mStwa.mediaScanner.wait(1000*5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
     }
 
     private void closeMediaScanner() {
@@ -2736,7 +2736,8 @@ public class SyncThread extends Thread {
         mStwa.mediaScanner.disconnect();
     }
 
-    static public void scanMediaFile(SyncThreadWorkArea stwa, SyncTaskItem sti, String fp) {
+    static public void scanMediaFile(SyncThreadWorkArea stwa, SyncTaskItem sti, SafFile3 sf) {
+        String fp=sf.getParent();
         if (getFileExtention(fp).equals("")) {
             stwa.util.addDebugMsg(1, "I", "MediaScanner scan ignored because file extention does not exists. fp=", fp);
             return;
