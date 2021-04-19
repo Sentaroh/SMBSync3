@@ -561,6 +561,7 @@
         <string name="msgs_mirror_confirm_delete_file_confirm">Подтвердите удаление файла \n %s \n (отключите опцию \ \"Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_file_confirm">Вы хотите удалить файлы в ZIP-файле?\n %s \n (отключите опцию \ \"Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_dir_confirm">Вы хотите удалить каталог в ZIP-файле?\n %s \n (отключите опцию \ \"Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">Раздельный архив не может быть использован.</string>
         <string name="msgs_mirror_confirm_move_cancel">[Перемещение отменено по запросу пользователя]</string>
         <string name="msgs_mirror_confirm_move_confirm">Подтвердить перемещение файла \nОтойти от: %1$s \nНазначение: %2$s \n(Если нет необходимости в подтверждении, снимите флажок \"Подтвердить\" в задании синхронизации).</string>
         <string name="msgs_mirror_confirm_no_btn">Нет</string>

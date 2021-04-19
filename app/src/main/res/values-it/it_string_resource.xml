@@ -560,6 +560,7 @@
         <string name="msgs_mirror_confirm_delete_file_confirm">Confermare la cancellazione del file \n%s\n(Disattivare l\'opzione \"Conferma prima di sovrascrivere/cancellare\" per questa attività di sincronizzazione per evitare questo messaggio in futuro)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_file_confirm">Volete cancellare i file nel file ZIP?\n%s\n(Disattivare l\'opzione \"Conferma prima di sovrascrivere/cancellare\" per questa operazione di sincronizzazione per evitare questo messaggio in futuro)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_dir_confirm">Volete cancellare le directory nel file ZIP?\n%s\n(Disattivare l\'opzione \"Conferma prima di sovrascrivere/cancellare\" per questa operazione di sincronizzazione per evitare questo messaggio in futuro)</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">L\'archivio diviso non può essere usato.</string>
         <string name="msgs_mirror_confirm_move_cancel">[Operazione di spostamento annullata dall\'utente]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confermare lo spostamento del file \nSpostare da: %1$s \nDestinazione: %2$s \n(Se non è necessario confermare, deselezionare \"Conferma\" nel compito di sincronizzazione).</string>
         <string name="msgs_mirror_confirm_no_btn">No</string>

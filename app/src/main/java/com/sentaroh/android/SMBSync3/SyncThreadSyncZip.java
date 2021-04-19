@@ -40,6 +40,7 @@ import com.sentaroh.android.Utilities3.Zip.BufferedZipFile3;
 import com.sentaroh.android.Utilities3.Zip.ZipUtil;
 
 import net.lingala.zip4j.model.FileHeader;
+import net.lingala.zip4j.model.ZipModel;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.AesKeyStrength;
 import net.lingala.zip4j.model.enums.CompressionLevel;
@@ -87,6 +88,11 @@ public class SyncThreadSyncZip {
         SafFile3 pdf=osf.getParentFile();
         if (!pdf.exists()) {
             pdf.mkdirs();
+        }
+        if (ZipUtil.isSplitArchiveFile(stwa.appContext, osf)) {
+            stwa.util.addLogMsg("E",sti.getSyncTaskName(),
+                    stwa.appContext.getString(R.string.msgs_mirror_file_zip_split_archive_can_not_be_used));
+            return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
         }
         String out_temp_path=dest_file_path+".tmp";
         try {
@@ -180,6 +186,11 @@ public class SyncThreadSyncZip {
         if (!pdf.exists()) {
             pdf.mkdirs();
         }
+        if (ZipUtil.isSplitArchiveFile(stwa.appContext, osf)) {
+            stwa.util.addLogMsg("E",sti.getSyncTaskName(),
+                    stwa.appContext.getString(R.string.msgs_mirror_file_zip_split_archive_can_not_be_used));
+            return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
+        }
         String out_temp_path=dest_file_path+".tmp";
         try {
             BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding());
@@ -256,6 +267,11 @@ public class SyncThreadSyncZip {
         SafFile3 pdf=osf.getParentFile();
         if (!pdf.exists()) {
             pdf.mkdirs();
+        }
+        if (ZipUtil.isSplitArchiveFile(stwa.appContext, osf)) {
+            stwa.util.addLogMsg("E",sti.getSyncTaskName(),
+                    stwa.appContext.getString(R.string.msgs_mirror_file_zip_split_archive_can_not_be_used));
+            return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
         }
         String out_temp_path=dest_file_path+".tmp";
         try {

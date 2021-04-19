@@ -76,7 +76,7 @@
 4. 「送信」ボタンを押してE-Mail選択ダイアログでE-Mailを選択\n
 5. E-Mailを送信してください。\n
 6. ZIPファイルをパスワード保護した場合は、「ZIPファイルのパスワードを送信」ボタンをタップしてE-Mailで送信してください。</string>
-        <string name="msgs_log_management_title">Log管理</string>
+        <string name="msgs_log_management_title">ログ管理</string>
         <string name="settings_mgt_dir">settings_mgt_dir</string>
         <string name="settings_mgt_dir_title">管理ファイルの保存ディレクトリ</string>
     <!-- Application passowrd -->
@@ -560,6 +560,7 @@
         <string name="msgs_mirror_confirm_delete_file_confirm">ファイルを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_file_confirm">ZIPファイル内のファイルを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_dir_confirm">ZIPファイル内のディレクトリーを削除しますか？\n%s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">分割ZIPファイルは使用できません。</string>
         <string name="msgs_mirror_confirm_move_cancel">移動がユーザーによりキャンセルされました。</string>
         <string name="msgs_mirror_confirm_move_confirm">ファイルを移動しますか？\n移動元: %1$s \n移動先: %2$s\n(確認が不要な場合は同期タスクで「確認」のチェックを外してください)</string>
         <string name="msgs_mirror_confirm_no_btn">取消</string>

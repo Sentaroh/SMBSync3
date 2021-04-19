@@ -24,19 +24,15 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Vibrator;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.work.Data;
 import androidx.work.ExistingWorkPolicy;
 import androidx.work.ForegroundInfo;
 import androidx.work.OneTimeWorkRequest;
@@ -93,9 +89,7 @@ public class SyncWorker extends Worker {
             mGp=GlobalWorkArea.getGlobalParameter(mContext);
             mUtil = new CommonUtilities(mContext, "SyncWorker", mGp, null);
             NotificationUtils.initNotification(mGp, mUtil, mContext);
-            mUtil.addDebugMsg(1, "I", "Configuration load started");
             mGp.loadConfigList(mContext, mUtil);
-            mUtil.addDebugMsg(1, "I", "Configuration load ended");
         } else {
             mGp=GlobalWorkArea.getGlobalParameter(mContext);
             if (mGp.notificationManager==null) NotificationUtils.initNotification(mGp, mUtil, mContext);
@@ -123,6 +117,12 @@ public class SyncWorker extends Worker {
     @Override
     public Result doWork() {
 //        mContext=getApplicationContext();
+
+        if (getRunAttemptCount()>0) {
+            mUtil.addDebugMsg(1, "I", "Worker request ignored, count="+getRunAttemptCount());
+            return Result.success();
+        }
+
         mGp.setSyncWorkerActive(true);
 
         mUtil.addDebugMsg(1, "I", "doWork entered");
@@ -131,11 +131,12 @@ public class SyncWorker extends Worker {
         ForegroundInfo fg=new ForegroundInfo(mGp.notificationOngoingMessageID, mGp.notification);
         setForegroundAsync(fg);
 
-        SyncWorker.listWorkerEnqueuedItem(mContext, mGp, mUtil, WorkManager.getInstance(mContext), WORKER_TAG);
+        listWorkerEnqueuedItem(mContext, mGp, mUtil, WorkManager.getInstance(mContext), WORKER_TAG);
 
         if (Looper.myLooper()==null) Looper.prepare();
 
 //        final Data input_data=getInputData();
+//        SystemClock.sleep(1000*60);
 
         if (!mGp.syncThreadActive) {
             if (mGp.syncRequestQueue.size()>0) {

@@ -67,9 +67,7 @@ public class ActivityIntentHandler extends Activity {
         }
         if (mUtil == null) mUtil = mUtil = new CommonUtilities(c, "IntentHandler", mGp, null);
 
-        mUtil.addDebugMsg(1, "I", "config load started");
         mGp.loadConfigList(c, mUtil);
-        mUtil.addDebugMsg(1, "I", "config load ended");
 
         final Intent received_intent=getIntent();
         if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {

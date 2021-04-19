@@ -560,6 +560,7 @@
         <string name="msgs_mirror_confirm_delete_file_confirm">Bestätigen Sie die Löschung der Datei\n%s\n(Deaktivieren Sie die Option \"Bestätigen vor dem Überschreiben/Löschen\" für diese Synchronisierungsaufgabe, um diese Meldung in Zukunft zu vermeiden)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_file_confirm">Möchten Sie die Dateien in der ZIP-Datei löschen?\n%s\n(Wenn Sie nicht bestätigen müssen, entfernen Sie die Markierung von \"Bestätigen\" in der Synchronisierungsaufgabe).</string>
         <string name="msgs_mirror_confirm_delete_zip_item_dir_confirm">Möchten Sie das Verzeichnis in der ZIP-Datei entfernen?\n%s\n(Wenn Sie nicht bestätigen müssen, entfernen Sie die Markierung von \"Bestätigen\" in der Synchronisierungsaufgabe).</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">Ein geteiltes Archiv kann nicht verwendet werden.</string>
         <string name="msgs_mirror_confirm_move_cancel">[Verschiebevorgang vom Benutzer abgebrochen]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confirm moving of file\nMove from %1$s \nDestination %2$s \n(If you don\'t need to confirm, uncheck \"Confirm\" in the synchronization task.)</string>
         <string name="msgs_mirror_confirm_no_btn">Nein</string>

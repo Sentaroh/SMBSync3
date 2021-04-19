@@ -24,27 +24,19 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.sentaroh.android.SMBSync3.Log.LogUtil;
-import com.sentaroh.android.Utilities3.Dialog.MessageDialogAppFragment;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.ThemeUtil;
 
 import static com.sentaroh.android.SMBSync3.Constants.APP_SHORTCUT_ID_KEY;
 import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
-import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_REQUESTOR;
-import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_REQUESTOR_SHORTCUT;
-import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_EXTRA_PARM_SYNC_TASK;
-import static com.sentaroh.android.SMBSync3.Constants.START_SYNC_INTENT;
 import static com.sentaroh.android.SMBSync3.Constants.SYNC_REQUEST_SHORTCUT;
 
 public class ActivityShortcut extends FragmentActivity {

@@ -154,8 +154,6 @@ public class ActivityMain extends AppCompatActivity {
 
     private String mTabNameTask="Task", mTabNameSchedule="Schedule", mTabNameHistory="History", mTabNameMessage="Message", mTabNameGroup="Group";
 
-    private MediaStatusChangeReceiver mMediaStatusChangeListener=new MediaStatusChangeReceiver();
-
     @Override
     protected void onSaveInstanceState(Bundle out) {
         super.onSaveInstanceState(out);
@@ -190,7 +188,6 @@ public class ActivityMain extends AppCompatActivity {
 
 //        Intent splash=new Intent(mActivity, ActivitySplash.class);
 //        startActivity(splash);
-
         mGp= GlobalWorkArea.getGlobalParameter(mActivity);
         GlobalParameters.setDisplayFontScale(mActivity);
         setTheme(mGp.applicationTheme);
@@ -232,11 +229,9 @@ public class ActivityMain extends AppCompatActivity {
             public void run() {
 //                makeCacheDirectory();
                 if (mGp.syncTaskList.size()==0) {
-                    mUtil.addDebugMsg(1, "I", "Configuration load started");
                     mGp.loadConfigList(mContext, mUtil);
-                    mUtil.addDebugMsg(1, "I", "Configuration load ended");
                 }
-                mTaskUtil = new TaskListUtils(mUtil, mActivity, mGp, getSupportFragmentManager());
+                mTaskUtil = new TaskListUtils(mUtil, mActivity, mGp, mActivity.getSupportFragmentManager());
             }
         };
         th.setName("ActivityLoadConfig");
@@ -5568,20 +5563,31 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
+    private MediaStatusChangeReceiver mMediaStatusChangeListener=null;
     private void setMediaStatusListener() {
-        mUtil.addDebugMsg(1, "I", "setMediaStatusListener entered");
-        IntentFilter media_filter = new IntentFilter();
-        media_filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
-        media_filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
-        media_filter.addAction(Intent.ACTION_MEDIA_EJECT);
-        media_filter.addAction(Intent.ACTION_MEDIA_REMOVED);
-        media_filter.addDataScheme("file");
-        registerReceiver(mMediaStatusChangeListener, media_filter);
+        if (mMediaStatusChangeListener==null) {
+            mMediaStatusChangeListener=new MediaStatusChangeReceiver();
+            IntentFilter media_filter = new IntentFilter();
+            media_filter.addAction(Intent.ACTION_MEDIA_MOUNTED);
+            media_filter.addAction(Intent.ACTION_MEDIA_UNMOUNTED);
+            media_filter.addAction(Intent.ACTION_MEDIA_EJECT);
+            media_filter.addAction(Intent.ACTION_MEDIA_REMOVED);
+            media_filter.addDataScheme("file");
+            registerReceiver(mMediaStatusChangeListener, media_filter);
+            mUtil.addDebugMsg(1, "I", "mediaStatusListener registered");
+        } else {
+            mUtil.addDebugMsg(1, "I", "mediaStatusListener already registered");
+        }
     }
 
     private void unsetMediaStatusListener() {
-        mUtil.addDebugMsg(1, "I", "unsetMediaStatusListener entered");
-        unregisterReceiver(mMediaStatusChangeListener);
+        if (mMediaStatusChangeListener!=null) {
+            unregisterReceiver(mMediaStatusChangeListener);
+            mUtil.addDebugMsg(1, "I", "mediaStatusListener unregistered");
+            mMediaStatusChangeListener=null;
+        } else {
+            mUtil.addDebugMsg(1, "I", "mediaStatusListener alreday unregistered");
+        }
     }
 
     final private class MediaStatusChangeReceiver extends BroadcastReceiver {

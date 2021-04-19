@@ -27,22 +27,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
-import androidx.work.Data;
-import androidx.work.ExistingWorkPolicy;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
-
-import com.google.common.util.concurrent.ListenableFuture;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-
-import static com.sentaroh.android.SMBSync3.Constants.*;
 
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_TIMER_EXPIRED;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_SCHEDULE_NAME_KEY;
@@ -67,9 +53,7 @@ public class SyncReceiver extends BroadcastReceiver {
             mGp =GlobalWorkArea.getGlobalParameter(c);
         }
         if (mUtil == null) mUtil = new CommonUtilities(c, "Receiver", mGp, null);
-        if (mUtil.getLogLevel()>0) mUtil.addDebugMsg(1, "I", "config load started");
         mGp.loadConfigList(c, mUtil);
-        if (mUtil.getLogLevel()>0) mUtil.addDebugMsg(1, "I", "config load ended");
 
         String action = received_intent.getAction();
         mUtil.addDebugMsg(1, "I", "Receiver received action=" + action);
@@ -77,8 +61,8 @@ public class SyncReceiver extends BroadcastReceiver {
             if (action.equals(Intent.ACTION_BOOT_COMPLETED) ||
                     action.equals(Intent.ACTION_DATE_CHANGED) ||
                     action.equals(Intent.ACTION_TIMEZONE_CHANGED) ||
-                    action.equals(Intent.ACTION_TIME_CHANGED) ||
-                    action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
+                    action.equals(Intent.ACTION_TIME_CHANGED)){
+//                    action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
                 for (ScheduleListAdapter.ScheduleListItem si : mGp.syncScheduleList) si.scheduleLastExecTime = System.currentTimeMillis();
                 TaskListImportExport.saveTaskListToAppDirectory(c, mGp, mUtil, mGp.syncTaskList, mGp.syncScheduleList, mGp.syncGroupList);
                 ScheduleUtils.setTimer(mContext, mGp, mUtil.getLogUtil());

@@ -41,10 +41,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <action android:name="android.intent.action.DATE_CHANGED"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED"/>
                 <action android:name="android.intent.action.TIME_SET"/>
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
 
                 <action android:name="${applicationId}.ACTION_TIMER_EXPIRED" />
 <!--                <action android:name="${applicationId}.ACTION_SET_TIMER" />-->

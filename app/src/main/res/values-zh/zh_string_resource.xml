@@ -556,6 +556,7 @@
         <string name="msgs_mirror_confirm_delete_file_confirm">确认删除文件\n%s\n(禁用此同步任务的 \"覆盖/删除前确认 \"选项，以避免将来出现此消息)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_file_confirm">你想删除ZIP文件中的文件吗？\n%s\n如果不需要确认，请在同步任务中取消勾选 \"确认\"）。</string>
         <string name="msgs_mirror_confirm_delete_zip_item_dir_confirm">你想删除ZIP文件中的目录吗？\n%s\n如果不需要确认，请在同步任务中取消勾选 \"确认\"）。</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">分割存档是不能使用的。</string>
         <string name="msgs_mirror_confirm_move_cancel">[用户取消移动操作]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confirm moving of file\nMove from %1$s \nDestination %2$s \n(If you don\'t need to confirm, uncheck \"Confirm\" in the synchronization task.)</string>
         <string name="msgs_mirror_confirm_no_btn">没有</string>

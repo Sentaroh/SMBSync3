@@ -561,6 +561,7 @@
         <string name="msgs_mirror_confirm_delete_file_confirm">Confirmer la suppression du fichier\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour ne plus afficher ce message)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_file_confirm">Voulez-vous supprimer les fichiers du fichier ZIP ?\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour ne plus afficher ce message)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_dir_confirm">Voulez-vous supprimer le répertoire dans le fichier ZIP ?\n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">L\'archive fractionnée ne peut pas être utilisée.</string>
         <string name="msgs_mirror_confirm_move_cancel">[Déplacement annulé par l\'utilisateur]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confirmer le déplacement du fichier\nPasser de: %1$s \nDestination: %2$s \n(Si vous n\'avez pas besoin de confirmer, décochez \"Confirmer\" dans la tâche de synchronisation).
 </string>

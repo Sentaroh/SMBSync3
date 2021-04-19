@@ -561,6 +561,7 @@
         <string name="msgs_mirror_confirm_delete_file_confirm">Confirm deletion of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_file_confirm">Do you want to delete the files in the ZIP file?\n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_delete_zip_item_dir_confirm">Do you want to delete the directories in the ZIP file?\n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
+        <string name="msgs_mirror_file_zip_split_archive_can_not_be_used">Split archive is can not be used.</string>
         <string name="msgs_mirror_confirm_move_cancel">[Move operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_move_confirm">Confirm moving of file\nMove from: %1$s \nDestination: %2$s \n(If you don\'t need to confirm, uncheck \"Confirm\" in the synchronization task.)</string>
         <string name="msgs_mirror_confirm_no_btn">No</string>

@@ -365,6 +365,7 @@ public class GlobalParameters {
 
     public boolean configListLoaded=false;
     public void loadConfigList(Context c, CommonUtilities cu) {
+        if (cu.getLogLevel()>0) cu.addDebugMsg(1, "I", "config load started");
         acquireConfigurationLock();
         if (!configListLoaded) {
             configListLoaded=true;
@@ -377,6 +378,7 @@ public class GlobalParameters {
             syncGroupList.addAll(gl);
         }
         releaseConfigurationLock();
+        if (cu.getLogLevel()>0) cu.addDebugMsg(1, "I", "config load ended");
     }
 
     private void initLogger(Context c) {
