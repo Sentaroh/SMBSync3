@@ -5,8 +5,8 @@
         <string name="msgs_about_dlg_privacy_btn">Datenschutzerklärung</string>
         <string name="msgs_about_dlg_change_btn">Änderungsprotokoll</string>
         <string name="msgs_dlg_title_about">Über SMBSync3</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_JA_Desc.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_JA_Privacy.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_DE_Desc.html</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_DE_Privacy.html</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Aufgabendatei zum Import auswählen</string>
@@ -858,10 +858,7 @@
         <string name="msgs_sync_folder_archive_add_sync_begin_date_button">Die Schaltfläche unten fügt einen Parameter für das Datum und die Uhrzeit des Sync-Starts hinzu.</string>
         <string name="msgs_sync_folder_archive_add_original_file_name_button">Die Schaltfläche unten fügt einen Parameter für den Dateinamen hinzu</string>
         <string name="msgs_sync_folder_archive_add_constants_button">Die Schaltfläche unten fügt ein Zeichen hinzu.</string>
-        <string name="delete_msgs_sync_folder_archive_rename_file_name_use_taken_date_time">Verwenden Sie das Datum und die Uhrzeit für die Parameterumwandlung unten</string>
-        <string name="deleteed_msgs_sync_folder_archive_rename_rule">Ändern Sie den Dateinamen und speichern Sie ihn beim Archivieren im angegebenen Verzeichnis</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Laufende Nummer</string>
-        <string name="delete_msgs_sync_folder_archive_create_directory">Erstellen Sie ein Verzeichnis auf der Grundlage des beim Archivieren genommenen Datums und speichern Sie die Datei.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Datum (JJJJJ-MM-TT)</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Zeit (HH-MM-SS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Ursprünglicher Name</string>

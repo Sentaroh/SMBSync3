@@ -63,7 +63,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -638,6 +640,18 @@ public class ActivityMain extends AppCompatActivity {
         mGp.clearParms(mContext);
         System.gc();
 
+        if (mGp.activityRestartRequired) {
+            mGp.activityRestartRequired=false;
+            Handler hndl = new Handler();
+            hndl.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(mContext, ActivityMain.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }, 200);
+        }
     }
 
     static public void exitCleanly(Context c, GlobalParameters gp) {
@@ -1832,18 +1846,21 @@ public class ActivityMain extends AppCompatActivity {
         func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         func_view.getSettings().setTextZoom(zf);
+        setWebViewListener(func_view);
 
         LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy_view);
         privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         privacy_view.getSettings().setTextZoom(zf);
+        setWebViewListener(privacy_view);
 
         LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
         final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_view);
         change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         change_view.getSettings().setTextZoom(zf);
+        setWebViewListener(change_view);
 
         final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, privacy_view, change_view});
@@ -1908,6 +1925,33 @@ public class ActivityMain extends AppCompatActivity {
         dialog.show();
     }
 
+    private void setWebViewListener(WebView wv) {
+//        wv.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+//                return false;
+//            }
+//        });
+//        wv.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event){
+//                if(event.getAction() == KeyEvent.ACTION_DOWN){
+//                    WebView webView = (WebView) v;
+//                    switch(keyCode){
+//                        case KeyEvent.KEYCODE_BACK:
+//                            if(webView.canGoBack()){
+//                                webView.goBack();
+//                                return true;
+//                            }
+//                            break;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
+
+    }
+
     private void killTerminateApplication() {
 
         mUtil.showCommonDialog(mContext, true, "W", mContext.getString(R.string.msgs_smnsync_main_kill_application), "", new CallBackListener() {
@@ -1958,17 +2002,6 @@ public class ActivityMain extends AppCompatActivity {
                         mGp.activityRestartRequired=true;
                         mUtil.flushLog();
                         mGp.settingExitClean=false;
-
-                        Handler hndl = new Handler();
-                        hndl.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Intent intent = new Intent(mContext, ActivityMain.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(intent);
-                            }
-                        }, 200);
-
                         finish();
                     }
                 }

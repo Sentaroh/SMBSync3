@@ -861,10 +861,7 @@
         <string name="msgs_sync_folder_archive_add_sync_begin_date_button">Le bouton ci-dessous ajoute un paramètre pour la date et l\'heure de début de la synchronisation.</string>
         <string name="msgs_sync_folder_archive_add_original_file_name_button">Le bouton ci-dessous ajoute un paramètre pour le nom du fichier</string>
         <string name="msgs_sync_folder_archive_add_constants_button">Le bouton ci-dessous permet d\'ajouter un caractère.</string>
-        <string name="delete_msgs_sync_folder_archive_rename_file_name_use_taken_date_time">Utilisez la date et l\'heure de la prise pour la conversion des paramètres ci-dessous</string>
-        <string name="deleteed_msgs_sync_folder_archive_rename_rule">Changer le nom du fichier avant de l\'archiver dans le dossier cible.</string>
         <string name="msgs_sync_folder_archive_seq_number_title">Incrémenter les noms de fichiers</string>
-        <string name="delete_msgs_sync_folder_archive_create_directory">Créer un dossier avec la date d\'archivage pour stocker les fichiers.</string>
         <string name="msgs_sync_folder_archive_btn_title_date">Date (YYYY-MM-DD)</string>
         <string name="msgs_sync_folder_archive_btn_title_time">Heure (HH-MM-SS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">Nom d\'origine</string>

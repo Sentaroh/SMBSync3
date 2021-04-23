@@ -854,10 +854,7 @@
         <string name="msgs_sync_folder_archive_add_sync_begin_date_button">下面的按钮增加了同步开始日期和时间的参数。</string>
         <string name="msgs_sync_folder_archive_add_original_file_name_button">下面的按钮为文件名添加了一个参数</string>
         <string name="msgs_sync_folder_archive_add_constants_button">下面的按钮增加一个字符。</string>
-        <string name="delete_msgs_sync_folder_archive_rename_file_name_use_taken_date_time">使用拍摄的日期和时间进行下面的参数转换</string>
-        <string name="deleteed_msgs_sync_folder_archive_rename_rule">归档时，更改文件名并将其存储在指定的目录中</string>
         <string name="msgs_sync_folder_archive_seq_number_title">序列号</string>
-        <string name="delete_msgs_sync_folder_archive_create_directory">根据存档和存储文件时的日期创建目录。</string>
         <string name="msgs_sync_folder_archive_btn_title_date">日期(YYYY-MM-DD)</string>
         <string name="msgs_sync_folder_archive_btn_title_time">时间(HH-MM-SS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">原名</string>

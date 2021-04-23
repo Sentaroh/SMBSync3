@@ -858,10 +858,7 @@
         <string name="msgs_sync_folder_archive_add_sync_begin_date_button">下記ボタンは同期開始日時に関する変数を追加します</string>
         <string name="msgs_sync_folder_archive_add_original_file_name_button">下記ボタンはファイル名の変数を追加します</string>
         <string name="msgs_sync_folder_archive_add_constants_button">下記のボタンは文字を追加します</string>
-        <string name="delete_msgs_sync_folder_archive_rename_file_name_use_taken_date_time">下記の変数変換で撮影日時を使用する</string>
-        <string name="deleteed_msgs_sync_folder_archive_rename_rule">アーカイブする際にファイル名の変更および格納するディレクトリーを作成する</string>
         <string name="msgs_sync_folder_archive_seq_number_title">ファイル名の順序番号</string>
-        <string name="delete_msgs_sync_folder_archive_create_directory">アーカイブする時に撮影日に基づくディレクトリーを作成しファイルを格納する</string>
         <string name="msgs_sync_folder_archive_btn_title_date">年月日 (YYYY-MM-DD)</string>
         <string name="msgs_sync_folder_archive_btn_title_time">時刻 (HH-MM-SS)</string>
         <string name="msgs_sync_folder_archive_btn_title_original_name">元の名前</string>

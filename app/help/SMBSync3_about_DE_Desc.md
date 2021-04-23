@@ -18,8 +18,8 @@ Die periodische Synchronisation kann durch die Zeitplanungsfunktion von SMBSync3
 3. Unterschiedlich über wenn letzte Aktualisierung 3 Sekunden
 
 ## FAQs
-[Bitte beachten Sie das PDF](https://drive.google.com/file/d/1v4-EIWuucUErSg9uYZtycsGGn9o-T_2t/view?usp=sharing)
+[FAQ](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
 
 ## Dokument
 
-[Bitte beachten Sie das PDF](https://drive.google.com/file/d/1gIsulxyGBY-Fl0Ki7BJ50gPFWx0iQ9Tm/view?usp=sharing)
+[Feature Beschreibung](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
