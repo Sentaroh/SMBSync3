@@ -153,124 +153,57 @@ public final class CommonUtilities {
         else spinner.setBackground(c.getDrawable(R.drawable.spinner_color_background));
     }
 
-    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, NotifyEvent ntfy) {
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf, listener);
     };
-    public void showCommonDialogInfo(final boolean negative, String title, String msgtext, NotifyEvent ntfy) {
+    public void showCommonDialogInfo(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_INFO, title, msgtext);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf, listener);
     };
-    public void showCommonDialogWarn(final boolean negative, String title, String msgtext, NotifyEvent ntfy) {
+    public void showCommonDialogWarn(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_WARN, title, msgtext);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf, listener);
     };
-    public void showCommonDialogError(final boolean negative, String title, String msgtext, NotifyEvent ntfy) {
+    public void showCommonDialogError(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_ERROR, title, msgtext);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf, listener);
     };
-    public void showCommonDialogDanger(final boolean negative, String title, String msgtext, NotifyEvent ntfy) {
+    public void showCommonDialogDanger(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_DANGER, title, msgtext);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf, listener);
     };
 
-    static public void showCommonDialog(FragmentManager fm, final boolean negative, String type, String title, String msgtext, NotifyEvent ntfy) {
+    static public void showCommonDialog(FragmentManager fm, final boolean negative, String type, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
-        cdf.showDialog(fm, cdf, ntfy);
+        cdf.showDialog(fm, cdf, listener);
     };
 
-    public void showCommonDialog(final boolean negative, String type, String title, Spannable msgtext, NotifyEvent ntfy) {
+    public void showCommonDialog(final boolean negative, String type, String title, Spannable msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, "");
         cdf.setMessageText(msgtext);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf,listener);
     };
 
-    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, int text_color, NotifyEvent ntfy) {
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, int text_color, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
         cdf.setTextColor(text_color);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf,listener);
     };
 
-//    public void showCommonDialogWordWrap(final boolean negative, String type, String title, String msgtext, int text_color, NotifyEvent ntfy) {
-//        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
-//        cdf.setTextColor(text_color);
-//        cdf.setWordWrapEanbled(true);
-//        cdf.showDialog(mFragMgr,cdf,ntfy);
-//    };
-
-    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, String ok_text, String cancel_text, NotifyEvent ntfy) {
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, ok_text, cancel_text);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf,listener);
     };
 
-    public void showCommonDialogWarn(final boolean negative, String title, String msgtext, String ok_text, String cancel_text, NotifyEvent ntfy) {
+    public void showCommonDialogWarn(final boolean negative, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_WARN, title, msgtext, ok_text, cancel_text);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
+        cdf.showDialog(mFragMgr,cdf,listener);
     };
 
-    public void showCommonDialogDanger(boolean negative, String title, String msgtext, String ok_text, String cancel_text, NotifyEvent ntfy) {
+    public void showCommonDialogDanger(boolean negative, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_DANGER, title, msgtext, ok_text, cancel_text);
-        cdf.showDialog(mFragMgr,cdf,ntfy);
-    };
-
-    public void showCommonDialog(Context c, boolean negative, String type, String title, String msgtext, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-    public void showCommonDialogInfo(Context c, boolean negative, String title, String msgtext, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_INFO, title, msgtext);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-    public void showCommonDialogWarn(Context c, boolean negative, String title, String msgtext, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_WARN, title, msgtext);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-    public void showCommonDialogError(Context c, boolean negative, String title, String msgtext, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_ERROR, title, msgtext);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-    public void showCommonDialogDanger(Context c, boolean negative, String title, String msgtext, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_DANGER, title, msgtext);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-
-    static public void showCommonDialog(Context c, FragmentManager fm, final boolean negative, String type, String title, String msgtext, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
-        cdf.showDialog(c, fm, cdf,cbl);
-    };
-
-    public void showCommonDialog(Context c, boolean negative, String type, String title, Spannable msgtext, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, "");
-        cdf.setMessageText(msgtext);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-
-    public void showCommonDialog(Context c, boolean negative, String type, String title, String msgtext, int text_color, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
-        cdf.setTextColor(text_color);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-
-//    public void showCommonDialogWordWrap(Context c, boolean negative, String type, String title, String msgtext, int text_color, CallBackListener cbl) {
-//        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
-//        cdf.setTextColor(text_color);
-//        cdf.setWordWrapEanbled(true);
-//        cdf.showDialog(c, mFragMgr,cdf,cbl);
-//    };
-
-    public void showCommonDialog(Context c, boolean negative, String type, String title, String msgtext, String ok_text, String cancel_text, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, ok_text, cancel_text);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-
-    public void showCommonDialogWarn(Context c, boolean negative, String title, String msgtext, String ok_text, String cancel_text, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_WARN, title, msgtext, ok_text, cancel_text);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
-    };
-
-    public void showCommonDialogDanger(Context c, boolean negative, String title, String msgtext, String ok_text, String cancel_text, CallBackListener cbl) {
-        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_DANGER, title, msgtext, ok_text, cancel_text);
-        cdf.showDialog(c, mFragMgr,cdf,cbl);
+        cdf.showDialog(mFragMgr,cdf,listener);
     };
 
 //    public static String convertMakdownToHtml(Context c, String mark_down_fp) {

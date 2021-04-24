@@ -276,26 +276,22 @@ public class ActivityMain extends AppCompatActivity {
                         @Override
                         public void onCallBack(Context context, boolean positive, Object[] objects) {
                             if (positive) {
-                                NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
-                                ntfy_all_file_access.setListener(new NotifyEvent.NotifyEventListener() {
+                                requestAllFileAccessPermission(new CallBackListener() {
                                     @Override
-                                    public void positiveResponse(Context context, Object[] objects) {
+                                    public void onCallBack(Context context, boolean b, Object[] objects) {
                                         initApplication();
                                     }
-                                    @Override
-                                    public void negativeResponse(Context context, Object[] objects) {}
                                 });
-                                requestAllFileAccessPermission(ntfy_all_file_access);
                             } else {
-                                mUtil.showCommonDialogWarn(mContext, false,
-                                        mContext.getString(R.string.msgs_privacy_policy_confirm_deny_title),
-                                        mContext.getString(R.string.msgs_privacy_policy_confirm_deny_message),
-                                        new CallBackListener(){
-                                            @Override
-                                            public void onCallBack(Context context, boolean positive, Object[] objects) {
-                                                finish();
-                                            }
-                                        });
+                                mUtil.showCommonDialogWarn(false,
+                                    mContext.getString(R.string.msgs_privacy_policy_confirm_deny_title),
+                                    mContext.getString(R.string.msgs_privacy_policy_confirm_deny_message),
+                                    new CallBackListener(){
+                                        @Override
+                                        public void onCallBack(Context context, boolean positive, Object[] objects) {
+                                            finish();
+                                        }
+                                    });
                             }
                         }
                     });
@@ -1954,7 +1950,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void killTerminateApplication() {
 
-        mUtil.showCommonDialog(mContext, true, "W", mContext.getString(R.string.msgs_smnsync_main_kill_application), "", new CallBackListener() {
+        mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_smnsync_main_kill_application), "", new CallBackListener() {
             @Override
             public void onCallBack(Context c, boolean positive, Object[] objects) {
                 if (positive) {
@@ -1990,7 +1986,7 @@ public class ActivityMain extends AppCompatActivity {
         final boolean theme_lang_changed=!new_lc.equals(mPrevLanguageSetting);
 
         if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed) {
-            mUtil.showCommonDialogWarn(mContext, true,
+            mUtil.showCommonDialogWarn(true,
                     mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_main_settings_restart_title),
                     mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart),
                     mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
@@ -2053,7 +2049,7 @@ public class ActivityMain extends AppCompatActivity {
         return false;
     }
 
-    private void requestAllFileAccessPermission(NotifyEvent p_ntfy) {
+    private void requestAllFileAccessPermission(CallBackListener cbl) {
 //        Enable "ALL_FILE_ACCESS"
         final boolean reload_required=!isAllFileAccessPermissionGranted();
         NotifyEvent ntfy_all_file_access=new NotifyEvent(mContext);
@@ -2069,20 +2065,16 @@ public class ActivityMain extends AppCompatActivity {
                                 mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
                                 mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
                             }
-                            if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+                            if (cbl!=null) cbl.onCallBack(mContext, true, null);
                         } else {
-                            NotifyEvent ntfy_denied=new NotifyEvent(mContext);
-                            ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
-                                @Override
-                                public void positiveResponse(Context context, Object[] objects) {
-                                    finish();
-                                }
-                                @Override
-                                public void negativeResponse(Context context, Object[] objects) {}
-                            });
                             mUtil.showCommonDialogWarn(false,
                                     mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
-                                    mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
+                                    mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), new CallBackListener(){
+                                        @Override
+                                        public void onCallBack(Context context, boolean positive, Object[] objects) {
+                                            finish();
+                                        }
+                                    });
                         }
                     }
                 });
@@ -2296,7 +2288,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void requestLegacyStoragePermission(final CallBackListener cbl) {
         ArrayList<SafStorage3>ssl=mGp.safMgr.getSafStorageList();
-        mUtil.showCommonDialogWarn(mContext, true,
+        mUtil.showCommonDialogWarn(true,
                 mContext.getString(R.string.msgs_main_permission_internal_storage_title),
                 mContext.getString(R.string.msgs_main_permission_internal_storage_request_msg), new CallBackListener() {
             @Override
@@ -2310,7 +2302,7 @@ public class ActivityMain extends AppCompatActivity {
                                 mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
                                 cbl.onCallBack(mContext, true, null);
                             } else {
-                                mUtil.showCommonDialog(mContext, false, "W",
+                                mUtil.showCommonDialog(false, "W",
                                         mContext.getString(R.string.msgs_main_permission_internal_storage_title),
                                         mContext.getString(R.string.msgs_main_permission_internal_storage_denied_msg), new CallBackListener() {
                                             @Override
@@ -2322,7 +2314,7 @@ public class ActivityMain extends AppCompatActivity {
                         }
                     });
                 } else {
-                    mUtil.showCommonDialogWarn(mContext, false,
+                    mUtil.showCommonDialogWarn(false,
                             mContext.getString(R.string.msgs_main_permission_internal_storage_title),
                             mContext.getString(R.string.msgs_main_permission_internal_storage_denied_msg), new CallBackListener() {
                         @Override
