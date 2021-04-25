@@ -64,6 +64,12 @@ modify or delete the contents of your USB storage**
 
 ### 4.2.Storage
 
+### 4.2.1.Android11から  
+**Manage external storage**  
+
+USBストレージへのファイル同期と管理ファイルの読み書きで使用します。
+
+### 4.2.2.Android10まで  
 **read the contents of your USB storage  
 modify or delete the contents of your USB storage**   
 Используется для синхронизации файлов с USB-накопителем и чтения/записи управляющего файла.

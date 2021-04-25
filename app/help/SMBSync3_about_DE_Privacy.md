@@ -65,6 +65,13 @@ Wird für die Dateisynchronisierung mit dem internen/externen Speicher und das L
 
 ### 4.2.Storage
 
+### 4.2.1.Android11から
+**Manage external storage**  
+
+USBストレージへのファイル同期と管理ファイルの読み書きで使用します。
+
+### 4.2.2.Android10まで
+
 **read the contents of your USB storage  
 modify or delete the contents of your USB storage**   
 Dient zur Dateisynchronisation mit dem USB-Speicher und zum Lesen/Schreiben der Verwaltungsdatei.
