@@ -385,7 +385,8 @@ class ScheduleUtils {
                 PendingIntent pi = PendingIntent.getBroadcast(c, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
                 try {
-                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
+//                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
+                    am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
                     schedule_done=true;
                 } catch(Exception e) {
                     String stm= MiscUtil.getStackTraceString(e);
