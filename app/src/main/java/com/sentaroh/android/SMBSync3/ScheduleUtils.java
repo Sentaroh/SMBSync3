@@ -382,7 +382,7 @@ class ScheduleUtils {
                 in.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
                 in.putExtra(SCHEDULE_SCHEDULE_NAME_KEY, sched_names);
                 in.setClass(c, SyncReceiver.class);
-                PendingIntent pi = PendingIntent.getBroadcast(c, 0, in, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pi = PendingIntent.getBroadcast(c, 0, in, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
                 AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
                 try {
 //                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
