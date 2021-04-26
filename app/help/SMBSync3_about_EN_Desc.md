@@ -18,8 +18,8 @@ Periodic synchronization can be initiated by SMBSync3's scheduling feature or ex
 3. Different over when last updated 3 seconds
 
 ## FAQs
-[Frequently Asked Questions](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm
 
 ## Document
 
-[Feature Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm

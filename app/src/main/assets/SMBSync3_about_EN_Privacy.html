@@ -2,8 +2,9 @@
 <html>
 <head>
 <meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>SMBSync3_about_EN_Privacy</title></head>
-<body><h2>1.Send recorded data from the app</h2>
+<title>SMBSync3_about_EN_Privacy</title><title>SMBSync3_about_EN_Privacy</title>
+</head>
+<body><h2 id='1send-recorded-data-from-the-app'>1.Send recorded data from the app</h2>
 <p>The data recorded by the application can be sent externally via email and sharing tools by the following app operations. <span style="color: red; "><u>The application will not send the recorded data externally unless the user does so.</u></span></p>
 <ul>
 <li>Press &quot;Share button&quot; from History tab</li>
@@ -11,8 +12,8 @@
 <li>Press &quot;Share button&quot; or &quot;Send to developer&quot; button from log management</li>
 
 </ul>
-<h2>2.Data recorded by the app</h2>
-<h3>2.1.Synchronization task list</h3>
+<h2 id='2data-recorded-by-the-app'>2.Data recorded by the app</h2>
+<h3 id='21synchronization-task-list'>2.1.Synchronization task list</h3>
 <p>The app records the necessary data to perform the synchronization.</p>
 <ul>
 <li>Directory name, file name, SMB server host name, IP address, port number, account name (<strong>*1</strong>), password (<strong>*1</strong>)</li>
@@ -21,8 +22,7 @@
 
 </ul>
 <p><strong>*1</strong> Encrypted with system generated key stored in AndroidKeystore.</p>
-<p> </p>
-<h3>2.2.App activity record</h3>
+<h3 id='22app-activity-record'>2.2.App activity record</h3>
 <p>The app will record the following data when you enable logging to verify and troubleshoot the synchronization results.</p>
 <ul>
 <li>Android version, terminal maker, terminal name, terminal model, application version</li>
@@ -33,7 +33,7 @@
 <li>App setting value</li>
 
 </ul>
-<h3>2.3.Sync task list exported</h3>
+<h3 id='23sync-task-list-exported'>2.3.Sync task list exported</h3>
 <p>The app can export &quot;2.1 Synchronization task list&quot; to a file. You can password protect on export.</p>
 <ul>
 <li>Directory name, file name</li>
@@ -41,36 +41,34 @@
 <li>App setting value </li>
 
 </ul>
-<h2>3.Purpose of use of data sent to app developers</h2>
+<h2 id='3purpose-of-use-of-data-sent-to-app-developers'>3.Purpose of use of data sent to app developers</h2>
 <p>The data sent by the users of the app to the developer will be used only to solve problems with the app and will not be disclosed to anyone other than the developer.</p>
-<h2>4.Permissions</h2>
+<h2 id='4permissions'>4.Permissions</h2>
 <p>The app requires the following permissions.</p>
-<h3>4.1.Photos/Media/Files</h3>
+<h3 id='41photosmediafiles'>4.1.Photos/Media/Files</h3>
 <p><strong>read the contents of your USB storage<br/>modify or delete the contents of your USB storage</strong><br/>Used for file synchronization to internal/external storage and read/write of management file.</p>
-<h3>4.2.Storage</h3>
-<h3>4.2.1.Android11から  </h3>
-<p><strong>Manage external storage</strong>  </p>
-<p>USBストレージへのファイル同期と管理ファイルの読み書きで使用します。</p>
-<h3>4.2.2.Android10まで  </h3>
-<p><strong>read the contents of your USB storage<br/>modify or delete the contents of your USB storage</strong><br/>Used for file synchronization to USB storage and read/write of management file.</p>
-<h3>4.3.Wi-Fi Connection infomation</h3>
+<h3 id='42storage'>4.2.Storage</h3>
+<p>4.2.1. Android 11 or later
+<strong>All file access</strong></p>
+<p>Used to synchronize files to and from internal and external storage and to read and write management files.</p>
+<p>4.2.1. up to Android 10
+<strong>read the contents of your USB storage<br/>modify or delete the contents of your USB storage</strong><br/>Used to synchronize files to and from internal and external storage and to read and write management files.</p>
+<h3 id='43wi-fi-connection-infomation'>4.3.Wi-Fi Connection infomation</h3>
 <p><strong>view Wi-Fi connections</strong><br/>Used to check the status of Wi-Fi at the start of synchronization.</p>
-<h3>4.4.Other</h3>
-<h3>4.4.1.view network connections</h3>
+<h3 id='44other'>4.4.Other</h3>
+<h3 id='441view-network-connections'>4.4.1.view network connections</h3>
 <p>Used to confirm that it is connected to the network at the start of synchronization.</p>
-<h3>4.4.2.connect and disconnect from Wi-Fi</h3>
+<h3 id='442connect-and-disconnect-from-wi-fi'>4.4.2.connect and disconnect from Wi-Fi</h3>
 <p>Used to turn on / off Wi-Fi in schedule synchronization in Andoid 8/9.</p>
-<h3>4.4.3.full network access</h3>
+<h3 id='443full-network-access'>4.4.3.full network access</h3>
 <p>Used to perform synchronization with the SMB protocol through the network.</p>
-<h3>4.4.4.run at startup</h3>
+<h3 id='444run-at-startup'>4.4.4.run at startup</h3>
 <p>Used to perform schedule synchronization.</p>
-<h3>4.4.5.control vibration</h3>
+<h3 id='445control-vibration'>4.4.5.control vibration</h3>
 <p>Used to notify the user at the end of synchronization.</p>
-<h3>4.4.6.prevent device from sleeping</h3>
+<h3 id='446prevent-device-from-sleeping'>4.4.6.prevent device from sleeping</h3>
 <p>Use it to start synchronization from a schedule or external application.</p>
-<h3>4.4.7.install shortcuts</h3>
+<h3 id='447install-shortcuts'>4.4.7.install shortcuts</h3>
 <p>Used to add a synchronization start shortcut to the desktop.</p>
-<p> </p>
-<p> </p>
 </body>
 </html>

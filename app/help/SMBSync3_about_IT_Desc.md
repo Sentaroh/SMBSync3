@@ -18,7 +18,7 @@ La sincronizzazione periodica può essere avviata dalla funzione di programmazio
 3. Diverso rispetto all'ultimo aggiornamento di 3 secondi
 
 ## FAQs
-[Frequently Asked Questions](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm
 
 ## Documento
-[Feature Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm

@@ -6,13 +6,9 @@
     
     <WebView
         android:id="@+id/about_dialog_change_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center_vertical"
-        android:minHeight="48dp"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginRight="5dp"/>
     
 </LinearLayout>

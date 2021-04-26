@@ -47,11 +47,11 @@ Appuyez sur le bouton pour modifier le dossier de destination
 
 ### Filtre sur la taille des fichiers
 
-Vous pouvez enregistrer la taille du fichier à synchroniser.
+Vous pouvez sélectionner les fichiers à synchroniser en fonction de leur taille.
 
 ### Filtre de date de modification des fichiers
 
-Indiquez la date de dernière modification du fichier que vous souhaitez synchroniser.
+Vous pouvez sélectionner le fichier à synchroniser par la date de dernière modification du fichier.
 
 ### Sélectionnez ce que vous voulez archiver
 

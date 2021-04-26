@@ -48,7 +48,7 @@ Cliccare il "tasto Lista" per visualizzare le directory disponibili. La director
 
 ### Modifica i parametri del nome della directory
 
-La data e l'ora **<u>può essere inclusa nella directory di destinazione</u>**. Le variabili vengono convertite in data all'inizio della sincronizzazione. Si prega di confermare i dettagli della variabile premendo "Modifica parametro nome della directory". 
+La data e l'ora **possono essere incluse nella directory**. Le variabili sono convertite in data quando inizia la sincronizzazione. Si prega di confermare i dettagli della variabile premendo "Modifica il parametro del nome della directory". 
 
 ### Directory
 

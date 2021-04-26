@@ -18,7 +18,7 @@ SMBSync3是安卓设备的内部存储，MicroSD，USB闪存和PC/NAS通过无�
 3. 与上次更新3秒时不同
 
 ## FAQs
-[Frequently Asked Questions](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm
 
 ## 文件
-[Feature Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm

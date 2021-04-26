@@ -48,7 +48,7 @@ Klicken Sie auf die Schaltfläche "Liste", um die verfügbaren Verzeichnisse anz
 
 ### Parameter für Verzeichnisnamen bearbeiten
 
-Das Datum und die Uhrzeit **<u>können in das Zielverzeichnis</u>** aufgenommen werden. Die Variablen werden beim Start der Synchronisation in das Datum umgewandelt. Bitte bestätigen Sie die Angaben der Variablen mit "Verzeichnisnamensparameter bearbeiten". 
+Das Datum und die Uhrzeit **können in das Verzeichnis** aufgenommen werden. Variablen werden beim Start der Synchronisation in Datum umgewandelt. Bitte bestätigen Sie die Angaben der Variablen mit "Verzeichnisnamenparameter bearbeiten". 
 
 ### Verzeichnis
 

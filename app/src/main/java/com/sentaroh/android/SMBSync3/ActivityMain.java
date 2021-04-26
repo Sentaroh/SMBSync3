@@ -39,6 +39,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -65,7 +66,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -1825,7 +1825,6 @@ public class ActivityMain extends AppCompatActivity {
         title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(getString(R.string.msgs_dlg_title_about) + " (Ver" + SystemInfo.getApplVersionName(mContext) + ")");
 
-        // get our tabHost from the xml
         final CustomTabLayout tab_layout = (CustomTabLayout) dialog.findViewById(R.id.tab_layout);
         tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_func_btn));
         tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_privacy_btn));
@@ -1841,6 +1840,7 @@ public class ActivityMain extends AppCompatActivity {
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function_view);
         func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        func_view.setScrollbarFadingEnabled(false);
         func_view.getSettings().setTextZoom(zf);
         setWebViewListener(func_view);
 
@@ -1863,6 +1863,7 @@ public class ActivityMain extends AppCompatActivity {
         final CustomViewPager viewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
+        viewPager.setSwipeEnabled(false);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageSelected(int position) {

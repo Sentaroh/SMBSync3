@@ -47,11 +47,11 @@ Toccare il pulsante per modificare la cartella di destinazione
 
 ### Filtro dimensione file
 
-È possibile registrare la dimensione del file da sincronizzare.
+È possibile selezionare i file da sincronizzare in base alla dimensione del file.
 
 ### Filtro della data di modifica del file
 
-Specifica la data dell'ultima modifica del file che vuoi sincronizzare.
+Puoi selezionare il file da sincronizzare in base alla data di ultima modifica del file.
 
 ### Seleziona cosa archiviare
 

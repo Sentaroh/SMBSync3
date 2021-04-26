@@ -46,9 +46,9 @@ You can enter the share name by hand.
 
 Click the "List button" to display the available directories. The current directory is displayed at the top of the screen.
 
-### Edit directory name parameters(Hidden in master directory)
+### Edit directory name parameters
 
-The date and time **can be included in the target directory**. Variables are converted to date when synchronization starts. Please confirm the details of the variable by pressing "Edit directory name parameter". 
+The date and time **can be included in the directory**. Variables are converted to date when synchronization starts. Please confirm the details of the variable by pressing "Edit directory name parameter". 
 
 ### Directory
 

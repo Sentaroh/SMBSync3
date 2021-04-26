@@ -1,10 +1,15 @@
 ### Filter
 
-"The name of the directory to select or exclude. 
+The name of the directory to select or exclude. 
+
 - wildcard : My*.jpg
 - Specify a character for a specific location: dsc_???.mov
-- filters can be entered in same line, separated by \";\": \*.jpg;\*.mp3
-- exclude filter wins
+- filters can be entered in same line, separated by \"";\"": \*.jpg;\*.mp3
+- exclude filter wins"
+
+### Enable / Disable
+
+Allows you to disable the filter.
 
 ### Include/Exclude
 

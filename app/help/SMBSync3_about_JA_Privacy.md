@@ -34,25 +34,22 @@
 ### 4.1.写真、メディア、ファイル
 **read the contents of your USB storage  
 modify or delete the contents of your USB storage**  
-
 内部ストレージへのファイル同期と管理ファイルの読み書きで使用します。
 
 ### 4.2.ストレージ
 
-### 4.2.1.Android11から
-**Manage external storage**  
+### 4.2.1.Android11以降
+**All file access**
 
-USBストレージへのファイル同期と管理ファイルの読み書きで使用します。
+内部ストレージと外部ストレージへのファイル同期と管理ファイルの読み書きで使用します。
 
 ### 4.2.2.Android10まで
 **read the contents of your USB storage  
 modify or delete the contents of your USB storage**  
-
-USBストレージへのファイル同期と管理ファイルの読み書きで使用します。
+内部ストレージと外部ストレージへのファイル同期と管理ファイルの読み書きで使用します。
 
 ### 4.3.Wi-Fi 接続情報
 **view Wi-Fi connections**  
-
 同期開始時にWi-Fiの状況を確認するために使用します。
 
 ### 4.4.その他
@@ -70,4 +67,3 @@ Andoid 8/9でスケジュール同期でWi-Fiのオン・オフを行うため�
 スケジュールまたは外部アプリからの同期開始で使用します。
 ### 4.4.7.install shortcuts
 デスクトップに同期開始ショートカットを追加するために使用します。
-

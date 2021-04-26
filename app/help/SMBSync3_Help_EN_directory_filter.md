@@ -9,8 +9,12 @@ The name of the directory to select or exclude.
 - wildcard : My*
 - Specify a character for a specific location: fo?der
 - Exclude all cache directories: \\cache
-- filters can be entered in same line, separated by \";\": audio;video;
-- exclude filter wins
+- filters can be entered in same line, separated by \"";\"": audio;video;
+- exclude filter wins"
+
+### Enable / Disable
+
+Allows you to disable the filter.
 
 ### Include/Exclude
 

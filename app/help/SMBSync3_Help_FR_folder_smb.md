@@ -48,7 +48,7 @@ Cliquez sur le bouton "Liste" pour afficher les répertoires disponibles. L'annu
 
 ### Modifier les paramètres du nom du répertoire
 
-La date et l'heure **<u> peuvent être incluses dans le répertoire cible</u>**. Les variables sont converties en date lorsque la synchronisation commence. Veuillez confirmer les détails de la variable en appuyant sur "Modifier le paramètre du nom du répertoire". 
+La date et l'heure **peuvent être incluses dans le répertoire**. Les variables sont converties en date lorsque la synchronisation commence. Veuillez confirmer les détails de la variable en appuyant sur "Editer le paramètre du nom du répertoire". 
 
 ### Répertoire
 

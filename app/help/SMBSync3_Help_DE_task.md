@@ -47,11 +47,11 @@ Tippen Sie auf die Schaltfläche, um den Zielordner zu bearbeiten
 
 ### Dateigrößenfilter
 
-Sie können die Größe der zu synchronisierenden Datei registrieren.
+Sie können die zu synchronisierenden Dateien nach Dateigröße auswählen.
 
 ### Filter für das Änderungsdatum der Datei
 
-Geben Sie das letzte Änderungsdatum der Datei an, die Sie synchronisieren möchten.
+Sie können die zu synchronisierende Datei anhand des letzten Änderungsdatums der Datei auswählen.
 
 ### Zum Archivieren der
 

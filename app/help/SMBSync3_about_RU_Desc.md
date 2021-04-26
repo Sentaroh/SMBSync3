@@ -18,7 +18,7 @@ SMBSync3 - это внутренний накопитель устройства
 3. Различаются по сравнению с последним обновлением 3 секунды
 
 ## FAQs
-[Frequently Asked Questions](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm
 
 ## Документ
-[Feature Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm

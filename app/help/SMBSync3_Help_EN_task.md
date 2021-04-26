@@ -47,11 +47,11 @@ Tap the button to edit destination folder
 
 ### File size filter
 
-You can register the size of the file to be synchronized.
+You can select the files to synchronize by file size.
 
 ### File modification date filter
 
-Specify the last modified date of the file to be synchronized.
+You can select the files to synchronize by their last modified date.
 
 ### To archive the
 

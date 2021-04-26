@@ -18,8 +18,8 @@ SMBSync3のスケジュール機能または外部アプリケーション（Tas
 1. ファイルの最終更新日時が3秒以上違う(秒数は同期タスクのオプションにより変更可能)
 
 ## FAQ
-[FAQへのリンク](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_JA.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_JA.htm
 
 ## マニュアル
 
-[マニュアルへのリンク](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_JA.htm)
+https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_JA.htm

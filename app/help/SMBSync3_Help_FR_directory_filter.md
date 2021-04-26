@@ -5,10 +5,16 @@ Nom du répertoire spécifié dans le dossier source.
 ### Filtre
 
 Le nom du répertoire à sélectionner ou à exclure. 
-- wildcard : Mon*.jpg
-- Spécifier un caractère spécifique : dsc_???.mov
-- les filtres peuvent être saisis en une seule ligne, séparés par \";\": \*.jpg;*.mp3
-- le filtre Exclure est prioritaire
+
+- wildcard : Mon*
+- Spécifier un caractère spécifique : fo?der.
+- Exclure tous les répertoires de cache : \\cache
+- les filtres peuvent être saisis en une seule ligne, séparés par \"";\"": audio;video;
+- le filtre Exclure est prioritaire"
+
+### Enable / Disable
+
+Vous pouvez désactiver le filtre.
 
 ### Inclure/Exclure
 
