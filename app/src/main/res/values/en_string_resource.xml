@@ -50,8 +50,8 @@
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_EN_task.md</string>
         <string name="msgs_help_sync_task_title">Sync Task Help</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_EN_folder_internal.md</string>
-        <string name="msgs_help_sync_folder_internal_title">Internal Storage Help</string>
+        <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_EN_folder_external.md</string>
+        <string name="msgs_help_sync_folder_external_title">External Storage Help</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_EN_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">Parameter Help</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_EN_folder_smb.md</string>
@@ -182,9 +182,9 @@
         <string name="msgs_main_external_storage_uuid_duplicated">The following UUIDs cannot be used because they are duplicated. Format a MicroSD or USB OTG drive to use it.</string>
         <string name="msgs_main_external_storage_uuid_unusable">Media not mounted</string>
         <string name="msgs_main_external_storage_request_permission">Allow use external storage</string>
-        <string name="msgs_main_permission_internal_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
-        <string name="msgs_main_permission_internal_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
-        <string name="msgs_main_permission_internal_storage_title">Storage Permission</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
+        <string name="msgs_main_permission_external_storage_title">Storage Permission</string>
         <string name="msgs_main_sync_all_auto_tasks">Execute all tasks configured to auto sync.</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">No sync tasks available for execution.  Please create a sync task.</string>
         <string name="msgs_main_sync_cancel_confirm">Cancel sync?</string>
@@ -228,7 +228,7 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Time difference tolerance (sec)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal">Duplicate directory names exist at both internal storage source and destination.  Source and destination directory names must be different.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">Both the source and destination folders have duplicate directories in external storage. Please change one of them to a different directory.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">Duplicate directory names exist at both source and destination.  Source and destination directory names must be different.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">Duplicate directory names exist at both external storage source and destination.  Source and destination directory names must be different.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">Source and destination SMB folders are identical. You must select different source and destination directory names.</string>
@@ -319,19 +319,19 @@
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Allow use to external storage</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Show password</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
+        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">Select SMB protocol</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">Use SMB V1</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">Use SMB V2/3</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">Select SMB protocol</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_suggestion_message">The current SMB protocol does not allow you to connect to the SMB server, please change the SMB protocol.</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_source_folder_smb_account_password">The SMB account or password in the source folder is blank because it cannot be decrypted. Please edit the source folder and correct the SMB account or password.</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password">The SMB account or password in the destination folder is blank because it cannot be decrypted. Please edit the destination folder and correct the SMB account or password.</string>
-        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">The ZIP password for the destination folder is blank because it cannot be decrypted. Edit the destination folder and change the password to the correct one.</string>
         <string name="msgs_task_edit_sync_folder_dlg_use_user_pass">Use Account name and password</string>
+        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">The ZIP password for the destination folder is blank because it cannot be decrypted. Edit the destination folder and change the password to the correct one.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Compression ratio</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">Smallest</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Small</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">Normal</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">Maximum</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Compression ratio</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">Passwords do not match</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">Password</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">Confirm password</string>
@@ -373,7 +373,7 @@
         <string name="msgs_task_sync_task_dlg_wifi_addr_edit_title">Edit IP Address</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_hint">IP Address</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_list">Wireless LAN IP address list</string>
-        <string name="msgs_task_sync_task_dlg_wifi_addr_title">Edit WiFi IP Address</string>
+        <string name="msgs_task_sync_task_dlg_wifi_addr_title">Edit IP address filter</string>
         <string name="msgs_task_sync_task_dlg_wifi_address_list">Wireless LAN IP address list</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_stop">STOP</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_skip_uncondition">IGNORE</string>
@@ -520,10 +520,11 @@
         <string name="msgs_terminate_application">Exit SMBSync3.</string>
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_confirm_title">Agreement of the privacy policy</string>
-        <string name="msgs_privacy_policy_confirm_message">I agree to the privacy policy</string>
+        <string name="msgs_privacy_policy_confirm_message">Please scroll down and read the entire privacy policy.</string>
+        <string name="msgs_privacy_policy_confirm_btn_deny">Disagree</string>
         <string name="msgs_privacy_policy_confirm_btn_confirm">Agree to continue</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">Agreement of the privacy policy</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">If you do not agree to the privacy policy, you will not be able to start the application.</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">Agreement to Privacy Policy</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">If you do not agree to the privacy policy, you cannot use SMBSync3.</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Performing maintenance of app data files</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
@@ -668,6 +669,7 @@
         <string name="msgs_progress_spin_dlg_filelist_cancel">Cancel</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Schedule</string>
+        <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">Schedule name</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add">Add Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">New Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">Edit Schedule</string>
@@ -692,7 +694,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30 Sec</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_off">Turn off back the Wifi once the scheduled tasks are completed.</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">Change sync task options</string>
-        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">Sync only starts while charging.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">Change the \"Execute sync tasks only when charging\" option</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">Do not change</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">Enabled</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">Disabled</string>
@@ -774,6 +776,7 @@
         <string name="msgs_group_edit_disable_sync_group">Would you like to disabled the following tasks?</string>
         <string name="msgs_group_main_dlg_hdr_auto_task_only">Synchronize only Auto tasks</string>
         <string name="msgs_group_main_dlg_hdr_task_list">Task list</string>
+        <string name="msgs_group_main_dlg_hdr_group_name">Group name</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">Auto task does not exists. Group=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">Task does not exists. Group=%1$s, Task=%2$s</string>
         <string name="msgs_group_add_sync_task_no_task_exists_for_add">No tasks exist that can be added.</string>
@@ -781,7 +784,7 @@
         <string name="msgs_group_info_sync_task_was_deleted_or_renamed">A synchronization task has been deleted or renamed. Task=%s</string>
         <string name="msgs_group_info_sync_task_list_was_empty">No synchronization task has been specified</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_already_exists">This group name already exists. Use a different name.</string>
-        <string name="msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified">Task group name is not specified.</string>
+        <string name="msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified">Group name is not specified.</string>
         <string name="msgs_group_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in group name: \"%s\".</string>
         <string name="msgs_group_error_specified_task_does_not_exists">Task does not exists. Task=%s</string>
         <string name="msgs_group_can_not_sync_specified_task_does_not_exists">Could not find the task specified in the group. Task=(%s)</string>
@@ -874,7 +877,7 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">WEEK NUMBER</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">WEEK DAY (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">WEEK DAY (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">ZIP files cannot be used as destinations for Archive sync type.  Internal storage will be used instead.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Changed to external storage because ZIP cannot be used when the sync method is archive.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">The request was ignored because Zip files cannot be used as destinations for Archive sync type.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Year</string>
         <string name="msgs_sync_folder_archive_btn_title_month">Month</string>

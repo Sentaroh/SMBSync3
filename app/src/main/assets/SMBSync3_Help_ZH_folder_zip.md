@@ -1,6 +1,6 @@
 ### 本地存储
 
-选择要使用的存储。
+可以选择内置存储/SDCARD/USB存储。
 
 ### 允许使用外部存储
 
@@ -24,13 +24,11 @@
 - 最大
 
 ### 加密方法
+选择加密方法
 
 - 没有加密
-
 - ZipCrypto
-
 - AES128 Bit
-
 - AES256 Bit
 
 ### 密码
@@ -40,3 +38,7 @@
 ### 确认
 
 重新输入密码进行确认。
+
+### 使用说明书
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

@@ -29,9 +29,15 @@
 按下按钮，显示编辑界面。选择要同步的任务。
 
 ### 同步开始时，当Wi-Fi关闭时，开启Wi-Fi（<span style="color: red;"><u>在Android 10或更高版本上不可用</u></span>）。
-如果您启用它，您可以在Wi-Fi关闭时打开Wi-Fi。  
-- 您可以指定开启Wi-Fi后等待同步开始的时间。
-- 你也可以在同步结束时关闭Wi-Fi。
+如果启用，在同步开始时，如果Wi-Fi是关闭的，它将打开Wi-Fi。
 
-### 只有在充电时才开始同步
+- 您可以指定开启Wi-Fi后等待同步开始的时间。
+- 如果您在同步开始时打开Wi-Fi，则在同步结束后关闭Wi-Fi。
+如果启用，它将在同步结束后关闭Wi-Fi。
+
+### 改变 "仅在充电时执行同步任务"选项
 您可以在开始同步时更改充电选项。 手动同步时，无论充电如何都可以同步，并且按时间表同步时，只能在充电时进行更改。
+
+### 使用说明书
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

@@ -55,6 +55,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerInfo;
 
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
@@ -1581,8 +1582,9 @@ public class TaskListUtils {
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
+        final TextInputLayout ll_et_filter=(TextInputLayout)dialog.findViewById(R.id.filter_list_edit_new_filter_view);
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_list_edit_new_filter);
-        et_filter.setHint(mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_hint));
+        ll_et_filter.setHint(mActivity.getString(R.string.msgs_task_sync_task_dlg_wifi_addr_hint));
         et_filter.setKeyListener(DigitsKeyListener.getInstance("0123456789.*"));
 
         final Button addBtn = (Button) dialog.findViewById(R.id.filter_list_edit_add_btn);
@@ -1799,7 +1801,9 @@ public class TaskListUtils {
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
+        final TextInputLayout ll_et_filter=(TextInputLayout) dialog.findViewById(R.id.filter_item_edit_dlg_filter_view);
         final EditText et_filter = (EditText) dialog.findViewById(R.id.filter_item_edit_dlg_filter);
+        ll_et_filter.setHint(mActivity.getString(R.string.msgs_task_sync_task_filter_list_dlg_filter_hint));
         et_filter.setText(filter);
         if (filter_type==FilterListAdapter.FILTER_TYPE_IP_ADDRESS) et_filter.setKeyListener(DigitsKeyListener.getInstance("0123456789.*"));
 

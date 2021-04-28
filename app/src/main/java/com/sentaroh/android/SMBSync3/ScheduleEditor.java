@@ -154,6 +154,7 @@ public class ScheduleEditor {
         final Button btn_edit = (Button) dialog.findViewById(R.id.scheduler_main_dlg_edit_sync_prof);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_msg);
 
+        final LinearLayout ll_schedule_name = (LinearLayout) dialog.findViewById(R.id.schedule_main_dlg_sched_name_view);
         final EditText et_name = (EditText) dialog.findViewById(R.id.schedule_main_dlg_sched_name);
 
         final CheckedTextView ctv_sched_enabled = (CheckedTextView) dialog.findViewById(R.id.scheduler_main_dlg_ctv_enabled);
@@ -253,7 +254,7 @@ public class ScheduleEditor {
             et_name.setText(mSched.scheduleName);
         }
         if (mEditMode) {
-            et_name.setVisibility(EditText.GONE);
+            ll_schedule_name.setVisibility(EditText.GONE);
             String title=dlg_title.getText().toString()+"("+mSched.scheduleName+")";
             dlg_title.setText(title);
         }

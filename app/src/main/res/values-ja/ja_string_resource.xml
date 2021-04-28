@@ -50,8 +50,8 @@
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_JA_task.md</string>
         <string name="msgs_help_sync_task_title">同期タスクのヘルプ</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_JA_folder_internal.md</string>
-        <string name="msgs_help_sync_folder_internal_title">内部ストレージのヘルプ</string>
+        <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_JA_folder_external.md</string>
+        <string name="msgs_help_sync_folder_external_title">内部ストレージのヘルプ</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_JA_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">変数のヘルプ</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_JA_folder_smb.md</string>
@@ -181,9 +181,9 @@
         <string name="msgs_main_external_storage_uuid_duplicated">下記のUUIDは重複しているため使用できません。使用するにはMicroSDまたはUSB OTGのドライブをフォーマットしてください。</string>
         <string name="msgs_main_external_storage_uuid_unusable">マウントされてません</string>
         <string name="msgs_main_external_storage_request_permission">外部ストレージの使用許可</string>
-        <string name="msgs_main_permission_internal_storage_denied_msg">ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
-        <string name="msgs_main_permission_internal_storage_request_msg">ストレージに同期するデータや管理用データの読み書きを行うために、ストレージにアクセスする許可を与えてください。</string>
-        <string name="msgs_main_permission_internal_storage_title">ストレージ許可</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
+        <string name="msgs_main_permission_external_storage_request_msg">ストレージに同期するデータや管理用データの読み書きを行うために、ストレージにアクセスする許可を与えてください。</string>
+        <string name="msgs_main_permission_external_storage_title">ストレージ許可</string>
         <string name="msgs_main_sync_all_auto_tasks">自動同期タスクを同期します。</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">同期タスクが存在していないため同期できません。同期タスクを作成してください。</string>
         <string name="msgs_main_sync_cancel_confirm">同期を中止しますか？</string>
@@ -227,7 +227,7 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal">ソースフォルダーと宛先フォルダーの両方が内部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">ソースフォルダーと宛先フォルダーの両方が外部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">ソースフォルダーと宛先フォルダーで同じディレクトリにアクセスします、どちらかのディレクトリを変更するかディレクトリフィルターを指定してください。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">ソースフォルダーと宛先フォルダーの両方が外部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">ソースフォルダーと宛先フォルダーが両方ともSMBは使用できません。どちらかを違うタイプに変更してください。</string>
@@ -318,19 +318,19 @@
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">外部ストレージ使用許可</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">パスワードの表示</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>
+        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">SMBプロトコルの選択</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">SMB1</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">SMB V2/3</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">SMBプロトコルの選択</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_suggestion_message">現在のSMBプロトコルではSMBサーバーに接続できませんSMBプロトコルを変更してください。</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_source_folder_smb_account_password">ソースフォルダーのSMBアカウントまたはパスワードが復号できないため空白になっています。ソースフォルダーを編集してSMBアカウントまたはパスワードを修正してください。</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password">宛先フォルダーのSMBアカウントまたはパスワードが復号できないため空白になっています。宛先フォルダーを編集してSMBアカウントまたはパスワードを修正してください。</string>
-        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">宛先フォルダーのZIPパスワードが復号できないため空白になっています。宛先フォルダーを編集して正しいパスワードに修正してください。</string>
         <string name="msgs_task_edit_sync_folder_dlg_use_user_pass">アカウント名/パスワードを使用する</string>
+        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">宛先フォルダーのZIPパスワードが復号できないため空白になっています。宛先フォルダーを編集して正しいパスワードに修正してください。</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">圧縮率</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">最低</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">低</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">中</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">最大</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">圧縮率</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">パスワードと確認パスワードが違います</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">パスワード</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">確認パスワード</string>
@@ -372,7 +372,7 @@
         <string name="msgs_task_sync_task_dlg_wifi_addr_edit_title">IPアドレスの編集</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_hint">IPアドレス</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_list">同期可能なIPアドレスリスト</string>
-        <string name="msgs_task_sync_task_dlg_wifi_addr_title">無線LAN IPアドレスリストの編集</string>
+        <string name="msgs_task_sync_task_dlg_wifi_addr_title">IPアドレスフィルターの編集</string>
         <string name="msgs_task_sync_task_dlg_wifi_address_list">同期可能なIPアドレスリスト</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_stop">停止</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_skip_uncondition">無視</string>
@@ -519,10 +519,11 @@
         <string name="msgs_terminate_application">SMBSync3を終了します。</string>
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_confirm_title">プライバシーポリシーへの同意</string>
-        <string name="msgs_privacy_policy_confirm_message">プライバシーポリシーに同意します</string>
+        <string name="msgs_privacy_policy_confirm_message">プライバシーポリシーをスクロールして全てお読み下さい。</string>
+        <string name="msgs_privacy_policy_confirm_btn_deny">不同意</string>
         <string name="msgs_privacy_policy_confirm_btn_confirm">同意して続行</string>
         <string name="msgs_privacy_policy_confirm_deny_title">プライバシーポリシーへの同意</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">プライバシーポリシーに同意していただけないとアプリは起動できません</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">プライバシーポリシーに同意していただけないとSMBSync3は使用できません</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">管理ファイルの保守実行中</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">保守の中止</string>
@@ -667,6 +668,7 @@
         <string name="msgs_progress_spin_dlg_filelist_cancel">ファイルリスト取得を中止</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">スケジュール</string>
+        <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">スケジュール名</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add">スケジュールの追加</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">新しいスケジュール</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">スケジュールの編集</string>
@@ -691,7 +693,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30秒</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_off">同期開始時にWi-Fiをオンにした場合は同期終了後にWi-Fiをオフにする</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">同期タスクのオプションを変更する</string>
-        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">同期は充電中のみ開始する</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">「同期は充電中のみ開始する」オプションを変更する</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">変更しない</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">有効にする</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">無効にする</string>
@@ -773,6 +775,7 @@
         <string name="msgs_group_edit_disable_sync_group">下記のタスクを無効にしますか？</string>
         <string name="msgs_group_main_dlg_hdr_auto_task_only">自動同期タスクだけを同期する</string>
         <string name="msgs_group_main_dlg_hdr_task_list">タスクリスト</string>
+        <string name="msgs_group_main_dlg_hdr_group_name">グループ名</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">自動同期タスクが存在しません。 グループ=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">タスクが見つかりません。グループ=%1$s, タスク=%2$s</string>
         <string name="msgs_group_add_sync_task_no_task_exists_for_add">追加できるタスクが存在しません。</string>
@@ -873,7 +876,7 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">週番号</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">曜日 (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">曜日 (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため内部ストレージに変更しました。</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため外部ストレージに変更しました。</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">要求された操作は無視されました。同期方法がアーカイブの場合、ZIPは使用できません。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">西暦</string>
         <string name="msgs_sync_folder_archive_btn_title_month">月</string>

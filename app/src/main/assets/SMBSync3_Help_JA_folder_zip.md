@@ -1,6 +1,6 @@
 ### ローカルストレージ
 
-内部ストレージまたはSDCARD/USB等の外部ストレージを選択できます。 
+内蔵ストレージ/SDCARD/USBのストレージを選択できます。 
 
 ### 外部ストレージの使用許可
 
@@ -25,12 +25,10 @@
 
 ### 暗号化
 暗号化方法を選択してください。 
+
 - 無し
-
 - ZipCrypto
-
 - AES128 Bit
-
 - AES256 Bit 
 
 ### パスワード
@@ -39,4 +37,8 @@
 
 ### 確認パスワード
 
-暗号化するための確認パスワード指定してください。
+暗号化するパスワードの確認のために、パスワードを再入力してください。
+
+### ドキュメント
+[よくある質問](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_JA.htm)
+[機能の説明](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_JA.htm)

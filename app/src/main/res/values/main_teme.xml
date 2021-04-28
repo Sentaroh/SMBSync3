@@ -5,5 +5,43 @@
 	    <!--<attr name="spinnerBackground" format="reference" />-->
 	<!--</declare-styleable>-->
 
+<!--    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">-->
+<!--        <item name="colorAccent">#fff</item>-->
+<!--    </style>-->
+
+<!--    <style name="spinner_normal" parent="@android:style/Widget.Spinner" >-->
+<!--        <item name="android:background">@drawable/spinner_color_background</item>-->
+<!--    </style>-->
+
+<!--    <style name="spinner_light" parent="@android:style/Widget.Spinner" >-->
+<!--        <item name="android:background">@drawable/spinner_color_background_light</item>-->
+<!--    </style>-->
+
+<!--    <style name="Main" parent="Base.Theme.MaterialComponents" >-->
+<!--        <item name="android:spinnerStyle">@style/spinner_normal</item>-->
+<!--        <item name="android:navigationBarColor">@color/navigationBarColorBlack</item>-->
+<!--        <item name="AppUsedTheme">0</item>-->
+<!--    </style>-->
+
+<!--    <style name="MainLight" parent="Base.Theme.MaterialComponents.Light.DarkActionBar" >-->
+<!--        <item name="android:textColor">@color/textColorLight</item>-->
+<!--        <item name="android:spinnerStyle">@style/spinner_light</item>-->
+
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+
+<!--        <item name="AppUsedTheme">1</item>-->
+<!--    </style>-->
+
+<!--    <style name="MainBlack" parent="Base.Theme.MaterialComponents">-->
+<!--        <item name="android:spinnerStyle">@style/spinner_normal</item>-->
+<!--        <item name="colorPrimary">@color/colorPrimaryBlack</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlack</item>-->
+<!--        &lt;!&ndash;<item name="colorAccent">@color/colorAccentBlack</item>&ndash;&gt;-->
+<!--        <item name="android:windowBackground">@color/windowBackgroundBlack</item>-->
+<!--        <item name="android:navigationBarColor">@color/navigationBarColorBlack</item>-->
+<!--        <item name="AppUsedTheme">2</item>-->
+<!--    </style>-->
 
 </resources>

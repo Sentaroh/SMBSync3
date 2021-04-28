@@ -78,12 +78,18 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/group_item_edit_dlg_group_name"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/group_item_edit_dlg_group_name_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="group name"
-                android:inputType="text"/>
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/group_item_edit_dlg_group_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/msgs_group_main_dlg_hdr_group_name"
+                    android:text="group name"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

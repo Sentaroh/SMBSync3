@@ -15,7 +15,6 @@ To specify SMB server name or IP address
 You can specify SMB protocol.
 
 - Use SMB V1
-
 - Use SMB V2/3 
 
 ### Use port number
@@ -24,7 +23,7 @@ Specify if the port number of the standard is not available. The standard port n
 
 ### Use Account name and password
 
-You need to specify an account name or password. The account name is a local account on the SMB server. <span style="color: red;"><u>Microsoft accounts cannot be used.</u></span> 
+If checked, please specify an account name or password. The account name is a local account on the SMB server. <span style="color: red;"><u>Microsoft accounts cannot be used.</u></span> 
 
 ### Account name
 
@@ -36,7 +35,7 @@ To specify password for SMB server.
 
 ### List share
 
-Show share name for SMB server.  
+Show share name for SMB server.
 
 ### Share name
 
@@ -52,15 +51,15 @@ The date and time **can be included in the directory**. Variables are converted 
 
 ### Directory
 
-To specify directory for SMB host. If the target directory does not exist, it will be created at the time of synchronization.
+You can enter the directory name of your PC/NAS. If the directory does not exist in the destination folder, it will be created when the synchronization is executed.
 
 **The following is only displayed when the synchronization type is Archive.**
 
-### Save all  files in the destination directory without creating subdirectories
+### Save allfiles in the destination directory without creating subdirectories
 
 If checked, the destination directory will not create a subdirectory in the source directory.
 
-### Increment  file names by appending
+### Incrementfile names by appending
 
 You can add a sequence number to the file name. 
 
@@ -74,3 +73,7 @@ You can add a sequence number to the file name.
 ### Edit file name parameter
 
 To include the date and time in the file name, tap the button and edit.
+
+### Manuals
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

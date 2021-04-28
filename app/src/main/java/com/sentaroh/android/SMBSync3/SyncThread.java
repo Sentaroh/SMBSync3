@@ -23,7 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
@@ -877,7 +876,7 @@ public class SyncThread extends Thread {
 
             to = buildStorageDir(sti.getDestinationStorageUuid(), sti.getDestinationDirectoryName());
 
-            mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-Internal From=" + from + ", To=" + to);
+            mStwa.util.addDebugMsg(1, "I", "Sync Local-To-Local From=" + from + ", To=" + to);
 
             makeLocalCacheDirectory(sti.getDestinationStorageUuid());
 
@@ -898,7 +897,7 @@ public class SyncThread extends Thread {
             if (sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) to = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+sti.getDestinationZipOutputFileName();
             else to = "/storage/"+sti.getDestinationStorageUuid()+"/"+ sti.getDestinationZipOutputFileName();
 
-            mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-ZIP From=" + from + ", To=" + to);
+            mStwa.util.addDebugMsg(1, "I", "Sync Local-To-ZIP From=" + from + ", To=" + to);
 
             makeLocalCacheDirectory(sti.getDestinationStorageUuid());
 
@@ -919,7 +918,7 @@ public class SyncThread extends Thread {
 
             to = buildSmbHostUrl(mStwa.destinationSmbHost, sti.getDestinationSmbShareName(), sti.getDestinationDirectoryName());
 
-            mStwa.util.addDebugMsg(1, "I", "Sync Internal-To-SMB From=" + from + ", To=" + to);
+            mStwa.util.addDebugMsg(1, "I", "Sync Local-To-SMB From=" + from + ", To=" + to);
 
             if (sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_COPY)) {
                 sync_result = SyncThreadSyncFile.syncCopyLocalToSmb(mStwa, sti, from, to);
@@ -938,7 +937,7 @@ public class SyncThread extends Thread {
 
             to = buildStorageDir(sti.getDestinationStorageUuid(), sti.getDestinationDirectoryName());
 
-            mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-Internal From=" + from + ", To=" + to);
+            mStwa.util.addDebugMsg(1, "I", "Sync SMB-To-Local From=" + from + ", To=" + to);
 
             makeLocalCacheDirectory(sti.getDestinationStorageUuid());
 
@@ -1674,7 +1673,6 @@ public class SyncThread extends Thread {
         if (stwa.logLevel>=1) stwa.util.addDebugMsg(1, "I", "sendConfirmRequest entered type=" , type ,
                 ", Override="+sti.isSyncOverrideCopyMoveFile(), ", Confirm=" + sti.isSyncConfirmOverrideOrDelete(),
                 ", from path=", from_path+", to_path="+to_path);
-//        Thread.dumpStack();
         if (sti.isSyncConfirmOverrideOrDelete()) {
             boolean ignore_confirm = true;
             if (type.equals(CONFIRM_REQUEST_DELETE_DIR) || type.equals(CONFIRM_REQUEST_DELETE_FILE) ||
@@ -2400,7 +2398,7 @@ public class SyncThread extends Thread {
                 }
 
                 if (!exc && stwa.matchFromBeginExcludeDirectoryList.size()>0) {
-                    exc= isDirectoryMatchedFromBeginByDirectoryHierarchy(stwa, reformed_abs_path, stwa.matchFromBeginExcludeDirectoryList);
+                    exc= isDirectoryExcludeMatchedFromBeginByDirectoryHierarchy(stwa, reformed_abs_path, stwa.matchFromBeginExcludeDirectoryList);
                 }
             }
             if (!exc) {
@@ -2409,7 +2407,7 @@ public class SyncThread extends Thread {
                     inc = true;
                     include_filter_specified=false;
                 } else {
-                    inc= isDirectoryMatchedFromBeginByDirectoryHierarchy(stwa, reformed_abs_path, stwa.matchFromBeginIncludeDirectoryList);
+                    inc= isDirectoryIncludeMatchedFromBeginByDirectoryHierarchy(stwa, reformed_abs_path, stwa.matchFromBeginIncludeDirectoryList);
                 }
             }
             result=inc;
@@ -2429,20 +2427,51 @@ public class SyncThread extends Thread {
         long b_time=System.currentTimeMillis();
         boolean exc=false;
         String exc_dir="/".concat(reformed_abs_path).concat("/");
+        String match_pattern="";
         for(Pattern exc_pattern:pattern_list) {
             Matcher exc_mt=exc_pattern.matcher(exc_dir);
             if (exc_mt.find()) {
                 exc=true;
-                if (stwa.logLevel>=debug_level_3)
-                    stwa.util.addDebugMsg(debug_level_3, "I", "isDirectoryExcludeMatchedAnyWhere result="+exc+", pattern="+exc_pattern+", dir="+exc_dir+
-                            ", elapsed time="+(System.currentTimeMillis()-b_time));
+                match_pattern=exc_pattern.toString();
                 break;
             }
         }
+        if (stwa.logLevel>=debug_level_3)
+            stwa.util.addDebugMsg(debug_level_3, "I", "isDirectoryExcludeMatchedAnyWhere result="+exc+", pattern="+match_pattern+", dir="+exc_dir+
+                    ", elapsed time="+(System.currentTimeMillis()-b_time));
         return exc;
     }
 
-    static private boolean isDirectoryMatchedFromBeginByDirectoryHierarchy(SyncThreadWorkArea stwa, String reformed_abs_path, ArrayList<String>filter_list) {
+    static private boolean isDirectoryExcludeMatchedFromBeginByDirectoryHierarchy(SyncThreadWorkArea stwa, String reformed_abs_path, ArrayList<String>filter_list) {
+        long b_time=System.currentTimeMillis();
+        int flags = Pattern.CASE_INSENSITIVE | Pattern.MULTILINE;
+        boolean filter_matched=false, filter_specified=false;
+
+        String[] directory_array=reformed_abs_path.split("/");
+        String match_pattern="";
+        if (filter_list.size()>0) {
+            filter_specified=true;
+            for(String filter:filter_list) {
+                String[] exc_filter_array=filter.split("/");
+
+                if (directory_array.length>=exc_filter_array.length) {
+                    Pattern pattern=Pattern.compile("^"+MiscUtil.convertRegExp(filter), flags);
+                    Matcher mt=pattern.matcher(reformed_abs_path);
+                    if (stwa.logLevel>=debug_level_3) match_pattern=pattern.toString();
+                    if (mt.find()) {
+                        filter_matched=true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (stwa.logLevel>=debug_level_3)
+            stwa.util.addDebugMsg(debug_level_3, "I", "isDirectoryExcludeMatchedFromBeginByDirectoryHierarchy result="+filter_matched+", pattern="+match_pattern+", dir="+reformed_abs_path+
+                    ", elapsed time="+(System.currentTimeMillis()-b_time));
+        return filter_matched;
+    }
+
+    static private boolean isDirectoryIncludeMatchedFromBeginByDirectoryHierarchy(SyncThreadWorkArea stwa, String reformed_abs_path, ArrayList<String>filter_list) {
         //ディレクトリーの階層で比較して一致する場合にはtrue、ディレクトリーの階層とは"/"で区切られたディレクトリー名の集合
         long b_time=System.currentTimeMillis();
         int flags = Pattern.CASE_INSENSITIVE | Pattern.MULTILINE;

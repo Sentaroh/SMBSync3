@@ -54,6 +54,7 @@ import android.provider.Settings;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,10 +63,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -269,13 +272,13 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, appStartStaus=" + appStartStaus);
         if (appStartStaus == START_INITIALYZING) {
             appStartStaus = START_INPROGRESS;
-            if (Build.VERSION.SDK_INT>=30) {
-                //ENable "ALL_FILE_ACCESS"
-                if (!isAllFileAccessPermissionGranted()) {
-                    checkPrivacyPolicyAgreement(new CallBackListener() {
-                        @Override
-                        public void onCallBack(Context context, boolean positive, Object[] objects) {
-                            if (positive) {
+            checkPrivacyPolicyAgreement(new CallBackListener() {
+                @Override
+                public void onCallBack(Context context, boolean positive, Object[] objects) {
+                    if (positive) {
+                        if (Build.VERSION.SDK_INT>=30) {
+                            //ENable "ALL_FILE_ACCESS"
+                            if (!isAllFileAccessPermissionGranted()) {
                                 requestAllFileAccessPermission(new CallBackListener() {
                                     @Override
                                     public void onCallBack(Context context, boolean b, Object[] objects) {
@@ -283,32 +286,32 @@ public class ActivityMain extends AppCompatActivity {
                                     }
                                 });
                             } else {
-                                mUtil.showCommonDialogWarn(false,
-                                    mContext.getString(R.string.msgs_privacy_policy_confirm_deny_title),
-                                    mContext.getString(R.string.msgs_privacy_policy_confirm_deny_message),
-                                    new CallBackListener(){
-                                        @Override
-                                        public void onCallBack(Context context, boolean positive, Object[] objects) {
-                                            finish();
-                                        }
-                                    });
+                                initApplication();
+                            }
+                        } else {
+                            if (isLegacyStorageAccessGranted()) initApplication();
+                            else {
+                                requestLegacyStoragePermission(new CallBackListener(){
+                                    @Override
+                                    public void onCallBack(Context c, boolean positive, Object[] o) {
+                                        initApplication();
+                                    }
+                                });
                             }
                         }
-                    });
-                } else {
-                    initApplication();
+                    } else {
+                        mUtil.showCommonDialogWarn(false,
+                                mContext.getString(R.string.msgs_privacy_policy_confirm_deny_title),
+                                mContext.getString(R.string.msgs_privacy_policy_confirm_deny_message),
+                                new CallBackListener(){
+                                    @Override
+                                    public void onCallBack(Context context, boolean positive, Object[] objects) {
+                                        finish();
+                                    }
+                                });
+                    }
                 }
-            } else {
-                if (isLegacyStorageAccessGranted()) initApplication();
-                else {
-                    requestLegacyStoragePermission(new CallBackListener(){
-                        @Override
-                        public void onCallBack(Context c, boolean positive, Object[] o) {
-                            initApplication();
-                        }
-                    });
-                }
-            }
+            });
         } else if (appStartStaus == START_COMPLETED) {
             setMediaStatusListener();
 
@@ -396,7 +399,10 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void checkPrivacyPolicyAgreement(CallBackListener cbl) {
-//        cbl.onCallBack(mContext, true, null);
+        if (GlobalParameters.isPrivacyPolicyAgreed(mContext)) {
+            cbl.onCallBack(mContext, true, null);
+            return;
+        }
 
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -406,25 +412,26 @@ public class ActivityMain extends AppCompatActivity {
         ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
         final TextView tv_title=(TextView)dialog.findViewById(R.id.agree_privacy_policy_dlg_title);
         tv_title.setTextColor(mGp.themeColorList.title_text_color);
-        final TextView tv_msg=(TextView)dialog.findViewById(R.id.privacy_policy_agreement_dlg_msg);
-        tv_msg.setVisibility(TextView.GONE);
         final Button btn_ok=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_ok);
         final Button btn_cancel=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_cancel);
 
+        final TextView tv_agree=(TextView) dialog.findViewById(R.id.privacy_policy_agreement_dlg_agree);
+        tv_agree.setText(mActivity.getString(R.string.msgs_privacy_policy_confirm_message));
+        tv_agree.setTextColor(mGp.themeColorList.text_color_warning);
+
         final WebView web_view=(WebView)dialog.findViewById(R.id.agree_privacy_policy_dlg_webview);
-        final CheckedTextView ct_agree=(CheckedTextView) dialog.findViewById(R.id.privacy_policy_agreement_dlg_agree);
-
-        web_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
         web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        web_view.setScrollbarFadingEnabled(false);
+        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
+        setWebViewListener(web_view, zf);
+        loadHelpFile(web_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
 
-        ct_agree.setChecked(false);
-        ct_agree.setOnClickListener(new OnClickListener() {
+        web_view.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
-            public void onClick(View v) {
-                boolean checked=!ct_agree.isChecked();
-                ct_agree.setChecked(checked);
-                if (checked) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+            public void onScrollChanged() {
+                if(!web_view.canScrollVertically(1)) {
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                }
             }
         });
 
@@ -432,6 +439,7 @@ public class ActivityMain extends AppCompatActivity {
         btn_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                GlobalParameters.setPrivacyPolicyAgreed(mContext, true);
                 cbl.onCallBack(mContext, true, null);
                 dialog.dismiss();
             }
@@ -650,22 +658,22 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    static public void exitCleanly(Context c, GlobalParameters gp) {
-        if (gp.settingExitClean && !gp.activityRestartRequired) {
-            Handler hndl = new Handler();
-            hndl.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                }
-            }, 100);
-        } else {
-            gp.activityRestartRequired=false;
-            gp.clearParms(c);
-            System.gc();
-        }
-
-    }
+//    static public void exitCleanly(Context c, GlobalParameters gp) {
+//        if (gp.settingExitClean && !gp.activityRestartRequired) {
+//            Handler hndl = new Handler();
+//            hndl.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    android.os.Process.killProcess(android.os.Process.myPid());
+//                }
+//            }, 100);
+//        } else {
+//            gp.activityRestartRequired=false;
+//            gp.clearParms(c);
+//            System.gc();
+//        }
+//
+//    }
 
     @Override
     public void onConfigurationChanged(final android.content.res.Configuration newConfig) {
@@ -1838,31 +1846,25 @@ public class ActivityMain extends AppCompatActivity {
 
         LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function_view);
-//        func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
-        String html_func=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_func_desc));
-        func_view.loadData(html_func, "text/html", "UTF-8");
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         func_view.setScrollbarFadingEnabled(false);
-        func_view.getSettings().setTextZoom(zf);
-        setWebViewListener(func_view);
+        setWebViewListener(func_view, zf);
 
         LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy_view);
-//        privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
-        String html_privacy=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_privacy_desc));
-        privacy_view.loadData(html_privacy, "text/html", "UTF-8");
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        privacy_view.getSettings().setTextZoom(zf);
-        setWebViewListener(privacy_view);
+        privacy_view.setScrollbarFadingEnabled(false);
+        setWebViewListener(privacy_view, zf);
 
         LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
         final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_view);
-//        change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
-        String html_change=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_change_desc));
-        change_view.loadData(html_change, "text/html", "UTF-8");
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        change_view.getSettings().setTextZoom(zf);
-        setWebViewListener(change_view);
+        change_view.setScrollbarFadingEnabled(false);
+        setWebViewListener(change_view, zf);
+
+        loadHelpFile(func_view, getString(R.string.msgs_dlg_title_about_func_desc));
+        loadHelpFile(privacy_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
+        loadHelpFile(change_view, getString(R.string.msgs_dlg_title_about_change_desc));
 
         final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new WebView[]{func_view, privacy_view, change_view});
@@ -1928,35 +1930,55 @@ public class ActivityMain extends AppCompatActivity {
         dialog.show();
     }
 
-    private void setWebViewListener(WebView wv) {
-//        wv.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public boolean shouldOverrideUrlLoading (WebView view, String url) {
-//                return false;
-//            }
-//        });
-//        wv.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event){
-//                if(event.getAction() == KeyEvent.ACTION_DOWN){
-//                    WebView webView = (WebView) v;
-//                    switch(keyCode){
-//                        case KeyEvent.KEYCODE_BACK:
-//                            if(webView.canGoBack()){
-//                                webView.goBack();
-//                                return true;
-//                            }
-//                            break;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
+    private void loadHelpFile(final WebView web_view, String fn) {
+        final Handler hndl=new Handler();
+        Thread th1=new Thread(){
+            @Override
+            public void run() {
+                String html=CommonUtilities.convertMakdownToHtml(mContext, fn);
+                final String b64= Base64.encodeToString(html.getBytes(), Base64.DEFAULT);
+                hndl.post(new Runnable(){
+                    @Override
+                    public void run() {
+//                        web_view.loadData(html_func, "text/html; charset=UTF-8", null);
+                        web_view.loadData(b64, null, "base64");
+                    }
+                });
+            }
+        };
+        th1.start();
+    }
 
+    private void setWebViewListener(WebView wv, int zf) {
+        wv.setBackgroundColor(Color.LTGRAY);
+        wv.getSettings().setTextZoom(zf);
+//        wv.getSettings().setBuiltInZoomControls(true);
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+                return false;
+            }
+        });
+        wv.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(event.getAction() == KeyEvent.ACTION_DOWN){
+                    WebView webView = (WebView) v;
+                    switch(keyCode){
+                        case KeyEvent.KEYCODE_BACK:
+                            if(webView.canGoBack()){
+                                webView.goBack();
+                                return true;
+                            }
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     private void killTerminateApplication() {
-
         mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_smnsync_main_kill_application), "", new CallBackListener() {
             @Override
             public void onCallBack(Context c, boolean positive, Object[] objects) {
@@ -2296,8 +2318,8 @@ public class ActivityMain extends AppCompatActivity {
     private void requestLegacyStoragePermission(final CallBackListener cbl) {
         ArrayList<SafStorage3>ssl=mGp.safMgr.getSafStorageList();
         mUtil.showCommonDialogWarn(true,
-                mContext.getString(R.string.msgs_main_permission_internal_storage_title),
-                mContext.getString(R.string.msgs_main_permission_internal_storage_request_msg), new CallBackListener() {
+                mContext.getString(R.string.msgs_main_permission_external_storage_title),
+                mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), new CallBackListener() {
             @Override
             public void onCallBack(Context c, boolean positive, Object[] objects) {
                 if (positive) {
@@ -2310,8 +2332,8 @@ public class ActivityMain extends AppCompatActivity {
                                 cbl.onCallBack(mContext, true, null);
                             } else {
                                 mUtil.showCommonDialog(false, "W",
-                                        mContext.getString(R.string.msgs_main_permission_internal_storage_title),
-                                        mContext.getString(R.string.msgs_main_permission_internal_storage_denied_msg), new CallBackListener() {
+                                        mContext.getString(R.string.msgs_main_permission_external_storage_title),
+                                        mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), new CallBackListener() {
                                             @Override
                                             public void onCallBack(Context c, boolean positive, Object[] objects) {
                                                 if (positive) finish();
@@ -2322,8 +2344,8 @@ public class ActivityMain extends AppCompatActivity {
                     });
                 } else {
                     mUtil.showCommonDialogWarn(false,
-                            mContext.getString(R.string.msgs_main_permission_internal_storage_title),
-                            mContext.getString(R.string.msgs_main_permission_internal_storage_denied_msg), new CallBackListener() {
+                            mContext.getString(R.string.msgs_main_permission_external_storage_title),
+                            mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), new CallBackListener() {
                         @Override
                         public void onCallBack(Context c, boolean positive, Object[] objects) {
                             mUiHandler.post(new Runnable(){

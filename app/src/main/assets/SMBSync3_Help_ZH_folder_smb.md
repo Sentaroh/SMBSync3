@@ -15,7 +15,6 @@
 您可以指定SMB协议。
 
 - 使用SMB V1
-
 - 使用SMB V2/3
 
 ### 使用端口号
@@ -24,7 +23,7 @@
 
 ###使用账户名/密码
 
-您必须指定一个账户名或密码。 账号名称为SMB服务器上的本地账号。 <span style="color: red;"><u>不能使用Microsoft账户。</u></span> 
+如果选中，请说明账户名称或密码。 账号名称为SMB服务器上的本地账号。 <span style="color: red;"><u>不能使用Microsoft账户。</u></span> 
 
 ### 账户名
 
@@ -52,7 +51,7 @@
 
 ### 目录
 
-你可以用手进入PC/NAS目录。
+你可以输入PC/NAS的目录名称。如果该目录在目标文件夹中不存在，在执行同步时将创建该目录。
 
 ### <u>只有当同步类型为存档时，才会显示以下内容</u>
 
@@ -74,3 +73,7 @@
 ### 编辑文件名参数
 
 要在文件名中加入日期和时间，点击按钮并编辑。
+
+### 使用说明书
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

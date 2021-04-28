@@ -1,8 +1,8 @@
-### Lokaler Speicherung
+### Lokaler Speicher
 
-Wählen Sie den zu verwendenden Speicher aus. 
+Eingebauter Speicher/SDCARD/USB-Speicher kann gewählt werden. 
 
-### Erlaubt  die Verwendung externer Speicher
+### Erlaubtdie Verwendung externer Speicher
 
 Fordern Sie die Erlaubnis zur Verwendung von externem Speicher an. Wenn Sie die MicroSD-Karte formatieren, ändert sich die UUID, daher sollten Sie die Erlaubnis zur Verwendung anfordern. 
 
@@ -24,13 +24,11 @@ Wählen Sie die Komprimierungsstufe.
 - Maximum
 
 ### Verschlüsselungsmethode
+Verschlüsselungsmethode wählen
 
 - Keine
-
 - ZipCrypto
-
 - AES128 Bit
-
 - AES256 Bit 
 
 ### Kennwort
@@ -40,3 +38,7 @@ Geben Sie das Passwort für die Verschlüsselung an.
 ### Bestätigen
 
 Geben Sie das Passwort zur Bestätigung erneut ein. 
+
+### Manuals
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

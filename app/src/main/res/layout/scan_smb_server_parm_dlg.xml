@@ -126,21 +126,18 @@
                         android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_port_number"
                         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_port_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                    <EditText
-                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_port_number"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_port"
-                            android:inputType="number"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                </LinearLayout>
+                        android:ems="10"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_port"
+                        android:inputType="number"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                         android:layout_width="match_parent"
@@ -157,22 +154,31 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="145dp"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_name"
-                            android:layout_width="145dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
                             android:inputType="text"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_password"
                             android:inputType="textPassword"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
                 <Button
                         android:id="@+id/scan_smb_server_parm_dlg_btn_refresh_share_list"

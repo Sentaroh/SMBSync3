@@ -50,8 +50,8 @@
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_ZH_task.md</string>
         <string name="msgs_help_sync_task_title">同步任务帮助</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_ZH_folder_internal.md</string>
-        <string name="msgs_help_sync_folder_internal_title">内部存储帮助</string>
+        <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_ZH_folder_external.md</string>
+        <string name="msgs_help_sync_folder_external_title">外部存储帮助</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_ZH_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">参数帮助</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_ZH_folder_smb.md</string>
@@ -176,9 +176,9 @@
         <string name="msgs_main_external_storage_uuid_duplicated">以下UUID不能使用，因为它们是重复的。格式化MicroSD或USB OTG驱动器以使用它。</string>
         <string name="msgs_main_external_storage_uuid_unusable">介质未安装</string>
         <string name="msgs_main_external_storage_request_permission">允许使用外部存储器</string>
-        <string name="msgs_main_permission_internal_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
-        <string name="msgs_main_permission_internal_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
-        <string name="msgs_main_permission_internal_storage_title">Storage Permission</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
+        <string name="msgs_main_permission_external_storage_title">Storage Permission</string>
         <string name="msgs_main_sync_all_auto_tasks">执行所有配置为自动同步的任务。</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">没有同步任务。请创建一个同步任务。</string>
         <string name="msgs_main_sync_cancel_confirm">是否取消同步？</string>
@@ -222,7 +222,7 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">时差容限（秒）</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal">内部存储源和目标都存在重复的目录名。 源和目的目录名必须不同。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">源文件夹和目标文件夹在外部存储中都有重复的目录。请将其中一个改为不同的目录。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">源地和目的地都存在重复的目录名。 源和目的目录名必须不同。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">外部存储源和目标都存在重复的目录名。 源和目的目录名必须不同。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">源和目标SMB文件夹是相同的。你必须选择不同的源目录和目标目录名称。</string>
@@ -314,19 +314,19 @@
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">允许使用到外部存储</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">显示密码</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMB协议</string>
+        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">选择SMB协议</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">使用SMB V1</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">使用SMB V2/3</string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">选择SMB协议</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_suggestion_message">当前的SMB协议不允许你连接到SMB服务器，请更改SMB协议。</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_source_folder_smb_account_password">源文件夹中的SMB账号或密码因无法解密而为空白，请编辑源文件夹，并更正SMB账号或密码。请编辑源文件夹，修改SMB账号或密码。</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password">目标文件夹中的SMB账户或密码因无法解密而为空白。请编辑目标文件夹，并修改SMB账户或密码。</string>
-        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">目标文件夹的ZIP密码是空白的，因为它不能被解密。 编辑目标文件夹，将密码改为正确的密码。</string>
         <string name="msgs_task_edit_sync_folder_dlg_use_user_pass">使用账户名和密码</string>
+        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">目标文件夹的ZIP密码是空白的，因为它不能被解密。 编辑目标文件夹，将密码改为正确的密码。</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">压缩比</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">最低值</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">低</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">媒介</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">最大</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">压缩比</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">密码不匹配</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">密码</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">确认密码</string>
@@ -368,7 +368,7 @@
         <string name="msgs_task_sync_task_dlg_wifi_addr_edit_title">编辑IP地址</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_hint">IP地址</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_list">无线LAN IP地址列表</string>
-        <string name="msgs_task_sync_task_dlg_wifi_addr_title">编辑WiFi IP地址</string>
+        <string name="msgs_task_sync_task_dlg_wifi_addr_title">编辑IP地址过滤器</string>
         <string name="msgs_task_sync_task_dlg_wifi_address_list">无线LAN IP地址列表</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_stop">停工</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_skip_uncondition">跳过</string>
@@ -515,10 +515,11 @@
         <string name="msgs_terminate_application">退出SMBSync3。</string>
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_confirm_title">我同意隐私政策</string>
-        <string name="msgs_privacy_policy_confirm_message">我同意隐私政策</string>
+        <string name="msgs_privacy_policy_confirm_message">请向下滚动并阅读整个隐私政策。</string>
+        <string name="msgs_privacy_policy_confirm_btn_deny">不同意</string>
         <string name="msgs_privacy_policy_confirm_btn_confirm">同意继续</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">我同意隐私政策</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">如果你不同意隐私政策，你就不能启动这个应用程序。</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">对隐私政策的同意</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">如果你不同意我们的隐私政策，你不能使用SMBSync3。</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">进行管理档案的维护。</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">取消维护</string>
@@ -663,6 +664,7 @@
         <string name="msgs_progress_spin_dlg_filelist_cancel">取消</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">时间表</string>
+        <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">时间表名称</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add">添加时间表</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">新时间表</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">编辑时间表</string>
@@ -687,7 +689,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30秒</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_off">如果您在同步开始时打开Wi-Fi，则在同步结束后关闭Wi-Fi。</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">更改同步任务选项</string>
-        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">只有在充电时才开始同步。</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">改变 \"仅在充电时执行同步任务\"选项</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">请勿更改</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">已启用</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">残疾人</string>
@@ -769,6 +771,7 @@
         <string name="msgs_group_edit_disable_sync_group">您是否想禁用以下任务？</string>
         <string name="msgs_group_main_dlg_hdr_auto_task_only">只同步自动任务</string>
         <string name="msgs_group_main_dlg_hdr_task_list">任务清单</string>
+        <string name="msgs_group_main_dlg_hdr_group_name">组别名称</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">自动任务不存在。 Group=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">任务不存在。 Group=%1$s, Task=%2$s</string>
         <string name="msgs_group_add_sync_task_no_task_exists_for_add">不存在可添加的任务。</string>
@@ -869,7 +872,7 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">周数</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">工作日 (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">工作日 (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">ZIP文件不能用作存档同步类型的目的地。 将使用内部存储。</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">改为外部存储，因为当同步方式为存档时，不能使用ZIP。</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">该请求被忽略，因为Zip文件不能用作存档同步类型的目的地。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">年份</string>
         <string name="msgs_sync_folder_archive_btn_title_month">月份</string>

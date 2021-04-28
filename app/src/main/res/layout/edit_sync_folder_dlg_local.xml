@@ -81,13 +81,17 @@
                         android:text="@string/msgs_task_sync_task_edit_directory_name_keyword"
                         android:textAppearance="?android:attr/textAppearanceMedium"/>
                 </LinearLayout>
-                <EditText
-                    android:id="@+id/edit_sync_folder_dlg_internal_directory_name"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/msgs_task_edit_sync_folder_dlg_directory"
-                    android:inputType="text|textMultiLine"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_sync_folder_dlg_internal_directory_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_directory"
+                        android:inputType="text|textMultiLine"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

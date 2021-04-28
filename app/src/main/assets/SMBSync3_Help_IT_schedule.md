@@ -29,9 +29,15 @@ Se deselezionato, è possibile selezionare un task di sincronizzazione
 Premere il tasto per visualizzare la schermata di modifica. Selezionare le attività da sincronizzare.
 
 ### Se il Wi-Fi è disattivato, abilitarlo per avviare le attività programmate (<span style="color: rosso; "><u>Non disponibile su Android 10 o successivo</u></span>)
-Quando è attivata, è possibile attivare il Wi-Fi quando il Wi-Fi è spento.  
-- È possibile specificare il tempo di attesa per l'avvio della sincronizzazione dopo l'attivazione del Wi-Fi.
-- È anche possibile disattivare il Wi-Fi al termine della sincronizzazione.
+Se abilitato, accende il Wi-Fi se il Wi-Fi è spento quando inizia la sincronizzazione.
 
-### La sincronizzazione inizia solo durante la ricarica
+- È possibile specificare il tempo di attesa per l'avvio della sincronizzazione dopo l'attivazione del Wi-Fi.
+- Spegnere il Wifi una volta che le attività pianificate sono state completate.
+Se abilitato, spegnerà il Wi-Fi al termine della sincronizzazione.
+
+### Cambia l'opzione "Eseguire le operazioni di sincronizzazione solo in fase di ricarica"
 È possibile modificare le opzioni di ricarica quando si avvia la sincronizzazione. Durante la sincronizzazione manuale, può essere sincronizzato indipendentemente dalla carica e durante la sincronizzazione su un programma, può essere modificato solo durante la ricarica.
+
+### Manuali
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

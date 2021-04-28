@@ -1,6 +1,6 @@
 ### Stoccaggio locale
 
-Selezionare la memoria da utilizzare. 
+È possibile selezionare l'archiviazione incorporata/SDCARD/USB. 
 
 ### Consentire l'uso di una memoria esterna
 
@@ -24,13 +24,11 @@ Selezionare il livello di compressione.
 - Massimo
 
 ### Metodo di crittografia
+Seleziona il metodo di crittografia
 
 - Nessuno
-
 - ZipCrypto
-
 - AES128 Bit
-
 - AES256 Bit 
 
 ### Password
@@ -40,3 +38,7 @@ Specificare la password per la crittografia.
 ### Conferma
 
 Reinserire la password per la conferma. 
+
+### Manuali
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

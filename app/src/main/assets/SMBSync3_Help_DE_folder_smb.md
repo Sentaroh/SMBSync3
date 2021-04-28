@@ -15,7 +15,6 @@ So geben Sie den SMB-Servernamen oder die IP-Adresse an
 Sie können das SMB-Protokoll angeben.
 
 - SMB V1 verwenden
-
 - SMB V2/3 verwenden
 
 ### Portn-ummer verwenden
@@ -24,7 +23,7 @@ Geben Sie an, wenn die Portnummer des Standards nicht verfügbar ist. Die Standa
 
 ### Kontoname und Passwort verwenden
 
-Sie müssen einen Kontonamen oder ein Passwort angeben. Der Kontoname ist ein lokales Konto auf dem SMB-Server. <span style="color: red;"><u>Microsoft-Konten können nicht verwendet werden.</u></span> 
+Wenn aktiviert, geben Sie bitte den Kontonamen oder das Passwort an. Der Kontoname ist ein lokales Konto auf dem SMB-Server. <span style="color: red;"><u>Microsoft-Konten können nicht verwendet werden.</u></span> 
 
 ### Kontoname
 
@@ -34,9 +33,9 @@ Zur Angabe des Kontonamens für den SMB-Server.
 
 Zur Angabe des Passworts für den SMB-Server. 
 
-### Liste  der Aktien
+### Listeder Aktien
 
-Zeigt den Freigabenamen für den SMB-Server an.  
+Zeigt den Freigabenamen für den SMB-Server an.
 
 ### Name der Freigabe
 
@@ -52,15 +51,15 @@ Das Datum und die Uhrzeit **können in das Verzeichnis** aufgenommen werden. Var
 
 ### Verzeichnis
 
-Zur Angabe des Verzeichnisses für den SMB-Host.Wenn das Zielverzeichnis nicht existiert, wird es zum Zeitpunkt der Synchronisation erstellt.
+Sie können den Verzeichnisnamen des PC/NAS eingeben. Wenn das Verzeichnis im Zielordner nicht vorhanden ist, wird das Verzeichnis bei der Ausführung der Synchronisierung erstellt.
 
 ### <u>Das Folgende wird nur angezeigt, wenn der Synchronisationstyp Archiv ist.</u>
 
-### Alle  Dateien im Zielverzeichnis speichern, ohne Unterverzeichnisse zu erstellen
+### AlleDateien im Zielverzeichnis speichern, ohne Unterverzeichnisse zu erstellen
 
 Wenn diese Option aktiviert ist, wird im Zielverzeichnis kein Unterverzeichnis im Quellverzeichnis angelegt.
 
-### Laufende  Nummer
+### LaufendeNummer
 
 Sie können dem Dateinamen eine Sequenznummer hinzufügen. 
 
@@ -74,3 +73,7 @@ Sie können dem Dateinamen eine Sequenznummer hinzufügen.
 ### Parameter Dateiname bearbeiten
 
 Um das Datum und die Uhrzeit in den Dateinamen aufzunehmen, tippen Sie auf die Schaltfläche und bearbeiten Sie sie.
+
+### Manuals
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

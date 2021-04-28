@@ -28,10 +28,16 @@ If unchecked, you can select a synchronization task
 
 Press the button to display the edit screen. Select tasks to sync.
 
-### If Wi-Fi is off, enable it to start the scheduled tasks (<span style="color: red; "><u>Not available on Android   10 or later</u></span>)
-When enabled, you can turn Wi-Fi on when Wi-Fi is off.  
-- You can specify the amount of time to wait for synchronization to start after Wi-Fi is turned on.
-- You can also turn off Wi-Fi at the end of synchronization.
+### If Wi-Fi is off, enable it to start the scheduled tasks (<span style="color: red; "><u>Not available on Android 10 or later</u></span>)
+When enabled, it will turn on Wi-Fi if it is off when syncing starts.
 
-### Sync only starts while charging
+- You can specify the amount of time to wait for synchronization to start after Wi-Fi is turned on.
+- Turn off back the Wifi once the scheduled tasks are completed.
+When enabled, it will turn off Wi-Fi at the end of synchronization.
+
+### Change the "Execute sync tasks only when charging" sync task option.
 You can change the charging options when you start the sync. When synchronizing manually, it can be synchronized regardless of charging, and when synchronizing on a schedule, it can be changed only during charging.
+
+### Manuals
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

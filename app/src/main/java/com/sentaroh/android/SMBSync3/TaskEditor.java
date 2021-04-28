@@ -41,6 +41,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -3165,10 +3167,11 @@ public class TaskEditor extends DialogFragment {
         final Button source_folder_info = (Button) mDialog.findViewById(R.id.edit_sync_task_source_folder_info_btn);
         final ImageView source_folder_icon=(ImageView)mDialog.findViewById(R.id.edit_sync_task_source_folder_info_icon);
 
+        final LinearLayout ll_sync_task_name_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_task_name_view);
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
         if (type.equals(TASK_EDIT_METHOD_EDIT)) {
             et_sync_main_task_name.setText(n_sti.getSyncTaskName());
-            et_sync_main_task_name.setVisibility(EditText.GONE);
+            ll_sync_task_name_view.setVisibility(EditText.GONE);
             dlg_title.setText(mActivity.getString(R.string.msgs_edit_sync_profile));
             dlg_title_sub.setText(" (" + n_sti.getSyncTaskName() + ")");
         } else if (type.equals(TASK_EDIT_METHOD_COPY)) {
@@ -4558,16 +4561,58 @@ public class TaskEditor extends DialogFragment {
         final EditText et_find_string=(EditText)dialog.findViewById(R.id.help_view_find_value);
         final ImageButton ib_find_next=(ImageButton) dialog.findViewById(R.id.help_view_find_next);
         final ImageButton ib_find_prev=(ImageButton) dialog.findViewById(R.id.help_view_find_prev);
+        final Button btn_reload=(Button) dialog.findViewById(R.id.help_view_reload);
         final TextView tv_find_count=(TextView) dialog.findViewById(R.id.help_view_find_count);
+
+        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(a));
 
         WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
 
 //        dlg_wb.loadUrl("file:///android_asset/" + help_msg);
         String html=CommonUtilities.convertMakdownToHtml(a, help_msg);
-        dlg_wb.loadData(html, "text/html", "UTF-8");
+//        dlg_wb.loadData(html, "text/html", "UTF-8");
+        dlg_wb.loadData(Base64.encodeToString(html.getBytes(), Base64.DEFAULT), null, "base64");
         dlg_wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        dlg_wb.getSettings().setBuiltInZoomControls(false);
-        dlg_wb.setInitialScale(0);
+        dlg_wb.getSettings().setSupportZoom(true);
+        dlg_wb.getSettings().setBuiltInZoomControls(true);
+        dlg_wb.getSettings().setTextZoom(zf);
+
+        btn_reload.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtilities.setViewEnabled(a, btn_reload, false);
+                dlg_wb.reload();
+            }
+        });
+
+        dlg_wb.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+                return false;
+            }
+
+            @Override
+            public void onPageFinished (WebView view, String url) {
+                CommonUtilities.setViewEnabled(a, btn_reload, true);
+            }
+        });
+        dlg_wb.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(event.getAction() == KeyEvent.ACTION_DOWN){
+                    WebView webView = (WebView) v;
+                    switch(keyCode){
+                        case KeyEvent.KEYCODE_BACK:
+                            if(webView.canGoBack()){
+                                webView.goBack();
+                                return true;
+                            }
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         ib_find_next.setOnClickListener(new OnClickListener() {
             @Override
@@ -4684,8 +4729,8 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) {
-                    showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_folder_internal_title),
-                            mActivity.getString(R.string.msgs_help_sync_folder_internal_file));
+                    showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_folder_external_title),
+                            mActivity.getString(R.string.msgs_help_sync_folder_external_file));
                 } else if (f_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
                     showFieldHelp(mActivity, mGp, mActivity.getString(R.string.msgs_help_sync_folder_smb_title),
                             mActivity.getString(R.string.msgs_help_sync_folder_smb_file));
@@ -4767,6 +4812,7 @@ public class TaskEditor extends DialogFragment {
         final Button source_folder_info = (Button) mDialog.findViewById(R.id.edit_sync_task_source_folder_info_btn);
         final ImageView source_folder_icon=(ImageView)mDialog.findViewById(R.id.edit_sync_task_source_folder_info_icon);
 
+        final LinearLayout ll_sync_task_name_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_task_name_view);
         final EditText et_sync_main_task_name = (EditText) mDialog.findViewById(R.id.edit_sync_task_task_name);
 
         final LinearLayout ll_file_filter_detail_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
@@ -5070,7 +5116,7 @@ public class TaskEditor extends DialogFragment {
         String msg="";
         if (sti.getSourceDirectoryName().equals("")) {
             if (sti.getDestinationDirectoryName().equals("")) {
-                msg=mActivity.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal);
+                msg=mActivity.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_external);
             } else {
                 //Sourceが上位
                 msg= checkDirectoryFilterForSameDirectoryAccess(mActivity, sti);
@@ -5080,7 +5126,7 @@ public class TaskEditor extends DialogFragment {
                 //Valid combination
             } else {
                 if (sti.getSourceDirectoryName().toLowerCase().equals(sti.getDestinationDirectoryName().toLowerCase())) {
-                    msg=mActivity.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal);
+                    msg=mActivity.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_external);
                 } else {
                     if (!sti.getDestinationDirectoryName().toLowerCase().equals(sti.getSourceDirectoryName().toLowerCase())) {
                         //Valid combination

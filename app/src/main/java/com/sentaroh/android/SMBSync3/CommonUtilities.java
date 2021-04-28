@@ -63,12 +63,10 @@ import com.sentaroh.android.SMBSync3.Log.LogUtil;
 
 
 import com.sentaroh.android.Utilities3.Base64Compat;
-import com.sentaroh.android.Utilities3.CallBackListener;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities3.EncryptUtilV3;
 import com.sentaroh.android.Utilities3.MiscUtil;
-import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.SafFile3;
 import com.sentaroh.android.Utilities3.ShellCommandUtil;
 import com.sentaroh.android.Utilities3.StringUtil;
@@ -78,13 +76,9 @@ import org.markdownj.MarkdownProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -103,10 +97,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 import static android.content.Context.USAGE_STATS_SERVICE;
-import static com.sentaroh.android.SMBSync3.Constants.DEFAULT_PREFS_FILENAME;
 import static com.sentaroh.android.SMBSync3.Constants.GENERAL_IO_BUFFER_SIZE;
 import static com.sentaroh.android.Utilities3.SafFile3.SAF_FILE_PRIMARY_UUID;
 
@@ -208,24 +200,18 @@ public final class CommonUtilities {
     };
 
     public static String convertMakdownToHtml(Context c, String mark_down_fp) {
+//        long b_time=System.currentTimeMillis();
+        String html ="";
         try {
             InputStream is = c.getAssets().open(mark_down_fp);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is), 1024*1024);
-            String mark_down_text="", line="", sep="";
-            while ((line = br.readLine()) != null) {
-                mark_down_text+=sep+line;
-                sep="\n";
-            }
-            br.close();
             MarkdownProcessor processor = new MarkdownProcessor();
-            String html = processor.markdown(mark_down_text);
-            return html;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            html=processor.markdown(true, is);
+        } catch(Exception e) {
+            log.error("MarkDown conversion error.", e);
             e.printStackTrace();
         }
-        return "";
+//        Log.v(APPLICATION_TAG, "convertMakdownToHtml elapsed time="+(System.currentTimeMillis()-b_time));
+        return html;
     }
 
     public String getStringWithLangCode(Activity c, String lang_code, int res_id) {
@@ -402,9 +388,10 @@ public final class CommonUtilities {
     }
 
 
-    final static private String LIST_ITEM_SEPARATOR ="\u0000";
-    final static private String LIST_ITEM_DUMMY_DATA ="\u0001";
-    final static private String LIST_ITEM_ENCODE_CR_CHARACTER ="\u0003";
+    final static public String LIST_ITEM_DATA_SEPARATOR ="\u0000";
+    final static public String LIST_ITEM_DUMMY_DATA ="\u0001";
+    final static public String LIST_ITEM_ENCODE_CR_CHARACTER ="\u0003";
+    final static public String LIST_ITEM_LINE_SEPARATOR="\n";
     synchronized static public void saveMessageList(Context c, GlobalParameters gp) {
 //        Thread.dumpStack();
         if (gp.syncMessageList == null || (gp.syncMessageList!=null && gp.syncMessageList.size()==0)) return;
@@ -423,13 +410,13 @@ public final class CommonUtilities {
                 synchronized (gp.syncMessageList) {
                     for (MessageListAdapter.MessageListItem smi:gp.syncMessageList) {
                         sb.setLength(0);
-                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getCategory()).append(LIST_ITEM_SEPARATOR); //msgCat
-                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getDate()).append(LIST_ITEM_SEPARATOR); //msgDate
-                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getTime()).append(LIST_ITEM_SEPARATOR); //msgTime
-                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getTitle()).append(LIST_ITEM_SEPARATOR); //msgTitle
-                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getMessage().replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_SEPARATOR); //msgBody
-                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getPath()).append(LIST_ITEM_SEPARATOR); //msgPath
-                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getType()).append(LIST_ITEM_SEPARATOR); //msgType
+                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getCategory()).append(LIST_ITEM_DATA_SEPARATOR); //msgCat
+                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getDate()).append(LIST_ITEM_DATA_SEPARATOR); //msgDate
+                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getTime()).append(LIST_ITEM_DATA_SEPARATOR); //msgTime
+                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getTitle()).append(LIST_ITEM_DATA_SEPARATOR); //msgTitle
+                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getMessage().replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_DATA_SEPARATOR); //msgBody
+                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getPath()).append(LIST_ITEM_DATA_SEPARATOR); //msgPath
+                        sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getType()).append(LIST_ITEM_DATA_SEPARATOR); //msgType
                         pw.println(sb.toString());
                     }
                     gp.syncMessageListChanged =false;
@@ -452,7 +439,7 @@ public final class CommonUtilities {
                 BufferedReader bir=new BufferedReader(isr, GENERAL_IO_BUFFER_SIZE);
                 String line=null;
                 while((line=bir.readLine())!=null) {
-                    String[] msg_array=line.split(LIST_ITEM_SEPARATOR);
+                    String[] msg_array=line.split(LIST_ITEM_DATA_SEPARATOR);
                     if (msg_array.length>=7) {
                         MessageListAdapter.MessageListItem smi = new MessageListAdapter.MessageListItem(
                                 msg_array[0].replace(LIST_ITEM_DUMMY_DATA, ""),//Cat
@@ -878,7 +865,7 @@ public final class CommonUtilities {
                 String line = "";
                 String[] l_array = null;
                 while ((line = bir.readLine()) != null) {
-                    l_array = line.split(LIST_ITEM_SEPARATOR);
+                    l_array = line.split(LIST_ITEM_DATA_SEPARATOR);
                     if (l_array != null && l_array.length >= 16 && !l_array[3].equals("")) {
                         HistoryListAdapter.HistoryListItem hli = new HistoryListAdapter.HistoryListItem();
                         try {
@@ -953,21 +940,21 @@ public final class CommonUtilities {
                         shli = hl.get(i);
                         if (i < max) {
                             sb_buf.setLength(0);
-                            sb_buf.append(shli.sync_date).append(LIST_ITEM_SEPARATOR)                           //0
-                                    .append(shli.sync_time).append(LIST_ITEM_SEPARATOR)                         //1
-                                    .append(String.valueOf(shli.sync_elapsed_time)).append(LIST_ITEM_SEPARATOR) //2
-                                    .append(shli.sync_task).append(LIST_ITEM_SEPARATOR)                         //3
-                                    .append(shli.sync_status).append(LIST_ITEM_SEPARATOR)                       //4
-                                    .append(shli.sync_test_mode ? "1" : "0").append(LIST_ITEM_SEPARATOR)        //5
-                                    .append(shli.sync_result_no_of_copied).append(LIST_ITEM_SEPARATOR)          //6
-                                    .append(shli.sync_result_no_of_deleted).append(LIST_ITEM_SEPARATOR)         //7
-                                    .append(shli.sync_result_no_of_ignored).append(LIST_ITEM_SEPARATOR)         //8
-                                    .append(shli.sync_result_no_of_moved).append(LIST_ITEM_SEPARATOR)           //9
-                                    .append(shli.sync_result_no_of_replaced).append(LIST_ITEM_SEPARATOR)        //10
-                                    .append(shli.sync_req).append(LIST_ITEM_SEPARATOR)                          //11
-                                    .append(shli.sync_error_text.replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_SEPARATOR)//12
-                                    .append(shli.sync_result_no_of_retry).append(LIST_ITEM_SEPARATOR)           //13
-                                    .append(shli.sync_transfer_speed).append(LIST_ITEM_SEPARATOR)               //14
+                            sb_buf.append(shli.sync_date).append(LIST_ITEM_DATA_SEPARATOR)                           //0
+                                    .append(shli.sync_time).append(LIST_ITEM_DATA_SEPARATOR)                         //1
+                                    .append(String.valueOf(shli.sync_elapsed_time)).append(LIST_ITEM_DATA_SEPARATOR) //2
+                                    .append(shli.sync_task).append(LIST_ITEM_DATA_SEPARATOR)                         //3
+                                    .append(shli.sync_status).append(LIST_ITEM_DATA_SEPARATOR)                       //4
+                                    .append(shli.sync_test_mode ? "1" : "0").append(LIST_ITEM_DATA_SEPARATOR)        //5
+                                    .append(shli.sync_result_no_of_copied).append(LIST_ITEM_DATA_SEPARATOR)          //6
+                                    .append(shli.sync_result_no_of_deleted).append(LIST_ITEM_DATA_SEPARATOR)         //7
+                                    .append(shli.sync_result_no_of_ignored).append(LIST_ITEM_DATA_SEPARATOR)         //8
+                                    .append(shli.sync_result_no_of_moved).append(LIST_ITEM_DATA_SEPARATOR)           //9
+                                    .append(shli.sync_result_no_of_replaced).append(LIST_ITEM_DATA_SEPARATOR)        //10
+                                    .append(shli.sync_req).append(LIST_ITEM_DATA_SEPARATOR)                          //11
+                                    .append(shli.sync_error_text.replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_DATA_SEPARATOR)//12
+                                    .append(shli.sync_result_no_of_retry).append(LIST_ITEM_DATA_SEPARATOR)           //13
+                                    .append(shli.sync_transfer_speed).append(LIST_ITEM_DATA_SEPARATOR)               //14
                                     .append(shli.sync_result_file_path)                                         //15
                                     .append("\n");
 

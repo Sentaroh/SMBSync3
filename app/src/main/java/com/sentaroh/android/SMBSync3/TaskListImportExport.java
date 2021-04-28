@@ -30,7 +30,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.SparseBooleanArray;
@@ -73,6 +72,8 @@ import java.util.Comparator;
 
 import javax.crypto.SecretKey;
 
+import static com.sentaroh.android.SMBSync3.CommonUtilities.LIST_ITEM_LINE_SEPARATOR;
+import static com.sentaroh.android.SMBSync3.CommonUtilities.LIST_ITEM_DATA_SEPARATOR;
 import static com.sentaroh.android.SMBSync3.Constants.APPLICATION_TAG;
 import static com.sentaroh.android.SMBSync3.Constants.GENERAL_IO_BUFFER_SIZE;
 import static com.sentaroh.android.SMBSync3.SyncConfiguration.ENCRYPT_MODE_ENCRYPT_VITAL_DATA;
@@ -177,24 +178,32 @@ public class TaskListImportExport {
         }
     }
 
+    private class SavedSyncTaskItem {
+        public SafFile3 file=null;
+        public long saved_time=0L;
+    }
+
     private static final String SAVED_SYNC_TASK_FILE_LIST=".saved_sync_task_file_list";
     private void putExportedFileList(SafFile3 sf) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(mActivity);
-        ArrayList<SafFile3> saved_file_list=getExportedFileList();
+        ArrayList<SavedSyncTaskItem> saved_file_list=getExportedFileList();
         boolean save_required=false;
         boolean found=false;
-        for(SafFile3 item:saved_file_list) {
-            if (item.getPath().equals(sf.getPath())) {
+        for(SavedSyncTaskItem item:saved_file_list) {
+            if (item.file.getPath().equals(sf.getPath())) {
                 found=true;
                 break;
             }
         }
         if (!found) {
-            saved_file_list.add(sf);
-            Collections.sort(saved_file_list, new Comparator<SafFile3>(){
+            SavedSyncTaskItem fi=new SavedSyncTaskItem();
+            fi.file=sf;
+            fi.saved_time=sf.lastModified();
+            saved_file_list.add(fi);
+            Collections.sort(saved_file_list, new Comparator<SavedSyncTaskItem>(){
                 @Override
-                public int compare(SafFile3 o1, SafFile3 o2) {
-                    return (int)(o2.lastModified()-o1.lastModified());
+                public int compare(SavedSyncTaskItem o1, SavedSyncTaskItem o2) {
+                    return (int)(o2.file.lastModified()-o1.file.lastModified());
                 }
             });
             if (saved_file_list.size()>9) {
@@ -204,8 +213,10 @@ public class TaskListImportExport {
         }
         if (save_required) {
             String saved_list="";
-            for(SafFile3 fp_item:saved_file_list) {
-                saved_list+=fp_item.getPath()+"\n";
+            for(SavedSyncTaskItem fi_item:saved_file_list) {
+                saved_list+=fi_item.file.getPath()+ LIST_ITEM_DATA_SEPARATOR +
+                        fi_item.saved_time+ LIST_ITEM_DATA_SEPARATOR +
+                        LIST_ITEM_LINE_SEPARATOR;
             }
 
             try {
@@ -226,35 +237,45 @@ public class TaskListImportExport {
 
     }
 
-    private ArrayList<SafFile3> getExportedFileList() {
+    private ArrayList<SavedSyncTaskItem> getExportedFileList() {
         String saved_list_string=null;
         try {
             SafFile3 df=new SafFile3(mActivity, mGp.settingAppManagemsntDirectoryName+"/"+SAVED_SYNC_TASK_FILE_LIST);
             if (df.exists()) {
                 InputStream fis=df.getInputStream();
-                byte[] buff=new byte[GENERAL_IO_BUFFER_SIZE];
+                byte[] buff=new byte[(int)df.length()+1];//GENERAL_IO_BUFFER_SIZE];
                 int rc=fis.read(buff);
                 fis.close();
                 saved_list_string=new String(buff,0,rc);
             }
         } catch(Exception e) {}
-        ArrayList<SafFile3> file_list=new ArrayList<SafFile3>();
+        ArrayList<SavedSyncTaskItem> exported_file_list=new ArrayList<SavedSyncTaskItem>();
         if (saved_list_string!=null) {
-            String[] saved_array=saved_list_string.split("\n");
-            for (String saved_fp:saved_array) {
-                if (saved_fp!=null && !saved_fp.equals("")) {
-                    SafFile3 sf=new SafFile3(mActivity, saved_fp);
-                    if (sf!=null && sf.exists()) file_list.add(sf);
+            String[] saved_list_array=saved_list_string.split(LIST_ITEM_LINE_SEPARATOR);
+            for (String saved_list_array_item:saved_list_array) {
+                if (saved_list_array_item!=null && !saved_list_array_item.equals("")) {
+                    String[] saved_file_list_item=saved_list_array_item.split(LIST_ITEM_DATA_SEPARATOR);
+                    SafFile3 sf=new SafFile3(mActivity, saved_file_list_item[0]);
+                    if (sf!=null && sf.exists()) {
+                        SavedSyncTaskItem fi=new SavedSyncTaskItem();
+                        fi.file=sf;
+                        if (saved_file_list_item.length>0) {
+                            fi.saved_time=Long.parseLong(saved_file_list_item[1]);
+                        } else {
+                            fi.saved_time=sf.lastModified();
+                        }
+                        exported_file_list.add(fi);
+                    }
                 }
             }
-            Collections.sort(file_list, new Comparator<SafFile3>(){
+            Collections.sort(exported_file_list, new Comparator<SavedSyncTaskItem>(){
                 @Override
-                public int compare(SafFile3 o1, SafFile3 o2) {
-                    return (int)(o2.lastModified()-o1.lastModified());
+                public int compare(SavedSyncTaskItem o1, SavedSyncTaskItem o2) {
+                    return (int)(o2.saved_time-o1.saved_time);
                 }
             });
         }
-        return file_list;
+        return exported_file_list;
     }
 
     public void importSyncTaskListDlg(final NotifyEvent p_ntfy) {
@@ -280,16 +301,16 @@ public class TaskListImportExport {
             auto_saved_selector_list.add(entry);
         }
 
-        final ArrayList<SafFile3> manual_save_file_list=getExportedFileList();
+        final ArrayList<SavedSyncTaskItem> manual_save_file_list=getExportedFileList();
         final ArrayList<String> manual_save_selector_list=new ArrayList<String>();
         for(int i=0;i<manual_save_file_list.size();i++) {
-            SafFile3 item=manual_save_file_list.get(i);
-            String dt=sdf.format(item.lastModified());
+            SavedSyncTaskItem item=manual_save_file_list.get(i);
+            String dt=sdf.format(item.saved_time);
             String entry="";
             if (i==0) entry= String.format(mActivity.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item_latest), dt);
             else entry= String.format(mActivity.getString(R.string.msgs_import_autosave_dlg_autosave_enty_item), dt);
 
-            manual_save_selector_list.add(item.getPath()+"\n"+entry);
+            manual_save_selector_list.add(item.file.getPath()+"\n"+entry);
         }
 
         if (auto_saved_selector_list.size()==0 && manual_save_selector_list.size()==0) {
@@ -374,7 +395,7 @@ public class TaskListImportExport {
                 if (!auto_selected) {
                     for (int i = 0; i <= manual_save_file_list.size(); i++) {
                         if (checked_manual_save.get(i) == true) {
-                            importSyncTaskList(p_ntfy, manual_save_file_list.get(i), false);
+                            importSyncTaskList(p_ntfy, manual_save_file_list.get(i).file, false);
                             break;
                         }
                     }

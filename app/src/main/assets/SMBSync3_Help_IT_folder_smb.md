@@ -15,7 +15,6 @@ Per specificare il nome del server SMB o l'indirizzo IP
 È possibile specificare il protocollo SMB.
 
 - Utilizzare SMB V1
-
 - Utilizzare SMB V2/3
 
 ### Utilizzare il numero di porta
@@ -24,7 +23,7 @@ Specificare se il numero di porta dello standard non è disponibile. Il numero d
 
 ### Utilizzare il nome del conto e la password
 
-È necessario specificare un nome utente o una password. Il nome del conto è un conto locale sul server SMB. <span style="colore: rosso;"><u>I conti microsoft non possono essere utilizzati.</u></span></span 
+Se spuntato, specifica il nome dell'account o la password. Il nome del conto è un conto locale sul server SMB. <span style="colore: rosso;"><u>I conti microsoft non possono essere utilizzati.</u></span></span 
 
 ### Nome dell'account
 
@@ -36,7 +35,7 @@ Per specificare la password per il server SMB.
 
 ### Condividi la lista
 
-Mostra il nome della condivisione per il server SMB.  
+Mostra il nome della condivisione per il server SMB.
 
 ### Nome condivisione
 
@@ -52,15 +51,15 @@ La data e l'ora **possono essere incluse nella directory**. Le variabili sono co
 
 ### Directory
 
-Per specificare la directory per l'host SMB. Se la directory di destinazione non esiste, verrà creata al momento della sincronizzazione.
+Si può inserire il nome della directory del PC/NAS. Se la directory non esiste nella cartella di destinazione, la directory verrà creata quando viene eseguita la sincronizzazione.
 
 ### <u>Il seguente viene visualizzato solo quando il tipo di sincronizzazione è Archive.</u>
 
-### Salvare  tutti i file nella directory di destinazione senza creare sottodirectory
+### Salvaretutti i file nella directory di destinazione senza creare sottodirectory
 
 Se spuntata, la directory di destinazione non creerà una sottodirectory nella directory di origine.
 
-### Incrementare  i nomi dei file aggiungendo
+### Incrementarei nomi dei file aggiungendo
 
 È possibile aggiungere un numero di sequenza al nome del file. 
 
@@ -74,3 +73,7 @@ Se spuntata, la directory di destinazione non creerà una sottodirectory nella d
 ### Modifica il parametro del nome del file
 
 Per includere la data e l'ora nel nome del file, toccare il pulsante e modificare.
+
+### Manuali
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

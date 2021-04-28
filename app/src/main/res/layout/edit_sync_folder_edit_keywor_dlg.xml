@@ -410,13 +410,18 @@
 
     </ScrollView>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edit_sync_folder_edit_keywor_dlg_keyword_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_sync_folder_edit_keywor_dlg_keyword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Directory or File name"
             android:inputType="textMultiLine|text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+    </com.google.android.material.textfield.TextInputLayout>
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

@@ -50,8 +50,8 @@
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_RU_task.md</string>
         <string name="msgs_help_sync_task_title">Справка по задачам синхронизации</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_RU_folder_internal.md</string>
-        <string name="msgs_help_sync_folder_internal_title">Справка по внутреннему хранилищу</string>
+        <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_RU_folder_external.md</string>
+        <string name="msgs_help_sync_folder_external_title">Помощь по внешнему хранению данных</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_RU_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">Справка по параметрам</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_RU_folder_smb.md</string>
@@ -181,9 +181,9 @@
         <string name="msgs_main_external_storage_uuid_duplicated">Следующие UUID-ы не могут быть использованы, так как они дублируются. Отформатируйте диск MicroSD или USB OTG для его использования.</string>
         <string name="msgs_main_external_storage_uuid_unusable">Не смонтированные носители</string>
         <string name="msgs_main_external_storage_request_permission">Разрешить использование внешнего хранилища</string>
-        <string name="msgs_main_permission_internal_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
-        <string name="msgs_main_permission_internal_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
-        <string name="msgs_main_permission_internal_storage_title">Storage Permission</string>
+        <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
+        <string name="msgs_main_permission_external_storage_title">Storage Permission</string>
         <string name="msgs_main_sync_all_auto_tasks">Выполнять все задачи, настроенные на автоматическую синхронизацию.</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">Нет задач синхронизации, доступных для выполнения.  Пожалуйста, создайте задачу синхронизации.</string>
         <string name="msgs_main_sync_cancel_confirm">Отменить синхронизацию?</string>
@@ -227,7 +227,7 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Последнее время модификации допуска (секунды)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_internal">Дублированные имена каталогов существуют как в источнике, так и в пункте назначения внутреннего хранилища.  Имена исходного и конечного каталогов должны быть разными.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">Папки источника и назначения имеют дубликаты каталогов во внешнем хранилище. Пожалуйста, измените один из них на другой каталог.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">Дублированные имена каталогов существуют как в исходном, так и в целевом месте.  Имена исходного и конечного каталогов должны быть разными.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">Дублированные имена каталогов существуют как на внешнем источнике хранения, так и на получателе.  Имена исходного и конечного каталогов должны быть разными.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">Исходная и конечная папки SMB идентичны. Вы должны выбрать разные имена исходной и целевой директорий.</string>
@@ -318,19 +318,19 @@
         <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Разрешить использование внешнего хранилища</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Показать пароль</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">Протокол SMB</string>
+        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">Выберите протокол SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smb1">Используйте SMB V1</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_smbv23">Используйте SMB V2/3 </string>
-        <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">Выберите протокол SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_suggestion_message">Текущий протокол SMB не позволяет Вам подключаться к SMB серверу, пожалуйста, измените протокол SMB.</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_source_folder_smb_account_password">Учетная запись SMB или пароль в папке-источнике пустые, потому что они не могут быть расшифрованы. Пожалуйста, отредактируйте исходную папку и исправьте учетную запись или пароль SMB.</string>
         <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_smb_account_password">Учетная запись SMB или пароль в целевой папке пустые, потому что они не могут быть расшифрованы. Пожалуйста, отредактируйте папку назначения и исправьте учетную запись или пароль SMB.</string>
-        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">Пароль ZIP для папки назначения пустой, так как не может быть расшифрован. Отредактируйте папку назначения и измените пароль на правильный.</string>
         <string name="msgs_task_edit_sync_folder_dlg_use_user_pass">Использовать имя учетной записи и пароль</string>
+        <string name="msgs_task_edit_sync_folder_dlg_import_failed_destination_folder_zip_password">Пароль ZIP для папки назначения пустой, так как не может быть расшифрован. Отредактируйте папку назначения и измените пароль на правильный.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Коэффициент сжатия</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fastest">наименьший</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Маленький</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">Нормальный</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">Максимум</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_title">Коэффициент сжатия</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">Пароли не соответствуют.</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">Пароль</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">Подтвердите пароль</string>
@@ -372,7 +372,7 @@
         <string name="msgs_task_sync_task_dlg_wifi_addr_edit_title">Отредактируйте IP-адрес</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_hint">IP-адрес</string>
         <string name="msgs_task_sync_task_dlg_wifi_addr_list">Беспроводной список IP-адреса LAN</string>
-        <string name="msgs_task_sync_task_dlg_wifi_addr_title">Отредактируйте IP-адрес WiFi</string>
+        <string name="msgs_task_sync_task_dlg_wifi_addr_title">Редактирование фильтра IP-адресов</string>
         <string name="msgs_task_sync_task_dlg_wifi_address_list">Беспроводной список IP-адреса LAN</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_stop">СТОП</string>
         <string name="msgs_task_sync_task_dlg_task_stop_condition_skip_uncondition">ИГНОР</string>
@@ -520,10 +520,11 @@
         <string name="msgs_terminate_application">Выход из SMBSync3.</string>
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_confirm_title">Соглашение о политике конфиденциальности</string>
-        <string name="msgs_privacy_policy_confirm_message">Я согласен с политикой конфиденциальности</string>
+        <string name="msgs_privacy_policy_confirm_message">Пожалуйста, прокрутите страницу вниз и прочитайте всю политику конфиденциальности.</string>
+        <string name="msgs_privacy_policy_confirm_btn_deny">Не соглашаться</string>
         <string name="msgs_privacy_policy_confirm_btn_confirm">Согласитесь продолжать</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">Соглашение о политике конфиденциальности</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">Если вы не согласны с политикой конфиденциальности, вы не сможете запустить приложение.</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">Согласие с политикой конфиденциальности</string>
+        <string name="msgs_privacy_policy_confirm_deny_message">Если вы не согласны с нашей политикой конфиденциальности, вы не можете использовать SMBSync3.</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Выполнение управления файлами обслуживания.</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Отмена обслуживания</string>
@@ -668,6 +669,7 @@
         <string name="msgs_progress_spin_dlg_filelist_cancel">Отмена</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Расписание</string>
+        <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">Название расписания</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add">Добавить расписание</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">Новый график</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">Изменить расписание</string>
@@ -692,7 +694,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3">30 сек</string>
         <string name="msgs_scheduler_main_dlg_hdr_wifi_off">Если  Wi-Fi был включен в начале синхронизации, выключить Wi-Fi после окончания синхронизации.</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option">Изменить параметры задачи синхронизации</string>
-        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">Синхронизация начинается только во время зарядки.</string>
+        <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge">Изменить параметр \"Выполнять синхронизирующие задачи только при зарядке\"</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_0">Не изменять</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_1">Включено</string>
         <string name="msgs_scheduler_main_dlg_hdr_override_sync_option_charge_rg_2">Отключено</string>
@@ -774,6 +776,7 @@
         <string name="msgs_group_edit_disable_sync_group">Вы хотите отключить следующие задачи?</string>
         <string name="msgs_group_main_dlg_hdr_auto_task_only">Синхронизировать только автоматические задачи</string>
         <string name="msgs_group_main_dlg_hdr_task_list">Список задач</string>
+        <string name="msgs_group_main_dlg_hdr_group_name">Название группы</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">Автозадача не существует. Group=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">Задачи не существует. Group=%1$s, Task=%2$s</string>
         <string name="msgs_group_add_sync_task_no_task_exists_for_add">Не существует задач, которые можно было бы добавить.</string>
@@ -874,7 +877,7 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">ЕЖЕНЕДЕЛЬНЫЙ ЧИСЛО</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">День недели (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">День недели (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива. Вместо этого будет использовано внутреннее хранилище.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Изменено на внешнее хранилище, поскольку ZIP нельзя использовать, когда метод синхронизации - архивный.</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">Запрошенная операция была проигнорированна. Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Год</string>
         <string name="msgs_sync_folder_archive_btn_title_month">Месяц</string>

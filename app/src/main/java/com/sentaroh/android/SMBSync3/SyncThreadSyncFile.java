@@ -397,21 +397,50 @@ public class SyncThreadSyncFile {
 //        stwa.util.addDebugMsg(1,"I","deleteLocalItemForSyncDelete entered="+tf.getPath());
         int sync_result=0;
         String msg="";
-        if (SyncThread.sendConfirmRequest(stwa, sti, confirm_id, "", destination_dir)) {
-            sync_result=deleteLocalItem(stwa, sti, tf);
-            if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
-                stwa.totalDeleteCount++;
-                if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_deleted);
-                else msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_deleted);
-                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+        if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) {
+            //Delete directory
+            SafFile3[] fl=tf.listFiles();
+            if (fl!=null) {
+                for(SafFile3 saf_item:fl) {
+                    if (saf_item.isDirectory()) {
+                        //Delete subdirectory
+                        deleteLocalItemForSyncDelete(stwa, sti, CONFIRM_REQUEST_DELETE_DIR, saf_item, saf_item.getPath());
+                    } else {
+                        //Delete file
+                        deleteLocalItemForSyncDelete(stwa, sti, CONFIRM_REQUEST_DELETE_FILE, saf_item, saf_item.getParent());
+                    }
+                }
+            }
+            if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_DELETE_DIR, "", destination_dir)) {
+                //Delete directory
+                sync_result=deleteLocalItem(stwa, sti, tf);
+                if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
+                    stwa.totalDeleteCount++;
+                    msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_deleted);
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                } else {
+                    msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_delete_failed);
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                }
             } else {
-                if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_delete_failed);
-                else msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_delete_failed);
-                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(),
+                        "", stwa.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
             }
         } else {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(),
-                    "", stwa.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+            if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_DELETE_FILE, "", destination_dir)) {
+                sync_result=deleteLocalItem(stwa, sti, tf);
+                if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
+                    stwa.totalDeleteCount++;
+                    msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_deleted);
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                } else {
+                    msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_delete_failed);
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                }
+            } else {
+                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(),
+                        "", stwa.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+            }
         }
         return sync_result;
     }
@@ -419,22 +448,76 @@ public class SyncThreadSyncFile {
     static private int deleteSmbItemForSyncDelete(SyncThreadWorkArea stwa, SyncTaskItem sti, String confirm_id, JcifsFile tf, String destination_dir) {
         int sync_result=0;
         String msg="";
-        if (SyncThread.sendConfirmRequest(stwa, sti, confirm_id, "", destination_dir)) {
-            sync_result=deleteSmbItem(stwa, sti, tf);
-            if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
-                stwa.totalDeleteCount++;
-                if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_deleted);
-                else msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_deleted);
-                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
-            } else {
-                if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_delete_failed);
-                else msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_delete_failed);
-                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+
+        if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) {
+            //Delete directory
+            try {
+                JcifsFile[] fl=tf.listFiles();
+                if (fl!=null) {
+                    for(JcifsFile saf_item:fl) {
+                        if (saf_item.isDirectory()) {
+                            //Delete subdirectory
+                            deleteSmbItemForSyncDelete(stwa, sti, CONFIRM_REQUEST_DELETE_DIR, saf_item, saf_item.getPath());
+                        } else {
+                            //Delete file
+                            deleteSmbItemForSyncDelete(stwa, sti, CONFIRM_REQUEST_DELETE_FILE, saf_item, saf_item.getParent());
+                        }
+                    }
+                }
+                if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_DELETE_DIR, "", destination_dir)) {
+                    //Delete directory
+                    sync_result=deleteSmbItem(stwa, sti, tf);
+                    if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
+                        stwa.totalDeleteCount++;
+                        msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_deleted);
+                        SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                    } else {
+                        msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_delete_failed);
+                        SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                    }
+                } else {
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(),
+                            "", stwa.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
             }
         } else {
-            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(),
-                    "", stwa.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+            if (SyncThread.sendConfirmRequest(stwa, sti, CONFIRM_REQUEST_DELETE_FILE, "", destination_dir)) {
+                sync_result=deleteSmbItem(stwa, sti, tf);
+                if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
+                    stwa.totalDeleteCount++;
+                    msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_deleted);
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                } else {
+                    msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_delete_failed);
+                    SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+                }
+            } else {
+                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(),
+                        "", stwa.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+            }
         }
+
+
+
+
+//        if (SyncThread.sendConfirmRequest(stwa, sti, confirm_id, "", destination_dir)) {
+//            sync_result=deleteSmbItem(stwa, sti, tf);
+//            if (sync_result== SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS) {
+//                stwa.totalDeleteCount++;
+//                if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_deleted);
+//                else msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_deleted);
+//                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+//            } else {
+//                if (confirm_id.equals(CONFIRM_REQUEST_DELETE_DIR)) msg=stwa.appContext.getString(R.string.msgs_mirror_task_dir_delete_failed);
+//                else msg=stwa.appContext.getString(R.string.msgs_mirror_task_file_delete_failed);
+//                SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(), "", msg);
+//            }
+//        } else {
+//            SyncThread.showMsg(stwa, false, sti.getSyncTaskName(), "I", destination_dir, tf.getName(),
+//                    "", stwa.appContext.getString(R.string.msgs_mirror_confirm_delete_cancel));
+//        }
         return sync_result;
     }
 

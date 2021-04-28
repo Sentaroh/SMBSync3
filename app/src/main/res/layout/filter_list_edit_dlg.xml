@@ -107,14 +107,19 @@
             android:text="@string/msgs_task_sync_task_filter_list_dlg_add" 
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-        <EditText
-            android:id="@+id/filter_list_edit_new_filter"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_list_edit_new_filter_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:hint="@string/msgs_task_sync_task_filter_list_dlg_filter_hint"
-            android:inputType="text" 
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:layout_weight="1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_list_edit_new_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+        </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <LinearLayout

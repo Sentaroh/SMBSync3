@@ -119,7 +119,8 @@ public class GlobalParameters {
 
     //	Settings parameter
 //    public String settingAppManagemsntDirectoryUuid ="primary";
-    public String settingAppManagemsntDirectoryName = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
+//    public String settingAppManagemsntDirectoryName = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
+    public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files/mgt_dir";
     public boolean settingExitClean = true;
 
     public boolean settingWriteSyncResultLog = true;
@@ -182,6 +183,16 @@ public class GlobalParameters {
         settingSupressShortcut3ConfirmationMessage =suppress;
     }
 
+    final static private String PRIVACY_POLICY_AGGREEMENT_KEY="privacy_policy_aggreed";
+    static public boolean isPrivacyPolicyAgreed(Context c) {
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
+        boolean aggree=prefs.getBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, false);
+        return aggree;
+    }
+    static public void setPrivacyPolicyAgreed(Context c, boolean aggreed) {
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
+        prefs.edit().putBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, aggreed).commit();
+    }
 
     public String settingSecurityApplicationPasswordHashValue = "";
 //    public boolean settingSecurityApplicationPassword = false;

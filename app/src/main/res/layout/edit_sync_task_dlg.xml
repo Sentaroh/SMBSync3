@@ -104,13 +104,18 @@
                    android:text="@string/msgs_task_sync_task_dlg_active"
                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-               <EditText
-                   android:id="@+id/edit_sync_task_task_name"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:hint="@string/msgs_task_sync_task_dlg_task_name"
-                   android:inputType="text"
-                   android:textAppearance="?android:attr/textAppearanceMedium" />
+               <com.google.android.material.textfield.TextInputLayout
+                   android:id="@+id/edit_sync_task_task_name_view"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/edit_sync_task_task_name"
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:hint="@string/msgs_task_sync_task_dlg_task_name"
+                       android:inputType="text"
+                       android:textAppearance="?android:attr/textAppearanceMedium" />
+               </com.google.android.material.textfield.TextInputLayout>
 
                <LinearLayout
                    android:layout_width="fill_parent"

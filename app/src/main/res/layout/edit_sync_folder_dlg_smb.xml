@@ -43,14 +43,18 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <EditText
-                    android:id="@+id/edit_sync_folder_dlg_remote_server"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_server"
-                    android:inputType="text"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_sync_folder_dlg_remote_server"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_server"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                         android:layout_width="fill_parent"
@@ -120,14 +124,18 @@
                         android:gravity="center_vertical"
                         android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_use_port_number"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <EditText
-                        android:id="@+id/edit_sync_folder_dlg_remote_port"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_port"
-                        android:inputType="number"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_sync_folder_dlg_remote_port"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_port"
+                            android:inputType="number"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -157,22 +165,31 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/edit_sync_folder_dlg_remote_user"
-                        android:layout_width="145dp"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
-                        android:inputType="text"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_sync_folder_dlg_remote_user"
+                            android:layout_width="145dp"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
+                            android:inputType="text"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <EditText
-                        android:id="@+id/edit_sync_folder_dlg_remote_pass"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_password"
-                        android:inputType="textPassword"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        >
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_sync_folder_dlg_remote_pass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_password"
+                            android:inputType="textPassword"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <CheckedTextView
@@ -200,13 +217,17 @@
                         android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_share_list"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <EditText
-                        android:id="@+id/edit_sync_folder_dlg_share_name"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_share"
-                        android:inputType="text"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                        android:layout_height="wrap_content">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_sync_folder_dlg_share_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_share"
+                            android:inputType="text"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -245,24 +266,28 @@
                     android:text="@string/msgs_task_edit_sync_folder_dlg_dirlist"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
                 <LinearLayout
-                        android:id="@+id/edit_sync_folder_dlg_smb_dir_keyword_view_x"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                    <Button
-                            android:id="@+id/edit_sync_folder_dlg_edit_smb_dir_keyword"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/msgs_task_sync_task_edit_directory_name_keyword"
-                            android:textAppearance="?android:attr/textAppearanceMedium"/>
-                </LinearLayout>
-                <EditText
-                    android:id="@+id/edit_sync_folder_dlg_smb_directory_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/edit_sync_folder_dlg_smb_dir_keyword_view_x"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/msgs_task_edit_sync_folder_dlg_directory"
-                    android:inputType="text|textMultiLine"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:orientation="vertical" >
+                    <Button
+                        android:id="@+id/edit_sync_folder_dlg_edit_smb_dir_keyword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msgs_task_sync_task_edit_directory_name_keyword"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_sync_folder_dlg_smb_directory_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_directory"
+                        android:inputType="text|textMultiLine"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

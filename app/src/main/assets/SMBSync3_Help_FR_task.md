@@ -1,37 +1,31 @@
 ### Mode test
-
 Il n'effectue pas l'écrasement et la suppression du fichier si vous vérifiez. Veuillez être testé lorsque vous créez une tâche de synchronisation, les fichiers qui sont copiés ou supprimés se trouvent dans l'onglet message.
 
-### Synchronisation  Auto
-
+### SynchronisationAuto
 Si la tâche a été vérifiée, elle est passée à l'automatique. Les tâches qui sont réglées sur la synchronisation automatique commenceront lorsque vous appuierez sur le bouton de synchronisation.
 
 ### Nom de la tâche
-
 Précisez le nom de la tâche.
 
 ### Mode de sync
-Choisissez une méthode parmi les suivantes : miroir, copie, déplacement et archivage. <span style="color : red ;"><u>La synchronisation se fait dans un sens, du dossier source au dossier de destination.</u></span>   
-- Miroir  
-  Faites une copie différentielle (**<u>*1</u>**) des répertoires et des fichiers du côté source vers le côté destination, et supprimez les fichiers et les répertoires du côté destination qui n'existent pas du côté source une fois la copie terminée.
+Choisissez une méthode parmi les suivantes : miroir, copie, déplacement et archivage. <span style="color : red ;"><u>La synchronisation se fait dans un sens, du dossier source au dossier de destination.</u></span> 
 
-Déplacer  
-
-  Faites une copie différentielle du répertoire et du fichier côté source vers le côté destination, et supprimez le fichier côté source copié vers le côté destination. Toutefois, le fichier portant le même nom que la source et la destination mais ayant la même taille et la même date de modification n'est pas copié et le fichier du côté source est supprimé.
-
-- Copie  
+- Miroir
+Faites une copie différentielle (**<u>*1</u>**) des répertoires et des fichiers du côté source vers le côté destination, et supprimez les fichiers et les répertoires du côté destination qui n'existent pas du côté source une fois la copie terminée.
+Déplacer
+Faites une copie différentielle du répertoire et du fichier côté source vers le côté destination, et supprimez le fichier côté source copié vers le côté destination. Toutefois, le fichier portant le même nom que la source et la destination mais ayant la même taille et la même date de modification n'est pas copié et le fichier du côté source est supprimé.
+- Copie
 Faites une copie différentielle des fichiers contenus dans le répertoire source vers le côté destination.
-
-- Archive  
+- Archive
 Déplacer les photos et vidéos contenues dans le répertoire source vers la destination à condition que la date et l'heure de tournage soient antérieures à 7 jours ou 30 jours à la date et l'heure d'exécution de l'archive. (Toutefois, le ZIP ne peut pas être utilisé comme destination).
 
-**<u>*1</u>** Si l'une des trois conditions suivantes est remplie, le fichier est considéré comme un fichier de différence et est copié ou déplacé. Cependant, la taille du fichier et le moment de la dernière modification peuvent être ignorés dans les options de la tâche de synchronisation.  
+**<u>*1</u>** Si l'une des trois conditions suivantes est remplie, le fichier est considéré comme un fichier de différence et est copié ou déplacé. Cependant, la taille du fichier et le moment de la dernière modification peuvent être ignorés dans les options de la tâche de synchronisation.
 
 1. le fichier n'existe pas
 2. la taille du fichier est différente
 3. la date et l'heure de la dernière modification sont différentes de plus de 3 secondes (le nombre de secondes peut être modifié par l'option de la tâche de synchronisation)
 
-### Inverser  les dossiers source et destination
+### Inverserles dossiers source et destination
 Échanger le contenu du dossier source et du dossier de destination 
 
 ### Dossier source
@@ -42,16 +36,17 @@ Appuyez sur le bouton pour modifier le dossier source
 
 Appuyez sur le bouton pour modifier le dossier de destination
 
-### File name filter
-  You can register the names and extensions of files to be synchronized.
+### Filtres
+Vous pouvez sélectionner les fichiers à synchroniser par leur nom, leur taille, leur date de modification et le nom du répertoire.
 
-### Filtre sur la taille des fichiers
-
+- File name filter
+You can register the names and extensions of files to be synchronized.
+- Filtre sur la taille des fichiers
 Vous pouvez sélectionner les fichiers à synchroniser en fonction de leur taille.
-
-### Filtre de date de modification des fichiers
-
+- Filtre de date de modification des fichiers
 Vous pouvez sélectionner le fichier à synchroniser par la date de dernière modification du fichier.
+- Filtre de répertoire
+Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.
 
 ### Sélectionnez ce que vous voulez archiver
 
@@ -65,46 +60,48 @@ Sélectionnez les critères pour les photos ou les vidéos à archiver.
 - Plus ancien que 180 jours
 - Plus ancien que 1 année
 
-### Filtre de répertoire
-  Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.
 ### Démarrer la synchronisation uniquement pendant la charge
 Si la case est cochée, vous ne pouvez démarrer la synchronisation que pendant la charge. Si la synchronisation est lancée alors que vous n'êtes pas en train de charger, cela entraînera une erreur.
 
-### Synchroniser  les fichiers situés dans la racine du dossier source 
+### Synchroniserles fichiers situés dans la racine du dossier source 
 
 si elle n'est pas cochée, seuls les dossiers et leurs fichiers/sous-dossiers sont synchronisés
 
-### Confirmer  avant de remplacer/supprimer
+### Confirmeravant de remplacer/supprimer
 
 Il affichera un dialogue de confirmation lorsque vous voudrez écraser et supprimer le fichier si vous avez coché.
 
-### Options d'erreur  
+### Options d'erreur
 
 Vous pouvez spécifier le comportement à adopter lorsqu'une erreur se produit.
+
 - Arrêter la synchronisation
-- Ignorez  toutes les erreurs et commencez les tâches suivantes  
-  Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont exécutées. 
-- Commencer  les tâches suivantes même si elles ne correspondent pas aux options du réseau  
-  Utilisez cette fonction si vous souhaitez exécuter des tâches ultérieures lorsque l'adresse n'est pas privée ou lorsqu'elle n'est pas l'adresse IP spécifiée.  
+- Ignoreztoutes les erreurs et commencez les tâches suivantes
+Utilisez cette option si vous voulez vous assurer que les tâches suivantes sont exécutées. 
+- Commencerles tâches suivantes même si elles ne correspondent pas aux options du réseau
+Utilisez cette fonction si vous souhaitez exécuter des tâches ultérieures lorsque l'adresse n'est pas privée ou lorsqu'elle n'est pas l'adresse IP spécifiée.
 
 ### Réseau
+Vous pouvez définir si la synchronisation peut être lancée par l'état du réseau.
 
-- Même si  Wifi éteint  
+- Même siWifi éteint
 Vous pouvez toujours commencer à synchroniser
-- Lorsqu'il est connecté à l'AP  
+- Lorsqu'il est connecté à l'AP
 La synchronisation peut démarrer si le réseau local sans fil est connecté à un point d'accès quelconque.
-- Adresse IP privée uniquement  
+- Adresse IP privée uniquement
 La synchronisation peut être lancée lorsque l'adresse IP est une adresse privée
-- Enregistré dans la liste des adresses IP  
-Vous pouvez lancer la synchronisation lorsque l'adresse IP est enregistrée dans la liste des adresses IP.  
-  Vous pouvez utiliser des jokers pour le filtre. (par exemple : 192.168.100.\*, 192.168.\*.\*.)
+- Enregistré dans la liste des adresses IP
+Vous pouvez lancer la synchronisation lorsque l'adresse IP est enregistrée dans la liste des adresses IP.
+Vous pouvez utiliser des jokers pour le filtre. (par exemple : 192.168.100.\*, 192.168.\*.\*.)
 
-### Autoriser  la connexion aux addresses IP publiques(inclure le public)  
+### Autoriserla connexion aux addresses IP publiques(inclure le public)
 
 Permet la synchronisation sur toutes les adresses IP. Cependant, le balayage du serveur SMB ne peut pas être effectué.
+
 ### Affiche les options avancées
 
 **Veuillez l'utiliser lors de la définition des options détaillées.**
+
 ### Inclure les sous-répertoires
 Il inclura récursivement les sous-répertoires sous le dossier source spécifié. 
 
@@ -137,7 +134,7 @@ Si elle est activée, **elle supprime les répertoires/fichiers qui sont exclus 
 
 ### Ne pas régler l'heure de la dernière modification du fichier de destination pour qu'elle corresponde à celle du fichier source
 
-Veuillez l'activer si vous obtenez une erreur du type SmbFile.setLastModified()/File.setLastModified() fails. Cela signifie que l'hôte distant n'autorise pas le paramétrage du fichier de la dernière modification. Si cette case n'est pas cochée, la dernière heure de modification du fichier copié sur la destination sera fixée à l'heure à laquelle il a été copié / synchronisé. Cela signifie que le fichier de destination apparaîtra plus récent que la source.
+Veuillez l'activer si vous obtenez une erreur du type SmbFile.setLastModified()/File.setLastModified() fails. Cela signifie que l'hôte distant n'autorise pas le paramétrage du fichier de la dernière modification. Si cette case n'est pas cochée, la dernière heure de modification du fichier copié sur la destination sera fixée à l'heure à laquelle il a été copié / synchronisé. Cela signifie que le fichier de destination apparaîtra plus récent que la source. 
 
 ### Utiliser la taille du fichier pour déterminer si les fichiers sont différents
 
@@ -161,7 +158,7 @@ Permet de sélectionner le décalage horaire en minutes entre l'heure d'été et
 Si elle est cochée, elle affichera un message d'avertissement et la synchronisation se poursuivra sans traiter les répertoires/fichiers contenant des caractères non valides. 
 
 ### Supprimez le répertoire source lorsqu'il est vide (uniquement lorsque l'option de synchronisation est Déplacer)
-Lorsque le mode de synchronisation est "Déplacement", après que les fichiers aient été déplacés vers la destination, le dossier Source est également supprimé.  
+Lorsque le mode de synchronisation est "Déplacement", après que les fichiers aient été déplacés vers la destination, le dossier Source est également supprimé.
 
 ### Si la date et l'heure ne peuvent pas être déterminées par les données EXIF, un message de confirmation s'affiche
 Afficher un message de confirmation lorsque la date et l'heure de la prise ne peuvent être obtenues auprès d'Exif.
@@ -171,3 +168,7 @@ Si cette case est cochée, vous pouvez éviter les erreurs d'entrée/sortie lors
 
 ### Ignorer les fichiers dont le nom dépasse 255 octets
 Si cette option est cochée, ignorez les fichiers dont le nom dépasse 255 octets.
+
+### Manuels
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

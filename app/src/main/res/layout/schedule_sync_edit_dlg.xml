@@ -80,12 +80,18 @@
             android:layout_marginRight="10dp"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/schedule_main_dlg_sched_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Schedule name"
-                android:inputType="text"/>
+			<com.google.android.material.textfield.TextInputLayout
+				android:id="@+id/schedule_main_dlg_sched_name_view"
+				style="@style/ThemeOverlay.MaterialComponents.TextInputEditText.OutlinedBox"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/schedule_main_dlg_sched_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="@string/msgs_scheduler_main_dlg_hdr_title_schedule_name"
+					android:inputType="text"/>
+			</com.google.android.material.textfield.TextInputLayout>
 
 		    <CheckedTextView
 		        android:id="@+id/scheduler_main_dlg_ctv_enabled"
@@ -254,13 +260,13 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+					android:visibility="gone"
                     android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
                 <TextView
                     android:id="@+id/scheduler_main_dlg_ctv_override_sync_option_charge"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:gravity="center_vertical"
                     android:text="@string/msgs_scheduler_main_dlg_hdr_override_sync_option_charge"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>

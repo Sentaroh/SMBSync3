@@ -1,6 +1,6 @@
 ### Local storage
 
-Select the storage to use. 
+You can choose between internal storage/SDCARD/USB storage. 
 
 ### Allow use external storage
 
@@ -24,13 +24,11 @@ Select compression level.
 - Maximum
 
 ### Encryption method
+Select encryption method
 
 - None
-
 - ZipCrypto
-
 - AES128 Bit
-
 - AES256 Bit 
 
 ### Password
@@ -40,3 +38,7 @@ Specify password for encryption.
 ### Confirm
 
 Re-enter password for confirmation. 
+
+### Manuals
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

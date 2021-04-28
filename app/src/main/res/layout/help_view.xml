@@ -45,17 +45,24 @@
             android:layout_gravity="center_vertical"/>
         <ImageButton
             android:id="@+id/help_view_find_next"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:scaleType="centerCrop"
             android:src="@drawable/scroll_down"
             android:layout_gravity="center_vertical"/>
         <ImageButton
             android:id="@+id/help_view_find_prev"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:scaleType="centerCrop"
             android:src="@drawable/scroll_up"
+            android:layout_gravity="center_vertical"/>
+        <Button
+            android:id="@+id/help_view_reload"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="R"
+            android:visibility="gone"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
 

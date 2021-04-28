@@ -176,6 +176,7 @@ class GroupEditor {
         final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.group_item_edit_dlg_msg);
 
+        final LinearLayout ll_group_name_view=(LinearLayout)dialog.findViewById(R.id.group_item_edit_dlg_group_name_view);
         final EditText et_name = (EditText) dialog.findViewById(R.id.group_item_edit_dlg_group_name);
         final CheckedTextView ctv_auto_task_only=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_auto_task_only);
 
@@ -197,7 +198,8 @@ class GroupEditor {
 
         if (mEditMode) {
             et_name.setText(mGroupListItem.groupName);
-            et_name.setVisibility(EditText.GONE);
+//            et_name.setVisibility(EditText.GONE);
+            ll_group_name_view.setVisibility(LinearLayout.GONE);
             String subtitle=" ("+ mGroupListItem.groupName+")";
             dlg_subtitle.setText(subtitle);
             dlg_title.setText(mActivity.getString(R.string.msgs_group_edit_title_edit));

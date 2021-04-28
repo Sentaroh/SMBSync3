@@ -29,10 +29,15 @@ Si cette option n'est pas cochée, vous pouvez sélectionner une tâche de synch
 Appuyez sur le bouton pour afficher l'écran d'édition. Sélectionnez les tâches à synchroniser.
 
 ### Si nécessaire, activer le Wifi pour démarrer les tâches planifiées (<span style="color : red ; "><u>Non disponible sur Android 10 ou ultérieur</u></span>)
-Lorsqu'il est activé, vous pouvez activer le Wi-Fi lorsque le Wi-Fi est désactivé.  
+Si elle est activée, elle activera le Wi-Fi si celui-ci est désactivé lorsque la synchronisation commencera.
+
 - Vous pouvez spécifier le temps d'attente pour le démarrage de la synchronisation après l'activation du Wi-Fi.
-- Vous pouvez également désactiver le Wi-Fi à la fin de la synchronisation.
+- Eteindre le Wifi une fois la synchronisation terminée.
+Si elle est activée, elle désactivera le Wi-Fi à la fin de la synchronisation.
 
-### La synchronisation ne démarre que pendant la charge
-
+### Modifier l'option "Démarrer la synchronisation seulement si l'appareil est en charge"
 Vous pouvez modifier les options de charge lorsque vous démarrez la synchronisation. Lors de la synchronisation manuelle, il peut être synchronisé indépendamment de la charge, et lors de la synchronisation selon un calendrier, il ne peut être modifié que pendant la charge.
+
+### Manuels
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)

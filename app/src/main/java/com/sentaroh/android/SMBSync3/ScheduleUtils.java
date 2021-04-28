@@ -319,7 +319,8 @@ class ScheduleUtils {
     }
 
     static public void setTimerIfNotSet(Context c, GlobalParameters gp, LogUtil lu) {
-        if (!isTimerScheduled(c)) {
+        lu.addDebugMsg(1, "I", "setTimerIfNotSet entered.");
+        if (!isTimerScheduled(c, lu)) {
             setTimer(c, gp, lu);
         } else {
             lu.addDebugMsg(1, "I", "setTimerIfNotSet request ignored.");
@@ -328,11 +329,10 @@ class ScheduleUtils {
 
     static public void setTimer(Context c, GlobalParameters gp, LogUtil lu) {
         lu.addDebugMsg(1, "I", "setTimer entered, settingScheduleSyncEnabled="+gp.settingScheduleSyncEnabled);
-        cancelTimer(c, lu);
-        boolean scheduleEnabled = false;
+        if (isTimerScheduled(c, lu)) cancelTimer(c, lu);
         boolean schedule_done=false;
-        for (ScheduleListAdapter.ScheduleListItem si : gp.syncScheduleList) if (si.scheduleEnabled) scheduleEnabled = true;
-        if (scheduleEnabled && gp.settingScheduleSyncEnabled) {
+//        for (ScheduleListAdapter.ScheduleListItem si : gp.syncScheduleList) if (si.scheduleEnabled) scheduleEnabled = true;
+        if (gp.settingScheduleSyncEnabled) {
             ArrayList<ScheduleListAdapter.ScheduleListItem> begin_sched_list = new ArrayList<ScheduleListAdapter.ScheduleListItem>();
             ArrayList<String> sched_list=new ArrayList<String>();
             for (ScheduleListAdapter.ScheduleListItem si : gp.syncScheduleList) {
@@ -340,7 +340,7 @@ class ScheduleUtils {
                     long time = getNextScheduleTime(si);
                     String item= StringUtil.convDateTimeTo_YearMonthDayHourMin(time)+","+si.scheduleName;
                     sched_list.add(item);
-                    lu.addDebugMsg(1,"I", "setTimer Schedule item added. item="+item);
+                    lu.addDebugMsg(1,"I", "setTimer active schedule item added. item="+item);
                 }
             }
             if (sched_list.size()>0) {
@@ -368,55 +368,66 @@ class ScheduleUtils {
                         }
                     }
                 }
-            }
-            if (begin_sched_list.size() > 0) {
-                String sched_names = "", sep="";
-                for (ScheduleListAdapter.ScheduleListItem si : begin_sched_list) {
-                    sched_names += sep + si.scheduleName;
-                    sep=",";
-                }
 
-                long time = getNextScheduleTime(begin_sched_list.get(0));
-                lu.addDebugMsg(1, "I", "setTimer result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=(" + sched_names+")");
-                Intent in = new Intent();
-                in.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
-                in.putExtra(SCHEDULE_SCHEDULE_NAME_KEY, sched_names);
-                in.setClass(c, SyncReceiver.class);
-                PendingIntent pi = PendingIntent.getBroadcast(c, 0, in, PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
-                AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
-                try {
+                if (begin_sched_list.size() > 0) {
+                    String sched_names = "", sep="";
+                    for (ScheduleListAdapter.ScheduleListItem si : begin_sched_list) {
+                        sched_names += sep + si.scheduleName;
+                        sep=",";
+                    }
+
+                    long time = getNextScheduleTime(begin_sched_list.get(0));
+                    lu.addDebugMsg(1, "I", "setTimer result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=(" + sched_names+")");
+                    Intent in = new Intent(c, SyncReceiver.class);
+                    in.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
+                    in.putExtra(SCHEDULE_SCHEDULE_NAME_KEY, sched_names);
+                    PendingIntent pi = PendingIntent.getBroadcast(c, 0, in,
+                            PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+                    AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+                    try {
 //                    am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
-                    am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
-                    schedule_done=true;
-                } catch(Exception e) {
-                    String stm= MiscUtil.getStackTraceString(e);
-                    lu.addDebugMsg(1, "I", "setTimer failed. error="+e.getMessage()+"\n"+stm);
+                        am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, time, pi);
+                        schedule_done=true;
+                    } catch(Exception e) {
+                        String stm= MiscUtil.getStackTraceString(e);
+                        lu.addDebugMsg(1, "I", "setTimer failed. error="+e.getMessage()+"\n"+stm);
+                    }
+                } else {
+                    lu.addDebugMsg(1, "I", "setTimer no active schedules.");
                 }
+            } else {
+                lu.addDebugMsg(1, "I", "setTimer no active schedules.");
             }
         }
-        if (!schedule_done) lu.addDebugMsg(1, "I", "setTimer timer is not set");
+//        if (!schedule_done) lu.addDebugMsg(1, "I", "setTimer timer reuest was not set up.");
     }
 
-    private static boolean isTimerScheduled(Context c) {
-        Intent iw = new Intent();
-        iw.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
-        iw.setClass(c, SyncReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(c, 0, iw, PendingIntent.FLAG_NO_CREATE);
-        if (pi == null) {
-            return false;
-        } else {
-            return true;
+    private static boolean isTimerScheduled(Context c, LogUtil lu) {
+        Intent in = new Intent(c, SyncReceiver.class);
+        in.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
+        PendingIntent pi = PendingIntent.getBroadcast(c, 0, in,
+                PendingIntent.FLAG_NO_CREATE|PendingIntent.FLAG_IMMUTABLE);
+        boolean result=false;
+        if (pi != null) {
+            result=true;
         }
+//        lu.addDebugMsg(1, "I", "isTimerScheduled result="+result);
+        return result;
     }
 
     static private void cancelTimer(Context c, LogUtil lu) {
-        lu.addDebugMsg(1, "I", "cancelTimer entered");
-        Intent in = new Intent();
-        in.setClass(c, SyncReceiver.class);
+        if (!isTimerScheduled(c, lu)) {
+            lu.addDebugMsg(1, "I", "cancelTimer timer request was ignored.");
+            return;
+        }
+        Intent in = new Intent(c, SyncReceiver.class);
         in.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);
-        PendingIntent pi = PendingIntent.getBroadcast(c, 0, in, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(c, 0, in,
+                PendingIntent.FLAG_CANCEL_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+        pi.cancel();
         AlarmManager am = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
         am.cancel(pi);
+        lu.addDebugMsg(1, "I", "cancelTimer timer request was cancelled.");
     }
 
 }
