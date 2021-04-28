@@ -23,7 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,8 +70,6 @@ public class ActivityIntentHandler extends Activity {
 
         final Intent received_intent=getIntent();
         if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {
-            final FragmentManager fm=getFragmentManager();
-
             if (received_intent.getAction().equals(QUERY_SYNC_TASK_INTENT)) {
                 querySyncTask(c, received_intent);
                 finish();
