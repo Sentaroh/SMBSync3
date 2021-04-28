@@ -74,6 +74,7 @@ import com.sentaroh.android.Utilities3.ShellCommandUtil;
 import com.sentaroh.android.Utilities3.StringUtil;
 import com.sentaroh.android.Utilities3.SystemInfo;
 
+import org.markdownj.MarkdownProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -206,26 +207,26 @@ public final class CommonUtilities {
         cdf.showDialog(mFragMgr,cdf,listener);
     };
 
-//    public static String convertMakdownToHtml(Context c, String mark_down_fp) {
-//        try {
-//            InputStream is = c.getAssets().open(mark_down_fp);
-//            BufferedReader br = new BufferedReader(new InputStreamReader(is), 1024*1024);
-//            String mark_down_text="", line="", sep="";
-//            while ((line = br.readLine()) != null) {
-//                mark_down_text+=sep+line;
-//                sep="\n";
-//            }
-//            br.close();
-//            MarkdownProcessor processor = new MarkdownProcessor();
-//            String html = processor.markdown(mark_down_text);
-//            return html;
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return "";
-//    }
+    public static String convertMakdownToHtml(Context c, String mark_down_fp) {
+        try {
+            InputStream is = c.getAssets().open(mark_down_fp);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is), 1024*1024);
+            String mark_down_text="", line="", sep="";
+            while ((line = br.readLine()) != null) {
+                mark_down_text+=sep+line;
+                sep="\n";
+            }
+            br.close();
+            MarkdownProcessor processor = new MarkdownProcessor();
+            String html = processor.markdown(mark_down_text);
+            return html;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     public String getStringWithLangCode(Activity c, String lang_code, int res_id) {
         Configuration config = new Configuration(c.getResources().getConfiguration());

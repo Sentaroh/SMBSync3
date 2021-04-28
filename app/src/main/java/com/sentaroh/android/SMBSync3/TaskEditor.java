@@ -4562,7 +4562,9 @@ public class TaskEditor extends DialogFragment {
 
         WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
 
-        dlg_wb.loadUrl("file:///android_asset/" + help_msg);
+//        dlg_wb.loadUrl("file:///android_asset/" + help_msg);
+        String html=CommonUtilities.convertMakdownToHtml(a, help_msg);
+        dlg_wb.loadData(html, "text/html", "UTF-8");
         dlg_wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         dlg_wb.getSettings().setBuiltInZoomControls(false);
         dlg_wb.setInitialScale(0);

@@ -1838,7 +1838,9 @@ public class ActivityMain extends AppCompatActivity {
 
         LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function_view);
-        func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
+//        func_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_func_desc));
+        String html_func=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_func_desc));
+        func_view.loadData(html_func, "text/html", "UTF-8");
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         func_view.setScrollbarFadingEnabled(false);
         func_view.getSettings().setTextZoom(zf);
@@ -1846,14 +1848,18 @@ public class ActivityMain extends AppCompatActivity {
 
         LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy_view);
-        privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
+//        privacy_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_privacy_desc));
+        String html_privacy=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_privacy_desc));
+        privacy_view.loadData(html_privacy, "text/html", "UTF-8");
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         privacy_view.getSettings().setTextZoom(zf);
         setWebViewListener(privacy_view);
 
         LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
         final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_view);
-        change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
+//        change_view.loadUrl("file:///android_asset/" + getString(R.string.msgs_dlg_title_about_change_desc));
+        String html_change=CommonUtilities.convertMakdownToHtml(mContext, getString(R.string.msgs_dlg_title_about_change_desc));
+        change_view.loadData(html_change, "text/html", "UTF-8");
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         change_view.getSettings().setTextZoom(zf);
         setWebViewListener(change_view);

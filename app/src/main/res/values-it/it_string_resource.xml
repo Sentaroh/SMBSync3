@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">Log cambiamenti</string>
         <string name="msgs_about_dlg_change_btn">Privacy</string>
         <string name="msgs_dlg_title_about">A proposito di SMBSync2</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_IT_Desc.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_IT_Privacy.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_IT_Desc.md</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_IT_Privacy.md</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Seleziona impostazioni e task da importare</string>
         <string name="msgs_export_import_profile_listing">Lista file di configurazione</string>
@@ -48,25 +48,25 @@
         <string name="msgs_export_import_pswd_hint_confirm">Conferma password</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Le password non coincidono.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync3_Help_IT_task.html</string>
+        <string name="msgs_help_sync_task_file">SMBSync3_Help_IT_task.md</string>
         <string name="msgs_help_sync_task_title">Aiuto Sync Task</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_IT_folder_internal.html</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_IT_folder_internal.md</string>
         <string name="msgs_help_sync_folder_internal_title">Aiuto Memoria Interna</string>
-        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_IT_folder_keyword.html</string>
+        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_IT_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">Parameter Help</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_IT_folder_smb.html</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_IT_folder_smb.md</string>
         <string name="msgs_help_sync_folder_smb_title">Aiuto Server SMB</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_IT_folder_zip.html</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_IT_folder_zip.md</string>
         <string name="msgs_help_sync_folder_zip_title">Aiuto file ZIP</string>
-        <string name="msgs_help_directory_filter_file">SMBSync3_Help_IT_directory_filter.html</string>
+        <string name="msgs_help_directory_filter_file">SMBSync3_Help_IT_directory_filter.md</string>
         <string name="msgs_help_directory_filter_title">Aiuto per il filtro di directory</string>
-        <string name="msgs_help_file_filter_file">SMBSync3_Help_IT_file_filter.html</string>
+        <string name="msgs_help_file_filter_file">SMBSync3_Help_IT_file_filter.md</string>
         <string name="msgs_help_file_filter_title">Aiuto per il filtro dei file</string>
-        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_IT_ip_address_filter.html</string>
+        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_IT_ip_address_filter.md</string>
         <string name="msgs_help_ip_address_filter_title">Aiuto filtro indirizzo IP</string>
-        <string name="msgs_help_schedule_file">SMBSync3_Help_IT_schedule.html</string>
+        <string name="msgs_help_schedule_file">SMBSync3_Help_IT_schedule.md</string>
         <string name="msgs_help_schedule_title">Aiuto per la programmazione</string>
-        <string name="msgs_help_group_file">SMBSync3_Help_IT_group.html</string>
+        <string name="msgs_help_group_file">SMBSync3_Help_IT_group.md</string>
         <string name="msgs_help_group_title">Aiuto di gruppo</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">Se si procede, nel file di registro verranno registrati i seguenti dati: \n Versione Android, Nome del dispositivo, Nome della directory, Nome del file, Nome dell\'account SMB, Indirizzo IP, Nome dell\'interfaccia di rete, Impostazioni di sistema, Informazioni sull\'applicazione</string>

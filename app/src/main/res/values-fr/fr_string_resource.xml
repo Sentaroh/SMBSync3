@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">Confidentialité</string>
         <string name="msgs_about_dlg_change_btn">Historique des modifications</string>
         <string name="msgs_dlg_title_about">À propos de SMBSync3</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_FR_Desc.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_FR_Privacy.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_FR_Desc.md</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_FR_Privacy.md</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">Sélectionner les tâches et les paramètres à importer</string>
         <string name="msgs_export_import_profile_listing">Afficher les fichiers de configutaion</string>
@@ -48,25 +48,25 @@
         <string name="msgs_export_import_pswd_hint_confirm">Confirmer mot de passe</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Les mots de passe saisis ne sont pas identiques.</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync3_Help_FR_task.html</string>
+        <string name="msgs_help_sync_task_file">SMBSync3_Help_FR_task.md</string>
         <string name="msgs_help_sync_task_title">Aide de Configuration de Tâche</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_FR_folder_internal.html</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_FR_folder_internal.md</string>
         <string name="msgs_help_sync_folder_internal_title">Aide sur le Stockage Interne</string>
-        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_FR_folder_keyword.html</string>
+        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_FR_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">Aide sur les paramètres</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_FR_folder_smb.html</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_FR_folder_smb.md</string>
         <string name="msgs_help_sync_folder_smb_title">Aide sur Serveur SMB</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_FR_folder_zip.html</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_FR_folder_zip.md</string>
         <string name="msgs_help_sync_folder_zip_title">Aide sur Fichier ZIP</string>
-        <string name="msgs_help_directory_filter_file">SMBSync3_Help_FR_directory_filter.html</string>
+        <string name="msgs_help_directory_filter_file">SMBSync3_Help_FR_directory_filter.md</string>
         <string name="msgs_help_directory_filter_title">Aide sur le filtre de répertoire</string>
-        <string name="msgs_help_file_filter_file">SMBSync3_Help_FR_file_filter.html</string>
+        <string name="msgs_help_file_filter_file">SMBSync3_Help_FR_file_filter.md</string>
         <string name="msgs_help_file_filter_title">Aide sur les filtres de fichiers</string>
-        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_FR_ip_address_filter.html</string>
+        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_FR_ip_address_filter.md</string>
         <string name="msgs_help_ip_address_filter_title">Aide sur le filtre d\'adresses IP</string>
-        <string name="msgs_help_schedule_file">SMBSync3_Help_FR_schedule.html</string>
+        <string name="msgs_help_schedule_file">SMBSync3_Help_FR_schedule.md</string>
         <string name="msgs_help_schedule_title">Schedule help</string>
-        <string name="msgs_help_group_file">SMBSync3_Help_FR_group.html</string>
+        <string name="msgs_help_group_file">SMBSync3_Help_FR_group.md</string>
         <string name="msgs_help_group_title">Group help</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">En poursuivant, les données suivantes seront enregistrées dans un fichier que vous pouvez envoyer:\nVersion Android, Nom du périphérique, Nom des dossiers, Nom des fichiers, Nom de compte SMB, addresse IP, Nom de l\'interface réseau, Paramètres système, Paramètres d\'application</string>

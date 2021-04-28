@@ -5,9 +5,9 @@
         <string name="msgs_about_dlg_privacy_btn">プライバシー ポリシー</string>
         <string name="msgs_about_dlg_change_btn">更新履歴</string>
         <string name="msgs_dlg_title_about">SMBSync3について</string>
-        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_JA_Desc.html</string>
-        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_JA_Privacy.html</string>
-        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_JA_Change.html</string>
+        <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_JA_Desc.md</string>
+        <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_JA_Privacy.md</string>
+        <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_JA_Change.md</string>
     <!-- Export/Import -->
         <string name="msgs_export_import_profile_title">取り込むタスク項目の選択</string>
         <string name="msgs_export_import_profile_listing">一覧</string>
@@ -48,25 +48,25 @@
         <string name="msgs_export_import_pswd_hint_confirm">パスワードの確認</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">パスワードと確認パスワードが一致していません</string>
     <!-- Help -->
-        <string name="msgs_help_sync_task_file">SMBSync3_Help_JA_task.html</string>
+        <string name="msgs_help_sync_task_file">SMBSync3_Help_JA_task.md</string>
         <string name="msgs_help_sync_task_title">同期タスクのヘルプ</string>
-        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_JA_folder_internal.html</string>
+        <string name="msgs_help_sync_folder_internal_file">SMBSync3_Help_JA_folder_internal.md</string>
         <string name="msgs_help_sync_folder_internal_title">内部ストレージのヘルプ</string>
-        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_JA_folder_keyword.html</string>
+        <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_JA_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">変数のヘルプ</string>
-        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_JA_folder_smb.html</string>
+        <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_JA_folder_smb.md</string>
         <string name="msgs_help_sync_folder_smb_title">SMBのヘルプ</string>
-        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_JA_folder_zip.html</string>
+        <string name="msgs_help_sync_folder_zip_file">SMBSync3_Help_JA_folder_zip.md</string>
         <string name="msgs_help_sync_folder_zip_title">ZIPのヘルプ</string>
-        <string name="msgs_help_directory_filter_file">SMBSync3_Help_JA_directory_filter.html</string>
+        <string name="msgs_help_directory_filter_file">SMBSync3_Help_JA_directory_filter.md</string>
         <string name="msgs_help_directory_filter_title">ディレクトリーフィルターのヘルプ</string>
-        <string name="msgs_help_file_filter_file">SMBSync3_Help_JA_file_filter.html</string>
+        <string name="msgs_help_file_filter_file">SMBSync3_Help_JA_file_filter.md</string>
         <string name="msgs_help_file_filter_title">ファイルフィルターのヘルプ</string>
-        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_JA_ip_address_filter.html</string>
+        <string name="msgs_help_ip_address_filter_file">SMBSync3_Help_JA_ip_address_filter.md</string>
         <string name="msgs_help_ip_address_filter_title">IPアドレスフィルターのヘルプ</string>
-        <string name="msgs_help_schedule_file">SMBSync3_Help_JA_schedule.html</string>
+        <string name="msgs_help_schedule_file">SMBSync3_Help_JA_schedule.md</string>
         <string name="msgs_help_schedule_title">スケジュールのヘルプ</string>
-        <string name="msgs_help_group_file">SMBSync3_Help_JA_group.html</string>
+        <string name="msgs_help_group_file">SMBSync3_Help_JA_group.md</string>
         <string name="msgs_help_group_title">グループのヘルプ</string>
     <!-- Log management -->
         <string name="msgs_log_management_enable_log_file_warning">有効にすることにより下記のデータがログファイルに記録されます。\nAndroidバージョン、端末名、ディレクトリー名、ファイル名、SMBアカウント名、IPアドレス、ネットワークインターフェース名、システム設定、アプリ情報</string>
