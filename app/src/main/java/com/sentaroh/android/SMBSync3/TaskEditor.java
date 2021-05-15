@@ -4566,26 +4566,28 @@ public class TaskEditor extends DialogFragment {
 
         int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(a));
 
-        WebView dlg_wb = (WebView) dialog.findViewById(R.id.help_view_help);
+        WebView wv = (WebView) dialog.findViewById(R.id.help_view_help);
 
 //        dlg_wb.loadUrl("file:///android_asset/" + help_msg);
         String html=CommonUtilities.convertMakdownToHtml(a, help_msg);
 //        dlg_wb.loadData(html, "text/html", "UTF-8");
-        dlg_wb.loadData(Base64.encodeToString(html.getBytes(), Base64.DEFAULT), null, "base64");
-        dlg_wb.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        dlg_wb.getSettings().setSupportZoom(true);
-        dlg_wb.getSettings().setBuiltInZoomControls(true);
-        dlg_wb.getSettings().setTextZoom(zf);
+        wv.loadData(Base64.encodeToString(html.getBytes(), Base64.DEFAULT), null, "base64");
+        wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+//        wv.getSettings().setSupportZoom(true);
+//        wv.getSettings().setBuiltInZoomControls(true);
+//        wv.getSettings().setTextZoom(zf);
+//        wv.setBackgroundColor(Color.LTGRAY);
+        CommonUtilities.setWebViewListener(mGp, wv, zf);
 
         btn_reload.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 CommonUtilities.setViewEnabled(a, btn_reload, false);
-                dlg_wb.reload();
+                wv.reload();
             }
         });
 
-        dlg_wb.setWebViewClient(new WebViewClient() {
+        wv.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading (WebView view, String url) {
                 return false;
@@ -4596,7 +4598,7 @@ public class TaskEditor extends DialogFragment {
                 CommonUtilities.setViewEnabled(a, btn_reload, true);
             }
         });
-        dlg_wb.setOnKeyListener(new View.OnKeyListener() {
+        wv.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event){
                 if(event.getAction() == KeyEvent.ACTION_DOWN){
@@ -4617,14 +4619,14 @@ public class TaskEditor extends DialogFragment {
         ib_find_next.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                dlg_wb.findNext(true);
+                wv.findNext(true);
             }
         });
 
         ib_find_prev.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                dlg_wb.findNext(false);
+                wv.findNext(false);
             }
         });
 
@@ -4632,7 +4634,7 @@ public class TaskEditor extends DialogFragment {
         CommonUtilities.setViewEnabled(a, ib_find_prev, false);
 
         final ColorStateList default_text_color=tv_find_count.getTextColors();
-        dlg_wb.setFindListener(new WebView.FindListener() {
+        wv.setFindListener(new WebView.FindListener() {
             @Override
             public void onFindResultReceived(int i, int i1, boolean b) {
                 if (et_find_string.getText().length()>0) {
@@ -4663,11 +4665,11 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length()>0) {
-                    dlg_wb.findAllAsync(s.toString());
+                    wv.findAllAsync(s.toString());
                 } else {
                     CommonUtilities.setViewEnabled(a, ib_find_next, false);
                     CommonUtilities.setViewEnabled(a, ib_find_prev, false);
-                    dlg_wb.findAllAsync("");
+                    wv.findAllAsync("");
                 }
             }
 

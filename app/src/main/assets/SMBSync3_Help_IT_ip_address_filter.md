@@ -1,15 +1,15 @@
-### Filtro
-Specifica l'indirizzo IP o il modello da cui può essere avviata la sincronizzazione.
+### Filtro<br>
+Specifica l'indirizzo IP o il modello da cui può essere avviata la sincronizzazione.<br>
 
-### Aggiungere l\'indirizzo IP corrente
-Aggiungere l'indirizzo IP attualmente assegnato.
+### Aggiungere l\'indirizzo IP corrente<br>
+Aggiungere l'indirizzo IP attualmente assegnato.<br>
 
-### indirizzo IP
-Specificare l'indirizzo IP o il modello da aggiungere al filtro.
+### indirizzo IP<br>
+Specificare l'indirizzo IP o il modello da aggiungere al filtro.<br>
 
-- Indirizzo diretto: 192.168.0.10
-- Wildcard: 10.0.*
+- Indirizzo diretto: 192.168.0.10<br>
+- Wildcard: 10.0.*<br>
 
-### Manuali
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+### Manuali<br>
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>

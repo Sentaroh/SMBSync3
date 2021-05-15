@@ -39,7 +39,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -66,13 +65,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -423,7 +420,7 @@ public class ActivityMain extends AppCompatActivity {
         web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         web_view.setScrollbarFadingEnabled(false);
         int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
-        setWebViewListener(web_view, zf);
+        CommonUtilities.setWebViewListener(mGp, web_view, zf);
         loadHelpFile(web_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
 
         web_view.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -1493,7 +1490,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonNormalMode();
                 return true;
             case R.id.menu_top_kill:
-                killTerminateApplication();
+                killApplication();
                 setContextButtonNormalMode();
                 return true;
             case R.id.menu_top_housekeep:
@@ -1848,19 +1845,19 @@ public class ActivityMain extends AppCompatActivity {
         final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function_view);
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         func_view.setScrollbarFadingEnabled(false);
-        setWebViewListener(func_view, zf);
+        CommonUtilities.setWebViewListener(mGp, func_view, zf);
 
         LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
         final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy_view);
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         privacy_view.setScrollbarFadingEnabled(false);
-        setWebViewListener(privacy_view, zf);
+        CommonUtilities.setWebViewListener(mGp, privacy_view, zf);
 
         LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
         final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_view);
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         change_view.setScrollbarFadingEnabled(false);
-        setWebViewListener(change_view, zf);
+        CommonUtilities.setWebViewListener(mGp, change_view, zf);
 
         loadHelpFile(func_view, getString(R.string.msgs_dlg_title_about_func_desc));
         loadHelpFile(privacy_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
@@ -1949,36 +1946,7 @@ public class ActivityMain extends AppCompatActivity {
         th1.start();
     }
 
-    private void setWebViewListener(WebView wv, int zf) {
-        wv.setBackgroundColor(Color.LTGRAY);
-        wv.getSettings().setTextZoom(zf);
-//        wv.getSettings().setBuiltInZoomControls(true);
-        wv.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading (WebView view, String url) {
-                return false;
-            }
-        });
-        wv.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event){
-                if(event.getAction() == KeyEvent.ACTION_DOWN){
-                    WebView webView = (WebView) v;
-                    switch(keyCode){
-                        case KeyEvent.KEYCODE_BACK:
-                            if(webView.canGoBack()){
-                                webView.goBack();
-                                return true;
-                            }
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
-    }
-
-    private void killTerminateApplication() {
+    private void killApplication() {
         mUtil.showCommonDialog(true, "W", mContext.getString(R.string.msgs_smnsync_main_kill_application), "", new CallBackListener() {
             @Override
             public void onCallBack(Context c, boolean positive, Object[] objects) {

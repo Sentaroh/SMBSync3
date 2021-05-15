@@ -1,15 +1,15 @@
-### Фильтр
-Указывает IP-адрес или шаблон, с которого может быть инициирована синхронизация.
+### Фильтр<br>
+Указывает IP-адрес или шаблон, с которого может быть инициирована синхронизация.<br>
 
-### Добавьте текущий IP-адрес
-Добавьте текущий назначенный IP-адрес.
+### Добавьте текущий IP-адрес<br>
+Добавьте текущий назначенный IP-адрес.<br>
 
-### IP-адрес
-Укажите IP-адрес или шаблон для добавления в фильтр.
+### IP-адрес<br>
+Укажите IP-адрес или шаблон для добавления в фильтр.<br>
 
-- Прямой адрес: 192.168.0.10
-- Дикий символ: 10.0.*
+- Прямой адрес: 192.168.0.10<br>
+- Дикий символ: 10.0.*<br>
 
-### Руководства
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+### Руководства<br>
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>

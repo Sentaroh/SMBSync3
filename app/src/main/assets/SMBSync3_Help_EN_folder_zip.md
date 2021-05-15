@@ -1,44 +1,44 @@
-### Local storage
+### Local storage<br>
 
-You can choose between internal storage/SDCARD/USB storage. 
+You can choose between internal storage/SDCARD/USB storage. <br>
 
-### Allow use external storage
+### Allow use external storage<br>
 
-Request permission to use external storage. If you format the MicroSD card, the UUID will change, so request permission to use it. 
+Request permission to use external storage. If you format the MicroSD card, the UUID will change, so request permission to use it. <br>
 
-### List files
+### List files<br>
 
-Show file lists. 
+Show file lists. <br>
 
-### ZIP File name
+### ZIP File name<br>
 
-Enter the name of the destination file. If you specify a non-existent file, it will be created when the synchronization is executed. 
+Enter the name of the destination file. If you specify a non-existent file, it will be created when the synchronization is executed. <br>
 
-### Compression ratio
+### Compression ratio<br>
 
-Select compression level.
+Select compression level.<br>
 
-- Smallest
-- Small
-- Normal
-- Maximum
+- Smallest<br>
+- Small<br>
+- Normal<br>
+- Maximum<br>
 
-### Encryption method
-Select encryption method
+### Encryption method<br>
+Select encryption method<br>
 
-- None
-- ZipCrypto
-- AES128 Bit
-- AES256 Bit 
+- None<br>
+- ZipCrypto<br>
+- AES128 Bit<br>
+- AES256 Bit <br>
 
-### Password
+### Password<br>
 
-Specify password for encryption. 
+Specify password for encryption. <br>
 
-### Confirm
+### Confirm<br>
 
-Re-enter password for confirmation. 
+Re-enter password for confirmation. <br>
 
-### Manuals
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+### Manuals<br>
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>

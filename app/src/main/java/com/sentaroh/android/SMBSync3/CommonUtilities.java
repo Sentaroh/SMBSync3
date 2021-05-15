@@ -35,28 +35,35 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.util.TypedValue;
 import android.view.ActionMode;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 import com.sentaroh.android.JcifsFile2.JcifsUtil;
 import com.sentaroh.android.SMBSync3.Log.LogUtil;
@@ -387,6 +394,51 @@ public final class CommonUtilities {
         return mLog.buildPrintLogMsg(cat, msg);
     }
 
+    static public void setWebViewListener(GlobalParameters gp, WebView wv, int zf) {
+//        wv.setBackgroundColor(Color.LTGRAY);
+//        if (Build.VERSION.SDK_INT>=29) {
+//            if (!gp.themeColorList.theme_is_light) {
+//                wv.getSettings().setForceDark(WebSettingsCompat.FORCE_DARK_ON);
+//            }
+//        }
+//        if (gp.applicationTheme==R.style.Main) {
+//            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+//                WebSettingsCompat.setForceDark(wv.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
+//                wv.setBackgroundColor(Color.DKGRAY);
+//            }
+//        } if (gp.applicationTheme==R.style.MainLight) {
+//        } else {
+//            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+//                WebSettingsCompat.setForceDark(wv.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
+//                wv.setBackgroundColor(Color.BLACK);
+//            }
+//        }
+        wv.getSettings().setTextZoom(zf);
+//        wv.getSettings().setBuiltInZoomControls(true);
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+                return false;
+            }
+        });
+        wv.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(event.getAction() == KeyEvent.ACTION_DOWN){
+                    WebView webView = (WebView) v;
+                    switch(keyCode){
+                        case KeyEvent.KEYCODE_BACK:
+                            if(webView.canGoBack()){
+                                webView.goBack();
+                                return true;
+                            }
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
 
     final static public String LIST_ITEM_DATA_SEPARATOR ="\u0000";
     final static public String LIST_ITEM_DUMMY_DATA ="\u0001";

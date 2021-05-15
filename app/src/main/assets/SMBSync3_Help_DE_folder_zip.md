@@ -1,44 +1,44 @@
-### Lokaler Speicher
+### Lokaler Speicher<br>
 
-Eingebauter Speicher/SDCARD/USB-Speicher kann gewählt werden. 
+Eingebauter Speicher/SDCARD/USB-Speicher kann gewählt werden. <br>
 
-### Erlaubtdie Verwendung externer Speicher
+### Erlaubtdie Verwendung externer Speicher<br>
 
-Fordern Sie die Erlaubnis zur Verwendung von externem Speicher an. Wenn Sie die MicroSD-Karte formatieren, ändert sich die UUID, daher sollten Sie die Erlaubnis zur Verwendung anfordern. 
+Fordern Sie die Erlaubnis zur Verwendung von externem Speicher an. Wenn Sie die MicroSD-Karte formatieren, ändert sich die UUID, daher sollten Sie die Erlaubnis zur Verwendung anfordern. <br>
 
-### Dateien auflisten
+### Dateien auflisten<br>
 
-Dateilisten anzeigen. 
+Dateilisten anzeigen. <br>
 
-### ZIP Dateiname
+### ZIP Dateiname<br>
 
-Geben Sie den Namen der Zieldatei ein. Wenn Sie eine nicht existierende Datei angeben, wird diese bei der Ausführung der Synchronisation erstellt. 
+Geben Sie den Namen der Zieldatei ein. Wenn Sie eine nicht existierende Datei angeben, wird diese bei der Ausführung der Synchronisation erstellt. <br>
 
-### Verdichtungsverhältnis
+### Verdichtungsverhältnis<br>
 
-Wählen Sie die Komprimierungsstufe.
+Wählen Sie die Komprimierungsstufe.<br>
 
-- kleinste
-- Klein
-- Normal
-- Maximum
+- kleinste<br>
+- Klein<br>
+- Normal<br>
+- Maximum<br>
 
-### Verschlüsselungsmethode
-Verschlüsselungsmethode wählen
+### Verschlüsselungsmethode<br>
+Verschlüsselungsmethode wählen<br>
 
-- Keine
-- ZipCrypto
-- AES128 Bit
-- AES256 Bit 
+- Keine<br>
+- ZipCrypto<br>
+- AES128 Bit<br>
+- AES256 Bit <br>
 
-### Kennwort
+### Kennwort<br>
 
-Geben Sie das Passwort für die Verschlüsselung an. 
+Geben Sie das Passwort für die Verschlüsselung an. <br>
 
-### Bestätigen
+### Bestätigen<br>
 
-Geben Sie das Passwort zur Bestätigung erneut ein. 
+Geben Sie das Passwort zur Bestätigung erneut ein. <br>
 
-### Manuals
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)
+### Manuals<br>
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>
