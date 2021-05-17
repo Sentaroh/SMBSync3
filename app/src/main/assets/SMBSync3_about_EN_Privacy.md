@@ -1,88 +1,83 @@
-## 1. Collected data<br>
-### 1.1.Data provided to SMBSync3 from users.<br>
+## 1. Collected data  
+### 1.1.Data provided to SMBSync3 from users.  
 
-The data provided by the user to use SMBSync3 will be saved in the storage area of the application.<br>
-When storing the data, the SMB account name, SMB account password, ZIP password, and application password will be encrypted with the system-generated password.<br>
-<span style="color: red;"><u>Data will not be sent externally unless the operation "1.4.Sending or writing data outside SMBSync3" is performed.</u></span><br>
+The following data provided by the user to use SMBSync3 will be stored in the memory area of the application.  
 
-- File information (directory name, file name)<br>
-- SMB server information (host name/IP address, port number, account name, account password)<br>
-- ZIP file information (compression method, encryption method, encryption password)<br>
-- App setting options (warning messages, language and font size, etc.)<br>
-- Application passwords (passwords used for authentication when launching applications, changing security settings, etc.)<br>
+- File information (directory name, file name)  
+- SMB server information if using SMB server (host name/IP address, port number, account name(**<u>\*1</u>**), account password(**<u>\*1</u>**))  
+- ZIP file information if using a ZIP file (compression method, encryption method, encryption password(**<u>\*1</u>**))  
+- App setting options (warning messages, language and font size, etc.)  
+- Application passwords(**<u>\*1</u>**)  
 
-### 1.2.Execution result of SMBSync3<br>
+**<u>\*1</u>**Data is encrypted and stored.  
 
-Save the data to the storage area in the application so that the user can check the execution result of SMBSync3.<br>
-<span style="color: red;"><u>Data will not be sent externally unless the operation "1.4.Sending or writing data outside SMBSync3" is performed.</u></span><br>
+### 1.2.Execution result of SMBSync3  
 
-- Directory name, file name, execution status<br>
-- File size of synchronized files, file update date and time<br>
-- Error information<br>
+Save the data to the storage area in the application so that the user can check the execution result of SMBSync3.  
 
-### 1.3.Activity record of SMBSync3<br>
+- Directory name, file name, execution status  
+- File size of synchronized files, file update date and time  
+- Error information  
 
-Save the data to the storage area in the application to verify the execution results of SMBSync3 and to query the developer.<br>
-<span style="color: red;"><u>Data will not be sent externally unless the operation "1.4.Sending or writing data outside SMBSync3" is performed.</u></span><br>
+### 1.3.Activity record of SMBSync3  
 
-- Device information (manufacturer name, model name, OS version, mount point, app-specific directory, StorageAccessFramework, Storage manager, IP address, WiFi enable/disable, WiFi link speed)<br>
-- SMBSync3 version, SMBSync3 execution options<br>
-- Directory name, file name, execution status<br>
-- File size of synchronized files, file modification date and time<br>
-- Debugging information<br>
-- Error information<br>
+Enabling logging will save the activity record data in the app's memory area for verification of the app's execution results and technical support. When logging is disabled, data recording will be stopped. However, the data already recorded will not be deleted, so you can delete it if you need to.  
 
-### 1.4.Sending or writing data outside SMBSync3<br>
+- Device information (manufacturer name, model name, OS version, mount point, app-specific directory, StorageAccessFramework, Storage manager, IP address, WiFi enable/disable, WiFi link speed)  
+- SMBSync3 version, SMBSync3 execution options  
+- Directory name, file name, execution status  
+- File size of synchronized files, file modification date and time  
+- Debugging information  
+- Error information  
 
-Data held by SMBSync3 cannot be sent or written out to outside unless operated by the user.<br>
+### 1.4.Sending or writing data outside SMBSync3  
 
-- Press "Share button" from History tab.<br>
-- Click "Send to Developer" button from System Information.<br>
-- Click the "Send to Developer" button from the log management.<br>
-- Export to external storage by clicking "Export log file" button from Log Management.<br>
-- By executing "Export settings" from the menu, "1.1. Data provided to SMBSync3 from users" will be exported.<br>
-By specifying a password when exporting, the information is encrypted and saved in the file.<br>
+<span style="color: red;"><u></u></span>Data held by SMBSync3 cannot be sent or written out to outside unless operated by the user.  
 
-### 1.5.Delete the data stored in SMBSync3<br>
+- Press "Share button" from History tab.  
+- Click "Send to Developer" button from System Information.  
+- Click the "Send to Developer" button from the log management.  
+- Export to external storage by clicking "Export log file" button from Log Management.  
+- By executing "Export settings" from the menu, "1.1. Data provided to SMBSync3 from users" will be exported.  
+The information will be encrypted by specifying a password when exporting.  
 
-By uninstalling SMBSync3, the saved data ("1.1. Data provided by user to SMBSync3", "1.2. Execution result of SMBSync3", "1.3. Activity record of SMBSync3") will be deleted from the device.<br>
-<span style="color: red;"><u>However, data stored in external storage due to user interaction will not be deleted.</u></span><br>
+### 1.5.Delete the data stored in SMBSync3  
 
-### 2.Permissions required to run the application<br>
+By uninstalling SMBSync3, the saved data ("1.1. Data provided by user to SMBSync3", "1.2. Execution result of SMBSync3", "1.3. Activity record of SMBSync3") will be deleted from the device.  
+<span style="color: red;"><u>However, data stored in external storage due to user interaction will not be deleted.</u></span>  
 
-### 2.1.Photos, Media and Files<br>
-**read the contents of your USB storage**.<br>
-**modify or delete the contents of your USB storage**.<br>
-Used for file synchronization and reading/writing management files.<br>
+### 2.Permissions required to run the application  
 
-### 2.2.Storage<br>
+### 2.2.Storage  
 
-### 2.2.1.Android 11 or later<br>
-**All file access**.<br>
+### 2.2.1.Android 11 or later  
+**All file access**.  
 
-Used for file synchronization and reading/writing management files.<br>
+Used for file synchronization and reading/writing management files.  
 
-### 2.2.2.Android 10 or before<br>
-**read the contents of your USB storage**.<br>
-**modify or delete the contents of your USB storage**.<br>
-Used for file synchronization and reading/writing management files.<br>
+### 2.1.2.Android 10 or before  
 
-### 2.3.Wi-Fi connection information<br>
-**view Wi-Fi connections**.<br>
-Used to check the Wi-Fi status when synchronization starts.<br>
+### 2.1.Photos, Media and Files  
+**"read the contents of your USB storage"**  
+**"modify or delete the contents of your USB storage"**  
+Used for file synchronization and reading/writing management files.  
 
-### 2.4.Others<br>
-### 2.4.1.View network connections<br>
-Use this to check network connections when starting synchronization.<br>
-### 2.4.2.connect and disconnect from Wi-Fi<br>
-This function is used to turn Wi-Fi on and off for scheduled synchronization in Andoid 8/9.<br>
-### 2.4.3.Full network access<br>
-Use this to synchronize via SMB protocol through the network.<br>
-### 2.4.4.Run at startup<br>
-Used to perform scheduled synchronization.<br>
-### 2.4.5.Control vibration<br>
-Used to notify the user when synchronization is finished.<br>
-### 2.4.6.Prevent device from sleeping<br>
-Used to start synchronization from a schedule or external app.<br>
-### 2.4.7.Install shortcuts<br>
-Used to add sync start shortcuts to the desktop.<br>
+### 2.2.Wi-Fi connection information  
+**view Wi-Fi connections**.  
+Used to check the Wi-Fi status when synchronization starts.  
+
+### 2.3.Others  
+### 2.3.1.View network connections  
+Use this to check network connections when starting synchronization.  
+### 2.3.2.connect and disconnect from Wi-Fi  
+This function is used to turn Wi-Fi on and off for scheduled synchronization in Andoid 8/9.  
+### 2.3.3.Full network access  
+Use this to synchronize via SMB protocol through the network.  
+### 2.3.4.Run at startup  
+Used to perform scheduled synchronization.  
+### 2.3.5.Control vibration  
+Used to notify the user when synchronization is finished.  
+### 2.3.6.Prevent device from sleeping  
+Used to start synchronization from a schedule or external app.  
+### 2.3.7.Install shortcuts  
+Used to add sync start shortcuts to the desktop.  

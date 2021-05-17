@@ -62,8 +62,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.fragment.app.FragmentManager;
-import androidx.webkit.WebSettingsCompat;
-import androidx.webkit.WebViewFeature;
 
 import com.sentaroh.android.JcifsFile2.JcifsUtil;
 import com.sentaroh.android.SMBSync3.Log.LogUtil;
@@ -212,7 +210,7 @@ public final class CommonUtilities {
         try {
             InputStream is = c.getAssets().open(mark_down_fp);
             MarkdownProcessor processor = new MarkdownProcessor();
-            html=processor.markdown(true, is);
+            html=processor.markdown(false, is);
         } catch(Exception e) {
             log.error("MarkDown conversion error.", e);
             e.printStackTrace();

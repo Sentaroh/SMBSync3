@@ -1,27 +1,27 @@
-### Source directory<br>
+### Source directory  
 
-Directory name specified in the source folder.<br>
+Directory name specified in the source folder.  
 
-### Filter<br>
+### Filter  
 The name of the directory to select or exclude. <br>
 
-- Wildcard<br>
-My*<br>
-- Specify a character for a specific location<br>
-fo?der<br>
-- Exclude all cache directories<br>
-\cache<br>
-- filters can be entered in same line, separated by ";"<br>
-audio;video;<br>
+- Wildcard  
+My*  
+- Specify a character for a specific location  
+fo?der  
+- Exclude all cache directories  
+\cache  
+- filters can be entered in same line, separated by ";"  
+audio;video;  
 
-### Enable / Disable<br>
+### Enable / Disable  
 
-You can disable a filter. Disabled filters are not available for selection or exclusion.<br>
+You can disable a filter. Disabled filters are not available for selection or exclusion.  
 
-### Include/Exclude<br>
+### Include/Exclude  
 
-The selection synchronizes the directory. Exclusion excludes directories from being synced. If the same directory as the selected directory is excluded, the exclusion takes precedence.<br>
+The selection synchronizes the directory. Exclusion excludes directories from being synced. If the same directory as the selected directory is excluded, the exclusion takes precedence.  
 
-### Manuals<br>
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>
+### Manuals  
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)  

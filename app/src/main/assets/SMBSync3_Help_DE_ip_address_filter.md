@@ -1,15 +1,15 @@
-### Filter<br>
-Gibt die IP-Adresse oder das Muster an, von dem aus die Synchronisierung eingeleitet werden kann.<br>
+### Filter  
+Gibt die IP-Adresse oder das Muster an, von dem aus die Synchronisierung eingeleitet werden kann.  
 
-### Aktuelle IP-Adresse hinzufügen<br>
-Fügen Sie die aktuell zugewiesene IP-Adresse hinzu.<br>
+### Aktuelle IP-Adresse hinzufügen  
+Fügen Sie die aktuell zugewiesene IP-Adresse hinzu.  
 
-### IP-Adresse<br>
-Geben Sie die IP-Adresse oder das Muster an, das dem Filter hinzugefügt werden soll.<br>
+### IP-Adresse  
+Geben Sie die IP-Adresse oder das Muster an, das dem Filter hinzugefügt werden soll.  
 
-- Direkte Adresse: 192.168.0.10<br>
-- Platzhalter: 10.0.*<br>
+- Direkte Adresse: 192.168.0.10  
+- Platzhalter: 10.0.*  
 
-### Manuals<br>
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>
+### Manuals  
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)  

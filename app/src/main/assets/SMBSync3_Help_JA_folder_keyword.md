@@ -1,66 +1,66 @@
-### 撮影日時に関する変数(同期方式がミラーの時は使用できません)<br>
+### 撮影日時に関する変数(同期方式がミラーの時は使用できません)  
 
-- T-DATE<br>
-撮影年月日(YYYY-MM-DD)<br>
-- T-TIME<br>
-撮影時間(HH-MM-SS)<br>
-- T-DAY-OF-YEAR<br>
-撮影日(年初からの日数)<br>
-- T-YYYY<br>
-撮影年(4桁)<br>
-- T-YY<br>
-撮影年の下２桁<br>
-- T-MM<br>
-撮影月(01~31)<br>
-- T-DD<br>
-撮影日(01~31)<br>
-- T-HH<br>
-撮影日の時(00~23)<br>
-- T-MIN<br>
-撮影日の分(00~59)<br>
-- T-SEC<br>
-撮影日の秒(00~59)<br>
-- T-WEEKNO<br>
-撮影日の年初からの週番号(01~53)<br>
-- T-WEEKDAY<br>
-撮影日の曜日(日、月など)<br>
-- T-WEEKDAY_LONG<br>
-撮影日の曜日(日曜日、月曜日など)<br>
+- T-DATE  
+撮影年月日(YYYY-MM-DD)  
+- T-TIME  
+撮影時間(HH-MM-SS)  
+- T-DAY-OF-YEAR  
+撮影日(年初からの日数)  
+- T-YYYY  
+撮影年(4桁)  
+- T-YY  
+撮影年の下２桁  
+- T-MM  
+撮影月(01~31)  
+- T-DD  
+撮影日(01~31)  
+- T-HH  
+撮影日の時(00~23)  
+- T-MIN  
+撮影日の分(00~59)  
+- T-SEC  
+撮影日の秒(00~59)  
+- T-WEEKNO  
+撮影日の年初からの週番号(01~53)  
+- T-WEEKDAY  
+撮影日の曜日(日、月など)  
+- T-WEEKDAY_LONG  
+撮影日の曜日(日曜日、月曜日など)  
 
-### 同期開始日時に関する変数<br>
+### 同期開始日時に関する変数  
 
-- E-DATE<br>
-同期開始の年月日(YYYY-MM-DD)<br>
-- E-TIME<br>
-同期開始の時間(HH-MM-SS)<br>
-- E-DAY-OF-YEAR<br>
-同期開始の日(年初からの日数)<br>
-- E-YYYY<br>
-同期開始の年(4桁)<br>
-- E-YY<br>
-同期開始の年の下２桁<br>
-- E-MM<br>
-同期開始の月(01~12)<br>
-- E-DD<br>
-同期開始の日(01~31)<br>
-- E-HH<br>
-同期開始の時(00~23)<br>
-- E-MIN<br>
-同期開始の分(00~59)<br>
-- E-SEC<br>
-同期開始の秒(00~59)<br>
-- E-WEEKNO<br>
-同期開始の年初からの週番号(01~53)<br>
-- E-WEEKDAY<br>
-同期開始の曜日(日、月など)<br>
-- E-WEEKDAY_LONG<br>
-同期開始の曜日(日曜日、月曜日など)<br>
+- E-DATE  
+同期開始の年月日(YYYY-MM-DD)  
+- E-TIME  
+同期開始の時間(HH-MM-SS)  
+- E-DAY-OF-YEAR  
+同期開始の日(年初からの日数)  
+- E-YYYY  
+同期開始の年(4桁)  
+- E-YY  
+同期開始の年の下２桁  
+- E-MM  
+同期開始の月(01~12)  
+- E-DD  
+同期開始の日(01~31)  
+- E-HH  
+同期開始の時(00~23)  
+- E-MIN  
+同期開始の分(00~59)  
+- E-SEC  
+同期開始の秒(00~59)  
+- E-WEEKNO  
+同期開始の年初からの週番号(01~53)  
+- E-WEEKDAY  
+同期開始の曜日(日、月など)  
+- E-WEEKDAY_LONG  
+同期開始の曜日(日曜日、月曜日など)  
 
-### ファイル名に関する変数(同期方式がアーカイブの時だけ使用できます)<br>
+### ファイル名に関する変数(同期方式がアーカイブの時だけ使用できます)  
 
-- ORIGINAL-NAME<br>
-元のファイル名<br>
+- ORIGINAL-NAME  
+元のファイル名  
 
-### ドキュメント<br>
-[よくある質問](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_JA.htm)<br>
-[機能の説明](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_JA.htm)<br>
+### ドキュメント  
+[よくある質問](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_JA.htm)  
+[機能の説明](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_JA.htm)  

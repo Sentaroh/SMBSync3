@@ -1,22 +1,22 @@
-### Filtre<br>
+### Filtre  
 
-Le nom du répertoire à sélectionner ou à exclure.<br>
+Le nom du répertoire à sélectionner ou à exclure.  
 
-- Wildcard<br>
-Mon*.jpg<br>
-- Spécifier un caractère spécifique<br>
-dsc_???.mov<br>
-- Les filtres peuvent être saisis en une seule ligne, séparés par ";"<br>
-\*.jpg;*.mp3<br>
+- Wildcard  
+Mon*.jpg  
+- Spécifier un caractère spécifique  
+dsc_???.mov  
+- Les filtres peuvent être saisis en une seule ligne, séparés par ";"  
+\*.jpg;*.mp3  
 
-### Enable / Disable<br>
+### Enable / Disable  
 
-Vous pouvez désactiver un filtre. Les filtres désactivés ne sont pas disponibles pour la sélection ou l'exclusion.<br>
+Vous pouvez désactiver un filtre. Les filtres désactivés ne sont pas disponibles pour la sélection ou l'exclusion.  
 
-### Inclure/Exclure<br>
+### Inclure/Exclure  
 
-Select rend les fichiers disponibles pour la synchronisation. Exclure exclut un fichier de la synchronisation. Si le même fichier que le fichier sélectionné est exclu, l'exclusion sera prioritaire.<br>
+Select rend les fichiers disponibles pour la synchronisation. Exclure exclut un fichier de la synchronisation. Si le même fichier que le fichier sélectionné est exclu, l'exclusion sera prioritaire.  
 
-### Manuels<br>
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>
+### Manuels  
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)  

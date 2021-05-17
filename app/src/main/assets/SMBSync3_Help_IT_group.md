@@ -1,19 +1,19 @@
-### Nome del gruppo<br>
-Il nome del gruppo.<br>
+### Nome del gruppo  
+Il nome del gruppo.  
 
-### Attivareil gruppo<br>
+### Attivareil gruppo  
 
-Attivare il gruppo. Abilitandolo si attiva il pulsante Sync.<br>
+Attivare il gruppo. Abilitandolo si attiva il pulsante Sync.  
 
-### Assegnazione del pulsante<br>
-È possibile assegnare un pulsante di scelta rapida o un pulsante di sincronizzazione per eseguire un'attività quando il pulsante viene premuto.<br>
+### Assegnazione del pulsante  
+È possibile assegnare un pulsante di scelta rapida o un pulsante di sincronizzazione per eseguire un'attività quando il pulsante viene premuto.  
 
-### Sincronizzasolo le attività automatiche<br>
-Avvia i task di sincronizzazione che vengono controllati automaticamente nel Task di sincronizzazione. L'elenco delle attività non apparirà se è selezionato.<br>
+### Sincronizzasolo le attività automatiche  
+Avvia i task di sincronizzazione che vengono controllati automaticamente nel Task di sincronizzazione. L'elenco delle attività non apparirà se è selezionato.  
 
-### Elenco attività<br>
-Toccarlo per selezionare un'attività di sincronizzazione.<br>
+### Elenco attività  
+Toccarlo per selezionare un'attività di sincronizzazione.  
 
-### Manuali<br>
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>
+### Manuali  
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)  

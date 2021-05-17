@@ -1,66 +1,66 @@
-### Über die Parameter des Aufnahmedatums<br>
+### Über die Parameter des Aufnahmedatums  
 
-- T-DATE<br>
-Aufnahmedatum (JJJJ-MM-TT)<br>
-- T-TIME<br>
-Aufgenommene Zeit(HH-MM-SS)<br>
-- T-DAY-Of-YEAR<br>
-Aufnahmedatum(Tage seit Jahresbeginn)<br>
-- T-YYYY<br>
-Drehjahr (4 Ziffern)<br>
-- T-YY<br>
-Drehjahr (2 Ziffern)<br>
-- T-MM<br>
-Der Monat der Dreharbeiten<br>
-- T-DD<br>
-Datum der Aufnahme<br>
-- T-HH<br>
-Beim Schießen<br>
-- T-MIN<br>
-Aufnahme Minuten<br>
-- T-SEC<br>
-Aufnahme Sekunden<br>
-- T-WEEKNO<br>
-Die Wochennummer des aufgenommenen Datums<br>
-- T-WEEKDAY<br>
-Tag der Woche (Sonne, Mo, etc.)<br>
-- T-WOCHENTAG_LÄNGS<br>
-Wochentag (Sonntag, Montag, etc.)<br>
+- T-DATE  
+Aufnahmedatum (JJJJ-MM-TT)  
+- T-TIME  
+Aufgenommene Zeit(HH-MM-SS)  
+- T-DAY-Of-YEAR  
+Aufnahmedatum(Tage seit Jahresbeginn)  
+- T-YYYY  
+Drehjahr (4 Ziffern)  
+- T-YY  
+Drehjahr (2 Ziffern)  
+- T-MM  
+Der Monat der Dreharbeiten  
+- T-DD  
+Datum der Aufnahme  
+- T-HH  
+Beim Schießen  
+- T-MIN  
+Aufnahme Minuten  
+- T-SEC  
+Aufnahme Sekunden  
+- T-WEEKNO  
+Die Wochennummer des aufgenommenen Datums  
+- T-WEEKDAY  
+Tag der Woche (Sonne, Mo, etc.)  
+- T-WOCHENTAG_LÄNGS  
+Wochentag (Sonntag, Montag, etc.)  
 
-### Parameter für das Sync-Anfangsdatum<br>
+### Parameter für das Sync-Anfangsdatum  
 
-- E-DATE<br>
-Sync-Anfangsdatum (JJJJ-MM-TT)<br>
-- E-TIME<br>
-Sync-Anfangszeit(HH-MM-SS)<br>
-- E-DAY-OF-YEAR<br>
-Sync-Anfangsdatum(Tage seit Jahresbeginn)<br>
-- E-YYYY<br>
-Sync-Anfangsjahr<br>
-- E-YY<br>
-Sync-Anfangsjahr (2-stellig)<br>
-- E-MM<br>
-Sync-Anfang Monat<br>
-- E-DD<br>
-Sync-Anfang Tag<br>
-- E-HH<br>
-Sync-Anfang Stunden<br>
-- E-MIN<br>
-Sync-Anfang Minuten<br>
-- E-SEC<br>
-Sync-Anfang Sekunden<br>
-- E-WEEKNO<br>
-Die Wochennummer des übernommenen Datums<br>
-- E-WEEKDAY<br>
-Starttag der Synchronisation (Tag, Monat usw.)<br>
-- E-WOCHENTAG_LÄNGS<br>
-Starttag der Synchronisation (Sonntag, Montag, etc.)<br>
+- E-DATE  
+Sync-Anfangsdatum (JJJJ-MM-TT)  
+- E-TIME  
+Sync-Anfangszeit(HH-MM-SS)  
+- E-DAY-OF-YEAR  
+Sync-Anfangsdatum(Tage seit Jahresbeginn)  
+- E-YYYY  
+Sync-Anfangsjahr  
+- E-YY  
+Sync-Anfangsjahr (2-stellig)  
+- E-MM  
+Sync-Anfang Monat  
+- E-DD  
+Sync-Anfang Tag  
+- E-HH  
+Sync-Anfang Stunden  
+- E-MIN  
+Sync-Anfang Minuten  
+- E-SEC  
+Sync-Anfang Sekunden  
+- E-WEEKNO  
+Die Wochennummer des übernommenen Datums  
+- E-WEEKDAY  
+Starttag der Synchronisation (Tag, Monat usw.)  
+- E-WOCHENTAG_LÄNGS  
+Starttag der Synchronisation (Sonntag, Montag, etc.)  
 
-### Dateinamensparameter (Kann nur verwendet werden, wenn die Synchronisationsmethode Archiv ist)<br>
+### Dateinamensparameter (Kann nur verwendet werden, wenn die Synchronisationsmethode Archiv ist)  
 
-- ORIGINAL-NAME<br>
-Originaler Dateiname<br>
+- ORIGINAL-NAME  
+Originaler Dateiname  
 
-### Manuals<br>
-[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)<br>
-[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)<br>
+### Manuals  
+[FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  
+[Description](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_Desc_EN.htm)  

@@ -518,11 +518,11 @@
         <string name="msgs_tab_name_group">Gruppe</string>
         <string name="msgs_terminate_application">Beenden Sie SMBSync3.</string>
     <!-- Privacy Policy confirm -->
-        <string name="msgs_privacy_policy_confirm_title">Einverständnis mit der Datenschutzrichtlinie</string>
+        <string name="msgs_privacy_policy_confirm_title">Akzeptieren Sie die Datenschutzbestimmungen</string>
         <string name="msgs_privacy_policy_confirm_message">Bitte scrollen Sie nach unten und lesen Sie die gesamte Datenschutzrichtlinie.</string>
         <string name="msgs_privacy_policy_confirm_btn_deny">Nicht zustimmen</string>
         <string name="msgs_privacy_policy_confirm_btn_confirm">Zustimmen zum Fortfahren</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">Zustimmung zur Datenschutzrichtlinie</string>
+        <string name="msgs_privacy_policy_confirm_deny_title">Akzeptieren Sie die Datenschutzbestimmungen</string>
         <string name="msgs_privacy_policy_confirm_deny_message">Wenn Sie mit unseren Datenschutzbestimmungen nicht einverstanden sind, können Sie SMBSync3 nicht verwenden.</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Durchführen der Verwaltungsdateipflege.</string>
