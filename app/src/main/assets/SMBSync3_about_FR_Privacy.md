@@ -48,9 +48,9 @@ En désinstallant SMBSync3, les données enregistrées ("1.1.Données fournies p
 
 ### 2.les autorisations requises pour exécuter l'application.  
 
-### 2.2.stockage  
+### 2.1.stockage  
 
-### 2.2.1.Android11 ou plus récent.  
+### 2.1.1.Android11 ou plus récent.  
 **Accès à tous les fichiers**.  
 
 Accès à tous les fichiers** Utilisé pour la synchronisation et la gestion des fichiers en lecture/écriture.  

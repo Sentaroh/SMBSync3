@@ -62,11 +62,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -139,10 +137,10 @@ public class ActivityMain extends AppCompatActivity {
     private CommonUtilities mUtil = null;
 //    private CustomContextMenu ccMenu = null;
 
-    private final static int START_INITIALYZING = 0;
+    private final static int START_BEGINING = 0;
     private final static int START_COMPLETED = 1;
-    private final static int START_INPROGRESS = 2;
-    private int appStartStaus = START_INITIALYZING;
+    private final static int START_INITIALYZING = 2;
+    private int appStartStaus = START_BEGINING;
 
     private boolean appStartWithRestored =false;
 
@@ -267,48 +265,31 @@ public class ActivityMain extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, appStartStaus=" + appStartStaus);
-        if (appStartStaus == START_INITIALYZING) {
-            appStartStaus = START_INPROGRESS;
-            checkPrivacyPolicyAgreement(new CallBackListener() {
-                @Override
-                public void onCallBack(Context context, boolean positive, Object[] objects) {
-                    if (positive) {
-                        if (Build.VERSION.SDK_INT>=30) {
-                            //ENable "ALL_FILE_ACCESS"
-                            if (!isAllFileAccessPermissionGranted()) {
-                                requestAllFileAccessPermission(new CallBackListener() {
-                                    @Override
-                                    public void onCallBack(Context context, boolean b, Object[] objects) {
-                                        initApplication();
-                                    }
-                                });
-                            } else {
-                                initApplication();
-                            }
-                        } else {
-                            if (isLegacyStorageAccessGranted()) initApplication();
-                            else {
-                                requestLegacyStoragePermission(new CallBackListener(){
-                                    @Override
-                                    public void onCallBack(Context c, boolean positive, Object[] o) {
-                                        initApplication();
-                                    }
-                                });
-                            }
+        if (appStartStaus == START_BEGINING) {
+            appStartStaus = START_INITIALYZING;
+            if (Build.VERSION.SDK_INT>=30) {
+                //ENable "ALL_FILE_ACCESS"
+                if (!isAllFileAccessPermissionGranted()) {
+                    requestAllFileAccessPermission(new CallBackListener() {
+                        @Override
+                        public void onCallBack(Context context, boolean b, Object[] objects) {
+                            initApplication();
                         }
-                    } else {
-                        mUtil.showCommonDialogWarn(false,
-                                mContext.getString(R.string.msgs_privacy_policy_confirm_deny_title),
-                                mContext.getString(R.string.msgs_privacy_policy_confirm_deny_message),
-                                new CallBackListener(){
-                                    @Override
-                                    public void onCallBack(Context context, boolean positive, Object[] objects) {
-                                        finish();
-                                    }
-                                });
-                    }
+                    });
+                } else {
+                    initApplication();
                 }
-            });
+            } else {
+                if (isLegacyStorageAccessGranted()) initApplication();
+                else {
+                    requestLegacyStoragePermission(new CallBackListener(){
+                        @Override
+                        public void onCallBack(Context c, boolean positive, Object[] o) {
+                            initApplication();
+                        }
+                    });
+                }
+            }
         } else if (appStartStaus == START_COMPLETED) {
             setMediaStatusListener();
 
@@ -393,73 +374,6 @@ public class ActivityMain extends AppCompatActivity {
                         });
             }
         });
-    }
-
-    private void checkPrivacyPolicyAgreement(CallBackListener cbl) {
-        if (GlobalParameters.isPrivacyPolicyAgreed(mContext)) {
-            cbl.onCallBack(mContext, true, null);
-            return;
-        }
-
-        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.privacy_policy_agreement);
-
-        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.privacy_policy_agreement_dlg_title_view);
-        ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
-        final TextView tv_title=(TextView)dialog.findViewById(R.id.agree_privacy_policy_dlg_title);
-        tv_title.setTextColor(mGp.themeColorList.title_text_color);
-        final Button btn_ok=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_ok);
-        final Button btn_cancel=(Button)dialog.findViewById(R.id.privacy_policy_agreement_dlg_btn_cancel);
-
-        final TextView tv_agree=(TextView) dialog.findViewById(R.id.privacy_policy_agreement_dlg_agree);
-        tv_agree.setText(mActivity.getString(R.string.msgs_privacy_policy_confirm_message));
-        tv_agree.setTextColor(mGp.themeColorList.text_color_warning);
-
-        final WebView web_view=(WebView)dialog.findViewById(R.id.agree_privacy_policy_dlg_webview);
-        web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        web_view.setScrollbarFadingEnabled(false);
-        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
-        CommonUtilities.setWebViewListener(mGp, web_view, zf);
-        loadHelpFile(web_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
-
-        web_view.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                if(!web_view.canScrollVertically(1)) {
-                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                }
-            }
-        });
-
-        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-        btn_ok.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GlobalParameters.setPrivacyPolicyAgreed(mContext, true);
-                cbl.onCallBack(mContext, true, null);
-                dialog.dismiss();
-            }
-        });
-
-        btn_cancel.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cbl.onCallBack(mContext, false, null);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                cbl.onCallBack(mContext, false, null);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-
     }
 
     private void checkStoredKey(CallBackListener cbl) {
@@ -1251,7 +1165,7 @@ public class ActivityMain extends AppCompatActivity {
                 mUtil.addDebugMsg(2,"I","onPageScrolled entered, pos="+position);
             }
         });
-        if (appStartStaus == START_INITIALYZING) {
+        if (appStartStaus == START_BEGINING) {
             mMainTabLayout.setCurrentTabByName(mTabNameTask);
             mMainViewPager.setCurrentItem(0);
         }
@@ -2093,32 +2007,26 @@ public class ActivityMain extends AppCompatActivity {
                         mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
             }
         });
-        showDialogWithImageView(mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
-                mContext.getString(R.string.msgs_storage_permission_all_file_access_request_message),
-                mContext.getString(R.string.msgs_storage_permission_all_file_access_image),
-                mContext.getString(R.string.msgs_storage_permission_all_file_access_button_text),
-                mContext.getString(R.string.msgs_common_dialog_cancel), ntfy_all_file_access);
-    }
-
-    private void showDialogWithImageView(final  String title_text, final String msg_text, String image_file_name,
-                                         String button_label_ok, String button_label_cancel, final NotifyEvent p_ntfy) {
         final Dialog dialog=new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(false);
-        dialog.setContentView(R.layout.dialog_with_image_view_dlg);
+        dialog.setContentView(R.layout.request_all_file_access_dlg);
 
-        TextView dlg_title=(TextView)dialog.findViewById(R.id.dialog_with_image_view_dlg_title);
-        TextView dlg_msg=(TextView)dialog.findViewById(R.id.dialog_with_image_view_dlg_msg);
-        ImageView dlg_image=(ImageView)dialog.findViewById(R.id.dialog_with_image_view_dlg_image);
+        TextView dlg_title=(TextView)dialog.findViewById(R.id.request_all_file_dlg_title);
+        TextView dlg_msg=(TextView)dialog.findViewById(R.id.request_all_file_dlg_msg);
+        ImageView dlg_image=(ImageView)dialog.findViewById(R.id.request_all_file_dlg_image);
 
-        Button dlg_ok=(Button)dialog.findViewById(R.id.dialog_with_image_view_dlg_btn_ok);
-        Button dlg_cancel=(Button)dialog.findViewById(R.id.dialog_with_image_view_dlg_btn_cancel);
+        Button dlg_show_privacy_btn=(Button)dialog.findViewById(R.id.request_all_file_dlg_show_privacy_policy_button);
+        dlg_show_privacy_btn.setVisibility(Button.VISIBLE);
 
-        dlg_title.setText(title_text);
-        dlg_msg.setText(msg_text);
+        Button dlg_ok=(Button)dialog.findViewById(R.id.request_all_file_dlg_btn_ok);
+        Button dlg_cancel=(Button)dialog.findViewById(R.id.request_all_file_dlg_btn_cancel);
+
+        dlg_title.setText(mContext.getString(R.string.msgs_storage_permission_all_file_access_title));
+        dlg_msg.setText(mContext.getString(R.string.msgs_storage_permission_all_file_access_request_message));
 
         try {
-            InputStream is = mContext.getResources().getAssets().open(image_file_name);
+            InputStream is = mContext.getResources().getAssets().open(mContext.getString(R.string.msgs_storage_permission_all_file_access_image));
             BufferedInputStream bis = new BufferedInputStream(is, 1024*1024);
             Bitmap bm = BitmapFactory.decodeStream(bis);
             dlg_image.setImageBitmap(bm);
@@ -2128,13 +2036,20 @@ public class ActivityMain extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        dlg_ok.setText(button_label_ok);
-        dlg_cancel.setText(button_label_cancel);
+        dlg_show_privacy_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPrivacyPolicy();
+            }
+        });
+
+        dlg_ok.setText(mContext.getString(R.string.msgs_storage_permission_all_file_access_button_text));
+        dlg_cancel.setText(mContext.getString(R.string.msgs_common_dialog_cancel));
 
         dlg_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                p_ntfy.notifyToListener(true, null);
+                ntfy_all_file_access.notifyToListener(true, null);
                 dialog.dismiss();
             }
         });
@@ -2142,7 +2057,7 @@ public class ActivityMain extends AppCompatActivity {
         dlg_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                p_ntfy.notifyToListener(false, null);
+                ntfy_all_file_access.notifyToListener(false, null);
                 dialog.dismiss();;
             }
         });
@@ -2159,6 +2074,34 @@ public class ActivityMain extends AppCompatActivity {
 
     private boolean isAllFileAccessPermissionGranted() {
         return Environment.isExternalStorageManager();
+    }
+
+    private void showPrivacyPolicy() {
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.show_privacy_policy_dlg);
+
+        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.show_privacy_policy_dlg_title_view);
+        ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
+        final TextView tv_title=(TextView)dialog.findViewById(R.id.show_privacy_policy_dlg_title);
+        tv_title.setTextColor(mGp.themeColorList.title_text_color);
+
+        final WebView web_view=(WebView)dialog.findViewById(R.id.agree_privacy_policy_dlg_webview);
+        web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        web_view.setScrollbarFadingEnabled(false);
+        int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
+        CommonUtilities.setWebViewListener(mGp, web_view, zf);
+        loadHelpFile(web_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
     }
 
 //    private void checkInternalStoragePermission(final NotifyEvent p_ntfy) {

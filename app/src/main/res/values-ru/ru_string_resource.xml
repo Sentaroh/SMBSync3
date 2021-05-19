@@ -519,12 +519,8 @@
         <string name="msgs_tab_name_group">Группа</string>
         <string name="msgs_terminate_application">Выход из SMBSync3.</string>
     <!-- Privacy Policy confirm -->
-        <string name="msgs_privacy_policy_confirm_title">Согласитесь с политикой конфиденциальности</string>
-        <string name="msgs_privacy_policy_confirm_message">Пожалуйста, прокрутите страницу вниз и прочитайте всю политику конфиденциальности.</string>
-        <string name="msgs_privacy_policy_confirm_btn_deny">Не соглашаться</string>
-        <string name="msgs_privacy_policy_confirm_btn_confirm">Согласитесь продолжать</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">Согласитесь с политикой конфиденциальности</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">Если вы не согласны с нашей политикой конфиденциальности, вы не можете использовать SMBSync3.</string>
+        <string name="msgs_privacy_policy_title">Политика приватности</string>
+        <string name="msgs_privacy_policy_show_privacy_policy">Показать политику конфиденциальности</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Выполнение управления файлами обслуживания.</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Отмена обслуживания</string>
@@ -906,7 +902,7 @@
         <string name="msgs_storage_permission_msg_saf_error_occured">SAF Berechtigungsfehler anfordern</string>
         <string name="msgs_storage_permission_all_file_access_title">All File Access</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_en.png</string>
-        <string name="msgs_storage_permission_all_file_access_request_message">SMBSync 3 требует разрешения \"All File Access\" для синхронизации с различными указанными вами каталогами.\nПожалуйста, выполните следующие шаги, чтобы разрешить "Доступ ко всем файлам" для доступа к хранилищу.\n    0.Нажмите кнопку \"Next\" в нижней части экрана.\n    1.Коснитесь \"SMBSync3\" на появившемся экране разрешений "All File Access" (Доступ ко всем файлам).\n    2.Коснитесь переключателя в правой части экрана.\n    3.Убедитесь, что переключатель в правой части экрана стал синим.\n    4. Вернитесь к экрану приложения с помощью клавиши возврата.</string>
+        <string name="msgs_storage_permission_all_file_access_request_message">SMBSync3 требует разрешения \"Доступ ко всем файлам\" для синхронизации с различными указанными вами каталогами. \nожалуйста, ознакомьтесь с политикой конфиденциальности приложения, чтобы узнать о собираемых данных и требуемых разрешениях.\nЧтобы разрешить \"Доступ ко всем файлам\", выполните следующие действия.\n0. Нажмите \"Далее\" в нижней части экрана.\n1. Нажмите \"SMBSync3\" на появившемся экране \"Доступ ко всем файлам\".\n2. Включите переключатель в правой части экрана.\n3. Убедитесь, что переключатель в правой части экрана горит синим цветом.\n4. Вернитесь на экран приложения с помощью клавиши \"Назад\".</string>
         <string name="msgs_storage_permission_all_file_access_button_text">Next</string>
         <string name="msgs_storage_permission_all_file_access_denied_message">Вы не можете запустить приложение, пока не будет разрешен \"Доступ ко всем файлам\". Если вы хотите разрешить его, пожалуйста, запустите приложение заново.</string>
         <string name="msgs_storage_permission_all_file_access_error_message">Экран разрешения \"Доступ ко всем файлам\" не мог отображаться.\nОшибка = %s</string>

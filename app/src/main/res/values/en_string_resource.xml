@@ -519,12 +519,8 @@
         <string name="msgs_tab_name_group">Group</string>
         <string name="msgs_terminate_application">Exit SMBSync3.</string>
     <!-- Privacy Policy confirm -->
-        <string name="msgs_privacy_policy_confirm_title">Agree to the privacy policy</string>
-        <string name="msgs_privacy_policy_confirm_message">Please scroll down and read the entire privacy policy.</string>
-        <string name="msgs_privacy_policy_confirm_btn_deny">Disagree</string>
-        <string name="msgs_privacy_policy_confirm_btn_confirm">Agree to continue</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">Agree to the privacy policy</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">If you do not agree to the privacy policy, you cannot use SMBSync3.</string>
+        <string name="msgs_privacy_policy_title">Privacy Policy</string>
+        <string name="msgs_privacy_policy_show_privacy_policy">Show Privacy Policy</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Performing maintenance of app data files</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
@@ -906,12 +902,7 @@
         <string name="msgs_storage_permission_msg_saf_error_occured">SAF Request permission error</string>
         <string name="msgs_storage_permission_all_file_access_title">All File Access</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_en.png</string>
-        <string name="msgs_storage_permission_all_file_access_request_message">SMBSync 3 requires \"All File Access\" permission to synchronize to the various directories you specify.\nPlease follow the steps below to allow \"All File Access\" to access the storage.\n\n
-    0.Click the \"Next\" button at the bottom of the screen.\n
-    1.Tap \"SMBSync3\" on the \"All File Access\" permissions screen that appears.\n
-    2.Tap the switch on the right side of the screen.\n
-    3.Make sure that the switch on the right side of the screen turns blue.\n
-    4. Return to the application screen with the back key</string>
+        <string name="msgs_storage_permission_all_file_access_request_message">SMBSync3 requires permission to \"Access All Files\" in order to sync to various directories you specify. Please check the privacy policy of the application for the data to be collected and the required permissions.\nPlease follow the steps below to allow \"Access all files\".\n0. Tap \"Next\" at the bottom of the screen.\n1. Tap \"SMBSync3\" on the \"Access all files\" screen that appears.\n2. Turn on the switch on the right side of the screen.\n3. Confirm that the switch on the right side of the screen is blue.\n4. Return to the application screen with the back key.</string>
         <string name="msgs_storage_permission_all_file_access_button_text">Next</string>
         <string name="msgs_storage_permission_all_file_access_denied_message">You cannot launch the app until \"All File Access\" is allowed. If you want to allow it, please start the app again.</string>
         <string name="msgs_storage_permission_all_file_access_error_message">The \"All File Access\" permission screen could not be displayed.\nError=%s</string>

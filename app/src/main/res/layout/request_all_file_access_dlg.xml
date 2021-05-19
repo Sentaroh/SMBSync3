@@ -5,13 +5,13 @@
     android:orientation="vertical" >
     
     <LinearLayout
-        android:id="@+id/dialog_with_image_view_dlg_title_view"
+        android:id="@+id/request_all_file_dlg_title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/dialog_with_image_view_dlg_title"
+            android:id="@+id/request_all_file_dlg_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
             <TextView
-                android:id="@+id/dialog_with_image_view_dlg_msg"
+                android:id="@+id/request_all_file_dlg_msg"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -42,7 +42,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             />
             <ImageView
-                android:id="@+id/dialog_with_image_view_dlg_image"
+                android:id="@+id/request_all_file_dlg_image"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -53,13 +53,20 @@
         </LinearLayout>
     </ScrollView>
 
+    <Button
+        android:id="@+id/request_all_file_dlg_show_privacy_policy_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msgs_privacy_policy_show_privacy_policy"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/dialog_with_image_view_dlg_btn_cancel"
+            android:id="@+id/request_all_file_dlg_btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -67,7 +74,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
-            android:id="@+id/dialog_with_image_view_dlg_btn_ok"
+            android:id="@+id/request_all_file_dlg_btn_ok"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -514,12 +514,8 @@
         <string name="msgs_tab_name_group">群体</string>
         <string name="msgs_terminate_application">退出SMBSync3。</string>
     <!-- Privacy Policy confirm -->
-        <string name="msgs_privacy_policy_confirm_title">同意隐私政策</string>
-        <string name="msgs_privacy_policy_confirm_message">请向下滚动并阅读整个隐私政策。</string>
-        <string name="msgs_privacy_policy_confirm_btn_deny">不同意</string>
-        <string name="msgs_privacy_policy_confirm_btn_confirm">同意继续</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">同意隐私政策</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">如果你不同意我们的隐私政策，你不能使用SMBSync3。</string>
+        <string name="msgs_privacy_policy_title">同意隐私政策</string>
+        <string name="msgs_privacy_policy_show_privacy_policy">显示隐私政策</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">进行管理档案的维护。</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">取消维护</string>
@@ -901,12 +897,7 @@
         <string name="msgs_storage_permission_msg_saf_error_occured">SAF 申请权限错误</string>
         <string name="msgs_storage_permission_all_file_access_title">All File Access</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_en.png</string>
-        <string name="msgs_storage_permission_all_file_access_request_message">Please follow the steps below to allow \"All File Access\" to access the storage.\n\n
-    0.Click the \"Next\" button at the bottom of the screen.\n
-    1.Tap \"SMBSync3\" on the \"All File Access\" permissions screen that appears.\n
-    2.Tap the switch on the right side of the screen.\n
-    3.Make sure that the switch on the right side of the screen turns blue.\n
-    4. Return to the application screen with the back key</string>
+        <string name="msgs_storage_permission_all_file_access_request_message">SMBSync3需要 \"访问所有文件 \"的权限，以便同步到您指定的各个目录。请查看应用程序的隐私政策，了解要收集的数据和所需的权限。\n请按照下面的步骤来允许 \"访问所有文件\"。\n0. 点屏幕底部的 \"下一步\"。\n1. 在出现的 \"访问所有文件 \"屏幕上点 \"SMBSync3\"。\n2. 2. 打开屏幕右侧的开关。\n3. 确认屏幕右侧的开关是蓝色的。\n4. 用后退键返回到应用屏幕。</string>
         <string name="msgs_storage_permission_all_file_access_button_text">Next</string>
         <string name="msgs_storage_permission_all_file_access_denied_message">You cannot launch the app until \"All File Access\" is allowed. If you want to allow it, please start the app again.</string>
         <string name="msgs_storage_permission_all_file_access_error_message">The \"All File Access\" permission screen could not be displayed.\nError=%s</string>

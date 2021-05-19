@@ -48,9 +48,9 @@ Durch die Deinstallation von SMBSync3 werden die gespeicherten Daten ("1.1.Vom B
 
 ### 2.erforderliche Berechtigungen zum Ausführen der Anwendung  
 
-### 2.2.Speicherung  
+### 2.1.Speicherung  
 
-### 2.2.1.Android11 oder höher.  
+### 2.1.1.Android11 oder höher.  
 **Alle Dateizugriffe**.  
 
 Alle Dateizugriffe** Wird für die Dateisynchronisation und das Lesen/Schreiben von Verwaltungsdateien verwendet.  

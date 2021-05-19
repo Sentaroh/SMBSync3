@@ -518,12 +518,8 @@
         <string name="msgs_tab_name_group">グループ</string>
         <string name="msgs_terminate_application">SMBSync3を終了します。</string>
     <!-- Privacy Policy confirm -->
-        <string name="msgs_privacy_policy_confirm_title">プライバシーポリシーへの同意</string>
-        <string name="msgs_privacy_policy_confirm_message">プライバシーポリシーをスクロールして全てお読み下さい。</string>
-        <string name="msgs_privacy_policy_confirm_btn_deny">不同意</string>
-        <string name="msgs_privacy_policy_confirm_btn_confirm">同意して続行</string>
-        <string name="msgs_privacy_policy_confirm_deny_title">プライバシーポリシーへの同意</string>
-        <string name="msgs_privacy_policy_confirm_deny_message">プライバシーポリシーに同意していただけないとSMBSync3は使用できません</string>
+        <string name="msgs_privacy_policy_title">プライバシー ポリシー</string>
+        <string name="msgs_privacy_policy_show_privacy_policy">プライバシーポリシーの表示</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">管理ファイルの保守実行中</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">保守の中止</string>
@@ -905,7 +901,7 @@
         <string name="msgs_storage_permission_msg_saf_error_occured">SAF 許可エラー</string>
         <string name="msgs_storage_permission_all_file_access_title">全てのファイルへのアクセス</string>
         <string name="msgs_storage_permission_all_file_access_image">all_file_access_desc_ja.png</string>
-        <string name="msgs_storage_permission_all_file_access_request_message">SMBSync3では貴方が指定する様々なディレクトリーへの同期を行うために「全てのファイルへのアクセス」の許可が必要です。\n下記の手順で「全てのファイルへのアクセス」を許可してください。\n0.画面最下部の「次へ」をタップしてください。\n1.「全てのファイルへのアクセス」画面が表示されますので\"SMBSync3\"をタップしてください\n2.画面右端のスイッチをオンにしてください\n3.画面右端のスイッチが青になっている事を確認する\n4.戻るキーでアプリケーション画面に戻る</string>
+        <string name="msgs_storage_permission_all_file_access_request_message">SMBSync3では貴方が指定する様々なディレクトリーへの同期を行うために「全てのファイルへのアクセス」の許可が必要です。収集するデータと必要な権限についてはアプリのプライバシーポリシーを確認してください。\n下記の手順で「全てのファイルへのアクセス」を許可してください。\n0.画面最下部の「次へ」をタップしてください。\n1.「全てのファイルへのアクセス」画面が表示されますので\"SMBSync3\"をタップしてください\n2.画面右端のスイッチをオンにしてください\n3.画面右端のスイッチが青になっている事を確認する\n4.戻るキーでアプリケーション画面に戻る</string>
         <string name="msgs_storage_permission_all_file_access_button_text">次へ</string>
         <string name="msgs_storage_permission_all_file_access_denied_message">All File Accessが許可されるまではアプリを起動できません。許可する場合はアプリを再起動してください。</string>
         <string name="msgs_storage_permission_all_file_access_error_message">All File Access許可画面を表示できませんでした。\nエラー=%s</string>
