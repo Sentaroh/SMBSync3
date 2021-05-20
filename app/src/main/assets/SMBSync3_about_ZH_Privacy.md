@@ -36,6 +36,7 @@
 
 - 从历史选项卡中按[分享按钮]。  
 - 从系统信息中点击 "发送至开发者 "按钮。  
+- 从日志管理中点击 "分享 "按钮。  
 - 从日志管理中点击 "发送至开发者 "按钮。  
 - 点击日志管理中的 "导出日志文件 "按钮，导出到外部存储。  
 - 通过执行菜单中的 "导出设置"，"1.1.由用户提供给SMBSync3的数据"将被导出。  
@@ -51,20 +52,19 @@
 ### 2.1. 储存  
 
 ### 2.1.1.Android11或更高版本。  
-**所有的文件访问**。  
-
+**<u>All file access</u>**  
 所有文件访问**用于文件同步和管理文件读/写。  
 
 ### 2.1.2.安卓10或之前  
 
 #### 2.1.2.1.照片、媒体、文件  
-**"read the contents of your USB storage"**  
-**"modify or delete the contents of your USB storage"**  
+**<u>read the contents of your USB storage</u>**  
+**<u>modify or delete the contents of your USB storage</u>**  
 用于文件同步和读/写管理文件。  
 
 ### 2.2.Wi-Fi连接信息  
 **查看Wi-Fi连接**。  
-用于检查同步开始时的Wi-Fi状态。  
+当同步开始时，使用它来检查网络连接。  
 
 ### 2.3.其他  
 ### 2.3.1.View network connections  
@@ -74,10 +74,10 @@
 ### 2.3.3.Full network access  
 这是用来通过网络的SMB协议进行同步。  
 ### 2.3.4.Run at startup  
-用于执行预定的同步。  
+用于在设备重启时初始化预定同步。  
 ### 2.3.5.Control vibration  
 这是用来通知用户同步完成的时间。  
 ### 2.3.6.Prevent device from sleeping  
-用于从一个日程表或外部应用程序开始同步。  
+用来防止设备在同步过程中进入睡眠状态。  
 ### 2.3.7.Install shortcuts  
 用于在桌面上添加一个同步启动的快捷方式。  

@@ -36,6 +36,7 @@ Enabling logging will save the activity record data in the app's memory area for
 
 - Press "Share button" from History tab.  
 - Click "Send to Developer" button from System Information.  
+- Click the "Share" button from the log management.  
 - Click the "Send to Developer" button from the log management.  
 - Export to external storage by clicking "Export log file" button from Log Management.  
 - By executing "Export settings" from the menu, "1.1. Data provided to SMBSync3 from users" will be exported.  
@@ -51,20 +52,19 @@ By uninstalling SMBSync3, the saved data ("1.1. Data provided by user to SMBSync
 ### 2.1.Storage  
 
 ### 2.1.1.Android 11 or later  
-**All file access**.  
-
+**<u>All file access</u>**  
 Used for file synchronization and reading/writing management files.  
 
 ### 2.1.2.Android 10 or before  
 
 ### 2.1.Photos, Media and Files  
-**"read the contents of your USB storage"**  
-**"modify or delete the contents of your USB storage"**  
+**<u>read the contents of your USB storage</u>**  
+**<u>modify or delete the contents of your USB storage</u>**  
 Used for file synchronization and reading/writing management files.  
 
 ### 2.2.Wi-Fi connection information  
 **view Wi-Fi connections**.  
-Used to check the Wi-Fi status when synchronization starts.  
+Use this to check network connections when starting synchronization.  
 
 ### 2.3.Others  
 ### 2.3.1.View network connections  
@@ -74,10 +74,10 @@ This function is used to turn Wi-Fi on and off for scheduled synchronization in 
 ### 2.3.3.Full network access  
 Use this to synchronize via SMB protocol through the network.  
 ### 2.3.4.Run at startup  
-Used to perform scheduled synchronization.  
+Used to initialize scheduled synchronization upon device reboot.  
 ### 2.3.5.Control vibration  
 Used to notify the user when synchronization is finished.  
 ### 2.3.6.Prevent device from sleeping  
-Used to start synchronization from a schedule or external app.  
+Used to prevent the device from going to sleep during synchronization.  
 ### 2.3.7.Install shortcuts  
 Used to add sync start shortcuts to the desktop.  

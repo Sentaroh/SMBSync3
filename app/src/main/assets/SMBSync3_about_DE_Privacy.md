@@ -36,6 +36,7 @@ Wenn Sie die Protokollierung aktivieren, werden die Daten der Aktivitätsaufzeic
 
 - Drücken Sie die Taste [Freigeben] auf der Registerkarte Verlauf.  
 - Klicken Sie in den Systeminformationen auf die Schaltfläche "An Entwickler senden".  
+- Klicken Sie in der Protokollverwaltung auf die Schaltfläche "Freigeben".  
 - Klicken Sie in der Protokollverwaltung auf die Schaltfläche "An Entwickler senden".  
 - Klicken Sie in der Protokollverwaltung auf die Schaltfläche "Protokolldatei exportieren", um in einen externen Speicher zu exportieren.  
 - Durch Ausführen von "Einstellungen exportieren" aus dem Menü wird "1.1.Vom Benutzer an SMBSync3 bereitgestellte Daten" exportiert werden.  
@@ -51,20 +52,19 @@ Durch die Deinstallation von SMBSync3 werden die gespeicherten Daten ("1.1.Vom B
 ### 2.1.Speicherung  
 
 ### 2.1.1.Android11 oder höher.  
-**Alle Dateizugriffe**.  
-
+**<u>All file access</u>**  
 Alle Dateizugriffe** Wird für die Dateisynchronisation und das Lesen/Schreiben von Verwaltungsdateien verwendet.  
 
 ### 2.1.2.Android 10 oder früher  
 
 #### 2.1.2.1.Fotos, Medien, Dateien  
-**"read the contents of your USB storage"**  
-**"modify or delete the contents of your USB storage"**  
+**<u>read the contents of your USB storage</u>**  
+**<u>modify or delete the contents of your USB storage</u>**  
 Wird für die Dateisynchronisation und das Lesen/Schreiben von Verwaltungsdateien verwendet.  
 
 ### 2.2.Wi-Fi Verbindungsinformationen  
 **Wi-Fi-Verbindungen anzeigen**.  
-Wird verwendet, um den Wi-Fi-Status zu prüfen, wenn die Synchronisierung beginnt.  
+Verwenden Sie dies, um Netzwerkverbindungen zu prüfen, wenn die Synchronisierung gestartet wird.  
 
 ### 2.3.Andere  
 ### 2.3.1.View network connections  
@@ -74,10 +74,10 @@ Diese Funktion wird verwendet, um Wi-Fi für die geplante Synchronisierung auf A
 ### 2.3.3.Full network access  
 Dies wird zur Synchronisierung über das SMB-Protokoll durch das Netzwerk verwendet.  
 ### 2.3.4.Run at startup  
-Wird verwendet, um eine geplante Synchronisierung durchzuführen.  
+Wird verwendet, um die geplante Synchronisierung beim Neustart des Geräts zu initialisieren.  
 ### 2.3.5.Control vibration  
 Dies wird verwendet, um den Benutzer zu benachrichtigen, wenn die Synchronisierung beendet ist.  
 ### 2.3.6.Prevent device from sleeping  
-Dient zum Starten der Synchronisierung aus einem Zeitplan oder einer externen App.  
+Wird verwendet, um zu verhindern, dass das Gerät während der Synchronisierung in den Ruhezustand geht.  
 ### 2.3.7.Install shortcuts  
 Dient zum Hinzufügen einer Sync-Start-Verknüpfung auf dem Desktop.  

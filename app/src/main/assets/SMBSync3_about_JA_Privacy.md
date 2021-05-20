@@ -36,6 +36,7 @@ SMBSync3の実行結果をユーザーが確認できるようにデータをア
 
 - 履歴タブから「共有ボタン」を押す  
 - システム情報から「開発者に送る」ボタンを押す  
+- ログ管理から「共有」ボタンを押す  
 - ログ管理から「開発者に送る」ボタンを押す  
 - ログ管理から「ログファイルの書出」ボタンを押すことにより外部ストレージに書き出します  
 - メニューから「タスクリストの保存」を実行する事により「 1.1.ユーザーからSMBSync3に提供されるデータ」を書き出します。  
@@ -51,20 +52,19 @@ SMBSync3をアンインストールする事により保存したデータ("1.1.
 ### 2.1.ストレージ  
 
 ### 2.1.1.Android11以降  
-**All file access**  
-
+**<u>All file access</u>**  
 ファイル同期と管理ファイルの読み書きで使用します。  
 
 ### 2.1.2.Android10以前  
 
 #### 2.1.2.1.写真、メディア、ファイル  
-**"read the contents of your USB storage"**  
-**"modify or delete the contents of your USB storage"**  
+**<u>read the contents of your USB storage</u>**  
+**<u>modify or delete the contents of your USB storage</u>**  
 ファイル同期と管理ファイルの読み書きで使用します。  
 
 ### 2.2.Wi-Fi 接続情報  
 **view Wi-Fi connections**  
-同期開始時にWi-Fiの状況を確認するために使用します。  
+同期開始時にネットワークに接続されていることを確認するために使用します。  
 
 ### 2.3.その他  
 ### 2.3.1.View network connections  
@@ -74,10 +74,10 @@ Andoid 8/9でスケジュール同期でWi-Fiのオン・オフを行うため�
 ### 2.3.3.Full network access  
 ネットワークを通じてSMBプロトコルで同期を行うために使用します。  
 ### 2.3.4.Run at startup  
-スケジュール同期を行うために使用します。  
+デバイス再起動時にスケジュール同期の初期化を行うために使用します。  
 ### 2.3.5.Control vibration  
 同期終了時にユーザーに通知を行うために使用します。  
 ### 2.3.6.Prevent device from sleeping  
-スケジュールまたは外部アプリからの同期開始で使用します。  
+同期中にデバイスがスリープしないようにするために使用します。  
 ### 2.3.7.Install shortcuts  
 デスクトップに同期開始ショートカットを追加するために使用します。  

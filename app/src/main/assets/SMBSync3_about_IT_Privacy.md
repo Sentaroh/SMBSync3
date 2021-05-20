@@ -36,6 +36,7 @@ Abilitando la registrazione verranno salvati i dati di registrazione dell'attivi
 
 - Premi [Pulsante di condivisione] dalla scheda Storia.  
 - Fare clic sul pulsante "Invia allo sviluppatore" da Informazioni di sistema.  
+- Fare clic sul pulsante "Condividi" dalla gestione del registro.  
 - Cliquez sur le bouton "Envoyer au développeur" à partir de la gestion du journal.  
 - Fare clic sul pulsante "Export log file" dalla gestione dei registri per esportare su una memoria esterna.  
 - Eseguendo "Impostazioni di esportazione" dal menu, "1.1.Dati forniti dall'utente a SMBSync3" saranno esportati.  
@@ -51,20 +52,19 @@ Disinstallando SMBSync3, i dati salvati ("1.1.Dati forniti dall'utente a SMBSync
 ### 2.1.Stoccaggio  
 
 ### 2.1.1.Android11 o successivo.  
-**Tutti gli accessi ai file**.  
-
+**<u>All file access</u>**  
 Tutti gli accessi ai file** Usato per la sincronizzazione dei file e la gestione dei file in lettura/scrittura.  
 
 ### 2.1.2.Android 10 o prima  
 
 #### 2.1.2.1.Foto, media, file  
-**"read the contents of your USB storage"**  
-**"modify or delete the contents of your USB storage"**  
+**<u>read the contents of your USB storage</u>**  
+**<u>modify or delete the contents of your USB storage</u>**  
 Utilizzato per la sincronizzazione dei file e la lettura/scrittura di file di gestione.  
 
 ### 2.2.Informazioni sulla connessione Wi-Fi  
 **vedi le connessioni Wi-Fi**.  
-Utilizzato per controllare lo stato del Wi-Fi quando inizia la sincronizzazione.  
+Usalo per controllare le connessioni di rete quando viene avviata la sincronizzazione.  
 
 ### 2.3.Altri  
 ### 2.3.1.View network connections  
@@ -74,10 +74,10 @@ Questa funzione è usata per attivare/disattivare il Wi-Fi per la sincronizzazio
 ### 2.3.3.Full network access  
 Questo è usato per sincronizzare tramite il protocollo SMB attraverso la rete.  
 ### 2.3.4.Run at startup  
-Utilizzato per eseguire la sincronizzazione programmata.  
+Utilizzato per inizializzare la sincronizzazione programmata al riavvio del dispositivo.  
 ### 2.3.5.Control vibration  
 Questo è usato per notificare all'utente quando la sincronizzazione è finita.  
 ### 2.3.6.Prevent device from sleeping  
-Utilizzato per avviare la sincronizzazione da una pianificazione o da un'applicazione esterna.  
+Utilizzato per evitare che il dispositivo vada a dormire durante la sincronizzazione.  
 ### 2.3.7.Install shortcuts  
 Utilizzato per aggiungere un collegamento di avvio della sincronizzazione al desktop.  

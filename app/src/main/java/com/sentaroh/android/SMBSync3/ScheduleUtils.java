@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
+import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_SET_TIMER;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_SET_TIMER_IF_NOT_SET;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.SCHEDULE_INTENT_TIMER_EXPIRED;
@@ -320,11 +321,12 @@ class ScheduleUtils {
 
     static public void setTimerIfNotSet(Context c, GlobalParameters gp, LogUtil lu) {
         lu.addDebugMsg(1, "I", "setTimerIfNotSet entered.");
-        if (!isTimerScheduled(c, lu)) {
-            setTimer(c, gp, lu);
-        } else {
-            lu.addDebugMsg(1, "I", "setTimerIfNotSet request ignored.");
-        }
+        setTimer(c, gp, lu);
+//        if (!isTimerScheduled(c, lu)) {
+//            setTimer(c, gp, lu);
+//        } else {
+//            lu.addDebugMsg(1, "I", "setTimerIfNotSet request ignored.");
+//        }
     }
 
     static public void setTimer(Context c, GlobalParameters gp, LogUtil lu) {
@@ -373,10 +375,15 @@ class ScheduleUtils {
                     String sched_names = "", sep="";
                     for (ScheduleListAdapter.ScheduleListItem si : begin_sched_list) {
                         sched_names += sep + si.scheduleName;
-                        sep=",";
+                        sep=NAME_LIST_SEPARATOR;
                     }
 
                     long time = getNextScheduleTime(begin_sched_list.get(0));
+                    if ((time/1000)<(System.currentTimeMillis()/1000)) {
+                        begin_sched_list.get(0).scheduleLastExecTime=0;
+                        time = getNextScheduleTime(begin_sched_list.get(0));
+                        lu.addDebugMsg(1, "I", "setTimer calcurated time is past");
+                    }
                     lu.addDebugMsg(1, "I", "setTimer result=" + StringUtil.convDateTimeTo_YearMonthDayHourMinSec(time) + ", name=(" + sched_names+")");
                     Intent in = new Intent(c, SyncReceiver.class);
                     in.setAction(SCHEDULE_INTENT_TIMER_EXPIRED);

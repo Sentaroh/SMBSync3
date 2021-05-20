@@ -36,6 +36,7 @@ L'activation de la journalisation permet de sauvegarder les données d'enregistr
 
 - Appuyez sur le [bouton Partager] dans l'onglet Historique.  
 - Cliquez sur le bouton "Envoyer au développeur" à partir des informations système.  
+- Cliquez sur le bouton "Partager" à partir de la gestion du journal.  
 - Cliquez sur le bouton "Envoyer au développeur" à partir de la gestion du journal.  
 - Cliquez sur le bouton "Exporter le fichier journal" depuis la gestion du journal pour l'exporter vers un stockage externe.  
 - En exécutant "Exporter la configuration" à partir du menu, "1.1.Données fournies par l'utilisateur à SMBSync3" sera exporté.  
@@ -51,20 +52,19 @@ En désinstallant SMBSync3, les données enregistrées ("1.1.Données fournies p
 ### 2.1.stockage  
 
 ### 2.1.1.Android11 ou plus récent.  
-**Accès à tous les fichiers**.  
-
+**<u>All file access</u>**  
 Accès à tous les fichiers** Utilisé pour la synchronisation et la gestion des fichiers en lecture/écriture.  
 
 ### 2.1.2.Android 10 ou avant  
 
 #### 2.1.2.1.Photos, médias, fichiers  
-**"read the contents of your USB storage"**  
-**"modify or delete the contents of your USB storage"**  
+**<u>read the contents of your USB storage</u>**  
+**<u>modify or delete the contents of your USB storage</u>**  
 Utilisé pour la synchronisation des fichiers et la lecture/écriture des fichiers de gestion.  
 
 ### 2.2.Informations sur la connexion Wi-Fi  
 **voir les connexions Wi-Fi**.  
-Utilisé pour vérifier l'état du Wi-Fi lorsque la synchronisation commence.  
+Utilisez cette option pour vérifier les connexions réseau lorsque la synchronisation est lancée.  
 
 ### 2.3.Autres  
 ### 2.3.1.View network connections  
@@ -74,10 +74,10 @@ Cette fonction est utilisée pour activer/désactiver le Wi-Fi pour la synchroni
 ### 2.3.3.Full network access  
 Il est utilisé pour synchroniser via le protocole SMB à travers le réseau.  
 ### 2.3.4.Run at startup  
-Utilisé pour effectuer une synchronisation programmée.  
+Utilisé pour initialiser la synchronisation programmée lors du redémarrage du dispositif.  
 ### 2.3.5.Control vibration  
 Ceci est utilisé pour notifier l'utilisateur lorsque la synchronisation est terminée.  
 ### 2.3.6.Prevent device from sleeping  
-Utilisé pour démarrer la synchronisation à partir d'une planification ou d'une application externe.  
+Utilisé pour empêcher l'appareil de se mettre en veille pendant la synchronisation.  
 ### 2.3.7.Install shortcuts  
 Permet d'ajouter un raccourci de démarrage de la synchronisation sur le bureau.  
