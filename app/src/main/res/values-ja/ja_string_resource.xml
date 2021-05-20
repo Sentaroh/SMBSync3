@@ -749,6 +749,8 @@
         <string name="msgs_schedule_list_edit_multi_sched_warn">複数スケジュールが同時刻に起動される場合は同期リストをまとめ、重複した同期タスクを無視します。またWI-FIオプションも各スケジュールで指定したオプションを組み合わせします。</string>
         <string name="msgs_schedule_sync_task_start_label">スケジュールを実行する(%s)</string>
         <string name="msgs_schedule_sync_task_start_error">スケジュール開始エラー</string>
+        <string name="msgs_schedule_battery_optimization_warning_title">バッテリー最適化</string>
+        <string name="msgs_schedule_battery_optimization_warning_msg">バッテリー最適化が有効なためスケジュール同期が失敗する可能性があります。バッテリー最適化の設定を変更しますか？</string>
     <!-- Group -->
         <string name="msgs_menu_group">グループ</string>
         <string name="msgs_group_edit_title_add">グループの追加</string>

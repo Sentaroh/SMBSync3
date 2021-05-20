@@ -749,6 +749,8 @@
         <string name="msgs_schedule_list_edit_multi_sched_warn">Zeitpläne und WiFi-Optionen für mehrere Aufgaben werden konsolidiert, um doppelte Synchronisierungsprozesse zu verhindern.  </string>
         <string name="msgs_schedule_sync_task_start_label">Execute the schedule (%s)</string>
         <string name="msgs_schedule_sync_task_start_error">Schedule execution error</string>
+        <string name="msgs_schedule_battery_optimization_warning_title">Akku-Optimierung</string>
+        <string name="msgs_schedule_battery_optimization_warning_msg">Die geplante Synchronisierung schlägt möglicherweise fehl, weil die Batterieoptimierung aktiviert ist. Möchten Sie die Einstellung der Batterieoptimierung ändern?</string>
     <!-- Group -->
         <string name="msgs_menu_group">Gruppe</string>
         <string name="msgs_group_edit_title_add">Gruppe hinzufugen</string>

@@ -39,10 +39,12 @@ import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Spannable;
@@ -1068,6 +1070,13 @@ public final class CommonUtilities {
         cu.addDebugMsg(1, "I", "Battery status="+status+", level="+batteryLevel+", chargePlug="+chargePlug+", bm_charging="+bm_charging+", legacy_charging="+legacy_charging);
 
         return bm_charging;
+    }
+
+    static public boolean isIgnoringBatteryOptimizations(Context c) {
+            String packageName = c.getPackageName();
+            PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
+            boolean result=pm.isIgnoringBatteryOptimizations(packageName);
+            return result;
     }
 
     static public boolean isExfatFileSystem(String uuid) {

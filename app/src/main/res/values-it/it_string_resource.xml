@@ -749,6 +749,8 @@
         <string name="msgs_schedule_list_edit_multi_sched_warn">Le pianificazioni e le opzioni WiFi per più attività verranno consolidate per evitare la duplicazione dei processi di sincronizzazione.  </string>
         <string name="msgs_schedule_sync_task_start_label">Eseguire la pianificazione (%s)</string>
         <string name="msgs_schedule_sync_task_start_error">Errore di esecuzione del programma</string>
+        <string name="msgs_schedule_battery_optimization_warning_title">Ottimizzazione della batteria</string>
+        <string name="msgs_schedule_battery_optimization_warning_msg">La sincronizzazione programmata può fallire perché l\'ottimizzazione della batteria è abilitata. Vuoi cambiare l\'impostazione di ottimizzazione della batteria?</string>
     <!-- Group -->
         <string name="msgs_menu_group">Gruppo</string>
         <string name="msgs_group_edit_title_add">Aggiungi gruppo</string>

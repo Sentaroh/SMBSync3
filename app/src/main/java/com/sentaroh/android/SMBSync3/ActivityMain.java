@@ -1566,6 +1566,7 @@ public class ActivityMain extends AppCompatActivity {
                 setScheduleTabMessage();
                 ScheduleUtils.sendTimerRequest(mContext,  mGp, mUtil.getLogUtil(), SCHEDULE_INTENT_SET_TIMER);
                 ScheduleUtils.setScheduleInfo(mContext, mGp, mUtil);
+                checkBatteryOptimization();
             }
             @Override
             public void negativeResponse(Context context, Object[] objects) {}
@@ -1665,6 +1666,8 @@ public class ActivityMain extends AppCompatActivity {
                 setGroupContextButtonMode(mGp.syncGroupListAdapter);
                 mGp.syncGroupListAdapter.notifyDataSetChanged();
                 setGroupTabMessage();
+
+                checkBatteryOptimization();
             }
 
             @Override
@@ -2981,6 +2984,36 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncScheduleListAdapter.notifyDataSetChanged();
     }
 
+    private void checkBatteryOptimization() {
+        if (Build.VERSION.SDK_INT>=23) {
+            boolean check_required=false;
+            if (mGp.settingScheduleSyncEnabled) {
+                for(ScheduleListAdapter.ScheduleListItem item:mGp.syncScheduleList) {
+                    if (item.scheduleEnabled) {
+                        check_required=true;
+                        break;
+                    }
+                }
+            }
+            if (check_required) {
+                boolean ignored=CommonUtilities.isIgnoringBatteryOptimizations(mContext);
+                if (!ignored) {
+                    mUtil.showCommonDialogWarn(true,
+                            mContext.getString(R.string.msgs_schedule_battery_optimization_warning_title),
+                            mContext.getString(R.string.msgs_schedule_battery_optimization_warning_msg),
+                            new CallBackListener() {
+                                @Override
+                                public void onCallBack(Context context, boolean positive, Object[] objects) {
+                                    if (positive) {
+                                        showBatteryOptimization();
+                                    }
+                                }
+                            });
+                }
+            }
+        }
+    }
+
     private void setScheduleContextButtonListener() {
         mContextScheduleButtonAdd.setOnClickListener(new OnClickListener() {
             @Override
@@ -3413,6 +3446,7 @@ public class ActivityMain extends AppCompatActivity {
         };
         th.setPriority(Thread.MAX_PRIORITY);
         th.start();
+        checkBatteryOptimization();
     }
 
     private void setScheduleContextButtonNormalMode() {

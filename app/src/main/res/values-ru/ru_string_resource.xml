@@ -750,6 +750,8 @@
         <string name="msgs_schedule_list_edit_multi_sched_warn">Расписание и параметры Wi-Fi для нескольких задач будут объединены, чтобы избежать дублирования процессов синхронизации.</string>
         <string name="msgs_schedule_sync_task_start_label">Execute the schedule (%s)</string>
         <string name="msgs_schedule_sync_task_start_error">Schedule execution error</string>
+        <string name="msgs_schedule_battery_optimization_warning_title">Оптимизация батареи</string>
+        <string name="msgs_schedule_battery_optimization_warning_msg">Запланированная синхронизация может не сработать, поскольку включена оптимизация батареи. Вы хотите изменить настройку оптимизации батареи?</string>
     <!-- Group -->
         <string name="msgs_menu_group">Группа</string>
         <string name="msgs_group_edit_title_add">Добавить группу</string>

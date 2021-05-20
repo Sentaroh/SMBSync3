@@ -745,6 +745,8 @@
         <string name="msgs_schedule_list_edit_multi_sched_warn">多个任务的计划和WiFi选项将被合并，以防止重复的同步过程。 </string>
         <string name="msgs_schedule_sync_task_start_label">Execute the schedule (%s)</string>
         <string name="msgs_schedule_sync_task_start_error">Schedule execution error</string>
+        <string name="msgs_schedule_battery_optimization_warning_title">电池优化</string>
+        <string name="msgs_schedule_battery_optimization_warning_msg">由于启用了电池优化，计划中的同步可能会失败。你想改变电池优化设置吗？</string>
     <!-- Group -->
         <string name="msgs_menu_group">组别</string>
         <string name="msgs_group_edit_title_add">添加组</string>
