@@ -1,10 +1,10 @@
-### Stockage local  
+### Stockage  
 
-Il est possible de sélectionner le stockage intégré, la carte mémoire ou le stockage USB.   
+Vous pouvez choisir le stockage interne, SDCARD ou USB.   
 
-### Autoriser l'utilisation d'un stockage externe  
+### Autorisation d\'utiliser le stockage SDCARD/USB  
 
-Demander l'autorisation d'utiliser un stockage externe. Si vous formatez la carte MicroSD, l'UUID changera, alors demandez la permission de l'utiliser.  
+Appuyez sur le bouton pour afficher l'écran d'autorisation d'utilisation du stockage SDCARD/USB. Sélectionnez le stockage que vous voulez autoriser à utiliser et appuyez sur le bouton "Ajouter".   
 
 ### Afficher les dossiers  
 

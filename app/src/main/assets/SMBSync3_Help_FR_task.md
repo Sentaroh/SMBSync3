@@ -48,7 +48,7 @@ Vous pouvez sélectionner le fichier à synchroniser par la date de dernière mo
 - Filtre de répertoire  
 Vous pouvez sélectionner le nom du répertoire que vous souhaitez synchroniser.  
 
-### Sélectionnez ce que vous voulez archiver  
+### Sélectionnez ce que vous voulez archiver(Affiché uniquement lorsque la méthode de synchronisation est l'archive)  
 
 Sélectionnez les critères pour les photos ou les vidéos à archiver.  
 
@@ -163,7 +163,7 @@ Lorsque le mode de synchronisation est "Déplacement", après que les fichiers a
 ### Si la date et l'heure ne peuvent pas être déterminées par les données EXIF, un message de confirmation s'affiche  
 Afficher un message de confirmation lorsque la date et l'heure de la prise ne peuvent être obtenues auprès d'Exif.  
 
-### Ignorer les fichiers sources de plus de 4 Go lors de la synchronisation avec le stockage externe.  
+### Ignorer les fichiers sources de plus de 4 Go lors de la synchronisation avec la SDCARD/le stockage USB  
 Si cette case est cochée, vous pouvez éviter les erreurs d'entrée/sortie lors de la synchronisation avec une carte MicroSD en ignorant les fichiers sources de plus de 4 Go à synchroniser avec le stockage local.  
 
 ### Ignorer les fichiers dont le nom dépasse 255 octets  

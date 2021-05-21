@@ -1,15 +1,23 @@
 ## 1.Données collectées  
 ### 1.1.Données fournies par l'utilisateur à SMBSync3  
 
-Les données suivantes fournies par l'utilisateur pour utiliser SMBSync3 seront stockées dans la zone de mémoire de l'application.  
+#### 1.1.1.Données à sauvegarder  
+Les données suivantes seront sauvegardées dans l'application.  
 
 - Informations sur les fichiers (nom du répertoire, nom du fichier)  
 - Informations sur le serveur SMB si vous utilisez un serveur SMB (nom d'hôte/adresse IP, numéro de port, nom de compte(**<u>\*1</u>**), mot de passe de compte(**<u>\*1</u>**))  
 - Informations sur le fichier ZIP en cas d'utilisation d'un fichier ZIP (méthode de compression, méthode de cryptage, mot de passe de cryptage(**<u>\*1</u>**)).  
 - Options de paramétrage de l'application (messages d'avertissement, langue et taille de la police, etc.)  
 - Mot de passe de l'application(**<u>\*1</u>**)  
+Le mot de passe créé par l'utilisateur est utilisé pour l'authentification du démarrage de l'application, des modifications de paramètres, etc.  
 
 **<u>\*1</u>**Les données sont cryptées et stockées.  
+
+#### 1.1.2.Données à ne pas sauvegarder  
+Les données suivantes ne seront pas sauvegardées.  
+
+- Mot de passe pour protéger les données dans "1.4 Envoi ou écriture de données en dehors de SMBSync3"  
+Le mot de passe sera éliminé et non sauvegardé lorsque le processus sera terminé.  
 
 ### 1.2.Résultat de l'exécution de SMBSync3  
 
@@ -19,9 +27,9 @@ Sauvegarder les données dans la zone de stockage de l'application afin que l'ut
 - Taille des fichiers synchronisés, date et heure de mise à jour des fichiers.  
 - Informations sur les erreurs  
 
-### 1.3.Fiche d'activité de SMBSync3  
+### 1.3.Journal d'activité de SMBSync3  
 
-L'activation de la journalisation permet de sauvegarder les données d'enregistrement de l'activité dans la zone de mémoire de l'application afin de vérifier les résultats d'exécution de l'application et d'obtenir une assistance technique. Lorsque la journalisation est désactivée, l'enregistrement des données s'arrête. Cependant, les données déjà enregistrées ne seront pas supprimées, vous pouvez donc les effacer si vous en avez besoin.  
+Lorsque l'enregistrement est activé, les données d'activité seront stockées dans la zone de mémoire de l'application pour la vérification des résultats d'exécution de l'application et pour l'assistance technique. Si la journalisation est désactivée, l'enregistrement des données sera arrêté, mais les données déjà enregistrées ne seront pas supprimées.  
 
 - Informations sur le dispositif (nom du fabricant, nom du modèle, version du système d'exploitation, point de montage, répertoire spécifique à l'application, StorageAccessFramework, gestionnaire de stockage, adresse IP, activation/désactivation du WiFi, vitesse de la liaison WiFi)  
 - Version de SMBSync3, options d'exécution de SMBSync3  
@@ -34,17 +42,18 @@ L'activation de la journalisation permet de sauvegarder les données d'enregistr
 
 <span style="color: red;"><u>Les données de SMBSync3 ne peuvent être envoyées ou écrites vers l'extérieur que si l'utilisateur l'actionne.</u></span>  
 
-- Appuyez sur le [bouton Partager] dans l'onglet Historique.  
+- Appuyez sur le "bouton Partager" dans l'onglet Historique.  
 - Cliquez sur le bouton "Envoyer au développeur" à partir des informations système.  
 - Cliquez sur le bouton "Partager" à partir de la gestion du journal.  
 - Cliquez sur le bouton "Envoyer au développeur" à partir de la gestion du journal.  
+Si vous spécifiez un mot de passe, le fichier joint sera protégé par un mot de passe. Le mot de passe sera supprimé lorsque vous fermerez l'écran et ne sera pas enregistré.  
 - Cliquez sur le bouton "Exporter le fichier journal" depuis la gestion du journal pour l'exporter vers un stockage externe.  
 - En exécutant "Exporter la configuration" à partir du menu, "1.1.Données fournies par l'utilisateur à SMBSync3" sera exporté.  
-Les informations seront cryptées en spécifiant un mot de passe lors de l'exportation.  
+Les informations seront cryptées en spécifiant un mot de passe lors de l'exportation. Le mot de passe sera supprimé lorsque vous fermerez l'écran et ne sera pas enregistré.  
 
 ### 1.5.supprimer les données stockées dans SMBSync3  
 
-En désinstallant SMBSync3, les données enregistrées ("1.1.Données fournies par l'utilisateur à SMBSync3", "1.2.Résultat de l'exécution de SMBSync3", "1.3.Fiche d'activité de SMBSync3") seront supprimées de l'appareil.  
+En désinstallant SMBSync3, les données enregistrées ("1.1.Données fournies par l'utilisateur à SMBSync3", "1.2.Résultat de l'exécution de SMBSync3", "1.3.Journal d'activité de SMBSync3") seront supprimées de l'appareil.  
 <span style="color: red;"><u>Toutefois, les données stockées sur un support externe en raison de l'interaction de l'utilisateur ne seront pas supprimées.</u></span>  
 
 ### 2.les autorisations requises pour exécuter l'application.  

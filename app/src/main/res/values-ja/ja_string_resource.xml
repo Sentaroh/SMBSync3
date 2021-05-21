@@ -51,7 +51,7 @@
         <string name="msgs_help_sync_task_file">SMBSync3_Help_JA_task.md</string>
         <string name="msgs_help_sync_task_title">同期タスクのヘルプ</string>
         <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_JA_folder_external.md</string>
-        <string name="msgs_help_sync_folder_external_title">内部ストレージのヘルプ</string>
+        <string name="msgs_help_sync_folder_external_title">ローカルフォルダーのヘルプ</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_JA_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">変数のヘルプ</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_JA_folder_smb.md</string>
@@ -172,17 +172,20 @@
         <string name="msgs_log_msg_filter_string_find_case_sensitive">A/a</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_msg">下記タスクを開始しますか？</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_suppress">この通知を次回以降表示しない （アプリ設定で再表示できます）</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_title">外部ストレージ追加の通知</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_msg">新しい外部ストレージが検出されました。外部ストレージを追加しますか？</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_title">SDCARD/USBストレージ追加の通知</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_msg">新しいSDCARD/USBストレージが検出されました。SDCARD/USBストレージを追加しますか？</string>
         <string name="msgs_main_suppress_add_external_storage_notification_suppress">この通知を次回以降表示しない （アプリ設定で再表示できます）</string>
         <string name="msgs_main_external_storage_select_activity_not_found_msg">ストレージへのアクセス許可を行うアクティビティを起動できませんでした。</string>
-        <string name="msgs_main_external_storage_select_required_cancel_msg">外部ストレージへのアクセスが許可されるまで外部ストレージを使用したタスクは実行できません。</string>
+        <string name="msgs_main_external_storage_select_required_cancel_msg">SDCARD/USBストレージへのアクセスが許可されるまでSDCARD/USBストレージを使用したタスクは実行できません。</string>
         <string name="msgs_main_external_storage_select_retry_select_msg">ルートディレクトリが選択されませんでした。選択しなおしますか？</string>
         <string name="msgs_main_external_storage_uuid_duplicated">下記のUUIDは重複しているため使用できません。使用するにはMicroSDまたはUSB OTGのドライブをフォーマットしてください。</string>
         <string name="msgs_main_external_storage_uuid_unusable">マウントされてません</string>
-        <string name="msgs_main_external_storage_request_permission">外部ストレージの使用許可</string>
+        <string name="msgs_main_external_storage_request_permission">SDCARD/USBストレージの使用許可</string>
         <string name="msgs_main_permission_external_storage_denied_msg">ストレージにアクセスする許可が与えられていないためアプリケーションを起動できません。</string>
-        <string name="msgs_main_permission_external_storage_request_msg">ストレージに同期するデータや管理用データの読み書きを行うために、ストレージにアクセスする許可を与えてください。</string>
+        <string name="msgs_main_permission_external_storage_request_msg">内部ストレージにデータや管理用データの読み書きを行うために下記の手順で内部ストレージにアクセスする許可を与えてください。\n
+1. 「了解」ボタンをタップ\n
+2. 許可画面で「許可」をタップ\n\n
+データの取り扱いと必要な権限はプライバシーポリシーを参照してください。\n\n</string>
         <string name="msgs_main_permission_external_storage_title">ストレージ許可</string>
         <string name="msgs_main_sync_all_auto_tasks">自動同期タスクを同期します。</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">同期タスクが存在していないため同期できません。同期タスクを作成してください。</string>
@@ -227,10 +230,10 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">最終更新時刻の差（秒）</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">ソースフォルダーと宛先フォルダーの両方が外部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">ソースフォルダーと宛先フォルダーの両方がローカルフォルダーでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">ソースフォルダーと宛先フォルダーで同じディレクトリにアクセスします、どちらかのディレクトリを変更するかディレクトリフィルターを指定してください。</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">ソースフォルダーと宛先フォルダーの両方が外部ストレージでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">ソースフォルダーと宛先フォルダーが両方ともSMBは使用できません。どちらかを違うタイプに変更してください。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">ソースフォルダーと宛先フォルダーの両方がローカルフォルダーでディレクトリーが重複しています。どちらかを違うディレクトリーに変更してください。</string>
+        <string name="deleted_msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">ソースフォルダーと宛先フォルダーが両方ともSMBは使用できません。どちらかを違うタイプに変更してください。</string>
         <string name="msgs_main_sync_profile_dlg_mirror">ミラー</string>
         <string name="msgs_main_sync_profile_dlg_move">移動</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">SMBホストのアドレスまたは名前を指定してください。</string>
@@ -240,8 +243,8 @@
         <string name="msgs_main_sync_profile_dlg_specify_host_pswd">SMBホストのパスワードを入力してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync">同期</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_source">ストレージへのアクセスが許可されていません、ソースフォルダーを編集してストレージへのアクセスを許可してください。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">ストレージへのアクセスが許可されていません、宛先フォルダーを編集してストレージへのアクセスを許可してください。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">ストレージへのアクセスが許可されていません、「外部ストレージの使用許可」ボタンを押してストレージへのアクセスを許可してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">SDCARD/USBストレージへのアクセスが許可されていません、宛先フォルダーを編集してSDCARD/USBストレージへのアクセスを許可してください。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">SDCARD/USBストレージへのアクセスが許可されていません、「SDCARD/USBストレージの使用許可」ボタンを押してストレージへのアクセスを許可してください。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">%sがマウントされていません</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_local">ローカル</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">フォルダーの選択</string>
@@ -294,8 +297,8 @@
         <string name="msgs_task_edit_sync_folder_dlg_directory">ディレクトリ</string>
         <string name="msgs_task_edit_sync_folder_dlg_dirlist">ディレクトリ一覧</string>
         <string name="msgs_task_edit_sync_folder_dlg_folder_type">フォルダータイプ</string>
-        <string name="msgs_task_edit_sync_folder_dlg_local_storage">ローカルストレージ</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">ローカルストレージの選択</string>
+        <string name="msgs_task_edit_sync_folder_dlg_local_storage">ストレージ</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">ストレージの選択</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_smb_server_and_configure">SMBサーバーを検索して設定する</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters">SMB設定を編集する</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name">共有名を選択してください</string>
@@ -315,7 +318,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_use_port_number">ポート番号を指定する</string>
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_username">アカウント名</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">SMBサーバーの検索</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">外部ストレージ使用許可</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">SDCARD/USBストレージ使用許可</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">パスワードの表示</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMBプロトコル</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">SMBプロトコルの選択</string>
@@ -473,7 +476,7 @@
         <string name="msgs_task_sync_task_sync_sub_directory_specific">サブディレクトリーを選択する</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">撮影日時がExifから取得できない時に確認メッセージを表示する</string>
-        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">外部ストレージに同期する際は4GBを超えるソースファイルを無視する</string>
+        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">SDCARD/USBストレージに同期する際は4GBを超えるソースファイルを無視する</string>
         <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">ファイル名が255バイト越えているファイルを無視する</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">宛先ディレクトリーにソースディレクトリーを作成しない</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">キャンセル</string>
@@ -520,6 +523,10 @@
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_title">プライバシー ポリシー</string>
         <string name="msgs_privacy_policy_show_privacy_policy">プライバシーポリシーの表示</string>
+    <!-- Search -->
+        <string name="msgs_find_view_search_word_hint">検索文字列</string>
+        <string name="msgs_find_view_search_prev_label">前の検索結果</string>
+        <string name="msgs_find_view_search_next_label">次の検索結果</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">管理ファイルの保守実行中</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">保守の中止</string>
@@ -575,8 +582,8 @@
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">宛先にファイルと同名のディレクトリーが存在するため同期を中止しました。ファイル=</string>
         <string name="msgs_mirror_abort_file_name_gt_255_byte">ファイル名の長さが255バイトを超えているため同期を中止しました。ファイル名のバイト数=%1$s, ファイル名=%2$s</string>
         <string name="msgs_mirror_ignore_file_name_gt_255_byte">ファイル名の長さが255バイトを超えているため無視しました。ファイル名のバイト数=%1$s, ファイル名=%2$s</string>
-        <string name="msgs_mirror_external_sdcard_not_mounted">外部ストレージがマウントされていないため同期を中止します。</string>
-        <string name="msgs_mirror_external_sdcard_select_required">ストレージへのアクセスができないため同期を中止します。UUID=%s</string>
+        <string name="msgs_mirror_external_sdcard_not_mounted">SDCARD/USBストレージがマウントされていないため同期を中止します。</string>
+        <string name="msgs_mirror_external_sdcard_select_required">SDCARD/USBストレージへのアクセスができないため同期を中止します。UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">ファイルサイズが4GBを越えているために無視しました。ファイル=%s</string>
         <string name="msgs_mirror_directory_ignored_because_access_not_granted">ディレクトリーにアクセスできないためディレクトリーを無視しました。ディレクトリー=%s</string>
         <string name="msgs_mirror_file_ignored_because_access_not_granted">ファイルにアクセスできないためファイルを無視しました。ファイル=%s</string>
@@ -874,8 +881,8 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">週番号</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">曜日 (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">曜日 (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPを使用できないため外部ストレージに変更しました。</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">要求された操作は無視されました。同期方法がアーカイブの場合、ZIPは使用できません。</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPフォルダーを使用できないためローカルフォルダーに変更しました。</string>
+        <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">要求された操作は無視されました。同期方法がアーカイブの場合、ZIPは使用できません。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">西暦</string>
         <string name="msgs_sync_folder_archive_btn_title_month">月</string>
         <string name="msgs_sync_folder_archive_btn_title_day">日</string>
@@ -1043,8 +1050,8 @@
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
         <string name="settings_suppress_add_external_storage_notification">settings_suppress_add_external_storage_notification</string>
-        <string name="settings_suppress_add_external_storage_notification_summary_ena">外部ストレージ追加の通知を表示しない</string>
-        <string name="settings_suppress_add_external_storage_notification_title">外部ストレージ追加の通知</string>
+        <string name="settings_suppress_add_external_storage_notification_summary_ena">SDCARD/USBストレージ追加の通知を表示しない</string>
+        <string name="settings_suppress_add_external_storage_notification_title">SDCARD/USBストレージ追加の通知</string>
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">同期開始の確認メッセージを表示しない</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">同期ボタン</string>

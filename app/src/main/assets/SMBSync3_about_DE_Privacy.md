@@ -1,15 +1,23 @@
 ## 1.Erfasste Daten  
 ### 1.1.Vom Benutzer an SMBSync3 bereitgestellte Daten  
 
-Die folgenden Daten, die der Benutzer zur Verwendung von SMBSync3 bereitstellt, werden im Speicherbereich der Anwendung gespeichert.  
+#### 1.1.1.Zu speichernde Daten  
+Die folgenden Daten werden in der Anwendung gespeichert.  
 
 - Dateiinformationen (Verzeichnisname, Dateiname)  
 - SMB-Server-Informationen, wenn Sie einen SMB-Server verwenden (Hostname/IP-Adresse, Portnummer, Kontoname(**<u>\*1</u>**), Kontopasswort(**<u>\*1</u>**))  
 - ZIP-Datei-Informationen, wenn eine ZIP-Datei verwendet wird (Komprimierungsmethode, Verschlüsselungsmethode, Verschlüsselungspasswort)  
 - App-Einstellungsoptionen (Warnmeldungen, Sprache und Schriftgröße usw.)  
 - Anwendungskennwort(**<u>\*1</u>**)  
+Das vom Benutzer erstellte Kennwort wird zur Authentifizierung beim Start der Anwendung, bei Einstellungsänderungen usw. verwendet.  
 
 **<u>\*1</u>**Die Daten werden verschlüsselt gespeichert.  
+
+#### 1.1.2.Nicht zu speichernde Daten  
+Die folgenden Daten werden nicht gespeichert.  
+
+- Passwort zum Schutz von Daten in "1.4.das Senden oder Schreiben von Daten außerhalb von SMBSync3"  
+Das Passwort wird verworfen und nicht gespeichert, wenn der Vorgang beendet ist.  
 
 ### 1.2.Ausführungsergebnis von SMBSync3  
 
@@ -21,7 +29,7 @@ Speichern Sie die Daten im Speicherbereich in der Anwendung, damit der Benutzer 
 
 ### 1.3.Aktivitätsprotokoll von SMBSync3  
 
-Wenn Sie die Protokollierung aktivieren, werden die Daten der Aktivitätsaufzeichnung im Speicherbereich der App zur Überprüfung der Ausführungsergebnisse der App und für den technischen Support gespeichert. Wenn die Protokollierung deaktiviert ist, wird die Datenaufzeichnung gestoppt. Die bereits aufgezeichneten Daten werden jedoch nicht gelöscht, so dass Sie sie bei Bedarf löschen können.  
+Wenn die Protokollierung aktiviert ist, werden Aktivitätsdaten im Speicherbereich der App zur Überprüfung der Ausführungsergebnisse der App und für den technischen Support gespeichert. Wenn die Protokollierung deaktiviert ist, wird die Datenaufzeichnung gestoppt, bereits aufgezeichnete Daten werden jedoch nicht gelöscht.  
 
 - Geräteinformationen (Herstellername, Modellname, OS-Version, Mount-Point, App-spezifisches Verzeichnis, StorageAccessFramework, Speichermanager, IP-Adresse, WiFi enable/disable, WiFi link speed)  
 - SMBSync3-Version, SMBSync3-Ausführungsoptionen  
@@ -34,13 +42,14 @@ Wenn Sie die Protokollierung aktivieren, werden die Daten der Aktivitätsaufzeic
 
 <span style="color: red;"><u>SMBSync3-Daten können nur dann nach außen gesendet oder geschrieben werden, wenn der Benutzer sie bedient.</u></span>  
 
-- Drücken Sie die Taste [Freigeben] auf der Registerkarte Verlauf.  
+- Drücken Sie die Taste "Freigeben" auf der Registerkarte Verlauf.  
 - Klicken Sie in den Systeminformationen auf die Schaltfläche "An Entwickler senden".  
 - Klicken Sie in der Protokollverwaltung auf die Schaltfläche "Freigeben".  
 - Klicken Sie in der Protokollverwaltung auf die Schaltfläche "An Entwickler senden".  
+Wenn Sie ein Passwort angeben, wird die angehängte Datei mit einem Passwort geschützt. Das Kennwort wird verworfen, wenn Sie den Bildschirm schließen, und wird nicht gespeichert.  
 - Klicken Sie in der Protokollverwaltung auf die Schaltfläche "Protokolldatei exportieren", um in einen externen Speicher zu exportieren.  
 - Durch Ausführen von "Einstellungen exportieren" aus dem Menü wird "1.1.Vom Benutzer an SMBSync3 bereitgestellte Daten" exportiert werden.  
-Die Informationen werden verschlüsselt, indem Sie beim Exportieren ein Passwort angeben.  
+Die Informationen werden verschlüsselt, indem Sie beim Exportieren ein Passwort angeben. Das Kennwort wird verworfen, wenn Sie den Bildschirm schließen, und wird nicht gespeichert.  
 
 ### 1.5.die in SMBSync3 gespeicherten Daten löschen  
 

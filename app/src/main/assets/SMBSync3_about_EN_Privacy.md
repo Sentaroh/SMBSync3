@@ -1,15 +1,23 @@
 ## 1. Collected data  
 ### 1.1.Data provided to SMBSync3 from users.  
 
-The following data provided by the user to use SMBSync3 will be stored in the memory area of the application.  
+#### 1.1.1.Data to be saved  
+The following data will be saved in the application.  
 
 - File information (directory name, file name)  
 - SMB server information if using SMB server (host name/IP address, port number, account name(**<u>\*1</u>**), account password(**<u>\*1</u>**))  
 - ZIP file information if using a ZIP file (compression method, encryption method, encryption password(**<u>\*1</u>**))  
 - App setting options (warning messages, language and font size, etc.)  
 - Application passwords(**<u>\*1</u>**)  
+The password created by the user is used for authentication of application startup, setting changes, etc.  
 
 **<u>\*1</u>**Data is encrypted and stored.  
+
+#### 1.1.2.Data not to be saved  
+The following data will not be saved.  
+
+- Password to protect data in "1.4. Send or export data outside SMBSync2"   
+The password will be discarded and not saved when the process is finished.  
 
 ### 1.2.Execution result of SMBSync3  
 
@@ -19,9 +27,9 @@ Save the data to the storage area in the application so that the user can check 
 - File size of synchronized files, file update date and time  
 - Error information  
 
-### 1.3.Activity record of SMBSync3  
+### 1.3.Activity log of SMBSync3  
 
-Enabling logging will save the activity record data in the app's memory area for verification of the app's execution results and technical support. When logging is disabled, data recording will be stopped. However, the data already recorded will not be deleted, so you can delete it if you need to.  
+When logging is enabled, activity data will be stored in the app's memory area for verification of the app's execution results and for technical support. If logging is disabled, data recording will be stopped, however, data already recorded will not be deleted.  
 
 - Device information (manufacturer name, model name, OS version, mount point, app-specific directory, StorageAccessFramework, Storage manager, IP address, WiFi enable/disable, WiFi link speed)  
 - SMBSync3 version, SMBSync3 execution options  
@@ -38,13 +46,14 @@ Enabling logging will save the activity record data in the app's memory area for
 - Click "Send to Developer" button from System Information.  
 - Click the "Share" button from the log management.  
 - Click the "Send to Developer" button from the log management.  
+If you specify a password, the attached file will be password protected. The password will be discarded when you close the screen and will not be saved.  
 - Export to external storage by clicking "Export log file" button from Log Management.  
 - By executing "Export settings" from the menu, "1.1. Data provided to SMBSync3 from users" will be exported.  
-The information will be encrypted by specifying a password when exporting.  
+The information will be encrypted by specifying a password when exporting. The password will be discarded when you close the screen and will not be saved.  
 
 ### 1.5.Delete the data stored in SMBSync3  
 
-By uninstalling SMBSync3, the saved data ("1.1. Data provided by user to SMBSync3", "1.2. Execution result of SMBSync3", "1.3. Activity record of SMBSync3") will be deleted from the device.  
+By uninstalling SMBSync3, the saved data ("1.1. Data provided by user to SMBSync3", "1.2. Execution result of SMBSync3", "1.3.Activity log of SMBSync3") will be deleted from the device.  
 <span style="color: red;"><u>However, data stored in external storage due to user interaction will not be deleted.</u></span>  
 
 ### 2.Permissions required to run the application  

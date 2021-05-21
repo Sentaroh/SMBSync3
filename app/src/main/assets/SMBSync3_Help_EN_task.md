@@ -48,7 +48,7 @@ You can select the files to synchronize by their last modified date.
 - Directory filter  
 You can select the name of the directory you want to synchronize.  
 
-### To archive the  
+### To archive the(Showed only when the synchronization method is archive)  
 
 Select the criteria for the photos or videos to be archived.  
 
@@ -163,7 +163,7 @@ When sync mode is Move, after the files are moved to the destination, the Source
 ### If the date and time cannot be determined by EXIF data, a confirmation message is displayed  
 Display a confirmation message when the taken date and time cannot be obtained from Exif.  
 
-### Ignore source files that are larger than 4 GB when sync to external storage.  
+### Ignore source files larger than 4GB when syncing to SDCARD/USB storage  
 If checked, you can prevent I/O errors when syncing to a MicroSD card by ignoring source files larger than 4 GB in size to be synced to local storage.  
 
 ### Ignore files whose file name exceed 255 bytes  

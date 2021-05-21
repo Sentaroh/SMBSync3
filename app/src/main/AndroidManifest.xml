@@ -50,6 +50,12 @@
 <!--                <action android:name="${applicationId}.ACTION_SET_TIMER" />-->
 <!--                <action android:name="${applicationId}.ACTION_SET_TIMER_IF_NOT_SET" />-->
             </intent-filter>
+
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>-->
+<!--                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>-->
+<!--            </intent-filter>-->
+
         </receiver>
 
         <activity

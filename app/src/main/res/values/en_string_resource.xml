@@ -51,7 +51,7 @@
         <string name="msgs_help_sync_task_file">SMBSync3_Help_EN_task.md</string>
         <string name="msgs_help_sync_task_title">Sync Task Help</string>
         <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_EN_folder_external.md</string>
-        <string name="msgs_help_sync_folder_external_title">External Storage Help</string>
+        <string name="msgs_help_sync_folder_external_title">Local Folder Help</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_EN_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">Parameter Help</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_EN_folder_smb.md</string>
@@ -173,17 +173,20 @@
         <string name="msgs_log_msg_filter_string_find_case_sensitive">A/a</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_msg">Do you want to start the following tasks?</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_suppress">Disable this notification (can be enabled in sync settings)</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_title">Notification of adding external storage</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_msg">New external storage has been detected. Add external storage?</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_title">Notification of adding SDCARD/USB storage</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_msg">A new SDCARD/USB storage has been detected, would you like to add the SDCARD/USB storage?</string>
         <string name="msgs_main_suppress_add_external_storage_notification_suppress">Disable this notification (can be enabled in sync settings)</string>
         <string name="msgs_main_external_storage_select_activity_not_found_msg">Failed to launch activity to write permission to external storage.</string>
-        <string name="msgs_main_external_storage_select_required_cancel_msg">You cannot perform any tasks using external storage until you are granted access to the external storage.</string>
+        <string name="msgs_main_external_storage_select_required_cancel_msg">Tasks using the SDCARD/USB storage cannot be executed until access to the SDCARD/USB storage is granted.</string>
         <string name="msgs_main_external_storage_select_retry_select_msg">The root directory of the storage was not selected.  Do you want to reselect?</string>
         <string name="msgs_main_external_storage_uuid_duplicated">The following UUIDs cannot be used because they are duplicated. Format a MicroSD or USB OTG drive to use it.</string>
         <string name="msgs_main_external_storage_uuid_unusable">Media not mounted</string>
-        <string name="msgs_main_external_storage_request_permission">Allow use external storage</string>
+        <string name="msgs_main_external_storage_request_permission">Permission to use SDCARD/USB storage</string>
         <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
-        <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">To read and write data and administrative data to the internal storage, please follow the steps below to grant permission to access the internal storage.\n
+1. Tap the \"OK\" button.\n
+2. Tap \"Allow\" on the permission screen.\n\n
+Please refer to the Privacy Policy for data handling and required permissions.\n\n</string>
         <string name="msgs_main_permission_external_storage_title">Storage Permission</string>
         <string name="msgs_main_sync_all_auto_tasks">Execute all tasks configured to auto sync.</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">No sync tasks available for execution.  Please create a sync task.</string>
@@ -228,10 +231,10 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Time difference tolerance (sec)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">Both the source and destination folders have duplicate directories in external storage. Please change one of them to a different directory.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">The source and destination folders are both local folders with duplicate directories. Please change one of them to a different directory.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">Duplicate directory names exist at both source and destination.  Source and destination directory names must be different.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">Duplicate directory names exist at both external storage source and destination.  Source and destination directory names must be different.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">Source and destination SMB folders are identical. You must select different source and destination directory names.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">The source and destination folders are both local folders with duplicate directories. Please change one of them to a different directory.</string>
+        <string name="deleted_msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">Source and destination SMB folders are identical. You must select different source and destination directory names.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Mirror</string>
         <string name="msgs_main_sync_profile_dlg_move">Move</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Specify the IP address or host name of the SMB server.</string>
@@ -241,8 +244,8 @@
         <string name="msgs_main_sync_profile_dlg_specify_host_pswd">Specify the SMB Host password.</string>
         <string name="msgs_main_sync_profile_dlg_sync">Sync</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_source">Write to external storage is not allowed, edit the source folder and allow writing to external storage.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">Write to external storage is not allowed, edit the destination folder and allow writing to external storage.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">Access to the storage is not allowed, please press the “Allow use external storage” button to allow access to the storage.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">Access to the SDCARD/USB storage is not allowed, please edit the destination folder to allow access to the SDCARD/USB storage.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">Access to SDCARD/USB storage is not allowed, please click the \"Allow use to SDCARD/USB storage\" button to allow access to the storage.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">%s is not mounted.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_local">Local</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">Select folder type</string>
@@ -295,8 +298,8 @@
         <string name="msgs_task_edit_sync_folder_dlg_directory">Directory</string>
         <string name="msgs_task_edit_sync_folder_dlg_dirlist">List Directories</string>
         <string name="msgs_task_edit_sync_folder_dlg_folder_type">Folder type</string>
-        <string name="msgs_task_edit_sync_folder_dlg_local_storage">Local storage</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">Select local storage</string>
+        <string name="msgs_task_edit_sync_folder_dlg_local_storage">Storage</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">Select storage</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_smb_server_and_configure">Find and configure the SMB server</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters">Edit SMB server parameters</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name">Chose SMB share name</string>
@@ -316,7 +319,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_use_port_number">Use port number</string>
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_username">Account name</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">Search SMB server</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Allow use to external storage</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Allow use to SDCARD/USB storage</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Show password</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMB protocol</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">Select SMB protocol</string>
@@ -474,7 +477,7 @@
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Select subdirectories</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Limit SMB I/O write buffer to 16 KB</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">If the date and time cannot be determined by EXIF data, a confirmation message is displayed</string>
-        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">Ignore source files that are larger than 4 GB when sync to external storage</string>
+        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">Ignore source files larger than 4GB when syncing to SDCARD/USB storage</string>
         <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">Ignore files whose file names exceed 255 bytes</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">Save all files in the destination directory without creating subdirectories</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Cancel</string>
@@ -521,6 +524,10 @@
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_title">Privacy Policy</string>
         <string name="msgs_privacy_policy_show_privacy_policy">Show Privacy Policy</string>
+    <!-- Search -->
+        <string name="msgs_find_view_search_word_hint">Search string</string>
+        <string name="msgs_find_view_search_prev_label">Previous search results</string>
+        <string name="msgs_find_view_search_next_label">Next Search Results</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Performing maintenance of app data files</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Cancel maintenance</string>
@@ -576,8 +583,8 @@
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sync aborted because the destination path contains a directory with the same name as the file being copied. File=</string>
         <string name="msgs_mirror_abort_file_name_gt_255_byte">Synchronization was cancelled because the length of the file name exceeds 255 characters. File name chars=%1$s, File name=%2$s</string>
         <string name="msgs_mirror_ignore_file_name_gt_255_byte">The file was ignored because the length of the file name exceeds 255 bytes. File name in bytes =%1$s, file name=%2$s</string>
-        <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because external storage is not mounted.</string>
-        <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because storage can not be access. UUID=%s</string>
+        <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because SDCARD/USB storage is not mounted.</string>
+        <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because SDCARD/USB storage can not be access. UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">Ignored it because the file size is over 4GB. File=%s</string>
         <string name="msgs_mirror_directory_ignored_because_access_not_granted">The directory is ignored because the directory is inaccessible. Directory=%s</string>
         <string name="msgs_mirror_file_ignored_because_access_not_granted">The file was ignored because the file was inaccessible. File=%s</string>
@@ -875,8 +882,8 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">WEEK NUMBER</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">WEEK DAY (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">WEEK DAY (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Changed to external storage because ZIP cannot be used when the sync method is archive.</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">The request was ignored because Zip files cannot be used as destinations for Archive sync type.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Changed to local folder because ZIP folder cannot be used when the sync method is archive.</string>
+        <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">The request was ignored because Zip files cannot be used as destinations for Archive sync type.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Year</string>
         <string name="msgs_sync_folder_archive_btn_title_month">Month</string>
         <string name="msgs_sync_folder_archive_btn_title_day">Day</string>
@@ -1044,8 +1051,8 @@
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
         <string name="settings_suppress_add_external_storage_notification">settings_suppress_add_external_storage_notification</string>
-        <string name="settings_suppress_add_external_storage_notification_summary_ena">Do not show notification of external storage addition.</string>
-        <string name="settings_suppress_add_external_storage_notification_title">Notification of adding external storage</string>
+        <string name="settings_suppress_add_external_storage_notification_summary_ena">Don\'t show notification of adding SDCARD/USB storage</string>
+        <string name="settings_suppress_add_external_storage_notification_title">Notification of SDCARD/USB storage addition</string>
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">Do not prompt for sync start with sync button.</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">sync button</string>

@@ -51,7 +51,7 @@
         <string name="msgs_help_sync_task_file">SMBSync3_Help_ZH_task.md</string>
         <string name="msgs_help_sync_task_title">同步任务帮助</string>
         <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_ZH_folder_external.md</string>
-        <string name="msgs_help_sync_folder_external_title">外部存储帮助</string>
+        <string name="msgs_help_sync_folder_external_title">本地文件夹帮助</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_ZH_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">参数帮助</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_ZH_folder_smb.md</string>
@@ -167,17 +167,20 @@
         <string name="msgs_log_msg_filter_string_find_case_sensitive">A/a</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_msg">您要启动以下任务吗？</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_suppress">禁用此通知（可在同步设置中启用）。</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_title">添加外部存储的通知</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_msg">已检测到新的外部存储器。添加外部存储？</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_title">添加SDCARD/USB存储的通知</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_msg">检测到一个新的SDCARD/USB存储器，您是否愿意添加SDCARD/USB存储器？</string>
         <string name="msgs_main_suppress_add_external_storage_notification_suppress">禁用此通知（可在同步设置中启用）。</string>
         <string name="msgs_main_external_storage_select_activity_not_found_msg">启动向外部存储写入权限的活动失败。</string>
-        <string name="msgs_main_external_storage_select_required_cancel_msg">在获准访问外部存储之前，您无法使用外部存储执行任何任务。</string>
+        <string name="msgs_main_external_storage_select_required_cancel_msg">使用SDCARD/USB存储的任务不能被执行，直到对SDCARD/USB存储的访问被授予。</string>
         <string name="msgs_main_external_storage_select_retry_select_msg">没有选择存储的根目录。 您是否要重新选择？</string>
         <string name="msgs_main_external_storage_uuid_duplicated">以下UUID不能使用，因为它们是重复的。格式化MicroSD或USB OTG驱动器以使用它。</string>
         <string name="msgs_main_external_storage_uuid_unusable">介质未安装</string>
-        <string name="msgs_main_external_storage_request_permission">允许使用外部存储器</string>
+        <string name="msgs_main_external_storage_request_permission">使用SDCARD/USB存储的许可</string>
         <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
-        <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">要读写数据和管理数据到内部存储，请按照以下步骤授予访问内部存储的权限。\n
+点 \"OK \"按钮。\n
+在权限屏幕上点 \"允许\"。\n\n
+关于数据处理和所需权限，请参考隐私政策。\n\n</string>
         <string name="msgs_main_permission_external_storage_title">Storage Permission</string>
         <string name="msgs_main_sync_all_auto_tasks">执行所有配置为自动同步的任务。</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">没有同步任务。请创建一个同步任务。</string>
@@ -222,10 +225,10 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">时差容限（秒）</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">源文件夹和目标文件夹在外部存储中都有重复的目录。请将其中一个改为不同的目录。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">源文件夹和目标文件夹都是本地文件夹，有重复的目录。请将其中一个改为不同的目录。</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">源地和目的地都存在重复的目录名。 源和目的目录名必须不同。</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">外部存储源和目标都存在重复的目录名。 源和目的目录名必须不同。</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">源和目标SMB文件夹是相同的。你必须选择不同的源目录和目标目录名称。</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">源文件夹和目标文件夹都是本地文件夹，有重复的目录。请将其中一个改为不同的目录。</string>
+        <string name="deleted_msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">源和目标SMB文件夹是相同的。你必须选择不同的源目录和目标目录名称。</string>
         <string name="msgs_main_sync_profile_dlg_mirror">镜子</string>
         <string name="msgs_main_sync_profile_dlg_move">移动</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">指定SMB服务器的IP地址或主机名。</string>
@@ -235,8 +238,8 @@
         <string name="msgs_main_sync_profile_dlg_specify_host_pswd">指定SMB主机密码。</string>
         <string name="msgs_main_sync_profile_dlg_sync">同步</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_source">不允许写入外部存储空间，请编辑源文件夹并允许写入外部存储空间。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">不允许写入外部存储空间，编辑目标文件夹并允许写入外部存储空间。</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">不允许访问存储器，请按 \"允许使用外部存储器 \"按钮允许访问存储器。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">不允许访问SDCARD/USB存储，请编辑目标文件夹以允许访问SDCARD/USB存储。</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">不允许访问SDCARD/USB存储器，请点击 \"允许使用SDCARD/USB存储\"按钮，允许访问该存储器。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">%s未安装。</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_local">本地</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">选择文件夹类型</string>
@@ -290,8 +293,8 @@
         <string name="msgs_task_edit_sync_folder_dlg_directory">目录</string>
         <string name="msgs_task_edit_sync_folder_dlg_dirlist">列表目录</string>
         <string name="msgs_task_edit_sync_folder_dlg_folder_type">文件夹类型</string>
-        <string name="msgs_task_edit_sync_folder_dlg_local_storage">本地存储</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">选择本地存储</string>
+        <string name="msgs_task_edit_sync_folder_dlg_local_storage">存储</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">选择存储</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_smb_server_and_configure">查找并配置SMB服务器</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters">编辑SMB服务器参数</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name">选择SMB共享名称</string>
@@ -311,7 +314,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_use_port_number">使用端口号</string>
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_username">账户名称</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">搜索SMB服务器</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">允许使用到外部存储</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">允许使用SDCARD/USB存储</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">显示密码</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">SMB协议</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">选择SMB协议</string>
@@ -469,7 +472,7 @@
         <string name="msgs_task_sync_task_sync_sub_directory_specific">选择子目录</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">限制SMB I/O写缓冲区为16KB。</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">如果无法通过EXIF数据确定日期和时间，将显示一条确认信息。</string>
-        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">同步到外部存储时，忽略大于4GB的源文件。</string>
+        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">同步到SDCARD/USB存储时，忽略大于4GB的源文件</string>
         <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">忽略文件名超过255字节的文件</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">将所有文件保存在目标目录中，而不创建子目录。</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">取消</string>
@@ -516,6 +519,10 @@
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_title">同意隐私政策</string>
         <string name="msgs_privacy_policy_show_privacy_policy">显示隐私政策</string>
+    <!-- Search -->
+        <string name="msgs_find_view_search_word_hint">搜索字符串</string>
+        <string name="msgs_find_view_search_prev_label">上一个搜索结果</string>
+        <string name="msgs_find_view_search_next_label">下一个搜索结果</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">进行管理档案的维护。</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">取消维护</string>
@@ -571,8 +578,8 @@
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">同步停止的原因是目标中存在与文件同名的目录。文件=</string>
         <string name="msgs_mirror_abort_file_name_gt_255_byte">由于文件名的长度超过255个字符，同步停止。文件名chars=%1$s，文件名=%2$s。</string>
         <string name="msgs_mirror_ignore_file_name_gt_255_byte">由于文件名的长度超过255字节，文件被忽略。 文件名的字节数=%1$s，文件名=%2$s。</string>
-        <string name="msgs_mirror_external_sdcard_not_mounted">同步被取消，因为外部存储未安装。</string>
-        <string name="msgs_mirror_external_sdcard_select_required">同步被取消，因为存储无法访问。UUID=%s</string>
+        <string name="msgs_mirror_external_sdcard_not_mounted">由于SDCARD/USB存储没有被安装，同步被取消。</string>
+        <string name="msgs_mirror_external_sdcard_select_required">因为SDCARD/USB存储不能被访问，所以同步被取消。UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">因为文件大小超过4GB，所以忽略了。文件=%s</string>
         <string name="msgs_mirror_directory_ignored_because_access_not_granted">因为目录无法访问，所以忽略了该目录。 目录=%s</string>
         <string name="msgs_mirror_file_ignored_because_access_not_granted">因为文件无法访问，所以忽略了该文件。 文件=%s</string>
@@ -870,8 +877,8 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">周数</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">工作日 (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">工作日 (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">改为外部存储，因为当同步方式为存档时，不能使用ZIP。</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">该请求被忽略，因为Zip文件不能用作存档同步类型的目的地。</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">改为本地文件夹，因为当同步方式为存档时，不能使用ZIP文件夹。</string>
+        <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">该请求被忽略，因为Zip文件不能用作存档同步类型的目的地。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">年份</string>
         <string name="msgs_sync_folder_archive_btn_title_month">月份</string>
         <string name="msgs_sync_folder_archive_btn_title_day">日</string>
@@ -1039,8 +1046,8 @@
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
         <string name="settings_suppress_add_external_storage_notification">settings_suppress_add_external_storage_notification</string>
-        <string name="settings_suppress_add_external_storage_notification_summary_ena">不显示添加外部存储的通知。</string>
-        <string name="settings_suppress_add_external_storage_notification_title">添加外部存储空间的通知</string>
+        <string name="settings_suppress_add_external_storage_notification_summary_ena">不显示添加SDCARD/USB存储的通知</string>
+        <string name="settings_suppress_add_external_storage_notification_title">添加SDCARD/USB存储的通知</string>
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">不要提示用同步按钮开始同步。</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">同步键</string>

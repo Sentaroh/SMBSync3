@@ -4551,53 +4551,27 @@ public class TaskEditor extends DialogFragment {
     static public void showFieldHelp(Activity a, GlobalParameters mGp, String title, String help_msg) {
         Dialog dialog = new Dialog(a, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.help_view);
-        LinearLayout ll_view = (LinearLayout) dialog.findViewById(R.id.help_view_title_view);
-        ll_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        dialog.setContentView(R.layout.help_dlg);
+        LinearLayout ll_title_view = (LinearLayout) dialog.findViewById(R.id.help_view_title_view);
+        ll_title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
 
         TextView dlg_tv = (TextView) dialog.findViewById(R.id.help_view_title_text);
         dlg_tv.setTextColor(mGp.themeColorList.title_text_color);
-
-        final EditText et_find_string=(EditText)dialog.findViewById(R.id.help_view_find_value);
-        final ImageButton ib_find_next=(ImageButton) dialog.findViewById(R.id.help_view_find_next);
-        final ImageButton ib_find_prev=(ImageButton) dialog.findViewById(R.id.help_view_find_prev);
-        final Button btn_reload=(Button) dialog.findViewById(R.id.help_view_reload);
-        final TextView tv_find_count=(TextView) dialog.findViewById(R.id.help_view_find_count);
 
         int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(a));
 
         WebView wv = (WebView) dialog.findViewById(R.id.help_view_help);
 
-//        dlg_wb.loadUrl("file:///android_asset/" + help_msg);
         String html=CommonUtilities.convertMakdownToHtml(a, help_msg);
 //        dlg_wb.loadData(html, "text/html", "UTF-8");
         wv.loadData(Base64.encodeToString(html.getBytes(), Base64.DEFAULT), null, "base64");
         wv.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-//        wv.getSettings().setSupportZoom(true);
-//        wv.getSettings().setBuiltInZoomControls(true);
-//        wv.getSettings().setTextZoom(zf);
-//        wv.setBackgroundColor(Color.LTGRAY);
+        wv.setScrollbarFadingEnabled(false);
         CommonUtilities.setWebViewListener(mGp, wv, zf);
 
-        btn_reload.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CommonUtilities.setViewEnabled(a, btn_reload, false);
-                wv.reload();
-            }
-        });
+        LinearLayout ll_help=(LinearLayout)dialog.findViewById(R.id.help_view);
+        CommonUtilities.setAboutFindListener(a, ll_help, wv);
 
-        wv.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading (WebView view, String url) {
-                return false;
-            }
-
-            @Override
-            public void onPageFinished (WebView view, String url) {
-                CommonUtilities.setViewEnabled(a, btn_reload, true);
-            }
-        });
         wv.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event){
@@ -4614,67 +4588,6 @@ public class TaskEditor extends DialogFragment {
                 }
                 return false;
             }
-        });
-
-        ib_find_next.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wv.findNext(true);
-            }
-        });
-
-        ib_find_prev.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                wv.findNext(false);
-            }
-        });
-
-        CommonUtilities.setViewEnabled(a, ib_find_next, false);
-        CommonUtilities.setViewEnabled(a, ib_find_prev, false);
-
-        final ColorStateList default_text_color=tv_find_count.getTextColors();
-        wv.setFindListener(new WebView.FindListener() {
-            @Override
-            public void onFindResultReceived(int i, int i1, boolean b) {
-                if (et_find_string.getText().length()>0) {
-                    if (i1>0) {
-                        tv_find_count.setText((i+1)+"/"+i1);
-                        tv_find_count.setTextColor(default_text_color);
-                        CommonUtilities.setViewEnabled(a, ib_find_next, true);
-                        CommonUtilities.setViewEnabled(a, ib_find_prev, true);
-                    } else {
-                        tv_find_count.setText(0+"/"+0);
-                        tv_find_count.setTextColor(Color.RED);
-                        CommonUtilities.setViewEnabled(a, ib_find_next, false);
-                        CommonUtilities.setViewEnabled(a, ib_find_prev, false);
-                    }
-                } else {
-                    CommonUtilities.setViewEnabled(a, ib_find_next, false);
-                    CommonUtilities.setViewEnabled(a, ib_find_prev, false);
-                    tv_find_count.setText("");
-                    tv_find_count.setTextColor(default_text_color);
-                }
-            }
-        });
-
-        et_find_string.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length()>0) {
-                    wv.findAllAsync(s.toString());
-                } else {
-                    CommonUtilities.setViewEnabled(a, ib_find_next, false);
-                    CommonUtilities.setViewEnabled(a, ib_find_prev, false);
-                    wv.findAllAsync("");
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
         });
 
         dlg_tv.setText(title);

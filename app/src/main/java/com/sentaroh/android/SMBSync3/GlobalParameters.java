@@ -207,7 +207,7 @@ public class GlobalParameters {
     public boolean appPasswordAuthValidated=false;
     public long appPasswordAuthLastTime=0L;
 
-    public boolean settingPreventSyncStartDelay = true;
+    public boolean settingPreventSyncStartDelay = false;
 //    public boolean settingScreenOnIfScreenOnAtStartOfSync = false;
 
     public boolean settingExportedTaskEncryptRequired = true;
@@ -511,7 +511,7 @@ public class GlobalParameters {
             pe.putBoolean(c.getString(R.string.settings_wifi_lock), true);
 
         if (!prefs.contains(c.getString(R.string.settings_force_screen_on_while_sync)))
-            pe.putBoolean(c.getString(R.string.settings_force_screen_on_while_sync), true);
+            pe.putBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
 
         if (!prefs.contains(c.getString(R.string.settings_screen_theme_language)))
             pe.putString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
@@ -567,7 +567,7 @@ public class GlobalParameters {
 
         settingWriteSyncResultLog = prefs.getBoolean(c.getString(R.string.settings_sync_history_log), true);
 
-        settingPreventSyncStartDelay =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), true);
+        settingPreventSyncStartDelay =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
 
         settingSecurityApplicationPasswordHashValue = ApplicationPasswordUtils.getPasswordHashValue(prefs);
         settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), false);

@@ -1,10 +1,10 @@
-### Lokaler Speicher  
+### Speicher  
 
-Eingebauter Speicher/SDCARD/USB-Speicher kann gewählt werden.   
+Sie können zwischen internem Speicher, SDCARD oder USB wählen.   
 
-### Erlaubtdie Verwendung externer Speicher  
+### Erlaubnis zur Verwendung von SDCARD/USB-Speicher  
 
-Fordern Sie die Erlaubnis zur Verwendung von externem Speicher an. Wenn Sie die MicroSD-Karte formatieren, ändert sich die UUID, daher sollten Sie die Erlaubnis zur Verwendung anfordern.  
+Drücken Sie die Taste , um den Bildschirm für die Erlaubnis zur Nutzung von SDCARD/USB-Speicher anzuzeigen. Wählen Sie den Speicher aus, dessen Verwendung Sie erlauben möchten, und drücken Sie die Taste "Hinzufügen".   
 
 ### Verzeichnisse auflisten  
 

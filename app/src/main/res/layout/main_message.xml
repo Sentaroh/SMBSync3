@@ -70,15 +70,29 @@
                 android:minWidth="0dp"
                 android:text="@string/msgs_log_msg_filter_string_reset_button"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
-            <EditText
-                android:id="@+id/main_message_filter_string_value"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:hint="@string/msgs_log_msg_filter_string_find_string"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+                android:layout_weight="1">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/main_message_filter_string_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:hint="@string/msgs_log_msg_filter_string_find_string"
+                    android:inputType="text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </com.google.android.material.textfield.TextInputLayout>
+<!--            <EditText-->
+<!--                android:id="@+id/main_message_filter_string_value"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:inputType="text"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:hint="@string/msgs_log_msg_filter_string_find_string"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>-->
             <Button
                 android:id="@+id/main_message_filter_string_find"
                 android:layout_width="wrap_content"

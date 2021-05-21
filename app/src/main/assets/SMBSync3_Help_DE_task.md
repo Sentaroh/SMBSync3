@@ -48,7 +48,7 @@ Sie können die zu synchronisierende Datei anhand des letzten Änderungsdatums d
 - Verzeichnisfilter  
 Sie können den Namen des Verzeichnisses auswählen, das Sie synchronisieren möchten.  
 
-### Zum Archivieren der  
+### Zum Archivieren der(Wird nur angezeigt, wenn die Synchronisationsmethode Archiv ist)  
 
 Wählen Sie die Kriterien für die zu archivierenden Fotos oder Videos.  
 
@@ -163,7 +163,7 @@ Wenn der Synchronisationsmodus "Verschieben" ist, wird nach dem Verschieben der 
 ### Wenn das Datum und die Uhrzeit nicht über die EXIF-Daten ermittelt werden können, wird eine Bestätigungsmeldung angezeigt  
 Anzeige einer Bestätigungsmeldung, wenn das übernommene Datum und die Uhrzeit nicht aus den Exif-Daten ermittelt werden können.  
 
-### IgnorierenSie Quelldateien, die größer als 4 GB sind, wenn sie mit einem externenSpeicher synchronisiert werden  
+### Quelldateien, die größer als 4 GB sind, beim Synchronisieren auf SDCARD/USB-Speicher ignorieren  
 Wenn dieses Kontrollkästchen aktiviert ist, können Sie E/A-Fehler bei der Synchronisierung mit einer MicroSD-Karte vermeiden, indem Quelldateien, die größer als 4 GB sind, bei der Synchronisierung mit dem lokalen Speicher ignoriert werden.  
 
 ### Ignoriere Dateien, deren Dateiname 255 Bytes überschreitet  

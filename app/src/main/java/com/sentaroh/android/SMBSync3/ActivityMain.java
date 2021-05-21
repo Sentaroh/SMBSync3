@@ -39,6 +39,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -1538,8 +1539,12 @@ public class ActivityMain extends AppCompatActivity {
 
     private void showHideFilterView() {
         LinearLayout ll_filter_view=(LinearLayout)mMessageView.findViewById(R.id.main_message_filter_view);
-        if (ll_filter_view.getVisibility()==LinearLayout.GONE) ll_filter_view.setVisibility(LinearLayout.VISIBLE);
-        else ll_filter_view.setVisibility(LinearLayout.GONE);
+        if (ll_filter_view.getVisibility()==LinearLayout.GONE) {
+            ll_filter_view.setVisibility(LinearLayout.VISIBLE);
+        } else {
+            ll_filter_view.setVisibility(LinearLayout.GONE);
+            clearMessageFilterSearchString();
+        }
     }
 
     private void invokeStorageRequestor() {
@@ -1780,8 +1785,13 @@ public class ActivityMain extends AppCompatActivity {
         loadHelpFile(privacy_view, getString(R.string.msgs_dlg_title_about_privacy_desc));
         loadHelpFile(change_view, getString(R.string.msgs_dlg_title_about_change_desc));
 
+        CommonUtilities.setAboutFindListener(mActivity, ll_func, func_view);
+        CommonUtilities.setAboutFindListener(mActivity, ll_privacy, privacy_view);
+        func_view.requestFocus();
+        privacy_view.requestFocus();
+
         final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
-                new WebView[]{func_view, privacy_view, change_view});
+                new View[]{ll_func, ll_privacy, ll_change});
         final CustomViewPager viewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
@@ -2109,9 +2119,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void requestLegacyStoragePermission(final CallBackListener cbl) {
         ArrayList<SafStorage3>ssl=mGp.safMgr.getSafStorageList();
-        mUtil.showCommonDialogWarn(true,
-                mContext.getString(R.string.msgs_main_permission_external_storage_title),
-                mContext.getString(R.string.msgs_main_permission_external_storage_request_msg), new CallBackListener() {
+        CallBackListener ok_cancel_cbl=new CallBackListener() {
             @Override
             public void onCallBack(Context c, boolean positive, Object[] objects) {
                 if (positive) {
@@ -2138,19 +2146,33 @@ public class ActivityMain extends AppCompatActivity {
                     mUtil.showCommonDialogWarn(false,
                             mContext.getString(R.string.msgs_main_permission_external_storage_title),
                             mContext.getString(R.string.msgs_main_permission_external_storage_denied_msg), new CallBackListener() {
-                        @Override
-                        public void onCallBack(Context c, boolean positive, Object[] objects) {
-                            mUiHandler.post(new Runnable(){
                                 @Override
-                                public void run() {
-                                    if (positive) finish();
+                                public void onCallBack(Context c, boolean positive, Object[] objects) {
+                                    mUiHandler.post(new Runnable(){
+                                        @Override
+                                        public void run() {
+                                            if (positive) finish();
+                                        }
+                                    });
                                 }
                             });
-                        }
-                    });
                 }
             }
-        });
+        };
+        CallBackListener extra_cbl=new CallBackListener() {
+            @Override
+            public void onCallBack(Context context, boolean b, Object[] objects) {
+                //Extran button listener
+                showPrivacyPolicy();
+            }
+        };
+        mUtil.showCommonDialog(true, "W",
+                mActivity.getString(R.string.msgs_main_permission_external_storage_title),
+                mActivity.getString(R.string.msgs_main_permission_external_storage_request_msg),
+                mActivity.getString(R.string.msgs_common_dialog_ok),
+                mActivity.getString(R.string.msgs_common_dialog_cancel),
+                mActivity.getString(R.string.msgs_privacy_policy_show_privacy_policy),
+                ok_cancel_cbl, extra_cbl, false);
     }
 
     private class ActivityLaunchItem {
@@ -4725,6 +4747,14 @@ public class ActivityMain extends AppCompatActivity {
 //        });
     }
 
+    private void clearMessageFilterSearchString() {
+        final EditText et_find_string=(EditText)mMessageView.findViewById(R.id.main_message_filter_string_value);
+        if (et_find_string.getText().length()>0) {
+            et_find_string.setText("");
+            mGp.syncMessageListAdapter.setFilterString("");
+        }
+    }
+
     private void setMessageFilterListener() {
         LinearLayout ll_filter_category=(LinearLayout) mMessageView.findViewById(R.id.main_message_filter_category_view);
         LinearLayout ll_filter_string=(LinearLayout) mMessageView.findViewById(R.id.main_message_filter_string_view);
@@ -4739,6 +4769,7 @@ public class ActivityMain extends AppCompatActivity {
 
         final EditText et_find_string=(EditText)mMessageView.findViewById(R.id.main_message_filter_string_value);
         final Button btn_find=(Button)mMessageView.findViewById(R.id.main_message_filter_string_find);
+        btn_find.setVisibility(Button.GONE);
         final Button btn_reset=(Button)mMessageView.findViewById(R.id.main_message_filter_string_reset);
         final CheckBox cb_filter_case_sensitive=(CheckBox) mMessageView.findViewById(R.id.main_message_filter_string_case_insensitive);
 
@@ -4777,7 +4808,7 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        CommonUtilities.setViewEnabled(mActivity, btn_find, false);
+//        CommonUtilities.setViewEnabled(mActivity, btn_find, false);
         CommonUtilities.setViewEnabled(mActivity, btn_reset, false);
         et_find_string.addTextChangedListener(new TextWatcher() {
             @Override
@@ -4789,10 +4820,13 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length()>0) {
-                    CommonUtilities.setViewEnabled(mActivity, btn_find, true);
+                    mGp.syncMessageListAdapter.setFilterString(et_find_string.getText().toString(), cb_filter_case_sensitive.isChecked());
+//                    CommonUtilities.setViewEnabled(mActivity, btn_find, true);
                     CommonUtilities.setViewEnabled(mActivity, btn_reset, true);
                 } else {
-                    CommonUtilities.setViewEnabled(mActivity, btn_find, false);
+                    mGp.syncMessageListAdapter.setFilterString("");
+//                    CommonUtilities.setViewEnabled(mActivity, btn_find, false);
+                    CommonUtilities.setViewEnabled(mActivity, btn_reset, false);
                 }
             }
         });
@@ -4806,13 +4840,13 @@ public class ActivityMain extends AppCompatActivity {
             }
         });
 
-        btn_find.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mGp.syncMessageListAdapter.setFilterString(et_find_string.getText().toString(), cb_filter_case_sensitive.isChecked());
-//                CommonUtilities.setViewEnabled(mActivity, btn_find, false);
-            }
-        });
+//        btn_find.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mGp.syncMessageListAdapter.setFilterString(et_find_string.getText().toString(), cb_filter_case_sensitive.isChecked());
+////                CommonUtilities.setViewEnabled(mActivity, btn_find, false);
+//            }
+//        });
     }
 
     private void setMessageContextButtonNormalMode() {

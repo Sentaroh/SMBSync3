@@ -33,6 +33,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -47,7 +48,9 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.Spannable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -60,8 +63,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -70,6 +75,7 @@ import com.sentaroh.android.SMBSync3.Log.LogUtil;
 
 
 import com.sentaroh.android.Utilities3.Base64Compat;
+import com.sentaroh.android.Utilities3.CallBackListener;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities3.EncryptUtilV3;
@@ -194,6 +200,13 @@ public final class CommonUtilities {
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, ok_text, cancel_text);
         cdf.showDialog(mFragMgr,cdf,listener);
+    };
+
+    public void showCommonDialog(final boolean negative, String type, String title, String msgtext,
+                                 String ok_text, String cancel_text, String extra_btn_label,
+                                 Object listener, CallBackListener cbl, boolean max) {
+        MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, ok_text, cancel_text, extra_btn_label);
+        cdf.showDialog(mFragMgr, cdf, listener, cbl, max);
     };
 
     public void showCommonDialogWarn(final boolean negative, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
@@ -392,6 +405,101 @@ public final class CommonUtilities {
 
     public String buildPrintMsg(String cat, String... msg) {
         return mLog.buildPrintLogMsg(cat, msg);
+    }
+
+    static public void setAboutFindListener(Activity a, LinearLayout ll, WebView wv) {
+        final EditText et_find_string=(EditText)ll.findViewById(R.id.dlg_find_view_search_word);
+        final ImageButton ib_find_next=(ImageButton) ll.findViewById(R.id.dlg_find_view_find_next);
+        final ImageButton ib_find_prev=(ImageButton) ll.findViewById(R.id.dlg_find_view_find_prev);
+        final TextView tv_find_count=(TextView) ll.findViewById(R.id.dlg_find_view_find_count);
+
+//        wv.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void onPageFinished (WebView view, String url) {
+//            }
+//        });
+
+        ib_find_next.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wv.findNext(true);
+            }
+        });
+        ib_find_next.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CommonDialog.showPopupMessageAsUpAnchorView(a, ib_find_next,
+                        a.getString(R.string.msgs_find_view_search_next_label), 2);
+                return true;
+            }
+        });
+
+        ib_find_prev.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wv.findNext(false);
+            }
+        });
+        ib_find_prev.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CommonDialog.showPopupMessageAsUpAnchorView(a, ib_find_next,
+                        a.getString(R.string.msgs_find_view_search_prev_label), 2);
+                return true;
+            }
+        });
+
+        CommonUtilities.setViewEnabled(a, ib_find_next, false);
+        CommonUtilities.setViewEnabled(a, ib_find_prev, false);
+
+        final ColorStateList default_text_color=tv_find_count.getTextColors();
+        wv.setFindListener(new WebView.FindListener() {
+            @Override
+            public void onFindResultReceived(int i, int i1, boolean b) {
+                if (et_find_string.getText().length()>0) {
+                    if (i1>0) {
+                        tv_find_count.setText((i+1)+"/"+i1);
+                        tv_find_count.setTextColor(default_text_color);
+                        CommonUtilities.setViewEnabled(a, ib_find_next, true);
+                        CommonUtilities.setViewEnabled(a, ib_find_prev, true);
+                    } else {
+                        tv_find_count.setText(0+"/"+0);
+                        tv_find_count.setTextColor(Color.RED);
+                        CommonUtilities.setViewEnabled(a, ib_find_next, false);
+                        CommonUtilities.setViewEnabled(a, ib_find_prev, false);
+                    }
+                } else {
+                    CommonUtilities.setViewEnabled(a, ib_find_next, false);
+                    CommonUtilities.setViewEnabled(a, ib_find_prev, false);
+                    tv_find_count.setText("");
+                    tv_find_count.setTextColor(default_text_color);
+                }
+            }
+        });
+
+        et_find_string.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()>0) {
+                    wv.findAllAsync(s.toString());
+                } else {
+                    CommonUtilities.setViewEnabled(a, ib_find_next, false);
+                    CommonUtilities.setViewEnabled(a, ib_find_prev, false);
+                    wv.findAllAsync("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 
     static public void setWebViewListener(GlobalParameters gp, WebView wv, int zf) {
@@ -1073,10 +1181,10 @@ public final class CommonUtilities {
     }
 
     static public boolean isIgnoringBatteryOptimizations(Context c) {
-            String packageName = c.getPackageName();
-            PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
-            boolean result=pm.isIgnoringBatteryOptimizations(packageName);
-            return result;
+        String packageName = c.getPackageName();
+        PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
+        boolean result=pm.isIgnoringBatteryOptimizations(packageName);
+        return result;
     }
 
     static public boolean isExfatFileSystem(String uuid) {
@@ -1100,7 +1208,7 @@ public final class CommonUtilities {
             }
             log.debug("getExternalStorageFileSystemName result="+result+", uuid="+uuid);
         } catch (Exception e) {
-            log.debug("getExternalStorageFileSystemName error="+e.toString()+MiscUtil.getStackTraceString(e));
+            log.debug("getExternalStorageFileSystemName error="+e.toString(),e);
         }
         return result;
     }

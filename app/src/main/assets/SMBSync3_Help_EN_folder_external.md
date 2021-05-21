@@ -1,10 +1,10 @@
-### Local storage  
+### Storage  
 
-You can choose between internal storage/SDCARD/USB storage.   
+You can choose internal storage, SDCARD or USB.   
 
-### Allow use external storage  
+### Permission to use SDCARD/USB storage  
 
-Request permission to use external storage. If you format the MicroSD card, the UUID will change, so request permission to use it.  
+Press the button to display the SDCARD/USB storage usage permission screen. Select the storage you want to allow to use and press the "Add" button.   
 
 ### List Directories  
 

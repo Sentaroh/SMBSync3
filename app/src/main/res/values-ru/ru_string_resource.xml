@@ -51,7 +51,7 @@
         <string name="msgs_help_sync_task_file">SMBSync3_Help_RU_task.md</string>
         <string name="msgs_help_sync_task_title">Справка по задачам синхронизации</string>
         <string name="msgs_help_sync_folder_external_file">SMBSync3_Help_RU_folder_external.md</string>
-        <string name="msgs_help_sync_folder_external_title">Помощь по внешнему хранению данных</string>
+        <string name="msgs_help_sync_folder_external_title">Справка по локальным папкам</string>
         <string name="msgs_help_sync_folder_keyword">SMBSync3_Help_RU_folder_keyword.md</string>
         <string name="msgs_help_sync_folder_keyword_title">Справка по параметрам</string>
         <string name="msgs_help_sync_folder_smb_file">SMBSync3_Help_RU_folder_smb.md</string>
@@ -172,17 +172,20 @@
         <string name="msgs_log_msg_filter_string_find_case_sensitive">A/a</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_msg">Вы хотите начать выполнение следующих задач?</string>
         <string name="msgs_main_suppress_start_sync_confirmation_message_suppress">Отключите это оповещение (можно включить в настройках синхронизации).</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_title">Уведомление о добавлении внешнего хранилища</string>
-        <string name="msgs_main_suppress_add_external_storage_notification_msg">Обнаружено новое внешнее хранилище. Добавить внешнее хранилище?</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_title">Уведомление о добавлении SDCARD/USB-накопителя</string>
+        <string name="msgs_main_suppress_add_external_storage_notification_msg">Было обнаружено новое хранилище SDCARD/USB, хотите ли вы добавить это хранилище SDCARD/USB?</string>
         <string name="msgs_main_suppress_add_external_storage_notification_suppress">Отключите это оповещение (можно включить в настройках синхронизации).</string>
         <string name="msgs_main_external_storage_select_activity_not_found_msg">Не удалось запустить активность для получения разрешения на запись во внешнее хранилище.</string>
-        <string name="msgs_main_external_storage_select_required_cancel_msg">Вы не сможете выполнять какие-либо задачи с помощью внешнего хранилища, пока вам не будет предоставлен доступ к внешнему хранилищу.</string>
+        <string name="msgs_main_external_storage_select_required_cancel_msg">Задачи, использующие хранилище SDCARD/USB, не могут быть выполнены, пока не будет предоставлен доступ к хранилищу SDCARD/USB.</string>
         <string name="msgs_main_external_storage_select_retry_select_msg">Корневая директория хранилища не была выбрана.  Хотите перевыбрать?</string>
         <string name="msgs_main_external_storage_uuid_duplicated">Следующие UUID-ы не могут быть использованы, так как они дублируются. Отформатируйте диск MicroSD или USB OTG для его использования.</string>
         <string name="msgs_main_external_storage_uuid_unusable">Не смонтированные носители</string>
-        <string name="msgs_main_external_storage_request_permission">Разрешить использование внешнего хранилища</string>
+        <string name="msgs_main_external_storage_request_permission">Разрешение на использование SDCARD/USB-накопителя</string>
         <string name="msgs_main_permission_external_storage_denied_msg">The application cannot be started because you have not been granted permission to access the storage.</string>
-        <string name="msgs_main_permission_external_storage_request_msg">Grant permission to access storage to read and write data that is synchronized to storage and for administrative data.</string>
+        <string name="msgs_main_permission_external_storage_request_msg">Для чтения и записи данных и административных данных во внутреннее хранилище выполните следующие действия, чтобы предоставить разрешение на доступ к внутреннему хранилищу.\n
+Нажмите кнопку \"OK\".\n
+Нажмите кнопку \"Разрешить\" на экране разрешения.\n\n
+Пожалуйста, ознакомьтесь с Политикой конфиденциальности в отношении обработки данных и необходимых разрешений.\n\n</string>
         <string name="msgs_main_permission_external_storage_title">Storage Permission</string>
         <string name="msgs_main_sync_all_auto_tasks">Выполнять все задачи, настроенные на автоматическую синхронизацию.</string>
         <string name="msgs_main_sync_can_not_sync_no_valid_profile">Нет задач синхронизации, доступных для выполнения.  Пожалуйста, создайте задачу синхронизации.</string>
@@ -227,10 +230,10 @@
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_10">10</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_3">3</string>
         <string name="msgs_main_sync_profile_dlg_diff_time_value_option_prompt">Последнее время модификации допуска (секунды)</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">Папки источника и назначения имеют дубликаты каталогов во внешнем хранилище. Пожалуйста, измените один из них на другой каталог.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_external">Исходная и конечная папки являются локальными папками с дублирующимися каталогами. Пожалуйста, измените один из них на другой каталог.</string>
         <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_same_dir">Дублированные имена каталогов существуют как в исходном, так и в целевом месте.  Имена исходного и конечного каталогов должны быть разными.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">Дублированные имена каталогов существуют как на внешнем источнике хранения, так и на получателе.  Имена исходного и конечного каталогов должны быть разными.</string>
-        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">Исходная и конечная папки SMB идентичны. Вы должны выбрать разные имена исходной и целевой директорий.</string>
+        <string name="msgs_main_sync_profile_dlg_invalid_source_destination_combination_sdcard">Исходная и конечная папки являются локальными папками с дублирующимися каталогами. Пожалуйста, измените один из них на другой каталог.</string>
+        <string name="deleted_msgs_main_sync_profile_dlg_invalid_source_destination_cobination_smb">Исходная и конечная папки SMB идентичны. Вы должны выбрать разные имена исходной и целевой директорий.</string>
         <string name="msgs_main_sync_profile_dlg_mirror">Зеркало</string>
         <string name="msgs_main_sync_profile_dlg_move">Переместить</string>
         <string name="msgs_main_sync_profile_dlg_specify_host_address_or_name">Укажите IP-адрес или имя хоста SMB-сервера.</string>
@@ -240,8 +243,8 @@
         <string name="msgs_main_sync_profile_dlg_specify_host_pswd">Укажите пароль хоста SMB.</string>
         <string name="msgs_main_sync_profile_dlg_sync">Синхронизация</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_source">Запись во внешнее хранилище запрещена, редактируйте исходную папку и разрешайте запись во внешнее хранилище.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">Запись во внешнее хранилище запрещена, отредактируйте папку назначения и разрешите запись во внешнее хранилище.</string>
-        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">Доступ к хранилищу не разрешён, нажмите кнопку \"Разрешить использовать внешнее хранилище\", чтобы разрешить доступ к хранилищу.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_please_edit_destination">Доступ к хранилищу SDCARD/USB не разрешен, пожалуйста, отредактируйте папку назначения, чтобы разрешить доступ к хранилищу SDCARD/USB.</string>
+        <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_auth_press_select_btn">Доступ к хранилищу SDCARD/USB не разрешен, нажмите кнопку \"Разрешить использование SDCARD/USB-накопителя\", чтобы разрешить доступ к хранилищу.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_sdcard_not_mounted">%s не смонтирован.</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_local">Местный</string>
         <string name="msgs_main_sync_profile_dlg_sync_folder_type_prompt">Выберите тип папки</string>
@@ -294,8 +297,8 @@
         <string name="msgs_task_edit_sync_folder_dlg_directory">Каталог</string>
         <string name="msgs_task_edit_sync_folder_dlg_dirlist">Список каталогов</string>
         <string name="msgs_task_edit_sync_folder_dlg_folder_type">Тип папки</string>
-        <string name="msgs_task_edit_sync_folder_dlg_local_storage">локальное хранилище</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">Выберите локальное хранилище</string>
+        <string name="msgs_task_edit_sync_folder_dlg_local_storage">хранилище</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_local_storage">Выберите хранилище</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_smb_server_and_configure">Поиск и настройка сервера SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters">Редактирование параметров SMB сервера</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name">Выберите имя акции SMB</string>
@@ -315,7 +318,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_use_port_number">Использовать номер порта</string>
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_username">Название аккаунта</string>
         <string name="msgs_task_edit_sync_folder_dlg_search_remote_server">Поисковый SMB-сервер</string>
-        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Разрешить использование внешнего хранилища</string>
+        <string name="msgs_task_edit_sync_folder_dlg_select_sdcard">Разрешить использование SDCARD/USB-накопителя</string>
         <string name="msgs_task_edit_sync_folder_dlg_show_password">Показать пароль</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_hdr">Протокол SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_smb_protocol_select_title">Выберите протокол SMB</string>
@@ -474,7 +477,7 @@
         <string name="msgs_task_sync_task_sync_sub_directory_specific">Выберите подкаталоги</string>
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Ограничить буфер записи ввода / вывода SMB 16 КБ</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">Если дата и время не могут быть определены по данным EXIF, отображается подтверждающее сообщение.</string>
-        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">Игнорируйте исходные файлы размером более 4 ГБ при синхронизации с внешним хранилищем.</string>
+        <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">Игнорирование исходных файлов размером более 4 ГБ при синхронизации с SDCARD/USB-накопителем</string>
         <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">Игнорировать файлы, имена которых превышают 255 байт</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">Сохранять все файлы в целевой директории без создания подкаталогов</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Отменить</string>
@@ -521,6 +524,10 @@
     <!-- Privacy Policy confirm -->
         <string name="msgs_privacy_policy_title">Политика приватности</string>
         <string name="msgs_privacy_policy_show_privacy_policy">Показать политику конфиденциальности</string>
+    <!-- Search -->
+        <string name="msgs_find_view_search_word_hint">поисковая строка</string>
+        <string name="msgs_find_view_search_prev_label">Предыдущие результаты поиска</string>
+        <string name="msgs_find_view_search_next_label">Следующие результаты поиска</string>
     <!-- Maintenance -->
         <string name="msgs_progress_spin_dlg_housekeep_running">Выполнение управления файлами обслуживания.</string>
         <string name="msgs_progress_spin_dlg_housekeep_cancel">Отмена обслуживания</string>
@@ -576,8 +583,8 @@
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Синхронизация прервана, поскольку в целевой папке существует каталог с тем же именем, что и у файла. Файл =</string>
         <string name="msgs_mirror_abort_file_name_gt_255_byte">Синхронизация была отменена, поскольку длина имени файла превышает 255 байтов. Число байтов в имени файла = %1$s, Имя файла = %2$s</string>
         <string name="msgs_mirror_ignore_file_name_gt_255_byte">Файл был проигнорирован, так как длина имени файла превышает 255 байт. Имя файла в байтах = %1$s, имя файла = %2$s.</string>
-        <string name="msgs_mirror_external_sdcard_not_mounted">Sync cancelled because external storage is not mounted.</string>
-        <string name="msgs_mirror_external_sdcard_select_required">Sync cancelled because storage can not be access. UUID=%s</string>
+        <string name="msgs_mirror_external_sdcard_not_mounted">Синхронизация отменена, потому что хранилище SDCARD/USB не смонтировано.</string>
+        <string name="msgs_mirror_external_sdcard_select_required">Синхронизация отменена, поскольку доступ к SDCARD/USB-накопителю невозможен. UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">Ignored it because the file size is over 4GB. File=%s</string>
         <string name="msgs_mirror_directory_ignored_because_access_not_granted">Каталог игнорируется, так как он недоступен. Каталог=%</string>
         <string name="msgs_mirror_file_ignored_because_access_not_granted">Файл был проигнорирован, потому что он был недоступен. Файл=%</string>
@@ -875,8 +882,8 @@
         <string name="msgs_sync_folder_archive_btn_title_week_number">ЕЖЕНЕДЕЛЬНЫЙ ЧИСЛО</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day">День недели (%1$s,%2$s...)</string>
         <string name="msgs_sync_folder_archive_btn_title_week_day_long">День недели (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Изменено на внешнее хранилище, поскольку ZIP нельзя использовать, когда метод синхронизации - архивный.</string>
-        <string name="msgs_sync_folder_archive_zip_folder_not_supported_error">Запрошенная операция была проигнорированна. Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива.</string>
+        <string name="msgs_sync_folder_archive_zip_folder_not_supported">Изменена на локальную папку, так как папка ZIP не может быть использована, когда метод синхронизации - архив.</string>
+        <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">Запрошенная операция была проигнорированна. Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Год</string>
         <string name="msgs_sync_folder_archive_btn_title_month">Месяц</string>
         <string name="msgs_sync_folder_archive_btn_title_day">День</string>
@@ -1044,8 +1051,8 @@
         <string name="settings_smb_use_extended_security_summary_ena">Использовать расширенную безопасность</string>
         <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность(SMBv1)</string>
         <string name="settings_suppress_add_external_storage_notification">settings_suppress_add_external_storage_notification</string>
-        <string name="settings_suppress_add_external_storage_notification_summary_ena">Не показывайте уведомления о добавлении внешнего запоминающего устройства.</string>
-        <string name="settings_suppress_add_external_storage_notification_title">Уведомление о добавлении внешнего хранилища</string>
+        <string name="settings_suppress_add_external_storage_notification_summary_ena">Не показывать уведомление о добавлении SDCARD/USB-накопителя</string>
+        <string name="settings_suppress_add_external_storage_notification_title">Уведомление о добавлении SDCARD/USB-накопителя</string>
         <string name="settings_suppress_start_sync_confirmation_message">settings_suppress_start_sync_confirmation_message</string>
         <string name="settings_suppress_start_sync_confirmation_message_summary_ena">Не просите запускать синхронизацию с помощью кнопки синхронизации.</string>
         <string name="settings_suppress_start_sync_confirmation_message_title">кнопка синхронизации</string>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true" >
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="5dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/search"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dlg_find_view_search_word"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:hint="@string/msgs_find_view_search_word_hint"
+            android:inputType="text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/dlg_find_view_find_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"/>
+    <ImageButton
+        android:id="@+id/dlg_find_view_find_next"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/scroll_down"
+        android:layout_gravity="center_vertical"/>
+    <ImageButton
+        android:id="@+id/dlg_find_view_find_prev"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/scroll_up"
+        android:layout_gravity="center_vertical"/>
+
+</LinearLayout>

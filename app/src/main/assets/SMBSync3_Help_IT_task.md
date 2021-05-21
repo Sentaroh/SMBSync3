@@ -48,7 +48,7 @@ Puoi selezionare il file da sincronizzare in base alla data di ultima modifica d
 - Filtro della directory  
 È possibile selezionare il nome della directory che si desidera sincronizzare.  
 
-### Seleziona cosa archiviare  
+### Seleziona cosa archiviare(Mostrato solo quando il metodo di sincronizzazione è l'archivio)  
 
 Selezionare i criteri per le foto o i video da archiviare.  
 
@@ -163,7 +163,7 @@ Quando la modalità di sincronizzazione è "Spostare", dopo che i file sono stat
 ### Se la data e l'ora non possono essere determinate dai dati EXIF, viene visualizzato un messaggio di conferma  
 Visualizzare un messaggio di conferma quando non è possibile ottenere da Exif la data e l'ora prese.  
 
-### Ignora i file sorgente che sono più grandi di 4 GB quando la sincronizzazione con la memoria esterna.  
+### Ignora i file sorgente più grandi di 4GB durante la sincronizzazione con SDCARD/USB storage  
 Se l'opzione è selezionata, è possibile evitare errori I/O durante la sincronizzazione su una scheda MicroSD ignorando i file sorgente di dimensioni superiori a 4 GB da sincronizzare sulla memoria locale.  
 
 ### Ignora i file il cui nome file supera i 255 byte  

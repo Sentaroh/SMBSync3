@@ -1,10 +1,10 @@
-### Stoccaggio locale  
+### Stoccaggio  
 
-È possibile selezionare l'archiviazione incorporata/SDCARD/USB.   
+Puoi scegliere la memoria interna, SDCARD o USB.   
 
-### Consentire l'uso di una memoria esterna  
+### Permesso di usare la memoria SDCARD/USB  
 
-Richiedere il permesso di utilizzare la memoria esterna. Se formattate la scheda MicroSD, l'UUID cambierà, quindi richiedete l'autorizzazione all'uso.  
+Premere il pulsante per visualizzare la schermata di autorizzazione all'uso dell'archiviazione SDCARD/USB. Seleziona lo spazio di archiviazione che vuoi permettere di utilizzare e premi il pulsante "Add".   
 
 ### Elenco Elenchi  
 

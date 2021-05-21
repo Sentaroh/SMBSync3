@@ -735,11 +735,13 @@ public class SyncThreadSyncFile {
                                 return sync_result;
                             }
                             if (sti.isSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb() &&
-                                    !sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID) && tf.length()>FAT32_MAX_FILE_SIZE) {
-                                String e_msg=stwa.appContext.getString(R.string.msgs_mirror_file_ignored_file_size_gt_4gb, tf.getPath());
-                                stwa.util.addLogMsg("W", sti.getSyncTaskName(), e_msg);
-                                stwa.totalIgnoreCount++;
-                                return sync_result;
+                                    !sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID) && mf_length>FAT32_MAX_FILE_SIZE) {
+                                if (!CommonUtilities.isExfatFileSystem(sti.getDestinationStorageUuid())) {
+                                    String e_msg=stwa.appContext.getString(R.string.msgs_mirror_file_ignored_file_size_gt_4gb, tf.getPath());
+                                    stwa.util.addLogMsg("W", sti.getSyncTaskName(), e_msg);
+                                    stwa.totalIgnoreCount++;
+                                    return sync_result;
+                                }
                             }
                             boolean tf_exists = tf.exists();
                             String conf_type="";
