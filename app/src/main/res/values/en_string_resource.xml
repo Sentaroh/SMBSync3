@@ -677,7 +677,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">New Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">Edit Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Enable schedule</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Sync List...</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Edit Sync task list</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Sun</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Mon</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">Tue</string>
@@ -717,7 +717,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">If the selected day never occurs in some months, sync will be skipped on those months. Exp: you select 29 and February has only 28 days, or you select 31 and the month only has 30 days. Select   \"Sync on the last day of the month\" option to ensure the task is executed on the last day of every month.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Sync task list</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Execute all auto sync tasks</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the sync tasks to be scheduled by pressing the ‘Sync list...’ button below.</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Please specify the sync tasks to be scheduled by pressing the \"Edit sync task list\" button below.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Next sync time is %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Next sync: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">The task specified in the schedule cannot be found.\nSchedule: %1$s, Task: %2$s</string>
@@ -763,8 +763,6 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_menu_group">Group</string>
         <string name="msgs_group_edit_title_add">Add group</string>
         <string name="msgs_group_edit_title_edit">Edit group</string>
-        <string name="msgs_group_edit_sync_task">Edit sync task List</string>
-        <string name="msgs_group_add_sync_task">Add sync task</string>
         <string name="msgs_group_edit_title_new_group_name">New Group</string>
         <string name="msgs_group_name_for_shortcut1">Button1</string>
         <string name="msgs_group_name_for_shortcut2">Button2</string>
@@ -774,7 +772,6 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_group_select_button_title">Select a button</string>
         <string name="msgs_group_label_button">Assigned Button :</string>
         <string name="msgs_group_label_assign_button">Button Assignment</string>
-        <string name="msgs_group_edit_delete_sync_task">Would you like to delete the following tasks?</string>
         <string name="msgs_group_main_dlg_hdr_enable">Enable group</string>
         <string name="msgs_group_main_dlg_hdr_disabled">Disabled</string>
         <string name="msgs_group_edit_enable_sync_group">Would you like to enabled the following tasks?</string>
@@ -784,14 +781,11 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_group_main_dlg_hdr_group_name">Group name</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">Auto task does not exists. Group=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">Task does not exists. Group=%1$s, Task=%2$s</string>
-        <string name="msgs_group_add_sync_task_no_task_exists_for_add">No tasks exist that can be added.</string>
         <string name="msgs_group_edit_sync_task_list_not_specified">Press the Task List button to specify the tasks to be synchronized.</string>
         <string name="msgs_group_info_sync_task_was_deleted_or_renamed">A synchronization task has been deleted or renamed. Task=%s</string>
-        <string name="msgs_group_info_sync_task_list_was_empty">No synchronization task has been specified</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_already_exists">This group name already exists. Use a different name.</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified">Group name is not specified.</string>
         <string name="msgs_group_list_edit_dlg_error_schedule_name_contains_unusabel_character">Invalid character in group name: \"%s\".</string>
-        <string name="msgs_group_error_specified_task_does_not_exists">Task does not exists. Task=%s</string>
         <string name="msgs_group_can_not_sync_specified_task_does_not_exists">Could not find the task specified in the group. Task=(%s)</string>
         <string name="msgs_group_cont_label_add">Add group</string>
         <string name="msgs_group_cont_label_up">Move up</string>
@@ -801,17 +795,23 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_group_cont_label_delete">Delete group</string>
         <string name="msgs_group_cont_label_copy">Copy group</string>
         <string name="msgs_group_cont_label_rename">Rename group</string>
-        <string name="msgs_group_cont_label_select_all">Select all</string>
-        <string name="msgs_group_cont_label_unselect_all">Deselect all</string>
-        <string name="msgs_group_guide_drag_drop">You can change the order of the items by moving up and down by pressing and holding the items.</string>
         <string name="msgs_group_confirm_msg_delete">Do you want to delete the following item(s)? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_group_confirm_msg_enable">Do you want to enable the following item(s)? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_group_confirm_msg_disable">Do you want to disable the following item(s)? The results are immediately reflected and cannot be undone.</string>
         <string name="msgs_group_confirm_msg_rename_warning">Change the group name? The results are immediately reflected and cannot be undone.</string>
-        <string name="msgs_group_confirm_msg_nosave">The group has changed. Exit without saving?</string>
         <string name="msgs_group_list_edit_no_group">Click the Add button to create a group.</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Do you want to enable the group?</string>
-        <string name="msgs_group_list_edit_confirm_group_to_disabled">Do you want to disable the group?</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Would you like to delete the following tasks?</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">No tasks exist that can be added.</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">Edit sync task List</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Add sync task</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">You can change the order of the items by moving up and down by pressing and holding the items.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">No synchronization task has been specified. Click the "Add Sync Task" button to add a task.</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Task does not exists. Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">Select all</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Deselect all</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">The task list has changed. Exit without saving?</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">Confirm start of sync</string>
         <string name="msgs_main_sync_button_confirmation_message_msg">Do you want to start the following tasks?</string>

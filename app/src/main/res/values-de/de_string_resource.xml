@@ -676,7 +676,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">Neuer Zeitplan</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">Terminplan bearbeiten</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Zeitplan aktivieren</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Synchronisierungsliste bearbeiten</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Sync-Aufgabenliste bearbeiten</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">So</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Mo</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">Di</string>
@@ -716,7 +716,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">Monate, die weniger als 29 Tage haben, dürfen keine Ausführung von Aufgaben auslösen, wenn der 29. bis 31. angegeben ist.  Aktivieren Sie die Option \"Am letzten Tag des Monats synchronisieren\", um sicherzustellen, dass die Aufgabe am letzten Tag jedes Monats ausgeführt wird.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Aufgabenliste synchronisieren</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Ausführen aller automatischen Synchronisierungsaufgaben</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Bitte geben Sie das zu synchronisierende Profil an, indem Sie auf die Schaltfläche \'Sync-Liste bearbeiten\' in der .</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Bitte geben Sie die zu planenden Sync-Aufgaben an, indem Sie unten auf die Schaltfläche \"Sync-Aufgabenliste bearbeiten\" klicken.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Nächste Sync-Zeit ist %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Nächste Synchronisierung: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Ich kann die von Ihnen angegebene Aufgabe im Zeitplan nicht finden. Zeitplan:%1$s, Aufgabe:%2$s</string>
@@ -762,8 +762,6 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_menu_group">Gruppe</string>
         <string name="msgs_group_edit_title_add">Gruppe hinzufugen</string>
         <string name="msgs_group_edit_title_edit">Gruppe bearbeiten</string>
-        <string name="msgs_group_edit_sync_task">Sync-Aufgabenliste bearbeiten</string>
-        <string name="msgs_group_add_sync_task">Synchronisierungsaufgabe hinzufügen</string>
         <string name="msgs_group_edit_title_new_group_name">Neue Gruppe</string>
         <string name="msgs_group_name_for_shortcut1">Schaltfläche1</string>
         <string name="msgs_group_name_for_shortcut2">Schaltfläche2</string>
@@ -773,7 +771,6 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_group_select_button_title">Schaltfläche Auswählen</string>
         <string name="msgs_group_label_button">Zugeordnete Schaltfläche :</string>
         <string name="msgs_group_label_assign_button">Button-Zuordnung</string>
-        <string name="msgs_group_edit_delete_sync_task">Möchten Sie die folgenden Gruppen löschen?</string>
         <string name="msgs_group_main_dlg_hdr_enable">Zeitplan aktivieren</string>
         <string name="msgs_group_main_dlg_hdr_disabled">Behinderte</string>
         <string name="msgs_group_edit_enable_sync_group">Möchten Sie die folgenden Aufgaben ermöglichen?</string>
@@ -783,14 +780,11 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_group_main_dlg_hdr_group_name">Name der Gruppe</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">Die automatische Aufgabe existiert nicht. Gruppe=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">Die Aufgabe existiert nicht. Group=%1$s, Task=%2$s</string>
-        <string name="msgs_group_add_sync_task_no_task_exists_for_add">Es gibt keine Aufgaben, die hinzugefügt werden können.</string>
         <string name="msgs_group_edit_sync_task_list_not_specified">Drücken Sie die Schaltfläche Aufgabenliste, um die zu synchronisierenden Aufgaben anzugeben.</string>
         <string name="msgs_group_info_sync_task_was_deleted_or_renamed">Eine Synchronisationsaufgabe wurde gelöscht oder umbenannt. Aufgabe=%s</string>
-        <string name="msgs_group_info_sync_task_list_was_empty">Es wurde keine Synchronisierungsaufgabe angegeben</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_already_exists">Dieser Gruppenname existiert bereits. Verwenden Sie einen anderen Namen.</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified">Der Name der Aufgabengruppe ist nicht angegeben.</string>
         <string name="msgs_group_list_edit_dlg_error_schedule_name_contains_unusabel_character">Ungültiges Zeichen im Gruppennamen: \"%s\".</string>
-        <string name="msgs_group_error_specified_task_does_not_exists">Die Aufgabe existiert nicht. Task=%s</string>
         <string name="msgs_group_can_not_sync_specified_task_does_not_exists">Die in der Gruppe angegebene Aufgabe konnte nicht gefunden werden. Aufgabe=(%s)</string>
         <string name="msgs_group_cont_label_add">Gruppe hinzufügen</string>
         <string name="msgs_group_cont_label_up">Aufrücken</string>
@@ -800,17 +794,23 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_group_cont_label_delete">Gruppe löschen</string>
         <string name="msgs_group_cont_label_copy">Gruppe kopieren</string>
         <string name="msgs_group_cont_label_rename">Gruppe umbenennen</string>
-        <string name="msgs_group_cont_label_select_all">Alle auswählen</string>
-        <string name="msgs_group_cont_label_unselect_all">Alle abwählen</string>
-        <string name="msgs_group_guide_drag_drop">Sie können die Reihenfolge der Artikel ändern, indem Sie sich nach oben und unten bewegen, indem Sie die Artikel drücken und gedrückt halten.</string>
         <string name="msgs_group_confirm_msg_delete">Möchten Sie den/die folgenden Punkt(e) löschen? Die Ergebnisse werden sofort reflektiert und können nicht rückgängig gemacht werden.</string>
         <string name="msgs_group_confirm_msg_enable">Möchten Sie den/die folgenden Punkt(e) aktivieren? Die Ergebnisse werden sofort widergespiegelt und können nicht rückgängig gemacht werden.</string>
         <string name="msgs_group_confirm_msg_disable">Möchten Sie das/die folgende(n) Element(e) deaktivieren? Die Ergebnisse werden sofort widergespiegelt und können nicht rückgängig gemacht werden.</string>
         <string name="msgs_group_confirm_msg_rename_warning">Den Gruppennamen ändern? Die Ergebnisse werden sofort widergespiegelt und können nicht rückgängig gemacht werden.</string>
-        <string name="msgs_group_confirm_msg_nosave">Die Gruppe hat sich geändert. Beenden ohne zu speichern?</string>
         <string name="msgs_group_list_edit_no_group">Klicken Sie auf die Schaltfläche Hinzufügen, um eine Gruppe zu erstellen.</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Möchten Sie die Gruppe aktivieren?</string>
-        <string name="msgs_group_list_edit_confirm_group_to_disabled">Wollen Sie die Gruppe deaktivieren?</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Möchten Sie die folgenden Gruppen löschen?</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Es gibt keine Aufgaben, die hinzugefügt werden können.</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">Sync-Aufgabenliste bearbeiten</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Synchronisierungsaufgabe hinzufügen</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Sie können die Reihenfolge der Artikel ändern, indem Sie sich nach oben und unten bewegen, indem Sie die Artikel drücken und gedrückt halten.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Es wurde keine Synchronisationsaufgabe angegeben. Klicken Sie auf die Schaltfläche \"Add Sync Task\", um eine Aufgabe hinzuzufügen.</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Die Aufgabe existiert nicht. Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">Alle auswählen</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Alle abwählen</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">Die Aufgabenliste hat sich geändert. Beenden ohne zu speichern?</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">Bestätigen Sie den Beginn der Sync</string>
         <string name="msgs_main_sync_button_confirmation_message_msg">Möchten Sie mit den folgenden Aufgaben beginnen?</string>

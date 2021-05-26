@@ -39,7 +39,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -2520,7 +2519,7 @@ public class ActivityMain extends AppCompatActivity {
                 setGroupContextButtonMode(mGp.syncGroupListAdapter);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonSelectAll, mContext.getString(R.string.msgs_group_cont_label_select_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonSelectAll, mContext.getString(R.string.msgs_edit_sync_task_list_cont_label_select_all));
 
         mContextGroupButtonUnselectAll.setOnClickListener(new OnClickListener() {
             @Override
@@ -2529,7 +2528,7 @@ public class ActivityMain extends AppCompatActivity {
                 setGroupContextButtonMode(mGp.syncGroupListAdapter);
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonUnselectAll, mContext.getString(R.string.msgs_group_cont_label_unselect_all));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextGroupButtonUnselectAll, mContext.getString(R.string.msgs_edit_sync_task_list_cont_label_unselect_all));
     }
 
     private void setGroupContextButtonMode(GroupListAdapter adapter) {

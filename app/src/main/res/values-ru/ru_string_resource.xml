@@ -677,7 +677,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">Новый график</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">Изменить расписание</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">Включить расписание</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Изменить список синхронизации</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">Редактирование списка задач синхронизации</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">Вс</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">Пн</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">Вт</string>
@@ -717,7 +717,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">Предупреждение: месяцы, которые имеют менее 29 дней, могут не запускать выполнение задач, если указано 29 - 31-е. Включите параметр «Синхронизировать в последний день месяца», чтобы задача выполнялась в последний день каждого месяца.</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">Синхронизировать список задач</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">Выполнить все задачи автосинхронизации</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Укажите профиль для синхронизации, нажав кнопку «Редактировать список синхронизации».</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">Пожалуйста, укажите задачи синхронизации, которые должны быть запланированы, нажав кнопку \"Редактировать список задач синхронизации\" ниже.</string>
         <string name="msgs_scheduler_info_next_schedule_time">Время следующей синхронизации %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">Следующая синхронизация: %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">Задача, указанная в расписании, не найдена.\nРасписание: %1$s, задача: %2$s </string>
@@ -763,8 +763,6 @@
         <string name="msgs_menu_group">Группа</string>
         <string name="msgs_group_edit_title_add">Добавить группу</string>
         <string name="msgs_group_edit_title_edit">Группа редактирования</string>
-        <string name="msgs_group_edit_sync_task">Редактировать список синхронизированных задач</string>
-        <string name="msgs_group_add_sync_task">Добавить задачу синхронизации</string>
         <string name="msgs_group_edit_title_new_group_name">Новая группа</string>
         <string name="msgs_group_name_for_shortcut1">Кнопка1</string>
         <string name="msgs_group_name_for_shortcut2">Кнопка2</string>
@@ -774,7 +772,6 @@
         <string name="msgs_group_select_button_title">Выберите кнопку</string>
         <string name="msgs_group_label_button">Назначенная кнопка :</string>
         <string name="msgs_group_label_assign_button">Назначение кнопки</string>
-        <string name="msgs_group_edit_delete_sync_task">Вы хотите удалить следующие задачи?</string>
         <string name="msgs_group_main_dlg_hdr_enable">Разрешительная группа</string>
         <string name="msgs_group_main_dlg_hdr_disabled">Инвалид</string>
         <string name="msgs_group_edit_enable_sync_group">Хотите включить следующие задачи?</string>
@@ -784,14 +781,11 @@
         <string name="msgs_group_main_dlg_hdr_group_name">Название группы</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">Автозадача не существует. Group=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">Задачи не существует. Group=%1$s, Task=%2$s</string>
-        <string name="msgs_group_add_sync_task_no_task_exists_for_add">Не существует задач, которые можно было бы добавить.</string>
         <string name="msgs_group_edit_sync_task_list_not_specified">Нажмите кнопку Список задач, чтобы указать задачи, которые необходимо синхронизировать.</string>
         <string name="msgs_group_info_sync_task_was_deleted_or_renamed">Задача синхронизации удалена или переименована. Задача=%с</string>
-        <string name="msgs_group_info_sync_task_list_was_empty">Задача синхронизации не указана</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_already_exists">Название этой группы уже существует. Используйте другое имя.</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified">Имя целевой группы не указано.</string>
         <string name="msgs_group_list_edit_dlg_error_schedule_name_contains_unusabel_character">Недействительный персонаж в названии группы: \"%s\".</string>
-        <string name="msgs_group_error_specified_task_does_not_exists">Задачи не существует. Task=%s</string>
         <string name="msgs_group_can_not_sync_specified_task_does_not_exists">Не смог найти задание, указанное в группе. Задача=(%s)</string>
         <string name="msgs_group_cont_label_add">Добавить группу</string>
         <string name="msgs_group_cont_label_up">Переместиться вверх</string>
@@ -801,17 +795,23 @@
         <string name="msgs_group_cont_label_delete">Группа удаления</string>
         <string name="msgs_group_cont_label_copy">Группа копирования</string>
         <string name="msgs_group_cont_label_rename">Группа переименования</string>
-        <string name="msgs_group_cont_label_select_all">Выберите все</string>
-        <string name="msgs_group_cont_label_unselect_all">Удалить все</string>
-        <string name="msgs_group_guide_drag_drop">Вы можете изменить порядок элементов, перемещаясь вверх и вниз, нажав и удерживая их.</string>
         <string name="msgs_group_confirm_msg_delete">Вы хотите удалить следующий(ие) пункт(ы)? Результаты отображаются немедленно и не могут быть отменены.</string>
         <string name="msgs_group_confirm_msg_enable">Вы хотите включить следующие пункты? Результаты отражаются немедленно и не могут быть отменены.</string>
         <string name="msgs_group_confirm_msg_disable">Вы хотите отключить следующие пункты? Результаты отражаются немедленно и не могут быть отменены.</string>
         <string name="msgs_group_confirm_msg_rename_warning">Изменить название группы? Результаты отражаются немедленно и не могут быть отменены.</string>
-        <string name="msgs_group_confirm_msg_nosave">Группа изменилась. Выход без экономии?</string>
         <string name="msgs_group_list_edit_no_group">Нажмите кнопку Добавить, чтобы создать группу.</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">Ты хочешь включить группу?</string>
-        <string name="msgs_group_list_edit_confirm_group_to_disabled">Ты хочешь отключить группу?</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">Вы хотите удалить следующие задачи?</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Не существует задач, которые можно было бы добавить.</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">Редактировать список синхронизированных задач</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Добавить задачу синхронизации</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Вы можете изменить порядок элементов, перемещаясь вверх и вниз, нажав и удерживая их.</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Задача синхронизации не задана. Нажмите кнопку \"Добавить задачу синхронизации\", чтобы добавить задачу.</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Задачи не существует. Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">Выберите все</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Удалить все</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">Список задач изменился. Выйти без сохранения?</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">Подтвердить начало синхронизации</string>
         <string name="msgs_main_sync_button_confirmation_message_msg">Вы хотите начать выполнение следующих задач?</string>

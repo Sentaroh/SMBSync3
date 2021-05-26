@@ -1,0 +1,634 @@
+package com.sentaroh.android.SMBSync3;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.sentaroh.android.Utilities3.ContextButton.ContextButtonUtil;
+import com.sentaroh.android.Utilities3.NotifyEvent;
+
+import java.util.ArrayList;
+
+import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
+
+public class EditSyncTaskList {
+    
+    private Activity mActivity=null;
+    private GlobalParameters mGp=null;
+    private CommonUtilities mUtil=null;
+    
+    public EditSyncTaskList(Activity a, GlobalParameters gp, CommonUtilities cu) {
+        mActivity=a;
+        mGp=gp;
+        mUtil=cu;
+    }
+    
+    public void editSyncTaskList(final String prof_list, final NotifyEvent p_ntfy) {
+        // カスタムダイアログの生成
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.edit_sync_task_list_dlg);
+
+        final LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_dlg_view);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+
+        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_dlg_title_view);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        final TextView dlg_title = (TextView) dialog.findViewById(R.id.edit_sync_task_list_dlg_title);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
+
+        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_task_list_dlg_msg);
+
+        final LinearLayout dlg_normal_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_dlg_normal_view);
+//        final LinearLayout dlg_select_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_dlg_select_view);
+        final Button btn_task_list = (Button) dialog.findViewById(R.id.edit_sync_task_list_dlg_add_task_list_btn);
+        final ImageButton ib_delete = (ImageButton) dialog.findViewById(R.id.context_button_delete);
+        final ImageButton ib_select_all = (ImageButton) dialog.findViewById(R.id.context_button_select_all);
+        final ImageButton ib_unselect_all = (ImageButton) dialog.findViewById(R.id.context_button_unselect_all);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.edit_sync_task_list_dlg_ok);
+        final Button btn_cancel = (Button) dialog.findViewById(R.id.edit_sync_task_list_dlg_cancel);
+
+        final RecyclerView rv_task_list = (RecyclerView) dialog.findViewById(R.id.edit_sync_task_list_dlg_recycler_view);
+        String[]task_array=prof_list.split(NAME_LIST_SEPARATOR);
+        ArrayList<EditSyncTaskListItem>task_list=new ArrayList<EditSyncTaskListItem>();
+        for(String item:task_array) {
+            if (!item.equals("")) {
+                EditSyncTaskListItem etli=new EditSyncTaskListItem();
+                etli.taskName=item;
+                task_list.add(etli);
+            }
+        }
+        final EditSyncTaskListAdapter adapter = new EditSyncTaskListAdapter(task_list);
+
+        rv_task_list.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mActivity);
+        rv_task_list.setLayoutManager(layoutManager);
+        rv_task_list.setAdapter(adapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv_task_list.getContext(),
+                new LinearLayoutManager(mActivity).getOrientation());
+        rv_task_list.addItemDecoration(dividerItemDecoration);
+
+        ItemTouchHelper.SimpleCallback scb=new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN , 0) {
+            private Drawable defaultBackGroundColor=null;
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return isEditSyncTaskListEnabeDragDrop();
+            }
+
+            @Override
+            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int action_state) {
+                mUtil.addDebugMsg(1, "I", "onSelectedChanged state="+action_state);
+                if (viewHolder!=null && viewHolder.itemView!=null) {
+                    viewHolder.itemView.setAlpha(0.5f);
+//                    if (defaultBackGroundColor==null)defaultBackGroundColor=viewHolder.itemView.getBackground();
+//                    if (ThemeUtil.isLightThemeUsed(mActivity)) viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
+//                    else viewHolder.itemView.setBackgroundColor(Color.LTGRAY);
+                }
+                if (action_state==ItemTouchHelper.ACTION_STATE_IDLE) {
+                    for(int i=0;i<adapter.recyclerViewDataList.size();i++) adapter.notifyItemChanged(i);
+                    if (isSyncTaskListChanged(prof_list, adapter)) {
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                    } else {
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                    }
+                }
+            }
+
+            @Override
+            public void clearView(RecyclerView recycle_view, RecyclerView.ViewHolder viewHolder) {
+                if (viewHolder.itemView!=null) {
+                    viewHolder.itemView.setAlpha(1.0f);
+//                        viewHolder.itemView.setBackground(defaultBackGroundColor);
+                }
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                final int fromPos = viewHolder.getAdapterPosition();
+                final int toPos = target.getAdapterPosition();
+                EditSyncTaskListItem fromTask=adapter.recyclerViewDataList.get(fromPos);
+                adapter.notifyItemMoved(fromPos, toPos);
+                adapter.recyclerViewDataList.remove(fromPos);
+                adapter.recyclerViewDataList.add(toPos, fromTask);
+                return true;// true if moved, false otherwise
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+//                final int fromPos = viewHolder.getAdapterPosition();
+//                dataset.remove(fromPos);
+//                adapter.notifyItemRemoved(fromPos);
+            }
+        };
+        ItemTouchHelper ith  = new ItemTouchHelper(scb);
+        ith.attachToRecyclerView(rv_task_list);
+
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+
+        showAddTaskListInfo(dialog, adapter);
+
+        NotifyEvent ntfy_delete=new NotifyEvent(mActivity);
+        ntfy_delete.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                final EditSyncTaskListItem task=(EditSyncTaskListItem) objects[0];
+                deleteSyncTask(dialog, adapter, prof_list, task);
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        adapter.setNotifyDeleteButton(ntfy_delete);
+
+        dlg_normal_view.setVisibility(LinearLayout.VISIBLE);
+
+        btn_task_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String curr_task_list=buildSyncTaskList(adapter);
+                NotifyEvent ntfy=new NotifyEvent(mActivity);
+                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        String[] add_list_array=((String)objects[0]).split(NAME_LIST_SEPARATOR);
+                        for(String item:add_list_array) {
+                            EditSyncTaskListItem etli=new EditSyncTaskListItem();
+                            etli.taskName=item;
+                            adapter.recyclerViewDataList.add(etli);
+                        }
+                        adapter.notifyDataSetChanged();
+                        setOkButtonEnabledEditSyncTaskList(dialog, curr_task_list, adapter);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                        showAddTaskListInfo(dialog, adapter);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+
+                    }
+                });
+                addTaskList(curr_task_list, ntfy);
+            }
+        });
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                String n_prof_list = buildSyncTaskList(adapter);
+                p_ntfy.notifyToListener(true, new Object[]{n_prof_list});
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isSyncTaskListChanged(prof_list, adapter)) {
+                    NotifyEvent ntfy=new NotifyEvent(mActivity);
+                    ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context context, Object[] objects) {
+                            dialog.dismiss();
+                            p_ntfy.notifyToListener(false, null);
+                        }
+
+                        @Override
+                        public void negativeResponse(Context context, Object[] objects) {
+                        }
+                    });
+                    mUtil.showCommonDialog(true, "W",
+                            mActivity.getString(R.string.msgs_edit_sync_task_list_confirm_msg_nosave), "", ntfy);
+                    return;
+                }
+                dialog.dismiss();
+                p_ntfy.notifyToListener(false, null);
+            }
+        });
+
+        setOkButtonEnabledEditSyncTaskList(dialog, prof_list, adapter);
+
+        dialog.show();
+    }
+
+    private void showAddTaskListInfo(Dialog dialog, EditSyncTaskListAdapter adapter) {
+        final Button btn_ok = (Button) dialog.findViewById(R.id.edit_sync_task_list_dlg_ok);
+        final Button btn_task_list = (Button) dialog.findViewById(R.id.edit_sync_task_list_dlg_add_task_list_btn);
+        final LinearLayout dlg_normal_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_dlg_normal_view);
+        final TextView task_list_drag_drop_comment = (TextView) dialog.findViewById(R.id.edit_sync_task_list_dlg_move_comment);
+        final String curr_task_list=buildSyncTaskList(adapter);
+        ArrayList<EditSyncTaskListItem>add_task_list=getAddTaskList(curr_task_list);
+        if (add_task_list.size()==0) {
+            btn_task_list.setVisibility(Button.GONE);
+        } else {
+            btn_task_list.setVisibility(Button.VISIBLE);
+        }
+        final String[] curr_task_name_array=curr_task_list.split(NAME_LIST_SEPARATOR);
+        dlg_normal_view.setVisibility(LinearLayout.VISIBLE);
+        if (curr_task_name_array.length>1) {
+            task_list_drag_drop_comment.setVisibility(TextView.VISIBLE);
+        } else {
+            task_list_drag_drop_comment.setVisibility(TextView.GONE);
+        }
+    }
+
+
+    private void deleteSyncTask(Dialog dialog, EditSyncTaskListAdapter adapter, String org_list, EditSyncTaskListItem task) {
+        final Button btn_ok = (Button) dialog.findViewById(R.id.edit_sync_task_list_dlg_ok);
+//        final LinearLayout dlg_select_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_dlg_select_view);
+        final ArrayList<EditSyncTaskListItem> del_task=new ArrayList<EditSyncTaskListItem>();
+        NotifyEvent ntfy_conf=new NotifyEvent(mActivity);
+        ntfy_conf.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                for(EditSyncTaskListItem etli:del_task) {
+                    adapter.recyclerViewDataList.remove(etli);
+                }
+                adapter.notifyDataSetChanged();
+                if (isSyncTaskListChanged(org_list, adapter)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+//                dlg_select_view.setVisibility(LinearLayout.GONE);
+
+                showAddTaskListInfo(dialog, adapter);
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        if (adapter.isAnyItemChecked()) {
+            String del_list="", sep="";
+            for(EditSyncTaskListItem etli:adapter.recyclerViewDataList) {
+                if (etli.checked) {
+                    del_list+=sep+etli.taskName;
+                    sep=", ";
+                    del_task.add(etli);
+                }
+            }
+            mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_edit_sync_task_list_delete_sync_task), del_list, ntfy_conf);
+        } else {
+            del_task.add(task);
+            mUtil.showCommonDialog(true, "W", mActivity.getString(R.string.msgs_edit_sync_task_list_delete_sync_task), task.taskName, ntfy_conf);
+        }
+
+    }
+
+    private String buildSyncTaskList(EditSyncTaskListAdapter adapter) {
+        String n_prof_list = "", sep = "";
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            n_prof_list = n_prof_list + sep + adapter.recyclerViewDataList.get(i).taskName;
+            sep = NAME_LIST_SEPARATOR;
+        }
+        return n_prof_list;
+    }
+
+    private boolean isSyncTaskListChanged(String org_list, EditSyncTaskListAdapter adapter) {
+        String new_list=buildSyncTaskList(adapter);
+        if (org_list.equals(new_list)) return false;
+        return true;
+    }
+
+    private void setOkButtonEnabledEditSyncTaskList(Dialog dialog, String org_task_list, EditSyncTaskListAdapter adapter) {
+        final RecyclerView lv_sync_list = (RecyclerView) dialog.findViewById(R.id.edit_sync_task_list_dlg_recycler_view);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.edit_sync_task_list_dlg_ok);
+        TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_task_list_dlg_msg);
+        boolean selected=false;
+        String task_list="", sep="";
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            task_list+=sep+adapter.recyclerViewDataList.get(i).taskName;
+            sep= NAME_LIST_SEPARATOR;
+        }
+        if (task_list.equals("")) {
+            dlg_msg.setText(mActivity.getString(R.string.msgs_edit_sync_task_list_info_sync_task_list_was_empty));
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+            return;
+        }
+        dlg_msg.setText("");
+        if (!task_list.equals(org_task_list)) {
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+        } else {
+            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+        }
+    }
+
+    private ArrayList<EditSyncTaskListItem>getAddTaskList(final String current_task_list) {
+        ArrayList<EditSyncTaskListItem>add_task_list=new ArrayList<EditSyncTaskListItem>();
+        String[] curr_task_list_array=current_task_list.split(NAME_LIST_SEPARATOR);
+        for(SyncTaskItem item:mGp.syncTaskList) {
+            String e_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mActivity, item.getSyncTaskName());
+            if (e_msg.equals("")) {
+                boolean found=false;
+                for(String curr_item:curr_task_list_array) {
+                    if (curr_item.equals(item.getSyncTaskName())) {
+                        found=true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    EditSyncTaskListItem atli=new EditSyncTaskListItem();
+                    atli.taskName=item.getSyncTaskName();
+                    add_task_list.add(atli);
+                }
+            }
+        }
+        return add_task_list;
+    }
+
+    private void addTaskList(final String current_task_list, final NotifyEvent p_ntfy) {
+
+        ArrayList<EditSyncTaskListItem>add_task_list=getAddTaskList(current_task_list);
+        if (add_task_list.size()==0) {
+            mUtil.showCommonDialog(false, "W", mActivity.getString(R.string.msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add), "", null);
+            return;
+        }
+
+        final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setContentView(R.layout.edit_sync_task_list_add_task_list_dlg);
+
+        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_add_task_list_dlg_view);
+//        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
+
+        LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_task_list_add_task_list_dlg_title_view);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        TextView dlg_title = (TextView) dialog.findViewById(R.id.edit_sync_task_list_add_task_list_dlg_title);
+        dlg_title.setTextColor(mGp.themeColorList.title_text_color);
+
+        TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_task_list_add_task_list_dlg_msg);
+
+        final ImageButton ib_select_all = (ImageButton) dialog.findViewById(R.id.context_button_select_all);
+        final ImageButton ib_unselect_all = (ImageButton) dialog.findViewById(R.id.context_button_unselect_all);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.edit_sync_task_list_add_task_list_dlg_ok);
+        final Button btn_cancel = (Button) dialog.findViewById(R.id.edit_sync_task_list_add_task_list_dlg_cancel);
+
+        final ListView lv_sync_list = (ListView) dialog.findViewById(R.id.edit_sync_task_list_add_task_list_dlg_task_list);
+        final AddSyncTaskListAdapter adapter = new AddSyncTaskListAdapter(mActivity, R.layout.edit_sync_task_list_add_task_list_item_view, add_task_list);
+        lv_sync_list.setAdapter(adapter);
+
+        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+
+        NotifyEvent ntfy_check=new NotifyEvent(mActivity);
+        ntfy_check.setListener(new NotifyEvent.NotifyEventListener() {
+            @Override
+            public void positiveResponse(Context context, Object[] objects) {
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                for(int i=0;i<adapter.getCount();i++) {
+                    if (adapter.getItem(i).checked) {
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void negativeResponse(Context context, Object[] objects) {}
+        });
+        adapter.setNotifyCheckBox(ntfy_check);
+
+        lv_sync_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                EditSyncTaskListItem atli=adapter.getItem(position);
+                atli.checked=!atli.checked;
+                adapter.notifyDataSetChanged();
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                for(int i=0;i<adapter.getCount();i++) {
+                    if (adapter.getItem(i).checked) {
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                        break;
+                    }
+                }
+            }
+        });
+
+        ib_select_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i=0;i<adapter.getCount();i++) {
+                    adapter.getItem(i).checked=true;
+                }
+                adapter.notifyDataSetChanged();
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mActivity, ib_select_all, mActivity.getString(R.string.msgs_edit_sync_task_list_cont_label_select_all));
+
+        ib_unselect_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i=0;i<adapter.getCount();i++) {
+                    adapter.getItem(i).checked=false;
+                }
+                adapter.notifyDataSetChanged();
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+            }
+        });
+        ContextButtonUtil.setButtonLabelListener(mActivity, ib_unselect_all, mActivity.getString(R.string.msgs_edit_sync_task_list_cont_label_unselect_all));
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                String n_prof_list = "", sep = "";
+                for (int i = 0; i < adapter.getCount(); i++) {
+                    if (adapter.getItem(i).checked) {
+                        n_prof_list = n_prof_list + sep + adapter.getItem(i).taskName;
+                        sep = NAME_LIST_SEPARATOR;
+                    }
+                }
+                p_ntfy.notifyToListener(true, new Object[]{n_prof_list});
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                p_ntfy.notifyToListener(false, null);
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    private boolean mEditSyncTaskListEnabeDragDrop=true;
+    private void setEditSyncTaskListEnabeDragDrop( boolean enabled) {
+        mEditSyncTaskListEnabeDragDrop=enabled;
+    }
+    private boolean isEditSyncTaskListEnabeDragDrop() {
+        return mEditSyncTaskListEnabeDragDrop;
+    }
+
+    private class EditSyncTaskListItem {
+        public String taskName="";
+        public boolean checked=false;
+    }
+
+    private class EditSyncTaskListAdapter extends RecyclerView.Adapter<EditSyncTaskListAdapter.ViewHolder> {
+
+        private ArrayList<EditSyncTaskListItem> recyclerViewDataList = new ArrayList<>();
+
+        private NotifyEvent mNtfyDeleteButtonClick=null;
+        public void setNotifyDeleteButton(NotifyEvent ntfy) {mNtfyDeleteButtonClick=ntfy;}
+
+        private NotifyEvent mNtfyCheckBox=null;
+        public void setNotifyCheckBox(NotifyEvent ntfy) {mNtfyCheckBox=ntfy;}
+
+        // Provide a reference to the views for each data item
+        // Complex data items may need more than one view per item, and
+        // you provide access to all the views for a data item in a view holder
+        class ViewHolder extends RecyclerView.ViewHolder {
+
+            // each data item is just a string in this case
+            TextView mTextView, mErrorMessage;
+            ImageButton mDeleteBtn;
+
+            ViewHolder(View v) {
+                super(v);
+                mDeleteBtn = (ImageButton) v.findViewById(R.id.edit_sync_task_list_edit_task_list_item_del_btn);
+                mTextView = (TextView)v.findViewById(R.id.edit_sync_task_list_edit_task_list_item_task_name);
+                mErrorMessage = (TextView)v.findViewById(R.id.edit_sync_task_list_edit_task_list_item_error_message);
+            }
+        }
+
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public EditSyncTaskListAdapter(ArrayList<EditSyncTaskListItem> dataset) {
+            recyclerViewDataList = dataset;
+        }
+
+        // Create new views (invoked by the layout manager)
+        @Override
+        @NonNull
+        public EditSyncTaskListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            // create a new view
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.edit_sync_task_list_edit_task_list_item_view, parent, false);
+
+            // set the view's size, margins, paddings and layout parameters
+
+            return new EditSyncTaskListAdapter.ViewHolder(view);
+        }
+
+        public boolean isAnyItemChecked() {
+            for(EditSyncTaskListItem etli:recyclerViewDataList) {
+                if (etli.checked) return true;
+            }
+            return false;
+        }
+
+        // Replace the contents of a view (invoked by the layout manager)
+        @Override
+        public void onBindViewHolder(@NonNull EditSyncTaskListAdapter.ViewHolder holder, int position) {
+            // - get element from your dataset at this position
+            // - replace the contents of the view with that element
+            final EditSyncTaskListItem o=recyclerViewDataList.get(position);
+            holder.mTextView.setText(o.taskName);
+            String[]task_array=o.taskName.split(NAME_LIST_SEPARATOR);
+            holder.mErrorMessage.setText("");
+            for(String item:task_array) {
+                SyncTaskItem sti= TaskListUtils.getSyncTaskByName(mGp.syncTaskList, item);
+                if (sti==null) {
+                    holder.mErrorMessage.setText(mActivity.getString(R.string.msgs_edit_sync_task_list_error_specified_task_does_not_exists));
+                    break;
+                }
+            }
+            if (holder.mErrorMessage.getText().length()==0) holder.mErrorMessage.setVisibility(TextView.GONE);
+            else holder.mErrorMessage.setVisibility(TextView.VISIBLE);
+
+            if (isAnyItemChecked()) holder.mDeleteBtn.setVisibility(ImageButton.INVISIBLE);
+            else holder.mDeleteBtn.setVisibility(ImageButton.VISIBLE);
+
+            holder.mDeleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mNtfyDeleteButtonClick!=null) mNtfyDeleteButtonClick.notifyToListener(true, new Object[]{recyclerViewDataList.get(position)});
+                }
+            });
+
+        }
+
+        // Return the size of your dataset (invoked by the layout manager)
+        @Override
+        public int getItemCount() {
+            return recyclerViewDataList.size();
+        }
+    }
+
+    private class AddSyncTaskListAdapter extends ArrayAdapter<EditSyncTaskListItem> {
+        private int layout_id = 0;
+        private Context context = null;
+        private NotifyEvent mNtfyCheckbox;
+        private int text_color = 0;
+
+        private ArrayList<EditSyncTaskListItem>mTaskList=null;
+
+        public AddSyncTaskListAdapter(Context c, int textViewResourceId, ArrayList<EditSyncTaskListItem>tl) {
+            super(c, textViewResourceId, tl);
+            layout_id = textViewResourceId;
+            context = c;
+            mTaskList=tl;
+        }
+
+        public void setNotifyCheckBox(NotifyEvent ntfy) {mNtfyCheckbox=ntfy;}
+
+        @Override
+        public View getView(final int position, View convertView, final ViewGroup parent) {
+            final AddSyncTaskListAdapter.ViewHolder holder;
+            final EditSyncTaskListItem o = getItem(position);
+            View v = convertView;
+            if (v == null) {
+                LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = vi.inflate(layout_id, null);
+                holder = new AddSyncTaskListAdapter.ViewHolder();
+                holder.tv_name = (TextView) v.findViewById(R.id.edit_sync_task_list_add_task_list_item_task_name);
+                holder.cb_selected = (CheckBox) v.findViewById(R.id.edit_sync_task_list_add_task_list_item_checked);
+                text_color = holder.tv_name.getCurrentTextColor();
+                v.setTag(holder);
+            } else {
+                holder = (AddSyncTaskListAdapter.ViewHolder) v.getTag();
+            }
+            if (o != null) {
+                holder.tv_name.setText(o.taskName);
+                holder.tv_name.setTextColor(text_color);
+            }
+
+            holder.cb_selected.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    o.checked=holder.cb_selected.isChecked();
+                    if (mNtfyCheckbox!=null) mNtfyCheckbox.notifyToListener(true, new Object[]{o});
+                }
+            });
+            holder.cb_selected.setChecked(o.checked);
+            return v;
+
+        }
+
+        class ViewHolder {
+            TextView tv_name;
+            CheckBox cb_selected;
+        }
+    }
+
+}

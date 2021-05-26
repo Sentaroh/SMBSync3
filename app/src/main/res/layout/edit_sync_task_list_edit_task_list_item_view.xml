@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <ImageButton
-        android:id="@+id/group_item_edit_task_list_item_del_btn"
+        android:id="@+id/edit_sync_task_list_edit_task_list_item_del_btn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center_vertical"
@@ -21,14 +21,14 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
         <com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
-            android:id="@+id/group_item_edit_task_list_item_task_name"
+            android:id="@+id/edit_sync_task_list_edit_task_list_item_task_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
         <com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
-            android:id="@+id/group_item_edit_task_list_item_error_message"
+            android:id="@+id/edit_sync_task_list_edit_task_list_item_error_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -38,10 +38,5 @@
             android:text="Error message"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
     </LinearLayout>
-    <CheckBox
-        android:id="@+id/group_item_edit_task_list_item_checked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

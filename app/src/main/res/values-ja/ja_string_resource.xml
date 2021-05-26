@@ -676,7 +676,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">新しいスケジュール</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">スケジュールの編集</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">スケジュールを有効にする</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">同期リストの編集</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">同期タスクリストの編集</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">日</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">月</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">火</string>
@@ -716,7 +716,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">29日から31日を指定すると実行する月によりスケジュールされない場合があります。必ず月末日に輔中るするには「毎月最後の日にスケジュールする」にチェックしてください。</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">同期タスクリスト</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">自動同期タスクだけを同期する</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">同期リストの編集ボタンを押して、同期するタスクを指定してください。</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">「同期タスクリストの編集」ボタンを押して、同期するタスクを指定してください。</string>
         <string name="msgs_scheduler_info_next_schedule_time">同期予定時刻 %s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">同期予定 : %1$s, (%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">スケジュールで指定したタスクが見つかりません。スケジュール:%1$s, タスク:%2$s</string>
@@ -762,8 +762,6 @@
         <string name="msgs_menu_group">グループ</string>
         <string name="msgs_group_edit_title_add">グループの追加</string>
         <string name="msgs_group_edit_title_edit">グループの編集</string>
-        <string name="msgs_group_edit_sync_task">タスクリストの編集</string>
-        <string name="msgs_group_add_sync_task">同期タスクの追加</string>
         <string name="msgs_group_edit_title_new_group_name">新しいグループ</string>
         <string name="msgs_group_name_for_shortcut1">ボタン1</string>
         <string name="msgs_group_name_for_shortcut2">ボタン2</string>
@@ -773,7 +771,6 @@
         <string name="msgs_group_select_button_title">ボタンの選択</string>
         <string name="msgs_group_label_button">ボタン割当 :</string>
         <string name="msgs_group_label_assign_button">ボタンの割当</string>
-        <string name="msgs_group_edit_delete_sync_task">下記のタスクを削除しますか？</string>
         <string name="msgs_group_main_dlg_hdr_enable">グループを有効にする</string>
         <string name="msgs_group_main_dlg_hdr_disabled">無効</string>
         <string name="msgs_group_edit_enable_sync_group">下記のタスクを有効にしますか？</string>
@@ -783,14 +780,11 @@
         <string name="msgs_group_main_dlg_hdr_group_name">グループ名</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">自動同期タスクが存在しません。 グループ=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">タスクが見つかりません。グループ=%1$s, タスク=%2$s</string>
-        <string name="msgs_group_add_sync_task_no_task_exists_for_add">追加できるタスクが存在しません。</string>
         <string name="msgs_group_edit_sync_task_list_not_specified">タスクリストボタンを押して、同期するタスクを指定してください。</string>
         <string name="msgs_group_info_sync_task_was_deleted_or_renamed">同期タスクが削除または改名されています。タスク=%s</string>
-        <string name="msgs_group_info_sync_task_list_was_empty">同期タスクが指定されていません</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_already_exists">グループ名が重複しています。</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified">グループ名が指定されていません。</string>
         <string name="msgs_group_list_edit_dlg_error_schedule_name_contains_unusabel_character">グループ名に無効な文字が含まれています: \"%s\"</string>
-        <string name="msgs_group_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
         <string name="msgs_group_can_not_sync_specified_task_does_not_exists">グループで指定したタスクが見つかりません。タスク=(%s)</string>
         <string name="msgs_group_cont_label_add">グループの追加</string>
         <string name="msgs_group_cont_label_up">上に移動</string>
@@ -800,17 +794,23 @@
         <string name="msgs_group_cont_label_delete">グループの削除</string>
         <string name="msgs_group_cont_label_copy">グループのコピー</string>
         <string name="msgs_group_cont_label_rename">グループの改名</string>
-        <string name="msgs_group_cont_label_select_all">全て選択</string>
-        <string name="msgs_group_cont_label_unselect_all">全ての選択解除</string>
-        <string name="msgs_group_guide_drag_drop">項目を長押して上下に移動することで順序を変更できます。</string>
         <string name="msgs_group_confirm_msg_delete">下記のグループを削除します。結果は即座に反映され、取り消しできません。</string>
         <string name="msgs_group_confirm_msg_enable">下記のグループを有効にします。結果は即座に反映され、取り消しできません。</string>
         <string name="msgs_group_confirm_msg_disable">下記のグループを無効にします。結果は即座に反映され、取り消しできません。</string>
         <string name="msgs_group_confirm_msg_rename_warning">グループ名を変更します。結果は即座に反映され、取り消しできません。</string>
-        <string name="msgs_group_confirm_msg_nosave">グループが変更されています、保存せず終了しますか。</string>
         <string name="msgs_group_list_edit_no_group">追加ボタンを押してグループを作成してください。</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">グループを有効にしますか？</string>
-        <string name="msgs_group_list_edit_confirm_group_to_disabled">グループを無効にしますか？</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">下記のタスクを削除しますか？</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">追加できるタスクが存在しません。</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">タスクリストの編集</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">同期タスクの追加</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">項目を長押して上下に移動することで順序を変更できます。</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">同期タスクが指定されていません。「同期タスクの追加」ボタンを押してタスクを追加してください。</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">全て選択</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">全ての選択解除</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">タスクリストが変更されています、保存せず終了しますか。</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">同期開始の確認</string>
         <string name="msgs_main_sync_button_confirmation_message_msg">下記タスクを開始しますか？</string>

@@ -50,6 +50,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import static com.sentaroh.android.SMBSync3.Constants.NAME_LIST_SEPARATOR;
+
 class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListItem> {
     private static final Logger log= LoggerFactory.getLogger(ScheduleListAdapter.class);
     private int layout_id = 0;
@@ -313,20 +315,13 @@ class ScheduleListAdapter extends ArrayAdapter<ScheduleListAdapter.ScheduleListI
         if (sched_item.syncTaskList.equals("")) {
             schedule_error=true;
         } else {
-            if (sched_item.syncTaskList.indexOf(",")>0) {
-                String[] stl=sched_item.syncTaskList.split(",");
-                String sep="";
-                for(String stn:stl) {
-                    if (ScheduleUtils.getSyncTask(gp,stn)==null) {
-                        schedule_error=true;
-                        error_item_name=sep+stn;
-                        sep=",";
-                    }
-                }
-            } else {
-                if (ScheduleUtils.getSyncTask(gp, sched_item.syncTaskList)==null) {
+            String[] task_name_array=sched_item.syncTaskList.split(NAME_LIST_SEPARATOR);
+            String sep="";
+            for(String stn:task_name_array) {
+                if (ScheduleUtils.getSyncTask(gp,stn)==null) {
                     schedule_error=true;
-                    error_item_name=sched_item.syncTaskList;
+                    error_item_name=sep+stn;
+                    sep=",";
                 }
             }
         }

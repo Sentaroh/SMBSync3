@@ -672,7 +672,7 @@
         <string name="msgs_scheduler_main_dlg_hdr_title_add_new_schedule_name">新时间表</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_edit">编辑时间表</string>
         <string name="msgs_scheduler_main_dlg_hdr_enable">启用时间表</string>
-        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">编辑同步列表</string>
+        <string name="msgs_scheduler_main_dlg_hdr_edit_prof">编辑同步任务列表</string>
         <string name="msgs_scheduler_main_dlg_hdr_sun">阳光</string>
         <string name="msgs_scheduler_main_dlg_hdr_mon">周一</string>
         <string name="msgs_scheduler_main_dlg_hdr_tue">星期二</string>
@@ -712,7 +712,7 @@
         <string name="msgs_scheduler_main_last_day_of_the_month_warning">当指定29-31日时，少于29天的月份可能不会触发任务的执行。 启用 \"每月最后一天同步 \"选项，以确保任务在每个月的最后一天执行。</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_title">同步任务列表</string>
         <string name="msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile">执行所有自动同步任务</string>
-        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">请按 \"编辑同步列表 \"按钮指定要同步的配置文件。</string>
+        <string name="msgs_scheduler_edit_sync_prof_list_not_specified">请按下面的 \"编辑同步任务列表 \"按钮来指定要安排的同步任务。</string>
         <string name="msgs_scheduler_info_next_schedule_time">下一次同步时间为%s</string>
         <string name="msgs_scheduler_info_next_schedule_main_info">下一个同步。 %1$s，(%2$s)</string>
         <string name="msgs_scheduler_info_next_schedule_main_error">找不到你在计划中指定的任务。 计划表:%1$s, 任务:%2$s。</string>
@@ -758,8 +758,6 @@
         <string name="msgs_menu_group">组别</string>
         <string name="msgs_group_edit_title_add">添加组</string>
         <string name="msgs_group_edit_title_edit">编辑组</string>
-        <string name="msgs_group_edit_sync_task">编辑同步任务列表</string>
-        <string name="msgs_group_add_sync_task">添加同步任务</string>
         <string name="msgs_group_edit_title_new_group_name">新集团</string>
         <string name="msgs_group_name_for_shortcut1">按钮1</string>
         <string name="msgs_group_name_for_shortcut2">按钮2</string>
@@ -769,7 +767,6 @@
         <string name="msgs_group_select_button_title">选择按钮</string>
         <string name="msgs_group_label_button">已分配的按钮 :</string>
         <string name="msgs_group_label_assign_button">按钮分配</string>
-        <string name="msgs_group_edit_delete_sync_task">您是否要删除以下组？</string>
         <string name="msgs_group_main_dlg_hdr_enable">启用时间表</string>
         <string name="msgs_group_main_dlg_hdr_disabled">残疾人</string>
         <string name="msgs_group_edit_enable_sync_group">您是否愿意启用以下任务？</string>
@@ -779,14 +776,11 @@
         <string name="msgs_group_main_dlg_hdr_group_name">组别名称</string>
         <string name="msgs_group_exec_sync_task_no_auto_task_exists">自动任务不存在。 Group=%1$s</string>
         <string name="msgs_group_exec_sync_task_no_sync_task_exists">任务不存在。 Group=%1$s, Task=%2$s</string>
-        <string name="msgs_group_add_sync_task_no_task_exists_for_add">不存在可添加的任务。</string>
         <string name="msgs_group_edit_sync_task_list_not_specified">按任务列表按钮指定要同步的任务。</string>
         <string name="msgs_group_info_sync_task_was_deleted_or_renamed">同步任务已被删除或重新命名。任务=%s</string>
-        <string name="msgs_group_info_sync_task_list_was_empty">没有指定同步任务</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_already_exists">该组名称已经存在。使用不同的名称。</string>
         <string name="msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified">任务组名称未指定。</string>
         <string name="msgs_group_list_edit_dlg_error_schedule_name_contains_unusabel_character">组名中的无效字符: \"%s\".</string>
-        <string name="msgs_group_error_specified_task_does_not_exists">任务不存在。 Task=%s</string>
         <string name="msgs_group_can_not_sync_specified_task_does_not_exists">找不到在组中指定的任务。任务=(%s)</string>
         <string name="msgs_group_cont_label_add">添加组</string>
         <string name="msgs_group_cont_label_up">往上走</string>
@@ -796,17 +790,23 @@
         <string name="msgs_group_cont_label_delete">删除组</string>
         <string name="msgs_group_cont_label_copy">复制组</string>
         <string name="msgs_group_cont_label_rename">重命名组</string>
-        <string name="msgs_group_cont_label_select_all">选择所有</string>
-        <string name="msgs_group_cont_label_unselect_all">取消选择所有</string>
-        <string name="msgs_group_guide_drag_drop">您可以通过按住物品上下移动来改变物品的顺序。</string>
         <string name="msgs_group_confirm_msg_delete">你想删除以下项目吗？结果会立即反映出来，并且无法撤销。</string>
         <string name="msgs_group_confirm_msg_enable">您是否要启用以下项目？结果会立即反映出来，并且无法撤销。</string>
         <string name="msgs_group_confirm_msg_disable">您是否要禁用以下项目？结果会立即反映出来，并且无法撤销。</string>
         <string name="msgs_group_confirm_msg_rename_warning">是否要更改组名？结果会立即反映出来，并且无法撤销。</string>
-        <string name="msgs_group_confirm_msg_nosave">该组已更改。不保存就退出？</string>
         <string name="msgs_group_list_edit_no_group">单击 \"添加 \"按钮，创建一个组。</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">您要启用组吗？</string>
-        <string name="msgs_group_list_edit_confirm_group_to_disabled">您是否要禁用该组？</string>
+    <!-- edit Sync task list -->
+        <string name="msgs_edit_sync_task_list_delete_sync_task">您是否要删除以下组？</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">不存在可添加的任务。</string>
+        <string name="msgs_edit_sync_task_list_dlg_title">编辑同步任务列表</string>
+        <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">添加同步任务</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">您可以通过按住物品上下移动来改变物品的顺序。</string>
+        <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">没有指定同步任务。点击 \"添加同步任务 \"按钮，添加一个任务。</string>
+        <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">任务不存在。 Task=%s</string>
+        <string name="msgs_edit_sync_task_list_cont_label_select_all">选择所有</string>
+        <string name="msgs_edit_sync_task_list_cont_label_unselect_all">取消选择所有</string>
+        <string name="msgs_edit_sync_task_list_confirm_msg_nosave">任务列表已经改变。不保存就退出？</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">确认开始同步</string>
         <string name="msgs_main_sync_button_confirmation_message_msg">您是否要启动以下任务？</string>

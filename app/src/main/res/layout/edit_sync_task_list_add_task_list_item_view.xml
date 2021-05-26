@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
-        android:id="@+id/group_item_add_task_list_item_task_name"
+        android:id="@+id/edit_sync_task_list_add_task_list_item_task_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
@@ -16,7 +16,7 @@
         android:layout_marginLeft="5dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <CheckBox
-        android:id="@+id/group_item_add_task_list_item_checked"
+        android:id="@+id/edit_sync_task_list_add_task_list_item_checked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

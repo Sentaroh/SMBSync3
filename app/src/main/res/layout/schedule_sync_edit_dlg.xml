@@ -141,16 +141,24 @@
             
             <include layout="@layout/schedule_sync_edit_dlg_day_of_week" />
 
-		    <CheckedTextView
-		        android:id="@+id/scheduler_main_dlg_ctv_interval_schedule_reset"
-		        android:layout_width="fill_parent"
-		        android:layout_height="wrap_content"
-		        android:layout_marginLeft="5dp"
-		        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-		        android:gravity="center_vertical"
-		        android:text="@string/msgs_scheduler_main_dlg_hdr_interval_schedule_reset"
-		        android:textAppearance="?android:attr/textAppearanceMedium"/>
-            
+			<LinearLayout
+				android:id="@+id/scheduler_main_dlg_ctv_interval_schedule_reset_view"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				<include layout="@layout/divider_line1"/>
+				<CheckedTextView
+					android:id="@+id/scheduler_main_dlg_ctv_interval_schedule_reset"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="5dp"
+					android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+					android:gravity="center_vertical"
+					android:text="@string/msgs_scheduler_main_dlg_hdr_interval_schedule_reset"
+					android:textAppearance="?android:attr/textAppearanceMedium"/>
+			</LinearLayout>
+
+			<include layout="@layout/divider_line1"/>
 		    <CheckedTextView
 		        android:id="@+id/scheduler_main_dlg_ctv_sync_all_sync_task"
 		        android:layout_width="fill_parent"
@@ -160,29 +168,30 @@
 		        android:gravity="center_vertical"
 		        android:text="@string/msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile" 
 		        android:textAppearance="?android:attr/textAppearanceMedium"/>
-		    		    
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
 
-                <Button
-                    android:id="@+id/scheduler_main_dlg_edit_sync_prof"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/msgs_scheduler_main_dlg_hdr_edit_prof" 
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+			<Button
+				android:id="@+id/scheduler_main_dlg_edit_sync_prof"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="30dp"
+				android:text="@string/msgs_scheduler_main_dlg_hdr_edit_prof"
+				android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                <TextView
-                    android:id="@+id/scheduler_main_dlg_sync_task_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:text=""
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+			<com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
+				android:id="@+id/scheduler_main_dlg_sync_task_list"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="40dp"
+				android:text=""
+				android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<CheckedTextView
+			<LinearLayout
+				android:id="@+id/scheduler_main_dlg_ctv_wifi_on_view"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				<include layout="@layout/divider_line1"/>
+				<CheckedTextView
 					android:id="@+id/scheduler_main_dlg_ctv_wifi_on"
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
@@ -192,27 +201,27 @@
 					android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on"
 					android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-			<LinearLayout
+				<LinearLayout
 					android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_view"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="30dp"
 					android:orientation="vertical" >
 
-				<TextView
+					<TextView
 						android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_text"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_time"
 						android:textAppearance="?android:attr/textAppearanceMedium" />
 
-				<RadioGroup
+					<RadioGroup
 						android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:orientation="horizontal" >
 
-					<RadioButton
+						<RadioButton
 							android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_1"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -221,7 +230,7 @@
 							android:checked="true"
 							android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_1" />
 
-					<RadioButton
+						<RadioButton
 							android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_2"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -229,16 +238,16 @@
 							android:layout_weight="1"
 							android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_2" />
 
-					<RadioButton
+						<RadioButton
 							android:id="@+id/scheduler_main_dlg_wifi_on_delay_time_rg_3"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_gravity="center_vertical"
 							android:layout_weight="1"
 							android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_on_delayed_3" />
-				</RadioGroup>
+					</RadioGroup>
 
-				<CheckedTextView
+					<CheckedTextView
 						android:id="@+id/scheduler_main_dlg_ctv_wifi_off"
 						android:layout_width="fill_parent"
 						android:layout_height="wrap_content"
@@ -248,15 +257,18 @@
 						android:text="@string/msgs_scheduler_main_dlg_hdr_wifi_off"
 						android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+				</LinearLayout>
+
 			</LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/scheduler_main_dlg_override_sync_option_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical" >
+				<include layout="@layout/divider_line1"/>
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
