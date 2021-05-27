@@ -808,7 +808,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Il n\'existe aucune tâche qui puisse être ajoutée.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Liste des tâches de synchronisation d\'édition</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Ajouter une tâche de synchronisation</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">Vous pouvez changer l\'ordre des articles en vous déplaçant de haut en bas en appuyant et en maintenant les articles.</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Vous pouvez modifier l\'ordre des éléments en les \"appuyant longuement\" ou en \"appuyant\" sur l\'icône située à droite de l\'écran pour les déplacer vers le haut ou vers le bas.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Aucune tâche de synchronisation n\'a été spécifiée. Cliquez sur le bouton \"Add Sync Task\" pour ajouter une tâche.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">La tâche n\'existe pas. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Sélectionner tout</string>

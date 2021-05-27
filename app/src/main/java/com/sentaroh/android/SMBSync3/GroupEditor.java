@@ -47,6 +47,8 @@ import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.ThemeColorList;
 import com.sentaroh.android.Utilities3.ThemeUtil;
 import com.sentaroh.android.Utilities3.Widget.CustomSpinnerAdapter;
+import com.sentaroh.android.Utilities3.Widget.NonWordwrapButton;
+import com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView;
 
 import java.util.ArrayList;
 
@@ -162,8 +164,9 @@ public class GroupEditor {
         final Button btn_cancel = (Button) dialog.findViewById(R.id.group_item_edit_dlg_cancel);
 
         final LinearLayout ll_sync_task_list_view = (LinearLayout) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_task_view);
-        final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
-        final TextView tv_sync_task_list = (TextView) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_task_list);
+        final NonWordwrapButton btn_edit = (NonWordwrapButton) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
+//        btn_edit.setDebugEnable(true);
+//        btn_edit.setWordWrapEnabled(false);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.group_item_edit_dlg_msg);
 
         final LinearLayout ll_group_name_view=(LinearLayout)dialog.findViewById(R.id.group_item_edit_dlg_group_name_view);
@@ -242,8 +245,7 @@ public class GroupEditor {
         });
 
         mCurrentSyncTaskList= mGroupListItem.taskList;
-
-        tv_sync_task_list.setText(buildSyncTaskListInfo(mCurrentSyncTaskList));
+        setEditTaskListButtonLabel(dialog);
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +256,7 @@ public class GroupEditor {
                         String prof_list = (String) o[0];
                         tv_msg.setText("");
                         mCurrentSyncTaskList=prof_list;
-                        tv_sync_task_list.setText(buildSyncTaskListInfo(mCurrentSyncTaskList));
+                        setEditTaskListButtonLabel(dialog);
                         setOkButtonEnabledGroupEditor(dialog);
                     }
 
@@ -322,8 +324,21 @@ public class GroupEditor {
         dialog.show();
     }
 
+    private void setEditTaskListButtonLabel(Dialog dialog) {
+        final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
+        String stl=buildSyncTaskListInfo(mCurrentSyncTaskList);
+        if (stl.equals("")) btn_edit.setText(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_edit_prof));
+        else btn_edit.setText(stl);
+    }
+
     private String buildSyncTaskListInfo(String task_list) {
-        return task_list.replaceAll(NAME_LIST_SEPARATOR, ", ");
+        String[] array=task_list.split(NAME_LIST_SEPARATOR);
+        String out="", sep="";
+        for(String item:array) {
+            out+=sep+item;
+            sep=", ";
+        }
+        return out;
     }
 
     private boolean isButtonAlreadyAssigned(GlobalParameters gp, GroupListAdapter.GroupListItem gi, int id) {
@@ -426,7 +441,7 @@ public class GroupEditor {
         final EditText et_name = (EditText) dialog.findViewById(R.id.group_item_edit_dlg_group_name);
         final TextView tv_msg = (TextView) dialog.findViewById(R.id.group_item_edit_dlg_msg);
         final CheckedTextView ctv_auto_task_only=(CheckedTextView)dialog.findViewById(R.id.group_item_edit_dlg_auto_task_only);
-        final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
+//        final Button btn_edit = (Button) dialog.findViewById(R.id.group_item_edit_dlg_edit_sync_prof);
         CommonDialog.setButtonEnabled(mActivity, btn_ok, !mEditMode);
         if (et_name.getText().length() == 0) {
             tv_msg.setText(mActivity.getString(R.string.msgs_group_list_edit_dlg_error_sync_list_name_does_not_specified));

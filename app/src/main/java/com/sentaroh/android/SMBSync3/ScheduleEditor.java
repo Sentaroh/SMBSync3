@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.text.Editable;
@@ -40,7 +39,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,19 +53,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.NotifyEvent;
 import com.sentaroh.android.Utilities3.StringUtil;
 import com.sentaroh.android.Utilities3.ThemeColorList;
 import com.sentaroh.android.Utilities3.Widget.CustomSpinnerAdapter;
-import com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -182,7 +174,7 @@ public class ScheduleEditor {
         final CheckBox cb_sched_thu = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_thursday);
         final CheckBox cb_sched_fri = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_friday);
         final CheckBox cb_sched_sat = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_satday);
-        final NonWordwrapTextView tv_sync_prof = (NonWordwrapTextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+//        final NonWordwrapTextView tv_sync_prof = (NonWordwrapTextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
 //		final LinearLayout ll_sched_dw=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week);
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
@@ -380,13 +372,14 @@ public class ScheduleEditor {
         if (mSched.syncAutoSyncTask) {
             ctv_sync_all_prof.setChecked(true);
             btn_edit.setVisibility(Button.GONE);//.setEnabled(false);
-            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
+//            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
         } else {
             ctv_sync_all_prof.setChecked(false);
             btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
-            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
+//            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
         }
-        tv_sync_prof.setText(mLatestSyncTaskList);
+        setEditTaskListButtonLabel(dialog);
+//        tv_sync_prof.setText(mLatestSyncTaskList);
 
         sp_sched_type.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -526,14 +519,15 @@ public class ScheduleEditor {
                             cb_sched_sat.isChecked()) {
                         if (isChecked) {
                             btn_edit.setVisibility(Button.GONE);//.setEnabled(false);
-                            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
+//                            tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
                             setViewEnabled(mActivity, btn_ok, isScheduleChanged(dialog,mSched));
                             tv_msg.setText("");
                             setOkButtonEnabledDisabled(dialog);
 
                         } else {
                             btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
-                            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
+//                            tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
+                            setEditTaskListButtonLabel(dialog);
                             if (mLatestSyncTaskList.equals("")) {
                                 setViewEnabled(mActivity, btn_ok, false);
                                 tv_msg.setText(mActivity.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
@@ -549,13 +543,13 @@ public class ScheduleEditor {
                 } else {
                     if (isChecked) {
                         btn_edit.setVisibility(Button.GONE);//.setEnabled(false);
-                        tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
+//                        tv_sync_prof.setVisibility(TextView.GONE);//.setEnabled(false);
                         setViewEnabled(mActivity, btn_ok, isScheduleChanged(dialog,mSched));
                         tv_msg.setText("");
                         setOkButtonEnabledDisabled(dialog);
                     } else {
                         btn_edit.setVisibility(Button.VISIBLE);//.setEnabled(true);
-                        tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
+//                        tv_sync_prof.setVisibility(TextView.VISIBLE);//.setEnabled(true);
                         if (mLatestSyncTaskList.equals("")) {
                             tv_msg.setText(mActivity.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             setViewEnabled(mActivity, btn_ok, false);
@@ -577,7 +571,8 @@ public class ScheduleEditor {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
                         mLatestSyncTaskList = (String) o[0];
-                        tv_sync_prof.setText(mLatestSyncTaskList);
+//                        tv_sync_prof.setText(mLatestSyncTaskList);
+                        setEditTaskListButtonLabel(dialog);
                         if (mLatestSyncTaskList.equals("")) {
                             tv_msg.setText(mActivity.getString(R.string.msgs_scheduler_edit_sync_prof_list_not_specified));
                             setViewEnabled(mActivity, btn_ok, false);
@@ -642,6 +637,23 @@ public class ScheduleEditor {
         });
 
         dialog.show();
+    }
+
+    private void setEditTaskListButtonLabel(Dialog dialog) {
+        final Button btn_edit = (Button) dialog.findViewById(R.id.scheduler_main_dlg_edit_sync_prof);
+        String stl=buildSyncTaskListInfo(mLatestSyncTaskList);
+        if (stl.equals("")) btn_edit.setText(mActivity.getString(R.string.msgs_scheduler_main_dlg_hdr_edit_prof));
+        else btn_edit.setText(stl);
+    }
+
+    private String buildSyncTaskListInfo(String task_list) {
+        String[] array=task_list.split(NAME_LIST_SEPARATOR);
+        String out="", sep="";
+        for(String item:array) {
+            out+=sep+item;
+            sep=", ";
+        }
+        return out;
     }
 
     private String getNotExistsSyncTaskName(String task_list) {
@@ -745,7 +757,7 @@ public class ScheduleEditor {
         final CheckBox cb_sched_thu = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_thursday);
         final CheckBox cb_sched_fri = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_friday);
         final CheckBox cb_sched_sat = (CheckBox) dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_satday);
-        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+//        final TextView tv_sync_prof = (TextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
 //		final LinearLayout ll_sched_dw=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week);
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);
@@ -837,7 +849,7 @@ public class ScheduleEditor {
 //		final CheckBox cb_sched_thu=(CheckBox)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_thursday);
 //		final CheckBox cb_sched_fri=(CheckBox)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_friday);
 //		final CheckBox cb_sched_sat=(CheckBox)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week_satday);
-        final NonWordwrapTextView tv_sync_profX = (NonWordwrapTextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
+//        final NonWordwrapTextView tv_sync_profX = (NonWordwrapTextView) dialog.findViewById(R.id.scheduler_main_dlg_sync_task_list);
 //		final LinearLayout ll_sched_dw=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_day_of_the_week);
 //		final LinearLayout ll_sched_hm=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hm);
 //		final LinearLayout ll_sched_hours=(LinearLayout)dialog.findViewById(R.id.scheduler_main_dlg_ll_exec_hour);

@@ -806,7 +806,7 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Не существует задач, которые можно было бы добавить.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Редактировать список синхронизированных задач</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Добавить задачу синхронизации</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">Вы можете изменить порядок элементов, перемещаясь вверх и вниз, нажав и удерживая их.</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Вы можете изменить порядок элементов, \"долго нажимая\" на них или \"нажимая\" на значок в правой части экрана, чтобы переместить их вверх или вниз.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Задача синхронизации не задана. Нажмите кнопку \"Добавить задачу синхронизации\", чтобы добавить задачу.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Задачи не существует. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Выберите все</string>

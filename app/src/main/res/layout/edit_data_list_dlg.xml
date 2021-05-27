@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/edit_sync_task_list_dlg_view"
+    android:id="@+id/edit_data_list_dlg_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/edit_sync_task_list_dlg_title_view"
+        android:id="@+id/edit_data_list_dlg_title_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/edit_sync_task_list_dlg_title"
+            android:id="@+id/edit_data_list_dlg_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -24,17 +24,18 @@
     </LinearLayout>
 
     <com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
-        android:id="@+id/edit_sync_task_list_dlg_msg"
+        android:id="@+id/edit_data_list_dlg_msg"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:text="Message"
         android:textColor="#ff0000"
+        android:visibility="gone"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/edit_sync_task_list_dlg_recycler_view"
+        android:id="@+id/edit_data_list_dlg_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -64,12 +65,12 @@
 <!--    </LinearLayout>-->
 
     <LinearLayout
-        android:id="@+id/edit_sync_task_list_dlg_normal_view"
+        android:id="@+id/edit_data_list_dlg_normal_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/edit_sync_task_list_dlg_move_comment"
+            android:id="@+id/edit_data_list_dlg_move_comment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
@@ -79,7 +80,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
-            android:id="@+id/edit_sync_task_list_dlg_add_task_list_btn"
+            android:id="@+id/edit_data_list_dlg_add_task_list_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -92,7 +93,7 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/edit_sync_task_list_dlg_cancel"
+            android:id="@+id/edit_data_list_dlg_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -100,7 +101,7 @@
             android:text="@string/msgs_common_dialog_cancel" />
 
         <Button
-            android:id="@+id/edit_sync_task_list_dlg_ok"
+            android:id="@+id/edit_data_list_dlg_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

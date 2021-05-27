@@ -805,7 +805,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Es gibt keine Aufgaben, die hinzugefügt werden können.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Sync-Aufgabenliste bearbeiten</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Synchronisierungsaufgabe hinzufügen</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">Sie können die Reihenfolge der Artikel ändern, indem Sie sich nach oben und unten bewegen, indem Sie die Artikel drücken und gedrückt halten.</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Sie können die Reihenfolge der Elemente ändern, indem Sie sie \"lang drücken\" oder das Symbol auf der rechten Seite des Bildschirms \"drücken\", um sie nach oben oder unten zu verschieben.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Es wurde keine Synchronisationsaufgabe angegeben. Klicken Sie auf die Schaltfläche \"Add Sync Task\", um eine Aufgabe hinzuzufügen.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Die Aufgabe existiert nicht. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Alle auswählen</string>

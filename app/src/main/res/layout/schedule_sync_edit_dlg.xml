@@ -169,21 +169,22 @@
 		        android:text="@string/msgs_scheduler_edit_synclist_dlg_hdr_sync_all_sync_profile" 
 		        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-			<Button
+			<com.sentaroh.android.Utilities3.Widget.NonWordwrapButton
 				android:id="@+id/scheduler_main_dlg_edit_sync_prof"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="30dp"
+				android:gravity="start"
+				android:layout_marginLeft="5dp"
 				android:text="@string/msgs_scheduler_main_dlg_hdr_edit_prof"
 				android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-			<com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
-				android:id="@+id/scheduler_main_dlg_sync_task_list"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginLeft="40dp"
-				android:text=""
-				android:textAppearance="?android:attr/textAppearanceMedium" />
+<!--			<com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView-->
+<!--				android:id="@+id/scheduler_main_dlg_sync_task_list"-->
+<!--				android:layout_width="match_parent"-->
+<!--				android:layout_height="wrap_content"-->
+<!--				android:layout_marginLeft="40dp"-->
+<!--				android:text=""-->
+<!--				android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
 			<LinearLayout
 				android:id="@+id/scheduler_main_dlg_ctv_wifi_on_view"

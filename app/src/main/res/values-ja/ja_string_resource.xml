@@ -801,11 +801,11 @@
         <string name="msgs_group_list_edit_no_group">追加ボタンを押してグループを作成してください。</string>
         <string name="msgs_group_list_edit_confirm_group_to_enabled">グループを有効にしますか？</string>
     <!-- edit Sync task list -->
-        <string name="msgs_edit_sync_task_list_delete_sync_task">下記のタスクを削除しますか？</string>
+        <string name="msgs_edit_sync_task_list_delete_sync_task">下記タスクを削除しますか？</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">追加できるタスクが存在しません。</string>
         <string name="msgs_edit_sync_task_list_dlg_title">タスクリストの編集</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">同期タスクの追加</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">項目を長押して上下に移動することで順序を変更できます。</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">項目を「長押し」または画面右端のアイコンを「押して」上下に移動することで順序を変更できます。</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">同期タスクが指定されていません。「同期タスクの追加」ボタンを押してタスクを追加してください。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">全て選択</string>

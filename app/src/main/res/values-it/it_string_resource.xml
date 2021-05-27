@@ -805,7 +805,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Non esistono compiti che possono essere aggiunti.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Modifica elenco attività di sincronizzazione</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Aggiungi attività di sincronizzazione</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">È possibile modificare l\'ordine delle voci muovendosi in su e in giù premendo e tenendo premuti gli elementi.</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">Puoi cambiare l\'ordine degli elementi \"premendo a lungo\" o \"premendo\" l\'icona sul lato destro dello schermo per spostarli in alto o in basso.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Non è stata specificata alcuna attività di sincronizzazione. Fai clic sul pulsante \"Add Sync Task\" per aggiungere un compito.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">L\'attività non esiste. Attività=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Seleziona tutti</string>

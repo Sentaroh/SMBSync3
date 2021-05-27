@@ -140,20 +140,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <Button
+                <com.sentaroh.android.Utilities3.Widget.NonWordwrapButton
                     android:id="@+id/group_item_edit_dlg_edit_sync_prof"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="start"
                     android:text="@string/msgs_scheduler_main_dlg_hdr_edit_prof"
                     android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                <com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView
-                    android:id="@+id/group_item_edit_dlg_edit_sync_task_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/msgs_scheduler_main_dlg_hdr_edit_prof"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+<!--                <com.sentaroh.android.Utilities3.Widget.NonWordwrapTextView-->
+<!--                    android:id="@+id/group_item_edit_dlg_edit_sync_task_list"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:text="@string/msgs_scheduler_main_dlg_hdr_edit_prof"-->
+<!--                    android:textAppearance="?android:attr/textAppearanceMedium"/>-->
             </LinearLayout>
 
         </LinearLayout>

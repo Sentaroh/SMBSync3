@@ -806,7 +806,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">No tasks exist that can be added.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Edit sync task List</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Add sync task</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">You can change the order of the items by moving up and down by pressing and holding the items.</string>
+        <string name="msgs_edit_sync_task_list_guide_drag_drop">You can change the order of the items by \"long pressing\" them or \"pressing\" the icon on the right side of the screen to move them up or down.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">No synchronization task has been specified. Click the "Add Sync Task" button to add a task.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Task does not exists. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Select all</string>
