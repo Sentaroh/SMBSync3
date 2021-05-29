@@ -106,27 +106,6 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getSourceFolderType() {return syncTaskSourceFolderType;}
     public void setSourceFolderType(String p) {syncTaskSourceFolderType = p;}
 
-    public final static String SYNC_TASK_TWO_WAY_OPTION_ASK_USER = "0";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER = "1";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER = "2";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_SOURCE_TO_DESTINATION = "3";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_DESTINATION_TO_SOURCE = "4";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE = "5";
-    public final static String SYNC_TASK_TWO_WAY_OPTION_DEFAULT = SYNC_TASK_TWO_WAY_OPTION_ASK_USER;
-    public final static String SYNC_TASK_TWO_WAY_OPTION_DEFAULT_DESCRIPTION = "Ask to user";
-    public final static String[] SYNC_TASK_TWO_WAY_OPTION_LIST=new String[]{
-            SYNC_TASK_TWO_WAY_OPTION_ASK_USER, SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER, SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER,
-            SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_SOURCE_TO_DESTINATION, SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_DESTINATION_TO_SOURCE,
-            SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE};
-    public final static String SYNC_TASK_TWO_WAY_CONFLICT_FILE_SUFFIX=".smbsync3_conflict";
-    private String syncTwoWayConflictOption =SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER;
-    public void setSyncTwoWayConflictFileRule(String p) {syncTwoWayConflictOption = p;}
-    public String getSyncTwoWayConflictFileRule() {return syncTwoWayConflictOption;}
-
-    private boolean syncTwoWayConflictKeepConflictFile = false;
-    public void setSyncTwoWayKeepConflictFile(boolean keep_file) {syncTwoWayConflictKeepConflictFile=keep_file;}
-    public boolean isSyncTwoWayKeepConflictFile() {return syncTwoWayConflictKeepConflictFile;}
-
     private boolean syncOptionDeterminChangedFileSizeGreaterThanDestinationFile = false;
     public boolean isSyncDifferentFileSizeGreaterThanDestinationFile() {return syncOptionDeterminChangedFileSizeGreaterThanDestinationFile;}
     public void setSyncDifferentFileSizeGreaterThanTagetFile(boolean p) {syncOptionDeterminChangedFileSizeGreaterThanDestinationFile = p;}
@@ -379,9 +358,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb() {return syncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb;}
     public void setSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb(boolean p) {syncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb = p;}
 
-    private boolean syncOptionIgnoreDestinationFileNameLengthExceed255Byte =false;
-    public boolean isSyncOptionIgnoreDestinationFileNameLengthExceed255Byte() {return syncOptionIgnoreDestinationFileNameLengthExceed255Byte;}
-    public void setSyncOptionIgnoreDestinationFileNameLengthExceed255Byte(boolean p) {syncOptionIgnoreDestinationFileNameLengthExceed255Byte = p;}
+    private int syncOptionMaxDestinationFileNameLength =255;
+    public int getSyncOptionMaxDestinationFileNameLength() {return syncOptionMaxDestinationFileNameLength;}
+    public void setSyncOptionMaxDestinationFileNameLength(int p) {syncOptionMaxDestinationFileNameLength = p;}
 
     private boolean syncOptionRemoveDirectoryFileThatExcludedByFilter =false;
     public void setSyncOptionRemoveDirectoryFileThatExcludedByFilter(boolean enabled) { syncOptionRemoveDirectoryFileThatExcludedByFilter = enabled;}
@@ -751,7 +730,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public boolean isSame(SyncTaskItem sti) {
         boolean result = false;
-        if ((syncTasｋName.equals(sti.getSyncTaskName()) &&
+        if (syncTasｋName.equals(sti.getSyncTaskName()) &&
                 (isChanged==sti.isChanged()) &&
                 (syncTaskGroup.equals(sti.getSyncTaskGroup())) &&
                 (syncTaskEnabled==sti.isSyncTaskAuto()) &&
@@ -760,8 +739,7 @@ class SyncTaskItem implements Serializable, Cloneable {
                 (syncTaskStatusErrorCode ==sti.getSyncTaskStatusErrorCode()) &&
                 (syncSourceFolderStatusError ==sti.getSourceFolderStatusError()) &&
                 (syncDestinationFolderStatusError ==sti.getDestinationFolderStatusError()) &&
-                (syncTwoWayConflictOption.equals(sti.getSyncTwoWayConflictFileRule())) &&
-                (syncTwoWayConflictKeepConflictFile==sti.isSyncTwoWayKeepConflictFile() ))&&
+
                 (syncTaskSourceFolderType.equals(sti.getSourceFolderType())) &&
                 (syncTaskSourceFolderDirName.equals(sti.getSourceDirectoryName())) &&
                 (syncTaskSourceFolderSmbShareName.equals(sti.getSourceSmbShareName())) &&
@@ -775,7 +753,8 @@ class SyncTaskItem implements Serializable, Cloneable {
 
                 (syncOptionWifiStatus.equals(sti.getSyncOptionWifiStatusOption())) &&
 
-                (syncTaskSourceFolderStorageUuid.equals(sti.getSourceStorageUuid()))) {
+                (syncTaskSourceFolderStorageUuid.equals(sti.getSourceStorageUuid()))
+                ) {
             if ((syncTaskDestinationFolderType.equals(sti.getDestinationFolderType())) &&
                     (syncTaskDestinationFolderDirName.equals(sti.getDestinationDirectoryName())) &&
                     (syncTaskDestinationFolderSmbShareName.equals(sti.getDestinationSmbShareName())) &&
@@ -846,7 +825,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
                         (syncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb ==sti.isSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb()) &&
 
-                        (syncOptionIgnoreDestinationFileNameLengthExceed255Byte==sti.isSyncOptionIgnoreDestinationFileNameLengthExceed255Byte()) &&
+                        (syncOptionMaxDestinationFileNameLength==sti.getSyncOptionMaxDestinationFileNameLength()) &&
 
                         (syncOptionRemoveDirectoryFileThatExcludedByFilter ==sti.isSyncOptionRemoveDirectoryFileThatExcludedByFilter()) &&
 

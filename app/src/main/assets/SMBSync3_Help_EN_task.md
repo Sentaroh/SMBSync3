@@ -166,8 +166,8 @@ Display a confirmation message when the taken date and time cannot be obtained f
 ### Ignore source files larger than 4GB when syncing to SDCARD/USB storage  
 If checked, you can prevent I/O errors when syncing to a MicroSD card by ignoring source files larger than 4 GB in size to be synced to local storage.  
 
-### Ignore files whose file name exceed 255 bytes  
-If checked, ignore files with file names longer than 255 bytes.  
+### Ignore files whose file name length is longer than the specified length.  
+If the length of the file name exceeds the value entered on the right side of the screen, the file will be ignored.  
 
 ### Manuals  
 [FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  

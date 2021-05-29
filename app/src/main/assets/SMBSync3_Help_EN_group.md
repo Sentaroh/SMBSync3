@@ -1,7 +1,7 @@
 ### Group  
 The name of the group.  
 
-### Synchronizeonly Auto tasks  
+### Synchronize only Auto tasks  
 Starts synchronizing tasks that are automatically checked in the Synchronization Task. The task list will not appear if it is checked.  
 
 ### Task list  

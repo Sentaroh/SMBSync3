@@ -46,7 +46,7 @@
         <string name="msgs_export_import_pswd_btn_ok">好的</string>
         <string name="msgs_export_import_pswd_hint_password">密码</string>
         <string name="msgs_export_import_pswd_hint_confirm">确认密码</string>
-        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">密码不匹配</string>
+        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">密码和确认密码不一致。</string>
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_ZH_task.md</string>
         <string name="msgs_help_sync_task_title">同步任务帮助</string>
@@ -330,7 +330,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">低</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">媒介</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">最大</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">密码不匹配</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">密码和确认密码不一致。</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">密码</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">确认密码</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_encrypt_none">没有加密</string>
@@ -393,7 +393,6 @@
         <string name="msgs_task_sync_task_filter_list_dlg_include">包括</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">未说明</string>
         <string name="msgs_task_sync_task_filter_title">滤波器</string>
-        <string name="msgs_task_sync_task_sync_direction_two_way">使用双向同步</string>
         <string name="msgs_task_sync_task_sync_file_type_add_audio_title">添加音频</string>
         <string name="msgs_task_sync_task_sync_file_type_add_image_title">添加图片</string>
         <string name="msgs_task_sync_task_sync_file_type_add_video_title">添加视频</string>
@@ -473,7 +472,10 @@
         <string name="msgs_task_sync_task_sync_use_small_ioarea">限制SMB I/O写缓冲区为16KB。</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">如果无法通过EXIF数据确定日期和时间，将显示一条确认信息。</string>
         <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">同步到SDCARD/USB存储时，忽略大于4GB的源文件</string>
-        <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">忽略文件名超过255字节的文件</string>
+        <string name="msgs_task_sync_task_option_ignore_file_name_length_gt_specified_length">忽略那些文件名长度超过指定长度的文件</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">指定要忽略的文件名的长度</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">指定要忽略的文件名长度大于或等于0</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">指定要忽略的文件名长度为255或更小</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">将所有文件保存在目标目录中，而不创建子目录。</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">取消</string>
         <string name="msgs_task_twoway_sync_conflict_keep_conflict_file">Keep a two-way sync conflict file</string>
@@ -576,8 +578,7 @@
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">由于无法从文件的EXIF/元数据中获取拍摄日期和时间，因此使用了文件的最后修改时间。文件=</string>
         <string name="msgs_mirror_taken_date_convert_error">由于所取日期的转换发生错误，所以使用了文件的最后修改时间。文件=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">同步停止的原因是目标中存在与文件同名的目录。文件=</string>
-        <string name="msgs_mirror_abort_file_name_gt_255_byte">由于文件名的长度超过255个字符，同步停止。文件名chars=%1$s，文件名=%2$s。</string>
-        <string name="msgs_mirror_ignore_file_name_gt_255_byte">由于文件名的长度超过255字节，文件被忽略。 文件名的字节数=%1$s，文件名=%2$s。</string>
+        <string name="msgs_mirror_ignore_file_name_gt_255_byte">由于文件名的长度超过%1$s字节，文件被忽略。 文件名的字节数=%2$s，文件名=%3$s。</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">由于SDCARD/USB存储没有被安装，同步被取消。</string>
         <string name="msgs_mirror_external_sdcard_select_required">因为SDCARD/USB存储不能被访问，所以同步被取消。UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">因为文件大小超过4GB，所以忽略了。文件=%s</string>
@@ -801,11 +802,15 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">不存在可添加的任务。</string>
         <string name="msgs_edit_sync_task_list_dlg_title">编辑同步任务列表</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">添加同步任务</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">你可以通过 \"长按\"来改变项目的顺序，或者 \"按\"屏幕右侧的图标来向上或向下移动它们。</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">没有指定同步任务。点击 \"添加同步任务 \"按钮，添加一个任务。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">任务不存在。 Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">选择所有</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">取消选择所有</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">移除同步化任务</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">添加同步任务</string>
+        <string name="msgs_edit_sync_task_list_help_title">编辑同步任务列表的帮助</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">选择你要添加的任务，并点击 \"添加 \"按钮。</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync3_Help_ZH_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">任务列表已经改变。不保存就退出？</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">确认开始同步</string>

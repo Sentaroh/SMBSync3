@@ -35,6 +35,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.wifi.WifiManager;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.LocaleList;
 import android.os.Looper;
@@ -85,6 +86,8 @@ public class GlobalParameters {
     public Handler uiHandler = null;
 
     public boolean debuggable = false;
+
+    public String externalStoragePrefix="";
 
     public boolean activityIsFinished = true;
 
@@ -354,6 +357,14 @@ public class GlobalParameters {
         if (Looper.myLooper()!=null) uiHandler = new Handler();
 
         debuggable = isDebuggable(c);
+
+        try {
+            settingAppManagemsntDirectoryName=c.getFilesDir().getCanonicalPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        externalStoragePrefix= Environment.getExternalStorageDirectory().getPath();
 
         mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-dim");
         forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-force-dim");

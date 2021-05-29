@@ -1,7 +1,7 @@
 ### Nome del gruppo  
 Il nome del gruppo.  
 
-### Sincronizzasolo le attività automatiche  
+### Sincronizza solo le attività automatiche  
 Avvia i task di sincronizzazione che vengono controllati automaticamente nel Task di sincronizzazione. L'elenco delle attività non apparirà se è selezionato.  
 
 ### Elenco attività  

@@ -31,6 +31,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 
@@ -854,12 +855,15 @@ public class SyncThread extends Thread {
         });
     }
 
+    private final static String SAF_FILE_PRIMARY_STORAGE_ANDROID_APP_DIRECTORY="%1$s/Android/data/%2$s";
+    private final static String SAF_FILE_EXTERNAL_STORAGE_ANDROID_APP_DIRECTORY="/storage/%1$s/Android/data/%2$s";
+
     private void makeLocalCacheDirectory(String uuid) {
         if (uuid.equals(SafFile3.SAF_FILE_PRIMARY_UUID)) {
-            File cd=new File(String.format(SafFile3.SAF_FILE_PRIMARY_STORAGE_ANDROID_APP_DIRECTORY,APPLICATION_ID)+"/cache");
+            File cd=new File(String.format(SAF_FILE_PRIMARY_STORAGE_ANDROID_APP_DIRECTORY, mGp.externalStoragePrefix, APPLICATION_ID)+"/cache");
             if (!cd.exists()) cd.mkdirs();
         } else {
-            File cd=new File(String.format(SafFile3.SAF_FILE_EXTERNAL_STORAGE_ANDROID_APP_DIRECTORY,uuid, APPLICATION_ID)+"/cache");
+            File cd=new File(String.format(SAF_FILE_EXTERNAL_STORAGE_ANDROID_APP_DIRECTORY, uuid, APPLICATION_ID)+"/cache");
             if (!cd.exists()) cd.mkdirs();
         }
     }
@@ -894,7 +898,7 @@ public class SyncThread extends Thread {
             from_temp = buildStorageDir(sti.getSourceStorageUuid(), sti.getSourceDirectoryName());
             from=replaceKeywordExecutionDateValue(from_temp, mStwa.syncBeginTime);
 
-            if (sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) to = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+sti.getDestinationZipOutputFileName();
+            if (sti.getDestinationStorageUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) to = Environment.getExternalStorageDirectory().getPath()+"/"+sti.getDestinationZipOutputFileName();
             else to = "/storage/"+sti.getDestinationStorageUuid()+"/"+ sti.getDestinationZipOutputFileName();
 
             mStwa.util.addDebugMsg(1, "I", "Sync Local-To-ZIP From=" + from + ", To=" + to);
@@ -979,18 +983,11 @@ public class SyncThread extends Thread {
     }
 
     public static int checkFileNameLength(SyncThreadWorkArea stwa, SyncTaskItem sti, String file_name) {
-        if (file_name.getBytes().length>255) {
+        if (file_name.getBytes().length>sti.getSyncOptionMaxDestinationFileNameLength()) {
             String e_msg="";
-            if (sti.isSyncOptionIgnoreDestinationFileNameLengthExceed255Byte()) {
-                e_msg=stwa.appContext.getString(R.string.msgs_mirror_ignore_file_name_gt_255_byte, file_name.getBytes().length, file_name);
-                stwa.util.addLogMsg("W", sti.getSyncTaskName(), e_msg);
-                return SyncTaskItem.SYNC_RESULT_STATUS_WARNING;
-            } else {
-                e_msg=stwa.appContext.getString(R.string.msgs_mirror_abort_file_name_gt_255_byte, file_name.getBytes().length, file_name);
-                stwa.util.addLogMsg("E", sti.getSyncTaskName(), e_msg);
-                stwa.gp.syncThreadCtrl.setThreadMessage(e_msg);
-                return SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
-            }
+            e_msg=stwa.appContext.getString(R.string.msgs_mirror_ignore_file_name_gt_255_byte, sti.getSyncOptionMaxDestinationFileNameLength(), file_name.getBytes().length, file_name);
+            stwa.util.addLogMsg("W", sti.getSyncTaskName(), e_msg);
+            return SyncTaskItem.SYNC_RESULT_STATUS_WARNING;
         }
         return SyncTaskItem.SYNC_RESULT_STATUS_SUCCESS;
     }
@@ -1203,9 +1200,9 @@ public class SyncThread extends Thread {
         return to_temp;
     }
 
-    static public String buildStorageDir(String uuid, String dir) {
+    private String buildStorageDir(String uuid, String dir) {
         String base="";
-        if (uuid.equals(SafFile3.SAF_FILE_PRIMARY_UUID)) base=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
+        if (uuid.equals(SafFile3.SAF_FILE_PRIMARY_UUID)) base=mGp.externalStoragePrefix;
         else base="/storage/"+uuid;
         if (dir.equals("")) return base;
         else {

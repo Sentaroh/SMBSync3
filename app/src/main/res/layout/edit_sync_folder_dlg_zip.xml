@@ -150,61 +150,38 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/edit_sync_folder_dlg_zip_enc_password_view"
+            android:id="@+id/edit_sync_folder_dlg_zip_enc_password_view_all"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <CheckedTextView
-                android:id="@+id/edit_sync_folder_dlg_ctv_show_zip_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:gravity="center_vertical"
-                android:text="@string/msgs_task_edit_sync_folder_dlg_show_password"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                tools:ignore="RtlHardcoded" />
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_password_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/msgs_task_edit_sync_folder_dlg_zip_title_zip_password"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_sync_folder_dlg_zip_enc_password"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:ems="10"
+                    android:hint="@string/msgs_task_edit_sync_folder_dlg_zip_title_zip_password"
                     android:inputType="textPassword" />
-            </LinearLayout>
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_sync_folder_dlg_zip_enc_confirm"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:longClickable="false"
+                    android:longClickable="true"
                     android:layout_gravity="center_vertical"
                     android:ems="10"
+                    android:hint="@string/msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password"
                     android:inputType="textPassword" />
-            </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

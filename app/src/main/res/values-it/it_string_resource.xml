@@ -46,7 +46,7 @@
         <string name="msgs_export_import_pswd_btn_ok">OK</string>
         <string name="msgs_export_import_pswd_hint_password">Password</string>
         <string name="msgs_export_import_pswd_hint_confirm">Conferma password</string>
-        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Le password non coincidono.</string>
+        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">La password e la password di conferma non corrispondono.</string>
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_IT_task.md</string>
         <string name="msgs_help_sync_task_title">Aiuto Sync Task</string>
@@ -334,7 +334,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Piccolo</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">Normale</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">Massimo</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">Le password non corrispondono</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">La password e la password di conferma non corrispondono.</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">Password</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">Confermare la password</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_encrypt_none">Nessuno</string>
@@ -397,7 +397,6 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_task_sync_task_filter_list_dlg_include">Includi</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">Non specificato</string>
         <string name="msgs_task_sync_task_filter_title">Filtri:</string>
-        <string name="msgs_task_sync_task_sync_direction_two_way">Utilizzare la sincronizzazione a due vie</string>
         <string name="msgs_task_sync_task_sync_file_type_add_audio_title">Add audio</string>
         <string name="msgs_task_sync_task_sync_file_type_add_image_title">Add image</string>
         <string name="msgs_task_sync_task_sync_file_type_add_video_title">Add Video</string>
@@ -477,7 +476,10 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Limitare il buffer di scrittura SMB I/O a 16 KB</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">Se la data e l\'ora non possono essere determinate dai dati EXIF, viene visualizzato un messaggio di conferma</string>
         <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">Ignora i file sorgente più grandi di 4GB durante la sincronizzazione con SDCARD/USB storage</string>
-        <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">Ignora i file i cui nomi superano i 255 byte</string>
+        <string name="msgs_task_sync_task_option_ignore_file_name_length_gt_specified_length">Ignora i file la cui lunghezza del nome del file è più lunga della lunghezza specificata</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Specificare la lunghezza del nome del file da ignorare</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">Specificare una lunghezza del nome del file da ignorare che sia maggiore o uguale a 0</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">Specificare una lunghezza del nome del file da ignorare pari o inferiore a 255</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">Salvare tutti i file nella directory di destinazione senza creare sottodirectory</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Annulla</string>
         <string name="msgs_task_twoway_sync_conflict_keep_conflict_file">Keep a two-way sync conflict file</string>
@@ -580,8 +582,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">L\'ultima ora modificata del file è stata utilizzata perché la data e l\'ora di ripresa non possono essere ricavate dall\'EXIF/metadata del file. File=</string>
         <string name="msgs_mirror_taken_date_convert_error">L\'ultimo orario modificato del file è stato utilizzato perché si è verificato un errore nella conversione della data di ripresa. File=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Sincronizzazione interrotta perché il percorso di destinazione contiene una directory con lo stesso nome del file che viene copiato. File=</string>
-        <string name="msgs_mirror_abort_file_name_gt_255_byte">La sincronizzazione è stata annullata perché la lunghezza del nome del file supera i 255 caratteri. Nome file chars=%1$s, Nome file=%2$s</string>
-        <string name="msgs_mirror_ignore_file_name_gt_255_byte">Il file è stato ignorato perché la lunghezza del nome del file supera i 255 byte. Nome del file in byte =%1$s, nome del file =%2$s</string>
+        <string name="msgs_mirror_ignore_file_name_gt_255_byte">Il file è stato ignorato perché la lunghezza del nome del file supera i %1$s byte. Nome del file in byte =%2$s, nome del file =%3$s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Sincronizzazione annullata perché la memoria SDCARD/USB non è montata.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Sincronizzazione annullata perché l\'archiviazione SDCARD/USB non è accessibile. UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">Ignorato perché la dimensione del file è superiore a 4GB. File=%s</string>
@@ -805,11 +806,15 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Non esistono compiti che possono essere aggiunti.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Modifica elenco attività di sincronizzazione</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Aggiungi attività di sincronizzazione</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">Puoi cambiare l\'ordine degli elementi \"premendo a lungo\" o \"premendo\" l\'icona sul lato destro dello schermo per spostarli in alto o in basso.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Non è stata specificata alcuna attività di sincronizzazione. Fai clic sul pulsante \"Add Sync Task\" per aggiungere un compito.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">L\'attività non esiste. Attività=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Seleziona tutti</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Deseleziona tutti</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">Supprimer une tâche de synchronisation</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">Aggiungi un\'attività di sincronizzazione</string>
+        <string name="msgs_edit_sync_task_list_help_title">Aide à l\'édition de la liste des tâches synchronisées</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">Seleziona il compito che vuoi aggiungere e clicca sul pulsante \"Aggiungi\".</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync3_Help_IT_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">L\'elenco dei compiti è cambiato. Uscire senza salvare?</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">Confermare l\'inizio della sincronizzazione</string>

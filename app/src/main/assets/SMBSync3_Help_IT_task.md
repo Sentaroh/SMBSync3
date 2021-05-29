@@ -166,8 +166,8 @@ Visualizzare un messaggio di conferma quando non è possibile ottenere da Exif l
 ### Ignora i file sorgente più grandi di 4GB durante la sincronizzazione con SDCARD/USB storage  
 Se l'opzione è selezionata, è possibile evitare errori I/O durante la sincronizzazione su una scheda MicroSD ignorando i file sorgente di dimensioni superiori a 4 GB da sincronizzare sulla memoria locale.  
 
-### Ignora i file il cui nome file supera i 255 byte  
-Se spuntata, ignorare i file con nomi di file più lunghi di 255 byte.  
+### Ignora i file la cui lunghezza del nome del file è più lunga della lunghezza specificata  
+Se la lunghezza del nome del file supera il valore inserito sul lato destro dello schermo, il file verrà ignorato.  
 
 ### Manuali  
 [FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  

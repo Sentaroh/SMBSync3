@@ -166,8 +166,8 @@ Anzeige einer Bestätigungsmeldung, wenn das übernommene Datum und die Uhrzeit 
 ### Quelldateien, die größer als 4 GB sind, beim Synchronisieren auf SDCARD/USB-Speicher ignorieren  
 Wenn dieses Kontrollkästchen aktiviert ist, können Sie E/A-Fehler bei der Synchronisierung mit einer MicroSD-Karte vermeiden, indem Quelldateien, die größer als 4 GB sind, bei der Synchronisierung mit dem lokalen Speicher ignoriert werden.  
 
-### Ignoriere Dateien, deren Dateiname 255 Bytes überschreitet  
-Wenn diese Option aktiviert ist, werden Dateien mit Dateinamen, die länger als 255 Byte sind, ignoriert.  
+### Dateien ignorieren, deren Dateinamen länger als die angegebene Länge sind  
+Wenn die Länge des Dateinamens den auf der rechten Seite des Bildschirms eingegebenen Wert überschreitet, wird die Datei ignoriert.  
 
 ### Manuals  
 [FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  

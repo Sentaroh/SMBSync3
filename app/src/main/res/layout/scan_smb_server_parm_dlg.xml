@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/scan_smb_server_parm_dlg_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:ignore="HardcodedText,InefficientWeight,UselessParent,RtlHardcoded,LabelFor" >
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scan_smb_server_parm_dlg_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,InefficientWeight,UselessParent,RtlHardcoded,LabelFor">
 
     <LinearLayout
             android:id="@+id/scan_smb_server_parm_dlg_title_view"
@@ -170,7 +171,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        >
+                        app:passwordToggleEnabled="true">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password"
                             android:layout_width="match_parent"

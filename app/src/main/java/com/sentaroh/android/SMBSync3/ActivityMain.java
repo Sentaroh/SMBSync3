@@ -5338,7 +5338,15 @@ public class ActivityMain extends AppCompatActivity {
 
     private void cleanupCacheFile() {
         long b_time=System.currentTimeMillis();
-        File[] fl=mContext.getExternalCacheDirs();
+
+        //Delete internal storage cache
+        File[] fl=mContext.getCacheDir().listFiles();
+        for(File del_item:fl) {
+            deleteCacheFile(del_item);
+        }
+
+        //Delete external storage cache
+        fl=mContext.getExternalCacheDirs();
         if (fl!=null && fl.length>0) {
             for(File cf:fl) {
                 if (cf!=null) {

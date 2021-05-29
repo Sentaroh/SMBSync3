@@ -1,7 +1,7 @@
 ### Gruppe  
 Der Name der Gruppe.  
 
-### NurAuto-Aufgaben synchronisieren  
+### Nur Auto-Aufgaben synchronisieren  
 Startet die Synchronisierung von Aufgaben, die in der Synchronisierungsaufgabe automatisch markiert sind. Die Aufgabenliste wird nicht angezeigt, wenn sie markiert ist.  
 
 ### Aufgabenliste  

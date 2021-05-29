@@ -149,14 +149,12 @@ public class SyncConfiguration {
     private static final String SYNC_TASK_XML_TAG_OPTION_SYNC_SUB_DIRECTORY = "sync_sub_directory";
 //    private static final String SYNC_TASK_XML_TAG_OPTION_DESTINATION_USE_TAKEN_DATE_DIRECTORY_NAME_KEYWORD = "sync_destination_use_taken_date_directory_name_keyword";
 //    private static final String SYNC_TASK_XML_TAG_OPTION_DESTINATION_USE_TAKEN_DATE_FILE_NAME_KEYWORD = "sync_destination_use_taken_date_file_name_keyword";
-    private static final String SYNC_TASK_XML_TAG_OPTION_TWO_WAY_CONFLICT_FILE_RULE = "two_way_conflict_file_rule";
-    private static final String SYNC_TASK_XML_TAG_OPTION_TWO_WAY_KEEP_CONFLICT_FILE = "two_way_keep_conflict_file";
     private static final String SYNC_TASK_XML_TAG_OPTION_WIFI_STATUS = "wifi_status";
     private static final String SYNC_TASK_XML_TAG_OPTION_IGNORE_DST_DIFFERENCE = "ignore_dst_difference";
     private static final String SYNC_TASK_XML_TAG_OPTION_OFFSET_OF_DST = "offset_of_dst";
     private static final String SYNC_TASK_XML_TAG_OPTION_IGNORE_SOURCE_FILE_THAT_FILE_SIZE_GT_4GB = "ignore_source_file_that_file_size_gt_4gb";
     private static final String SYNC_TASK_XML_TAG_OPTION_REMOVE_DIRECTORY_FILE_THAT_EXCLUDED_BY_FILTER = "remove_dir_file_that_excluded_by_filter";
-    private static final String SYNC_TASK_XML_TAG_OPTION_IGNORE_FILE_NAME_LENGTH_EXCEED_255_BYTE = "ignore_file_name_length_exceed_255_byte";
+    private static final String SYNC_TASK_XML_TAG_OPTION_MAX_DESTINATION_FILE_NAME_LENGTH = "max_destination_file_name_length";
 
     private static final String SYNC_TASK_XML_TAG_TASK_AUTO_TASK = "auto";
     private static final String SYNC_TASK_XML_TAG_TASK_ERROR_SOURCE = "error_source";
@@ -221,11 +219,12 @@ public class SyncConfiguration {
             String[] config_array = new String[2];
             config_array[0] = br.readLine();
             String line="";
-            config_array[1]="";
+            StringBuilder sb=new StringBuilder(1024*1024);
             while((line=br.readLine())!=null) {
-                config_array[1] += line;
+                sb.append(line);
             }
             br.close();
+            config_array[1]=sb.toString();
             return config_array;
         } catch (Exception e) {
             e.printStackTrace();
@@ -352,7 +351,7 @@ public class SyncConfiguration {
                     if (prof != null) {
                         config_data = CommonUtilities.encryptUserData(c, cp_enc, prof);
                     } else {
-                        cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+"  Sync task list not saved because null CipherParms supplied.");
+                        cu.addDebugMsg(1, "E", CommonUtilities.getExecutedMethodName()+" Sync task list not saved because null CipherParms supplied.");
                     }
                 } else {
                     config_data = prof;
@@ -661,8 +660,6 @@ public class SyncConfiguration {
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_SYNC_SUB_DIRECTORY, item.isSyncOptionSyncSubDirectory() ? "true" : "false");
 //        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_DESTINATION_USE_TAKEN_DATE_DIRECTORY_NAME_KEYWORD, item.isDestinationUseTakenDateTimeToDirectoryNameKeyword()?"true":"false");
 //        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_DESTINATION_USE_TAKEN_DATE_FILE_NAME_KEYWORD, item.isDestinationUseTakenDateTimeToFileNameKeyword()?"true":"false");
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_TWO_WAY_CONFLICT_FILE_RULE, item.getSyncTwoWayConflictFileRule());
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_TWO_WAY_KEEP_CONFLICT_FILE, item.isSyncTwoWayKeepConflictFile() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_WIFI_STATUS, item.getSyncOptionWifiStatusOption());
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_IGNORE_DST_DIFFERENCE, item.isSyncOptionIgnoreDstDifference() ? "true" : "false");
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_OFFSET_OF_DST, String.valueOf(item.getSyncOptionOffsetOfDst()));
@@ -671,7 +668,7 @@ public class SyncConfiguration {
 
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_REMOVE_DIRECTORY_FILE_THAT_EXCLUDED_BY_FILTER, String.valueOf(item.isSyncOptionRemoveDirectoryFileThatExcludedByFilter() ? "true" : "false"));
 
-        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_IGNORE_FILE_NAME_LENGTH_EXCEED_255_BYTE, String.valueOf(item.isSyncOptionIgnoreDestinationFileNameLengthExceed255Byte() ? "true" : "false"));
+        option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_MAX_DESTINATION_FILE_NAME_LENGTH, String.valueOf(item.getSyncOptionMaxDestinationFileNameLength()));
 
         option_tag.setAttribute(SYNC_TASK_XML_TAG_OPTION_ERROR_OPTION, item.getSyncTaskErrorOption());
 
@@ -1126,15 +1123,6 @@ public class SyncConfiguration {
                 sti.setSyncOptionSyncHiddenFile(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_SYNC_SUB_DIRECTORY)) {
                 sti.setSyncOptionSyncSubDirectory(xpp.getAttributeValue(i).toLowerCase().equals("true"));
-            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_TWO_WAY_CONFLICT_FILE_RULE)) {
-                if (isValidTaskItemValue(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_LIST, xpp.getAttributeValue(i))) {
-                    sti.setSyncTwoWayConflictFileRule(xpp.getAttributeValue(i));
-                } else {
-                    sti.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_DEFAULT);
-                    putTaskListValueErrorMessage(cu, "Twoway conflict file rule", String.valueOf(SyncTaskItem.SYNC_FILE_DIFFERENCE_ALLOWABLE_TIME_DEFAULT));
-                }
-            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_TWO_WAY_KEEP_CONFLICT_FILE)) {
-                sti.setSyncTwoWayKeepConflictFile(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_WIFI_STATUS)) {
                 if (isValidTaskItemValue(SyncTaskItem.WIFI_STATUS_WIFI_LIST, xpp.getAttributeValue(i))) {
                     sti.setSyncOptionWifiStatusOption(xpp.getAttributeValue(i));
@@ -1160,8 +1148,8 @@ public class SyncConfiguration {
                 sti.setSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb(xpp.getAttributeValue(i).toLowerCase().equals("true"));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_REMOVE_DIRECTORY_FILE_THAT_EXCLUDED_BY_FILTER)) {
                 sti.setSyncOptionRemoveDirectoryFileThatExcludedByFilter(xpp.getAttributeValue(i).toLowerCase().equals("true"));
-            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_IGNORE_FILE_NAME_LENGTH_EXCEED_255_BYTE)) {
-                sti.setSyncOptionIgnoreDestinationFileNameLengthExceed255Byte(xpp.getAttributeValue(i).toLowerCase().equals("true"));
+            } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_MAX_DESTINATION_FILE_NAME_LENGTH)) {
+                sti.setSyncOptionMaxDestinationFileNameLength(Integer.parseInt(xpp.getAttributeValue(i)));
             } else if (xpp.getAttributeName(i).equals(SYNC_TASK_XML_TAG_OPTION_ERROR_OPTION)) {
                 sti.setSyncTaskErrorOption(xpp.getAttributeValue(i));
             }

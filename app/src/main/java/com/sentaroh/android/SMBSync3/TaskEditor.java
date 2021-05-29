@@ -35,6 +35,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.storage.StorageManager;
 import android.text.Editable;
@@ -42,8 +43,11 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
+import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -68,6 +72,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.SMBSync3.LocalStorageSelectorAdapter.LocalStorageSelectorItem;
 
@@ -353,7 +358,6 @@ public class TaskEditor extends DialogFragment {
         final Spinner spinnerSyncDstOffsetValue =(Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value);
         final CheckedTextView ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
         final CheckedTextView ctv_sync_remove_source_if_empty =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
-        final CheckedTextView ctv_edit_sync_tak_option_keep_conflict_file =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file);
 
         final Spinner sp_file_size_type=(Spinner)mDialog.findViewById(R.id.sync_filter_file_size_type_spinner);
         final EditText et_file_size_value=(EditText)mDialog.findViewById(R.id.sync_filter_file_size_value);
@@ -477,7 +481,6 @@ public class TaskEditor extends DialogFragment {
         final Spinner spinnerSyncDstOffsetValue =(Spinner) mDialog.findViewById(R.id.edit_sync_task_option_spinner_offset_daylight_saving_time_value);
         final CheckedTextView ctv_edit_sync_task_option_ignore_unusable_character_used_directory_file_name =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
         final CheckedTextView ctv_sync_remove_source_if_empty =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
-        final CheckedTextView ctv_edit_sync_tak_option_keep_conflict_file =(CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file);
 
         final Spinner sp_file_size_type=(Spinner)mDialog.findViewById(R.id.sync_filter_file_size_type_spinner);
         final EditText et_file_size_value=(EditText)mDialog.findViewById(R.id.sync_filter_file_size_value);
@@ -736,8 +739,9 @@ public class TaskEditor extends DialogFragment {
         final CheckedTextView ctv_sync_folder_use_pswd = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
         final EditText et_sync_folder_domain = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_domain);
         final EditText et_sync_folder_user = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
-        final EditText et_sync_folder_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
-        final CheckedTextView ctv_show_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_smb_account_password);
+        final TextInputEditText et_sync_folder_pswd = (TextInputEditText ) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
+        final TextInputLayout ll_sync_folder_pswd_view = (TextInputLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass_view);
+//        final CheckedTextView ctv_show_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_smb_account_password);
         final Button btn_sync_folder_list_share = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_share_btn);
         final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
@@ -780,10 +784,10 @@ public class TaskEditor extends DialogFragment {
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, false);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, false);
         }
-        if (mGp.settingSecurityReinitSmbAccountPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
-            et_sync_folder_user.setText("");
-            et_sync_folder_pswd.setText("");
-        }
+//        if (mGp.settingSecurityReinitSmbAccountPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+//            et_sync_folder_user.setText("");
+//            et_sync_folder_pswd.setText("");
+//        }
         sfev.folder_smb_use_pswd =ctv_sync_folder_use_pswd.isChecked();
         ctv_sync_folder_use_pswd.setOnClickListener(new OnClickListener() {
             @Override
@@ -792,25 +796,49 @@ public class TaskEditor extends DialogFragment {
                 ctv_sync_folder_use_pswd.setChecked(isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, isChecked);
-                CommonUtilities.setViewEnabled(mActivity, ctv_show_password, isChecked);
+//                ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
+                if (mGp.settingSecurityHideShowSmbPasswordButton) ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+                else ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
         });
 
-        CommonUtilities.setViewEnabled(mActivity, ctv_show_password, ctv_sync_folder_use_pswd.isChecked());
-        if (mGp.settingSecurityHideShowSmbPasswordButton) ctv_show_password.setVisibility(CheckedTextView.GONE);
-        else ctv_show_password.setVisibility(CheckedTextView.VISIBLE);
-        ctv_show_password.setOnClickListener(new OnClickListener() {
+        if (mGp.settingSecurityHideShowSmbPasswordButton) ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+        else ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
+        ll_sync_folder_pswd_view.setEndIconOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View view) {
-                CheckedTextView ctv=(CheckedTextView)view;
-                ctv.setChecked(!ctv.isChecked());
-                if (!ctv.isChecked()) et_sync_folder_pswd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                else et_sync_folder_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            public void onClick(View v) {
+                if (et_sync_folder_pswd.getTransformationMethod()!=null) {
+                    et_sync_folder_pswd.setTransformationMethod(null);
+                    et_sync_folder_pswd.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                        @Override
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            return true;
+                        }
+                        @Override
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            menu.removeItem(android.R.id.cut);
+                            menu.removeItem(android.R.id.copy);
+                            menu.removeItem(android.R.id.shareText);
+                            return true;
+                        }
+                        @Override
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            return false;
+                        }
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {
+                        }
+                    });
+
+                } else {
+                    et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
+                }
+
             }
         });
-        ctv_show_password.setChecked(sfev.show_smb_passowrd);
-        if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//        if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
+//        else et_sync_folder_pswd.setTransformationMethod(null);
 
         et_sync_folder_share_name.setText(sfev.folder_smb_share);
 
@@ -1029,8 +1057,8 @@ public class TaskEditor extends DialogFragment {
         final CheckedTextView ctv_sync_folder_use_pswd = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
         final EditText et_sync_folder_domain = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_domain);
         final EditText et_sync_folder_user = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
-        final EditText et_sync_folder_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
-        final CheckedTextView ctv_show_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_smb_account_password);
+        final TextInputEditText et_sync_folder_pswd = (TextInputEditText ) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
+        final TextInputLayout ll_sync_folder_pswd_view = (TextInputLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass_view);
         final Button btn_sync_folder_list_share = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_share_btn);
         final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
 
@@ -1052,19 +1080,16 @@ public class TaskEditor extends DialogFragment {
             if (ctv_sync_folder_use_pswd.isChecked()) {
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_domain, true);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, true);
-                CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, true);
-                CommonUtilities.setViewEnabled(mActivity, ctv_show_password, true);
+                CommonUtilities.setViewEnabled(mActivity, ll_sync_folder_pswd_view, true);
             } else {
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_domain, false);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, false);
-                CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, false);
-                CommonUtilities.setViewEnabled(mActivity, ctv_show_password, false);
+                CommonUtilities.setViewEnabled(mActivity, ll_sync_folder_pswd_view, false);
             }
         } else {
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_domain, false);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, false);
-            CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, false);
-            CommonUtilities.setViewEnabled(mActivity, ctv_show_password, false);
+            CommonUtilities.setViewEnabled(mActivity, ll_sync_folder_pswd_view, false);
         }
         CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_list_share, enabled);
         CommonUtilities.setViewEnabled(mActivity, et_sync_folder_share_name, enabled);
@@ -1458,10 +1483,7 @@ public class TaskEditor extends DialogFragment {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
-        final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
-
-        if (mGp.settingSecurityHideShowZipPasswordButton) ctv_sync_folder_show_zip_password.setVisibility(CheckedTextView.GONE);
-        else ctv_sync_folder_show_zip_password.setVisibility(CheckedTextView.VISIBLE);
+//        final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
 
         final Spinner sp_sync_folder_zip_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_storage_selector);
         sp_sync_folder_zip_storage_selector.setOnItemSelectedListener(null);
@@ -1546,49 +1568,64 @@ public class TaskEditor extends DialogFragment {
         final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
         sp_zip_enc_method.setOnItemSelectedListener(null);
         setSpinnerSyncFolderZipEncryptMethod(sp_zip_enc_method, sfev.zip_enc_method);
-        final LinearLayout ll_zip_password_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password_view);
+        final LinearLayout ll_password_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password_view_all);
+        final TextInputLayout ll_zip_pswd_view=(TextInputLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password_view);
         final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
+        final TextInputLayout ll_zip_conf_pswd_view=(TextInputLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
 //        final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
-        final LinearLayout ll_conf_pswd_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
-        ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
+//        final LinearLayout ll_conf_pswd_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
 
-        ctv_sync_folder_show_zip_password.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean isChecked=!ctv_sync_folder_show_zip_password.isChecked();
-                ctv_sync_folder_show_zip_password.setChecked(isChecked);
-                if (isChecked) {
-                    et_zip_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
-                } else {
-                    et_zip_pswd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    String pswd=et_zip_pswd.getText().toString();
-                    String conf_pswd=et_zip_conf_pswd.getText().toString();
-                    if (!pswd.equals(sfev.zip_file_password)) {
-                        ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
-                    } else {
-                        ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
-                    }
-                }
-            }
-        });
-        ctv_sync_folder_show_zip_password.setChecked(sfev.show_zip_passowrd);
-        if (sfev.show_zip_passowrd) et_zip_pswd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
+//        if (mGp.settingSecurityHideShowZipPasswordButton) ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
+//        else {
+//            ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(true);
+//            if (sfev.show_zip_passowrd) {
+//                et_zip_pswd.setTransformationMethod(null);
+//                ll_zip_conf_pswd_view.setVisibility(TextInputLayout.GONE);
+//            } else {
+//                et_zip_pswd.setTransformationMethod(new PasswordTransformationMethod());
+//                ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
+//            }
+//        }
+//
+//        ll_zip_pswd_view.setEndIconOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (et_zip_pswd.getTransformationMethod()!=null) {
+//                    et_zip_pswd.setTransformationMethod(null);
+//                    ll_zip_conf_pswd_view.setVisibility(TextInputLayout.GONE);
+//                    et_zip_pswd.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+//                        @Override
+//                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+//                            return true;
+//                        }
+//                        @Override
+//                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+//                            menu.removeItem(android.R.id.cut);
+//                            menu.removeItem(android.R.id.copy);
+//                            menu.removeItem(android.R.id.shareText);
+//                            return true;
+//                        }
+//                        @Override
+//                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+//                            return false;
+//                        }
+//                        @Override
+//                        public void onDestroyActionMode(ActionMode mode) {
+//                        }
+//                    });
+//                } else {
+//                    et_zip_pswd.setTransformationMethod(new PasswordTransformationMethod());
+//                    ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
+//                }
+//            }
+//        });
 
-        if (!mGp.settingSecurityReinitZipPasswordValue) {
-            et_zip_pswd.setText(sfev.zip_file_password);
-            et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
-        }
         if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
-            ll_zip_password_view.setVisibility(LinearLayout.GONE);
+            ll_password_view.setVisibility(LinearLayout.GONE);
         } else {
-            ll_zip_password_view.setVisibility(LinearLayout.VISIBLE);
-            if (!ctv_sync_folder_show_zip_password.isChecked()) {
-                String pswd=et_zip_pswd.getText().toString();
-                String pswd_conf=et_zip_conf_pswd.getText().toString();
-                if (!pswd.equals(pswd_conf)) ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
-            }
+            ll_password_view.setVisibility(LinearLayout.VISIBLE);
         }
 
         sp_zip_enc_method.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -1596,9 +1633,9 @@ public class TaskEditor extends DialogFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String zip_enc_method=(String)sp_zip_enc_method.getSelectedItem();
                 if (!zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_none))) {
-                    ll_zip_password_view.setVisibility(LinearLayout.VISIBLE);
+                    ll_password_view.setVisibility(LinearLayout.VISIBLE);
                 } else {
-                    ll_zip_password_view.setVisibility(LinearLayout.GONE);
+                    ll_password_view.setVisibility(LinearLayout.GONE);
                 }
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
                 checkSyncFolderValidation(dialog, sti, sfev);
@@ -1671,6 +1708,8 @@ public class TaskEditor extends DialogFragment {
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
         });
+        et_zip_pswd.setText(sfev.zip_file_password);
+        et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
         et_zip_pswd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -1678,19 +1717,6 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    if (s.toString().equals(sfev.zip_file_password)) {
-                        ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
-                    } else {
-                        if (ctv_sync_folder_show_zip_password.isChecked()) ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
-                        else ll_conf_pswd_view.setVisibility(LinearLayout.VISIBLE);
-                    }
-//                    CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, true);
-
-                } else {
-                    ll_conf_pswd_view.setVisibility(LinearLayout.INVISIBLE);
-//                    CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, false);
-                }
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
         });
@@ -2117,7 +2143,8 @@ public class TaskEditor extends DialogFragment {
         final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
         final Button btn_sync_folder_local_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_internal_directory_btn);
         final Button btn_sync_folder_smb_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_smb_directory_btn);
-        final CheckedTextView ctv_sync_folder_show_smb_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_smb_account_password);
+        final TextInputLayout ll_sync_folder_pswd_view = (TextInputLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass_view);
+//        final CheckedTextView ctv_sync_folder_show_smb_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_smb_account_password);
 
         final EditText et_sync_folder_internal_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
         final EditText et_sync_folder_smb_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_directory_name);
@@ -2131,10 +2158,10 @@ public class TaskEditor extends DialogFragment {
         final EditText et_zip_file = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_name);
         final Spinner sp_comp_level = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_comp_level);
         final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
-        final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
+        final TextInputEditText et_zip_pswd = (TextInputEditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
         final LinearLayout ll_conf_pswd_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
-        final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
+//        final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
 
         final Spinner sp_sync_retain_period = (Spinner) dialog.findViewById(R.id.edit_sync_filter_archive_retention_period);
         final Spinner sp_sync_suffix_option = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_suffix_seqno);
@@ -2197,7 +2224,7 @@ public class TaskEditor extends DialogFragment {
 
             if (mGp.settingSecurityReinitZipPasswordValue && et_zip_pswd.getText().toString().length()>0)  nsfev.isChanged=true;
 
-            nsfev.show_zip_passowrd=ctv_sync_folder_show_zip_password.isChecked();
+            nsfev.show_zip_passowrd=et_zip_pswd.getTransformationMethod()==null?true:false;
 
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_ZIP;
         } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {//smb
@@ -2236,7 +2263,7 @@ public class TaskEditor extends DialogFragment {
             }
 
             nsfev.show_smb_detail_settings=ctv_sync_folder_edit_smb_detail.isChecked();
-            nsfev.show_smb_passowrd=ctv_sync_folder_show_smb_password.isChecked();
+            nsfev.show_smb_passowrd=et_sync_folder_pswd.getTransformationMethod()==null?false:true;
         }
         return nsfev;
     }
@@ -2343,12 +2370,10 @@ public class TaskEditor extends DialogFragment {
         final Button btn_zip_filelist = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_filelist_btn);
         final EditText et_sync_folder_zip_file_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_name);
         final Spinner sp_zip_enc_method=(Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_method);
-        final EditText et_zip_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
+        final TextInputEditText et_zip_pswd = (TextInputEditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_password);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
         final EditText et_sync_folder_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
         final EditText et_file_template = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_name_template);
-
-        final CheckedTextView ctv_sync_folder_show_zip_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_zip_password);
 
         String sel_type = sp_sync_folder_type.getSelectedItem().toString();
         if (sel_type.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {
@@ -2477,7 +2502,7 @@ public class TaskEditor extends DialogFragment {
                     result = true;
                 } else {
                     if (et_zip_pswd.getText().length() > 0) {
-                        if (!ctv_sync_folder_show_zip_password.isChecked()) {
+                        if (et_zip_pswd.getTransformationMethod()!=null) {
                             if (et_zip_pswd.getText().toString().equals(et_zip_conf_pswd.getText().toString())) {
                                 result = true;
                             } else {
@@ -2755,7 +2780,7 @@ public class TaskEditor extends DialogFragment {
             sl_item.mounted =true;
             if (Build.VERSION.SDK_INT<=29) {
                 if (ss.uuid.equals(SAF_FILE_PRIMARY_UUID)) {
-                    sl_item.root_path=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
+                    sl_item.root_path= mGp.externalStoragePrefix;//SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
                     adapter.add(sl_item);
                 } else {
                     if (SafManager3.isUuidRegistered(mActivity, ss.uuid)) {
@@ -2766,7 +2791,7 @@ public class TaskEditor extends DialogFragment {
             } else {
                 if (SafManager3.isUuidRegistered(mActivity, ss.uuid)) {
                     if (ss.uuid.equals(SAF_FILE_PRIMARY_UUID)) {
-                        sl_item.root_path=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
+                        sl_item.root_path=mGp.externalStoragePrefix;
                         adapter.add(sl_item);
                     } else {
                         sl_item.root_path=SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+ss.uuid;
@@ -3206,35 +3231,25 @@ public class TaskEditor extends DialogFragment {
         ctv_ignore_file_size_gt_4gb.setChecked(n_sti.isSyncOptionIgnoreDestinationFileWhenSourceFileSizeGreaterThan4Gb());
         setCtvListenerForEditSyncTask(ctv_ignore_file_size_gt_4gb, type, n_sti, dlg_msg);
 
-        final CheckedTextView ctv_ignore_file_name_length_255_byte = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_exceed_255_byte);
-        CommonUtilities.setCheckedTextViewListener(ctv_ignore_file_name_length_255_byte);
-        ctv_ignore_file_name_length_255_byte.setChecked(n_sti.isSyncOptionIgnoreDestinationFileNameLengthExceed255Byte());
-        setCtvListenerForEditSyncTask(ctv_ignore_file_name_length_255_byte, type, n_sti, dlg_msg);
+        final EditText et_max_dest_file_name_length = (EditText) mDialog.findViewById(R.id.edit_sync_task_option_max_destination_file_name_length);
+        et_max_dest_file_name_length.setText(String.valueOf(n_sti.getSyncOptionMaxDestinationFileNameLength()));
+        et_max_dest_file_name_length.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        final CheckedTextView ctv_edit_sync_tak_option_keep_conflict_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file);
-        final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
-        ctv_edit_sync_tak_option_keep_conflict_file.setChecked(n_sti.isSyncTwoWayKeepConflictFile());
-        setCtvListenerForEditSyncTask(ctv_edit_sync_tak_option_keep_conflict_file, type, n_sti, dlg_msg);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
+            }
+        });
 
         final CheckedTextView ctvIgnoreFilterRemoveDirFileDesNotExistsInSource = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_remove_dir_file_excluded_by_filter);
         final LinearLayout ctvIgnoreFilterRemoveDirFileDesNotExistsInSourceView = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_remove_dir_file_excluded_by_filter);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
         final LinearLayout ctvDeleteFirstView = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_delete_first_when_mirror);
-
-        final Spinner spinnerTwoWaySyncConflictRule = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_value);
-        final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
-        spinnerTwoWaySyncConflictRule.setOnItemSelectedListener(null);
-        setSpinnerTwoWaySyncConflictRule(spinnerTwoWaySyncConflictRule, n_sti.getSyncTwoWayConflictFileRule());
-        spinnerTwoWaySyncConflictRule.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
         spinnerSyncType.setOnItemSelectedListener(null);
@@ -3927,12 +3942,17 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_smb_domain = n_sti.getSourceSmbDomain();
                 sfev.folder_smb_host = n_sti.getSourceSmbHost();
                 sfev.folder_smb_port = n_sti.getSourceSmbPort();
-                sfev.folder_smb_password = n_sti.getSourceSmbAccountPassword();
+                if (mGp.settingSecurityReinitSmbAccountPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+                    sfev.folder_smb_password = "";
+                    sfev.folder_smb_account = "";
+                } else {
+                    sfev.folder_smb_password = n_sti.getSourceSmbAccountPassword();
+                    sfev.folder_smb_account = n_sti.getSourceSmbAccountName();
+                }
                 sfev.folder_smb_share = n_sti.getSourceSmbShareName();
-                sfev.folder_smb_account = n_sti.getSourceSmbAccountName();
                 sfev.folder_smb_protocol=n_sti.getSourceSmbProtocol();
                 sfev.folder_type = n_sti.getSourceFolderType();
-                if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("")) {
+                if (!n_sti.getSourceSmbAccountName().equals("") || !n_sti.getSourceSmbAccountPassword().equals("")) {
                     sfev.folder_smb_use_pswd =true;
                 } else {
                     sfev.folder_smb_use_pswd =false;
@@ -4102,13 +4122,18 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_smb_domain = n_sti.getDestinationSmbDomain();
                 sfev.folder_smb_host = n_sti.getDestinationSmbHost();
                 sfev.folder_smb_port = n_sti.getDestinationSmbPort();
-                sfev.folder_smb_password = n_sti.getDestinationSmbPassword();
+                if (mGp.settingSecurityReinitSmbAccountPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+                    sfev.folder_smb_password = "";
+                    sfev.folder_smb_account = "";
+                } else {
+                    sfev.folder_smb_password = n_sti.getSourceSmbAccountPassword();
+                    sfev.folder_smb_account = n_sti.getSourceSmbAccountName();
+                }
                 sfev.folder_smb_share = n_sti.getDestinationSmbShareName();
-                sfev.folder_smb_account = n_sti.getDestinationSmbAccountName();
                 sfev.folder_type = n_sti.getDestinationFolderType();
                 sfev.folder_smb_protocol = n_sti.getDestinationSmbProtocol();
 
-                if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("")) {
+                if (!n_sti.getSourceSmbAccountName().equals("") || !n_sti.getSourceSmbAccountPassword().equals("")) {
                     sfev.folder_smb_use_pswd =true;
                 } else {
                     sfev.folder_smb_use_pswd =false;
@@ -4117,8 +4142,13 @@ public class TaskEditor extends DialogFragment {
                 sfev.zip_comp_level = n_sti.getDestinationZipCompressionLevel();
                 sfev.zip_enc_method = n_sti.getDestinationZipEncryptMethod();
                 sfev.zip_file_name = n_sti.getDestinationZipOutputFileName();
-                sfev.zip_file_password = n_sti.getDestinationZipPassword();
-                sfev.zip_file_confirm_password = n_sti.getDestinationZipPassword();
+                if (mGp.settingSecurityReinitZipPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+                    sfev.zip_file_password = "";
+                    sfev.zip_file_confirm_password = "";
+                } else {
+                    sfev.zip_file_password = n_sti.getDestinationZipPassword();
+                    sfev.zip_file_confirm_password = n_sti.getDestinationZipPassword();
+                }
 
                 sfev.archive_file_rename_template =n_sti.getDestinationArchiveRenameFileTemplate();
 //                sfev.archive_retention_period=String.valueOf(n_sti.getDestinationArchiveRetentionPeriod());
@@ -4406,9 +4436,6 @@ public class TaskEditor extends DialogFragment {
         final Spinner spinnerSyncType = (Spinner) dialog.findViewById(R.id.edit_sync_task_sync_type);
         final Spinner spinnerSyncWifiStatus = (Spinner) dialog.findViewById(R.id.edit_sync_task_option_spinner_wifi_status);
 
-        final CheckedTextView ctv_edit_sync_tak_option_keep_conflict_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file);
-        final Spinner spinnerTwoWaySyncConflictRule = (Spinner) mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_value);
-
         final CheckedTextView ctv_task_sync_when_cahrging = (CheckedTextView) dialog.findViewById(R.id.edit_sync_task_option_ctv_sync_start_when_charging);
         final CheckedTextView ctv_never_overwrite_destination_file_newer_than_the_source_file = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file);
         final CheckedTextView ctv_ignore_unusable_character_used_directory_file_name = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_unusable_character_used_directory_file_name);
@@ -4450,7 +4477,7 @@ public class TaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_confirm_exif_date = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_confirm_exif_date);
         final CheckedTextView ctv_ignore_file_size_gt_4gb = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_source_file_that_file_size_gt_4gb);
-        final CheckedTextView ctv_ignore_file_name_length_255_byte = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ignore_file_name_length_exceed_255_byte);
+        final EditText et_max_dest_file_name_length = (EditText) mDialog.findViewById(R.id.edit_sync_task_option_max_destination_file_name_length);
 
         final Spinner spinnerSyncDiffTimeValue = (Spinner) dialog.findViewById(R.id.edit_sync_task_option_spinner_diff_file_determin_time_value);
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
@@ -4536,10 +4563,7 @@ public class TaskEditor extends DialogFragment {
 
         nstli.setSyncOptionRemoveDirectoryFileThatExcludedByFilter(ctvIgnoreFilterRemoveDirFileDesNotExistsInSource.isChecked());
 
-        nstli.setSyncOptionIgnoreDestinationFileNameLengthExceed255Byte(ctv_ignore_file_name_length_255_byte.isChecked());
-
-        nstli.setSyncTwoWayKeepConflictFile(ctv_edit_sync_tak_option_keep_conflict_file.isChecked());
-        setTwoWaySyncConflictRuleFromSpinnere(spinnerTwoWaySyncConflictRule, nstli);
+        nstli.setSyncOptionMaxDestinationFileNameLength(Integer.valueOf(et_max_dest_file_name_length.getText().toString()));
 
         nstli.setSyncOptionIgnoreFileSize0ByteFile(ctvIgnore_0_byte_file.isChecked());
 
@@ -4593,23 +4617,6 @@ public class TaskEditor extends DialogFragment {
         dlg_tv.setText(title);
 
         dialog.show();
-    }
-
-    private void setTwoWaySyncConflictRuleFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
-        String so = mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer);
-        if (spinner.getSelectedItemPosition()<spinner.getAdapter().getCount()) so=spinner.getSelectedItem().toString();
-        if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_ask_user)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_ASK_USER);
-        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_newer)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_NEWER);
-        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_older)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_OLDER);
-        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_source_to_destination)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_SOURCE_TO_DESTINATION);
-        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_copy_from_destination_to_source)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_COPY_FROM_DESTINATION_TO_SOURCE);
-        else if (so.equals(mActivity.getString(R.string.msgs_task_twoway_sync_conflict_copy_rurle_skip_sync_file)))
-            n_stli.setSyncTwoWayConflictFileRule(SyncTaskItem.SYNC_TASK_TWO_WAY_OPTION_SKIP_SYNC_FILE);
     }
 
     private void setSyncTaskTypeFromSpinnere(Spinner spinner, SyncTaskItem n_stli) {
@@ -4710,9 +4717,6 @@ public class TaskEditor extends DialogFragment {
         final CheckedTextView ctv_sync_remove_source_if_empty = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_remove_directory_if_empty_when_move);
         final Spinner sp_sync_task_option_error_option=(Spinner)mDialog.findViewById(R.id.edit_sync_task_option_error_option_value);
 
-        final LinearLayout ll_edit_sync_tak_option_keep_conflict_file=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_keep_conflic_file_view);
-        final LinearLayout ll_spinnerTwoWaySyncConflictRule=(LinearLayout)mDialog.findViewById(R.id.edit_sync_task_option_twoway_sync_conflict_file_rule_view);
-
         final CheckedTextView ctvIgnoreFilterRemoveDirFileDesNotExistsInSource = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_remove_dir_file_excluded_by_filter);
         final LinearLayout ctvIgnoreFilterRemoveDirFileDesNotExistsInSourceView = (LinearLayout) mDialog.findViewById(R.id.edit_sync_task_option_ll_sync_remove_dir_file_excluded_by_filter);
         final CheckedTextView ctvDeleteFirst = (CheckedTextView) mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_delete_first_when_mirror);
@@ -4733,11 +4737,11 @@ public class TaskEditor extends DialogFragment {
         final LinearLayout ll_file_filter_detail_view = (LinearLayout) mDialog.findViewById(R.id.sync_filter_file_type_detail_view);
         final LinearLayout ll_archive_detail_view = (LinearLayout) mDialog.findViewById(R.id.edit_sync_filter_archive_file_type_view);
 
+        final EditText et_max_dest_file_name_length = (EditText) mDialog.findViewById(R.id.edit_sync_task_option_max_destination_file_name_length);
+
         final Button btn_ok = (Button) dialog.findViewById(R.id.edit_profile_sync_dlg_btn_ok);
         String t_name_msg = checkTaskNameValidity(type, n_sti.getSyncTaskName(), dlg_msg, btn_ok);
         boolean error_detected = false;
-        ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.GONE);
-        ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.GONE);
         swap_source_destination.setVisibility(Button.VISIBLE);
 
         ll_wifi_wl_view.setVisibility(Button.GONE);
@@ -4801,8 +4805,6 @@ public class TaskEditor extends DialogFragment {
             }
 
             if (n_sti.getSyncTaskType().equals(SyncTaskItem.SYNC_TASK_TYPE_SYNC)) {
-                ll_edit_sync_tak_option_keep_conflict_file.setVisibility(LinearLayout.VISIBLE);
-                ll_spinnerTwoWaySyncConflictRule.setVisibility(LinearLayout.VISIBLE);
                 swap_source_destination.setVisibility(Button.GONE);
             }
 
@@ -4862,9 +4864,25 @@ public class TaskEditor extends DialogFragment {
                                     }
                                 }
                             } else {
-                                setDialogMsg(dlg_msg, s_msg);
-                                if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                                else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                                String ev=et_max_dest_file_name_length.getText().toString();
+                                if (ev.length()>0) {
+                                    int val=Integer.parseInt(ev.toString());
+                                    if (val==0) {
+                                        s_msg=mActivity.getString(R.string.msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0);
+                                    } else if (val>255) {
+                                        s_msg=mActivity.getString(R.string.msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255);
+                                    }
+                                } else {
+                                    s_msg=mActivity.getString(R.string.msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified);
+                                }
+                                if (s_msg.equals("")) {
+                                    setDialogMsg(dlg_msg, s_msg);
+                                    if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                                    else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                                } else {
+                                    setDialogMsg(dlg_msg, s_msg);
+                                    CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
+                                }
                             }
                         } else {
                             setDialogMsg(dlg_msg, s_msg);

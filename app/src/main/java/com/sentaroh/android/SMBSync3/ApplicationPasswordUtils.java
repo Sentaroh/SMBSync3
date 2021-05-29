@@ -30,6 +30,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -41,6 +42,8 @@ import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.Utilities3.Base64Compat;
 import com.sentaroh.android.Utilities3.CallBackListener;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
@@ -156,9 +159,11 @@ public class ApplicationPasswordUtils {
         tv_msg.setText(mActivity.getString(R.string.msgs_security_application_password_auth_specify_password));
         final CheckedTextView ctv_prot=(CheckedTextView)dialog.findViewById(R.id.password_input_ctv_protect);
         ctv_prot.setVisibility(CheckedTextView.GONE);
-        final EditText et_pswd1=(EditText)dialog.findViewById(R.id.password_input_password);
-        final EditText et_pswd2=(EditText)dialog.findViewById(R.id.password_input_password_confirm);
-        et_pswd2.setVisibility(EditText.GONE);
+        final TextInputLayout ll_pswd1=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+        final TextInputEditText et_pswd1=(TextInputEditText)dialog.findViewById(R.id.password_input_password);
+        final TextInputLayout ll_pswd2=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
+        final TextInputEditText et_pswd2=(TextInputEditText)dialog.findViewById(R.id.password_input_password_confirm);
+        ll_pswd2.setVisibility(EditText.GONE);
 
         final TextView tv_warn=(TextView)dialog.findViewById(R.id.password_input_warning_msg);
         tv_warn.setVisibility(TextView.VISIBLE);
@@ -269,8 +274,10 @@ public class ApplicationPasswordUtils {
         tv_msg.setText(mActivity.getString(R.string.msgs_security_application_password_auth_specify_password));
         final CheckedTextView ctv_prot=(CheckedTextView)dialog.findViewById(R.id.password_input_ctv_protect);
         ctv_prot.setVisibility(CheckedTextView.GONE);
-        final EditText et_pswd1=(EditText)dialog.findViewById(R.id.password_input_password);
-        final EditText et_pswd2=(EditText)dialog.findViewById(R.id.password_input_password_confirm);
+        final TextInputLayout ll_pswd1=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+        final TextInputEditText et_pswd1=(TextInputEditText)dialog.findViewById(R.id.password_input_password);
+        final TextInputLayout ll_pswd2=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
+        final TextInputEditText et_pswd2=(TextInputEditText)dialog.findViewById(R.id.password_input_password_confirm);
 
         final TextView tv_warn=(TextView)dialog.findViewById(R.id.password_input_warning_msg);
         tv_warn.setVisibility(TextView.VISIBLE);
@@ -281,7 +288,18 @@ public class ApplicationPasswordUtils {
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
-//        tv_title.setText("Application startup password");
+        ll_pswd1.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_pswd1.getTransformationMethod()!=null) {
+                    et_pswd1.setTransformationMethod(null);
+                    ll_pswd2.setVisibility(TextInputLayout.GONE);
+                } else {
+                    et_pswd1.setTransformationMethod(new PasswordTransformationMethod());
+                    ll_pswd2.setVisibility(TextInputLayout.VISIBLE);
+                }
+            }
+        });
 
         et_pswd1.addTextChangedListener(new TextWatcher(){
             @Override
@@ -369,23 +387,29 @@ public class ApplicationPasswordUtils {
         return hash;
     }
 
-    static private void checkNewPasswordSpecification(Context c, GlobalParameters gp, Button btn_ok, EditText et_pswd1, EditText et_pswd2, TextView msg) {
+    static private void checkNewPasswordSpecification(Context c, GlobalParameters gp, Button btn_ok,
+                                                      TextInputEditText et_pswd1, TextInputEditText et_pswd2, TextView msg) {
         btn_ok.setEnabled(false);
         if (et_pswd1.getText().length()>=4) {
-            if (et_pswd1.getText().length()>0 && et_pswd2.getText().length()>0) {
-                if (et_pswd1.getText().toString().equals(et_pswd2.getText().toString())) {
-                    btn_ok.setEnabled(true);
-                    msg.setText("");
+            if (et_pswd1.getTransformationMethod()!=null) {
+                if (et_pswd1.getText().length()>0 && et_pswd2.getText().length()>0) {
+                    if (et_pswd1.getText().toString().equals(et_pswd2.getText().toString())) {
+                        btn_ok.setEnabled(true);
+                        msg.setText("");
 //                    msg.setText(c.getString(R.string.msgs_password_input_preference_match));
+                    } else {
+                        msg.setText(c.getString(R.string.msgs_password_input_preference_unmatch));
+                    }
                 } else {
-                    msg.setText(c.getString(R.string.msgs_password_input_preference_unmatch));
+                    if (et_pswd1.getText().length()==0) {
+                        msg.setText(c.getString(R.string.msgs_password_input_preference_new_not_specified));
+                    } else {
+                        msg.setText(c.getString(R.string.msgs_password_input_preference_conf_not_specified));
+                    }
                 }
             } else {
-                if (et_pswd1.getText().length()==0) {
-                    msg.setText(c.getString(R.string.msgs_password_input_preference_new_not_specified));
-                } else {
-                    msg.setText(c.getString(R.string.msgs_password_input_preference_conf_not_specified));
-                }
+                btn_ok.setEnabled(true);
+                msg.setText("");
             }
         } else {
             msg.setText(c.getString(R.string.msgs_security_application_password_create_min_length_is_4_digit));

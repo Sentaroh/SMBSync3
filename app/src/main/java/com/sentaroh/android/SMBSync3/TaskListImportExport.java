@@ -32,9 +32,13 @@ import android.net.Uri;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -49,6 +53,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.Dialog.CommonFileSelector2;
 import com.sentaroh.android.Utilities3.EncryptUtilV3;
@@ -57,6 +63,7 @@ import com.sentaroh.android.Utilities3.SafFile3;
 import com.sentaroh.android.Utilities3.SafManager3;
 
 import com.sentaroh.android.SMBSync3.SyncConfiguration.SettingParameterItem;
+import com.sentaroh.android.Utilities3.ThreadCtrl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -576,22 +583,55 @@ public class TaskListImportExport {
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.password_input_title);
-//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
         final CheckedTextView ctv_protect = (CheckedTextView) dialog.findViewById(R.id.password_input_ctv_protect);
         final Button btn_ok = (Button) dialog.findViewById(R.id.password_input_ok_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.password_input_cancel_btn);
-        final EditText et_password = (EditText) dialog.findViewById(R.id.password_input_password);
-        final EditText et_confirm = (EditText) dialog.findViewById(R.id.password_input_password_confirm);
-        et_confirm.setVisibility(EditText.GONE);
+        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+        final TextInputEditText et_password = (TextInputEditText) dialog.findViewById(R.id.password_input_password);
+        final TextInputLayout ll_confirm_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
+        final TextInputEditText et_confirm = (TextInputEditText) dialog.findViewById(R.id.password_input_password_confirm);
+        ll_confirm_view.setVisibility(TextInputLayout.GONE);
         btn_ok.setText(mActivity.getString(R.string.msgs_export_import_pswd_btn_ok));
         ctv_protect.setVisibility(CheckedTextView.GONE);
 
         dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_password_required));
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
+
+        ll_confirm_view.setVisibility(TextInputLayout.GONE);
+        ll_password_view.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_password.getTransformationMethod()!=null) {
+                    et_password.setTransformationMethod(null);
+                    et_password.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                        @Override
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            return true;
+                        }
+                        @Override
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            menu.removeItem(android.R.id.cut);
+                            menu.removeItem(android.R.id.copy);
+                            menu.removeItem(android.R.id.shareText);
+                            return true;
+                        }
+                        @Override
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            return false;
+                        }
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {}
+                    });
+                } else {
+                    et_password.setTransformationMethod(new PasswordTransformationMethod());
+                }
+            }
+        });
 
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         et_password.addTextChangedListener(new TextWatcher() {
@@ -602,12 +642,10 @@ public class TaskListImportExport {
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 
             @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
         });
 
         //OK button
@@ -619,7 +657,7 @@ public class TaskListImportExport {
 
                 boolean correct_password=false;
                 if (TaskListImportFromSMBSync2.isSMBSync2SyncTaskList(mActivity, mGp, mUtil, enc_data)) {
-                    correct_password= TaskListImportFromSMBSync2.isCorrectPassowrd(enc_data.substring(9), passwd);
+                    correct_password= TaskListImportFromSMBSync2.isCorrectPassowrd(enc_data, passwd);
                 } else {
                     correct_password= isCorrectPassword(mActivity, enc_data, passwd);
                 }
@@ -668,15 +706,17 @@ public class TaskListImportExport {
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.password_input_title_view);
         final TextView title = (TextView) dialog.findViewById(R.id.password_input_title);
-//        title_view.setBackgroundColor(mGp.themeColorList.dialog_title_background_color);
-//        title.setTextColor(mGp.themeColorList.text_color_dialog_title);
+        title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
+        title.setTextColor(mGp.themeColorList.title_text_color);
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
         final CheckedTextView ctv_protect = (CheckedTextView) dialog.findViewById(R.id.password_input_ctv_protect);
         final Button btn_ok = (Button) dialog.findViewById(R.id.password_input_ok_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.password_input_cancel_btn);
-        final EditText et_password = (EditText) dialog.findViewById(R.id.password_input_password);
-        final EditText et_confirm = (EditText) dialog.findViewById(R.id.password_input_password_confirm);
+        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+        final TextInputEditText et_password = (TextInputEditText) dialog.findViewById(R.id.password_input_password);
+        final TextInputLayout ll_confirm_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
+        final TextInputEditText et_confirm = (TextInputEditText) dialog.findViewById(R.id.password_input_password_confirm);
 
         dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_specify_password));
 
@@ -687,46 +727,82 @@ public class TaskListImportExport {
             public void onClick(View v) {
                 ctv_protect.toggle();
                 boolean isChecked = ctv_protect.isChecked();
-                setPasswordFieldVisibility(isChecked, et_password, et_confirm, btn_ok, dlg_msg);
+                setPasswordFieldVisibility(dialog, isChecked);
             }
         });
 
         ctv_protect.setChecked(mGp.settingExportedTaskEncryptRequired);
-        setPasswordFieldVisibility(mGp.settingExportedTaskEncryptRequired, et_password, et_confirm, btn_ok, dlg_msg);
+
+        ThreadCtrl disable_text_watcher=new ThreadCtrl();
+        ll_password_view.setPasswordVisibilityToggleEnabled(false);
+//        ll_password_view.setEndIconOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                disable_text_watcher.setDisabled();
+//                if (et_password.getTransformationMethod()!=null) {
+//                    et_password.setTransformationMethod(null);
+//                    ll_confirm_view.setVisibility(TextInputLayout.GONE);
+//                    et_password.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+//                        @Override
+//                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+//                            return true;
+//                        }
+//                        @Override
+//                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+//                            menu.removeItem(android.R.id.cut);
+//                            menu.removeItem(android.R.id.copy);
+//                            menu.removeItem(android.R.id.shareText);
+//                            return true;
+//                        }
+//                        @Override
+//                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+//                            return false;
+//                        }
+//                        @Override
+//                        public void onDestroyActionMode(ActionMode mode) {}
+//                    });
+//                } else {
+//                    et_password.setTransformationMethod(new PasswordTransformationMethod());
+//                    ll_confirm_view.setVisibility(TextInputLayout.VISIBLE);
+//                }
+//                disable_text_watcher.setEnabled();
+//                setPasswordPromptOkButton(dialog);
+//            }
+//        });
+
+        setPasswordFieldVisibility(dialog, mGp.settingExportedTaskEncryptRequired);
 
         CommonUtilities.setViewEnabled(mActivity, et_password, true);
         CommonUtilities.setViewEnabled(mActivity, et_confirm, false);
         et_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
-                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                setPasswordPromptOkButton(et_password, et_confirm, btn_ok, dlg_msg);
+                if (disable_text_watcher.isEnabled()) {
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                    setPasswordPromptOkButton(dialog);
+                }
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 
             @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
         });
 
-        CommonUtilities.setEditTextPasteCopyEnabled(et_confirm, false);
+//        CommonUtilities.setEditTextPasteCopyEnabled(et_confirm, false);
         et_confirm.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                setPasswordPromptOkButton(et_password, et_confirm, btn_ok, dlg_msg);
+                setPasswordPromptOkButton(dialog);
             }
 
             @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 
             @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            }
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
         });
 
         //OK button
@@ -774,43 +850,67 @@ public class TaskListImportExport {
 
     }
 
-    private void setPasswordFieldVisibility(boolean isChecked, EditText et_password,
-                                            EditText et_confirm, Button btn_ok, TextView dlg_msg) {
+    private void setPasswordFieldVisibility(Dialog dialog, boolean isChecked) {
+        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.password_input_ok_btn);
+        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+        final TextInputEditText et_password = (TextInputEditText) dialog.findViewById(R.id.password_input_password);
+        final TextInputLayout ll_confirm_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
+        final TextInputEditText et_confirm = (TextInputEditText) dialog.findViewById(R.id.password_input_password_confirm);
+
         if (isChecked) {
-            et_password.setVisibility(EditText.VISIBLE);
-            et_confirm.setVisibility(EditText.VISIBLE);
-            setPasswordPromptOkButton(et_password, et_confirm, btn_ok, dlg_msg);
+            ll_password_view.setVisibility(EditText.VISIBLE);
+            ll_confirm_view.setVisibility(EditText.VISIBLE);
+            setPasswordPromptOkButton(dialog);
         } else {
             dlg_msg.setText("");
-            et_password.setVisibility(EditText.GONE);
-            et_confirm.setVisibility(EditText.GONE);
+            ll_password_view.setVisibility(EditText.GONE);
+            ll_confirm_view.setVisibility(EditText.GONE);
             CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
         }
     }
 
-    private void setPasswordPromptOkButton(EditText et_passwd, EditText et_confirm,
-                                           Button btn_ok, TextView dlg_msg) {
-        String password = et_passwd.getText().toString();
-        String confirm = et_confirm.getText().toString();
-        if (password.length() > 0 && et_confirm.getText().length() == 0) {
-            dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
-            CommonUtilities.setViewEnabled(mActivity, et_confirm, true);
-        } else if (password.length() > 0 && et_confirm.getText().length() > 0) {
-            CommonUtilities.setViewEnabled(mActivity, et_confirm, true);
-            if (!password.equals(confirm)) {
-                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+    private void setPasswordPromptOkButton(Dialog dialog) {
+        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
+        final Button btn_ok = (Button) dialog.findViewById(R.id.password_input_ok_btn);
+        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+        final TextInputEditText et_password = (TextInputEditText) dialog.findViewById(R.id.password_input_password);
+        final TextInputLayout ll_confirm_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
+        final TextInputEditText et_confirm = (TextInputEditText) dialog.findViewById(R.id.password_input_password_confirm);
+
+        String password = et_password.getText().toString();
+        if (et_password.getTransformationMethod()!=null) {
+            String confirm = et_confirm.getText().toString();
+            if (password.length() > 0 && et_confirm.getText().length() == 0) {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
-            } else {
-                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                dlg_msg.setText("");
+                CommonUtilities.setViewEnabled(mActivity, et_confirm, true);
+            } else if (password.length() > 0 && et_confirm.getText().length() > 0) {
+                CommonUtilities.setViewEnabled(mActivity, et_confirm, true);
+                if (!password.equals(confirm)) {
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                    dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
+                } else {
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+                    dlg_msg.setText("");
+                }
+            } else if (password.length() == 0 && confirm.length() == 0) {
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_specify_password));
+                CommonUtilities.setViewEnabled(mActivity, et_password, true);
+                CommonUtilities.setViewEnabled(mActivity, et_confirm, false);
+            } else if (password.length() == 0 && confirm.length() > 0) {
+                dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
             }
-        } else if (password.length() == 0 && confirm.length() == 0) {
-            CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-            dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_specify_password));
-            CommonUtilities.setViewEnabled(mActivity, et_passwd, true);
-            CommonUtilities.setViewEnabled(mActivity, et_confirm, false);
-        } else if (password.length() == 0 && confirm.length() > 0) {
-            dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_unmatched_confirm_pswd));
+        } else {
+            if (password.length() == 0) {
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                dlg_msg.setText(mActivity.getString(R.string.msgs_export_import_pswd_specify_password));
+                CommonUtilities.setViewEnabled(mActivity, et_password, true);
+                CommonUtilities.setViewEnabled(mActivity, et_confirm, false);
+            } else {
+                dlg_msg.setText("");
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
+            }
         }
     }
 

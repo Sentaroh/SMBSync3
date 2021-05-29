@@ -38,14 +38,14 @@
         <string name="msgs_export_import_profile_smb_account_name_password_not_restored">下記のタスクで使用されているアカウント名、アカウントパスワードまたはZIPパスワードの取込みに失敗しました。アプリの初期化やアプリを再インストールすると自動保存されたタスクリストからはアカウント名、アカウントパスワードおよびZIPパスワードは回復できません。同期タスクを編集して正しい値に修正してください。</string>
         <string name="msgs_export_import_pswd_password_title">タスクリスト パスワード保護</string>
         <string name="msgs_export_import_pswd_password_protect">タスクリストをパスワードで保護する</string>
-        <string name="msgs_export_import_pswd_specify_password">パスワードと確認パスワードを入力してください。</string>
+        <string name="msgs_export_import_pswd_specify_password">パスワードを入力してください。</string>
         <string name="msgs_export_import_pswd_password_required">ファイルがパスワード保護されています、パスワードを指定してください。</string>
         <string name="msgs_export_import_pswd_invalid_password">パスワードが間違っています、指定し直してください。</string>
         <string name="msgs_export_import_pswd_btn_cancel">キャンセル</string>
         <string name="msgs_export_import_task_list_btn_ok">取込</string>
         <string name="msgs_export_import_pswd_btn_ok">了解</string>
         <string name="msgs_export_import_pswd_hint_password">パスワード</string>
-        <string name="msgs_export_import_pswd_hint_confirm">パスワードの確認</string>
+        <string name="msgs_export_import_pswd_hint_confirm">確認パスワード</string>
         <string name="msgs_export_import_pswd_unmatched_confirm_pswd">パスワードと確認パスワードが一致していません</string>
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_JA_task.md</string>
@@ -397,7 +397,6 @@
         <string name="msgs_task_sync_task_filter_list_dlg_include">選択</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">無指定</string>
         <string name="msgs_task_sync_task_filter_title">フィルター :</string>
-        <string name="msgs_task_sync_task_sync_direction_two_way">Use Bi-directional sync</string>
         <string name="msgs_task_sync_task_sync_file_type_add_audio_title">オーディオの追加</string>
         <string name="msgs_task_sync_task_sync_file_type_add_image_title">イメージの追加</string>
         <string name="msgs_task_sync_task_sync_file_type_add_video_title">ビデオの追加</string>
@@ -477,7 +476,10 @@
         <string name="msgs_task_sync_task_sync_use_small_ioarea">SMBフォルダー書き込み時のIOバッファーを16KBに制限する</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">撮影日時がExifから取得できない時に確認メッセージを表示する</string>
         <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">SDCARD/USBストレージに同期する際は4GBを超えるソースファイルを無視する</string>
-        <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">ファイル名が255バイト越えているファイルを無視する</string>
+        <string name="msgs_task_sync_task_option_ignore_file_name_length_gt_specified_length">ファイル名の長さが指定された長さを越えているファイルを無視する</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">無視するファイル名の長さを指定してください</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">無視するファイル名の長さは0以上を指定してください</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">無視するファイル名の長さは255以下を指定してください</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">宛先ディレクトリーにソースディレクトリーを作成しない</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">キャンセル</string>
         <string name="msgs_task_twoway_sync_conflict_keep_conflict_file">双方向同期の競合ファイルを保存する</string>
@@ -580,8 +582,7 @@
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">ファイルのEXIF/MetaDataから撮影日時が取得できないためファイルの最終更新時刻を使用しました。ファイル=</string>
         <string name="msgs_mirror_taken_date_convert_error">撮影日時の変換でエラーが発生したためファイルの最終更新時刻を使用しました。ファイル=</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">宛先にファイルと同名のディレクトリーが存在するため同期を中止しました。ファイル=</string>
-        <string name="msgs_mirror_abort_file_name_gt_255_byte">ファイル名の長さが255バイトを超えているため同期を中止しました。ファイル名のバイト数=%1$s, ファイル名=%2$s</string>
-        <string name="msgs_mirror_ignore_file_name_gt_255_byte">ファイル名の長さが255バイトを超えているため無視しました。ファイル名のバイト数=%1$s, ファイル名=%2$s</string>
+        <string name="msgs_mirror_ignore_file_name_gt_255_byte">ファイル名の長さが%1$sバイトを超えているため無視しました。ファイル名のバイト数=%2$s, ファイル名=%3$s</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">SDCARD/USBストレージがマウントされていないため同期を中止します。</string>
         <string name="msgs_mirror_external_sdcard_select_required">SDCARD/USBストレージへのアクセスができないため同期を中止します。UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">ファイルサイズが4GBを越えているために無視しました。ファイル=%s</string>
@@ -805,11 +806,15 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">追加できるタスクが存在しません。</string>
         <string name="msgs_edit_sync_task_list_dlg_title">タスクリストの編集</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">同期タスクの追加</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">項目を「長押し」または画面右端のアイコンを「押して」上下に移動することで順序を変更できます。</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">同期タスクが指定されていません。「同期タスクの追加」ボタンを押してタスクを追加してください。</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">タスクが見つかりません。タスク=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">全て選択</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">全ての選択解除</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">同期タスクを取り除く</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">同期タスクの追加</string>
+        <string name="msgs_edit_sync_task_list_help_title">同期タスクリスト編集のヘルプ</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">追加するタスクを選択して「追加」ボタンを押してください。</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync3_Help_JA_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">タスクリストが変更されています、保存せず終了しますか。</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">同期開始の確認</string>

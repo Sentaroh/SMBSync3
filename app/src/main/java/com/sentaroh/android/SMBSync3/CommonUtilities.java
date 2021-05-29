@@ -44,6 +44,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -250,7 +251,8 @@ public final class CommonUtilities {
 
     static public String getRootFilePath(String fp) {
         String reform_fp=StringUtil.removeRedundantDirectorySeparator(fp);
-        if (reform_fp.startsWith("/storage/emulated/0")) return "/storage/emulated/0";
+        String is_pre=Environment.getExternalStorageDirectory().toString();
+        if (reform_fp.startsWith(is_pre)) return is_pre;
         else {
             String[] fp_parts=reform_fp.startsWith("/")?reform_fp.substring(1).split("/"):reform_fp.split("/");
             String rt_fp="/"+fp_parts[0]+"/"+fp_parts[1];
@@ -1073,7 +1075,7 @@ public final class CommonUtilities {
     }
 
     public static String getStoragePathFromUuid(String uuid) {
-        if (uuid.equals(SAF_FILE_PRIMARY_UUID)) return SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
+        if (uuid.equals(SAF_FILE_PRIMARY_UUID)) return Environment.getExternalStorageDirectory().getPath();//SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
         else return SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+uuid;
     }
 

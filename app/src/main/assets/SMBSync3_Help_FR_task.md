@@ -166,8 +166,8 @@ Afficher un message de confirmation lorsque la date et l'heure de la prise ne pe
 ### Ignorer les fichiers sources de plus de 4 Go lors de la synchronisation avec la SDCARD/le stockage USB  
 Si cette case est cochée, vous pouvez éviter les erreurs d'entrée/sortie lors de la synchronisation avec une carte MicroSD en ignorant les fichiers sources de plus de 4 Go à synchroniser avec le stockage local.  
 
-### Ignorer les fichiers dont le nom dépasse 255 octets  
-Si cette option est cochée, ignorez les fichiers dont le nom dépasse 255 octets.  
+### Ignorer les fichiers dont la longueur du nom de fichier est supérieure à la longueur spécifiée  
+Si la longueur du nom du fichier dépasse la valeur saisie à droite de l'écran, le fichier sera ignoré.  
 
 ### Manuels  
 [FAQs](https://sentaroh.github.io/Documents/SMBSync3/SMBSync3_FAQ_EN.htm)  

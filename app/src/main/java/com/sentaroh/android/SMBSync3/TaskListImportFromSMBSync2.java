@@ -90,7 +90,7 @@ public class TaskListImportFromSMBSync2 {
         if (enc_str==null || enc_str.equals("")) return false;
         if (private_key==null || private_key.equals("")) return false;
         EncryptUtilV1.CipherParms cp=EncryptUtilV1.initDecryptEnv(PROFILE_KEY_PREFIX +private_key);
-        byte[] enc_array = Base64Compat.decode(enc_str, Base64Compat.NO_WRAP);
+        byte[] enc_array = Base64Compat.decode(enc_str.substring(9), Base64Compat.NO_WRAP);
         String dec_str = EncryptUtilV1.decrypt(enc_array, cp);
         return dec_str==null?false:true;
     }
@@ -593,8 +593,8 @@ public class TaskListImportFromSMBSync2 {
             boolean use_exif_date_time=false;
             if (!parm[82].equals("") && !parm[82].equals(SMBSYNC2_TASK_END_MARK)) use_exif_date_time=(parm[82].equals("1") ? true : false);
 
-            if (!parm[83].equals("") && !parm[83].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncTwoWayConflictFileRule(parm[83]);
-            if (!parm[84].equals("") && !parm[84].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncTwoWayKeepConflictFile((parm[84].equals("1") ? true : false));
+//            if (!parm[83].equals("") && !parm[83].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncTwoWayConflictFileRule(parm[83]);
+//            if (!parm[84].equals("") && !parm[84].equals(SMBSYNC2_TASK_END_MARK)) stli.setSyncTwoWayKeepConflictFile((parm[84].equals("1") ? true : false));
 
 //            if (!parm[85].equals("") && !parm[85].equals(SMBSYNC2_TASK_END_MARK)) stli.setMasterSmbUseSmb2Negotiation((parm[85].equals("1") ? true : false));
 //            if (!parm[86].equals("") && !parm[86].equals(SMBSYNC2_TASK_END_MARK)) stli.setTargetSmbUseSmb2Negotiation((parm[86].equals("1") ? true : false));
@@ -658,6 +658,15 @@ public class TaskListImportFromSMBSync2 {
                     stli.setSyncFilterFileDateValue(SyncTaskItem.FILTER_FILE_DATE_VALUE_DEFAULT);
                     stli.setSyncFilterFileDateType(SyncTaskItem.FILTER_FILE_DATE_TYPE_DEFAULT);
                     putTaskListValueErrorMessage(util, "Filter File Date Value", SyncTaskItem.FILTER_FILE_DATE_VALUE_DEFAULT);
+                }
+            }
+
+            if (!parm[101].equals("") && !parm[101].equals("end")) {
+                if (parm[101].length() <= 3 && TextUtils.isDigitsOnly(parm[101]) && Integer.parseInt(parm[101]) > 0) { //max 3 digits allowed and value > 1
+                    stli.setSyncOptionMaxDestinationFileNameLength(Integer.parseInt(parm[101]));
+                } else {
+                    stli.setSyncOptionMaxDestinationFileNameLength(255);
+                    putTaskListValueErrorMessage(util, "File name length ignore Value", 255);
                 }
             }
 

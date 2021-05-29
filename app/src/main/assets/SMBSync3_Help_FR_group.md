@@ -1,7 +1,8 @@
 ### Nom du groupe  
 Le nom du groupe.  
 
-### Synchroniseruniquement les tâches automatiques   
+### Synchroniser uniquement les tâches automatiques
+  
 Lance les tâches de synchronisation qui sont automatiquement vérifiées dans la tâche de synchronisation. La liste des tâches n'apparaîtra pas si elle est cochée.  
 
 ### Liste de tâches  

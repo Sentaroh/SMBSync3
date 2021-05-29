@@ -25,6 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 import android.content.ContentProviderClient;
 import android.content.Context;
+import android.os.Environment;
 
 
 import java.io.BufferedInputStream;
@@ -54,7 +55,7 @@ public class SyncThreadSyncZip {
     static private void setZipEnvironment(SyncThreadWorkArea stwa, SyncTaskItem sti,
                                              SafFile3 mf, ZipParameters zp) {
         String fp_prefix="";
-        if (mf.getUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) fp_prefix=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
+        if (mf.getUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) fp_prefix= stwa.gp.externalStoragePrefix;
         else fp_prefix=SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+mf.getUuid();
 
         zp.setDefaultFolderPath(fp_prefix+"/");
@@ -69,14 +70,17 @@ public class SyncThreadSyncZip {
         if (sti.getDestinationZipEncryptMethod().equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD)) {
             zp.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
             zp.setEncryptFiles(true);
+            zp.setPassword(sti.getDestinationZipPassword());
         } else if (sti.getDestinationZipEncryptMethod().equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128)) {
             zp.setEncryptionMethod(EncryptionMethod.AES);
             zp.setAesKeyStrength(AesKeyStrength.KEY_STRENGTH_128);
             zp.setEncryptFiles(true);
+            zp.setPassword(sti.getDestinationZipPassword());
         } else if (sti.getDestinationZipEncryptMethod().equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256)) {
             zp.setEncryptionMethod(EncryptionMethod.AES);
             zp.setAesKeyStrength(AesKeyStrength.KEY_STRENGTH_256);
             zp.setEncryptFiles(true);
+            zp.setPassword(sti.getDestinationZipPassword());
         }
 
     }
@@ -99,7 +103,7 @@ public class SyncThreadSyncZip {
             BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding());
             if (bzf != null) {
                 bzf.setNoCompressExtentionList(stwa.gp.settingNoCompressFileType);
-                bzf.setPassword(sti.getDestinationZipPassword());
+//                bzf.setPassword(sti.getDestinationZipPassword());
                 SafFile3 mf = new SafFile3(stwa.appContext, from_path);
                 setZipEnvironment(stwa, sti, mf, zp);
                 sync_result = moveCopyLocalToLocalZip(stwa, sti, false, from_path, from_path, mf, bzf, zp, null);
@@ -196,7 +200,7 @@ public class SyncThreadSyncZip {
             BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding());
             if (bzf != null) {
                 bzf.setNoCompressExtentionList(stwa.gp.settingNoCompressFileType);
-                bzf.setPassword(sti.getDestinationZipPassword());
+//                bzf.setPassword(sti.getDestinationZipPassword());
                 SafFile3 mf = new SafFile3(stwa.appContext, from_path);
                 setZipEnvironment(stwa, sti, mf, zp);
                 sync_result = moveCopyLocalToLocalZip(stwa, sti, false, from_path, from_path, mf, bzf, zp, null);
@@ -278,7 +282,7 @@ public class SyncThreadSyncZip {
             BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding());
             if (bzf != null) {
                 bzf.setNoCompressExtentionList(stwa.gp.settingNoCompressFileType);
-                bzf.setPassword(sti.getDestinationZipPassword());
+//                bzf.setPassword(sti.getDestinationZipPassword());
                 SafFile3 mf = new SafFile3(stwa.appContext, from_path);
                 setZipEnvironment(stwa, sti, mf, zp);
                 ArrayList<SafFile3>remove_list=new ArrayList<SafFile3>();
@@ -564,7 +568,7 @@ public class SyncThreadSyncZip {
             SafFile3 mf = new SafFile3(stwa.appContext, from_path);
 //            mf_cpc = mf.getContentProviderClient();
             String fp_prefix="";
-            if (mf.getUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) fp_prefix=SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/";
+            if (mf.getUuid().equals(SafFile3.SAF_FILE_PRIMARY_UUID)) fp_prefix=stwa.gp.externalStoragePrefix;
             else fp_prefix=SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+mf.getUuid()+"/";
             if (mf.exists()) {
                 ArrayList<FileHeader> fhl = bzf.getFileHeaderList();

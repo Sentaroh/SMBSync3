@@ -86,30 +86,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/edit_sync_task_option_twoway_sync_conflict_file_rule_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/msgs_task_twoway_sync_conflict_copy_rurle"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <Spinner
-                android:id="@+id/edit_sync_task_option_twoway_sync_conflict_file_rule_value"
-                style="?android:attr/spinnerStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:minHeight="36dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/edit_sync_task_option_wifi_condition_view"
@@ -179,7 +155,7 @@
         </LinearLayout>
 
 
-        <include layout="@layout/divider_line1_turquoise" />
+        <include layout="@layout/divider_line1" />
 
         <CheckedTextView
             android:id="@+id/edit_sync_task_option_ctv_show_special_option"
@@ -408,7 +384,6 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_task_sync_task_sync_option_diff_file_use_last_mod_time"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
             </LinearLayout>
 
             <LinearLayout
@@ -442,7 +417,6 @@
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 </LinearLayout>
-                <include layout="@layout/divider_line1" />
 
                 <LinearLayout
                     android:id="@+id/edit_sync_task_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file_view"
@@ -450,6 +424,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
+                    <include layout="@layout/divider_line1" />
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file"
                         android:layout_width="fill_parent"
@@ -458,7 +433,6 @@
                         android:gravity="center_vertical"
                         android:text="@string/msgs_task_sync_task_sync_option_never_overwrite_destination_file_if_it_is_newer_than_the_source_file"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
-                    <include layout="@layout/divider_line1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -467,6 +441,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     >
+                    <include layout="@layout/divider_line1" />
                     <CheckedTextView
                         android:id="@+id/edit_sync_task_option_ctv_sync_diff_ignore_dst_difference"
                         android:layout_width="fill_parent"
@@ -499,7 +474,6 @@
                             android:textAppearance="?android:attr/textAppearanceMedium" />
                     </LinearLayout>
 
-                    <include layout="@layout/divider_line1" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -508,6 +482,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <include layout="@layout/divider_line1" />
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ignore_unusable_character_used_directory_file_name"
                     android:layout_width="fill_parent"
@@ -516,7 +491,6 @@
                     android:gravity="center_vertical"
                     android:text="@string/msgs_task_sync_task_sync_option_ignore_unusable_character_used_directory_file_name"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
-                <include layout="@layout/divider_line1" />
             </LinearLayout>
 
             <LinearLayout
@@ -524,6 +498,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <include layout="@layout/divider_line1" />
                 <CheckedTextView
                     android:id="@+id/edit_sync_task_option_ctv_remove_directory_if_empty_when_move"
                     android:layout_width="fill_parent"
@@ -565,18 +540,33 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/edit_sync_task_option_ignore_file_name_over_255_byte_view"
+                android:id="@+id/edit_sync_task_option_max_destination_file_name_length_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <include layout="@layout/divider_line1" />
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_ignore_file_name_length_exceed_255_byte"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:text="@string/msgs_task_sync_task_option_ignore_file_name_over_255_byte"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/msgs_task_sync_task_option_ignore_file_name_length_gt_specified_length"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    <EditText
+                        android:id="@+id/edit_sync_task_option_max_destination_file_name_length"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="end"
+                        android:minWidth="50dp"
+                        android:inputType="number"
+                        android:text="255"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </LinearLayout>
             </LinearLayout>
 
             <include layout="@layout/divider_line1" />
@@ -588,22 +578,6 @@
                 android:gravity="center_vertical"
                 android:text="@string/msgs_task_sync_task_sync_file_size_ignore_file_size_0_byte_file"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <LinearLayout
-                android:id="@+id/edit_sync_task_option_twoway_sync_keep_conflic_file_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <include layout="@layout/divider_line1" />
-                <CheckedTextView
-                    android:id="@+id/edit_sync_task_option_twoway_sync_keep_conflic_file"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                    android:gravity="center_vertical"
-                    android:text="@string/msgs_task_twoway_sync_conflict_keep_conflict_file"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

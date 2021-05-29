@@ -46,7 +46,7 @@
         <string name="msgs_export_import_pswd_btn_ok">Ок</string>
         <string name="msgs_export_import_pswd_hint_password">Введите пароль</string>
         <string name="msgs_export_import_pswd_hint_confirm">Подтвердите пароль</string>
-        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Пароли не совпадают.</string>
+        <string name="msgs_export_import_pswd_unmatched_confirm_pswd">Пароль и пароль подтверждения не совпадают.</string>
     <!-- Help -->
         <string name="msgs_help_sync_task_file">SMBSync3_Help_RU_task.md</string>
         <string name="msgs_help_sync_task_title">Справка по задачам синхронизации</string>
@@ -334,7 +334,7 @@
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_fast">Маленький</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_normal">Нормальный</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_comp_level_maximum">Максимум</string>
-        <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">Пароли не соответствуют.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_zip_diff_zip_password">Пароль и пароль подтверждения не совпадают.</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_password">Пароль</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_title_zip_confirm_password">Подтвердите пароль</string>
         <string name="msgs_task_edit_sync_folder_dlg_zip_encrypt_none">Ничего</string>
@@ -397,7 +397,6 @@
         <string name="msgs_task_sync_task_filter_list_dlg_include">Включать</string>
         <string name="msgs_task_sync_task_filter_list_dlg_not_specified">Не определенный</string>
         <string name="msgs_task_sync_task_filter_title">Фильтр</string>
-        <string name="msgs_task_sync_task_sync_direction_two_way">Используйте двунаправленную синхронизацию</string>
         <string name="msgs_task_sync_task_sync_file_type_add_audio_title">Добавить аудио</string>
         <string name="msgs_task_sync_task_sync_file_type_add_image_title">Добавить изображение</string>
         <string name="msgs_task_sync_task_sync_file_type_add_video_title">Добавить Видео</string>
@@ -478,7 +477,10 @@
         <string name="msgs_task_sync_task_sync_use_small_ioarea">Ограничить буфер записи ввода / вывода SMB 16 КБ</string>
         <string name="msgs_task_sync_task_option_confirm_exif_date">Если дата и время не могут быть определены по данным EXIF, отображается подтверждающее сообщение.</string>
         <string name="msgs_task_sync_task_option_ignore_source_file_that_file_size_gt_4gb">Игнорирование исходных файлов размером более 4 ГБ при синхронизации с SDCARD/USB-накопителем</string>
-        <string name="msgs_task_sync_task_option_ignore_file_name_over_255_byte">Игнорировать файлы, имена которых превышают 255 байт</string>
+        <string name="msgs_task_sync_task_option_ignore_file_name_length_gt_specified_length">Игнорировать файлы, длина имени файла которых превышает указанную длину</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_not_specified">Укажите длину игнорируемого имени файла</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0">Укажите длину игнорируемого имени файла, которая больше или равна 0</string>
+        <string name="msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_le_255">Укажите длину игнорируемого имени файла, равную 255 или меньше</string>
         <string name="msgs_task_sync_folder_dlg_archive_ignore_source_directory_hierarchy">Сохранять все файлы в целевой директории без создания подкаталогов</string>
         <string name="msgs_progress_spin_dlg_sync_cancel">Отменить</string>
         <string name="msgs_task_twoway_sync_conflict_keep_conflict_file">Keep a two-way sync conflict file</string>
@@ -581,8 +583,7 @@
         <string name="msgs_mirror_taken_date_can_not_obtain_from_the_file">Время последнего изменения файла было использовано, поскольку дату и время съемки невозможно получить из EXIF ​​/ метаданных файла. Файл =</string>
         <string name="msgs_mirror_taken_date_convert_error">Время последнего изменения файла было использовано, поскольку произошла ошибка при преобразовании даты съемки. Файл =</string>
         <string name="msgs_mirror_directory_with_same_name_as_the_file_found">Синхронизация прервана, поскольку в целевой папке существует каталог с тем же именем, что и у файла. Файл =</string>
-        <string name="msgs_mirror_abort_file_name_gt_255_byte">Синхронизация была отменена, поскольку длина имени файла превышает 255 байтов. Число байтов в имени файла = %1$s, Имя файла = %2$s</string>
-        <string name="msgs_mirror_ignore_file_name_gt_255_byte">Файл был проигнорирован, так как длина имени файла превышает 255 байт. Имя файла в байтах = %1$s, имя файла = %2$s.</string>
+        <string name="msgs_mirror_ignore_file_name_gt_255_byte">Файл был проигнорирован, так как длина имени файла превышает %1$s байт. Имя файла в байтах = %2$s, имя файла = %3$s.</string>
         <string name="msgs_mirror_external_sdcard_not_mounted">Синхронизация отменена, потому что хранилище SDCARD/USB не смонтировано.</string>
         <string name="msgs_mirror_external_sdcard_select_required">Синхронизация отменена, поскольку доступ к SDCARD/USB-накопителю невозможен. UUID=%s</string>
         <string name="msgs_mirror_file_ignored_file_size_gt_4gb">Ignored it because the file size is over 4GB. File=%s</string>
@@ -806,11 +807,15 @@
         <string name="msgs_edit_sync_task_list_add_sync_task_no_task_exists_for_add">Не существует задач, которые можно было бы добавить.</string>
         <string name="msgs_edit_sync_task_list_dlg_title">Редактировать список синхронизированных задач</string>
         <string name="msgs_edit_sync_task_list_add_sync_task_btn_title">Добавить задачу синхронизации</string>
-        <string name="msgs_edit_sync_task_list_guide_drag_drop">Вы можете изменить порядок элементов, \"долго нажимая\" на них или \"нажимая\" на значок в правой части экрана, чтобы переместить их вверх или вниз.</string>
         <string name="msgs_edit_sync_task_list_info_sync_task_list_was_empty">Задача синхронизации не задана. Нажмите кнопку \"Добавить задачу синхронизации\", чтобы добавить задачу.</string>
         <string name="msgs_edit_sync_task_list_error_specified_task_does_not_exists">Задачи не существует. Task=%s</string>
         <string name="msgs_edit_sync_task_list_cont_label_select_all">Выберите все</string>
         <string name="msgs_edit_sync_task_list_cont_label_unselect_all">Удалить все</string>
+        <string name="msgs_edit_sync_task_list_cont_label_remove_sync_task">Удалить задачу синхронизации</string>
+        <string name="msgs_edit_sync_task_list_cont_label_add_sync_task">Добавить синхронизированную задачу</string>
+        <string name="msgs_edit_sync_task_list_help_title">Справка по редактированию списка синхронизированных задач</string>
+        <string name="msgs_edit_sync_task_list_add_task_list_guide">Выберите задачу, которую вы хотите добавить, и нажмите кнопку \"Добавить\".</string>
+        <string name="msgs_edit_sync_task_list_help_file">SMBSync3_Help_RU_edit_sync_task_list.md</string>
         <string name="msgs_edit_sync_task_list_confirm_msg_nosave">Список задач изменился. Выйти без сохранения?</string>
     <!-- Sync Button -->
         <string name="msgs_main_sync_button_confirmation_message_title">Подтвердить начало синхронизации</string>
