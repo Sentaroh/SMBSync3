@@ -122,8 +122,8 @@ public class GlobalParameters {
 
     //	Settings parameter
 //    public String settingAppManagemsntDirectoryUuid ="primary";
-//    public String settingAppManagemsntDirectoryName = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
-    public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files/mgt_dir";
+    public String settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
+    //public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files/mgt_dir";
     public boolean settingExitClean = true;
 
     public boolean settingWriteSyncResultLog = true;
@@ -358,12 +358,13 @@ public class GlobalParameters {
 
         debuggable = isDebuggable(c);
 
+/*      // Set app settings directory to /data/data/package_name/files
         try {
             settingAppManagemsntDirectoryName=c.getFilesDir().getCanonicalPath();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
         externalStoragePrefix= Environment.getExternalStorageDirectory().getPath();
 
         mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-dim");
