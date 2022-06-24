@@ -4227,7 +4227,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonRenameSyncTask, mContext.getString(R.string.msgs_task_cont_label_up));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonRenameSyncTask, mContext.getString(R.string.msgs_task_cont_label_rename));
 
         mContextSyncTaskButtonMoveToUp.setOnClickListener(new OnClickListener() {
             @Override
@@ -4278,7 +4278,7 @@ public class ActivityMain extends AppCompatActivity {
                 }
             }
         });
-        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonMoveToUp, mContext.getString(R.string.msgs_task_cont_label_down));
+        ContextButtonUtil.setButtonLabelListener(mActivity, mContextSyncTaskButtonMoveToUp, mContext.getString(R.string.msgs_task_cont_label_up));
 
         mContextSyncTaskButtonMoveToDown.setOnClickListener(new OnClickListener() {
             @Override
