@@ -73,7 +73,7 @@ import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import jcifs.util.LogStream;
+import jcifs13.util.LogStream;
 
 import static android.content.Context.WINDOW_SERVICE;
 import static com.sentaroh.android.SMBSync3.Constants.*;

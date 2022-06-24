@@ -92,10 +92,12 @@ dependencies {
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
 
-    implementation files('libs/jcifs-ng-2.1.6-20201207-01.jar')
+    implementation files('libs/jcifsng-latest.jar')
     implementation files('libs/jcifs-1.3.17_patch.jar')
-    implementation files('libs/JcifsFile2-1.0.8.jar')
-    implementation files('libs/bcprov-jdk15to18-1.66.jar')
+    implementation files('libs/JcifsFile2-1.0.9.jar')
+//    implementation files('libs/bcprov-jdk15to18-1.66.jar')
+//    implementation files('libs/bcprov-jdk15to18-169.jar')
+    implementation 'org.bouncycastle:bcprov-jdk15to18:1.69'
 
     implementation files('libs/Utilities3-1.0.3.aar')
 
