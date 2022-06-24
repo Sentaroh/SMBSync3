@@ -772,7 +772,7 @@ public class TaskEditor extends DialogFragment {
         });
 
         et_sync_folder_domain.setVisibility(EditText.GONE);
-        if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("") || sfev.folder_error_code!= SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR) {
+        if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("") || (sfev.folder_error_code != SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR)) {
             ctv_sync_folder_use_pswd.setChecked(true);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, true);
             et_sync_folder_user.setText(sfev.folder_smb_account);
