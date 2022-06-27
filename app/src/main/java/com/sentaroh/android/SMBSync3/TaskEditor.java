@@ -803,6 +803,7 @@ public class TaskEditor extends DialogFragment {
                     //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
                 }
 
+                CommonUtilities.setViewEnabled(mActivity, ll_sync_folder_pswd_view, isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, isChecked);
                 //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
