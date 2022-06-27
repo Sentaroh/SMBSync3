@@ -590,7 +590,7 @@ public class TaskListImportExport {
         final CheckedTextView ctv_protect = (CheckedTextView) dialog.findViewById(R.id.password_input_ctv_protect);
         final Button btn_ok = (Button) dialog.findViewById(R.id.password_input_ok_btn);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.password_input_cancel_btn);
-        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+//        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
         final TextInputEditText et_password = (TextInputEditText) dialog.findViewById(R.id.password_input_password);
         final TextInputLayout ll_confirm_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
         final TextInputEditText et_confirm = (TextInputEditText) dialog.findViewById(R.id.password_input_password_confirm);
@@ -603,6 +603,9 @@ public class TaskListImportExport {
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
         ll_confirm_view.setVisibility(TextInputLayout.GONE);
+
+/*
+      // Mod: allow copy/paste on password field for import encryped app settings
         ll_password_view.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -632,7 +635,7 @@ public class TaskListImportExport {
                 }
             }
         });
-
+*/
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
         et_password.addTextChangedListener(new TextWatcher() {
             @Override
