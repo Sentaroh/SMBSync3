@@ -1574,53 +1574,57 @@ public class TaskEditor extends DialogFragment {
         final TextInputLayout ll_zip_conf_pswd_view=(TextInputLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
 //        final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
-//        final LinearLayout ll_conf_pswd_view=(LinearLayout)dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm_view);
 
-        ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
-//        if (mGp.settingSecurityHideShowZipPasswordButton) ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
-//        else {
-//            ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(true);
-//            if (sfev.show_zip_passowrd) {
-//                et_zip_pswd.setTransformationMethod(null);
-//                ll_zip_conf_pswd_view.setVisibility(TextInputLayout.GONE);
-//            } else {
-//                et_zip_pswd.setTransformationMethod(new PasswordTransformationMethod());
-//                ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
-//            }
-//        }
-//
-//        ll_zip_pswd_view.setEndIconOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (et_zip_pswd.getTransformationMethod()!=null) {
-//                    et_zip_pswd.setTransformationMethod(null);
-//                    ll_zip_conf_pswd_view.setVisibility(TextInputLayout.GONE);
-//                    et_zip_pswd.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-//                        @Override
-//                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-//                            return true;
-//                        }
-//                        @Override
-//                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-//                            menu.removeItem(android.R.id.cut);
-//                            menu.removeItem(android.R.id.copy);
-//                            menu.removeItem(android.R.id.shareText);
-//                            return true;
-//                        }
-//                        @Override
-//                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//                            return false;
-//                        }
-//                        @Override
-//                        public void onDestroyActionMode(ActionMode mode) {
-//                        }
-//                    });
-//                } else {
-//                    et_zip_pswd.setTransformationMethod(new PasswordTransformationMethod());
-//                    ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
-//                }
-//            }
-//        });
+        ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
+        if (mGp.settingSecurityHideShowZipPasswordButton) {
+            ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
+            //ll_zip_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+        } else {
+            ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(true);
+            //ll_zip_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+            if (sfev.show_zip_passowrd) {
+                et_zip_pswd.setTransformationMethod(null);
+                ll_zip_conf_pswd_view.setVisibility(TextInputLayout.GONE);
+            } else {
+                et_zip_pswd.setTransformationMethod(new PasswordTransformationMethod());
+                ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
+            }
+        }
+
+        ll_zip_pswd_view.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_zip_pswd.getTransformationMethod()!=null) {
+                    et_zip_pswd.setTransformationMethod(null);
+                    ll_zip_conf_pswd_view.setVisibility(TextInputLayout.GONE);
+/*
+                    et_zip_pswd.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                        @Override
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            return true;
+                        }
+                        @Override
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            menu.removeItem(android.R.id.cut);
+                            menu.removeItem(android.R.id.copy);
+                            menu.removeItem(android.R.id.shareText);
+                            return true;
+                        }
+                        @Override
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            return false;
+                        }
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {
+                        }
+                    });
+*/
+                } else {
+                    et_zip_pswd.setTransformationMethod(new PasswordTransformationMethod());
+                    ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
+                }
+            }
+        });
 
         if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
             ll_password_view.setVisibility(LinearLayout.GONE);
@@ -1685,6 +1689,7 @@ public class TaskEditor extends DialogFragment {
                 fsdf.showDialog(false, mActivity.getSupportFragmentManager(), fsdf, ntfy);
             }
         });
+
         et_zip_file.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -1708,8 +1713,8 @@ public class TaskEditor extends DialogFragment {
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
         });
+
         et_zip_pswd.setText(sfev.zip_file_password);
-        et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
         et_zip_pswd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -1721,10 +1726,11 @@ public class TaskEditor extends DialogFragment {
             }
         });
 
-        if (et_zip_pswd.getText().length() > 0) CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, true);
-        else CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, false);
+        //if (et_zip_pswd.getText().length() > 0) CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, true);
+        //else CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, false);
 
-        CommonUtilities.setEditTextPasteCopyEnabled(et_zip_conf_pswd, false);
+        //CommonUtilities.setEditTextPasteCopyEnabled(et_zip_conf_pswd, false);
+        et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
         et_zip_conf_pswd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -1814,7 +1820,7 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, sfev);
                 final TextView tv_template = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_new_name);
-                nsfev.folder_error_code= SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR;
+                nsfev.folder_error_code = SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR;
                 ntfy.notifyToListener(true, new Object[]{nsfev});
                 dialog.dismiss();
                 mEditFolderDialog=null;
