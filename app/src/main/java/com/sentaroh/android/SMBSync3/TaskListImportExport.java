@@ -725,6 +725,10 @@ public class TaskListImportExport {
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
+        //settingExportedTaskEncryptRequired: Setting to remember last user choice (encrypt or not exported config)
+        ctv_protect.setChecked(mGp.settingExportedTaskEncryptRequired);
+        setPasswordFieldVisibility(dialog, mGp.settingExportedTaskEncryptRequired);
+
         ctv_protect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -734,46 +738,44 @@ public class TaskListImportExport {
             }
         });
 
-        ctv_protect.setChecked(mGp.settingExportedTaskEncryptRequired);
-
         ThreadCtrl disable_text_watcher=new ThreadCtrl();
-        ll_password_view.setPasswordVisibilityToggleEnabled(false);
-//        ll_password_view.setEndIconOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                disable_text_watcher.setDisabled();
-//                if (et_password.getTransformationMethod()!=null) {
-//                    et_password.setTransformationMethod(null);
-//                    ll_confirm_view.setVisibility(TextInputLayout.GONE);
-//                    et_password.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
-//                        @Override
-//                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-//                            return true;
-//                        }
-//                        @Override
-//                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-//                            menu.removeItem(android.R.id.cut);
-//                            menu.removeItem(android.R.id.copy);
-//                            menu.removeItem(android.R.id.shareText);
-//                            return true;
-//                        }
-//                        @Override
-//                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//                            return false;
-//                        }
-//                        @Override
-//                        public void onDestroyActionMode(ActionMode mode) {}
-//                    });
-//                } else {
-//                    et_password.setTransformationMethod(new PasswordTransformationMethod());
-//                    ll_confirm_view.setVisibility(TextInputLayout.VISIBLE);
-//                }
-//                disable_text_watcher.setEnabled();
-//                setPasswordPromptOkButton(dialog);
-//            }
-//        });
-
-        setPasswordFieldVisibility(dialog, mGp.settingExportedTaskEncryptRequired);
+        // Mod: enable password confirmation field toggle and copy/paste when exporting settings with password
+        ll_password_view.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disable_text_watcher.setDisabled();
+                if (et_password.getTransformationMethod()!=null) {
+                    et_password.setTransformationMethod(null);
+                    ll_confirm_view.setVisibility(TextInputLayout.GONE);
+/*
+                    et_password.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
+                        @Override
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            return true;
+                        }
+                        @Override
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            menu.removeItem(android.R.id.cut);
+                            menu.removeItem(android.R.id.copy);
+                            menu.removeItem(android.R.id.shareText);
+                            return true;
+                        }
+                        @Override
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            return false;
+                        }
+                        @Override
+                        public void onDestroyActionMode(ActionMode mode) {}
+                    });
+*/
+                } else {
+                    et_password.setTransformationMethod(new PasswordTransformationMethod());
+                    ll_confirm_view.setVisibility(TextInputLayout.VISIBLE);
+                }
+                disable_text_watcher.setEnabled();
+                setPasswordPromptOkButton(dialog);
+            }
+        });
 
         CommonUtilities.setViewEnabled(mActivity, et_password, true);
         CommonUtilities.setViewEnabled(mActivity, et_confirm, false);
@@ -876,7 +878,7 @@ public class TaskListImportExport {
     private void setPasswordPromptOkButton(Dialog dialog) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.password_input_msg);
         final Button btn_ok = (Button) dialog.findViewById(R.id.password_input_ok_btn);
-        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+//        final TextInputLayout ll_password_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
         final TextInputEditText et_password = (TextInputEditText) dialog.findViewById(R.id.password_input_password);
         final TextInputLayout ll_confirm_view=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
         final TextInputEditText et_confirm = (TextInputEditText) dialog.findViewById(R.id.password_input_password_confirm);
