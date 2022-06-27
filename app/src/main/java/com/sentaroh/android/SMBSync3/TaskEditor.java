@@ -794,17 +794,30 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 boolean isChecked = !ctv_sync_folder_use_pswd.isChecked();
                 ctv_sync_folder_use_pswd.setChecked(isChecked);
+
+                if (mGp.settingSecurityHideShowSmbPasswordButton) {
+                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                } else {
+                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
+                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                }
+
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, isChecked);
-//                ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
-                if (mGp.settingSecurityHideShowSmbPasswordButton) ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
-                else ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
+                //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
                 checkSyncFolderValidation(dialog, sti, sfev);
             }
         });
 
-        if (mGp.settingSecurityHideShowSmbPasswordButton) ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
-        else ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
+        if (mGp.settingSecurityHideShowSmbPasswordButton) {
+            ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+            //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+        } else {
+            ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
+            //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+        }
+
 /*
         ll_sync_folder_pswd_view.setEndIconOnClickListener(new OnClickListener() {
             @Override
@@ -835,7 +848,6 @@ public class TaskEditor extends DialogFragment {
                 } else {
                     et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
                 }
-
             }
         });
 */
@@ -1077,6 +1089,7 @@ public class TaskEditor extends DialogFragment {
         } else {
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, false);
         }
+
         CommonUtilities.setViewEnabled(mActivity, ctv_sync_folder_use_pswd, enabled);
         if (enabled) {
             if (ctv_sync_folder_use_pswd.isChecked()) {
