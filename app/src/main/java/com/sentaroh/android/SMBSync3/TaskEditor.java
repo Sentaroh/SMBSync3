@@ -805,6 +805,7 @@ public class TaskEditor extends DialogFragment {
 
         if (mGp.settingSecurityHideShowSmbPasswordButton) ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
         else ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
+/*
         ll_sync_folder_pswd_view.setEndIconOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -837,6 +838,7 @@ public class TaskEditor extends DialogFragment {
 
             }
         });
+*/
 //        if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
 //        else et_sync_folder_pswd.setTransformationMethod(null);
 
