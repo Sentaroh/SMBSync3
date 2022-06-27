@@ -784,11 +784,14 @@ public class TaskEditor extends DialogFragment {
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, false);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, false);
         }
+
 //        if (mGp.settingSecurityReinitSmbAccountPasswordValue && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
 //            et_sync_folder_user.setText("");
 //            et_sync_folder_pswd.setText("");
 //        }
+
         sfev.folder_smb_use_pswd =ctv_sync_folder_use_pswd.isChecked();
+
         ctv_sync_folder_use_pswd.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -975,6 +978,15 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View view) {
                 boolean isChecked=!((CheckedTextView)view).isChecked();
                 ((CheckedTextView)view).setChecked(isChecked);
+
+                if (!isChecked || mGp.settingSecurityHideShowSmbPasswordButton) {
+                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                } else {
+                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
+                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                }
+
                 setSyncFolderSmbDetailView(dialog, isChecked);
                 setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev);
             }
@@ -1107,6 +1119,7 @@ public class TaskEditor extends DialogFragment {
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, false);
             CommonUtilities.setViewEnabled(mActivity, ll_sync_folder_pswd_view, false);
         }
+
         CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_list_share, enabled);
         CommonUtilities.setViewEnabled(mActivity, et_sync_folder_share_name, enabled);
 
