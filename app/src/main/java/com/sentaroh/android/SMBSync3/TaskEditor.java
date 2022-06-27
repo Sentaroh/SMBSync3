@@ -820,6 +820,8 @@ public class TaskEditor extends DialogFragment {
         } else {
             ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
             //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+            if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(null);
+            else et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
         }
 
 /*
@@ -855,8 +857,6 @@ public class TaskEditor extends DialogFragment {
             }
         });
 */
-//        if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
-//        else et_sync_folder_pswd.setTransformationMethod(null);
 
         et_sync_folder_share_name.setText(sfev.folder_smb_share);
 
@@ -2298,7 +2298,7 @@ public class TaskEditor extends DialogFragment {
             }
 
             nsfev.show_smb_detail_settings=ctv_sync_folder_edit_smb_detail.isChecked();
-            nsfev.show_smb_passowrd=et_sync_folder_pswd.getTransformationMethod()==null?false:true;
+            nsfev.show_smb_passowrd=et_sync_folder_pswd.getTransformationMethod()==null?true:false;
         }
         return nsfev;
     }
