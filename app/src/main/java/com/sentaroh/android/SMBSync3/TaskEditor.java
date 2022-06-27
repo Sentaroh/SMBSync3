@@ -4126,14 +4126,14 @@ public class TaskEditor extends DialogFragment {
                     sfev.folder_smb_password = "";
                     sfev.folder_smb_account = "";
                 } else {
-                    sfev.folder_smb_password = n_sti.getSourceSmbAccountPassword();
-                    sfev.folder_smb_account = n_sti.getSourceSmbAccountName();
+                    sfev.folder_smb_password = n_sti.getDestinationSmbPassword();
+                    sfev.folder_smb_account = n_sti.getDestinationSmbAccountName();
                 }
                 sfev.folder_smb_share = n_sti.getDestinationSmbShareName();
                 sfev.folder_type = n_sti.getDestinationFolderType();
                 sfev.folder_smb_protocol = n_sti.getDestinationSmbProtocol();
 
-                if (!n_sti.getSourceSmbAccountName().equals("") || !n_sti.getSourceSmbAccountPassword().equals("")) {
+                if (!n_sti.getDestinationSmbAccountName().equals("") || !n_sti.getDestinationSmbPassword().equals("")) {
                     sfev.folder_smb_use_pswd =true;
                 } else {
                     sfev.folder_smb_use_pswd =false;
