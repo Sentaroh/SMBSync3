@@ -799,11 +799,11 @@ public class TaskEditor extends DialogFragment {
                 ctv_sync_folder_use_pswd.setChecked(isChecked);
 
                 if (mGp.settingSecurityHideShowSmbPasswordButton) {
-                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
-                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+                    ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
                 } else {
-                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
-                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
+                    ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
                 }
 
                 //Toggle SMB password Layout view on use password check/uncheck
@@ -817,11 +817,11 @@ public class TaskEditor extends DialogFragment {
         });
 
         if (mGp.settingSecurityHideShowSmbPasswordButton) {
-            ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
-            //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+            ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
         } else {
-            ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
-            //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+            //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
+            ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
 
             // Mod 1/2: Preserve SMB password masked/unmasked state on screen rotation
             if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(null);
@@ -985,11 +985,11 @@ public class TaskEditor extends DialogFragment {
 
                 // Mod: Mask SMB password when edit SMB parameters option is unchecked
                 if (!isChecked || mGp.settingSecurityHideShowSmbPasswordButton) {
-                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
-                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                    //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
+                    ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
                 } else {
-                    ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
-                    //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
+                    ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
                 }
 
                 setSyncFolderSmbDetailView(dialog, isChecked);
@@ -1612,11 +1612,11 @@ public class TaskEditor extends DialogFragment {
         // Mod: Fix Zip password could not be set because confirmation password is not clickable
         ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
         if (mGp.settingSecurityHideShowZipPasswordButton) {
-            ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
-            //ll_zip_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
+            //ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
+            ll_zip_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
         } else {
-            ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(true);
-            //ll_zip_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+            //ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(true);
+            ll_zip_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
             if (sfev.show_zip_passowrd) {
                 et_zip_pswd.setTransformationMethod(null);
                 ll_zip_conf_pswd_view.setVisibility(TextInputLayout.GONE);
