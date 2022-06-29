@@ -2298,7 +2298,8 @@ public class TaskEditor extends DialogFragment {
             }
 
             nsfev.show_smb_detail_settings=ctv_sync_folder_edit_smb_detail.isChecked();
-            nsfev.show_smb_passowrd=et_sync_folder_pswd.getTransformationMethod()==null?true:false;
+            if (nsfev.show_smb_detail_settings && et_sync_folder_pswd.getTransformationMethod() == null) nsfev.show_smb_passowrd = true;
+            else nsfev.show_smb_passowrd = false;
         }
         return nsfev;
     }
