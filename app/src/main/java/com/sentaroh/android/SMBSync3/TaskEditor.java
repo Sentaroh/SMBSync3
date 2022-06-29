@@ -824,7 +824,7 @@ public class TaskEditor extends DialogFragment {
             else et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
         }
 
-/*
+/*      // Mod: Allow copy/paste in smb password field when it is unmasked
         ll_sync_folder_pswd_view.setEndIconOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2178,7 +2178,7 @@ public class TaskEditor extends DialogFragment {
         final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
         final Button btn_sync_folder_local_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_internal_directory_btn);
         final Button btn_sync_folder_smb_list_dir = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_list_smb_directory_btn);
-        final TextInputLayout ll_sync_folder_pswd_view = (TextInputLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass_view);
+//        final TextInputLayout ll_sync_folder_pswd_view = (TextInputLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass_view);
 //        final CheckedTextView ctv_sync_folder_show_smb_password = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_show_smb_account_password);
 
         final EditText et_sync_folder_internal_dir_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
