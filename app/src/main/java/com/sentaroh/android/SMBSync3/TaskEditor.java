@@ -98,6 +98,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_LEVEL_SMB1;
@@ -115,6 +118,8 @@ public class TaskEditor extends DialogFragment {
     private GlobalParameters mGp = null;
     private TaskListUtils mTaskUtil = null;
     private CommonUtilities mUtil = null;
+
+    private static Logger log= LoggerFactory.getLogger(TaskEditor.class);
 
     private FragmentManager mFragMgr = null;
 
@@ -5209,6 +5214,7 @@ public class TaskEditor extends DialogFragment {
         public boolean isSame(SyncFolderEditValue comp) {
             boolean result = false;
             if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) {
+                //log.debug("SyncFolderEditValue.isSame : {}={}", folder_directory, comp.folder_directory);
                 if (folder_type.equals(comp.folder_type) &&
                     isChanged==comp.isChanged &&
                     folder_directory.equals(comp.folder_directory) &&
