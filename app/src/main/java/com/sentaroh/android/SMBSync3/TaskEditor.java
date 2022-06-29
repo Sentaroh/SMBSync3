@@ -772,7 +772,8 @@ public class TaskEditor extends DialogFragment {
                 boolean isChecked = !ctv_sync_folder_use_port.isChecked();
                 ctv_sync_folder_use_port.setChecked(isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, isChecked);
-                checkSyncFolderValidation(dialog, sti, sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -817,7 +818,9 @@ public class TaskEditor extends DialogFragment {
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, isChecked);
                 //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
-                checkSyncFolderValidation(dialog, sti, sfev);
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -876,7 +879,8 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                checkSyncFolderValidation(dialog, sti, sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
         et_sync_folder_port.addTextChangedListener(new TextWatcher() {
@@ -886,7 +890,8 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                checkSyncFolderValidation(dialog, sti, sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -897,7 +902,8 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                checkSyncFolderValidation(dialog, sti, sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
         et_sync_folder_pswd.addTextChangedListener(new TextWatcher() {
@@ -907,7 +913,8 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                checkSyncFolderValidation(dialog, sti, sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
         et_sync_folder_share_name.addTextChangedListener(new TextWatcher() {
@@ -921,14 +928,18 @@ public class TaskEditor extends DialogFragment {
                 if (remove_char!=null) {
                     mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_share_name_has_invalid_char), "", null);
                 }
-                checkSyncFolderValidation(dialog, sti, sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
         sp_sync_folder_smb_proto.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev);
+                setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev, org_sfev);
+
+                //checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -971,6 +982,9 @@ public class TaskEditor extends DialogFragment {
                 if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
                 final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
                 SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, (String)sp_sync_folder_smb_proto.getSelectedItem());
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -978,6 +992,9 @@ public class TaskEditor extends DialogFragment {
             @Override
             public void onClick(View v) {
                 mTaskUtil.invokeSelectSmbShareDlg(dialog);
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -998,7 +1015,10 @@ public class TaskEditor extends DialogFragment {
                 }
 
                 setSyncFolderSmbDetailView(dialog, isChecked);
-                setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev);
+
+                setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev, org_sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
         ctv_sync_folder_edit_smb_detail.setChecked(sfev.show_smb_detail_settings);
@@ -1025,6 +1045,9 @@ public class TaskEditor extends DialogFragment {
                 if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) disable_taken_date=true;
                 editDirectoryFileNameRule(true, disable_taken_date, sti, sfev, et_sync_folder_dir_name,
                         mActivity.getString(R.string.msgs_task_sync_task_edit_directory_name_keyword), ntfy);
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -1064,7 +1087,7 @@ public class TaskEditor extends DialogFragment {
                 } else {
                     dlg_msg.setText("");
                 }
-                if (e_msg.equals("")) setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+                if (e_msg.equals("")) checkSyncFolderValidation(dialog, sti, sfev, org_sfev); //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -1073,7 +1096,9 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View v) {
                 String sel = sp_sync_folder_type.getSelectedItem().toString();
                 mTaskUtil.selectRemoteDirectoryDlg(dialog, !sfev.is_source_folder);
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
     }
@@ -1194,15 +1219,16 @@ public class TaskEditor extends DialogFragment {
 
                     setSyncFolderArchiveFileImage(dialog, sti, s.toString(), true);
                 }
-                if (e_msg.equals("")) setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+                if (e_msg.equals("")) checkSyncFolderValidation(dialog, sti, sfev, org_sfev); //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
         sp_sync_folder_local_storage_selector.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                checkSyncFolderValidation(dialog, sti, sfev);
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+
                 LocalStorageSelectorItem sl=(LocalStorageSelectorItem)sp_sync_folder_local_storage_selector.getSelectedItem();
                 mUtil.addDebugMsg(1,"I","isExfatFileSystem="+CommonUtilities.isExfatFileSystem(sl.uuid));
             }
@@ -1284,7 +1310,8 @@ public class TaskEditor extends DialogFragment {
                                 true, true, sel_item.uuid, "", "", mActivity.getString(R.string.msgs_select_local_dir));
                 fsdf.showDialog(false, mActivity.getSupportFragmentManager(), fsdf, ntfy);
 
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
     }
@@ -1425,6 +1452,8 @@ public class TaskEditor extends DialogFragment {
             public void onClick(View view) {
                 boolean isChecked=!ctv_ignore_source_directory_hierarchy.isChecked();
                 ctv_ignore_source_directory_hierarchy.setChecked(isChecked);
+
+                //checkSyncFolderValidation(dialog, n_sti, sfev, org_sfev);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
@@ -1532,8 +1561,8 @@ public class TaskEditor extends DialogFragment {
         sp_sync_folder_zip_storage_selector.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                checkSyncFolderValidation(dialog, sti, sfev);
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -1681,8 +1710,9 @@ public class TaskEditor extends DialogFragment {
                 } else {
                     ll_password_view.setVisibility(LinearLayout.GONE);
                 }
-                setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
-                checkSyncFolderValidation(dialog, sti, sfev);
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
 
             @Override
@@ -1692,6 +1722,7 @@ public class TaskEditor extends DialogFragment {
         sp_comp_level.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                 setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
             @Override
@@ -1713,7 +1744,9 @@ public class TaskEditor extends DialogFragment {
                         TextView tv_zip_dir = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_dir_name);
                         et_zip_file.setText(fn);
                         tv_zip_dir.setText(fd.equals("")?"/":fd);
-                        setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
+
+                        checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                        //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
                     }
 
                     @Override
@@ -1742,7 +1775,9 @@ public class TaskEditor extends DialogFragment {
                 for(int i = s.length()-1; i >= 0; i--){
                     if (s.charAt(i) == '\n'){
                         s.delete(i, i + 1);
-                        checkSyncFolderValidation(dialog, sti, sfev);
+
+                        checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                        //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
                         return;
                     }
                 }
@@ -1750,7 +1785,9 @@ public class TaskEditor extends DialogFragment {
                 if (remove_char!=null) {
                     mUtil.showCommonDialogWarn(false, mActivity.getString(R.string.msgs_task_sync_task_dlg_file_name_has_invalid_char), "", null);
                 }
-                checkSyncFolderValidation(dialog, sti, sfev);
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -1762,7 +1799,9 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                checkSyncFolderValidation(dialog, sti, sfev);
+
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
 
@@ -1779,7 +1818,8 @@ public class TaskEditor extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-                checkSyncFolderValidation(dialog, sti, sfev);
+                checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
+                //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
     }
@@ -1843,12 +1883,12 @@ public class TaskEditor extends DialogFragment {
         final Button btn_sync_folder_cancel = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_cancel);
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
 
-        setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev);
+        setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev, mEditFolderSfev);
 
         sp_sync_folder_type.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev);
+                setSyncFolderViewVisibility(dialog, sti, sfev.is_source_folder, sfev, mEditFolderSfev);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -2327,7 +2367,7 @@ public class TaskEditor extends DialogFragment {
         CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_smb_list_dir, enabled);
     }
 
-    private void setSyncFolderViewVisibility(final Dialog dialog, SyncTaskItem sti, final boolean source, SyncFolderEditValue org_sfev) {
+    private void setSyncFolderViewVisibility(final Dialog dialog, SyncTaskItem sti, final boolean source, SyncFolderEditValue sfev, SyncFolderEditValue org_sfev) {
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         final LinearLayout ll_sync_folder_local_storage = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_storage_selector_view);
@@ -2360,24 +2400,24 @@ public class TaskEditor extends DialogFragment {
             ll_sync_folder_internal_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.VISIBLE);
             ll_sync_folder_zip_view.setVisibility(LinearLayout.GONE);
-            checkSyncFolderValidation(dialog, sti, org_sfev);
+            checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_SMB);
         } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {
             ll_sync_folder_internal_view.setVisibility(LinearLayout.VISIBLE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_zip_view.setVisibility(LinearLayout.GONE);
-            checkSyncFolderValidation(dialog, sti, org_sfev);
+            checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL);
         } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_zip))) {
             ll_sync_folder_internal_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_smb_view.setVisibility(LinearLayout.GONE);
             ll_sync_folder_zip_view.setVisibility(LinearLayout.VISIBLE);
-            checkSyncFolderValidation(dialog, sti, org_sfev);
+            checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
             setSyncFolderFieldHelpListener(dialog, SyncTaskItem.SYNC_FOLDER_TYPE_ZIP);
         }
     }
 
-    private boolean checkSyncFolderValidation(Dialog dialog, SyncTaskItem sti, SyncFolderEditValue org_sfev) {
+    private boolean checkSyncFolderValidation(Dialog dialog, SyncTaskItem sti, SyncFolderEditValue sfev, SyncFolderEditValue org_sfev) {
         boolean result = true;
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
         setDialogMsg(dlg_msg, "");
@@ -2460,8 +2500,8 @@ public class TaskEditor extends DialogFragment {
                     CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_local_list_dir, false);
                 }
             }
-            if (result && !org_sfev.is_source_folder) {
-                if (org_sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+            if (result && !sfev.is_source_folder) {
+                if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                     String e_msg=checkTakenDateParameterUsed(et_sync_folder_dir_name.getText().toString());
                     if (!e_msg.equals("")) {
                         result = false;
@@ -2513,8 +2553,8 @@ public class TaskEditor extends DialogFragment {
                         result = false;
                     } else {
                         if (result) {
-                            if (result && !org_sfev.is_source_folder) {
-                                if (org_sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
+                            if (result && !sfev.is_source_folder) {
+                                if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                                     String e_msg=checkTakenDateParameterUsed(et_sync_folder_dir_name.getText().toString());
                                     if (!e_msg.equals("")) {
                                         result = false;
