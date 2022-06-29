@@ -725,10 +725,6 @@ public class TaskListImportExport {
 
         CommonDialog.setDlgBoxSizeCompactWithInput(dialog);
 
-        //settingExportedTaskEncryptRequired: Setting to remember last user choice (encrypt or not exported config)
-        ctv_protect.setChecked(mGp.settingExportedTaskEncryptRequired);
-        setPasswordFieldVisibility(dialog, mGp.settingExportedTaskEncryptRequired);
-
         ctv_protect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -737,6 +733,10 @@ public class TaskListImportExport {
                 setPasswordFieldVisibility(dialog, isChecked);
             }
         });
+
+        //settingExportedTaskEncryptRequired: Setting to remember last user choice (encrypt or not exported config)
+        // only valid for current app session, until app is exited
+        ctv_protect.setChecked(mGp.settingExportedTaskEncryptRequired);
 
         ThreadCtrl disable_text_watcher=new ThreadCtrl();
         // Mod: enable password confirmation field toggle and copy/paste when exporting settings with password
@@ -776,6 +776,8 @@ public class TaskListImportExport {
                 setPasswordPromptOkButton(dialog);
             }
         });
+
+        setPasswordFieldVisibility(dialog, mGp.settingExportedTaskEncryptRequired);
 
         CommonUtilities.setViewEnabled(mActivity, et_password, true);
         CommonUtilities.setViewEnabled(mActivity, et_confirm, false);

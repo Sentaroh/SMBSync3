@@ -806,7 +806,9 @@ public class TaskEditor extends DialogFragment {
                     //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
                 }
 
+                //Toggle SMB password Layout view on use password check/uncheck
                 CommonUtilities.setViewEnabled(mActivity, ll_sync_folder_pswd_view, isChecked);
+
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, isChecked);
                 CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, isChecked);
                 //ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(isChecked);
@@ -820,6 +822,8 @@ public class TaskEditor extends DialogFragment {
         } else {
             ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(true);
             //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+
+            // Mod 1/2: Preserve SMB password masked/unmasked state on screen rotation
             if (sfev.show_smb_passowrd) et_sync_folder_pswd.setTransformationMethod(null);
             else et_sync_folder_pswd.setTransformationMethod(new PasswordTransformationMethod());
         }
@@ -979,6 +983,7 @@ public class TaskEditor extends DialogFragment {
                 boolean isChecked=!((CheckedTextView)view).isChecked();
                 ((CheckedTextView)view).setChecked(isChecked);
 
+                // Mod: Mask SMB password when edit SMB parameters option is unchecked
                 if (!isChecked || mGp.settingSecurityHideShowSmbPasswordButton) {
                     ll_sync_folder_pswd_view.setPasswordVisibilityToggleEnabled(false);
                     //ll_sync_folder_pswd_view.setEndIconMode(TextInputLayout.END_ICON_NONE);
@@ -1604,6 +1609,7 @@ public class TaskEditor extends DialogFragment {
         final EditText et_zip_conf_pswd = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_enc_confirm);
 //        final Button btn_zip_select_sdcard = (Button) dialog.findViewById(R.id.edit_sync_folder_dlg_zip_select_document_tree);
 
+        // Mod: Fix Zip password could not be set because confirmation password is not clickable
         ll_zip_conf_pswd_view.setVisibility(TextInputLayout.VISIBLE);
         if (mGp.settingSecurityHideShowZipPasswordButton) {
             ll_zip_pswd_view.setPasswordVisibilityToggleEnabled(false);
@@ -1755,6 +1761,7 @@ public class TaskEditor extends DialogFragment {
             }
         });
 
+        // Hide Confirmation password if no password is entered
         //if (et_zip_pswd.getText().length() > 0) CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, true);
         //else CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, false);
 
@@ -2298,6 +2305,8 @@ public class TaskEditor extends DialogFragment {
             }
 
             nsfev.show_smb_detail_settings=ctv_sync_folder_edit_smb_detail.isChecked();
+
+            // Mod 2/2: Preserve SMB password masked/unmasked state on screen rotation
             if (nsfev.show_smb_detail_settings && et_sync_folder_pswd.getTransformationMethod() == null) nsfev.show_smb_passowrd = true;
             else nsfev.show_smb_passowrd = false;
         }

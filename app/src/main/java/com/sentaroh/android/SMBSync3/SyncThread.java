@@ -710,6 +710,7 @@ public class SyncThread extends Thread {
                 }
             }
             mStwa.util.addDebugMsg(1,"I","Source SMB Address reachable="+reachable+", addr="+sti.getSourceSmbHost());
+            // Mod: Source is SMB: fix SMB sync error message displaying url:port:port error instead of url:port
             if (!reachable) {
                 String msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.sourceSmbHost);
                 showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", msg);
@@ -737,6 +738,7 @@ public class SyncThread extends Thread {
             }
             mStwa.destinationSmbHost =CommonUtilities.buildSmbUrlAddressElement(sti.getDestinationSmbHost(), sti.getDestinationSmbPort());
             boolean reachable=false;
+            // Mod: fix SMB sync unable to connect when setting a custom port in target
             if (sti.getDestinationSmbPort().equals("")) {
                 reachable=CommonUtilities.canSmbHostConnectable(sti.getDestinationSmbHost());
             } else {
@@ -750,6 +752,7 @@ public class SyncThread extends Thread {
             }
             mStwa.util.addDebugMsg(1,"I","Destination SMB Address reachable="+reachable+", addr="+mStwa.destinationSmbHost);
             if (!reachable) {
+                // Mod: Target is SMB: fix SMB sync error message displaying url:port:port error instead of url:port
                 String msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.destinationSmbHost);
                 showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", msg);
                 mGp.syncThreadCtrl.setThreadMessage(msg);

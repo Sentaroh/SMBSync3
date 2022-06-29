@@ -122,6 +122,7 @@ public class GlobalParameters {
 
     //	Settings parameter
 //    public String settingAppManagemsntDirectoryUuid ="primary";
+    // Mod 1/2: Set app settings directory to /storage/emulated/0/SMBSync3
     public String settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
     //public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files/mgt_dir";
     public boolean settingExitClean = true;
@@ -359,6 +360,7 @@ public class GlobalParameters {
         debuggable = isDebuggable(c);
 
 /*      // Set app settings directory to /data/data/package_name/files
+        // Mod 2/2: Set app settings directory to /storage/emulated/0/SMBSync3
         try {
             settingAppManagemsntDirectoryName=c.getFilesDir().getCanonicalPath();
         } catch (IOException e) {

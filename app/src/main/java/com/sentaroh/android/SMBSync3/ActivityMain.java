@@ -1985,7 +1985,7 @@ public class ActivityMain extends AppCompatActivity {
                     public void onCallBack(Context context, boolean b, Object[] objects) {
                         if (isAllFileAccessPermissionGranted()) {
                             if (reload_required) {
-                                // properly reload history and messages from storage
+                                // properly reload history and messages from storage after permission request or app reinstall
                                 mGp.syncHistoryList.addAll(mUtil.loadHistoryList());
                                 mGp.syncMessageList.addAll(CommonUtilities.loadMessageList(mContext, mGp));
                                 mGp.syncMessageListAdapter.notifyDataSetChanged();
