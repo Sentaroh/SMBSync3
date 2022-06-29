@@ -2589,7 +2589,7 @@ public class TaskEditor extends DialogFragment {
     private void setSyncFolderOkButtonEnabledIfFolderChanged(Dialog dialog, SyncFolderEditValue org_sfev) {
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
         SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, org_sfev);
-        boolean same = nsfev.isSame(org_sfev);
+        boolean same = nsfev.isSame(org_sfev, mUtil);
         if (!same) setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
         else setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
     }
@@ -4381,7 +4381,7 @@ public class TaskEditor extends DialogFragment {
         boolean changed=false;
 
         SyncFolderEditValue nsfev=buildSyncFolderEditValue(dialog, current_sfev);
-        changed=!current_sfev.isSame(nsfev);
+        changed=!current_sfev.isSame(nsfev, mUtil);
         if (!changed) {
             if (!et_file_template.getText().toString().equals(n_sti.getDestinationArchiveRenameFileTemplate())) changed=true;
 //            else if (n_sti.getDestinationArchiveRetentionPeriod()!=sp_sync_retain_period.getSelectedItemPosition()) changed=true;
@@ -5211,16 +5211,25 @@ public class TaskEditor extends DialogFragment {
             return npfli;
         }
 
-        public boolean isSame(SyncFolderEditValue comp) {
+        public boolean isSame(SyncFolderEditValue comp, CommonUtilities cu) {
             boolean result = false;
             if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_LOCAL)) {
                 //log.debug("SyncFolderEditValue.isSame : {}={}", folder_directory, comp.folder_directory);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_type: "+folder_type + "=" + comp.folder_type);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame isChanged: "+isChanged + "=" + comp.isChanged);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_directory: "+folder_directory + "=" + comp.folder_directory);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_storage_uuid: "+folder_storage_uuid + "=" + comp.folder_storage_uuid);
+
                 if (folder_type.equals(comp.folder_type) &&
                     isChanged==comp.isChanged &&
                     folder_directory.equals(comp.folder_directory) &&
                     folder_storage_uuid.equals(comp.folder_storage_uuid)
                     ) {
                     if (task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                        cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame archive_file_append_suffix_digit: "+archive_file_append_suffix_digit + "=" + comp.archive_file_append_suffix_digit);
+                        cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame archive_file_rename_template: "+archive_file_rename_template + "=" + comp.archive_file_rename_template);
+                        cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame archive_ignore_source_directory_hiearachy: "+archive_ignore_source_directory_hiearachy + "=" + comp.archive_ignore_source_directory_hiearachy);
+
                         if (archive_file_append_suffix_digit.equals(comp.archive_file_append_suffix_digit) &&
 //                                archive_retention_period.equals(comp.archive_retention_period) &&
                                 archive_file_rename_template.equals(comp.archive_file_rename_template) &&
@@ -5231,6 +5240,20 @@ public class TaskEditor extends DialogFragment {
                     }
                 }
             } else if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_type: "+folder_type + "=" + comp.folder_type);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame isChanged: "+isChanged + "=" + comp.isChanged);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_directory: "+folder_directory + "=" + comp.folder_directory);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_account: "+folder_smb_account + "=" + comp.folder_smb_account);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_password: "+folder_smb_password + "=" + comp.folder_smb_password);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_domain: "+folder_smb_domain + "=" + comp.folder_smb_domain);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_host: "+folder_smb_host + "=" + comp.folder_smb_host);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_share: "+folder_smb_share + "=" + comp.folder_smb_share);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_port: "+folder_smb_port + "=" + comp.folder_smb_port);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_protocol: "+folder_smb_protocol + "=" + comp.folder_smb_protocol);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_use_pswd: "+folder_smb_use_pswd + "=" + comp.folder_smb_use_pswd);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_ipc_enforced: "+folder_smb_ipc_enforced + "=" + comp.folder_smb_ipc_enforced);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_use_smb2_negotiation: "+folder_smb_use_smb2_negotiation + "=" + comp.folder_smb_use_smb2_negotiation);
+
                 if (folder_type.equals(comp.folder_type) &&
                         isChanged==comp.isChanged &&
                         folder_directory.equals(comp.folder_directory) &&
@@ -5246,6 +5269,10 @@ public class TaskEditor extends DialogFragment {
                         (folder_smb_use_smb2_negotiation==comp.folder_smb_use_smb2_negotiation)
                     ) {
                     if (task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
+                        cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame archive_file_append_suffix_digit: "+archive_file_append_suffix_digit + "=" + comp.archive_file_append_suffix_digit);
+                        cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame archive_file_rename_template: "+archive_file_rename_template + "=" + comp.archive_file_rename_template);
+                        cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame archive_ignore_source_directory_hiearachy: "+archive_ignore_source_directory_hiearachy + "=" + comp.archive_ignore_source_directory_hiearachy);
+
                         if (archive_file_append_suffix_digit.equals(comp.archive_file_append_suffix_digit) &&
 //                                archive_retention_period.equals(comp.archive_retention_period) &&
                                 archive_file_rename_template.equals(comp.archive_file_rename_template) &&
@@ -5257,6 +5284,15 @@ public class TaskEditor extends DialogFragment {
                     }
                 }
             } else if (folder_type.equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_type: "+folder_type + "=" + comp.folder_type);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame isChanged: "+isChanged + "=" + comp.isChanged);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_directory: "+folder_directory + "=" + comp.folder_directory);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_storage_uuid: "+folder_storage_uuid + "=" + comp.folder_storage_uuid);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame zip_comp_level: "+zip_comp_level + "=" + comp.zip_comp_level);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame zip_enc_method: "+zip_enc_method + "=" + comp.zip_enc_method);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame zip_file_name: "+zip_file_name + "=" + comp.zip_file_name);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame zip_file_password: "+zip_file_password + "=" + comp.zip_file_password);
+
                 if (folder_type.equals(comp.folder_type) &&
                         isChanged==comp.isChanged &&
                         folder_directory.equals(comp.folder_directory) &&
