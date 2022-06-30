@@ -500,7 +500,7 @@ public class TaskEditor extends DialogFragment {
         ctvTestMode.setChecked(sv.sync_test_mode);
         if (sv.sync_test_mode) CommonUtilities.setViewEnabled(mActivity, ctv_auto, false);
         ctv_auto.setChecked(sv.cb_active);
-        CommonUtilities.setViewEnabled(mActivity, spinnerSyncOption, false);
+        //CommonUtilities.setViewEnabled(mActivity, spinnerSyncOption, false);
         spinnerSyncOption.setSelection(sv.sync_opt);
 
         CommonUtilities.setViewEnabled(mActivity, swap_source_destination, sv.sync_task_swap_source_destination_button_enabled);
@@ -527,7 +527,7 @@ public class TaskEditor extends DialogFragment {
         ctvConfirmOverride.setChecked(sv.sync_conf_required);
         ctvDeleteFirst.setChecked(sv.sync_delete_first);
 
-        CommonUtilities.setViewEnabled(mActivity, spinnerSyncWifiStatus, false);
+        //CommonUtilities.setViewEnabled(mActivity, spinnerSyncWifiStatus, false);
 
         int wifi_opt_sel=0;
         if (sv.sync_wifi_option.equals(SyncTaskItem.WIFI_STATUS_WIFI_CONNECT_ANY_AP)) wifi_opt_sel=1;
@@ -548,7 +548,7 @@ public class TaskEditor extends DialogFragment {
         ctvDeterminChangedFileSizeGtDestination.setChecked(sv.sync_diff_file_size_gt_destination);
         ctDeterminChangedFileByTime.setChecked(sv.sync_diff_use_last_mod);
 
-        CommonUtilities.setViewEnabled(mActivity, spinnerSyncDiffTimeValue, false);
+        //CommonUtilities.setViewEnabled(mActivity, spinnerSyncDiffTimeValue, false);
         spinnerSyncDiffTimeValue.setSelection(sv.sync_diff_last_mod_value);
 
         ctv_task_sync_when_cahrging.setChecked(sv.sync_when_cahrging);
@@ -1849,7 +1849,7 @@ public class TaskEditor extends DialogFragment {
 
         final TextView dlg_msg = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
-        final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
+        //final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
 
 
         LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_view);
@@ -2960,8 +2960,8 @@ public class TaskEditor extends DialogFragment {
     }
 
     private void setSpinnerSyncFolderType(SyncTaskItem sti, Spinner spinner, String cv, boolean source) {
-        final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
-        String sync_type=spinnerSyncType.getSelectedItem().toString();
+        //final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
+        //String sync_type=spinnerSyncType.getSelectedItem().toString();
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapter.setDropDownTextWordwrapEnabled(true);
