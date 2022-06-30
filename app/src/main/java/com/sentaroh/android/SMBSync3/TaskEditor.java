@@ -3013,7 +3013,7 @@ public class TaskEditor extends DialogFragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void setSpinnerSyncTaskType(Spinner spinnerSyncOption, String prof_syncopt, String destination_folder_type) {
+    private void setSpinnerSyncTaskType(Spinner spinnerSyncOption, String prof_syncopt) {
         CommonUtilities.setSpinnerBackground(mActivity, spinnerSyncOption, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapterSyncOption = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
 //        adapterSyncOption.setDropDownTextWordwrapEnabled(true);
@@ -3343,7 +3343,7 @@ public class TaskEditor extends DialogFragment {
 
         final Spinner spinnerSyncType = (Spinner) mDialog.findViewById(R.id.edit_sync_task_sync_type);
         spinnerSyncType.setOnItemSelectedListener(null);
-        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getDestinationFolderType());
+        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType());
         spinnerSyncType.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -3969,7 +3969,7 @@ public class TaskEditor extends DialogFragment {
                         destination_folder_info.setText(buildDestinationSyncFolderInfo(n_sti, destination_folder_info, destination_folder_icon));
                         destination_folder_info.requestLayout();
 
-                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getDestinationFolderType());
+                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                         if (!prev_source_folder_type.equals(n_sti.getSourceFolderType())) {
                             ll_wifi_condition_view.setVisibility(LinearLayout.GONE);
@@ -4096,7 +4096,7 @@ public class TaskEditor extends DialogFragment {
                         destination_folder_info.setText(buildDestinationSyncFolderInfo(n_sti, destination_folder_info, destination_folder_icon));
                         destination_folder_info.requestLayout();
 
-                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getDestinationFolderType());
+                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
                     }
 
@@ -4153,7 +4153,7 @@ public class TaskEditor extends DialogFragment {
                         if (n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) CommonUtilities.setViewEnabled(mActivity, swap_source_destination, false);
                         else CommonUtilities.setViewEnabled(mActivity, swap_source_destination, true);
 
-                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType(), n_sti.getDestinationFolderType());
+                        setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
 
                         if (!prev_destination_folder_type.equals(n_sti.getDestinationFolderType())) {
