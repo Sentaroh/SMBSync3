@@ -590,7 +590,7 @@ public class TaskEditor extends DialogFragment {
 
     private void restoreEditSyncFolderContents() {
         if (mEditFolderDialog!=null) {
-            SyncFolderEditValue new_sfev=buildSyncFolderEditValue(mEditFolderDialog, mEditFolderSfev);
+            SyncFolderEditValue new_sfev=buildSyncFolderEditValue(mEditFolderDialog, mEditFolderSfev, false);
             editSyncFolder(true, mEditFolderSti, new_sfev, mEditFolderNotify);
         }
     }
@@ -778,15 +778,14 @@ public class TaskEditor extends DialogFragment {
         });
 
         et_sync_folder_domain.setVisibility(EditText.GONE);
-        if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("") || (sfev.folder_error_code != SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR)) {
-            ctv_sync_folder_use_pswd.setChecked(true);
+
+        ctv_sync_folder_use_pswd.setChecked(sfev.folder_smb_use_pswd);
+        et_sync_folder_user.setText(sfev.folder_smb_account);
+        et_sync_folder_pswd.setText(sfev.folder_smb_password);
+        if (ctv_sync_folder_use_pswd.isChecked() || (sfev.folder_error_code != SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR)) {
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, true);
-            et_sync_folder_user.setText(sfev.folder_smb_account);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, true);
-            et_sync_folder_pswd.setText(sfev.folder_smb_password);
         } else {
-            if (sfev.folder_smb_use_account_name_password) ctv_sync_folder_use_pswd.setChecked(true);
-            else ctv_sync_folder_use_pswd.setChecked(false);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_user, false);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_pswd, false);
         }
@@ -795,8 +794,6 @@ public class TaskEditor extends DialogFragment {
 //            et_sync_folder_user.setText("");
 //            et_sync_folder_pswd.setText("");
 //        }
-
-        sfev.folder_smb_use_pswd =ctv_sync_folder_use_pswd.isChecked();
 
         ctv_sync_folder_use_pswd.setOnClickListener(new OnClickListener() {
             @Override
@@ -1899,7 +1896,7 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, sfev);
+                SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, sfev, true);
                 final TextView tv_template = (TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_archive_new_name);
                 nsfev.folder_error_code = SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR;
                 ntfy.notifyToListener(true, new Object[]{nsfev});
@@ -2209,7 +2206,7 @@ public class TaskEditor extends DialogFragment {
         });
     }
 
-    private SyncFolderEditValue buildSyncFolderEditValue(Dialog dialog, SyncFolderEditValue org_sfev) {
+    private SyncFolderEditValue buildSyncFolderEditValue(Dialog dialog, SyncFolderEditValue org_sfev, boolean is_save_btn) {
         final Spinner sp_sync_folder_type = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_folder_type);
         final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
         final LinearLayout ll_sync_folder_local_storage = (LinearLayout) dialog.findViewById(R.id.edit_sync_folder_dlg_internal_storage_selector_view);
@@ -2322,18 +2319,21 @@ public class TaskEditor extends DialogFragment {
             while(nsfev.folder_directory.endsWith("/")) {
                 nsfev.folder_directory=nsfev.folder_directory.substring(0, nsfev.folder_directory.length()-1);
             }
+
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_SMB;
             nsfev.folder_smb_host =et_remote_host.getText().toString();
             nsfev.folder_smb_domain = et_sync_folder_domain.getText().toString().trim();
+
             if (ctv_sync_folder_use_port.isChecked())
                 nsfev.folder_smb_port = et_sync_folder_port.getText().toString();
             else nsfev.folder_smb_port = "";
-            if (ctv_sync_folder_use_pswd.isChecked()) {
-                nsfev.folder_smb_account = et_sync_folder_user.getText().toString().trim();
-                nsfev.folder_smb_password = et_sync_folder_pswd.getText().toString();
-            } else {
+
+            if (is_save_btn && !ctv_sync_folder_use_pswd.isChecked()) {
                 nsfev.folder_smb_account = "";
                 nsfev.folder_smb_password = "";
+            } else {
+                nsfev.folder_smb_account = et_sync_folder_user.getText().toString().trim();
+                nsfev.folder_smb_password = et_sync_folder_pswd.getText().toString();
             }
 
             if (mGp.settingSecurityReinitSmbAccountPasswordValue &&
@@ -2628,7 +2628,7 @@ public class TaskEditor extends DialogFragment {
 
     private void setSyncFolderOkButtonEnabledIfFolderChanged(Dialog dialog, SyncFolderEditValue org_sfev) {
         final Button btn_sync_folder_ok = (Button) dialog.findViewById(R.id.edit_profile_remote_btn_ok);
-        SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, org_sfev);
+        SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, org_sfev, false);
         boolean same = nsfev.isSame(org_sfev, mUtil);
         if (!same) setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
         else setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
@@ -4420,7 +4420,7 @@ public class TaskEditor extends DialogFragment {
 
         boolean changed=false;
 
-        SyncFolderEditValue nsfev=buildSyncFolderEditValue(dialog, current_sfev);
+        SyncFolderEditValue nsfev=buildSyncFolderEditValue(dialog, current_sfev, false);
         changed=!current_sfev.isSame(nsfev, mUtil);
         if (!changed) {
             if (!et_file_template.getText().toString().equals(n_sti.getDestinationArchiveRenameFileTemplate())) changed=true;
@@ -5200,7 +5200,6 @@ public class TaskEditor extends DialogFragment {
         public boolean folder_smb_ipc_enforced=true;
         public boolean folder_smb_use_smb2_negotiation=false;
         public boolean folder_smb_use_port_number =false;
-        public boolean folder_smb_use_account_name_password =false;
         public boolean show_smb_detail_settings=false;
         public boolean show_smb_passowrd=false;
 
