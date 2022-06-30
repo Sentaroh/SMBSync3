@@ -3796,8 +3796,9 @@ public class ActivityMain extends AppCompatActivity {
                         item.setChecked(!item.isChecked());
                         setSyncTaskContextButtonSelectMode();
                         mGp.syncTaskView.setEnabled(true);
-                        mGp.syncTaskListAdapter.notifyDataSetChanged();
                     }
+                    // Mod: fix tasklist icon/path not updated in main view after edit
+                    mGp.syncTaskListAdapter.notifyDataSetChanged();
                 }
             }
         });
