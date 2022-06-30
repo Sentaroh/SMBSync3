@@ -756,16 +756,15 @@ public class TaskEditor extends DialogFragment {
 
         et_remote_host.setText(sfev.folder_smb_host);
 
-        CommonUtilities.setCheckedTextViewListener(ctv_sync_folder_use_port);
-        if (!sfev.folder_smb_port.equals("")) {
-            ctv_sync_folder_use_port.setChecked(true);
+        ctv_sync_folder_use_port.setChecked(sfev.folder_smb_use_port);
+        et_sync_folder_port.setText(sfev.folder_smb_port);
+        if (ctv_sync_folder_use_port.isChecked()) {
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, true);
-            et_sync_folder_port.setText(sfev.folder_smb_port);
         } else {
-            if (sfev.folder_smb_use_port_number) ctv_sync_folder_use_port.setChecked(true);
-            else ctv_sync_folder_use_port.setChecked(false);
             CommonUtilities.setViewEnabled(mActivity, et_sync_folder_port, false);
         }
+
+        //CommonUtilities.setCheckedTextViewListener(ctv_sync_folder_use_port);
         ctv_sync_folder_use_port.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2324,9 +2323,11 @@ public class TaskEditor extends DialogFragment {
             nsfev.folder_smb_host =et_remote_host.getText().toString();
             nsfev.folder_smb_domain = et_sync_folder_domain.getText().toString().trim();
 
-            if (ctv_sync_folder_use_port.isChecked())
+            if (is_save_btn && !ctv_sync_folder_use_port.isChecked()) {
+                nsfev.folder_smb_port = "";
+            } else {
                 nsfev.folder_smb_port = et_sync_folder_port.getText().toString();
-            else nsfev.folder_smb_port = "";
+            }
 
             if (is_save_btn && !ctv_sync_folder_use_pswd.isChecked()) {
                 nsfev.folder_smb_account = "";
@@ -2340,6 +2341,7 @@ public class TaskEditor extends DialogFragment {
                     (et_sync_folder_user.getText().toString().length()>0 || et_sync_folder_pswd.getText().toString().length()>0) )  nsfev.isChanged=true;
 
             nsfev.folder_smb_use_pswd =ctv_sync_folder_use_pswd.isChecked();
+            nsfev.folder_smb_use_port =ctv_sync_folder_use_port.isChecked();
             nsfev.folder_smb_share = et_sync_folder_share_name.getText().toString().trim();
             nsfev.folder_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);
             if (nsfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
@@ -4047,6 +4049,13 @@ public class TaskEditor extends DialogFragment {
                 } else {
                     sfev.folder_smb_use_pswd =false;
                 }
+
+                if (!sfev.folder_smb_port.equals("")) {
+                    sfev.folder_smb_use_port =true;
+                } else {
+                    sfev.folder_smb_use_port =false;
+                }
+
                 sfev.folder_error_code=n_sti.getSourceFolderStatusError();
                 editSyncFolder(false, n_sti, sfev, ntfy);
             }
@@ -4227,6 +4236,12 @@ public class TaskEditor extends DialogFragment {
                     sfev.folder_smb_use_pswd =true;
                 } else {
                     sfev.folder_smb_use_pswd =false;
+                }
+
+                if (!sfev.folder_smb_port.equals("")) {
+                    sfev.folder_smb_use_port =true;
+                } else {
+                    sfev.folder_smb_use_port =false;
                 }
 
                 sfev.zip_comp_level = n_sti.getDestinationZipCompressionLevel();
@@ -5186,20 +5201,20 @@ public class TaskEditor extends DialogFragment {
         public String task_type="";
         public String folder_title = "";
         public boolean is_source_folder = false;
-        public boolean folder_smb_use_pswd =false;
         public String folder_type = "";
         public String folder_directory = "";
         public String folder_storage_uuid = "";
+        public boolean folder_smb_use_pswd =false;
         public String folder_smb_account = "";
         public String folder_smb_password = "";
         public String folder_smb_domain = "";
         public String folder_smb_host = "";
         public String folder_smb_share = "";
+        public boolean folder_smb_use_port =false;
         public String folder_smb_port = "";
         public String folder_smb_protocol = "1";
         public boolean folder_smb_ipc_enforced=true;
         public boolean folder_smb_use_smb2_negotiation=false;
-        public boolean folder_smb_use_port_number =false;
         public boolean show_smb_detail_settings=false;
         public boolean show_smb_passowrd=false;
 
@@ -5290,6 +5305,7 @@ public class TaskEditor extends DialogFragment {
                 cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_port: "+folder_smb_port + "=" + comp.folder_smb_port);
                 cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_protocol: "+folder_smb_protocol + "=" + comp.folder_smb_protocol);
                 cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_use_pswd: "+folder_smb_use_pswd + "=" + comp.folder_smb_use_pswd);
+                cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_use_port: "+folder_smb_use_port + "=" + comp.folder_smb_use_port);
                 cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_ipc_enforced: "+folder_smb_ipc_enforced + "=" + comp.folder_smb_ipc_enforced);
                 cu.addDebugMsg(3, "W", "SyncFolderEditValue.isSame folder_smb_use_smb2_negotiation: "+folder_smb_use_smb2_negotiation + "=" + comp.folder_smb_use_smb2_negotiation);
 
@@ -5304,6 +5320,7 @@ public class TaskEditor extends DialogFragment {
                         folder_smb_port.equals(comp.folder_smb_port) &&
                         folder_smb_protocol.equals(comp.folder_smb_protocol) &&
                         (folder_smb_use_pswd == comp.folder_smb_use_pswd)  &&
+                        (folder_smb_use_port == comp.folder_smb_use_port)  &&
                         (folder_smb_ipc_enforced==comp.folder_smb_ipc_enforced) &&
                         (folder_smb_use_smb2_negotiation==comp.folder_smb_use_smb2_negotiation)
                     ) {
