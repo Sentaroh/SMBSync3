@@ -4044,7 +4044,7 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_smb_share = n_sti.getSourceSmbShareName();
                 sfev.folder_smb_protocol=n_sti.getSourceSmbProtocol();
                 sfev.folder_type = n_sti.getSourceFolderType();
-                if (!n_sti.getSourceSmbAccountName().equals("") || !n_sti.getSourceSmbAccountPassword().equals("")) {
+                if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("")) {
                     sfev.folder_smb_use_pswd =true;
                 } else {
                     sfev.folder_smb_use_pswd =false;
@@ -4232,7 +4232,7 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_type = n_sti.getDestinationFolderType();
                 sfev.folder_smb_protocol = n_sti.getDestinationSmbProtocol();
 
-                if (!n_sti.getDestinationSmbAccountName().equals("") || !n_sti.getDestinationSmbPassword().equals("")) {
+                if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("")) {
                     sfev.folder_smb_use_pswd =true;
                 } else {
                     sfev.folder_smb_use_pswd =false;
