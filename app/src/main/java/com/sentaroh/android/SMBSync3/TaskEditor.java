@@ -2293,10 +2293,6 @@ public class TaskEditor extends DialogFragment {
             else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_zip_crypto))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
             else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes128))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
             else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes256))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
-
-            if (tv_zip_dir.getText().toString().trim().equals("/")) nsfev.zip_file_name=et_zip_file.getText().toString().trim();
-            else nsfev.zip_file_name=tv_zip_dir.getText().toString().trim().substring(1)+"/"+et_zip_file.getText().toString().trim();
-
             if (!nsfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
                 nsfev.zip_file_password = et_zip_pswd.getText().toString();
                 nsfev.zip_file_confirm_password = et_zip_conf_pswd.getText().toString();
@@ -2304,6 +2300,9 @@ public class TaskEditor extends DialogFragment {
                 nsfev.zip_file_password = "";
                 nsfev.zip_file_confirm_password="";
             }
+
+            if (tv_zip_dir.getText().toString().trim().equals("/")) nsfev.zip_file_name=et_zip_file.getText().toString().trim();
+            else nsfev.zip_file_name=tv_zip_dir.getText().toString().trim().substring(1)+"/"+et_zip_file.getText().toString().trim();
 
             if (mGp.settingSecurityReinitZipPasswordValue && et_zip_pswd.getText().toString().length()>0)  nsfev.isChanged=true;
 
@@ -2323,12 +2322,14 @@ public class TaskEditor extends DialogFragment {
             nsfev.folder_smb_host =et_remote_host.getText().toString();
             nsfev.folder_smb_domain = et_sync_folder_domain.getText().toString().trim();
 
+            nsfev.folder_smb_use_port =ctv_sync_folder_use_port.isChecked();
             if (is_save_btn && !ctv_sync_folder_use_port.isChecked()) {
                 nsfev.folder_smb_port = "";
             } else {
                 nsfev.folder_smb_port = et_sync_folder_port.getText().toString();
             }
 
+            nsfev.folder_smb_use_pswd =ctv_sync_folder_use_pswd.isChecked();
             if (is_save_btn && !ctv_sync_folder_use_pswd.isChecked()) {
                 nsfev.folder_smb_account = "";
                 nsfev.folder_smb_password = "";
@@ -2340,8 +2341,6 @@ public class TaskEditor extends DialogFragment {
             if (mGp.settingSecurityReinitSmbAccountPasswordValue &&
                     (et_sync_folder_user.getText().toString().length()>0 || et_sync_folder_pswd.getText().toString().length()>0) )  nsfev.isChanged=true;
 
-            nsfev.folder_smb_use_pswd =ctv_sync_folder_use_pswd.isChecked();
-            nsfev.folder_smb_use_port =ctv_sync_folder_use_port.isChecked();
             nsfev.folder_smb_share = et_sync_folder_share_name.getText().toString().trim();
             nsfev.folder_smb_protocol=getSmbSelectedProtocol(sp_sync_folder_smb_proto);
             if (nsfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_ARCHIVE)) {
