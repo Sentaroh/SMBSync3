@@ -11,10 +11,6 @@ android {
         versionName "1.0.1"
     }
 
-    lintOptions {
-        disable 'MissingTranslation'
-        abortOnError false
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -42,7 +38,8 @@ android {
                         }
 
                         task copyDebugApkRelease(type: Copy) {
-                            from 'build/outputs/apk/debug'
+//                            from 'build/outputs/apk/debug'
+                            from 'build/intermediates/apk/debug'
                             into '../release/' // Into the project root, one level above the app folder
                             include '*debug.apk'
                         }
@@ -51,10 +48,10 @@ android {
 //                            options.compilerArgs << '-Xlint:unchecked,deprecation'
 //                        }
 
-                        afterEvaluate {
+//                        afterEvaluate {
                             packageDebug.finalizedBy(copyDebugApkRelease)
 //                            copyDebugApkRelease.finalizedBy(copyDebugApk)
-                        }
+//                        }
 
                     }
                 }
@@ -80,6 +77,10 @@ android {
             }
 
         }
+    }
+    lint {
+        abortOnError false
+        disable 'MissingTranslation'
     }
 
 }
