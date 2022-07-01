@@ -1691,6 +1691,8 @@ public class TaskEditor extends DialogFragment {
             }
         });
 
+        et_zip_pswd.setText(sfev.zip_file_password);
+        et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
         if (sfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
             ll_password_view.setVisibility(LinearLayout.GONE);
         } else {
@@ -1787,7 +1789,6 @@ public class TaskEditor extends DialogFragment {
             }
         });
 
-        et_zip_pswd.setText(sfev.zip_file_password);
         et_zip_pswd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -1806,7 +1807,6 @@ public class TaskEditor extends DialogFragment {
         //else CommonUtilities.setViewEnabled(mActivity, et_zip_conf_pswd, false);
 
         //CommonUtilities.setEditTextPasteCopyEnabled(et_zip_conf_pswd, false);
-        et_zip_conf_pswd.setText(sfev.zip_file_confirm_password);
         et_zip_conf_pswd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -2293,12 +2293,12 @@ public class TaskEditor extends DialogFragment {
             else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_zip_crypto))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD;
             else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes128))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128;
             else if (zip_enc_method.equals(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_encrypt_aes256))) nsfev.zip_enc_method = SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256;
-            if (!nsfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
-                nsfev.zip_file_password = et_zip_pswd.getText().toString();
-                nsfev.zip_file_confirm_password = et_zip_conf_pswd.getText().toString();
-            } else {
+            if (is_save_btn && nsfev.zip_enc_method.equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_NONE)) {
                 nsfev.zip_file_password = "";
                 nsfev.zip_file_confirm_password="";
+            } else {
+                nsfev.zip_file_password = et_zip_pswd.getText().toString();
+                nsfev.zip_file_confirm_password = et_zip_conf_pswd.getText().toString();
             }
 
             if (tv_zip_dir.getText().toString().trim().equals("/")) nsfev.zip_file_name=et_zip_file.getText().toString().trim();
