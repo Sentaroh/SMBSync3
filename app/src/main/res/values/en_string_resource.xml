@@ -514,6 +514,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_smbsync_ui_settings_language_changed_restart">It is recommended to restart the application after changing the theme or language. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Later</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Restart</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">Application started.</string>
         <string name="msgs_smnsync_main_kill_application">Kill application?</string>
         <string name="msgs_specify_task_name">Please specify a name for the task</string>
@@ -951,6 +952,22 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">Do not display the \"Show Password\" button on the Edit ZIP folder screen</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Select location to store app settings (Resart Required !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Root (/data/data)</item>
+            <item>App specific (/Android/data)</item>
+            <item>Internal storage</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in root directory %s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in internal storage under app specific directory /Android/data/%s/files</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in internal storage under %s directory</string>
+        <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Display app in portrait mode</string>
         <string name="settings_device_orientation_portrait_title">Force Portrait Mode</string>

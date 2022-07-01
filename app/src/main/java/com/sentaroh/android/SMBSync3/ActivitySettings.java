@@ -46,6 +46,7 @@ import com.sentaroh.android.Utilities3.Dialog.MessageDialogAppFragment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,6 +54,8 @@ import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_LM_COMPATIBILITY_DEFAULT;
+
+import static com.sentaroh.android.Utilities3.SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
 
 public class ActivitySettings extends PreferenceActivity {
     static final private Logger log= LoggerFactory.getLogger(ActivitySettings.class);
@@ -62,6 +65,8 @@ public class ActivitySettings extends PreferenceActivity {
     private static Activity mActivity=null;
 
     private static String mCurrentScreenTheme=SCREEN_THEME_STANDARD;
+
+    private static String mCurrentAppSettingsDirectory = APP_SETTINGS_DIRECTORY_ROOT;
 
     private CommonUtilities mUtil = null;
 
@@ -583,8 +588,9 @@ public class ActivitySettings extends PreferenceActivity {
             addPreferencesFromResource(R.xml.settings_frag_security);
 
             SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
+            mCurrentAppSettingsDirectory=shared_pref.getString(getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
 
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_application_password), getContext());
+            setCurrentValue(shared_pref);
 
             Preference button = (Preference)getPreferenceManager().findPreference(getString(R.string.settings_security_application_password));
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -595,6 +601,11 @@ public class ActivitySettings extends PreferenceActivity {
                     return false;
                 }
             });
+        }
+
+        private void setCurrentValue(SharedPreferences shared_pref) {
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_application_password), getContext());
+            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_security_app_settings_directory), getContext());
         }
 
         private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
@@ -625,6 +636,28 @@ public class ActivitySettings extends PreferenceActivity {
                         contents_string+="\n-"+c.getString(R.string.settings_security_hide_show_zip_passowrd_title);
                 }
                 pref_key.setSummary(contents_string);
+            } else if (key_string.equals(c.getString(R.string.settings_security_app_settings_directory))) {
+                String kv=shared_pref.getString(key_string, APP_SETTINGS_DIRECTORY_ROOT);
+                String summary = "";
+                if (kv.equals(APP_SETTINGS_DIRECTORY_ROOT)) {
+                    try {
+                        summary = c.getFilesDir().getCanonicalPath();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        summary = "/data/data/"+APPLICATION_ID+"/files";
+                    }
+                    summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_root), summary);
+                } else if (kv.equals(APP_SETTINGS_DIRECTORY_APP_SPECIFIC)) {
+                    summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_app_specific), APPLICATION_ID);
+                } else if (kv.equals(APP_SETTINGS_DIRECTORY_STORAGE)) {
+                    summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_storage), SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG);
+                }
+                pref_key.setSummary(summary);
+
+                if (!mCurrentAppSettingsDirectory.equals(kv)) {
+                    mCurrentAppSettingsDirectory=kv;
+                    // app restart needed to properly display further messages and history
+                }
             }
         }
 

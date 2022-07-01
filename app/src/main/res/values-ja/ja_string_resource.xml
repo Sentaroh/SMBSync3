@@ -513,6 +513,7 @@
         <string name="msgs_smbsync_ui_settings_language_changed_restart">テーマまたは言語を変更した場合はアプリケーションを再起動するまで反映されません。 「再起動」 をクリックすると直ぐに再起動します。後で再起動する場合は「後で」をクリックしてください。</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">後で</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">再起動</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">アプリケーションが起動しました。</string>
         <string name="msgs_smnsync_main_kill_application">SMBSync3を強制終了しますか？</string>
         <string name="msgs_specify_task_name">タスク名を指定してください</string>
@@ -950,6 +951,22 @@
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">ZIPフォルダー編集画面の「パスワードの表示」ボタンを表示しない</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Select location to store app settings (Resart Required !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Root (/data/data)</item>
+            <item>App specific (/Android/data)</item>
+            <item>Internal storage</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in root directory %s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in internal storage under app specific directory /Android/data/%s/files</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in internal storage under %s directory</string>
+        <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">端末の向きをポートレイトに固定する</string>
         <string name="settings_device_orientation_portrait_title">端末の向き</string>

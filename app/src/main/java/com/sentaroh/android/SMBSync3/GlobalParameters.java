@@ -123,8 +123,8 @@ public class GlobalParameters {
     //	Settings parameter
 //    public String settingAppManagemsntDirectoryUuid ="primary";
     // Mod 1/2: Set app settings directory to /storage/emulated/0/SMBSync3
-    public String settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
-    //public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files/mgt_dir";
+    //public String settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
+    public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files";
     public boolean settingExitClean = true;
 
     public boolean settingWriteSyncResultLog = true;
@@ -210,6 +210,8 @@ public class GlobalParameters {
 
     public boolean appPasswordAuthValidated=false;
     public long appPasswordAuthLastTime=0L;
+
+    public String settingSecurityAppSettingsDirectory = APP_SETTINGS_DIRECTORY_ROOT;
 
     public boolean settingPreventSyncStartDelay = false;
 //    public boolean settingScreenOnIfScreenOnAtStartOfSync = false;
@@ -521,6 +523,9 @@ public class GlobalParameters {
         if (!prefs.contains(c.getString(R.string.settings_security_hide_show_zip_passowrd)))
             pe.putBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), false);
 
+        if (!prefs.contains(c.getString(R.string.settings_security_app_settings_directory)))
+            pe.putString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
+
         if (!prefs.contains(c.getString(R.string.settings_wifi_lock)))
             pe.putBoolean(c.getString(R.string.settings_wifi_lock), true);
 
@@ -592,6 +597,23 @@ public class GlobalParameters {
         settingSecurityReinitZipPasswordValue = prefs.getBoolean(c.getString(R.string.settings_security_init_zip_passowrd), false);
         settingSecurityHideShowSmbPasswordButton = prefs.getBoolean(c.getString(R.string.settings_security_hide_show_smb_passowrd), false);
         settingSecurityHideShowZipPasswordButton = prefs.getBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), false);
+
+        settingSecurityAppSettingsDirectory = prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
+        if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_ROOT)) {
+            // Set app settings directory to /data/data/package_name/files
+            try {
+                settingAppManagemsntDirectoryName = c.getFilesDir().getCanonicalPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+                settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files";
+            }
+        } else if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_APP_SPECIFIC)) {
+            // Set app settings directory to /storage/emulated/0/Android/data/package_name/files
+            settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/Android/data/"+APPLICATION_ID+"/files";
+        } else if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_STORAGE)) {
+            // Set app settings directory to /storage/emulated/0/app_name
+            settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
+        }
 
         settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULE_ENABLED_KEY, true);
 
@@ -706,6 +728,12 @@ public class GlobalParameters {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         String lc=prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
         return lc;
+    }
+
+    static public String getAppSettingsDirId(Context c) {
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
+        String pos=prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);                         
+        return pos;
     }
 
     // wrap language layout in the base context for all activities

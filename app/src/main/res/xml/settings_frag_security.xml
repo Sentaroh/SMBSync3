@@ -6,5 +6,13 @@
             android:title="@string/settings_security_application_password_setting_title"
             android:singleLineTitle="false"
             />
+  	    <ListPreference
+			android:key="@string/settings_security_app_settings_directory"
+			android:title="@string/settings_security_app_settings_directory_title"
+			android:summary="@string/settings_security_app_settings_directory_summary_root" 
+			android:dialogTitle="@string/settings_security_app_settings_directory_dialog_title"
+			android:entries="@array/settings_security_app_settings_directory_list_entries"
+			android:entryValues="@array/settings_security_app_settings_directory_list_values"
+			android:singleLineTitle="false"/>
     </PreferenceCategory>
 </PreferenceScreen>

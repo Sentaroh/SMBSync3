@@ -1887,6 +1887,7 @@ public class ActivityMain extends AppCompatActivity {
     private void invokeSettingsActivity() {
         mUtil.addDebugMsg(1, "I", "Invoke Setting activity.");
         mPrevLanguageSetting=GlobalParameters.getLanguageCode(mContext);
+        mPrevAppSettingsDirectory=GlobalParameters.getAppSettingsDirId(mContext);
         Intent intent = new Intent(mContext, ActivitySettings.class);
         launchActivityResult(mActivity, "Settings", intent, new CallBackListener() {
             @Override
@@ -1898,32 +1899,52 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private String mPrevLanguageSetting=APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
+    private String mPrevAppSettingsDirectory=APP_SETTINGS_DIRECTORY_ROOT;
     private void reloadSettingParms() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
         String p_theme = mGp.settingScreenTheme;
+        String p_settings_app_dir = mGp.settingSecurityAppSettingsDirectory;
 
         mGp.loadSettingsParms(mContext);
 
         String new_lc=GlobalParameters.getLanguageCode(mContext);
         final boolean theme_lang_changed=!new_lc.equals(mPrevLanguageSetting);
 
-        if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed) {
+        String new_dirId=GlobalParameters.getAppSettingsDirId(mContext);
+        final boolean app_settings_dir_changed=!new_dirId.equals(mPrevAppSettingsDirectory);
+
+        if (!p_settings_app_dir.equals(mGp.settingSecurityAppSettingsDirectory) || app_settings_dir_changed) {
+            mUtil.showCommonDialog(false, "W",
+                    mContext.getString(R.string.msgs_smbsync_main_settings_restart_title),
+                    mContext.getString(R.string.msgs_smbsync_security_settings_app_dir_changed_restart),
+                    new CallBackListener() {
+                        @Override
+                        public void onCallBack(Context c, boolean positive, Object[] objects) {
+                            if (positive) {
+                                mGp.activityRestartRequired=true;
+                                mUtil.flushLog();
+                                mGp.settingExitClean=false;
+                                finish();
+                            }
+                        }
+            });
+        } else if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed) {
             mUtil.showCommonDialogWarn(true,
                     mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_main_settings_restart_title),
                     mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart),
                     mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
                     mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
                     new CallBackListener() {
-                @Override
-                public void onCallBack(Context c, boolean positive, Object[] objects) {
-                    if (positive) {
-                        mGp.activityRestartRequired=true;
-                        mUtil.flushLog();
-                        mGp.settingExitClean=false;
-                        finish();
-                    }
-                }
+                        @Override
+                        public void onCallBack(Context c, boolean positive, Object[] objects) {
+                            if (positive) {
+                                mGp.activityRestartRequired=true;
+                                mUtil.flushLog();
+                                mGp.settingExitClean=false;
+                                finish();
+                            }
+                        }
             });
         }
 

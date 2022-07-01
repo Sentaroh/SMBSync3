@@ -513,6 +513,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_smbsync_ui_settings_language_changed_restart">Es wird empfohlen, die Anwendung nach einer Änderung des Themas oder der Sprache neu zu starten. Klicken Sie auf \"Neustart\", um die Anwendung jetzt neu zu starten. Wenn Sie die Anwendung später neu starten möchten, klicken Sie auf \"Später\".</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Später</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">neu starten</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">Anwendung gestartet.</string>
         <string name="msgs_smnsync_main_kill_application">Anwendung beenden?</string>
         <string name="msgs_specify_task_name">Bitte geben Sie einen Namen für die Aufgabe an</string>
@@ -950,6 +951,22 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">Zeigen Sie die Schaltfläche \"Passwort anzeigen\" auf dem Bildschirm \"Synchronisierungsaufgabe bearbeiten\" nicht an</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Select location to store app settings (Resart Required !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Root (/data/data)</item>
+            <item>App specific (/Android/data)</item>
+            <item>Internal storage</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in root directory %s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in internal storage under app specific directory /Android/data/%s/files</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in internal storage under %s directory</string>
+        <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">App im Hochformat anzeigen</string>
         <string name="settings_device_orientation_portrait_title">Porträt-Orientierung erzwingen</string>

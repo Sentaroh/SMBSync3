@@ -509,6 +509,7 @@
         <string name="msgs_smbsync_ui_settings_language_changed_restart">建议在更改主题或语言后重新启动应用程序。点击 \"重新启动\"，现在就可以重新启动。如果您想稍后重启，请点击 \"稍后\"。</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_later">后来</string>
         <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">重新启动</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">应用开始。</string>
         <string name="msgs_smnsync_main_kill_application">杀死应用程序？</string>
         <string name="msgs_specify_task_name">请为任务指定一个名称</string>
@@ -946,6 +947,22 @@
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">不要在 \"编辑同步任务 \"屏幕上显示 \"显示密码 \"按钮。</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Select location to store app settings (Resart Required !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Root (/data/data)</item>
+            <item>App specific (/Android/data)</item>
+            <item>Internal storage</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in root directory %s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in internal storage under app specific directory /Android/data/%s/files</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in internal storage under %s directory</string>
+        <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">以纵向显示应用程序</string>
         <string name="settings_device_orientation_portrait_title">逼真的人像方向</string>
