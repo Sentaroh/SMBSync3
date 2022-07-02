@@ -238,6 +238,7 @@ public class ActivityMain extends AppCompatActivity {
         th.start();
 
         createTabView();
+        initAdapterAndView();
 
         listSettingsOption();
 
@@ -840,8 +841,8 @@ public class ActivityMain extends AppCompatActivity {
         ViewSaveArea vsa = null;
         vsa = saveViewContent();
 
-        mGp.syncTaskView.setAdapter(null);
-        mGp.syncHistoryView.setAdapter(null);
+        //mGp.syncTaskView.setAdapter(null);
+        //mGp.syncHistoryView.setAdapter(null);
 
         setContentView(R.layout.main_screen);
         mActionBar = getSupportActionBar();
@@ -871,12 +872,18 @@ public class ActivityMain extends AppCompatActivity {
         mGp.syncTaskListAdapter.notifyDataSetChanged();
         if (mGp.syncTaskList.size()==0) mGp.syncTaskEmptyMessage.setVisibility(TextView.VISIBLE);
         else mGp.syncTaskEmptyMessage.setVisibility(TextView.GONE);
+
         mGp.syncMessageListAdapter = new MessageListAdapter(mActivity, R.layout.message_list_item, mfl, mGp);
+
         mGp.syncHistoryListAdapter = new HistoryListAdapter(mActivity, R.layout.history_list_item, vsa.sync_hist_list);
         mGp.syncHistoryListAdapter.setShowCheckBox(vsa.sync_adapter_show_cb);
         mGp.syncHistoryListAdapter.notifyDataSetChanged();
+
         mGp.syncScheduleListAdapter.setSelectMode(sync_schedule_adapter_select_mode);
+
         mGp.syncGroupListAdapter.setSelectMode(sync_group_adapter_select_mode);
+
+        initAdapterAndView();
 
         restoreViewContent(vsa);
 
@@ -913,6 +920,18 @@ public class ActivityMain extends AppCompatActivity {
         if (isUiEnabled()) setUiEnabled();
         else setUiDisabled();
         vsa = null;
+    }
+
+    private void initAdapterAndView() {
+        mGp.syncMessageView.setAdapter(mGp.syncMessageListAdapter);
+        mGp.syncMessageView.setDrawingCacheEnabled(true);
+        mGp.syncMessageView.setSelection(mGp.syncMessageListAdapter.getCount() - 1);
+
+        mGp.syncTaskView.setAdapter(mGp.syncTaskListAdapter);
+        mGp.syncTaskView.setDrawingCacheEnabled(true);
+
+        mGp.syncHistoryView.setAdapter(mGp.syncHistoryListAdapter);
+        mGp.syncHistoryListAdapter.notifyDataSetChanged();
     }
 
 //    private int newSyncTaskListViewPos = -1;
@@ -955,6 +974,7 @@ public class ActivityMain extends AppCompatActivity {
         mMainTabLayout.setCurrentTabByPosition(vsa.current_tab_pos);
         mMainViewPager.setCurrentItem(vsa.current_pager_pos);
         mWhileRestoreViewProcess=false;
+
         mGp.syncTaskView.setSelectionFromTop(vsa.task_list_view_pos_x, vsa.task_list_view_pos_y);
         mGp.syncMessageView.setSelectionFromTop(vsa.msg_list_view_pos_x, vsa.msg_list_view_pos_y);
         mGp.syncHistoryView.setSelectionFromTop(vsa.hist_list_view_pos_x, vsa.hist_list_view_pos_y);
@@ -1246,17 +1266,6 @@ public class ActivityMain extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
-        mGp.syncMessageView.setAdapter(mGp.syncMessageListAdapter);
-        mGp.syncMessageView.setDrawingCacheEnabled(true);
-        mGp.syncMessageView.setSelection(mGp.syncMessageListAdapter.getCount() - 1);
-
-        mGp.syncTaskView.setAdapter(mGp.syncTaskListAdapter);
-        mGp.syncTaskView.setDrawingCacheEnabled(true);
-
-        mGp.syncHistoryView.setAdapter(mGp.syncHistoryListAdapter);
-        mGp.syncHistoryListAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -3348,7 +3357,6 @@ public class ActivityMain extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     private void saveScheduleList() {
@@ -3906,7 +3914,6 @@ public class ActivityMain extends AppCompatActivity {
                 return true;
             }
         });
-
     }
 
     private LinearLayout mContextSyncTaskContextView=null;
