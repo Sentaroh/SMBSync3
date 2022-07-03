@@ -1756,7 +1756,7 @@ public class TaskEditor extends DialogFragment {
 
                 String title = mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_zip_select_file_title);
                 CommonFileSelector2 fsdf=
-                        CommonFileSelector2.newInstance(true, true, true, CommonFileSelector2.DIALOG_SELECT_CATEGORY_FILE, true, uuid, "", "", title);
+                        CommonFileSelector2.newInstance(true, true, true, CommonFileSelector2.DIALOG_SELECT_CATEGORY_FILE, true, uuid, "", et_zip_file.getText().toString(), title);
                 fsdf.showDialog(false, mActivity.getSupportFragmentManager(), fsdf, ntfy);
             }
         });
