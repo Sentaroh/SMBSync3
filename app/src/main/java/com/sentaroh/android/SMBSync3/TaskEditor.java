@@ -987,7 +987,22 @@ public class TaskEditor extends DialogFragment {
         btn_sync_folder_list_share.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTaskUtil.invokeSelectSmbShareDlg(dialog);
+                NotifyEvent ntfy_list_shares=new NotifyEvent(mActivity);
+                ntfy_list_shares.setListener(new NotifyEvent.NotifyEventListener() {
+                    @Override
+                    public void positiveResponse(Context context, Object[] objects) {
+                        String[] result=(String[])objects[0];
+
+                        // query again dialog as it could have been destroyed on screen rotation during invokeSelectSmbShareDlg() thread
+                        // temporary fix to preserve share selection after screen rotation in List Shares dialog
+                        final EditText et_dialog_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
+                        et_dialog_sync_folder_share_name.setText(result[0]);
+                    }
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {}
+                });
+                mTaskUtil.invokeSelectSmbShareDlg(dialog, ntfy_list_shares);
 
                 checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                 //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);

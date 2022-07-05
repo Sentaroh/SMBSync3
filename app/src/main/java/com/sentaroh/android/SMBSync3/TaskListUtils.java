@@ -311,10 +311,9 @@ public class TaskListUtils {
             }
         });
         dialog.show();
-
     }
 
-    public void invokeSelectSmbShareDlg(Dialog dialog) {
+    public void invokeSelectSmbShareDlg(Dialog dialog, final NotifyEvent p_ntfy) {
 //		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
         final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
@@ -352,7 +351,9 @@ public class TaskListUtils {
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context arg0, Object[] arg1) {
-                editshare.setText((String) arg1[0]);
+                //editshare.setText((String) arg1[0]);
+                String selected_share_name = (String) arg1[0];
+                p_ntfy.notifyToListener(true, new Object[]{new String[]{selected_share_name}});
             }
 
             @Override
