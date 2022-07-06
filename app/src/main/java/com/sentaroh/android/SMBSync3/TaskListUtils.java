@@ -313,41 +313,35 @@ public class TaskListUtils {
         dialog.show();
     }
 
-    public void invokeSelectSmbShareDlg(Dialog dialog, final NotifyEvent p_ntfy) {
-//		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
+    //public void invokeSelectSmbShareDlg(Dialog dialog, final NotifyEvent p_ntfy) {
+    public void invokeSelectSmbShareDlg(final String remote_host, final String smb_proto, final String remote_port, final String remote_user, final String remote_pass, final String share_name, final NotifyEvent p_ntfy) {
+		//final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
-        final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-        final EditText edituser = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
-        final EditText editpass = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
-        final EditText editshare = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
-        final EditText edithost = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
-        final CheckedTextView ctv_use_userpass = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
-        final EditText editport = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
-        final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
-//        final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
-//        final CheckedTextView ctv_sync_folder_smb_use_smb2_negotiation = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation);
-        String remote_addr="", remote_user = "", remote_pass = "", remote_host="";
+        //final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
+        //final EditText edituser = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
+        //final EditText editpass = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
+        //final EditText editshare = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
+        //final EditText edithost = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
+        //final CheckedTextView ctv_use_userpass = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
+        //final EditText editport = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
+        //final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
+        ////final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
+        //final CheckedTextView ctv_sync_folder_smb_use_smb2_negotiation = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation);
 
-        if (ctv_use_userpass.isChecked()) {
-            remote_user = edituser.getText().toString().trim();
-            remote_pass = editpass.getText().toString();
-        }
+        //final String smb_proto=(String)sp_sync_folder_smb_proto.getSelectedItem();
+        //final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
+        //final boolean smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
 
-        final String smb_proto=(String)sp_sync_folder_smb_proto.getSelectedItem();
-//        final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
-//        final boolean smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
-        String host=edithost.getText().toString().trim();
+        SmbServerInfo ssi = new SmbServerInfo();
+        ssi.serverHostName = remote_host;
+        ssi.serverProtocol = smb_proto;
+        ssi.serverPort = remote_port;
+        ssi.serverAccountName = remote_user;
+        ssi.serverAccountPassword = remote_pass;
+        ssi.serverShareName = share_name;
 
-        SmbServerInfo ssi=new SmbServerInfo();
-        ssi.serverHostName= edithost.getText().toString();
-        ssi.serverShareName=editshare.getText().toString();;
-        if (ctv_use_port_number.isChecked() && editport.getText().length() > 0) ssi.serverPort = editport.getText().toString();
-        ssi.serverProtocol=smb_proto;
-        ssi.serverAccountName=remote_user;
-        ssi.serverAccountPassword=remote_pass;
-
-        NotifyEvent ntfy = new NotifyEvent(mActivity);
         //Listen setRemoteShare response
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context arg0, Object[] arg1) {

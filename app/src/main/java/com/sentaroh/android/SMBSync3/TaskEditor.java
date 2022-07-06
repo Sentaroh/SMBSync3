@@ -1004,16 +1004,29 @@ public class TaskEditor extends DialogFragment {
                     public void positiveResponse(Context context, Object[] objects) {
                         String[] result=(String[])objects[0];
 
-                        // query again dialog as it could have been destroyed on screen rotation during invokeSelectSmbShareDlg() thread
-                        // temporary fix to preserve share selection after screen rotation in List Shares dialog
-                        final EditText et_dialog_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
-                        et_dialog_sync_folder_share_name.setText(result[0]);
+                        // query the dialog again as it could have been destroyed on screen rotation during invokeSelectSmbShareDlg() thread
+                        final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
+                        et_sync_folder_share_name.setText(result[0]);
                     }
 
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                mTaskUtil.invokeSelectSmbShareDlg(dialog, ntfy_list_shares);
+                String remote_host="", smb_proto = "", remote_port = "", remote_user = "", remote_pass = "", share_name = "";
+                remote_host=et_remote_host.getText().toString().trim();
+                smb_proto=(String)sp_sync_folder_smb_proto.getSelectedItem();
+                if (ctv_sync_folder_use_port.isChecked()) {
+                    remote_port = et_sync_folder_port.getText().toString();
+                }
+                if (ctv_sync_folder_use_pswd.isChecked()) {
+                    remote_user = et_sync_folder_user.getText().toString().trim();
+                    remote_pass = et_sync_folder_pswd.getText().toString();
+                }
+                share_name = et_sync_folder_share_name.getText().toString();
+                //boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
+                //boolean smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
+
+                mTaskUtil.invokeSelectSmbShareDlg(remote_host, smb_proto, remote_port, remote_user, remote_pass, share_name, ntfy_list_shares);
 
                 checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                 //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
