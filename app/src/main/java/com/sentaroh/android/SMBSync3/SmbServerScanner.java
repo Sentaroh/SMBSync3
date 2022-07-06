@@ -749,7 +749,7 @@ public class SmbServerScanner {
         try {
             Properties prop=new Properties();
             prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-            JcifsAuth auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, "SMB202", "SMB311", prop);
+            JcifsAuth auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
             result.smb23_nt_status_desc =isSmbServerAvailable(SMB_LEVEL_SMB23, auth, address);
             if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
                 result.smb23_available =true;
