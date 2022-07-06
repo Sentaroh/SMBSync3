@@ -958,6 +958,17 @@ public class TaskEditor extends DialogFragment {
                         String smb_share_name=result[5];
                         mUtil.addDebugMsg(1,"I", "editSyncFolder(SMB) selected value, host="+smb_host+", protocol="+smb_level+", port="+smb_portnum+
                                 ", account="+smb_acct_name+", share="+smb_share_name);
+
+///
+                        final EditText et_remote_host = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
+                        final EditText et_sync_folder_port = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
+                        final CheckedTextView ctv_sync_folder_use_port = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
+                        final EditText et_sync_folder_user = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
+                        final CheckedTextView ctv_sync_folder_use_pswd = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
+                        final TextInputEditText et_sync_folder_pswd = (TextInputEditText ) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
+                        final EditText et_sync_folder_share_name = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
+                        final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
+///
                         et_remote_host.setText(smb_host);
                         et_sync_folder_port.setText(smb_portnum);
                         ctv_sync_folder_use_port.setChecked(!smb_portnum.equals(""));
@@ -976,7 +987,7 @@ public class TaskEditor extends DialogFragment {
                 });
                 String port_num = "";
                 if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
-                final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
+                //final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
                 SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, (String)sp_sync_folder_smb_proto.getSelectedItem());
 
                 checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
