@@ -985,11 +985,14 @@ public class TaskEditor extends DialogFragment {
                     }
 
                 });
+                // smb_search_protocol: optional, used to set the default smb protocol for the scanner based on an eventual configured server
+                //                      Usually, SMB1 and SMB2 scanners can detect SMB1/2/3 hosts
+                // port_num: ports to scan, default is 435 and 139 (keep empty to not use any existing server defined port on initial scan)
                 //final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-                String port_num = "", smb_protocol = "";
-                smb_protocol = (String)sp_sync_folder_smb_proto.getSelectedItem();
-                if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
-                SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, smb_protocol);
+                String port_num = "", smb_search_protocol = "";
+                smb_search_protocol = (String)sp_sync_folder_smb_proto.getSelectedItem();
+                //if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
+                SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, smb_search_protocol);
 
                 checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                 //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);

@@ -71,19 +71,20 @@ public class SmbServerScanner {
     private GlobalParameters mGp=null;
 
     public SmbServerScanner(ActivityMain a, GlobalParameters gp, CommonUtilities cu, final NotifyEvent p_ntfy,
-                            String port_number, boolean scan_start, final String smb_protocol) {
+                            String port_number, boolean scan_start, final String scanner_smb_protocol) {
         mActivity=a;
         mUtil=cu;
         mGp=gp;
-        initDialog(p_ntfy, port_number, scan_start, smb_protocol);
+        initDialog(p_ntfy, port_number, scan_start, scanner_smb_protocol);
     }
 
-    private void initDialog(final NotifyEvent p_ntfy, String port_number, boolean scan_start, final String smb_protocol) {
+    private void initDialog(final NotifyEvent p_ntfy, String port_number, boolean scan_start, final String scanner_smb_protocol) {
         if (!SyncThread.isWifiOn(mActivity)) {
             mUtil.showCommonDialog(false, "W", mActivity.getString(R.string.msgs_scan_ip_address_select_title),
                     mActivity.getString(R.string.msgs_scan_not_started_because_wifi_off), null);
             return;
         }
+
         //カスタムダイアログの生成
         final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -279,7 +280,7 @@ public class SmbServerScanner {
                 String subnet = ba1 + "." + ba2 + "." + ba3;
                 int begin_addr = Integer.parseInt(ba4);
                 int end_addr = Integer.parseInt(ea5);
-                performSmbServerScan(dialog, lv, adap, subnet, begin_addr, end_addr, ntfy, smb_protocol);
+                performSmbServerScan(dialog, lv, adap, subnet, begin_addr, end_addr, ntfy, scanner_smb_protocol);
             }
         });
 
@@ -544,7 +545,7 @@ public class SmbServerScanner {
             final SmbServerScanAdapter adap,
 //            final ArrayList<SmbServerScanAdapter.NetworkScanListItem> ipAddressList,
             final String subnet, final int begin_addr, final int end_addr,
-            final NotifyEvent p_ntfy, final String smb_protcol) {
+            final NotifyEvent p_ntfy, final String scanner_smb_protocol) {
         final Handler handler = new Handler();
         final ThreadCtrl tc = new ThreadCtrl();
         final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
@@ -605,7 +606,7 @@ public class SmbServerScanner {
                             startSmbServerScanThread(handler, tc, dialog, p_ntfy,
                                     lv_ipaddr, adap, tvmsg, subnet + "." + j,
 //                                    ipAddressList,
-                                    scan_port, smb_protcol);
+                                    scan_port, scanner_smb_protocol);
                         } else {
                             scan_end = true;
                         }
@@ -990,7 +991,7 @@ public class SmbServerScanner {
 
     public class SmbServerScanResult {
         public static final String SMB_LEVEL_SMB1="SMB1";
-        public static final String SMB_LEVEL_SMB23 ="SMB23";
+        public static final String SMB_LEVEL_SMB23 ="SMB2/3";
         public static final String SMB_STATUS_UNSUCCESSFULL="Unsuccessfull";
         public static final String SMB_STATUS_ACCESS_DENIED="Access denied";
         public static final String SMB_STATUS_INVALID_LOGON_TYPE="Invalid login type";
@@ -1007,7 +1008,7 @@ public class SmbServerScanner {
     }
 
     public class SmbServerScanShareInfo {
-        public String smb_level= "SMB1";
+        public String smb_level= SmbServerScanResult.SMB_LEVEL_SMB1;
         public String share_name="";
     }
 
@@ -1074,8 +1075,8 @@ public class SmbServerScanner {
             }
             if (o != null) {
                 String smb_level="";
-                if (o.smb1_available) smb_level+="SMB1 ";
-                if (o.smb23_available) smb_level+="SMB2/3 ";
+                if (o.smb1_available) smb_level+=(SmbServerScanResult.SMB_LEVEL_SMB1+" ");
+                if (o.smb23_available) smb_level+=(SmbServerScanResult.SMB_LEVEL_SMB23+" ");
                 holder.tv_name.setText(o.server_smb_name+"\n"+smb_level);
                 holder.tv_addr.setText(o.server_smb_ip_addr);
                 if (o.server_smb_name.equals("")) holder.tv_name.setEnabled(false);

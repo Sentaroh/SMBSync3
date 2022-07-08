@@ -670,7 +670,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_ip_address_range_dlg_not_private">Impossibile effettuare una ricerca diversa da quella degli indirizzi privati.</string>
         <string name="msgs_scan_dlg_smb_protocol">Scanner SMB Library</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
-        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number (default 445 and 139)</string>
         <string name="msgs_scan_not_started_because_wifi_off">La ricerca non è possibile perché il WiFi è disattivato. Attivare il WiFi per cercare il server SMB.</string>
         <string name="msgs_progress_dlg_canceling">Annullamento...</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Ottenere la lista dei file...</string>

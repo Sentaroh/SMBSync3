@@ -671,7 +671,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_ip_address_range_dlg_not_private">Unable to search other than private addresses.</string>
         <string name="msgs_scan_dlg_smb_protocol">Scanner SMB Library</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
-        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number (default 445 and 139)</string>
         <string name="msgs_scan_not_started_because_wifi_off">Search is not possible because WiFi is off. Please turn on WiFi to search for your SMB server.</string>
         <string name="msgs_progress_dlg_canceling">Cancelling…</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Obtaining file list…</string>
