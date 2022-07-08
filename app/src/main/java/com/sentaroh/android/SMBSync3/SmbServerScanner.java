@@ -1106,10 +1106,22 @@ public class SmbServerScanner {
                 holder = (ViewHolder) v.getTag();
             }
             if (o != null) {
-                String smb_level="";
-                if (o.smb1_available) smb_level+=(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1+" ");
-                if (o.smb23_available) smb_level+=(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23+" ");
-                holder.tv_name.setText(o.server_smb_name+"\n"+smb_level);
+                String smb_level = "";
+                String sep = "";
+                if (o.smb1_available) {
+                    smb_level += SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1;
+                    sep = " ";
+                }
+                if (o.smb23_available) {
+                    smb_level += sep;
+                    smb_level += SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
+                }
+
+                sep = "\n";
+                if (o.server_smb_name.equals("")) {
+                    sep = "";
+                }
+                holder.tv_name.setText(o.server_smb_name + sep + smb_level);
                 holder.tv_addr.setText(o.server_smb_ip_addr);
                 if (o.server_smb_name.equals("")) holder.tv_name.setEnabled(false);
                 else holder.tv_name.setEnabled(true);
