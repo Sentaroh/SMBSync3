@@ -657,7 +657,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_scan_ip_address_not_detected">Kein SMB-Server gefunden.</string>
         <string name="msgs_scan_ip_address_select_detected_host">Hostname oder IP-Adresse aus den Suchergebnissen auswählen</string>
         <string name="msgs_scan_ip_address_scan_result_title">Suchergebnisse :</string>
-        <string name="msgs_ip_address_scan_progress">Suche nach SMB-Host... %s%% abgeschlossen.</string>
+        <string name="msgs_ip_address_scan_progress">Suche nach SMB-Host... %d%% abgeschlossen.</string>
         <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Beginnen Sie</string>
         <string name="msgs_ip_address_range_dlg_end">Ende</string>
@@ -668,9 +668,9 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">Anfangsadresse ist größer als Endadresse.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">Die Endadresse sollte größer als die Anfangsadresse sein.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Es ist nicht möglich, andere als private Adressen zu suchen.</string>
-        <string name="msgs_scan_dlg_smb_protocol">Scanner SMB Library</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan library</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
-        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number (default 445 and 139)</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">Die Suche ist nicht möglich, da WiFi ausgeschaltet ist. Bitte schalten Sie WiFi ein, um nach Ihrem SMB-Server zu suchen.</string>
         <string name="msgs_progress_dlg_canceling">Annullieren...</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Dateiliste beschaffen...</string>

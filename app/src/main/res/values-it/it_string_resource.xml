@@ -657,7 +657,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_scan_ip_address_not_detected">Nessun server SMB trovato.</string>
         <string name="msgs_scan_ip_address_select_detected_host">Selezionare il nome host o l\'indirizzo IP dai risultati della ricerca</string>
         <string name="msgs_scan_ip_address_scan_result_title">Risultati della ricerca :</string>
-        <string name="msgs_ip_address_scan_progress">Ricerca host SMB... %s%% completato.</string>
+        <string name="msgs_ip_address_scan_progress">Ricerca host SMB... %d%% completato.</string>
         <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Inizio</string>
         <string name="msgs_ip_address_range_dlg_end">Fine</string>
@@ -668,9 +668,9 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">L\'indirizzo finale deve essere da 2 a 254.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">L\'indirizzo finale deve essere più grande dell\'indirizzo iniziale.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Impossibile effettuare una ricerca diversa da quella degli indirizzi privati.</string>
-        <string name="msgs_scan_dlg_smb_protocol">Scanner SMB Library</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan library</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
-        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number (default 445 and 139)</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">La ricerca non è possibile perché il WiFi è disattivato. Attivare il WiFi per cercare il server SMB.</string>
         <string name="msgs_progress_dlg_canceling">Annullamento...</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Ottenere la lista dei file...</string>

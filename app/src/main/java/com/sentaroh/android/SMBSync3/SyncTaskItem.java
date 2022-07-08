@@ -373,7 +373,12 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB23 = JcifsAuth.JCIFS_FILE_SMB23;
     public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT = SYNC_FOLDER_SMB_PROTOCOL_SMB23;
     public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
-    public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[]{SYNC_FOLDER_SMB_PROTOCOL_SMB1, SYNC_FOLDER_SMB_PROTOCOL_SMB23};
+    public final static int SYNC_FOLDER_SMB_PROTOCOL_SMB1_INDEX = 0;
+    public final static int SYNC_FOLDER_SMB_PROTOCOL_SMB23_INDEX = 1;
+    public final static int SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_INDEX = SYNC_FOLDER_SMB_PROTOCOL_SMB23_INDEX;
+    public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[] { 
+        SYNC_FOLDER_SMB_PROTOCOL_SMB1,      // 0
+        SYNC_FOLDER_SMB_PROTOCOL_SMB23};    // 1
     private String syncTaskSourceFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
     public String getSourceSmbProtocol() {return syncTaskSourceFolderSmbProtocol;}
     public void setSourceSmbProtocol(String proto) {syncTaskSourceFolderSmbProtocol=proto;}

@@ -103,7 +103,6 @@ import org.slf4j.LoggerFactory;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.*;
-import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_LEVEL_SMB1;
 import static com.sentaroh.android.SMBSync3.SyncTaskItem.TEMPLATE_ORIGINAL_NAME;
 import static com.sentaroh.android.SMBSync3.SyncTaskItem.ARCHIVE_SUFFIX_DIGIT_DEFAULT;
 import static com.sentaroh.android.Utilities3.SafFile3.SAF_FILE_PRIMARY_UUID;
@@ -976,8 +975,9 @@ public class TaskEditor extends DialogFragment {
                         ctv_sync_folder_use_pswd.setChecked(!smb_acct_name.equals("") || !smb_acct_pswd.equals(""));
                         et_sync_folder_pswd.setText(smb_acct_pswd);
                         et_sync_folder_share_name.setText(smb_share_name);
-                        if (smb_level.equals(SMB_LEVEL_SMB1)) sp_sync_folder_smb_proto.setSelection(0);
-                        else sp_sync_folder_smb_proto.setSelection(1);
+                        if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) sp_sync_folder_smb_proto.setSelection(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_INDEX);
+                        else if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) sp_sync_folder_smb_proto.setSelection(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23_INDEX);
+                        else sp_sync_folder_smb_proto.setSelection(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_INDEX);
                     }
 
                     @Override
@@ -985,14 +985,17 @@ public class TaskEditor extends DialogFragment {
                     }
 
                 });
-                // smb_search_protocol: optional, used to set the default smb protocol for the scanner based on an eventual configured server
-                //                      Usually, SMB1 and SMB2 scanners can detect SMB1/2/3 hosts
-                // port_num: ports to scan, default is 435 and 139 (keep empty to not use any existing server defined port on initial scan)
+                // smb_scan_protocol: optional, used to set the default smb protocol for the scanner based on an eventual configured server
+                //                    Usually, SMB1 and SMB2 scanners can detect SMB1/2/3 hosts
                 //final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-                String port_num = "", smb_search_protocol = "";
-                smb_search_protocol = (String)sp_sync_folder_smb_proto.getSelectedItem();
+                String smb_scan_protocol = "";
+                smb_scan_protocol = (String) sp_sync_folder_smb_proto.getSelectedItem();
+
+                // port_num: ports to scan, default is 435 and 139 (keep empty to not use any existing server defined port on initial scan)
+                String port_num = "";
                 //if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
-                SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, smb_search_protocol);
+
+                SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, smb_scan_protocol, true);
 
                 checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                 //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
@@ -2977,9 +2980,9 @@ public class TaskEditor extends DialogFragment {
         adapter.add(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1);
         adapter.add(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23);
 
-        if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) spinner.setSelection(0);
-        else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) spinner.setSelection(1);
-        else spinner.setSelection(1);
+        if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) spinner.setSelection(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1_INDEX);
+        else if (cv.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) spinner.setSelection(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23_INDEX);
+        else spinner.setSelection(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_INDEX);
     }
 
     private void setSpinnerSyncTaskErrorOption(SyncTaskItem sti, Spinner spinner, String cv) {
