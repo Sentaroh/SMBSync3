@@ -985,10 +985,11 @@ public class TaskEditor extends DialogFragment {
                     }
 
                 });
-                String port_num = "";
-                if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
                 //final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-                SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, (String)sp_sync_folder_smb_proto.getSelectedItem());
+                String port_num = "", smb_protocol = "";
+                smb_protocol = (String)sp_sync_folder_smb_proto.getSelectedItem();
+                if (ctv_sync_folder_use_port.isChecked()) port_num = et_sync_folder_port.getText().toString();
+                SmbServerScanner ss=new SmbServerScanner(mActivity, mGp, mUtil, ntfy_search_result, port_num, true, smb_protocol);
 
                 checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                 //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);

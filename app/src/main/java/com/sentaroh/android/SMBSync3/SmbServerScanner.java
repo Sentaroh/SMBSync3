@@ -123,7 +123,8 @@ public class SmbServerScanner {
         eaEt5.setText("254");
         baEt4.requestFocus();
 
-        final EditText et_port_number = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
+        //final EditText et_port_number = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
+        //et_port_number.setText(port_number);
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
@@ -538,7 +539,7 @@ public class SmbServerScanner {
         final Button scan_cancel = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_cancel);
 
 //        final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.scan_remote_ntwk_ctv_use_port);
-        final EditText et_port_number = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
+        //final EditText et_port_number = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
 
         tvmsg.setText("");
         scan_cancel.setText(R.string.msgs_scan_progress_spin_dlg_addr_cancel);
@@ -578,7 +579,7 @@ public class SmbServerScanner {
                 mScanAddrCount = end_addr - begin_addr + 1;
                 int scan_thread = 100;
                 String scan_port = "";
-                if (et_port_number.getText().length()>0) scan_port = et_port_number.getText().toString();
+                //if (et_port_number.getText().length()>0) scan_port = et_port_number.getText().toString();
                 for (int i = begin_addr; i <= end_addr; i += scan_thread) {
                     if (!tc.isEnabled()) break;
                     boolean scan_end = false;

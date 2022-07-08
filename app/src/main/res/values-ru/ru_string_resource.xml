@@ -659,6 +659,7 @@
         <string name="msgs_scan_ip_address_select_detected_host">Выберите имя хоста или IP-адрес из результатов поиска</string>
         <string name="msgs_scan_ip_address_scan_result_title">результаты поиска</string>
         <string name="msgs_ip_address_scan_progress">Поиск хоста SMB…%s %% завершен.</string>
+        <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Начать</string>
         <string name="msgs_ip_address_range_dlg_end">Конец</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">Укажите начало диапазона адресов.</string>
@@ -668,6 +669,9 @@
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">Конечный адрес должен быть от 2 до 254.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">Конечный адрес должен быть больше, чем начальный адрес.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Невозможен поиск, кроме личных адресов.</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scanner SMB Library</string>
+        <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number</string>
         <string name="msgs_scan_not_started_because_wifi_off">Поиск невозможен, потому что WiFi отключен. Пожалуйста, включите WiFi для поиска вашего сервера SMB.</string>
         <string name="msgs_progress_dlg_canceling">Отмена ...</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Получение списка файлов…</string>

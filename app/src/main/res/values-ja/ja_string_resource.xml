@@ -658,6 +658,7 @@
         <string name="msgs_scan_ip_address_select_detected_host">検索結果のIPアドレスかホスト名をタップして選択してください。</string>
         <string name="msgs_scan_ip_address_scan_result_title">検索結果</string>
         <string name="msgs_ip_address_scan_progress">SMBサーバー 検索が%s%% 終了</string>
+        <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">開始</string>
         <string name="msgs_ip_address_range_dlg_end">終了</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">開始アドレスが指定されていません。</string>
@@ -667,6 +668,9 @@
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">終了アドレスは1から254の範囲で指定してください。</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">終了アドレスは開始アドレスより大きくしてください。</string>
         <string name="msgs_ip_address_range_dlg_not_private">プライベートアドレス以外は検索できません。</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scanner SMB Library</string>
+        <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">Port number</string>
         <string name="msgs_scan_not_started_because_wifi_off">WiFiがオフのため検索ができません。SMBサーバーを検索するにはWiFiをオンにしてください。</string>
         <string name="msgs_progress_dlg_canceling">キャンセルしています</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">ファイルリスト取得中</string>
