@@ -42,6 +42,7 @@
                 android:textColor="#ff0000" />
 
         <ScrollView
+                android:id="@+id/scan_smb_server_param_dlg_settings_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <LinearLayout

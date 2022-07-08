@@ -656,7 +656,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_scan_ip_address_press_scan_btn">Specificare l\'intervallo di indirizzi IP, quindi premere il pulsante Cerca</string>
         <string name="msgs_scan_ip_address_not_detected">Nessun server SMB trovato.</string>
         <string name="msgs_scan_ip_address_select_detected_host">Selezionare il nome host o l\'indirizzo IP dai risultati della ricerca</string>
-        <string name="msgs_scan_ip_address_scan_result_title">Risultati della ricerca</string>
+        <string name="msgs_scan_ip_address_scan_result_title">Risultati della ricerca :</string>
         <string name="msgs_ip_address_scan_progress">Ricerca host SMB... %s%% completato.</string>
         <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Inizio</string>

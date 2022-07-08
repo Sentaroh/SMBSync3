@@ -657,7 +657,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_scan_ip_address_press_scan_btn">Specify IP address range, then press the Search button</string>
         <string name="msgs_scan_ip_address_not_detected">No SMB server found.</string>
         <string name="msgs_scan_ip_address_select_detected_host">Select host name or IP address from search results</string>
-        <string name="msgs_scan_ip_address_scan_result_title">Search Results</string>
+        <string name="msgs_scan_ip_address_scan_result_title">Search Results :</string>
         <string name="msgs_ip_address_scan_progress">Searching SMB host… %s%% completed.</string>
         <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Start</string>

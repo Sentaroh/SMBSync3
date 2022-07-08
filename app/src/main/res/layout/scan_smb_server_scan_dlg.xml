@@ -41,6 +41,7 @@
             android:textColor="#ff0000" />
 
         <ScrollView
+                android:id="@+id/scan_smb_server_scan_dlg_settings_scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <LinearLayout
@@ -241,15 +242,15 @@
         </ScrollView>
     </LinearLayout>
 
+    <include layout="@layout/divider_line1_turquoise" />
+
     <LinearLayout
             android:id="@+id/scan_smb_server_scan_dlg_scan_result"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1.3"
             android:orientation="vertical">
-
-        <include layout="@layout/divider_line1_turquoise" />
 
         <TextView
                 android:id="@+id/scan_smb_server_scan_dlg_scan_result_title"
