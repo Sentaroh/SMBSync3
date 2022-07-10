@@ -274,6 +274,11 @@ public class SmbServerScanner {
             public void onClick(View v) {
                 tvmsg.setText("");
                 mScanResultList.clear();
+
+                // On next scan start, ensure we cannot click search results while scan is running, thus dismissing the dialog
+                // The scan thread would then continue to run in the background until it is completed
+                lv.setEnabled(false);
+
                 NotifyEvent ntfy = new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
