@@ -305,7 +305,9 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Autorizzare il conto o specificare il nome del conto corretto e premere il pulsante \"Aggiorna lista delle azioni\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">Viene specificato un nome di conto che non può accedere. Specificare il nome del conto corretto e fare clic sul pulsante \"Aggiorna elenco condivisioni \".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">Il nome del conto o la password non sono corretti. Specificare il nome del conto e la password corretti e fare clic sul pulsante \"Aggiorna elenco condivisioni \".</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Il nome dell\'account o la password non sono specificati. Specificare il nome del conto e la password corretti e fare clic sul pulsante \"Aggiorna elenco condivisioni \".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Connection failed. No account name or password specified. Enter the correct credentials then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty">Enter an account name and password then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares">Click \"Refresh share list\" button and select a share.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Scelta dei parametri del server SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Aggiorna l\'elenco delle azioni</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">Account e password del server SMB</string>
@@ -655,7 +657,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_scan_ip_address_scan_btn">Ricerca</string>
         <string name="msgs_scan_ip_address_press_scan_btn">Specificare l\'intervallo di indirizzi IP, quindi premere il pulsante Cerca</string>
         <string name="msgs_scan_ip_address_not_detected">Nessun server SMB trovato.</string>
-        <string name="msgs_scan_ip_address_select_detected_host">Selezionare il nome host o l\'indirizzo IP dai risultati della ricerca</string>
+        <string name="msgs_scan_ip_address_select_detected_host">Select server from search results or change settings to start a new scan</string>
         <string name="msgs_scan_ip_address_scan_result_title">Risultati della ricerca :</string>
         <string name="msgs_ip_address_scan_progress">Ricerca host SMB... %d%% completato.</string>
         <string name="msgs_ip_address_range_select_title">Select IP range to search</string>

@@ -345,6 +345,7 @@ public class SmbServerScanner {
         if (scan_start) btn_scan.performClick();
     }
 
+    // called by initDialog() on server selected from scan results list view
     private void buildSmbServerParmsDlg(final SmbServerScanResult scan_result, final NotifyEvent p_ntfy) {
         final Dialog dialog=new Dialog(mActivity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -412,6 +413,7 @@ public class SmbServerScanner {
         }
         buildShareListSelectorView(dialog, scan_result, share_list_adapter);
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+
         dlg_smb_share_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -424,8 +426,11 @@ public class SmbServerScanner {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 dlg_use_smb23.setChecked(!b);
-                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                scan_result.share_item_list.clear();
+                scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
@@ -433,8 +438,62 @@ public class SmbServerScanner {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 dlg_use_smb1.setChecked(!b);
-                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                scan_result.share_item_list.clear();
+                scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+            }
+        });
+
+        dlg_smb_port_number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                scan_result.share_item_list.clear();
+                scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+            }
+        });
+
+        dlg_smb_account_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                scan_result.share_item_list.clear();
+                scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+            }
+        });
+
+        dlg_smb_account_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                scan_result.share_item_list.clear();
+                scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
@@ -460,8 +519,7 @@ public class SmbServerScanner {
                 Thread th=new Thread(){
                     @Override
                     public void run() {
-                        SmbServerScanResult result= createSmbServerShareInfo(null, acct, pswd,
-                                scan_result.server_smb_ip_addr, scan_result.server_smb_name);
+                        SmbServerScanResult result= createSmbServerShareInfo(false, null, acct, pswd, scan_result.server_smb_ip_addr, scan_result.server_smb_name);
                         scan_result.smb1_nt_status_desc=result.smb1_nt_status_desc;
                         scan_result.smb1_available=result.smb1_available;
                         scan_result.smb23_nt_status_desc=result.smb23_nt_status_desc;
@@ -527,51 +585,61 @@ public class SmbServerScanner {
         final RadioButton dlg_use_smb23=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23);
         final LinearLayout ll_dlg_smb_share_name=(LinearLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
         final ListView dlg_smb_share_name=(ListView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
+
+        String nt_status_desc = "";
+        String smb_level = "";
+        if (dlg_use_smb1.isChecked()) {
+            nt_status_desc = scan_result.smb1_nt_status_desc;
+            smb_level = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1;
+            //updateShareListSelectorAdapter(dialog, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, dlg_msg, adapter, scan_result.smb1_nt_status_desc, scan_result.share_item_list);
+        } else {
+            nt_status_desc = scan_result.smb23_nt_status_desc;
+            smb_level = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
+            //updateShareListSelectorAdapter(dialog, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, dlg_msg, adapter, scan_result.smb23_nt_status_desc, scan_result.share_item_list);
+        }
+
         adapter.clear();
         dlg_smb_share_name.setAdapter(null);
-        boolean share_added=false;
-        if (dlg_use_smb1.isChecked()) {
-            updateShareListSelectorAdapter(dialog, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, dlg_msg, adapter, scan_result.smb1_nt_status_desc, scan_result.share_item_list);
-        } else {
-            updateShareListSelectorAdapter(dialog, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, dlg_msg, adapter, scan_result.smb23_nt_status_desc, scan_result.share_item_list);
-        }
-        if (adapter.getCount()>0) ll_dlg_smb_share_name.setVisibility(LinearLayout.VISIBLE);
-        else ll_dlg_smb_share_name.setVisibility(LinearLayout.GONE);
-
-//        scanSmbServerEnableSmbScanSelectorOkButton(dialog);
-
-        if (dlg_msg.getText().length()==0 && adapter.getCount()>0) {
-            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name));
+        for(SmbServerScanShareInfo item:scan_result.share_item_list) {
+            if (item.smb_level.equals(smb_level)) {
+                adapter.add(item.share_name);
+            }
         }
 
         dlg_smb_share_name.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-    }
+//        scanSmbServerEnableSmbScanSelectorOkButton(dialog);
 
-    @SuppressWarnings("unchecked")
-    private void updateShareListSelectorAdapter(Dialog dialog, String smb_level,
-                                                TextView dlg_msg, ArrayAdapter adapter, String nt_status_desc, ArrayList<SmbServerScanShareInfo>sl) {
+        if (adapter.getCount()>0) ll_dlg_smb_share_name.setVisibility(LinearLayout.VISIBLE);
+        else ll_dlg_smb_share_name.setVisibility(LinearLayout.GONE);
+
+        final EditText dlg_smb_account_name=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
+        final EditText dlg_smb_account_password=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
+        String acct=dlg_smb_account_name.getText().toString();
+        String pswd=dlg_smb_account_password.getText().toString();
         if (nt_status_desc.equals(SMB_STATUS_ACCESS_DENIED)) {
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account));
         } else if (nt_status_desc.equals(SMB_STATUS_INVALID_LOGON_TYPE)) {
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account));
         } else if (nt_status_desc.equals(SMB_STATUS_UNKNOWN_ACCOUNT)) {
-            final EditText dlg_smb_account_name=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
-            final EditText dlg_smb_account_password=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
-            String acct=dlg_smb_account_name.getText().toString();
-            String pswd=dlg_smb_account_password.getText().toString();
-            if (acct.equals("") && pswd.equals("")) {
+            if (acct.equals("") || pswd.equals("")) {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified));
             } else {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password));
             }
+        } else if (nt_status_desc.equals(SMB_STATUS_UNTESTED_LOGIN)) {
+            // During scan for servers, no credentials are provided // On edit selected server settings
+            if (acct.equals("") || pswd.equals("")) {
+                dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty));
+            } else {
+                dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares));
+            }
         } else {
             dlg_msg.setText("");
         }
-        for(SmbServerScanShareInfo item:sl) {
-            if (item.smb_level.equals(smb_level)) {
-                adapter.add(item.share_name);
-            }
+
+        if (dlg_msg.getText().length()==0 && adapter.getCount()>0) {
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name));
         }
     }
 
@@ -743,7 +811,7 @@ public class SmbServerScanner {
                 }
                 if (CommonUtilities.isSmbHost(mUtil, addr, scan_port, 3500)) {
                     final String srv_name = CommonUtilities.getSmbHostName(mUtil, smb_level, addr);
-                    mScanResultList.add(createSmbServerShareInfo(null, null, null, addr, srv_name));
+                    mScanResultList.add(createSmbServerShareInfo(true, null, null, null, addr, srv_name));
 
                     handler.post(new Runnable() {// UI thread
                         @Override
@@ -785,37 +853,49 @@ public class SmbServerScanner {
         th.start();
     }
 
-    final private SmbServerScanResult createSmbServerShareInfo(String domain, String user, String pass, String address, String srv_name) {
-        SmbServerScanResult result=new SmbServerScanResult();
-        result.server_smb_ip_addr=address;
-        result.server_smb_name=srv_name;
+    final private SmbServerScanResult createSmbServerShareInfo(boolean is_scanner, String domain, String user, String pass, String address, String srv_name) {
+        SmbServerScanResult result = new SmbServerScanResult();
+        result.server_smb_ip_addr = address;
+        result.server_smb_name = srv_name;
 
         try {
-            JcifsAuth auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
-            result.smb1_nt_status_desc=isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, address);
+            JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
+            result.smb1_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, address);
             if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-                result.smb1_available=true;
-                ArrayList<SmbServerScanShareInfo> sl=createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, address);
-                result.share_item_list.addAll(sl);
+                result.smb1_available = true;
+                if (is_scanner) {
+                    // during scan, login is tried with no user/pass provided: do not try to refresh shares list
+                    // used to provide a proper error message when first selecting a server from scan results
+                    result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                } else  {
+                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, address);
+                    result.share_item_list.addAll(sl);
+                }
             }
         } catch(JcifsException e) {
             e.printStackTrace();
-            mUtil.addDebugMsg(1, "I", "JcifsException occured, error="+e.getMessage());
+            mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
         }
 
         try {
-            Properties prop=new Properties();
+            Properties prop = new Properties();
             prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-            JcifsAuth auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
-            result.smb23_nt_status_desc =isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, address);
+            JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
+            result.smb23_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, address);
             if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-                result.smb23_available =true;
-                ArrayList<SmbServerScanShareInfo> sl=createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, address);
-                result.share_item_list.addAll(sl);
+                result.smb23_available = true;
+                if (is_scanner) {
+                    // during scan, login is tried with no user/pass provided: do not try to refresh shares list
+                    // used to provide a proper error message when first selecting a server from scan results
+                    result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                } else {
+                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, address);
+                    result.share_item_list.addAll(sl);
+                }
             }
         } catch(JcifsException e) {
             e.printStackTrace();
-            mUtil.addDebugMsg(1, "I", "JcifsException occured, error="+e.getMessage());
+            mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
         }
 
         return result;
@@ -1033,6 +1113,7 @@ public class SmbServerScanner {
         public static final String SMB_STATUS_ACCESS_DENIED="Access denied";
         public static final String SMB_STATUS_INVALID_LOGON_TYPE="Invalid login type";
         public static final String SMB_STATUS_UNKNOWN_ACCOUNT="Unknown account or invalid password";
+        public static final String SMB_STATUS_UNTESTED_LOGIN="Login failed because no user or password were provided"; // during scan for servers, SMB_STATUS_UNKNOWN_ACCOUNT
         //    public String server_smb_level= "SMB1";
         public boolean smb1_available=false;
         public String smb1_nt_status_desc="";
