@@ -76,6 +76,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX;
@@ -346,7 +347,20 @@ public class TaskListUtils {
             @Override
             public void positiveResponse(Context arg0, Object[] arg1) {
                 //editshare.setText((String) arg1[0]);
-                String selected_share_name = (String) arg1[0];
+                //String selected_share_name = (String) arg1[0];
+                List<List<String>> index_and_shares_lists = (List<List<String>>) arg1[0];
+                List<String> selected_index_list = index_and_shares_lists.get(0);
+                List<String> shares_list = index_and_shares_lists.get(1);
+
+                int selected_index = 0;
+                try {
+                    selected_index = Integer.parseInt(selected_index_list.get(0));
+                } catch (NumberFormatException e) {
+                    mUtil.addDebugMsg(1, "E", "invokeSelectSmbShareDlg: Integer Expected. selected_index="+selected_index_list.get(0));
+                    selected_index = 0;
+                }
+
+                String selected_share_name = shares_list.get(selected_index);
                 p_ntfy.notifyToListener(true, new Object[]{new String[]{selected_share_name}});
             }
 
@@ -2740,15 +2754,15 @@ public class TaskListUtils {
             @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                final ArrayList<String> rows = new ArrayList<String>();
+                final ArrayList<String> shares_list = new ArrayList<String>();
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
-                for (TreeFilelistItem item:rfl) rows.add(item.getName());
-                if (rows.size() < 1) {
+                for (TreeFilelistItem item:rfl) shares_list.add(item.getName());
+                if (shares_list.size() < 1) {
                     mUtil.showCommonDialog(false, "W",
                             mActivity.getString(R.string.msgs_share_list_not_obtained), "", null);
                     return;
                 }
-                Collections.sort(rows, String.CASE_INSENSITIVE_ORDER);
+                Collections.sort(shares_list, String.CASE_INSENSITIVE_ORDER);
                 //カスタムダイアログの生成
                 final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2777,7 +2791,7 @@ public class TaskListUtils {
 
                 final ListView lv = (ListView) dialog.findViewById(R.id.list_view);
                 lv.setAdapter(new ArrayAdapter<String>(mActivity,
-                        android.R.layout.simple_list_item_single_choice, rows));
+                        android.R.layout.simple_list_item_single_choice, shares_list));
                 lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                 lv.setScrollingCacheEnabled(false);
                 lv.setScrollbarFadingEnabled(false);
@@ -2800,9 +2814,23 @@ public class TaskListUtils {
                     public void onClick(View v) {
                         dialog.dismiss();
                         SparseBooleanArray checked = lv.getCheckedItemPositions();
-                        for (int i = 0; i <= rows.size(); i++) {
+
+                        final List<List<String>> index_and_shares_lists = new ArrayList<List<String>>();
+                        final ArrayList<String> selected_index_list = new ArrayList<String>();
+                        for (int i = 0; i <= shares_list.size(); i++) {
                             if (checked.get(i) == true) {
-                                p_ntfy.notifyToListener(true, new Object[]{rows.get(i)});
+                                selected_index_list.add(String.valueOf(i));
+                                index_and_shares_lists.add(selected_index_list);
+                                index_and_shares_lists.add(shares_list);
+                                if (mUtil.getLogLevel() >= 3) {
+                                    for (List<String> list:index_and_shares_lists) {
+                                        for (String item:list) {
+                                            mUtil.addDebugMsg(3, "I", "selectRemoteShareDlg p_notify: " + item);
+                                        }
+                                    }
+                                }
+                                p_ntfy.notifyToListener(true, new Object[]{index_and_shares_lists});
+                                //p_ntfy.notifyToListener(true, new Object[]{shares_list.get(i)});
                                 break;
                             }
                         }
