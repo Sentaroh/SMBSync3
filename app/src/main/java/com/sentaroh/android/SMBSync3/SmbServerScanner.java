@@ -886,7 +886,7 @@ public class SmbServerScanner {
                     // used to provide a proper error message when first selecting a server from scan results
                     result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 } else  {
-                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, address);
+                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                     result.share_item_list.addAll(sl);
                 }
             }
@@ -907,7 +907,7 @@ public class SmbServerScanner {
                     // used to provide a proper error message when first selecting a server from scan results
                     result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 } else {
-                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, address);
+                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                     result.share_item_list.addAll(sl);
                 }
             }
@@ -928,13 +928,13 @@ public class SmbServerScanner {
         String host = smb_ip_addr;
         if (host.equals("")) host = smb_hostname;
 
-        JcifsFile[] share_file_list=null;
-        String server_status="";
-        try {
-            String url_prefix=CommonUtilities.buildSmbUrlAddressElement(host, port_number);
-            url_prefix = "smb://" + url_prefix;
-            mUtil.addDebugMsg(1, "I", "buildRemoteUrl url_prefix="+url_prefix);
+        String url_prefix=CommonUtilities.buildSmbUrlAddressElement(host, port_number);
+        url_prefix = "smb://" + url_prefix;
+        mUtil.addDebugMsg(1, "I", "buildRemoteUrl url_prefix="+url_prefix);
 
+        String server_status="";
+        JcifsFile[] share_file_list=null;
+        try {
             JcifsFile sf = new JcifsFile(url_prefix, auth);
             share_file_list=sf.listFiles();
             server_status="";
@@ -950,26 +950,38 @@ public class SmbServerScanner {
             else if (e.getNtStatus()==0xc0000022) server_status=SMB_STATUS_ACCESS_DENIED;  //
             else if (e.getNtStatus()==0xc000015b) server_status=SMB_STATUS_INVALID_LOGON_TYPE;  //
             else if (e.getNtStatus()==0xc000006d) server_status=SMB_STATUS_UNKNOWN_ACCOUNT;  //
-            mUtil.addDebugMsg(1,"I","isSmbServerAvailable level="+smb_level+", address="+address+
+            mUtil.addDebugMsg(1,"I","isSmbServerAvailable level="+smb_level+", url_prefix="+url_prefix+
                     ", statue="+server_status+ String.format(", status=0x%8h",e.getNtStatus())+", result="+result);
 
         } catch (MalformedURLException e) {
             //log.info("Test logon failed." , e);
             //e.printStackTrace();
         }
-        mUtil.addDebugMsg(1, "I", "isSmbServerAvailable level="+smb_level + ", smb_ip_addr="+smb_ip_addr + ", smb_hostname="+smb_hostname + ", result="+server_status);
+        mUtil.addDebugMsg(1, "I", "isSmbServerAvailable level="+smb_level + ", smb_ip_addr="+smb_ip_addr + ", smb_hostname="+smb_hostname + ", url_prefix="+url_prefix + ", result="+server_status);
         return server_status;
     }
         
-    final private ArrayList<SmbServerScanShareInfo> createSmbServerShareList(String smb_level, JcifsAuth auth, String address) {
+    final private ArrayList<SmbServerScanShareInfo> createSmbServerShareList(String smb_level, JcifsAuth auth, String address, String srv_name, String port) {
+        String smb_ip_addr = address==null? "":address;
+        String smb_hostname = srv_name==null? "":srv_name;
+        String port_number = port==null? "":port;
+
+        String host = smb_ip_addr;
+        if (host.equals("")) host = smb_hostname;
+
+        String url_prefix=CommonUtilities.buildSmbUrlAddressElement(host, port_number);
+        url_prefix = "smb://" + url_prefix;
+        //mUtil.addDebugMsg(1, "I", "buildRemoteUrl url_prefix="+url_prefix);
+
+        mUtil.addDebugMsg(1, "I", "createSmbServerShareList level="+smb_level + ", smb_ip_addr="+smb_ip_addr + ", smb_hostname="+smb_hostname + ", url_prefix="+url_prefix);
+
         ArrayList<SmbServerScanShareInfo> result=new ArrayList<SmbServerScanShareInfo>();
         JcifsFile[] share_file_list=null;
         try {
-            JcifsFile sf = new JcifsFile("smb://"+address, auth);
+            JcifsFile sf = new JcifsFile(url_prefix, auth);
             share_file_list=sf.listFiles();
-            mUtil.addDebugMsg(1,"I","createSmbServerShareList level="+smb_level+", address="+address);
             for(JcifsFile item:share_file_list) {
-                mUtil.addDebugMsg(1,"I","   Share="+item.getName());
+                mUtil.addDebugMsg(1, "I", "   Share="+item.getName());
                 SmbServerScanShareInfo share_item=new SmbServerScanShareInfo();
                 share_item.smb_level=smb_level;
                 share_item.share_name=item.getName().substring(0, item.getName().length()-1);
@@ -983,7 +995,7 @@ public class SmbServerScanner {
                 mUtil.addDebugMsg(1,"I","close() failed. Error=",e.getMessage());
             }
         } catch (JcifsException e) {
-            mUtil.addDebugMsg(1,"I","createSmbServerShareList level="+smb_level+", address="+address+
+            mUtil.addDebugMsg(1,"I","createSmbServerShareList level="+smb_level + ", url_prefix="+url_prefix +
                     String.format(", status=0x%8h",e.getNtStatus()));
 
         } catch (MalformedURLException e) {
