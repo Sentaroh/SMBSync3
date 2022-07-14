@@ -518,10 +518,11 @@ public class SmbServerScanner {
                 final String acct=dlg_smb_account_name.getText().toString().equals("")?null:dlg_smb_account_name.getText().toString();
                 final String pswd=dlg_smb_account_password.getText().toString().equals("")?null:dlg_smb_account_password.getText().toString();
                 final String port=dlg_smb_port_number.getText().toString();
+                final String smb_level=dlg_use_smb1.isChecked()? SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1:SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
                 Thread th=new Thread(){
                     @Override
                     public void run() {
-                        SmbServerScanResult result= createSmbServerShareInfo(false, null, acct, pswd, scan_result.server_smb_ip_addr, scan_result.server_smb_name, port);
+                        SmbServerScanResult result= createSmbServerShareInfo(false, smb_level, null, acct, pswd, scan_result.server_smb_ip_addr, scan_result.server_smb_name, port);
                         scan_result.smb1_nt_status_desc=result.smb1_nt_status_desc;
                         scan_result.smb1_available=result.smb1_available;
                         scan_result.smb23_nt_status_desc=result.smb23_nt_status_desc;
@@ -602,6 +603,7 @@ public class SmbServerScanner {
             smb_level = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
             //updateShareListSelectorAdapter(dialog, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, dlg_msg, adapter, scan_result.smb23_nt_status_desc, scan_result.share_item_list);
         }
+        mUtil.addDebugMsg(1, "I", "buildShareListSelectorView: nt_status_desc="+nt_status_desc);
 
         adapter.clear();
         dlg_smb_share_name.setAdapter(null);
@@ -639,6 +641,9 @@ public class SmbServerScanner {
             } else {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares));
             }
+        } else if (nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+            // on refresh shares if server cannot be reached because server params (port, SMB level) were edited in the dialog and differ now from what scan result returned
+            dlg_msg.setText("Connection failed: ensure server is online or specify the proper port and SMB protocol");
         } else {
             dlg_msg.setText("");
         }
@@ -828,7 +833,7 @@ public class SmbServerScanner {
                 }
                 if (found) {
                     final String srv_name = CommonUtilities.getSmbHostName(mUtil, smb_level, addr);
-                    mScanResultList.add(createSmbServerShareInfo(true, null, null, null, addr, srv_name, ports[i]));
+                    mScanResultList.add(createSmbServerShareInfo(true, smb_level, null, null, null, addr, srv_name, ports[i]));
 
                     handler.post(new Runnable() {// UI thread
                         @Override
@@ -870,7 +875,7 @@ public class SmbServerScanner {
         th.start();
     }
 
-    final private SmbServerScanResult createSmbServerShareInfo(boolean is_scanner, String domain, String user, String pass, String address, String srv_name, String port) {
+    final private SmbServerScanResult createSmbServerShareInfo(boolean is_scanner, String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
         SmbServerScanResult result = new SmbServerScanResult();
         result.server_smb_ip_addr = address==null? "":address;
         result.server_smb_name = srv_name==null? "":srv_name;
@@ -885,10 +890,12 @@ public class SmbServerScanner {
                     // during scan, login is tried with no user/pass provided: do not try to refresh shares list
                     // used to provide a proper error message when first selecting a server from scan results
                     result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                } else  {
+                } else if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
                     ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                     result.share_item_list.addAll(sl);
                 }
+            } else {
+                result.smb1_available = false;
             }
         } catch(JcifsException e) {
             e.printStackTrace();
@@ -906,10 +913,12 @@ public class SmbServerScanner {
                     // during scan, login is tried with no user/pass provided: do not try to refresh shares list
                     // used to provide a proper error message when first selecting a server from scan results
                     result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                } else {
+                } else if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) {
                     ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                     result.share_item_list.addAll(sl);
                 }
+            } else {
+                result.smb23_available = false;
             }
         } catch(JcifsException e) {
             e.printStackTrace();
@@ -950,9 +959,9 @@ public class SmbServerScanner {
             else if (e.getNtStatus()==0xc0000022) server_status=SMB_STATUS_ACCESS_DENIED;  //
             else if (e.getNtStatus()==0xc000015b) server_status=SMB_STATUS_INVALID_LOGON_TYPE;  //
             else if (e.getNtStatus()==0xc000006d) server_status=SMB_STATUS_UNKNOWN_ACCOUNT;  //
+            else server_status=Integer.toHexString(e.getNtStatus());
             mUtil.addDebugMsg(1,"I","isSmbServerAvailable level="+smb_level+", url_prefix="+url_prefix+
-                    ", statue="+server_status+ String.format(", status=0x%8h",e.getNtStatus())+", result="+result);
-
+                    ", status="+server_status+ String.format(", status=0x%8h",e.getNtStatus())+", result="+result);
         } catch (MalformedURLException e) {
             //log.info("Test logon failed." , e);
             //e.printStackTrace();
