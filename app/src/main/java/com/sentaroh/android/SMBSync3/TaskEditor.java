@@ -2962,7 +2962,7 @@ public class TaskEditor extends DialogFragment {
 
     private String getSmbSelectedProtocol(Spinner spinner) {
         if (spinner.getSelectedItem()==null) {
-            return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
+            return SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
         }
         return (String)spinner.getSelectedItem();
     }
