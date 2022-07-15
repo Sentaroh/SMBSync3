@@ -308,6 +308,9 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Connexion échouée. Le nom d\'utilisateur ou le mot de passe ne sont pas spécifiés. Saisisez le compte et le mot de passe, puis appuyer sur \"Actualiser les dossiers partagés\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty">Saisisez le nom d\'utilisateur et le mot de passe, puis appuyer sur \"Actualiser les dossiers partagés\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares">Appuyer sur \"Actualiser les dossiers partagés\" et sélectionnez un partage.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error">Connection failed: ensure server is online or specify the proper port and SMB protocol</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty">No shares found. Try another account or ensure the account has the proper permissions to list the shares</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error">Server does not support any SMB level. Please restart scan and report error to author</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Choisir les paramètres du serveur SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Actualiser les dossiers partagés</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">Compte et mot de passe du serveur SMB</string>

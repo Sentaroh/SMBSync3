@@ -100,6 +100,7 @@
                             tools:ignore="HardcodedText,RtlHardcoded" />
 
                     <RadioGroup
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb_rg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
@@ -170,6 +171,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password_view"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

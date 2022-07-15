@@ -51,6 +51,7 @@ import android.widget.TextView;
 
 import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.*;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
 import com.sentaroh.android.JcifsFile2.JcifsException;
 import com.sentaroh.android.JcifsFile2.JcifsFile;
@@ -414,9 +415,6 @@ public class SmbServerScanner {
         dlg_use_smb23.setChecked(scan_result.smb23_available);
         if (!scan_result.smb23_available) dlg_use_smb1.setChecked(scan_result.smb1_available);
 
-        CommonUtilities.setViewEnabled(mActivity, dlg_use_smb1, scan_result.smb1_available);
-        CommonUtilities.setViewEnabled(mActivity, dlg_use_smb23, scan_result.smb23_available);
-
         buildShareListSelectorView(dialog, scan_result, share_list_adapter);
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
@@ -583,35 +581,57 @@ public class SmbServerScanner {
 
     private void buildShareListSelectorView(Dialog dialog, SmbServerScanResult scan_result, ArrayAdapter adapter) {
         final TextView dlg_msg=(TextView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
+        final ScrollView server_settings_scroll_view = (ScrollView) dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
+        final RadioButton dlg_use_ip_addr=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_address);
+        final RadioButton dlg_use_host_name=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_hostname);
         final RadioButton dlg_use_smb1=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1);
         final RadioButton dlg_use_smb23=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23);
+        final EditText dlg_smb_port_number=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_port_number);
+        final EditText dlg_smb_account_name=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
+        final EditText dlg_smb_account_password=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
+        final TextInputLayout til_smb_account_password = (TextInputLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
+        final Button btn_refresh=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_refresh_share_list);
         final LinearLayout ll_dlg_smb_share_name=(LinearLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
         final ListView dlg_smb_share_name=(ListView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
+        final Button btn_ok=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
 
         String nt_status_desc = "";
         String smb_level = "";
+        CommonUtilities.setViewEnabled(mActivity, dlg_use_smb1, scan_result.smb1_available);
+        CommonUtilities.setViewEnabled(mActivity, dlg_use_smb23, scan_result.smb23_available);
         if (dlg_use_smb1.isChecked()) {
             nt_status_desc = scan_result.smb1_nt_status_desc;
             smb_level = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1;
-            //updateShareListSelectorAdapter(dialog, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, dlg_msg, adapter, scan_result.smb1_nt_status_desc, scan_result.share_item_list);
         } else if (dlg_use_smb23.isChecked()) {
             nt_status_desc = scan_result.smb23_nt_status_desc;
             smb_level = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
-            //updateShareListSelectorAdapter(dialog, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, dlg_msg, adapter, scan_result.smb23_nt_status_desc, scan_result.share_item_list);
         } else {
             // Normally, if no SMB level protocol was found, the server cannot be selected and we should'nt have a situation
             // where both SMB level radio buttons are unchecked and disabled. However, we account for this situation
-            final ScrollView server_settings_scroll_view = (ScrollView) dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
-            final Button btn_ok=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
-            dlg_msg.setText("No SMB level available, restart scan");
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error));
+
+            //server_settings_scroll_view.setVisibility(ScrollView.GONE);
             CommonUtilities.setViewEnabled(mActivity, server_settings_scroll_view, false);
+            CommonUtilities.setViewEnabled(mActivity, dlg_use_ip_addr, false);
+            CommonUtilities.setViewEnabled(mActivity, dlg_use_host_name, false);
+            CommonUtilities.setViewEnabled(mActivity, dlg_use_smb1, false);
+            CommonUtilities.setViewEnabled(mActivity, dlg_use_smb23, false);
+            CommonUtilities.setViewEnabled(mActivity, dlg_smb_port_number, false);
+            CommonUtilities.setViewEnabled(mActivity, dlg_smb_account_name, false);
+            //CommonUtilities.setViewEnabled(mActivity, dlg_smb_account_password, false);
+            CommonUtilities.setViewEnabled(mActivity, til_smb_account_password, false);
+            CommonUtilities.setViewEnabled(mActivity, btn_refresh, false);
+
             ll_dlg_smb_share_name.setVisibility(LinearLayout.GONE);
+
             CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-            mUtil.addDebugMsg(1, "E", "This should not happen");
+
+            mUtil.addDebugMsg(1, "E", "buildShareListSelectorView Exception: No SMB level enabled. address="+scan_result.server_smb_ip_addr + " , port="+scan_result.server_smb_port_number +
+                    " , smb1_nt_status_desc="+scan_result.smb1_nt_status_desc + " , smb23_nt_status_desc"+scan_result.smb23_nt_status_desc);
             return;
         }
-        
-        mUtil.addDebugMsg(1, "I", "buildShareListSelectorView: nt_status_desc="+nt_status_desc);
+
+        mUtil.addDebugMsg(1, "I", "buildShareListSelectorView: smb_level="+smb_level + " , nt_status_desc="+nt_status_desc);
 
         adapter.clear();
         dlg_smb_share_name.setAdapter(null);
@@ -628,8 +648,6 @@ public class SmbServerScanner {
         if (adapter.getCount() > 0) ll_dlg_smb_share_name.setVisibility(LinearLayout.VISIBLE);
         else ll_dlg_smb_share_name.setVisibility(LinearLayout.GONE);
 
-        final EditText dlg_smb_account_name=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
-        final EditText dlg_smb_account_password=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
         String acct=dlg_smb_account_name.getText().toString();
         String pswd=dlg_smb_account_password.getText().toString();
         if (nt_status_desc.equals(SMB_STATUS_ACCESS_DENIED)) {
@@ -643,17 +661,18 @@ public class SmbServerScanner {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password));
             }
         } else if (nt_status_desc.equals(SMB_STATUS_UNTESTED_LOGIN)) {
-            // During scan for servers, no credentials are provided // On edit selected server settings
+            // During scan for servers, no credentials are provided
+            // Also, on edit selected server settings
             if (acct.equals("") || pswd.equals("")) {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty));
             } else {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares));
             }
         } else if (nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-            // on refresh shares if server cannot be reached because server params (port, SMB level) were edited in the dialog and differ now from what scan result returned
-            dlg_msg.setText("Connection failed: ensure server is online or specify the proper port and SMB protocol");
+            // on refresh shares, server cannot be reached because server params (port, SMB level) were edited in the dialog and differ now from what scan result returned
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error));
         } else if (adapter.getCount() <= 0) {
-            dlg_msg.setText("No shares found to select");
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty));
         } else {
             dlg_msg.setText("");
         }
@@ -788,12 +807,8 @@ public class SmbServerScanner {
         th.start();
     }
 
-    private void closeSmbServerScanProgressDlg(
-            final Dialog dialog,
-            final NotifyEvent p_ntfy,
-            final ListView lv_ipaddr,
-            final SmbServerScanAdapter adap,
-            final TextView tvmsg) {
+    private void closeSmbServerScanProgressDlg(final Dialog dialog, final NotifyEvent p_ntfy, final ListView lv_ipaddr,
+                                               final SmbServerScanAdapter adap, final TextView tvmsg) {
         final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
         final LinearLayout ll_prog = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
         final Button btn_scan = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
@@ -817,8 +832,9 @@ public class SmbServerScanner {
                                           final SmbServerScanAdapter adap,
                                           final TextView tvmsg,
                                           final String addr,
-//                                              final ArrayList<SmbServerScanAdapter.NetworkScanListItem> ipAddressList,
-                                          final String scan_port, final String scan_smb_level) {
+                                          //final ArrayList<SmbServerScanAdapter.NetworkScanListItem> ipAddressList,
+                                          final String scan_port,
+                                          final String scan_smb_level) {
         final String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress);
         if (!tc.isEnabled()) return;
         Thread th = new Thread(new Runnable() {
@@ -909,6 +925,7 @@ public class SmbServerScanner {
 
         if (scan_smbv1) {
             try {
+                result.scan_for_smb1 = true;
                 JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
                 result.smb1_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                 if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
@@ -925,6 +942,7 @@ public class SmbServerScanner {
 
         if (scan_smbv23) {
             try {
+                result.scan_for_smb23 = true;
                 Properties prop = new Properties();
                 prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
                 JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
@@ -1261,10 +1279,16 @@ public class SmbServerScanner {
         public static final String SMB_STATUS_INVALID_LOGON_TYPE="Invalid login type";
         public static final String SMB_STATUS_UNKNOWN_ACCOUNT="Unknown account or invalid password";
         public static final String SMB_STATUS_UNTESTED_LOGIN="Login failed because no user or password were provided"; // during scan for servers, SMB_STATUS_UNKNOWN_ACCOUNT
-        //    public String server_smb_level= "SMB1";
+
+        // True if the scan query that listed the server was started with the corresponding SMB level selected (SMBv1, SMBv23 or "SMBv1 & SMBv23")
+        public boolean scan_for_smb1=false;
+        public boolean scan_for_smb23=false;
+
+        // true if the found server supports the corresponding SMB level
         public boolean smb1_available=false;
-        public String smb1_nt_status_desc="";
         public boolean smb23_available =false;
+
+        public String smb1_nt_status_desc="";
         public String smb23_nt_status_desc ="";
         public String server_smb_name= "";
         public String server_smb_ip_addr= "";
@@ -1356,10 +1380,50 @@ public class SmbServerScanner {
                 }
                 holder.tv_name.setText(o.server_smb_name + sep + smb_level);
                 holder.tv_addr.setText(o.server_smb_ip_addr);
-                if (o.server_smb_name.equals("")) holder.tv_name.setEnabled(false);
-                else holder.tv_name.setEnabled(true);
+                //if (o.server_smb_name.equals("")) holder.tv_name.setEnabled(false);
+                //else holder.tv_name.setEnabled(true);
+                if (o.scan_for_smb1 && !o.scan_for_smb23) {
+                    if (o.smb1_available) {
+                        holder.tv_name.setEnabled(true);
+                        holder.tv_addr.setEnabled(true);
+                    } else {
+                        holder.tv_name.setEnabled(false);
+                        holder.tv_addr.setEnabled(false);
+                    }
+                }
+                if (o.scan_for_smb23 && !o.scan_for_smb1) {
+                    if (o.smb23_available) {
+                        holder.tv_name.setEnabled(true);
+                        holder.tv_addr.setEnabled(true);
+                    } else {
+                        holder.tv_name.setEnabled(false);
+                        holder.tv_addr.setEnabled(false);
+                    }
+                }
             }
             return v;
+        }
+
+        // the method returns true if all the list items can be selected
+        @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
+
+        // the method returns true for a particular list item position so that the list item at that position can be selected
+        // On scan result, if we select SMBv1 and results have an SMBv2 only server, do not allow the server to be selectable
+        // Same if we select SMBv23 and results have an SMBv1 only server, do not allow the server to be selectable
+        @Override
+        public boolean isEnabled(int position) {
+            final SmbServerScanResult o = getItem(position);
+            boolean enabled = true;
+            if (o.scan_for_smb1 && !o.scan_for_smb23) {
+                if (!o.smb1_available) enabled = false;
+            }
+            if (o.scan_for_smb23 && !o.scan_for_smb1) {
+                if (!o.smb23_available) enabled = false;
+            }
+            return enabled;
         }
 
         class ViewHolder {

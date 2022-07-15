@@ -308,6 +308,9 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Connection failed. No account name or password specified. Enter the correct credentials then click the \"Refresh share list\" button.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty">Enter an account name and password then click the \"Refresh share list\" button.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares">Click \"Refresh share list\" button and select a share.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error">Connection failed: ensure server is online or specify the proper port and SMB protocol</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty">No shares found. Try another account or ensure the account has the proper permissions to list the shares</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error">Server does not support any SMB level. Please restart scan and report error to author</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Scelta dei parametri del server SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Aggiorna l\'elenco delle azioni</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">Account e password del server SMB</string>
