@@ -670,7 +670,8 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">Anfangsadresse ist größer als Endadresse.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">Die Endadresse sollte größer als die Anfangsadresse sein.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Es ist nicht möglich, andere als private Adressen zu suchen.</string>
-        <string name="msgs_scan_dlg_smb_protocol">Scan library</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan protocol</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Select SMB protocol</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
         <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">Die Suche ist nicht möglich, da WiFi ausgeschaltet ist. Bitte schalten Sie WiFi ein, um nach Ihrem SMB-Server zu suchen.</string>

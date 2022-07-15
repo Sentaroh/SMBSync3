@@ -666,7 +666,8 @@
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">起始地址大于结束地址。</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">结束地址应大于起始地址。</string>
         <string name="msgs_ip_address_range_dlg_not_private">无法搜索除私人地址以外的其他地址。</string>
-        <string name="msgs_scan_dlg_smb_protocol">Scan library</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan protocol</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Select SMB protocol</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
         <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">由于WiFi关闭，无法搜索。请打开WiFi搜索SMB服务器。</string>

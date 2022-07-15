@@ -670,7 +670,8 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">L\'indirizzo finale deve essere da 2 a 254.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">L\'indirizzo finale deve essere più grande dell\'indirizzo iniziale.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Impossibile effettuare una ricerca diversa da quella degli indirizzi privati.</string>
-        <string name="msgs_scan_dlg_smb_protocol">Scan library</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan protocol</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Select SMB protocol</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
         <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">La ricerca non è possibile perché il WiFi è disattivato. Attivare il WiFi per cercare il server SMB.</string>

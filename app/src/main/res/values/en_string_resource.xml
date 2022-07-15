@@ -671,7 +671,8 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">End address must be 2 to 254.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">The end address should be larger than the start address.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Unable to search other than private addresses.</string>
-        <string name="msgs_scan_dlg_smb_protocol">Scan library</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan protocol</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Select SMB protocol</string>
         <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
         <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">Search is not possible because WiFi is off. Please turn on WiFi to search for your SMB server.</string>

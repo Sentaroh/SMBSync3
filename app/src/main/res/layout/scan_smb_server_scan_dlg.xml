@@ -139,38 +139,34 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:orientation="vertical">
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:orientation="horizontal">
 
                         <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="5dp"
-                                android:gravity="left"
-                                android:text="@string/msgs_scan_dlg_smb_protocol"
-                                android:textAppearance="?android:attr/textAppearanceLarge" />
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="left"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:ellipsize="middle"
+                            android:text="@string/msgs_scan_dlg_smb_protocol"
+                            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-                        <RadioGroup
-                            android:id="@+id/scan_smb_scanner_dlg_smb_library_id_rg"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="20dp"
-                            android:orientation="horizontal">
-                            <RadioButton
-                                    android:id="@+id/scan_smb_scanner_dlg_smb_library_smb1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                android:text="SMBv1"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
-                            <RadioButton
-                                    android:id="@+id/scan_smb_scanner_dlg_smb_library_smb23"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                android:text="SMBv2/3"
-                                android:textAppearance="?android:attr/textAppearanceMedium" />
-                        </RadioGroup>
+                        <Spinner
+                            android:id="@+id/scan_smb_scanner_dlg_smb_protocol_spinner"
+                            style="?android:attr/spinnerStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="0"
+                            android:layout_gravity="center_vertical"
+                            android:minHeight="36dp"
+                            android:singleLine="true"
+                            android:ellipsize="middle"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
                     </LinearLayout>
 
                     <LinearLayout
