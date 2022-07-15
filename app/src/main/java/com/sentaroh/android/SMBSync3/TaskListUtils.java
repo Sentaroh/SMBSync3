@@ -855,45 +855,45 @@ public class TaskListUtils {
         final Dialog dialog=CommonDialog.showProgressSpinIndicator(mActivity);
         dialog.show();
         Thread th=new Thread(){
-             @Override
-             public void run() {
-                  try {
-                      JcifsAuth auth=null;
-                      if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                          auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                      } else {
-                          auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                      }
-                      JcifsFile jf=new JcifsFile(new_dir, auth);
-                      if (jf.exists()) p_ntfy.notifyToListener(true, new Object[] {true});
-                      else p_ntfy.notifyToListener(true, new Object[] {false});
-                  } catch (MalformedURLException e) {
-                      e.printStackTrace();
-                      mUtil.addDebugMsg(1, "E", e.toString());
-                      p_ntfy.notifyToListener(false, new Object[]{e.toString()});
-                  } catch (JcifsException e) {
-                      e.printStackTrace();
-                      String suggest_msg=getJcifsErrorSugestionMessage(mActivity, MiscUtil.getStackTraceString(e));
-                      String cause="";
-                      String un="";
-                      if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
-                          if (ssi.serverAccountName!=null) un=(ssi.serverAccountName.equals(""))?"":"????????";
-                          else un=null;
-                      } else {
-                          un=ssi.serverAccountName;
-                      }
-                      String[] e_msg= JcifsUtil.analyzeNtStatusCode(e, new_dir, un);
-                      if (e.getCause()!=null) {
-                          String tc=e.getCause().toString();
-                          cause=tc.substring(tc.indexOf(":")+1);
-                          e_msg[0]=cause+"\n"+e_msg[0];
-                      }
-                      String error_msg=suggest_msg.equals("")?e_msg[0]:suggest_msg+"\n"+e_msg[0];
-                      mUtil.addDebugMsg(1, "E", error_msg);
-                      p_ntfy.notifyToListener(false, new Object[]{error_msg});
-                  }
-                  dialog.dismiss();
-             }
+            @Override
+            public void run() {
+                try {
+                    JcifsAuth auth=null;
+                    if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+                        auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                    } else {
+                        auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                    }
+                    JcifsFile jf=new JcifsFile(new_dir, auth);
+                    if (jf.exists()) p_ntfy.notifyToListener(true, new Object[] {true});
+                    else p_ntfy.notifyToListener(true, new Object[] {false});
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    mUtil.addDebugMsg(1, "E", e.toString());
+                    p_ntfy.notifyToListener(false, new Object[]{e.toString()});
+                } catch (JcifsException e) {
+                    e.printStackTrace();
+                    String suggest_msg=getJcifsErrorSugestionMessage(mActivity, MiscUtil.getStackTraceString(e));
+                    String cause="";
+                    String un="";
+                    if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+                        if (ssi.serverAccountName!=null) un=(ssi.serverAccountName.equals(""))?"":"????????";
+                        else un=null;
+                    } else {
+                        un=ssi.serverAccountName;
+                    }
+                    String[] e_msg= JcifsUtil.analyzeNtStatusCode(e, new_dir, un);
+                    if (e.getCause()!=null) {
+                        String tc=e.getCause().toString();
+                        cause=tc.substring(tc.indexOf(":")+1);
+                        e_msg[0]=cause+"\n"+e_msg[0];
+                    }
+                    String error_msg=suggest_msg.equals("")?e_msg[0]:suggest_msg+"\n"+e_msg[0];
+                    mUtil.addDebugMsg(1, "E", error_msg);
+                    p_ntfy.notifyToListener(false, new Object[]{error_msg});
+                }
+                dialog.dismiss();
+            }
         };
         th.start();
     }

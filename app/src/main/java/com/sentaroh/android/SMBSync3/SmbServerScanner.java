@@ -498,31 +498,15 @@ public class SmbServerScanner {
             }
         });
 
+        final Handler hndl=new Handler();
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final NotifyEvent ntfy=new NotifyEvent(mActivity);
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        buildShareListSelectorView(dialog, scan_result, share_list_adapter);
-                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-                    }
-
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {
-
-                    }
-                });
-                final Handler hndl=new Handler();
-                final String acct=dlg_smb_account_name.getText().toString().equals("")?null:dlg_smb_account_name.getText().toString();
-                final String pswd=dlg_smb_account_password.getText().toString().equals("")?null:dlg_smb_account_password.getText().toString();
-                final String port=dlg_smb_port_number.getText().toString();
-                final String smb_level=dlg_use_smb1.isChecked()? SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1:SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
-                Thread th=new Thread(){
-                    @Override
-                    public void run() {
-                        SmbServerScanResult result= createSmbServerShareInfo(false, smb_level, null, acct, pswd, scan_result.server_smb_ip_addr, scan_result.server_smb_name, port);
+                    public void positiveResponse(Context context, Object[] arg1) {
+                        SmbServerScanResult result = (SmbServerScanResult) arg1[0];
                         scan_result.smb1_nt_status_desc=result.smb1_nt_status_desc;
                         scan_result.smb1_available=result.smb1_available;
                         scan_result.smb23_nt_status_desc=result.smb23_nt_status_desc;
@@ -532,15 +516,20 @@ public class SmbServerScanner {
                         //dlg_smb_port_number.setText(scan_result.server_smb_port_number);
                         scan_result.share_item_list.clear();
                         scan_result.share_item_list.addAll(result.share_item_list);
-                        hndl.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                ntfy.notifyToListener(true, null);
-                            }
-                        });
+                        buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                        CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                     }
-                };
-                th.start();
+
+                    @Override
+                    public void negativeResponse(Context context, Object[] objects) {
+
+                    }
+                });
+                final String acct=dlg_smb_account_name.getText().toString().equals("")?null:dlg_smb_account_name.getText().toString();
+                final String pswd=dlg_smb_account_password.getText().toString().equals("")?null:dlg_smb_account_password.getText().toString();
+                final String port=dlg_smb_port_number.getText().toString();
+                final String smb_level=dlg_use_smb1.isChecked()? SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1:SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
+                createSmbServerShareInfo(ntfy, smb_level, null, acct, pswd, scan_result.server_smb_ip_addr, scan_result.server_smb_name, port);
             }
         });
 
@@ -833,7 +822,7 @@ public class SmbServerScanner {
                 }
                 if (found) {
                     final String srv_name = CommonUtilities.getSmbHostName(mUtil, smb_level, addr);
-                    mScanResultList.add(createSmbServerShareInfo(true, smb_level, null, null, null, addr, srv_name, ports[i]));
+                    mScanResultList.add(createSmbServerInfo(smb_level, null, null, null, addr, srv_name, ports[i]));
 
                     handler.post(new Runnable() {// UI thread
                         @Override
@@ -875,7 +864,7 @@ public class SmbServerScanner {
         th.start();
     }
 
-    final private SmbServerScanResult createSmbServerShareInfo(boolean is_scanner, String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
+    final private SmbServerScanResult createSmbServerInfo(String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
         SmbServerScanResult result = new SmbServerScanResult();
         result.server_smb_ip_addr = address==null? "":address;
         result.server_smb_name = srv_name==null? "":srv_name;
@@ -886,14 +875,7 @@ public class SmbServerScanner {
             result.smb1_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
             if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
                 result.smb1_available = true;
-                if (is_scanner) {
-                    // during scan, login is tried with no user/pass provided: do not try to refresh shares list
-                    // used to provide a proper error message when first selecting a server from scan results
-                    result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                } else if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
-                    result.share_item_list.addAll(sl);
-                }
+                result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
             } else {
                 result.smb1_available = false;
             }
@@ -909,14 +891,7 @@ public class SmbServerScanner {
             result.smb23_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
             if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
                 result.smb23_available = true;
-                if (is_scanner) {
-                    // during scan, login is tried with no user/pass provided: do not try to refresh shares list
-                    // used to provide a proper error message when first selecting a server from scan results
-                    result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                } else if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) {
-                    ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
-                    result.share_item_list.addAll(sl);
-                }
+                result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
             } else {
                 result.smb23_available = false;
             }
@@ -926,6 +901,65 @@ public class SmbServerScanner {
         }
 
         return result;
+    }
+
+    final private void createSmbServerShareInfo(final NotifyEvent p_ntfy, String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
+        SmbServerScanResult result = new SmbServerScanResult();
+        result.server_smb_ip_addr = address==null? "":address;
+        result.server_smb_name = srv_name==null? "":srv_name;
+        result.server_smb_port_number = port==null? "":port;
+
+        final Dialog dialog=CommonDialog.showProgressSpinIndicator(mActivity);
+        dialog.show();
+        final Handler hndl=new Handler();
+        Thread th=new Thread(){
+            @Override
+            public void run() {
+                try {
+                    JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
+                    result.smb1_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                    if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                        result.smb1_available = true;
+                        if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+                            ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                            result.share_item_list.addAll(sl);
+                        }
+                    } else {
+                        result.smb1_available = false;
+                    }
+                } catch(JcifsException e) {
+                    e.printStackTrace();
+                    mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
+                }
+
+                try {
+                    Properties prop = new Properties();
+                    prop.setProperty("jcifs.smb.client.responseTimeout", "3000");
+                    JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
+                    result.smb23_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                    if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                        result.smb23_available = true;
+                        if (smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) {
+                            ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                            result.share_item_list.addAll(sl);
+                        }
+                    } else {
+                        result.smb23_available = false;
+                    }
+                } catch(JcifsException e) {
+                    e.printStackTrace();
+                    mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
+                }
+                hndl.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        p_ntfy.notifyToListener(true, new Object[]{result});
+                        dialog.dismiss();
+                    }
+                });
+            }
+        };
+        th.start();
     }
 
     final private String isSmbServerAvailable(String smb_level, JcifsAuth auth, String address, String srv_name, String port) {
