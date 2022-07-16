@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scan_remote_ntwk_dlg_view"
     android:layout_width="match_parent"
@@ -139,6 +140,59 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginRight="5dp"
+                            android:orientation="horizontal">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout 
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/scan_smb_scanner_dlg_smb_protocol_spinner_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="left"
+                                app:layout_constrainedWidth="true"
+                                app:layout_constraintWidth_min="100dp"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@+id/scan_smb_scanner_dlg_smb_protocol_spinner"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text="@string/msgs_scan_dlg_smb_protocol"
+                                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                            <Spinner
+                                android:id="@+id/scan_smb_scanner_dlg_smb_protocol_spinner"
+                                style="?android:attr/spinnerStyle"
+                                app:layout_constraintHeight_min="36dp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                app:layout_constraintWidth_min="100dp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                android:contentDescription="@string/msgs_scan_dlg_smb_level_spinner_dlg_title"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.5"
+                                app:layout_constraintStart_toEndOf="@+id/scan_smb_scanner_dlg_smb_protocol_spinner_text"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:textAppearance="?android:attr/textAppearanceMedium" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
+<!--
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:orientation="horizontal">
@@ -150,7 +204,7 @@
                             android:gravity="left"
                             android:layout_weight="1"
                             android:singleLine="true"
-                            android:ellipsize="middle"
+                            android:ellipsize="end"
                             android:text="@string/msgs_scan_dlg_smb_protocol"
                             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -164,22 +218,21 @@
                             android:layout_gravity="center_vertical"
                             android:minHeight="36dp"
                             android:singleLine="true"
-                            android:ellipsize="middle"
+                            android:ellipsize="end"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
-
                     </LinearLayout>
-
+-->
                     <LinearLayout
                         android:id="@+id/scan_smb_server_scan_dlg_port_option"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
                             android:gravity="left"
                             android:text="@string/scan_smb_server_scan_dlg_port_number_title"
                             android:textAppearance="?android:attr/textAppearanceLarge" />
