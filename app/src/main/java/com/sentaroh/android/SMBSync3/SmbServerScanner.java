@@ -582,6 +582,7 @@ public class SmbServerScanner {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                p_ntfy.notifyToListener(false, null);
                 dialog.dismiss();
             }
         });
