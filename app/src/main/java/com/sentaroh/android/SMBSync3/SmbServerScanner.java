@@ -31,6 +31,7 @@ import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -485,6 +486,7 @@ public class SmbServerScanner {
             }
         });
 
+        final ThreadCtrl tc = new ThreadCtrl();
         dlg_smb_account_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -494,11 +496,28 @@ public class SmbServerScanner {
 
             @Override
             public void afterTextChanged(Editable s) {
-                scan_result.share_item_list.clear();
-                scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
-                CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                if (!tc.isEnabled()) {
+                    scan_result.share_item_list.clear();
+                    scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                    scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                    buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                    CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                }
+            }
+        });
+
+        final TextInputLayout til_smb_account_password = (TextInputLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
+        til_smb_account_password.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tc.setEnabled(); // do not trigger dlg_smb_account_password.addTextChangedListener.afterTextChanged()
+                tc.setThreadResultSuccess();
+                if (dlg_smb_account_password.getTransformationMethod()!=null) {
+                    dlg_smb_account_password.setTransformationMethod(null);
+                } else {
+                    dlg_smb_account_password.setTransformationMethod(new PasswordTransformationMethod());
+                }
+                tc.setDisabled();
             }
         });
 
