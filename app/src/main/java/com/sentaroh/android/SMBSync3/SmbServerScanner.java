@@ -521,7 +521,6 @@ public class SmbServerScanner {
             }
         });
 
-        final Handler hndl=new Handler();
         btn_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -946,7 +945,7 @@ public class SmbServerScanner {
             try {
                 result.scan_for_smb1 = true;
                 JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
-                result.smb1_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                result.smb1_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                 if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
                     result.smb1_available = true;
                     result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
@@ -965,7 +964,7 @@ public class SmbServerScanner {
                 Properties prop = new Properties();
                 prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
                 JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
-                result.smb23_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                result.smb23_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                 if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
                     result.smb23_available = true;
                     result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
@@ -1008,7 +1007,7 @@ public class SmbServerScanner {
                 if (scan_smbv1) {
                     try {
                         JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
-                        result.smb1_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                        result.smb1_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                         if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
                             result.smb1_available = true;
                             ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
@@ -1027,7 +1026,7 @@ public class SmbServerScanner {
                         Properties prop = new Properties();
                         prop.setProperty("jcifs.smb.client.responseTimeout", "3000");
                         JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
-                        result.smb23_nt_status_desc = isSmbServerAvailable(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                        result.smb23_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
                         if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
                             result.smb23_available = true;
                             ArrayList<SmbServerScanShareInfo> sl = createSmbServerShareList(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
@@ -1053,7 +1052,7 @@ public class SmbServerScanner {
         th.start();
     }
 
-    final private String isSmbServerAvailable(String smb_level, JcifsAuth auth, String address, String srv_name, String port) {
+    final private String isSmbServerAvailable(JcifsAuth auth, String address, String srv_name, String port) {
         boolean result=false;
         String smb_ip_addr = address==null? "":address;
         String smb_hostname = srv_name==null? "":srv_name;
@@ -1085,13 +1084,13 @@ public class SmbServerScanner {
             else if (e.getNtStatus()==0xc000015b) server_status=SMB_STATUS_INVALID_LOGON_TYPE;  //
             else if (e.getNtStatus()==0xc000006d) server_status=SMB_STATUS_UNKNOWN_ACCOUNT;  //
             else server_status=Integer.toHexString(e.getNtStatus());
-            mUtil.addDebugMsg(1,"I","isSmbServerAvailable level="+smb_level+", url_prefix="+url_prefix+
+            mUtil.addDebugMsg(1,"I","isSmbServerAvailable smb_level="+auth.getSmbLevel() + ", url_prefix="+url_prefix+
                     ", status="+server_status+ String.format(", status=0x%8h",e.getNtStatus())+", result="+result);
         } catch (MalformedURLException e) {
             //log.info("Test logon failed." , e);
             //e.printStackTrace();
         }
-        mUtil.addDebugMsg(1, "I", "isSmbServerAvailable level="+smb_level + ", smb_ip_addr="+smb_ip_addr + ", smb_hostname="+smb_hostname + ", url_prefix="+url_prefix + ", result="+server_status);
+        mUtil.addDebugMsg(1, "I", "isSmbServerAvailable smb_level="+auth.getSmbLevel() + ", smb_ip_addr="+smb_ip_addr + ", smb_hostname="+smb_hostname + ", url_prefix="+url_prefix + ", result="+server_status);
         return server_status;
     }
         
