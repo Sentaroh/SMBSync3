@@ -1403,7 +1403,16 @@ public class SmbServerScanner {
                 holder.tv_addr.setText(o.server_smb_ip_addr);
                 //if (o.server_smb_name.equals("")) holder.tv_name.setEnabled(false);
                 //else holder.tv_name.setEnabled(true);
+
+                // Grey-out invalid entries, we disable selecting them in isEnabled() method
+                if (!o.smb1_available && !o.smb23_available) {
+                    // Server responds to be SMB compatible but doesn't provide a compatible SMB v1/2/3 level support
+                    // Exp: scanning uses port 135 while SMB server is listening on a different port
+                    holder.tv_name.setEnabled(false);
+                    holder.tv_addr.setEnabled(false);
+                }
                 if (o.scan_for_smb1 && !o.scan_for_smb23) {
+                    // SMB v1 only scan, servers with only SMB v2/3 are greyed
                     if (o.smb1_available) {
                         holder.tv_name.setEnabled(true);
                         holder.tv_addr.setEnabled(true);
@@ -1413,6 +1422,7 @@ public class SmbServerScanner {
                     }
                 }
                 if (o.scan_for_smb23 && !o.scan_for_smb1) {
+                    // SMB v2/3 only scan, servers with only SMB v1 are greyed
                     if (o.smb23_available) {
                         holder.tv_name.setEnabled(true);
                         holder.tv_addr.setEnabled(true);
@@ -1431,17 +1441,24 @@ public class SmbServerScanner {
             return false;
         }
 
-        // the method returns true for a particular list item position so that the list item at that position can be selected
+        // The method returns true for a particular list item position so that the list item at that position can be selected
         // On scan result, if we select SMBv1 and results have an SMBv2 only server, do not allow the server to be selectable
         // Same if we select SMBv23 and results have an SMBv1 only server, do not allow the server to be selectable
         @Override
         public boolean isEnabled(int position) {
             final SmbServerScanResult o = getItem(position);
             boolean enabled = true;
+            if (!o.smb1_available && !o.smb23_available) {
+                // Server responds to be SMB compatible but doesn't provide a compatible SMB v1/2/3 level support
+                // Exp: scanning uses port 135 while SMB server is listening on a different port -> Server cannot be selected in results
+                enabled = false;
+            }
             if (o.scan_for_smb1 && !o.scan_for_smb23) {
+                // SMB v1 only scan, servers with only SMB v2/3 cannot be selected
                 if (!o.smb1_available) enabled = false;
             }
             if (o.scan_for_smb23 && !o.scan_for_smb1) {
+                // SMB v2/3 only scan, servers with only SMB v1 cannot be selected
                 if (!o.smb23_available) enabled = false;
             }
             return enabled;
