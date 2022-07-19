@@ -52,6 +52,8 @@ import android.widget.TextView;
 
 import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.*;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
 import com.sentaroh.android.JcifsFile2.JcifsException;
@@ -101,7 +103,7 @@ public class SmbServerScanner {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.scan_smb_server_scan_dlg);
 
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.scan_remote_ntwk_dlg_view);
+        final ConstraintLayout ll_dlg_view = (ConstraintLayout) dialog.findViewById(R.id.scan_remote_ntwk_dlg_view);
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
         final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_title_view);
