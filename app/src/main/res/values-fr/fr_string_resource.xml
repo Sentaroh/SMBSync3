@@ -683,6 +683,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_progress_dlg_canceling">Annulation…</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Obtention de la liste des fichiers…</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">Annuler</string>
+        <string name="msgs_scan_smb_server_parm_dlg_smb_port_hint">Server port number</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Planifier</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">Nom de l\'annexe</string>

@@ -26,174 +26,180 @@
         <include layout="@layout/divider_line1_turquoise" />
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
+            android:id="@+id/scan_smb_server_param_dlg_settings_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="0dp" 
+            android:layout_weight="1" 
             android:orientation="vertical" >
-
-        <TextView
-                android:id="@+id/scan_smb_server_parm_dlg_msg"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#ff0000" />
+                android:orientation="vertical" >
 
-        <ScrollView
-                android:id="@+id/scan_smb_server_param_dlg_settings_scroll_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_server"
-                        android:textAppearance="?android:attr/textAppearanceLarge"/>
-                <RadioGroup
-                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_rg"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
-                    <RadioButton
-                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_address"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="IP Address" />
-                    <RadioButton
-                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_hostname"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Host name" />
-                </RadioGroup>
-
-                <TextView
-                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_selected"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
-                        android:text="192.168.0.1"
-                        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical">
-
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:gravity="left"
-                            android:text="@string/msgs_task_edit_sync_folder_dlg_smb_protocol_hdr"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            tools:ignore="HardcodedText,RtlHardcoded" />
-
-                    <RadioGroup
-                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb_rg"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:orientation="horizontal">
-                        <RadioButton
-                                android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="SMBv1" />
-                        <RadioButton
-                                android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="SMBv2/3" />
-                    </RadioGroup>
-                </LinearLayout>
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="left"
-                        android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_port_number"
-                        android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-                <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                    android:id="@+id/scan_smb_server_parm_dlg_msg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp" >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_port_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_port"
-                        android:inputType="number"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="left"
-                        android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password"
-                        android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="145dp"
-                        android:layout_height="wrap_content">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
-                            android:inputType="text"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password_view"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#ff0000" />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/msgs_task_edit_sync_folder_dlg_remote_smb_server"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+            <RadioGroup
+                    android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_rg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal">
+                <RadioButton
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:endIconMode="password_toggle">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_password"
-                            android:inputType="textPassword"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+                        android:text="IP Address" />
+                <RadioButton
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_id_hostname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Host name" />
+            </RadioGroup>
 
-                <Button
-                        android:id="@+id/scan_smb_server_parm_dlg_btn_refresh_share_list"
+            <TextView
+                    android:id="@+id/scan_smb_server_parm_dlg_smb_server_selected"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="192.168.0.1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="left"
+                        android:text="@string/msgs_task_edit_sync_folder_dlg_smb_protocol_hdr"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list" />
+                        tools:ignore="HardcodedText,RtlHardcoded" />
+
+                <RadioGroup
+                    android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb_rg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="SMBv1" />
+                    <RadioButton
+                            android:id="@+id/scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="SMBv2/3" />
+                </RadioGroup>
             </LinearLayout>
-        </ScrollView>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="left"
+                    android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_port_number"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/scan_smb_server_parm_dlg_smb_server_port_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/msgs_scan_smb_server_parm_dlg_smb_port_hint"
+                    android:inputType="number"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="left"
+                    android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal" >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="145dp"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_username"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:endIconMode="password_toggle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/scan_smb_server_parm_dlg_smb_server_account_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/msgs_task_edit_sync_folder_dlg_remote_smb_password"
+                        android:inputType="textPassword"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <Button
+                    android:id="@+id/scan_smb_server_parm_dlg_btn_refresh_share_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+            android:id="@+id/scan_smb_server_scan_dlg_title_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical" >
+
+        <include layout="@layout/divider_line1_turquoise" />
     </LinearLayout>
 
     <LinearLayout
@@ -201,7 +207,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.5"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
         <TextView
@@ -226,7 +232,6 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal" >
         <Button
                 android:id="@+id/scan_smb_server_parm_dlg_btn_cancel"
