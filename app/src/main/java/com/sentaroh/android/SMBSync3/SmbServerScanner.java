@@ -891,24 +891,18 @@ public class SmbServerScanner {
                 if (scan_port != null && !scan_port.equals("")) {
                     ports = new String[] { scan_port };
                 }
+
                 for (String port : ports) {
                     i++;
                     found = CommonUtilities.isSmbHost(mUtil, addr, port, 3500);
                     if (found) break;
                 }
+
                 if (found) { //if (true) { // debug to add all scanned servers
                     final String port = ports[i];
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
-                            synchronized (mScanRequestedAddrList) {
-                                mScanRequestedAddrList.remove(addr);
-                                  // If two IPs are added at same time from 2 or more threads, it will crash because adapter is modified in another non UI thread
-//                                synchronized (adap) {
-//                                    adap.add(smb_server_item);
-//                                    adap.sort();
-//                                }
-                            }
                             synchronized (mLockScanCompleteCount) {
                                 mScanCompleteCount++;
                             }
@@ -924,11 +918,17 @@ public class SmbServerScanner {
                                             mAdapter.notifyDataSetChanged();
                                             lv_ipaddr.setSelection(lv_ipaddr.getCount()); // ensure the selection/listView is set to the last added server
                                         }
+
+                                        synchronized (mScanRequestedAddrList) {
+                                            mScanRequestedAddrList.remove(addr);
+                                        }
                                     }
 
                                     @Override
                                     public void negativeResponse(Context context, Object[] objects) {
-
+                                        synchronized (mScanRequestedAddrList) {
+                                            mScanRequestedAddrList.remove(addr);
+                                        }
                                     }
                                 });
                                 createSmbServerInfo(ntfy, tc, scan_smbv1, scan_smbv23, null, null, null, addr, port);
@@ -962,7 +962,11 @@ public class SmbServerScanner {
     }
 
     final private void createSmbServerInfo(final NotifyEvent p_ntfy, final ThreadCtrl tc, boolean scan_smbv1, boolean scan_smbv23, String domain, String user, String pass, String address, String port) {
-        if (!tc.isEnabled()) return;
+        if (tc != null && !tc.isEnabled()) {
+            //p_ntfy.notifyToListener(false, null);
+            return;
+        }
+
         SmbServerScanResult result = new SmbServerScanResult();
         result.server_smb_ip_addr = address==null? "":address;
         result.server_smb_port_number = port==null? "":port;
@@ -970,15 +974,13 @@ public class SmbServerScanner {
         final Handler hndl=new Handler();
         Thread th=new Thread(){
             @Override
-            public void run() {
-                if (!tc.isEnabled()) return;
+            public void run() {//non UI thread
                 String srv_name = null;
                 if (scan_smbv1) {
                     // Try to get server hostname by IP/addres
                     srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, result.server_smb_ip_addr);
                     result.server_smb_name = srv_name==null? "":srv_name;
                     try {
-                        if (!tc.isEnabled()) return;
                         result.scan_for_smb1 = true;
                         JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
                         result.smb1_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
@@ -995,13 +997,11 @@ public class SmbServerScanner {
                 }
 
                 if (scan_smbv23) {
-                    if (!tc.isEnabled()) return;
                     if (srv_name == null || srv_name.equals("")) {
                         srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, result.server_smb_ip_addr);
                         result.server_smb_name = srv_name==null? "":srv_name;
                     }
                     try {
-                        if (!tc.isEnabled()) return;
                         result.scan_for_smb23 = true;
                         Properties prop = new Properties();
                         prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
