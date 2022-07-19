@@ -89,6 +89,7 @@ public class SmbServerScanner {
         initDialog(p_ntfy, port_number, scanner_smb_protocol, scan_start);
     }
 
+    private static SmbServerScanAdapter mAdapter = null;
     private final static String SYNC_FOLDER_SMB_PROTOCOL_SMB123 = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1 + " & " + SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
     private void initDialog(final NotifyEvent p_ntfy, final String port_number, final String scanner_smb_protocol, boolean scan_start) {
         if (!SyncThread.isWifiOn(mActivity)) {
@@ -268,11 +269,7 @@ public class SmbServerScanner {
         CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
         tvmsg.setText("");
 
-        final SmbServerScanAdapter adap = new SmbServerScanAdapter
-                (mActivity, R.layout.scan_address_result_list_item, mScanResultList, ntfy_lv_click);
-
         final ListView lv = (ListView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_result_list);
-        lv.setAdapter(adap);
         lv.setScrollingCacheEnabled(false);
         //lv.setScrollbarFadingEnabled(false);
         lv.setScrollBarFadeDuration(0);
@@ -300,6 +297,8 @@ public class SmbServerScanner {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context c, Object[] o) {
+                        //mAdapter.notifyDataSetChanged();
+                        //mAdapter.sort();
                         lv.setEnabled(true);
                         if (!mScanSmbErrorMessage.equals("")) {
                             tvmsg.setText(mScanSmbErrorMessage);
@@ -330,8 +329,22 @@ public class SmbServerScanner {
                 int end_addr = Integer.parseInt(ea5);
 
                 String scan_smb_level = getSmbSelectedProtocol(dlg_scan_smb_protocol_spinner);
+                boolean scan_smbv1 = false;
+                boolean scan_smbv23 = false;
+                if (scan_smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+                    scan_smbv1 = true;
+                } else if (scan_smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) {
+                    scan_smbv23 = true;
+                } else {
+                    // default scan for both protocols (not used currently during refresh shares, only radio buttons for SMBv1 and SMBv2/3 are provided)
+                    scan_smbv1 = true;
+                    scan_smbv23 = true;
+                }
 
-                performSmbServerScan(dialog, lv, adap, subnet, begin_addr, end_addr, scan_smb_level, ntfy);
+                mAdapter = new SmbServerScanAdapter(mActivity, R.layout.scan_address_result_list_item, mScanResultList, ntfy_lv_click);
+                lv.setAdapter(mAdapter);
+
+                performSmbServerScan(dialog, lv, subnet, begin_addr, end_addr, scan_smbv1, scan_smbv23, ntfy);
             }
         });
 
@@ -711,10 +724,9 @@ public class SmbServerScanner {
     private void performSmbServerScan(
             final Dialog dialog,
             final ListView lv_ipaddr,
-            final SmbServerScanAdapter adap,
 //            final ArrayList<SmbServerScanAdapter.NetworkScanListItem> ipAddressList,
             final String subnet, final int begin_addr, final int end_addr,
-            final String scan_smb_level, final NotifyEvent p_ntfy) {
+            final boolean scan_smbv1, final boolean scan_smbv23, final NotifyEvent p_ntfy) {
         final Handler handler = new Handler();
         final ThreadCtrl tc = new ThreadCtrl();
         final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
@@ -734,7 +746,7 @@ public class SmbServerScanner {
         ll_prog.setVisibility(LinearLayout.VISIBLE);
         btn_scan.setVisibility(Button.GONE);
         btn_cancel.setVisibility(Button.GONE);
-        adap.setButtonEnabled(false);
+        mAdapter.setButtonEnabled(false);
         CommonUtilities.setViewEnabled(mActivity, scan_cancel, true);
         dialog.setOnKeyListener(new DialogBackKeyListener(mActivity));
         dialog.setCancelable(false);
@@ -759,7 +771,7 @@ public class SmbServerScanner {
         String p_txt = String.format(scan_prog, 0);
         tvmsg.setText(p_txt);
 
-        Thread th=new Thread(new Runnable() {
+        Thread th = new Thread(new Runnable() {
             @Override
             public void run() {//non UI thread
                 mScanCompleteCount = 0;
@@ -772,9 +784,9 @@ public class SmbServerScanner {
                         if (!tc.isEnabled()) break;
                         if (j <= end_addr) {
                             startSmbServerScanThread(handler, tc, dialog, p_ntfy,
-                                    lv_ipaddr, adap, tvmsg, subnet + "." + j,
+                                    lv_ipaddr, tvmsg, subnet + "." + j,
 //                                    ipAddressList,
-                                    scan_port, scan_smb_level);
+                                    scan_port, scan_smbv1, scan_smbv23);
                         } else {
                             scan_end = true;
                         }
@@ -799,8 +811,11 @@ public class SmbServerScanner {
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
-                            adap.sort();
-                            closeSmbServerScanProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
+                            synchronized (mAdapter) {
+                                mAdapter.notifyDataSetChanged();
+                                mAdapter.sort();
+                                closeSmbServerScanProgressDlg(dialog, p_ntfy, lv_ipaddr, tvmsg);
+                            }
                         }
                     });
                 } else {
@@ -814,10 +829,13 @@ public class SmbServerScanner {
                         @Override
                         public void run() {
                             synchronized (mLockScanCompleteCount) {
-                                adap.sort();
-                                lv_ipaddr.setSelection(lv_ipaddr.getCount());
-                                adap.notifyDataSetChanged();
-                                closeSmbServerScanProgressDlg(dialog, p_ntfy, lv_ipaddr, adap, tvmsg);
+                                synchronized (mAdapter) {
+                                    mAdapter.notifyDataSetChanged();
+                                    mAdapter.sort();
+                                    lv_ipaddr.setSelection(lv_ipaddr.getCount());
+                                    mAdapter.notifyDataSetChanged();
+                                    closeSmbServerScanProgressDlg(dialog, p_ntfy, lv_ipaddr, tvmsg);
+                                }
                             }
                         }
                     });
@@ -829,7 +847,7 @@ public class SmbServerScanner {
     }
 
     private void closeSmbServerScanProgressDlg(final Dialog dialog, final NotifyEvent p_ntfy, final ListView lv_ipaddr,
-                                               final SmbServerScanAdapter adap, final TextView tvmsg) {
+                                               final TextView tvmsg) {
         final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
         final LinearLayout ll_prog = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
         final Button btn_scan = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
@@ -838,7 +856,7 @@ public class SmbServerScanner {
         ll_prog.setVisibility(LinearLayout.GONE);
         btn_scan.setVisibility(Button.VISIBLE);
         btn_cancel.setVisibility(Button.VISIBLE);
-        adap.setButtonEnabled(true);
+        mAdapter.setButtonEnabled(true);
         dialog.setOnKeyListener(null);
         dialog.setCancelable(true);
         if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
@@ -850,12 +868,12 @@ public class SmbServerScanner {
                                           final Dialog dialog,
                                           final NotifyEvent p_ntfy,
                                           final ListView lv_ipaddr,
-                                          final SmbServerScanAdapter adap,
                                           final TextView tvmsg,
                                           final String addr,
                                           //final ArrayList<SmbServerScanAdapter.NetworkScanListItem> ipAddressList,
                                           final String scan_port,
-                                          final String scan_smb_level) {
+                                          final boolean scan_smbv1,
+                                          final boolean scan_smbv23) {
         final String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress);
         if (!tc.isEnabled()) return;
         Thread th = new Thread(new Runnable() {
@@ -878,38 +896,43 @@ public class SmbServerScanner {
                     found = CommonUtilities.isSmbHost(mUtil, addr, port, 3500);
                     if (found) break;
                 }
-                if (found) {
-                    boolean scan_smbv1 = false;
-                    boolean scan_smbv23 = false;
-                    if (scan_smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                        scan_smbv1 = true;
-                    } else if (scan_smb_level.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) {
-                        scan_smbv23 = true;
-                    } else {
-                        // default scan for both protocols
-                        scan_smbv1 = true;
-                        scan_smbv23 = true;
-                    }
-
-                    String srv_name = null;
-                    // Try to get server hostname by IP/addres
-                    if (scan_smbv1) srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, addr);
-                    if ((srv_name == null || srv_name.equals("")) && scan_smbv23) srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, addr);
-
-                    mScanResultList.add(createSmbServerInfo(scan_smbv1, scan_smbv23, null, null, null, addr, srv_name, ports[i]));
-
+                if (found) { //if (true) { // debug to add all scanned servers
+                    final String port = ports[i];
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
                             synchronized (mScanRequestedAddrList) {
                                 mScanRequestedAddrList.remove(addr);
-                                synchronized (adap) {
+                                  // If two IPs are added at same time from 2 or more threads, it will crash because adapter is modified in another non UI thread
+//                                synchronized (adap) {
 //                                    adap.add(smb_server_item);
-                                    adap.sort();
-                                }
+//                                    adap.sort();
+//                                }
                             }
                             synchronized (mLockScanCompleteCount) {
                                 mScanCompleteCount++;
+                            }
+
+                            synchronized (mScanResultList) {
+                                final NotifyEvent ntfy=new NotifyEvent(mActivity);
+                                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                                    @Override
+                                    public void positiveResponse(Context context, Object[] arg1) {
+                                        mScanResultList.add((SmbServerScanResult) arg1[0]);
+                                        synchronized (mAdapter) {
+                                            //mAdapter.sort(); // sorts the results dynamically, but we don't see this way the last current added server as the list gets sorted each time
+                                            mAdapter.notifyDataSetChanged();
+                                            lv_ipaddr.setSelection(lv_ipaddr.getCount()); // ensure the selection/listView is set to the last added server
+                                        }
+                                    }
+
+                                    @Override
+                                    public void negativeResponse(Context context, Object[] objects) {
+
+                                    }
+                                });
+                                createSmbServerInfo(ntfy, tc, scan_smbv1, scan_smbv23, null, null, null, addr, port);
+                                //createSmbServerInfo(ntfy, tc, false, false, null, null, null, addr, port); // debug to add all scanned servers
                             }
                         }
                     });
@@ -925,7 +948,7 @@ public class SmbServerScanner {
                     @Override
                     public void run() {
                         synchronized (mLockScanCompleteCount) {
-                            lv_ipaddr.setSelection(lv_ipaddr.getCount());
+                            //lv_ipaddr.setSelection(lv_ipaddr.getCount());
 //                            adap.notifyDataSetChanged();
                             String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
                             tvmsg.setText(p_txt);
@@ -938,49 +961,73 @@ public class SmbServerScanner {
         th.start();
     }
 
-    final private SmbServerScanResult createSmbServerInfo(boolean scan_smbv1, boolean scan_smbv23, String domain, String user, String pass, String address, String srv_name, String port) {
+    final private void createSmbServerInfo(final NotifyEvent p_ntfy, final ThreadCtrl tc, boolean scan_smbv1, boolean scan_smbv23, String domain, String user, String pass, String address, String port) {
+        if (!tc.isEnabled()) return;
         SmbServerScanResult result = new SmbServerScanResult();
         result.server_smb_ip_addr = address==null? "":address;
-        result.server_smb_name = srv_name==null? "":srv_name;
         result.server_smb_port_number = port==null? "":port;
 
-        if (scan_smbv1) {
-            try {
-                result.scan_for_smb1 = true;
-                JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
-                result.smb1_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
-                if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-                    result.smb1_available = true;
-                    result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                } else {
-                    result.smb1_available = false;
+        final Handler hndl=new Handler();
+        Thread th=new Thread(){
+            @Override
+            public void run() {
+                if (!tc.isEnabled()) return;
+                String srv_name = null;
+                if (scan_smbv1) {
+                    // Try to get server hostname by IP/addres
+                    srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, result.server_smb_ip_addr);
+                    result.server_smb_name = srv_name==null? "":srv_name;
+                    try {
+                        if (!tc.isEnabled()) return;
+                        result.scan_for_smb1 = true;
+                        JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
+                        result.smb1_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                        if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                            result.smb1_available = true;
+                            result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                        } else {
+                            result.smb1_available = false;
+                        }
+                    } catch(JcifsException e) {
+                        e.printStackTrace();
+                        mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
+                    }
                 }
-            } catch(JcifsException e) {
-                e.printStackTrace();
-                mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
-            }
-        }
 
-        if (scan_smbv23) {
-            try {
-                result.scan_for_smb23 = true;
-                Properties prop = new Properties();
-                prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-                JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
-                result.smb23_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
-                if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-                    result.smb23_available = true;
-                    result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                } else {
-                    result.smb23_available = false;
+                if (scan_smbv23) {
+                    if (!tc.isEnabled()) return;
+                    if (srv_name == null || srv_name.equals("")) {
+                        srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, result.server_smb_ip_addr);
+                        result.server_smb_name = srv_name==null? "":srv_name;
+                    }
+                    try {
+                        if (!tc.isEnabled()) return;
+                        result.scan_for_smb23 = true;
+                        Properties prop = new Properties();
+                        prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+                        JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
+                        result.smb23_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                        if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                            result.smb23_available = true;
+                            result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                        } else {
+                            result.smb23_available = false;
+                        }
+                    } catch(JcifsException e) {
+                        e.printStackTrace();
+                        mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
+                    }
                 }
-            } catch(JcifsException e) {
-                e.printStackTrace();
-                mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
-            }
-        }
 
-        return result;
+                hndl.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        p_ntfy.notifyToListener(true, new Object[]{result});
+                    }
+                });
+            }
+        };
+        th.start();
     }
 
     final private void createSmbServerShareInfo(final NotifyEvent p_ntfy, String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
