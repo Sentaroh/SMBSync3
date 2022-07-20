@@ -1019,7 +1019,7 @@
         <string name="settings_other_title">Другое</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">Звук уведомления по умолчанию не был установлен.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s %% системного тома</string>
+        <string name="settings_playback_ringtone_volume_summary">%d%% системного тома</string>
         <string name="settings_playback_ringtone_volume_title">Громкость звука уведомлений</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Выберите условия воспроизведения звука</string>

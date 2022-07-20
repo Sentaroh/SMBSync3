@@ -1014,7 +1014,7 @@
         <string name="settings_other_title">其他</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">未设置默认的通知音</string>
-        <string name="settings_playback_ringtone_volume_summary">系统音量的%s%%</string>
+        <string name="settings_playback_ringtone_volume_summary">系统音量的%d%%</string>
         <string name="settings_playback_ringtone_volume_title">通知音音量</string>
         <string name="settings_playback_ringtone_when_sync_ended">设置_播放_铃声_当同步结束时的设置</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">选择播放声音条件</string>

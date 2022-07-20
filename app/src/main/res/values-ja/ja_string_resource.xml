@@ -1018,7 +1018,7 @@
         <string name="settings_other_title">Other</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">デフォルト通知音が設定されていません。</string>
-        <string name="settings_playback_ringtone_volume_summary">ボリュームの%s%%</string>
+        <string name="settings_playback_ringtone_volume_summary">ボリュームの%d%%</string>
         <string name="settings_playback_ringtone_volume_title">通知音の音量</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">通知音の条件</string>

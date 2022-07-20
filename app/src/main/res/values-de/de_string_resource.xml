@@ -1018,7 +1018,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="settings_other_title">Andere</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">The default notification sound has not been set.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s%% of system volume</string>
+        <string name="settings_playback_ringtone_volume_summary">%d%% of system volume</string>
         <string name="settings_playback_ringtone_volume_title">Notification Sound Volume</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Select playback sound condition</string>

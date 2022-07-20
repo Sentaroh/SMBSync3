@@ -1018,7 +1018,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="settings_other_title">Altro</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">Il suono di notifica predefinito non è stato impostato.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s%% del volume del sistema</string>
+        <string name="settings_playback_ringtone_volume_summary">%d%% del volume del sistema</string>
         <string name="settings_playback_ringtone_volume_title">Notifica Volume del suono</string>
         <string name="settings_playback_ringtone_when_sync_ended">impostazioni_riproduzione_ringtone_ringtone_quando_sincronizzato</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Selezionare quando riprodurre il suono di notifica predefinito</string>

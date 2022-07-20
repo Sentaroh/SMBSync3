@@ -1021,7 +1021,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_other_title">Autre</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">Aucun son de notification par défaut défini.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s%% du volume</string>
+        <string name="settings_playback_ringtone_volume_summary">%d%% du volume</string>
         <string name="settings_playback_ringtone_volume_title">Volume du Son des Notifications</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Sélectionner quand le son par défaut des notifications est activé</string>
