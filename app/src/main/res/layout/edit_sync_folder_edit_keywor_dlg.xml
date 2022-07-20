@@ -435,7 +435,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="5dp"
-            android:text="/storage/emulated/0/DCIM"
+            android:text="DSC-001"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <LinearLayout

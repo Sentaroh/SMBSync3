@@ -369,7 +369,8 @@ public class GlobalParameters {
             e.printStackTrace();
         }
 */
-        externalStoragePrefix= Environment.getExternalStorageDirectory().getPath();
+        //externalStoragePrefix = Environment.getExternalStorageDirectory().getPath();
+        externalStoragePrefix = SafManager3.getPrimaryStoragePath();
 
         mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-dim");
         forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-force-dim");
@@ -600,19 +601,23 @@ public class GlobalParameters {
 
         settingSecurityAppSettingsDirectory = prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
         if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_ROOT)) {
-            // Set app settings directory to /data/data/package_name/files
+            // Set app settings directory to /data/data/APPLICATION_ID/files
             try {
                 settingAppManagemsntDirectoryName = c.getFilesDir().getCanonicalPath();
             } catch (IOException e) {
                 e.printStackTrace();
                 settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files";
             }
-        } else if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_APP_SPECIFIC)) {
-            // Set app settings directory to /storage/emulated/0/Android/data/package_name/files
-            settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/Android/data/"+APPLICATION_ID+"/files";
+        } else if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_APP_SPECIFIC_INTERNAL)) {
+            // Set app settings directory to /storage/emulated/0/Android/data/APPLICATION_ID/files
+            settingAppManagemsntDirectoryName = SafManager3.getAppSpecificDirectory(c, SafFile3.SAF_FILE_PRIMARY_UUID);
+            if (settingAppManagemsntDirectoryName == null) {
+                settingAppManagemsntDirectoryName = SafManager3.getPrimaryStoragePath()+"/Android/data/"+APPLICATION_ID+"/files";
+                if (log.isDebugEnabled()) log.debug("loadSettingsParms: SafManager3.getAppSpecificDirectory returns null on primary uid");
+            }
         } else if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_STORAGE)) {
             // Set app settings directory to /storage/emulated/0/app_name
-            settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
+            settingAppManagemsntDirectoryName = SafManager3.getPrimaryStoragePath()+"/"+APPLICATION_TAG;
         }
 
         settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULE_ENABLED_KEY, true);

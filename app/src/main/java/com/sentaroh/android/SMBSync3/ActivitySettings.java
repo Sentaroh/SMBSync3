@@ -42,6 +42,8 @@ import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogAppFragment;
+import com.sentaroh.android.Utilities3.SafFile3;
+import com.sentaroh.android.Utilities3.SafManager3;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,8 +56,6 @@ import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT;
 import static com.sentaroh.android.SMBSync3.GlobalParameters.SMB_LM_COMPATIBILITY_DEFAULT;
-
-import static com.sentaroh.android.Utilities3.SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
 
 public class ActivitySettings extends PreferenceActivity {
     static final private Logger log= LoggerFactory.getLogger(ActivitySettings.class);
@@ -640,6 +640,7 @@ public class ActivitySettings extends PreferenceActivity {
                 String kv=shared_pref.getString(key_string, APP_SETTINGS_DIRECTORY_ROOT);
                 String summary = "";
                 if (kv.equals(APP_SETTINGS_DIRECTORY_ROOT)) {
+                    // /data/data/APPLICATION_ID/files
                     try {
                         summary = c.getFilesDir().getCanonicalPath();
                     } catch (IOException e) {
@@ -647,16 +648,23 @@ public class ActivitySettings extends PreferenceActivity {
                         summary = "/data/data/"+APPLICATION_ID+"/files";
                     }
                     summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_root), summary);
-                } else if (kv.equals(APP_SETTINGS_DIRECTORY_APP_SPECIFIC)) {
-                    summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_app_specific), APPLICATION_ID);
+                } else if (kv.equals(APP_SETTINGS_DIRECTORY_APP_SPECIFIC_INTERNAL)) {
+                    // /storage/emulated/0/Android/data/APPLICATION_ID/files
+                    summary = SafManager3.getAppSpecificDirectory(c, SafFile3.SAF_FILE_PRIMARY_UUID);
+                    if (summary == null) {
+                        summary = SafManager3.getPrimaryStoragePath() + "/Android/data/" + APPLICATION_ID + "/files";
+                        mUtil.addDebugMsg(1, "I", "checkSettingValue: SafManager3.getAppSpecificDirectory returns null on primary uid");
+                    }
+                    summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_app_specific), summary);
                 } else if (kv.equals(APP_SETTINGS_DIRECTORY_STORAGE)) {
-                    summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_storage), SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG);
+                    // /storage/emulated/0/app_name
+                    summary = String.format(c.getString(R.string.settings_security_app_settings_directory_summary_storage), mGp.externalStoragePrefix+"/"+APPLICATION_TAG);
                 }
                 pref_key.setSummary(summary);
 
                 if (!mCurrentAppSettingsDirectory.equals(kv)) {
                     mCurrentAppSettingsDirectory=kv;
-                    // app restart needed to properly display further messages and history
+                    // app restart needed to properly display further messages and history: triggered in reloadSettingParms()
                 }
             }
         }

@@ -2119,7 +2119,6 @@ public class TaskEditor extends DialogFragment {
                         }
                     }
 
-
                     String cv=getConvertedDirectoryFileName(s.toString(), System.currentTimeMillis(), "DSC-001");
                     dlg_image.setText(cv);
                     if (etInput.getText().toString().equals(dlg_keyword.getText().toString())) CommonUtilities.setViewEnabled(mActivity, dlg_ok, false);
@@ -2129,6 +2128,7 @@ public class TaskEditor extends DialogFragment {
                 }
             }
         });
+
         String cv=getConvertedDirectoryFileName(dlg_keyword.getText().toString(), System.currentTimeMillis(), "DSC-001");
         dlg_image.setText(cv);
 

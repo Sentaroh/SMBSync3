@@ -970,9 +970,9 @@
             <item>1</item>
             <item>2</item>
         </string-array >
-        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in root directory %s</string>
-        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in internal storage under app specific directory /Android/data/%s/files</string>
-        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in internal storage under %s directory</string>
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in:\n%s</string>
         <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">以纵向显示应用程序</string>

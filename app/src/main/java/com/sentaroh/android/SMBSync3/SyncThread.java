@@ -1288,14 +1288,14 @@ public class SyncThread extends Thread {
         return true;
     }
 
-//    static public boolean canAccessLocalDirectory(String path) {
+//    static public boolean canAccessLocalDirectory(String path, GlobalParameters gp) {
 //        boolean result=true;
 //        if (path.endsWith(".android_secure")) result=false;
 //        else {
 //            if (Build.VERSION.SDK_INT>=30) {
 //                String[] fp_array=path.split("/");
-//                if (path.startsWith("/storage/emulated/0")) {
-//                    String abs_dir=path.replace("/storage/emulated/0", "");
+//                if (path.startsWith(gp.externalStoragePrefix)) {
+//                    String abs_dir=path.replace(gp.externalStoragePrefix, "");
 //                    if (!abs_dir.equals("")) {
 //                        if (abs_dir.startsWith("/Android/data") || abs_dir.startsWith("/Android/obb")) {
 //                            result=false;

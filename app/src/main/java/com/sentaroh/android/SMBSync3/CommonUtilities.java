@@ -1075,7 +1075,7 @@ public final class CommonUtilities {
     }
 
     public static String getStoragePathFromUuid(String uuid) {
-        if (uuid.equals(SAF_FILE_PRIMARY_UUID)) return Environment.getExternalStorageDirectory().getPath();//SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX;
+        if (uuid.equals(SAF_FILE_PRIMARY_UUID)) return Environment.getExternalStorageDirectory().getPath();// /storage/emulated/0
         else return SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+uuid;
     }
 
