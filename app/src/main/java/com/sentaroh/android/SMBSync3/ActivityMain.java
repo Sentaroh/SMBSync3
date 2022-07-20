@@ -5352,20 +5352,25 @@ public class ActivityMain extends AppCompatActivity {
         return st_msg;
     }
 
+    // not used method
     private void makeCacheDirectory() {
 //        String packageName = mContext.getPackageName();
         long b_time=System.currentTimeMillis();
         File[] stg_array=mContext.getExternalFilesDirs(null);
-        for(File item:stg_array) {
-            if (item!=null) {
-                File cd=new File(item.getParentFile()+"/cache");
-                if (!cd.exists()) {
-                    boolean rc=cd.mkdirs();
-//                mUtil.addDebugMsg(1, "I", "makeChachDirectory directory create result="+rc);
+        if (stg_array != null) {
+            for(File item:stg_array) {
+                if (item != null) {
+                    File cd = new File(item.getParentFile()+"/cache");
+                    if (cd != null && !cd.exists()) {
+                        boolean rc = cd.mkdirs();
+                        mUtil.addDebugMsg(1, "I", "makeChachDirectory directory create result="+rc);
+                    }
                 }
             }
+            mUtil.addDebugMsg(1, "I", "makeCacheDirectory elapsed="+(System.currentTimeMillis()-b_time));
+        } else {
+            mUtil.addDebugMsg(1, "I", "makeCacheDirectory error: no value from getExternalFilesDirs(null)");
         }
-        mUtil.addDebugMsg(1, "I", "makeCacheDirectory elapsed="+(System.currentTimeMillis()-b_time));
     }
 
     private void cleanupCacheFile() {
