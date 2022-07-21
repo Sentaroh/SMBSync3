@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Funzioni</string>
         <string name="msgs_about_dlg_privacy_btn">Log cambiamenti</string>
         <string name="msgs_about_dlg_change_btn">Privacy</string>
-        <string name="msgs_dlg_title_about">A proposito di SMBSync2</string>
+        <string name="msgs_dlg_title_about">A proposito di SMBSync2 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_IT_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_IT_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -564,7 +564,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_menu_show_battery_optimization_screen">Ottimizzazione della batteria</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Operazione di archiviazione annullata dall\'utente]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">L\'ora e la data di acquisizione delle immagini non possono essere ottenute dai dati EXIF.  Utilizzare invece l\'ora e la data di aggiornamento dei file?  (Disattivare l\'opzione di archiviazione \"Conferma\" per questa operazione di sincronizzazione per evitare questo messaggio in futuro)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">Operazione di copia annullata dall\'utente]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confermare la sovrascrittura del file \n%s\n(Disattivare l\'opzione \"Confermare prima di sovrascrivere/cancellare\" per questa attività di sincronizzazione per evitare questo messaggio in futuro)</string>
         <string name="msgs_mirror_confirm_delete_cancel">Cancellare l\'operazione annullata dall\'utente]</string>

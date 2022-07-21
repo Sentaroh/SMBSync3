@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Fonctions</string>
         <string name="msgs_about_dlg_privacy_btn">Confidentialité</string>
         <string name="msgs_about_dlg_change_btn">Historique des modifications</string>
-        <string name="msgs_dlg_title_about">À propos de SMBSync3</string>
+        <string name="msgs_dlg_title_about">À propos de SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_FR_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_FR_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -565,7 +565,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_menu_show_battery_optimization_screen">Optimiser la batterie</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivage annulé par l\'utilisateur]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">La date de capture de l\'image ne peut pas être obtenue depuis l\'entête EXIF. Utiliser la date de mise à jour du fichier image? (Désactiver l\'option \"Confirmer\" de la tâche pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Copie annulée par l\'utilisateur]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confirmer le remplacement du fichier \n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour pour ne plus afficher ce message)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Suppression annulée par l\'utilisateur]</string>

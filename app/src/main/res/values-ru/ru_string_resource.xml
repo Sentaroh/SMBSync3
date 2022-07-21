@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Функции</string>
         <string name="msgs_about_dlg_privacy_btn">Политика приватности</string>
         <string name="msgs_about_dlg_change_btn">Журнал изменений</string>
-        <string name="msgs_dlg_title_about">О SMBSync3</string>
+        <string name="msgs_dlg_title_about">О SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_RU_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_RU_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -565,7 +565,7 @@
         <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Архив отменен по запросу пользователя]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">Время и дата изображения не могут быть получены из данных EXIF. Вместо этого использовать время и дату обновления файла? (Отключите параметр архивации \ \"Подтвердить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Копирование отменено по запросу пользователя]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Подтвердить перезапись файла \n %s \n (отключите опцию \ \"Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Удаление отменено по запросу пользователя]</string>

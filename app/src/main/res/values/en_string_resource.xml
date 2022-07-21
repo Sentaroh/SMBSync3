@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Functions</string>
         <string name="msgs_about_dlg_privacy_btn">Privacy Policy</string>
         <string name="msgs_about_dlg_change_btn">Change Log</string>
-        <string name="msgs_dlg_title_about">About SMBSync3</string>
+        <string name="msgs_dlg_title_about">About SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_EN_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_EN_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -565,7 +565,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_menu_show_battery_optimization_screen">Battery optimization</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archive operation cancelled by user]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file update time and date instead?  (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Copy operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confirm overwrite of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Delete operation cancelled by user]</string>

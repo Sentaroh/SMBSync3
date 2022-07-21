@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Funktion</string>
         <string name="msgs_about_dlg_privacy_btn">Datenschutzerklärung</string>
         <string name="msgs_about_dlg_change_btn">Änderungsprotokoll</string>
-        <string name="msgs_dlg_title_about">Über SMBSync3</string>
+        <string name="msgs_dlg_title_about">Über SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_DE_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_DE_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -564,7 +564,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_menu_show_battery_optimization_screen">Optimierung der Batterie</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivierungsvorgang vom Benutzer abgebrochen]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">Die Bildaufnahmezeit und das Datum können nicht aus EXIF-Daten gewonnen werden.  Stattdessen Zeit und Datum der Dateiaktualisierung verwenden?  (Deaktivieren Sie die Archivierungsoption \"Bestätigen\" für diese Synchronisierungsaufgabe, um diese Meldung in Zukunft zu vermeiden)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Kopiervorgang vom Benutzer abgebrochen]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Bestätigen Sie das Überschreiben der Datei\n%s\n(Deaktivieren Sie die Option \"Bestätigen vor dem Überschreiben/Löschen\" für diese Synchronisierungsaufgabe, um diese Meldung in Zukunft zu vermeiden)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Löschvorgang vom Benutzer abgebrochen]</string>

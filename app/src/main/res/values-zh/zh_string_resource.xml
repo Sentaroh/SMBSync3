@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">功能</string>
         <string name="msgs_about_dlg_privacy_btn">私隐政策</string>
         <string name="msgs_about_dlg_change_btn">变更日志</string>
-        <string name="msgs_dlg_title_about">关于SMBSync3</string>
+        <string name="msgs_dlg_title_about">关于SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_ZH_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_ZH_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -560,7 +560,7 @@
         <string name="msgs_menu_show_battery_optimization_screen">电池优化</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[用户取消的存档操作]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">无法从EXIF数据中获取图像拍摄时间和日期。 请使用文件更新时间和日期代替？ (禁用此同步任务的 \"确认 \"存档选项，以避免今后出现此信息)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[用户取消复制操作]</string>
         <string name="msgs_mirror_confirm_copy_confirm">确认覆盖文件\n%s\n(禁用此同步任务的 \"覆盖/删除前确认 \"选项，以避免将来出现此消息)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[用户取消的删除操作]</string>

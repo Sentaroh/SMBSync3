@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">機能</string>
         <string name="msgs_about_dlg_privacy_btn">プライバシー ポリシー</string>
         <string name="msgs_about_dlg_change_btn">更新履歴</string>
-        <string name="msgs_dlg_title_about">SMBSync3について</string>
+        <string name="msgs_dlg_title_about">SMBSync3 (v%s)について</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_JA_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_JA_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_JA_Change.md</string>
