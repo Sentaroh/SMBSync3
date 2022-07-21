@@ -217,7 +217,7 @@ public class TaskListAdapter extends ArrayAdapter<SyncTaskItem> {
         if (o != null) {
             boolean sync_btn_disable=false;
 
-            holder.ll_view.setBackgroundDrawable(mDefaultBackground);
+            holder.ll_view.setBackground(mDefaultBackground);
 //            holder.ib_row_sync.setBackgroundDrawable(ib_default);
 
             String act = "";

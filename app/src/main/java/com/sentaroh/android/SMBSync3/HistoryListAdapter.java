@@ -212,7 +212,7 @@ public class HistoryListAdapter extends ArrayAdapter<HistoryListAdapter.HistoryL
 
         if (o != null) {
             if (!o.sync_task.equals("")) {
-//        		holder.ll_main.setBackgroundDrawable(ll_default);
+//        		holder.ll_main.setBackground(ll_default);
 
                 holder.tv_seq.setText(String.format("%1$3d", position + 1));
                 holder.tv_seq.setVisibility(TextView.VISIBLE);
