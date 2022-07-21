@@ -148,7 +148,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private boolean appStartWithRestored =false;
 
-    private Handler mUiHandler = new Handler();
+    private final Handler mUiHandler = new Handler();
 
     private ActionBar mActionBar = null;
 
@@ -641,7 +641,7 @@ public class ActivityMain extends AppCompatActivity {
         btn_copy.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                android.content.ClipboardManager cm=(android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager cm=(ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setPrimaryClip(ClipData.newPlainText("SMBSync3 System Info", tv_msg.getOriginalText().toString()));
                 CommonDialog.showPopupMessageAsUpAnchorViewShort(mActivity, btn_copy, mContext.getString(R.string.msgs_info_storage_copy_completed));
             }
@@ -769,28 +769,29 @@ public class ActivityMain extends AppCompatActivity {
         dialog.show();
     }
 
+    // Requires Build.VERSION.SDK_INT>=23
     private void showBatteryOptimization() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            Intent intent = new Intent();
-//            String packageName = mContext.getPackageName();
-//            PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
-//            if (pm.isIgnoringBatteryOptimizations(packageName)) {
-//                intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
-//                startActivity(intent);
-//                mUtil.addDebugMsg(1, "I", "Invoke battery optimization settings");
-//            } else {
-//                intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
-//                intent.setData(Uri.parse("package:" + packageName));
-//                startActivity(intent);
-//                mUtil.addDebugMsg(1, "I", "Request ignore battery optimization");
-//            }
+        Intent intent = new Intent();
+/*
+        String packageName = mContext.getPackageName();
+        PowerManager pm = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        if (pm.isIgnoringBatteryOptimizations(packageName)) {
             intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
             startActivity(intent);
             mUtil.addDebugMsg(1, "I", "Invoke battery optimization settings");
+        } else {
+            intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+            intent.setData(Uri.parse("package:" + packageName));
+            startActivity(intent);
+            mUtil.addDebugMsg(1, "I", "Request ignore battery optimization");
         }
+*/
+        intent.setAction(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS);
+        startActivity(intent);
+        mUtil.addDebugMsg(1, "I", "Invoke battery optimization settings");
     }
 
-    class ViewSaveArea {
+    private static class ViewSaveArea {
         public int current_tab_pos = 0;
         public int current_pager_pos = 0;
         public int task_list_view_pos_x = 0, task_list_view_pos_y = 0;
@@ -1284,7 +1285,7 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         mUtil.addDebugMsg(2, "I", CommonUtilities.getExecutedMethodName(), " entered, isUiEnabled()="+isUiEnabled());
-        boolean pm_bo = false;
+//        boolean pm_bo = false;
 //        if (Build.VERSION.SDK_INT >= 23) {
 //            menu.findItem(R.id.menu_top_show_battery_optimization).setVisible(true);
 //            String packageName = mContext.getPackageName();
@@ -1381,7 +1382,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
 
-    private boolean mScheduleEditorAvailable = true;
+    //private boolean mScheduleEditorAvailable = true;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -1435,7 +1436,7 @@ public class ActivityMain extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.menu_top_request_all_file_access_permission) {
             //Enable "ALL_FILE_ACCESS"
-            requestAllFileAccessPermission(null);
+            if (Build.VERSION.SDK_INT>=30) requestAllFileAccessPermission(null);
             return true;
         }
         if (isUiEnabled()) {
@@ -1945,22 +1946,24 @@ public class ActivityMain extends AppCompatActivity {
                         }
             });
         } else if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed) {
+            // app restart required
             mUtil.showCommonDialogWarn(true,
-                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_main_settings_restart_title),
-                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart),
-                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
-                    mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
-                    new CallBackListener() {
-                        @Override
-                        public void onCallBack(Context c, boolean positive, Object[] objects) {
-                            if (positive) {
-                                mGp.activityRestartRequired=true;
-                                mUtil.flushLog();
-                                mGp.settingExitClean=false;
-                                finish();
-                            }
+                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_main_settings_restart_title),
+                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart),
+                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
+                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
+                new CallBackListener() {
+                    @Override
+                    public void onCallBack(Context c, boolean positive, Object[] objects) {
+                        if (positive) {
+                            mGp.activityRestartRequired=true;
+                            mUtil.flushLog();
+                            mGp.settingExitClean=false;
+                            finish();
                         }
-            });
+                    }
+                }
+            );
         }
 
         GlobalParameters.setDisplayFontScale(mActivity);
@@ -1970,8 +1973,44 @@ public class ActivityMain extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        checkJcifsOptionChanged();
+        if (isJcifsOptionChanged()) {
+            // app restart required
+            listSettingsOption();
+            NotifyEvent ntfy=new NotifyEvent(mContext);
+            ntfy.setListener(new NotifyEvent.NotifyEventListener() {
+                @Override
+                public void positiveResponse(Context context, Object[] objects) {
+                    mUtil.flushLog();
+                    mGp.settingExitClean=true;
+                    finish();
+                }
+                @Override
+                public void negativeResponse(Context context, Object[] objects) {
+                    mGp.settingExitClean=true;
+                }
+            });
+            mUtil.showCommonDialog(true, "W",
+                    mContext.getString(R.string.msgs_smbsync_main_settings_restart_title),
+                    mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), ntfy);
+        }
+    }
 
+    private boolean isJcifsOptionChanged() {
+        boolean changed = false;
+
+        String prevSmbLmCompatibility = mGp.settingsSmbLmCompatibility,
+                prevSmbUseExtendedSecurity = mGp.settingsSmbUseExtendedSecurity;
+        String p_response_timeout=mGp.settingsSmbClientResponseTimeout;
+        String p_disable_plain_text_passwords=mGp.settingsSmbDisablePlainTextPasswords;
+
+        mGp.initJcifsOption(mContext);
+
+        if (!mGp.settingsSmbLmCompatibility.equals(prevSmbLmCompatibility)) changed = true;
+        else if (!mGp.settingsSmbUseExtendedSecurity.equals(prevSmbUseExtendedSecurity)) changed = true;
+        else if (!mGp.settingsSmbClientResponseTimeout.equals(p_response_timeout)) changed = true;
+        else if (!mGp.settingsSmbDisablePlainTextPasswords.equals(p_disable_plain_text_passwords)) changed = true;
+
+        return changed;
     }
 
     private void listSettingsOption() {
@@ -2003,6 +2042,7 @@ public class ActivityMain extends AppCompatActivity {
         return false;
     }
 
+    // not used
     private boolean isPrimaryStorageAccessGranted() {
         if (mGp.safMgr.isUuidRegistered(SAF_FILE_PRIMARY_UUID)) return true;
         return false;
@@ -3632,7 +3672,7 @@ public class ActivityMain extends AppCompatActivity {
                 setContextButtonEnabled(mContextHistoryButtonHistiryCopyClipboard, false);
                 if (isUiEnabled()) {
                     //ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                    android.content.ClipboardManager cm = (android.content.ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
                     StringBuilder out = new StringBuilder(256);
                     for (int i = 0; i < mGp.syncHistoryListAdapter.getCount(); i++) {
                         if (mGp.syncHistoryListAdapter.getItem(i).isChecked) {
@@ -3905,12 +3945,11 @@ public class ActivityMain extends AppCompatActivity {
                             for (int i = down_sel_pos + 1; i <= pos; i++)
                                 mGp.syncTaskListAdapter.getItem(i).setChecked(true);
                         }
-                        mGp.syncTaskListAdapter.notifyDataSetChanged();
                     } else {
                         mGp.syncTaskListAdapter.setShowCheckBox(true);
                         mGp.syncTaskListAdapter.getItem(pos).setChecked(true);
-                        mGp.syncTaskListAdapter.notifyDataSetChanged();
                     }
+                    mGp.syncTaskListAdapter.notifyDataSetChanged();
                     setSyncTaskContextButtonSelectMode();
                 }
                 return true;
@@ -4615,7 +4654,7 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
-    private long timeLastMessagesTouchEvent = System.currentTimeMillis();
+    //private long timeLastMessagesTouchEvent = System.currentTimeMillis();
     private final static int MESSAGE_SCROLL_AMOUNT=1;
     private void setMessageContextButtonListener() {
         setMessageScrollButtonVisibility();
@@ -4674,8 +4713,8 @@ public class ActivityMain extends AppCompatActivity {
                 }
 
                 //mUtil.addDebugMsg(2, "I", "lv_height="+lv_height + " first_item_height="+first_item_height + " first_item_y_top="+first_item_y_top + " first_item_y_bottom="+first_item_y_bottom);
-                int lp=mGp.syncMessageView.getLastVisiblePosition();
-                int fp=mGp.syncMessageView.getFirstVisiblePosition();
+                //int lp=mGp.syncMessageView.getLastVisiblePosition();
+                //int fp=mGp.syncMessageView.getFirstVisiblePosition();
                 mGp.syncMessageListAdapter.refresh();
                 mGp.syncMessageView.setSelectionFromTop(mGp.syncMessageView.getFirstVisiblePosition(), lv_height - y_offset);
                 setMessageScrollButtonVisibility();
@@ -5161,6 +5200,7 @@ public class ActivityMain extends AppCompatActivity {
 //
 //    };
 
+    // not used
     private void applyMediaStatusChanged(String action) {
         mUiHandler.post(new Runnable() {
             @Override
@@ -5315,52 +5355,14 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    final private boolean checkJcifsOptionChanged() {
-        boolean changed = false;
-
-        String prevSmbLmCompatibility = mGp.settingsSmbLmCompatibility,
-                prevSmbUseExtendedSecurity = mGp.settingsSmbUseExtendedSecurity;
-        String p_response_timeout=mGp.settingsSmbClientResponseTimeout;
-        String p_disable_plain_text_passwords=mGp.settingsSmbDisablePlainTextPasswords;
-
-        mGp.initJcifsOption(mContext);
-
-        if (!mGp.settingsSmbLmCompatibility.equals(prevSmbLmCompatibility)) changed = true;
-        else if (!mGp.settingsSmbUseExtendedSecurity.equals(prevSmbUseExtendedSecurity)) changed = true;
-        else if (!mGp.settingsSmbClientResponseTimeout.equals(p_response_timeout)) changed = true;
-        else if (!mGp.settingsSmbDisablePlainTextPasswords.equals(p_disable_plain_text_passwords)) changed = true;
-
-        if (changed) {
-            listSettingsOption();
-            NotifyEvent ntfy=new NotifyEvent(mContext);
-            ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                @Override
-                public void positiveResponse(Context context, Object[] objects) {
-                    mUtil.flushLog();
-                    mGp.settingExitClean=true;
-                    finish();
-                }
-                @Override
-                public void negativeResponse(Context context, Object[] objects) {
-                    mGp.settingExitClean=true;
-                }
-            });
-            mUtil.showCommonDialog(true, "W",
-                    mContext.getString(R.string.msgs_smbsync_main_settings_restart_title),
-                    mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), ntfy);
-        }
-
-        return changed;
-    }
-
+    // not used
     private String printStackTraceElement(StackTraceElement[] ste) {
-        String st_msg = "";
-        for (int i = 0; i < ste.length; i++) {
-            st_msg += "\n at " + ste[i].getClassName() + "." +
-                    ste[i].getMethodName() + "(" + ste[i].getFileName() +
-                    ":" + ste[i].getLineNumber() + ")";
+        StringBuilder st_msg = new StringBuilder();
+        for (StackTraceElement stack_element : ste) {
+            st_msg.append("\n at ").append(stack_element.getClassName()).append(".").append(stack_element.getMethodName()).
+                    append("(").append(stack_element.getFileName()).append(":").append(stack_element.getLineNumber()).append(")");
         }
-        return st_msg;
+        return st_msg.toString();
     }
 
     // not used method
@@ -5372,7 +5374,7 @@ public class ActivityMain extends AppCompatActivity {
             for(File item:stg_array) {
                 if (item != null) {
                     File cd = new File(item.getParentFile()+"/cache");
-                    if (cd != null && !cd.exists()) {
+                    if (!cd.exists()) {
                         boolean rc = cd.mkdirs();
                         mUtil.addDebugMsg(1, "I", "makeChachDirectory directory create result="+rc);
                     }
@@ -5388,18 +5390,20 @@ public class ActivityMain extends AppCompatActivity {
         long b_time=System.currentTimeMillis();
 
         //Delete internal storage cache
-        File[] fl=mContext.getCacheDir().listFiles();
-        for(File del_item:fl) {
-            deleteCacheFile(del_item);
+        File[] fl = mContext.getCacheDir().listFiles();
+        if (fl != null && fl.length > 0) {
+            for(File del_item : fl) {
+                deleteCacheFile(del_item);
+            }
         }
 
         //Delete external storage cache
         fl=mContext.getExternalCacheDirs();
-        if (fl!=null && fl.length>0) {
-            for(File cf:fl) {
-                if (cf!=null) {
+        if (fl != null && fl.length > 0) {
+            for(File cf : fl) {
+                if (cf != null) {
                     File[] child_list=cf.listFiles();
-                    if (child_list!=null) {
+                    if (child_list != null) {
                         for(File ch_item:child_list) {
                             if (ch_item!=null) {
                                 if (!deleteCacheFile(ch_item)) break;
@@ -5417,22 +5421,24 @@ public class ActivityMain extends AppCompatActivity {
     private boolean deleteCacheFile(File del_item) {
         boolean result=true;
         if (del_item.isDirectory()) {
-            File[] child_list=del_item.listFiles();
-            for(File child_item:child_list) {
-                if (child_item!=null) {
-                    if (!deleteCacheFile(child_item)) {
-                        result=false;
-                        break;
+            File[] child_list = del_item.listFiles();
+            if (child_list != null) {
+                for(File child_item : child_list) {
+                    if (child_item != null) {
+                        if (!deleteCacheFile(child_item)) {
+                            result = false;
+                            break;
+                        }
                     }
                 }
             }
             if (result) {
-                result=del_item.delete();
-                if (mUtil.getLogLevel()>=2 && result) mUtil.addDebugMsg(2, "I", "cache directory deleted, dir="+ del_item.getPath());
+                result  =del_item.delete();
+                if (mUtil.getLogLevel() >= 2 && result) mUtil.addDebugMsg(2, "I", "cache directory deleted, dir="+ del_item.getPath());
             }
         } else {
-            result=del_item.delete();
-            if (mUtil.getLogLevel()>=2 && result) mUtil.addDebugMsg(2, "I", "cache file deleted, file="+ del_item.getPath());
+            result = del_item.delete();
+            if (mUtil.getLogLevel() >= 2 && result) mUtil.addDebugMsg(2, "I", "cache file deleted, file="+ del_item.getPath());
         }
         return result;
     }
@@ -5450,9 +5456,9 @@ public class ActivityMain extends AppCompatActivity {
      */
     final static private int ANDROID_LONG_PRESS_TIMEOUT = 500;
     final static private int DEFAULT_LONG_PRESS_REPEAT_INTERVAL = 100;
-    private class RepeatListener implements View.OnTouchListener {
+    private static class RepeatListener implements View.OnTouchListener {
 
-        private Handler handler = new Handler();
+        private final Handler handler = new Handler();
 
         private final int mLongPressTimeout;
         private final int mRepeatInterval;
@@ -5461,7 +5467,7 @@ public class ActivityMain extends AppCompatActivity {
         private View mTouchedView;
 //      private Rect mRect; // Variable to hold the bounds of the view rectangle
 
-        private Runnable handlerRunnable = new Runnable() {
+        private final Runnable handlerRunnable = new Runnable() {
             @Override
             public void run() {
 //                mUtil.addDebugMsg(1, "I", "runnable enterd, enabled="+mTouchedView.isEnabled());
@@ -5521,6 +5527,7 @@ public class ActivityMain extends AppCompatActivity {
                 case MotionEvent.ACTION_UP:
 //                    mUtil.addDebugMsg(1, "I", "runnable cancelled by Finger UP");
                     handler.removeCallbacks(handlerRunnable);
+                    view.performClick(); // optional as click is enabled on ACTION_DOWN, just to suppress Lint warning
                     mTouchedView.setPressed(false);
                     mTouchedView = null;
                     return mConsumeEvent;
@@ -5558,7 +5565,7 @@ public class ActivityMain extends AppCompatActivity {
 
     final private class MediaStatusChangeReceiver extends BroadcastReceiver {
         @Override
-        final public void onReceive(Context c, Intent in) {
+        public void onReceive(Context c, Intent in) {
             String action = in.getAction();
             mUtil.addDebugMsg(1, "I", "Media status change receiver, action=" + action);
             if (action.equals(Intent.ACTION_MEDIA_MOUNTED) || action.equals(Intent.ACTION_MEDIA_UNMOUNTED)
