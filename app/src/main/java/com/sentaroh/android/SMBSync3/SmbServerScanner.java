@@ -717,9 +717,13 @@ public class SmbServerScanner {
     }
 
     private int mScanCompleteCount = 0, mScanAddrCount = 0;
-    private ArrayList<String> mScanRequestedAddrList = new ArrayList<String>();
-    private ArrayList<SmbServerScanResult> mScanResultList = new ArrayList<SmbServerScanResult>();
-    private String mLockScanCompleteCount = "";
+    // private int mStartedThreadsCount = 0, mTh2ResultEntered = 0, mTh2ResultOut = 0 //debug scanner multithreading
+    private final ArrayList<String> mScanRequestedAddrList = new ArrayList<String>();
+    private final ArrayList<SmbServerScanResult> mScanResultList = new ArrayList<SmbServerScanResult>(); // UI adapter
+    private final ArrayList<SmbServerScanResult> mThreadScanResultList = new ArrayList<SmbServerScanResult>(); // non UI network scan threads
+    private static final Object mLockThreadsScanResultList = new Object(); //for mThreadScanResultList
+    private static final Object mLockScanProgress = new Object(); //for mScanRequestedAddrList and mScanCompleteCount
+    private static final Object mLockSmbServerScanAdapter = new Object(); //mScanResultList and mAdapter
 
     private void performSmbServerScan(
             final Dialog dialog,
@@ -752,6 +756,7 @@ public class SmbServerScanner {
         dialog.setCancelable(false);
 
         mScanResultList.clear();
+        mThreadScanResultList.clear();
         // CANCELボタンの指定
         scan_cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -774,80 +779,62 @@ public class SmbServerScanner {
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {//non UI thread
+                //mStartedThreadsCount = 0;
+                //mTh2ResultEntered = 0;
+                //mTh2ResultOut = 0;
                 mScanCompleteCount = 0;
                 mScanAddrCount = end_addr - begin_addr + 1;
-                int scan_thread = 100;
-                for (int i = begin_addr; i <= end_addr; i += scan_thread) {
+                int scan_threads = 100;
+                for (int i = begin_addr; i <= end_addr; i += scan_threads) {
                     if (!tc.isEnabled()) break;
                     boolean scan_end = false;
-                    for (int j = i; j < (i + scan_thread); j++) {
+                    for (int j = i; j < (i + scan_threads); j++) {
                         if (!tc.isEnabled()) break;
                         if (j <= end_addr) {
-                            startSmbServerScanThread(handler, tc, dialog, p_ntfy,
-                                    lv_ipaddr, tvmsg, subnet + "." + j,
-//                                    ipAddressList,
-                                    scan_port, scan_smbv1, scan_smbv23);
+                            startSmbServerScanThread(handler, tc, lv_ipaddr, tvmsg, subnet + "." + j, scan_port, scan_smbv1, scan_smbv23);
                         } else {
                             scan_end = true;
+                            break;
                         }
                     }
                     if (!scan_end) {
                         for (int wc = 0; wc < 210; wc++) {
                             if (!tc.isEnabled()) break;
-                            synchronized (mScanRequestedAddrList) {
+                            synchronized (mLockScanProgress) {
                                 if (mScanRequestedAddrList.size() == 0) break;
                             }
-                            SystemClock.sleep(30);
+                            SystemClock.sleep(30); //msecs
                         }
+                    } else {
+                        break;
                     }
                 }
-                if (!tc.isEnabled()) {
-                    for (int i = 0; i < 1000; i++) {
-                        SystemClock.sleep(100);
-                        synchronized (mScanRequestedAddrList) {
-                            if (mScanRequestedAddrList.size() == 0) break;
-                        }
+
+                // Wait for all threads to complete, up to max of 100 seconds
+                for (int i = 0; i < 1000; i++) {
+                    SystemClock.sleep(100);
+                    synchronized (mLockScanProgress) {
+                        if (mScanRequestedAddrList.size() == 0) break;
                     }
-                    handler.post(new Runnable() {// UI thread
-                        @Override
-                        public void run() {
-                            synchronized (mAdapter) {
-                                mAdapter.notifyDataSetChanged();
-                                mAdapter.sort();
-                                closeSmbServerScanProgressDlg(dialog, p_ntfy, lv_ipaddr, tvmsg);
-                            }
-                        }
-                    });
-                } else {
-                    for (int i = 0; i < 1000; i++) {
-                        SystemClock.sleep(100);
-                        synchronized (mScanRequestedAddrList) {
-                            if (mScanRequestedAddrList.size() == 0) break;
-                        }
-                    }
-                    handler.post(new Runnable() {// UI thread
-                        @Override
-                        public void run() {
-                            synchronized (mLockScanCompleteCount) {
-                                synchronized (mAdapter) {
-                                    mAdapter.notifyDataSetChanged();
-                                    mAdapter.sort();
-                                    lv_ipaddr.setSelection(lv_ipaddr.getCount());
-                                    mAdapter.notifyDataSetChanged();
-                                    closeSmbServerScanProgressDlg(dialog, p_ntfy, lv_ipaddr, tvmsg);
-                                }
-                            }
-                        }
-                    });
                 }
+                handler.post(new Runnable() {//UI thread, all scan threads completed
+                    @Override
+                    public void run() {
+                        synchronized (mLockSmbServerScanAdapter) {
+                            mAdapter.notifyDataSetChanged();
+                            mAdapter.sort();
+                            //lv_ipaddr.setSelection(lv_ipaddr.getCount());
+                            closeSmbServerScanProgressDlg(dialog, p_ntfy);
+                        }
+                    }
+                });
             }
         });
         th.setPriority(Thread.MIN_PRIORITY);
         th.start();
     }
 
-    private void closeSmbServerScanProgressDlg(final Dialog dialog, final NotifyEvent p_ntfy, final ListView lv_ipaddr,
-                                               final TextView tvmsg) {
+    private void closeSmbServerScanProgressDlg(final Dialog dialog, final NotifyEvent p_ntfy) {
         final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
         final LinearLayout ll_prog = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
         final Button btn_scan = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
@@ -865,12 +852,9 @@ public class SmbServerScanner {
     private String mScanSmbErrorMessage="";
     private void startSmbServerScanThread(final Handler handler,
                                           final ThreadCtrl tc,
-                                          final Dialog dialog,
-                                          final NotifyEvent p_ntfy,
                                           final ListView lv_ipaddr,
                                           final TextView tvmsg,
                                           final String addr,
-                                          //final ArrayList<SmbServerScanAdapter.NetworkScanListItem> ipAddressList,
                                           final String scan_port,
                                           final boolean scan_smbv1,
                                           final boolean scan_smbv23) {
@@ -879,15 +863,16 @@ public class SmbServerScanner {
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {//non UI thread
+                //mStartedThreadsCount++;
                 if (!tc.isEnabled()) return;
 //                byte[] oo=new byte[Integer.MAX_VALUE];
-                synchronized (mScanRequestedAddrList) {
+                synchronized (mLockScanProgress) {
                     mScanRequestedAddrList.add(addr);
                 }
 
                 boolean found = false;
                 int i = -1;
-                String ports[] = { "445", "139" };
+                String[] ports = { "445", "139" };
                 if (scan_port != null && !scan_port.equals("")) {
                     ports = new String[] { scan_port };
                 }
@@ -898,136 +883,131 @@ public class SmbServerScanner {
                     if (found) break;
                 }
 
-                if (found) { //if (true) { // debug to add all scanned servers
-                    final String port = ports[i];
+                final SmbServerInfo ssi = new SmbServerInfo();
+                //ssi.serverHostName = addr;
+                //ssi.serverProtocol = scan_smbv1 ? SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1 : SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
+                ssi.serverPort = ports[i];
+
+                //if (true) {//debug to add all scanned servers
+                if (found) {
+                    // start a new non UI background thread to scan for SMBv1 and SMBv2/3 protocols on the found server
+                    Thread th2 = new Thread(new Runnable() {
+                        @Override
+                        public void run() {//non UI thread
+                            final SmbServerScanResult result = createSmbServerInfo(tc, scan_smbv1, scan_smbv23, null, null, null, addr, ssi.serverPort);
+                            //final SmbServerScanResult result = createSmbServerInfo(tc, false, false, null, null, null, addr, port); //debug to add all scanned servers
+                            //mTh2ResultOut++;
+
+                            synchronized (mLockThreadsScanResultList) {
+                                if (result != null) mThreadScanResultList.add(result);
+                            }
+                            handler.post(new Runnable() {//UI thread, createSmbServerInfo() thread completed, update the results ListView
+                                @Override
+                                public void run() {
+                                    synchronized (mLockSmbServerScanAdapter) {
+                                        synchronized (mLockThreadsScanResultList) {
+                                            mScanResultList.clear(); // hacky way to not use AsyncTask. It also makes the ListView properly expand to bottom of screen if enough elements
+                                            mScanResultList.addAll(mThreadScanResultList);
+                                        }
+
+                                        //mAdapter.sort(); // sorts the results dynamically. However, we won't see the last current added server as the list gets sorted each time
+                                        mAdapter.notifyDataSetChanged();
+                                        lv_ipaddr.setSelection(lv_ipaddr.getCount()); // ensure the selection/listView is set to the last added server
+                                    }
+                                    synchronized (mLockScanProgress) {
+                                        mScanCompleteCount++;
+                                        mScanRequestedAddrList.remove(addr);
+
+                                        //String p_txt = String.format(scan_prog+" mStarted="+mStartedThreadsCount +" Entered="+mTh2ResultEntered + " Out"+mTh2ResultOut, (mScanCompleteCount * 100) / mScanAddrCount);
+                                        String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
+                                        tvmsg.setText(p_txt);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    th2.setPriority(Thread.MIN_PRIORITY);
+                    th2.start();
+                } else {
+                    // server not found, update progress
                     handler.post(new Runnable() {// UI thread
                         @Override
                         public void run() {
-                            synchronized (mLockScanCompleteCount) {
+                            //mTh2ResultOut++;
+                            synchronized (mLockScanProgress) {
                                 mScanCompleteCount++;
-                            }
+                                mScanRequestedAddrList.remove(addr);
 
-                            synchronized (mScanResultList) {
-                                final NotifyEvent ntfy=new NotifyEvent(mActivity);
-                                ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-                                    @Override
-                                    public void positiveResponse(Context context, Object[] arg1) {
-                                        mScanResultList.add((SmbServerScanResult) arg1[0]);
-                                        synchronized (mAdapter) {
-                                            //mAdapter.sort(); // sorts the results dynamically, but we don't see this way the last current added server as the list gets sorted each time
-                                            mAdapter.notifyDataSetChanged();
-                                            lv_ipaddr.setSelection(lv_ipaddr.getCount()); // ensure the selection/listView is set to the last added server
-                                        }
-
-                                        synchronized (mScanRequestedAddrList) {
-                                            mScanRequestedAddrList.remove(addr);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void negativeResponse(Context context, Object[] objects) {
-                                        synchronized (mScanRequestedAddrList) {
-                                            mScanRequestedAddrList.remove(addr);
-                                        }
-                                    }
-                                });
-                                createSmbServerInfo(ntfy, tc, scan_smbv1, scan_smbv23, null, null, null, addr, port);
-                                //createSmbServerInfo(ntfy, tc, false, false, null, null, null, addr, port); // debug to add all scanned servers
+                                //String p_txt = String.format(scan_prog+" mStarted="+mStartedThreadsCount +" Entered="+mTh2ResultEntered + " Out"+mTh2ResultOut, (mScanCompleteCount * 100) / mScanAddrCount);
+                                String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
+                                tvmsg.setText(p_txt);
                             }
                         }
                     });
-                } else {
-                    synchronized (mScanRequestedAddrList) {
-                        mScanRequestedAddrList.remove(addr);
-                    }
-                    synchronized (mLockScanCompleteCount) {
-                        mScanCompleteCount++;
-                    }
                 }
-                handler.post(new Runnable() {// UI thread
-                    @Override
-                    public void run() {
-                        synchronized (mLockScanCompleteCount) {
-                            //lv_ipaddr.setSelection(lv_ipaddr.getCount());
-//                            adap.notifyDataSetChanged();
-                            String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
-                            tvmsg.setText(p_txt);
-                        }
-                    }
-                });
             }
         });
         th.setPriority(Thread.MIN_PRIORITY);
         th.start();
     }
 
-    final private void createSmbServerInfo(final NotifyEvent p_ntfy, final ThreadCtrl tc, boolean scan_smbv1, boolean scan_smbv23, String domain, String user, String pass, String address, String port) {
+    // must be called from non UI background thread
+    private SmbServerScanResult createSmbServerInfo(final ThreadCtrl tc, boolean scan_smbv1, boolean scan_smbv23, String domain, String user, String pass, String address, String port) {
+        //mTh2ResultEntered++;
         if (tc != null && !tc.isEnabled()) {
             //p_ntfy.notifyToListener(false, null);
-            return;
+            return null;
         }
-
         SmbServerScanResult result = new SmbServerScanResult();
         result.server_smb_ip_addr = address==null? "":address;
         result.server_smb_port_number = port==null? "":port;
 
-        final Handler hndl=new Handler();
-        Thread th=new Thread(){
-            @Override
-            public void run() {//non UI thread
-                String srv_name = null;
-                if (scan_smbv1) {
-                    // Try to get server hostname by IP/addres
-                    srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, result.server_smb_ip_addr);
-                    result.server_smb_name = srv_name==null? "":srv_name;
-                    try {
-                        result.scan_for_smb1 = true;
-                        JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
-                        result.smb1_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
-                        if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-                            result.smb1_available = true;
-                            result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                        } else {
-                            result.smb1_available = false;
-                        }
-                    } catch(JcifsException e) {
-                        e.printStackTrace();
-                        mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
-                    }
+        String srv_name = null;
+        if (scan_smbv1) {
+            // Try to get server hostname by IP/addres
+            srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1, result.server_smb_ip_addr);
+            result.server_smb_name = srv_name==null? "":srv_name;
+            try {
+                result.scan_for_smb1 = true;
+                JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, domain, user, pass);
+                result.smb1_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                if (!result.smb1_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                    result.smb1_available = true;
+                    result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                } else {
+                    result.smb1_available = false;
                 }
-
-                if (scan_smbv23) {
-                    if (srv_name == null || srv_name.equals("")) {
-                        srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, result.server_smb_ip_addr);
-                        result.server_smb_name = srv_name==null? "":srv_name;
-                    }
-                    try {
-                        result.scan_for_smb23 = true;
-                        Properties prop = new Properties();
-                        prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
-                        JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
-                        result.smb23_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
-                        if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
-                            result.smb23_available = true;
-                            result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                        } else {
-                            result.smb23_available = false;
-                        }
-                    } catch(JcifsException e) {
-                        e.printStackTrace();
-                        mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
-                    }
-                }
-
-                hndl.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        p_ntfy.notifyToListener(true, new Object[]{result});
-                    }
-                });
+            } catch(JcifsException e) {
+                e.printStackTrace();
+                mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
+                mScanSmbErrorMessage=mActivity.getString(R.string.msgs_scan_smb_server_scan_dlg_scan_error);
             }
-        };
-        th.start();
+        }
+
+        if (scan_smbv23) {
+            if (srv_name == null || srv_name.equals("")) {
+                srv_name = CommonUtilities.getSmbHostName(mUtil, SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, result.server_smb_ip_addr);
+                result.server_smb_name = srv_name==null? "":srv_name;
+            }
+            try {
+                result.scan_for_smb23 = true;
+                Properties prop = new Properties();
+                prop.setProperty("jcifs.smb.client.responseTimeout", mGp.settingsSmbClientResponseTimeout);
+                JcifsAuth auth = new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB23, domain, user, pass, JcifsAuth.SMB_CLIENT_MIN_VERSION, JcifsAuth.SMB_CLIENT_MAX_VERSION, prop);
+                result.smb23_nt_status_desc = isSmbServerAvailable(auth, result.server_smb_ip_addr, result.server_smb_name, result.server_smb_port_number);
+                if (!result.smb23_nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
+                    result.smb23_available = true;
+                    result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
+                } else {
+                    result.smb23_available = false;
+                }
+            } catch(JcifsException e) {
+                e.printStackTrace();
+                mUtil.addDebugMsg(1, "I", "JcifsException occured, error=" + e.getMessage());
+                mScanSmbErrorMessage=mActivity.getString(R.string.msgs_scan_smb_server_scan_dlg_scan_error);
+            }
+        }
+        return result;
     }
 
     final private void createSmbServerShareInfo(final NotifyEvent p_ntfy, String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
@@ -1341,7 +1321,7 @@ public class SmbServerScanner {
         public String serverAccountPassword="";
     }
 
-    public class SmbServerScanResult {
+    public static class SmbServerScanResult {
         public static final String SMB_STATUS_UNSUCCESSFULL="Unsuccessfull";
         public static final String SMB_STATUS_ACCESS_DENIED="Access denied";
         public static final String SMB_STATUS_INVALID_LOGON_TYPE="Invalid login type";
@@ -1372,8 +1352,9 @@ public class SmbServerScanner {
     private static class SmbServerScanAdapter extends ArrayAdapter<SmbServerScanResult> {
 
         private ArrayList<SmbServerScanResult> mResultList = null;
+        private static final Object mLockResultList = new Object(); //for mResultList
         private int mResourceId = 0;
-        private Context mActivity;
+        private final Context mActivity;
         private NotifyEvent mNtfyEvent = null;
         private boolean mButtonEnabled = true;
 
@@ -1393,15 +1374,15 @@ public class SmbServerScanner {
 
         @Override
         public void add(SmbServerScanResult item) {
-            synchronized (mResultList) {
+            synchronized (mLockResultList) {
                 mResultList.add(item);
                 notifyDataSetChanged();
             }
         }
 
         public void sort() {
-            synchronized (mResultList) {
-                Collections.sort(mResultList, new Comparator<SmbServerScanResult>() {
+            synchronized (mLockResultList) {
+                mResultList.sort(new Comparator<SmbServerScanResult>() {
                     @Override
                     public int compare(SmbServerScanResult lhs, SmbServerScanResult rhs) {
                         String r_o4 = rhs.server_smb_ip_addr.substring(rhs.server_smb_ip_addr.lastIndexOf(".") + 1);

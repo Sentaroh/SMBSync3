@@ -683,6 +683,7 @@
         <string name="msgs_progress_spin_dlg_filelist_getting">Получение списка файлов…</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">Отмена</string>
         <string name="msgs_scan_smb_server_parm_dlg_smb_port_hint">Server port number</string>
+        <string name="msgs_scan_smb_server_scan_dlg_scan_error">A JcifsException occured during scan, check logs for more info !</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Расписание</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">Название расписания</string>
