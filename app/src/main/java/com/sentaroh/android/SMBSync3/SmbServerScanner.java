@@ -50,9 +50,13 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.*;
+import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_STATUS_ACCESS_DENIED;
+import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_STATUS_INVALID_LOGON_TYPE;
+import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_STATUS_UNKNOWN_ACCOUNT;
+import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_STATUS_UNSUCCESSFULL;
+import static com.sentaroh.android.SMBSync3.SmbServerScanner.SmbServerScanResult.SMB_STATUS_UNTESTED_LOGIN;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+//import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
@@ -66,7 +70,6 @@ import com.sentaroh.android.Utilities3.Widget.CustomSpinnerAdapter;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Properties;
 
@@ -89,7 +92,7 @@ public class SmbServerScanner {
         initDialog(p_ntfy, port_number, scanner_smb_protocol, scan_start);
     }
 
-    private static SmbServerScanAdapter mAdapter = null;
+    private SmbServerScanAdapter mAdapter = null;
     private final static String SYNC_FOLDER_SMB_PROTOCOL_SMB123 = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1 + " & " + SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
     private void initDialog(final NotifyEvent p_ntfy, final String port_number, final String scanner_smb_protocol, boolean scan_start) {
         if (!SyncThread.isWifiOn(mActivity)) {
@@ -104,21 +107,21 @@ public class SmbServerScanner {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.scan_smb_server_scan_dlg);
 
-        final ConstraintLayout ll_dlg_view = (ConstraintLayout) dialog.findViewById(R.id.scan_remote_ntwk_dlg_view);
+        //final ConstraintLayout ll_dlg_view = (ConstraintLayout) dialog.findViewById(R.id.scan_remote_ntwk_dlg_view);
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_title);
+        final LinearLayout title_view = dialog.findViewById(R.id.scan_smb_server_scan_dlg_title_view);
+        final TextView title = dialog.findViewById(R.id.scan_smb_server_scan_dlg_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
-        final ScrollView scan_settings_scroll_view = (ScrollView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_settings_scroll_view);
+        final ScrollView scan_settings_scroll_view = dialog.findViewById(R.id.scan_smb_server_scan_dlg_settings_scroll_view);
         scan_settings_scroll_view.setScrollBarFadeDuration(0);
         scan_settings_scroll_view.setScrollbarFadingEnabled(false);
 
-        final Button btn_scan = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
-        final TextView tvmsg = (TextView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_msg);
+        final Button btn_scan = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
+        final Button btn_cancel = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
+        final TextView tvmsg = dialog.findViewById(R.id.scan_smb_server_scan_dlg_msg);
         //final TextView tv_result = (TextView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_result_title);
         tvmsg.setText(mActivity.getString(R.string.msgs_scan_ip_address_press_scan_btn));
         //tv_result.setVisibility(TextView.GONE);
@@ -128,12 +131,12 @@ public class SmbServerScanner {
         String subnet_o1, subnet_o2, subnet_o3;
         subnet_o1 = subnet.substring(0, subnet.indexOf("."));
         subnet_o2 = subnet.substring(subnet.indexOf(".") + 1, subnet.lastIndexOf("."));
-        subnet_o3 = subnet.substring(subnet.lastIndexOf(".") + 1, subnet.length());
-        final EditText baEt1 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o1);
-        final EditText baEt2 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o2);
-        final EditText baEt3 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o3);
-        final EditText baEt4 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o4);
-        final EditText eaEt5 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_end_address_o4);
+        subnet_o3 = subnet.substring(subnet.lastIndexOf(".") + 1);
+        final EditText baEt1 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o1);
+        final EditText baEt2 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o2);
+        final EditText baEt3 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o3);
+        final EditText baEt4 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o4);
+        final EditText eaEt5 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_end_address_o4);
         baEt1.setText(subnet_o1);
         baEt2.setText(subnet_o2);
         baEt3.setText(subnet_o3);
@@ -142,7 +145,7 @@ public class SmbServerScanner {
         eaEt5.setText("254");
         baEt4.requestFocus();
 
-        final Spinner dlg_scan_smb_protocol_spinner = (Spinner) dialog.findViewById(R.id.scan_smb_scanner_dlg_smb_protocol_spinner);
+        final Spinner dlg_scan_smb_protocol_spinner = dialog.findViewById(R.id.scan_smb_scanner_dlg_smb_protocol_spinner);
         dlg_scan_smb_protocol_spinner.setOnItemSelectedListener(null);
         CommonUtilities.setSpinnerBackground(mActivity, dlg_scan_smb_protocol_spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter smb_level_spinner_adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
@@ -160,7 +163,7 @@ public class SmbServerScanner {
         else if (scanner_smb_protocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23)) dlg_scan_smb_protocol_spinner.setSelection(1);
         else dlg_scan_smb_protocol_spinner.setSelection(2);
 
-        final EditText et_port_number = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
+        final EditText et_port_number = dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
         if (port_number.isEmpty() || TextUtils.isDigitsOnly(port_number)) {
             et_port_number.setText(port_number);
         } else {
@@ -198,11 +201,7 @@ public class SmbServerScanner {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
-                if (isValidScanAddress(dialog)) {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
-                } else {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
-                }
+                CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
             }
         });
 
@@ -213,11 +212,7 @@ public class SmbServerScanner {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
-                if (isValidScanAddress(dialog)) {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
-                } else {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
-                }
+                CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
             }
         });
 
@@ -228,11 +223,7 @@ public class SmbServerScanner {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
-                if (isValidScanAddress(dialog)) {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
-                } else {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
-                }
+                CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
             }
         });
 
@@ -243,11 +234,7 @@ public class SmbServerScanner {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
-                if (isValidScanAddress(dialog)) {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
-                } else {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
-                }
+                CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
             }
         });
 
@@ -258,18 +245,14 @@ public class SmbServerScanner {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void afterTextChanged(Editable editable) {
-                if (isValidScanAddress(dialog)) {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
-                } else {
-                    CommonUtilities.setViewEnabled(mActivity, btn_scan, false);
-                }
+                CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
             }
         });
 
         CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
         tvmsg.setText("");
 
-        final ListView lv = (ListView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_result_list);
+        final ListView lv = dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_result_list);
         lv.setScrollingCacheEnabled(false);
         //lv.setScrollbarFadingEnabled(false);
         lv.setScrollBarFadeDuration(0);
@@ -374,28 +357,28 @@ public class SmbServerScanner {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.scan_smb_server_parm_dlg);
 
-        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_title_view);
+        final LinearLayout ll_title= dialog.findViewById(R.id.scan_smb_server_parm_dlg_title_view);
         ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
-        final TextView tv_title=(TextView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_title);
+        final TextView tv_title= dialog.findViewById(R.id.scan_smb_server_parm_dlg_title);
         tv_title.setTextColor(mGp.themeColorList.title_text_color);
-        final TextView dlg_msg=(TextView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
+        final TextView dlg_msg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
 
-        final ScrollView server_settings_scroll_view = (ScrollView) dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
+        final ScrollView server_settings_scroll_view = dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
         server_settings_scroll_view.setScrollBarFadeDuration(0);
         server_settings_scroll_view.setScrollbarFadingEnabled(false);
 
-        final RadioGroup dlg_smb_host_rg=(RadioGroup)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_rg);
-        final RadioButton dlg_use_ip_addr=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_address);
-        final RadioButton dlg_use_host_name=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_hostname);
-        final TextView dlg_smb_host_selcted=(TextView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_selected);
-        final RadioButton dlg_use_smb1=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1);
-        final RadioButton dlg_use_smb23=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23);
-        final EditText dlg_smb_port_number=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_port_number);
-        final EditText dlg_smb_account_name=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
-        final EditText dlg_smb_account_password=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
-        final LinearLayout ll_dlg_smb_share_name=(LinearLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
+        final RadioGroup dlg_smb_host_rg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_rg);
+        final RadioButton dlg_use_ip_addr= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_address);
+        final RadioButton dlg_use_host_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_hostname);
+        final TextView dlg_smb_host_selcted= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_selected);
+        final RadioButton dlg_use_smb1= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1);
+        final RadioButton dlg_use_smb23= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23);
+        final EditText dlg_smb_port_number= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_port_number);
+        final EditText dlg_smb_account_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
+        final EditText dlg_smb_account_password= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
+        //final LinearLayout ll_dlg_smb_share_name=(LinearLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
 
-        final ListView dlg_smb_share_name=(ListView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
+        final ListView dlg_smb_share_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
         //dlg_smb_share_name.setScrollbarFadingEnabled(false);
         dlg_smb_share_name.setScrollBarFadeDuration(0);
         
@@ -404,11 +387,11 @@ public class SmbServerScanner {
         dlg_smb_share_name.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         dlg_smb_share_name.setAdapter(share_list_adapter);
 
-        final Button btn_refresh=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_refresh_share_list);
+        final Button btn_refresh= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_refresh_share_list);
 
-        final Button btn_ok=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
+        final Button btn_ok= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
-        final Button btn_cancel=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_cancel);
+        final Button btn_cancel= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_cancel);
 
         CommonDialog.setDlgBoxSizeLimit(dialog,true);
 
@@ -521,7 +504,7 @@ public class SmbServerScanner {
             }
         });
 
-        final TextInputLayout til_smb_account_password = (TextInputLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
+        final TextInputLayout til_smb_account_password = dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
         til_smb_account_password.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -583,7 +566,7 @@ public class SmbServerScanner {
 
                 SparseBooleanArray checked = dlg_smb_share_name.getCheckedItemPositions();
                 for (int i = 0; i <= share_name_list.size(); i++) {
-                    if (checked.get(i) == true) {
+                    if (checked.get(i)) {
                         smb_share_name=share_name_list.get(i);
                         break;
                     }
@@ -613,21 +596,21 @@ public class SmbServerScanner {
 //        else CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
 //    }
 
-    private void buildShareListSelectorView(Dialog dialog, SmbServerScanResult scan_result, ArrayAdapter adapter) {
-        final TextView dlg_msg=(TextView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
-        final ScrollView server_settings_scroll_view = (ScrollView) dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
-        final RadioButton dlg_use_ip_addr=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_address);
-        final RadioButton dlg_use_host_name=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_hostname);
-        final RadioButton dlg_use_smb1=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1);
-        final RadioButton dlg_use_smb23=(RadioButton)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23);
-        final EditText dlg_smb_port_number=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_port_number);
-        final EditText dlg_smb_account_name=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
-        final EditText dlg_smb_account_password=(EditText)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
-        final TextInputLayout til_smb_account_password = (TextInputLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
-        final Button btn_refresh=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_refresh_share_list);
-        final LinearLayout ll_dlg_smb_share_name=(LinearLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
-        final ListView dlg_smb_share_name=(ListView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
-        final Button btn_ok=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
+    private void buildShareListSelectorView(Dialog dialog, SmbServerScanResult scan_result, ArrayAdapter<String> adapter) {
+        final TextView dlg_msg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
+        final ScrollView server_settings_scroll_view = dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
+        final RadioButton dlg_use_ip_addr= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_address);
+        final RadioButton dlg_use_host_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_hostname);
+        final RadioButton dlg_use_smb1= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1);
+        final RadioButton dlg_use_smb23= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb23);
+        final EditText dlg_smb_port_number= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_port_number);
+        final EditText dlg_smb_account_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_name);
+        final EditText dlg_smb_account_password= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
+        final TextInputLayout til_smb_account_password = dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
+        final Button btn_refresh= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_refresh_share_list);
+        final LinearLayout ll_dlg_smb_share_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
+        final ListView dlg_smb_share_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
+        final Button btn_ok= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
 
         String nt_status_desc = "";
         String smb_level = "";
@@ -733,15 +716,15 @@ public class SmbServerScanner {
             final boolean scan_smbv1, final boolean scan_smbv23, final NotifyEvent p_ntfy) {
         final Handler handler = new Handler();
         final ThreadCtrl tc = new ThreadCtrl();
-        final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
-        final LinearLayout ll_prog = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
-        final TextView tvmsg = (TextView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_msg);
-        final Button btn_scan = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
-        final Button scan_cancel = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_cancel);
+        final LinearLayout ll_addr = dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
+        final LinearLayout ll_prog = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
+        final TextView tvmsg = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_msg);
+        final Button btn_scan = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
+        final Button btn_cancel = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
+        final Button scan_cancel = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_cancel);
 
 //        final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.scan_remote_ntwk_ctv_use_port);
-        final EditText et_port_number = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
+        final EditText et_port_number = dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
         final String scan_port = et_port_number.getText().toString();
 
         tvmsg.setText("");
@@ -835,10 +818,10 @@ public class SmbServerScanner {
     }
 
     private void closeSmbServerScanProgressDlg(final Dialog dialog, final NotifyEvent p_ntfy) {
-        final LinearLayout ll_addr = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
-        final LinearLayout ll_prog = (LinearLayout) dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
-        final Button btn_scan = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
+        final LinearLayout ll_addr = dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
+        final LinearLayout ll_prog = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
+        final Button btn_scan = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
+        final Button btn_cancel = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
         ll_addr.setVisibility(LinearLayout.VISIBLE);
         ll_prog.setVisibility(LinearLayout.GONE);
         btn_scan.setVisibility(Button.VISIBLE);
@@ -1010,7 +993,7 @@ public class SmbServerScanner {
         return result;
     }
 
-    final private void createSmbServerShareInfo(final NotifyEvent p_ntfy, String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
+    private void createSmbServerShareInfo(final NotifyEvent p_ntfy, String smb_level, String domain, String user, String pass, String address, String srv_name, String port) {
         SmbServerScanResult result = new SmbServerScanResult();
         result.server_smb_ip_addr = address==null? "":address;
         result.server_smb_name = srv_name==null? "":srv_name;
@@ -1082,7 +1065,7 @@ public class SmbServerScanner {
         th.start();
     }
 
-    final private String isSmbServerAvailable(JcifsAuth auth, String address, String srv_name, String port) {
+    private String isSmbServerAvailable(JcifsAuth auth, String address, String srv_name, String port) {
         boolean result=false;
         String smb_ip_addr = address==null? "":address;
         String smb_hostname = srv_name==null? "":srv_name;
@@ -1096,10 +1079,13 @@ public class SmbServerScanner {
         mUtil.addDebugMsg(1, "I", "buildRemoteUrl url_prefix="+url_prefix);
 
         String server_status="";
-        JcifsFile[] share_file_list=null;
         try {
+            // we just try to connect to the server without credentials
+            //JcifsFile[] share_file_list=null;
+            //JcifsFile sf = new JcifsFile(url_prefix, auth);
+            //share_file_list=sf.listFiles();
             JcifsFile sf = new JcifsFile(url_prefix, auth);
-            share_file_list=sf.listFiles();
+            sf.listFiles();
             server_status="";
             result=true;
             try {
@@ -1124,7 +1110,7 @@ public class SmbServerScanner {
         return server_status;
     }
         
-    final private ArrayList<SmbServerScanShareInfo> createSmbServerShareList(String smb_level, JcifsAuth auth, String address, String srv_name, String port) {
+    private ArrayList<SmbServerScanShareInfo> createSmbServerShareList(String smb_level, JcifsAuth auth, String address, String srv_name, String port) {
         String smb_ip_addr = address==null? "":address;
         String smb_hostname = srv_name==null? "":srv_name;
         String port_number = port==null? "":port;
@@ -1169,12 +1155,12 @@ public class SmbServerScanner {
 
     private boolean isValidScanAddress(Dialog dialog) {
         boolean result = false;
-        final EditText baEt1 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o1);
-        final EditText baEt2 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o2);
-        final EditText baEt3 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o3);
-        final EditText baEt4 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o4);
-        final EditText eaEt5 = (EditText) dialog.findViewById(R.id.scan_smb_server_scan_dlg_end_address_o4);
-        final TextView tvmsg = (TextView) dialog.findViewById(R.id.scan_smb_server_scan_dlg_msg);
+        final EditText baEt1 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o1);
+        final EditText baEt2 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o2);
+        final EditText baEt3 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o3);
+        final EditText baEt4 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o4);
+        final EditText eaEt5 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_end_address_o4);
+        final TextView tvmsg = dialog.findViewById(R.id.scan_smb_server_scan_dlg_msg);
 
         String ba1 = baEt1.getText().toString();
         String ba2 = baEt2.getText().toString();
@@ -1344,7 +1330,7 @@ public class SmbServerScanner {
         public ArrayList<SmbServerScanShareInfo> share_item_list=new ArrayList<SmbServerScanShareInfo>();
     }
 
-    public class SmbServerScanShareInfo {
+    private static class SmbServerScanShareInfo {
         public String smb_level= SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
         public String share_name="";
     }
@@ -1405,8 +1391,8 @@ public class SmbServerScanner {
                 LayoutInflater vi = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 v = vi.inflate(mResourceId, null);
                 holder = new ViewHolder();
-                holder.tv_name = (TextView) v.findViewById(R.id.scan_result_list_item_server_name);
-                holder.tv_addr = (TextView) v.findViewById(R.id.scan_result_list_item_server_addr);
+                holder.tv_name = v.findViewById(R.id.scan_result_list_item_server_name);
+                holder.tv_addr = v.findViewById(R.id.scan_result_list_item_server_addr);
                 v.setTag(holder);
             } else {
                 holder = (ViewHolder) v.getTag();
@@ -1427,7 +1413,8 @@ public class SmbServerScanner {
                 if (o.server_smb_name.equals("")) {
                     sep = "";
                 }
-                holder.tv_name.setText(o.server_smb_name + sep + smb_level);
+                String smb_name_txt = o.server_smb_name + sep + smb_level;
+                holder.tv_name.setText(smb_name_txt);
                 holder.tv_addr.setText(o.server_smb_ip_addr);
                 //if (o.server_smb_name.equals("")) holder.tv_name.setEnabled(false);
                 //else holder.tv_name.setEnabled(true);
@@ -1475,24 +1462,21 @@ public class SmbServerScanner {
         @Override
         public boolean isEnabled(int position) {
             final SmbServerScanResult o = getItem(position);
-            boolean enabled = true;
-            if (!o.smb1_available && !o.smb23_available) {
-                // Server responds to be SMB compatible but doesn't provide a compatible SMB v1/2/3 level support
-                // Exp: scanning uses port 135 while SMB server is listening on a different port -> Server cannot be selected in results
-                enabled = false;
-            }
+            boolean is_selectable = o.smb1_available || o.smb23_available;
+            // Server responds to be SMB compatible but doesn't provide a compatible SMB v1/2/3 level support
+            // Exp: scanning uses port 135 while SMB server is listening on a different port -> Server cannot be selected in results
             if (o.scan_for_smb1 && !o.scan_for_smb23) {
                 // SMB v1 only scan, servers with only SMB v2/3 cannot be selected
-                if (!o.smb1_available) enabled = false;
+                if (!o.smb1_available) is_selectable = false;
             }
             if (o.scan_for_smb23 && !o.scan_for_smb1) {
                 // SMB v2/3 only scan, servers with only SMB v1 cannot be selected
-                if (!o.smb23_available) enabled = false;
+                if (!o.smb23_available) is_selectable = false;
             }
-            return enabled;
+            return is_selectable;
         }
 
-        class ViewHolder {
+        static class ViewHolder {
             TextView tv_name, tv_addr;
         }
     }
