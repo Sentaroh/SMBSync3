@@ -97,6 +97,7 @@ public class SmbServerScanner {
 
     private SmbServerScanAdapter mAdapter = null;
     private final static String SYNC_FOLDER_SMB_PROTOCOL_SMB123 = SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1 + " & " + SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23;
+
     private void initDialog(final NotifyEvent p_ntfy, final String port_number, final String scanner_smb_protocol, boolean scan_start) {
         if (!SyncThread.isWifiOn(mActivity)) {
             mUtil.showCommonDialog(false, "W", mActivity.getString(R.string.msgs_scan_ip_address_select_title),
@@ -214,6 +215,7 @@ public class SmbServerScanner {
             @Override
             public void afterTextChanged(Editable editable) {
                 CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
+                setDialogTitleOffscreenColor(title, tvmsg, scan_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
             }
         });
 
@@ -225,6 +227,7 @@ public class SmbServerScanner {
             @Override
             public void afterTextChanged(Editable editable) {
                 CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
+                setDialogTitleOffscreenColor(title, tvmsg, scan_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
             }
         });
 
@@ -236,6 +239,7 @@ public class SmbServerScanner {
             @Override
             public void afterTextChanged(Editable editable) {
                 CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
+                setDialogTitleOffscreenColor(title, tvmsg, scan_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
             }
         });
 
@@ -247,6 +251,7 @@ public class SmbServerScanner {
             @Override
             public void afterTextChanged(Editable editable) {
                 CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
+                setDialogTitleOffscreenColor(title, tvmsg, scan_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
             }
         });
 
@@ -258,11 +263,18 @@ public class SmbServerScanner {
             @Override
             public void afterTextChanged(Editable editable) {
                 CommonUtilities.setViewEnabled(mActivity, btn_scan, isValidScanAddress(dialog));
+                setDialogTitleOffscreenColor(title, tvmsg, scan_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
+            }
+        });
+
+        scan_settings_sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                setDialogTitleOffscreenColor(title, tvmsg, scan_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
             }
         });
 
         CommonUtilities.setViewEnabled(mActivity, btn_scan, true);
-        tvmsg.setText("");
 
         final ListView lv = dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_result_list);
         lv.setScrollingCacheEnabled(false);
@@ -306,19 +318,9 @@ public class SmbServerScanner {
                                 //tv_result.setVisibility(TextView.VISIBLE);
                             }
                         }
-/*
-                        // After scan, move scan settings ScrollView to the top so that result header message (in red) is visible
-                        // Result header message is included in ScrollView to preserve touch heights on narrow screens with landscape orientation
-                        scan_settings_sv.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-                            @Override
-                            public void onGlobalLayout() {
-                                // Ready, move up
-                                //scan_settings_sv.fullScroll(View.FOCUS_UP); //moves up to the to selectable/focusable element
-                                scan_settings_sv.smoothScrollTo(0,0); // scrolls to top of view
-                                scan_settings_sv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                            }
-                        });
-*/
+                        moveScrollViewToTop(scan_settings_sv);
+                        // Set color not needed since moveScrollViewToTop() triggers scan_settings_sv.setOnScrollChangeListener()
+                        //setDialogTitleOffscreenColor(title, tvmsg, scan_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
                     }
 
                     @Override
@@ -1265,6 +1267,7 @@ public class SmbServerScanner {
 
     private boolean isValidScanAddress(Dialog dialog) {
         boolean result = false;
+
         final EditText baEt1 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o1);
         final EditText baEt2 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o2);
         final EditText baEt3 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o3);
@@ -1300,6 +1303,7 @@ public class SmbServerScanner {
             eaEt5.requestFocus();
             return false;
         }
+
         int iba1=0, iba2=0, iba3=0, iba4=0, iea5=0;
         try {
             iba1 = Integer.parseInt(ba1);
