@@ -662,7 +662,8 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="msgs_scan_ip_address_not_detected">Nessun server SMB trovato.</string>
         <string name="msgs_scan_ip_address_select_detected_host">Select server from search results or change settings to start a new scan</string>
         <string name="msgs_scan_ip_address_scan_result_title">Risultati della ricerca :</string>
-        <string name="msgs_ip_address_scan_progress">Ricerca host SMB... %d%% completato.</string>
+        <string name="msgs_ip_address_scan_progress_ip_range">Scanning %1$s.%2$d -> %3$d</string>
+        <string name="msgs_ip_address_scan_progress_percent">Ricerca host SMB... %d%% completato.</string>
         <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Inizio</string>
         <string name="msgs_ip_address_range_dlg_end">Fine</string>

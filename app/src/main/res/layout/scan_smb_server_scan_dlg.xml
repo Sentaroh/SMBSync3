@@ -268,12 +268,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone" >
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/scan_smb_server_scan_dlg_progress_msg_scan_range"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_gravity="center_vertical"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:id="@+id/scan_smb_server_scan_dlg_progress_msg_scan_percent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal" >
 
                     <ProgressBar
                         android:layout_width="wrap_content"

@@ -630,12 +630,7 @@ public class SmbServerScanner {
         final TextView dlg_msg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
         Rect rect = new Rect();
         sv.getHitRect(rect);
-        boolean msg_visible = true;
-        if (dlg_msg.getLocalVisibleRect(rect)) {
-            msg_visible = true;
-        } else {
-            msg_visible = false;
-        }
+        boolean msg_visible = dlg_msg.getLocalVisibleRect(rect);
         if (dlg_msg.getText().length() != 0 && !msg_visible) {
             tv_title.setTextColor(mGp.themeColorList.text_color_error);
         } else {
@@ -814,7 +809,7 @@ public class SmbServerScanner {
         final ThreadCtrl tc = new ThreadCtrl();
         final LinearLayout ll_addr = dialog.findViewById(R.id.scan_smb_server_scan_dlg_scan_address);
         final LinearLayout ll_prog = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress);
-        final TextView tvmsg = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_msg);
+        final TextView tv_progress_percent_msg = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_msg);
         final Button btn_scan = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
         final Button btn_cancel = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
         final Button scan_cancel = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_cancel);
@@ -823,7 +818,7 @@ public class SmbServerScanner {
         final EditText et_port_number = dialog.findViewById(R.id.scan_smb_server_scan_dlg_port_number);
         final String scan_port = et_port_number.getText().toString();
 
-        tvmsg.setText("");
+        tv_progress_percent_msg.setText("");
         scan_cancel.setText(R.string.msgs_scan_progress_spin_dlg_addr_cancel);
         ll_addr.setVisibility(LinearLayout.GONE);
         ll_prog.setVisibility(LinearLayout.VISIBLE);
@@ -847,14 +842,17 @@ public class SmbServerScanner {
         });
         dialog.show();
 
+        
+        final TextView tv_progress_ip_range = dialog.findViewById(R.id.scan_smb_server_scan_dlg_progress_msg_scan_range);
+        String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress_ip_range);
+        tv_progress_ip_range.setText(String.format(scan_prog, subnet, begin_addr, end_addr));
         mUtil.addDebugMsg(1, "I", "Scan IP address ransge is " + subnet + "." + begin_addr + " - " + end_addr);
 
-        mScanRequestedAddrList.clear();
-
-        final String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress);
+        scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress_percent);
         String p_txt = String.format(scan_prog, 0);
-        tvmsg.setText(p_txt);
+        tv_progress_percent_msg.setText(p_txt);
 
+        mScanRequestedAddrList.clear();
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {//non UI thread
@@ -870,7 +868,7 @@ public class SmbServerScanner {
                     for (int j = i; j < (i + scan_threads); j++) {
                         if (!tc.isEnabled()) break;
                         if (j <= end_addr) {
-                            startSmbServerScanThread(handler, tc, lv_ipaddr, tvmsg, subnet + "." + j, scan_port, scan_smbv1, scan_smbv23);
+                            startSmbServerScanThread(handler, tc, lv_ipaddr, tv_progress_percent_msg, subnet + "." + j, scan_port, scan_smbv1, scan_smbv23);
                         } else {
                             scan_end = true;
                             break;
@@ -932,12 +930,12 @@ public class SmbServerScanner {
     private void startSmbServerScanThread(final Handler handler,
                                           final ThreadCtrl tc,
                                           final ListView lv_ipaddr,
-                                          final TextView tvmsg,
+                                          final TextView tv_progress_percent_msg,
                                           final String addr,
                                           final String scan_port,
                                           final boolean scan_smbv1,
                                           final boolean scan_smbv23) {
-        final String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress);
+        final String scan_prog = mActivity.getString(R.string.msgs_ip_address_scan_progress_percent);
         if (!tc.isEnabled()) return;
         Thread th = new Thread(new Runnable() {
             @Override
@@ -999,7 +997,7 @@ public class SmbServerScanner {
 
                                         //String p_txt = String.format(scan_prog+" mStarted="+mStartedThreadsCount +" Entered="+mTh2ResultEntered + " Out"+mTh2ResultOut, (mScanCompleteCount * 100) / mScanAddrCount);
                                         String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
-                                        tvmsg.setText(p_txt);
+                                        tv_progress_percent_msg.setText(p_txt);
                                     }
                                 }
                             });
@@ -1019,7 +1017,7 @@ public class SmbServerScanner {
 
                                 //String p_txt = String.format(scan_prog+" mStarted="+mStartedThreadsCount +" Entered="+mTh2ResultEntered + " Out"+mTh2ResultOut, (mScanCompleteCount * 100) / mScanAddrCount);
                                 String p_txt = String.format(scan_prog, (mScanCompleteCount * 100) / mScanAddrCount);
-                                tvmsg.setText(p_txt);
+                                tv_progress_percent_msg.setText(p_txt);
                             }
                         }
                     });

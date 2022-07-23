@@ -658,7 +658,8 @@
         <string name="msgs_scan_ip_address_not_detected">没有找到SMB服务器。</string>
         <string name="msgs_scan_ip_address_select_detected_host">Select server from search results or change settings to start a new scan</string>
         <string name="msgs_scan_ip_address_scan_result_title">搜索结果:</string>
-        <string name="msgs_ip_address_scan_progress">搜索SMB主机...%d%%完成。</string>
+        <string name="msgs_ip_address_scan_progress_ip_range">Scanning %1$s.%2$d -> %3$d</string>
+        <string name="msgs_ip_address_scan_progress_percent">搜索SMB主机...%d%%完成。</string>
         <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">开始</string>
         <string name="msgs_ip_address_range_dlg_end">结束</string>
