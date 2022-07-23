@@ -23,9 +23,12 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import static android.view.ViewTreeObserver.*;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -115,9 +118,9 @@ public class SmbServerScanner {
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
-        final ScrollView scan_settings_scroll_view = dialog.findViewById(R.id.scan_smb_server_scan_dlg_settings_scroll_view);
-        scan_settings_scroll_view.setScrollBarFadeDuration(0);
-        scan_settings_scroll_view.setScrollbarFadingEnabled(false);
+        final ScrollView scan_settings_sv = dialog.findViewById(R.id.scan_smb_server_scan_dlg_settings_scroll_view);
+        scan_settings_sv.setScrollBarFadeDuration(0);
+        scan_settings_sv.setScrollbarFadingEnabled(false);
 
         final Button btn_scan = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_ok);
         final Button btn_cancel = dialog.findViewById(R.id.scan_smb_server_scan_dlg_btn_cancel);
@@ -137,13 +140,22 @@ public class SmbServerScanner {
         final EditText baEt3 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o3);
         final EditText baEt4 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_begin_address_o4);
         final EditText eaEt5 = dialog.findViewById(R.id.scan_smb_server_scan_dlg_end_address_o4);
+
+        // Debug to start scan on a fixed IP/range 192.168.1.50 -> 50
+        //baEt1.setText("192");
+        //baEt2.setText("168");
+        //baEt3.setText("1");
+        //baEt4.setText("50");
+        //eaEt5.setText("50");
+
         baEt1.setText(subnet_o1);
         baEt2.setText(subnet_o2);
         baEt3.setText(subnet_o3);
         baEt4.setText("1");
-        baEt4.setSelection(1);
-        eaEt5.setText("254");
+        //baEt4.setSelection(1);
         baEt4.requestFocus();
+        baEt4.setSelection(baEt4.getText().length());
+        eaEt5.setText("254");
 
         final Spinner dlg_scan_smb_protocol_spinner = dialog.findViewById(R.id.scan_smb_scanner_dlg_smb_protocol_spinner);
         dlg_scan_smb_protocol_spinner.setOnItemSelectedListener(null);
@@ -294,6 +306,19 @@ public class SmbServerScanner {
                                 //tv_result.setVisibility(TextView.VISIBLE);
                             }
                         }
+/*
+                        // After scan, move scan settings ScrollView to the top so that result header message (in red) is visible
+                        // Result header message is included in ScrollView to preserve touch heights on narrow screens with landscape orientation
+                        scan_settings_sv.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+                            @Override
+                            public void onGlobalLayout() {
+                                // Ready, move up
+                                //scan_settings_sv.fullScroll(View.FOCUS_UP); //moves up to the to selectable/focusable element
+                                scan_settings_sv.smoothScrollTo(0,0); // scrolls to top of view
+                                scan_settings_sv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                            }
+                        });
+*/
                     }
 
                     @Override
@@ -351,6 +376,7 @@ public class SmbServerScanner {
         if (scan_start) btn_scan.performClick();
     }
 
+    private ArrayAdapter<String>mServerSharesListAdapter = null;
     // called by initDialog() on server selected from scan results list view
     private void buildSmbServerParmsDlg(SmbServerScanResult scan_result, final NotifyEvent p_ntfy) {
         final Dialog dialog=new Dialog(mActivity);
@@ -363,9 +389,9 @@ public class SmbServerScanner {
         tv_title.setTextColor(mGp.themeColorList.title_text_color);
         final TextView dlg_msg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
 
-        final ScrollView server_settings_scroll_view = dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
-        server_settings_scroll_view.setScrollBarFadeDuration(0);
-        server_settings_scroll_view.setScrollbarFadingEnabled(false);
+        final ScrollView server_settings_sv = dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
+        server_settings_sv.setScrollBarFadeDuration(0);
+        server_settings_sv.setScrollbarFadingEnabled(false);
 
         final RadioGroup dlg_smb_host_rg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_rg);
         final RadioButton dlg_use_ip_addr= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_address);
@@ -378,14 +404,14 @@ public class SmbServerScanner {
         final EditText dlg_smb_account_password= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password);
         //final LinearLayout ll_dlg_smb_share_name=(LinearLayout) dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
 
-        final ListView dlg_smb_share_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
-        //dlg_smb_share_name.setScrollbarFadingEnabled(false);
-        dlg_smb_share_name.setScrollBarFadeDuration(0);
+        final ListView dlg_smb_shares_lv= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
+        //dlg_smb_shares_lv.setScrollbarFadingEnabled(false);
+        dlg_smb_shares_lv.setScrollBarFadeDuration(0);
         
         final ArrayList<String> share_name_list=new ArrayList<String>();
-        final ArrayAdapter<String>share_list_adapter=new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_single_choice, share_name_list);
-        dlg_smb_share_name.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        dlg_smb_share_name.setAdapter(share_list_adapter);
+        mServerSharesListAdapter=new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_single_choice, share_name_list);
+        dlg_smb_shares_lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        dlg_smb_shares_lv.setAdapter(mServerSharesListAdapter);
 
         final Button btn_refresh= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_refresh_share_list);
 
@@ -414,13 +440,15 @@ public class SmbServerScanner {
         dlg_use_smb23.setChecked(scan_result.smb23_available);
         if (!scan_result.smb23_available) dlg_use_smb1.setChecked(scan_result.smb1_available);
 
-        buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+        dlg_smb_port_number.setText(scan_result.server_smb_port_number);
+
+        buildShareListSelectorView(false, dialog, scan_result);
         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
 
-        dlg_smb_share_name.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        dlg_smb_shares_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                dlg_msg.setText("");
+                buildShareListSelectorView(true, dialog, scan_result);
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
             }
         });
@@ -432,7 +460,7 @@ public class SmbServerScanner {
                 scan_result.share_item_list.clear();
                 scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                buildShareListSelectorView(false, dialog, scan_result);
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
@@ -444,12 +472,11 @@ public class SmbServerScanner {
                 scan_result.share_item_list.clear();
                 scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                buildShareListSelectorView(false, dialog, scan_result);
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
-        dlg_smb_port_number.setText(scan_result.server_smb_port_number);
         dlg_smb_port_number.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -462,7 +489,7 @@ public class SmbServerScanner {
                 scan_result.share_item_list.clear();
                 scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                buildShareListSelectorView(false, dialog, scan_result);
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
@@ -479,11 +506,13 @@ public class SmbServerScanner {
                 scan_result.share_item_list.clear();
                 scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                 scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                buildShareListSelectorView(false, dialog, scan_result);
                 CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
             }
         });
 
+        // Thread control to not trigger dlg_smb_account_password.addTextChangedListener.afterTextChanged()
+        // when we only click the end eye icon to show/hide password
         final ThreadCtrl tc = new ThreadCtrl();
         dlg_smb_account_password.addTextChangedListener(new TextWatcher() {
             @Override
@@ -498,17 +527,18 @@ public class SmbServerScanner {
                     scan_result.share_item_list.clear();
                     scan_result.smb1_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
                     scan_result.smb23_nt_status_desc = SMB_STATUS_UNTESTED_LOGIN;
-                    buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                    buildShareListSelectorView(false, dialog, scan_result);
                     CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
                 }
             }
         });
 
+        // override hide/show password onclick of end eye icon so that it doesn't trigger dlg_smb_account_password.addTextChangedListener.afterTextChanged()
         final TextInputLayout til_smb_account_password = dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
         til_smb_account_password.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tc.setEnabled(); // do not trigger dlg_smb_account_password.addTextChangedListener.afterTextChanged()
+                tc.setEnabled();
                 tc.setThreadResultSuccess();
                 if (dlg_smb_account_password.getTransformationMethod()!=null) {
                     dlg_smb_account_password.setTransformationMethod(null);
@@ -516,6 +546,13 @@ public class SmbServerScanner {
                     dlg_smb_account_password.setTransformationMethod(new PasswordTransformationMethod());
                 }
                 tc.setDisabled();
+            }
+        });
+
+        server_settings_sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                setDialogErrorColor(dialog, server_settings_sv);
             }
         });
 
@@ -537,14 +574,14 @@ public class SmbServerScanner {
                         scan_result.share_item_list.clear();
                         scan_result.share_item_list.addAll(result.share_item_list);
 
-                        buildShareListSelectorView(dialog, scan_result, share_list_adapter);
+                        buildShareListSelectorView(false, dialog, scan_result);
                         CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+
+                        //moveScrollViewToTop(server_settings_sv);
                     }
 
                     @Override
-                    public void negativeResponse(Context context, Object[] objects) {
-
-                    }
+                    public void negativeResponse(Context context, Object[] objects) {}
                 });
                 final String acct=dlg_smb_account_name.getText().toString().equals("")?null:dlg_smb_account_name.getText().toString();
                 final String pswd=dlg_smb_account_password.getText().toString().equals("")?null:dlg_smb_account_password.getText().toString();
@@ -564,7 +601,7 @@ public class SmbServerScanner {
                 String smb_acct_pswd=dlg_smb_account_password.getText().toString();
                 String smb_share_name=share_name_list.get(0);
 
-                SparseBooleanArray checked = dlg_smb_share_name.getCheckedItemPositions();
+                SparseBooleanArray checked = dlg_smb_shares_lv.getCheckedItemPositions();
                 for (int i = 0; i <= share_name_list.size(); i++) {
                     if (checked.get(i)) {
                         smb_share_name=share_name_list.get(i);
@@ -588,6 +625,48 @@ public class SmbServerScanner {
         dialog.show();
     }
 
+    private void setDialogErrorColor(Dialog dialog, ScrollView sv) {
+        final TextView tv_title= dialog.findViewById(R.id.scan_smb_server_parm_dlg_title);
+        final TextView dlg_msg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
+        Rect rect = new Rect();
+        sv.getHitRect(rect);
+        boolean msg_visible = true;
+        if (dlg_msg.getLocalVisibleRect(rect)) {
+            msg_visible = true;
+        } else {
+            msg_visible = false;
+        }
+        if (dlg_msg.getText().length() != 0 && !msg_visible) {
+            tv_title.setTextColor(mGp.themeColorList.text_color_error);
+        } else {
+            tv_title.setTextColor(mGp.themeColorList.title_text_color);
+        }
+    }
+
+    // ScrollView needs to be invalidated first to ensure it is not cached
+    // else, if view content did not change, it won't scroll
+    private void moveScrollViewToTop(ScrollView sv) {
+        sv.invalidate();
+        sv.requestLayout();
+        sv.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Ready, move up
+                final OnGlobalLayoutListener gl = this;
+                Handler hndl = new Handler();
+                hndl.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //sv.fullScroll(View.FOCUS_UP);
+                        sv.smoothScrollTo(0,0);
+                        //sv.scrollTo(0,0);
+                        sv.getViewTreeObserver().removeOnGlobalLayoutListener(gl);
+                    }
+                }, 100);
+            }
+        });
+    }
+
 //    private void scanSmbServerEnableSmbScanSelectorOkButton(Dialog dialog) {
 //        final TextView dlg_msg=(TextView)dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
 //        final Button btn_ok=(Button)dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
@@ -596,9 +675,10 @@ public class SmbServerScanner {
 //        else CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
 //    }
 
-    private void buildShareListSelectorView(Dialog dialog, SmbServerScanResult scan_result, ArrayAdapter<String> adapter) {
+    private void buildShareListSelectorView(final boolean select_share, Dialog dialog, SmbServerScanResult scan_result) {
+        final TextView tv_title= dialog.findViewById(R.id.scan_smb_server_parm_dlg_title);
         final TextView dlg_msg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
-        final ScrollView server_settings_scroll_view = dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
+        final ScrollView server_settings_sv = dialog.findViewById(R.id.scan_smb_server_param_dlg_settings_scroll_view);
         final RadioButton dlg_use_ip_addr= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_address);
         final RadioButton dlg_use_host_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_id_hostname);
         final RadioButton dlg_use_smb1= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_smb_protocol_smb1);
@@ -609,10 +689,12 @@ public class SmbServerScanner {
         final TextInputLayout til_smb_account_password = dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_account_password_view);
         final Button btn_refresh= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_refresh_share_list);
         final LinearLayout ll_dlg_smb_share_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_view);
-        final ListView dlg_smb_share_name= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
+        final ListView dlg_smb_shares_lv= dialog.findViewById(R.id.scan_smb_server_parm_dlg_smb_server_share_name);
         final Button btn_ok= dialog.findViewById(R.id.scan_smb_server_parm_dlg_btn_ok);
 
-        String nt_status_desc = "";
+        String original_info_msg = dlg_msg.getText().toString();
+
+        final String nt_status_desc;
         String smb_level = "";
         CommonUtilities.setViewEnabled(mActivity, dlg_use_smb1, scan_result.smb1_available);
         CommonUtilities.setViewEnabled(mActivity, dlg_use_smb23, scan_result.smb23_available);
@@ -625,10 +707,11 @@ public class SmbServerScanner {
         } else {
             // Normally, if no SMB level protocol was found, the server cannot be selected and we should'nt have a situation
             // where both SMB level radio buttons are unchecked and disabled. However, we account for this situation
+            nt_status_desc = "";
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error));
 
-            //server_settings_scroll_view.setVisibility(ScrollView.GONE);
-            CommonUtilities.setViewEnabled(mActivity, server_settings_scroll_view, false);
+            //server_settings_sv.setVisibility(ScrollView.GONE);
+            CommonUtilities.setViewEnabled(mActivity, server_settings_sv, false);
             CommonUtilities.setViewEnabled(mActivity, dlg_use_ip_addr, false);
             CommonUtilities.setViewEnabled(mActivity, dlg_use_host_name, false);
             CommonUtilities.setViewEnabled(mActivity, dlg_use_smb1, false);
@@ -650,20 +733,26 @@ public class SmbServerScanner {
 
         mUtil.addDebugMsg(1, "I", "buildShareListSelectorView: smb_level="+smb_level + " , nt_status_desc="+nt_status_desc);
 
-        adapter.clear();
-        dlg_smb_share_name.setAdapter(null);
-        for(SmbServerScanShareInfo item:scan_result.share_item_list) {
-            if (item.smb_level.equals(smb_level)) {
-                adapter.add(item.share_name);
+        if (!select_share) {
+            mServerSharesListAdapter.clear();
+            //dlg_smb_shares_lv.setAdapter(null); //we need to setAdapter() again to reset all items to unchecked if adapter contents did not change
+            for(SmbServerScanShareInfo item : scan_result.share_item_list) {
+                if (item.smb_level.equals(smb_level)) {
+                    mServerSharesListAdapter.add(item.share_name);
+                }
             }
+            //dlg_smb_shares_lv.setAdapter(mServerSharesListAdapter);
+            mServerSharesListAdapter.notifyDataSetChanged();
+            dlg_smb_shares_lv.clearChoices(); // alternative way instead of setAdapter(null) then setAdapter(mServerSharesListAdapter)
+            dlg_smb_shares_lv.smoothScrollToPosition(0);
         }
 
-        dlg_smb_share_name.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 //        scanSmbServerEnableSmbScanSelectorOkButton(dialog);
 
-        if (adapter.getCount() > 0) ll_dlg_smb_share_name.setVisibility(LinearLayout.VISIBLE);
+        if (mServerSharesListAdapter.getCount() > 0) ll_dlg_smb_share_name.setVisibility(LinearLayout.VISIBLE);
         else ll_dlg_smb_share_name.setVisibility(LinearLayout.GONE);
+
+        //mUtil.addDebugMsg(1, "I", "dlg_smb_shares_lv selected psition="+dlg_smb_shares_lv.getCheckedItemPosition());
 
         String acct=dlg_smb_account_name.getText().toString();
         String pswd=dlg_smb_account_password.getText().toString();
@@ -688,17 +777,24 @@ public class SmbServerScanner {
         } else if (nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
             // on refresh shares, server cannot be reached because server params (port, SMB level) were edited in the dialog and differ now from what scan result returned
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error));
-        } else if (adapter.getCount() <= 0) {
+        } else if (mServerSharesListAdapter.getCount() <= 0) {
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty));
-        } else {
+        } else if (dlg_smb_shares_lv.getCheckedItemPosition() < 0) { // refresh share button pressed (unused: or on call of buildSmbServerParmsDlg() with a scan_result.share_item_list poupulated)
+            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name));
+        } else { //select_share == true
             dlg_msg.setText("");
         }
 
-        if (dlg_msg.getText().length()==0 && adapter.getCount() > 0) {
-            dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name));
+        if (dlg_msg.getText().length() != 0 && !nt_status_desc.equals(SMB_STATUS_UNTESTED_LOGIN) && mServerSharesListAdapter.getCount() <= 0) {
+            moveScrollViewToTop(server_settings_sv);
         }
+        setDialogErrorColor(dialog, server_settings_sv);
     }
 
+/*  Scan thread:
+    - performSmbServerScan(): starts the first non UI thread
+        + starts a scan for 100
+*/
     private int mScanCompleteCount = 0, mScanAddrCount = 0;
     // private int mStartedThreadsCount = 0, mTh2ResultEntered = 0, mTh2ResultOut = 0 //debug scanner multithreading
     private final ArrayList<String> mScanRequestedAddrList = new ArrayList<String>();
