@@ -514,6 +514,7 @@ public class SmbServerScanner {
         // Thread control to not trigger dlg_smb_account_password.addTextChangedListener.afterTextChanged()
         // when we only click the end eye icon to show/hide password
         final ThreadCtrl tc = new ThreadCtrl();
+        tc.setDisabled(); // ThreadCtrl is enabled by default !
         dlg_smb_account_password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -552,7 +553,7 @@ public class SmbServerScanner {
         server_settings_sv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                setDialogErrorColor(dialog, server_settings_sv);
+                setDialogTitleOffscreenColor(tv_title, dlg_msg, server_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
             }
         });
 
@@ -625,21 +626,22 @@ public class SmbServerScanner {
         dialog.show();
     }
 
-    private void setDialogErrorColor(Dialog dialog, ScrollView sv) {
-        final TextView tv_title= dialog.findViewById(R.id.scan_smb_server_parm_dlg_title);
-        final TextView dlg_msg= dialog.findViewById(R.id.scan_smb_server_parm_dlg_msg);
+    // If the warning message is out of the screen in ScrollView, set the dialog title color to red
+    private void setDialogTitleOffscreenColor(TextView tv_title, TextView dlg_msg, ScrollView sv, int color_msg_inscreen, int color_msg_offscreen) {
         Rect rect = new Rect();
         sv.getHitRect(rect);
         boolean msg_visible = dlg_msg.getLocalVisibleRect(rect);
         if (dlg_msg.getText().length() != 0 && !msg_visible) {
-            tv_title.setTextColor(mGp.themeColorList.text_color_error);
+            tv_title.setTextColor(color_msg_offscreen);
         } else {
-            tv_title.setTextColor(mGp.themeColorList.title_text_color);
+            tv_title.setTextColor(color_msg_inscreen);
         }
     }
 
     // ScrollView needs to be invalidated first to ensure it is not cached
     // else, if view content did not change, it won't scroll
+    // A post delayed runnable is needed as even with the listener, can sometimes trigger before the ScrollView
+    // is completely drawn to screen and the scroll to top fails
     private void moveScrollViewToTop(ScrollView sv) {
         sv.invalidate();
         sv.requestLayout();
@@ -762,8 +764,8 @@ public class SmbServerScanner {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password));
             }
         } else if (nt_status_desc.equals(SMB_STATUS_UNTESTED_LOGIN)) {
-            // During scan for servers, no credentials are provided
-            // Also, on edit selected server settings
+            // On server selected from scan results: during scan for servers, no credentials are provided
+            // Also, on edit selected server settings (SMB level, port)
             if (acct.equals("") || pswd.equals("")) {
                 dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty));
             } else {
@@ -771,19 +773,33 @@ public class SmbServerScanner {
             }
         } else if (nt_status_desc.equals(SMB_STATUS_UNSUCCESSFULL)) {
             // on refresh shares, server cannot be reached because server params (port, SMB level) were edited in the dialog and differ now from what scan result returned
+            // also can happen if server when offline after the scan result. On refreshing shares, the server is not rechable
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error));
         } else if (mServerSharesListAdapter.getCount() <= 0) {
+            // On refresh shares, no shares were found
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty));
-        } else if (dlg_smb_shares_lv.getCheckedItemPosition() < 0) { // refresh share button pressed (unused: or on call of buildSmbServerParmsDlg() with a scan_result.share_item_list poupulated)
+        } else if (dlg_smb_shares_lv.getCheckedItemPosition() < 0) {
+            // on refresh shares, we have a list of shares without any share selected (unused: or on call of buildSmbServerParmsDlg() with a scan_result.share_item_list poupulated)
             dlg_msg.setText(mActivity.getString(R.string.msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name));
-        } else { //select_share == true
+        } else if (select_share == true) {
+            // a share was selected in the available list of shares.
             dlg_msg.setText("");
+        } else {
+            String exception = "Uknown exception, contact author with logs !";
+            dlg_msg.setText(exception);
+            mUtil.addDebugMsg(1, "E", "buildShareListSelectorView Exception: adapter_count="+mServerSharesListAdapter.getCount() +
+                    ", List selected pos="+dlg_smb_shares_lv.getCheckedItemPosition() + ", select_share="+select_share);
         }
 
-        if (dlg_msg.getText().length() != 0 && !nt_status_desc.equals(SMB_STATUS_UNTESTED_LOGIN) && mServerSharesListAdapter.getCount() <= 0) {
+        // Only possible cases below: refresh shares button failed to get shares (connection error, no shares)
+        // - after first view int, on server selected from scan results: SMB_STATUS_UNTESTED_LOGIN
+        // - after modifying server settings (port, SMB level): SMB_STATUS_UNTESTED_LOGIN
+        // - after refresh shares button successfull: mServerSharesListAdapter.getCount() > 0
+        // - after selecting a server from the shares list: dlg_msg.getText().length == 0
+        if (mServerSharesListAdapter.getCount() <= 0 && dlg_msg.getText().length() != 0 && !nt_status_desc.equals(SMB_STATUS_UNTESTED_LOGIN)) {
             moveScrollViewToTop(server_settings_sv);
         }
-        setDialogErrorColor(dialog, server_settings_sv);
+        setDialogTitleOffscreenColor(tv_title, dlg_msg, server_settings_sv, mGp.themeColorList.title_text_color, mGp.themeColorList.text_color_error);
     }
 
 /*  Scan thread:
