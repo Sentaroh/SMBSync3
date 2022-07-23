@@ -611,18 +611,18 @@ public class ActivityMain extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.common_dialog);
 
-        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.common_dialog_title_view);
+        final LinearLayout ll_title= dialog.findViewById(R.id.common_dialog_title_view);
         ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
-        final TextView tv_title=(TextView)dialog.findViewById(R.id.common_dialog_title);
+        final TextView tv_title= dialog.findViewById(R.id.common_dialog_title);
         tv_title.setTextColor(mGp.themeColorList.title_text_color);
-        final TextView tv_msg_old=(TextView)dialog.findViewById(R.id.common_dialog_msg);
+        final TextView tv_msg_old= dialog.findViewById(R.id.common_dialog_msg);
         tv_msg_old.setVisibility(TextView.GONE);
-        final NonWordwrapTextView tv_msg=(NonWordwrapTextView)dialog.findViewById(R.id.common_dialog_custom_text_view);
+        final NonWordwrapTextView tv_msg= dialog.findViewById(R.id.common_dialog_custom_text_view);
         tv_msg.setVisibility(TextView.VISIBLE);
 //        if (Build.VERSION.SDK_INT>=23) tv_msg.setBreakStrategy(Layout.BREAK_STRATEGY_HIGH_QUALITY);
-        final Button btn_copy=(Button)dialog.findViewById(R.id.common_dialog_btn_ok);
-        final Button btn_close=(Button)dialog.findViewById(R.id.common_dialog_btn_cancel);
-        final Button btn_send=(Button)dialog.findViewById(R.id.common_dialog_extra_button);
+        final Button btn_copy= dialog.findViewById(R.id.common_dialog_btn_ok);
+        final Button btn_close= dialog.findViewById(R.id.common_dialog_btn_cancel);
+        final Button btn_send= dialog.findViewById(R.id.common_dialog_extra_button);
         btn_send.setText(mContext.getString(R.string.msgs_info_storage_send_btn_title));
         btn_send.setVisibility(Button.VISIBLE);
 
@@ -705,25 +705,25 @@ public class ActivityMain extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.single_item_input_dlg);
 
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
+        LinearLayout ll_dlg_view = dialog.findViewById(R.id.single_item_input_dlg_view);
         CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
-        final TextView tv_title = (TextView) dialog.findViewById(R.id.single_item_input_title);
+        final LinearLayout title_view = dialog.findViewById(R.id.single_item_input_title_view);
+        final TextView tv_title = dialog.findViewById(R.id.single_item_input_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         tv_title.setTextColor(mGp.themeColorList.title_text_color);
         tv_title.setText(mContext.getString(R.string.msgs_your_problem_title));
 
-        final TextView tv_msg=(TextView)dialog.findViewById(R.id.single_item_input_msg);
+        final TextView tv_msg= dialog.findViewById(R.id.single_item_input_msg);
         tv_msg.setVisibility(TextView.GONE);
-        final TextView tv_desc=(TextView)dialog.findViewById(R.id.single_item_input_name);
+        final TextView tv_desc= dialog.findViewById(R.id.single_item_input_name);
         tv_desc.setText(mContext.getString(R.string.msgs_your_problem_msg));
-        final EditText et_msg=(EditText)dialog.findViewById(R.id.single_item_input_dir);
+        final EditText et_msg= dialog.findViewById(R.id.single_item_input_dir);
         et_msg.setHint(mContext.getString(R.string.msgs_your_problem_hint));
         et_msg.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        final Button btn_ok=(Button)dialog.findViewById(R.id.single_item_input_ok_btn);
-        final Button btn_cancel=(Button)dialog.findViewById(R.id.single_item_input_cancel_btn);
+        final Button btn_ok= dialog.findViewById(R.id.single_item_input_ok_btn);
+        final Button btn_cancel= dialog.findViewById(R.id.single_item_input_cancel_btn);
 
 //        btn_cancel.setText(mContext.getString(R.string.msgs_common_dialog_close));
 
@@ -1336,19 +1336,16 @@ public class ActivityMain extends AppCompatActivity {
 
         if (isUiEnabled()) {
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_housekeep), true);
-            if (mGp.syncThreadActive) menu.findItem(R.id.menu_top_housekeep).setVisible(false);
-            else menu.findItem(R.id.menu_top_housekeep).setVisible(true);
+            menu.findItem(R.id.menu_top_housekeep).setVisible(!mGp.syncThreadActive);
             if (mCurrentTab.equals(mTabNameTask)) {
-                if (mGp.syncTaskList.size()>0) menu.findItem(R.id.menu_top_sync).setVisible(true);
-                else menu.findItem(R.id.menu_top_sync).setVisible(false);
+                menu.findItem(R.id.menu_top_sync).setVisible(mGp.syncTaskList.size() > 0);
             }
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_settings), true);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_export), true);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_import), true);
             setMenuItemEnabled(menu, menu.findItem(R.id.menu_top_log_management), true);
 
-            if (mGp.safMgr.isStoragePermissionRequired()) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
-            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
+            menu.findItem(R.id.menu_top_select_storage).setVisible(mGp.safMgr.isStoragePermissionRequired());
 //            if (mGp.debuggable) menu.findItem(R.id.menu_top_select_storage).setVisible(true);
 //            else menu.findItem(R.id.menu_top_select_storage).setVisible(false);
 
@@ -1549,7 +1546,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void showHideFilterView() {
-        LinearLayout ll_filter_view=(LinearLayout)mMessageView.findViewById(R.id.main_message_filter_view);
+        LinearLayout ll_filter_view= mMessageView.findViewById(R.id.main_message_filter_view);
         if (ll_filter_view.getVisibility()==LinearLayout.GONE) {
             ll_filter_view.setVisibility(LinearLayout.VISIBLE);
         } else {
@@ -1760,13 +1757,13 @@ public class ActivityMain extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.about_dialog);
 
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.about_dialog_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.about_dialog_title);
+        final LinearLayout title_view = dialog.findViewById(R.id.about_dialog_title_view);
+        final TextView title = dialog.findViewById(R.id.about_dialog_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
         title.setText(String.format(getString(R.string.msgs_dlg_title_about), SystemInfo.getApplVersionName(mContext)));
 
-        final CustomTabLayout tab_layout = (CustomTabLayout) dialog.findViewById(R.id.tab_layout);
+        final CustomTabLayout tab_layout = dialog.findViewById(R.id.tab_layout);
         tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_func_btn));
         tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_privacy_btn));
         tab_layout.addTab(mContext.getString(R.string.msgs_about_dlg_change_btn));
@@ -1778,19 +1775,19 @@ public class ActivityMain extends AppCompatActivity {
         int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
 
         @SuppressLint("InflateParams") LinearLayout ll_func = (LinearLayout) vi.inflate(R.layout.about_dialog_func, null);
-        final WebView func_view = (WebView) ll_func.findViewById(R.id.about_dialog_function_view);
+        final WebView func_view = ll_func.findViewById(R.id.about_dialog_function_view);
         func_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         func_view.setScrollbarFadingEnabled(false);
         CommonUtilities.setWebViewListener(mGp, func_view, zf);
 
         @SuppressLint("InflateParams") LinearLayout ll_privacy = (LinearLayout) vi.inflate(R.layout.about_dialog_privacy, null);
-        final WebView privacy_view = (WebView) ll_privacy.findViewById(R.id.about_dialog_privacy_view);
+        final WebView privacy_view = ll_privacy.findViewById(R.id.about_dialog_privacy_view);
         privacy_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         privacy_view.setScrollbarFadingEnabled(false);
         CommonUtilities.setWebViewListener(mGp, privacy_view, zf);
 
         @SuppressLint("InflateParams") LinearLayout ll_change = (LinearLayout) vi.inflate(R.layout.about_dialog_change, null);
-        final WebView change_view = (WebView) ll_change.findViewById(R.id.about_dialog_change_view);
+        final WebView change_view = ll_change.findViewById(R.id.about_dialog_change_view);
         change_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         change_view.setScrollbarFadingEnabled(false);
         CommonUtilities.setWebViewListener(mGp, change_view, zf);
@@ -1806,7 +1803,7 @@ public class ActivityMain extends AppCompatActivity {
 
         final CustomViewPagerAdapter adapter = new CustomViewPagerAdapter(mActivity,
                 new View[]{ll_func, ll_privacy, ll_change});
-        final CustomViewPager viewPager = (CustomViewPager) dialog.findViewById(R.id.about_view_pager);
+        final CustomViewPager viewPager = dialog.findViewById(R.id.about_view_pager);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setSwipeEnabled(false);
@@ -1848,7 +1845,7 @@ public class ActivityMain extends AppCompatActivity {
 
         });
 
-        final Button btnOk = (Button) dialog.findViewById(R.id.about_dialog_btn_ok);
+        final Button btnOk = dialog.findViewById(R.id.about_dialog_btn_ok);
 
         CommonDialog.setDlgBoxSizeLimit(dialog, true);
 
@@ -2044,8 +2041,7 @@ public class ActivityMain extends AppCompatActivity {
 
     // not used
     private boolean isPrimaryStorageAccessGranted() {
-        if (mGp.safMgr.isUuidRegistered(SAF_FILE_PRIMARY_UUID)) return true;
-        return false;
+        return mGp.safMgr.isUuidRegistered(SAF_FILE_PRIMARY_UUID);
     }
 
     // Requires Build.VERSION.SDK_INT>=30
@@ -2105,15 +2101,15 @@ public class ActivityMain extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setContentView(R.layout.request_all_file_access_dlg);
 
-        TextView dlg_title=(TextView)dialog.findViewById(R.id.request_all_file_dlg_title);
-        TextView dlg_msg=(TextView)dialog.findViewById(R.id.request_all_file_dlg_msg);
-        ImageView dlg_image=(ImageView)dialog.findViewById(R.id.request_all_file_dlg_image);
+        TextView dlg_title= dialog.findViewById(R.id.request_all_file_dlg_title);
+        TextView dlg_msg= dialog.findViewById(R.id.request_all_file_dlg_msg);
+        ImageView dlg_image= dialog.findViewById(R.id.request_all_file_dlg_image);
 
-        Button dlg_show_privacy_btn=(Button)dialog.findViewById(R.id.request_all_file_dlg_show_privacy_policy_button);
+        Button dlg_show_privacy_btn= dialog.findViewById(R.id.request_all_file_dlg_show_privacy_policy_button);
         dlg_show_privacy_btn.setVisibility(Button.VISIBLE);
 
-        Button dlg_ok=(Button)dialog.findViewById(R.id.request_all_file_dlg_btn_ok);
-        Button dlg_cancel=(Button)dialog.findViewById(R.id.request_all_file_dlg_btn_cancel);
+        Button dlg_ok= dialog.findViewById(R.id.request_all_file_dlg_btn_ok);
+        Button dlg_cancel= dialog.findViewById(R.id.request_all_file_dlg_btn_cancel);
 
         dlg_title.setText(mContext.getString(R.string.msgs_storage_permission_all_file_access_title));
         dlg_msg.setText(mContext.getString(R.string.msgs_storage_permission_all_file_access_request_message));
@@ -2176,12 +2172,12 @@ public class ActivityMain extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.show_privacy_policy_dlg);
 
-        final LinearLayout ll_title=(LinearLayout) dialog.findViewById(R.id.show_privacy_policy_dlg_title_view);
+        final LinearLayout ll_title= dialog.findViewById(R.id.show_privacy_policy_dlg_title_view);
         ll_title.setBackgroundColor(mGp.themeColorList.title_background_color);
-        final TextView tv_title=(TextView)dialog.findViewById(R.id.show_privacy_policy_dlg_title);
+        final TextView tv_title= dialog.findViewById(R.id.show_privacy_policy_dlg_title);
         tv_title.setTextColor(mGp.themeColorList.title_text_color);
 
-        final WebView web_view=(WebView)dialog.findViewById(R.id.agree_privacy_policy_dlg_webview);
+        final WebView web_view= dialog.findViewById(R.id.agree_privacy_policy_dlg_webview);
         web_view.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         web_view.setScrollbarFadingEnabled(false);
         int zf=(int)((float)100* GlobalParameters.getFontScaleFactorValue(mActivity));
@@ -2741,11 +2737,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (isUiEnabled()) {
                     if (mGp.syncGroupListAdapter.isSelectMode()) {
-                        if (mGp.syncGroupListAdapter.getItem(i).isChecked) {
-                            mGp.syncGroupListAdapter.getItem(i).isChecked = false;
-                        } else {
-                            mGp.syncGroupListAdapter.getItem(i).isChecked = true;
-                        }
+                        mGp.syncGroupListAdapter.getItem(i).isChecked = !mGp.syncGroupListAdapter.getItem(i).isChecked;
                         mGp.syncGroupListAdapter.notifyDataSetChanged();
                         setGroupContextButtonMode(mGp.syncGroupListAdapter);
                     } else {
@@ -2817,21 +2809,21 @@ public class ActivityMain extends AppCompatActivity {
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(R.layout.single_item_input_dlg);
 
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
+        LinearLayout ll_dlg_view = dialog.findViewById(R.id.single_item_input_dlg_view);
         CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
 
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.single_item_input_title);
+        final LinearLayout title_view = dialog.findViewById(R.id.single_item_input_title_view);
+        final TextView title = dialog.findViewById(R.id.single_item_input_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
-        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
+        final TextView dlg_msg = dialog.findViewById(R.id.single_item_input_msg);
         dlg_msg.setTextColor(Color.YELLOW);
         dlg_msg.setVisibility(TextView.VISIBLE);
-        final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
-        final Button btn_ok = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
-        final EditText etInput = (EditText) dialog.findViewById(R.id.single_item_input_dir);
+        final TextView dlg_cmp = dialog.findViewById(R.id.single_item_input_name);
+        final Button btn_ok = dialog.findViewById(R.id.single_item_input_ok_btn);
+        final Button btn_cancel = dialog.findViewById(R.id.single_item_input_cancel_btn);
+        final EditText etInput = dialog.findViewById(R.id.single_item_input_dir);
 
         title.setText(mContext.getString(R.string.msgs_group_cont_label_rename));
 
@@ -3224,24 +3216,24 @@ public class ActivityMain extends AppCompatActivity {
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         dialog.setContentView(R.layout.single_item_input_dlg);
 
-        LinearLayout ll_dlg_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_dlg_view);
+        LinearLayout ll_dlg_view = dialog.findViewById(R.id.single_item_input_dlg_view);
         CommonUtilities.setDialogBoxOutline(mContext, ll_dlg_view);
 
 //        Drawable db = ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.dialog_box_outline, null);
 //        ll_dlg_view.setBackground(db);
 //        ll_dlg_view.setBackgroundColor(mGp.themeColorList.dialog_msg_background_color);
 
-        final LinearLayout title_view = (LinearLayout) dialog.findViewById(R.id.single_item_input_title_view);
-        final TextView title = (TextView) dialog.findViewById(R.id.single_item_input_title);
+        final LinearLayout title_view = dialog.findViewById(R.id.single_item_input_title_view);
+        final TextView title = dialog.findViewById(R.id.single_item_input_title);
         title_view.setBackgroundColor(mGp.themeColorList.title_background_color);
         title.setTextColor(mGp.themeColorList.title_text_color);
 
-        final TextView dlg_msg = (TextView) dialog.findViewById(R.id.single_item_input_msg);
+        final TextView dlg_msg = dialog.findViewById(R.id.single_item_input_msg);
         dlg_msg.setVisibility(TextView.VISIBLE);
-        final TextView dlg_cmp = (TextView) dialog.findViewById(R.id.single_item_input_name);
-        final Button btn_ok = (Button) dialog.findViewById(R.id.single_item_input_ok_btn);
-        final Button btn_cancel = (Button) dialog.findViewById(R.id.single_item_input_cancel_btn);
-        final EditText etInput = (EditText) dialog.findViewById(R.id.single_item_input_dir);
+        final TextView dlg_cmp = dialog.findViewById(R.id.single_item_input_name);
+        final Button btn_ok = dialog.findViewById(R.id.single_item_input_ok_btn);
+        final Button btn_cancel = dialog.findViewById(R.id.single_item_input_cancel_btn);
+        final EditText etInput = dialog.findViewById(R.id.single_item_input_dir);
 
         title.setText(mContext.getString(R.string.msgs_schedule_rename_schedule));
 
@@ -3362,11 +3354,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (isUiEnabled()) {
                     if (mGp.syncScheduleListAdapter.isSelectMode()) {
-                        if (mGp.syncScheduleListAdapter.getItem(i).isChecked) {
-                            mGp.syncScheduleListAdapter.getItem(i).isChecked = false;
-                        } else {
-                            mGp.syncScheduleListAdapter.getItem(i).isChecked = true;
-                        }
+                        mGp.syncScheduleListAdapter.getItem(i).isChecked = !mGp.syncScheduleListAdapter.getItem(i).isChecked;
                         mGp.syncScheduleListAdapter.notifyDataSetChanged();
                         setScheduleContextButtonMode(mGp.syncScheduleListAdapter);
                     } else {
@@ -3497,14 +3485,12 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private boolean canListViewScrollDown(ListView lv) {
-        boolean result=false;
-        if (lv.getLastVisiblePosition()<(lv.getCount()-1)) result=true;
+        boolean result= lv.getLastVisiblePosition() < (lv.getCount() - 1);
         return result;
     }
 
     private boolean canListViewScrollUp(ListView lv) {
-        boolean result=false;
-        if (lv.getFirstVisiblePosition()>0) result=true;
+        boolean result= lv.getFirstVisiblePosition() > 0;
         return result;
     }
 
@@ -3582,7 +3568,7 @@ public class ActivityMain extends AppCompatActivity {
                     y_offset = first_item_height;
                     if (y_offset > lv_height) {
                         //item is more than one page: position to the bottom, the current top exact last visible position, minus 3 text lines
-                        TextView listTextView = (TextView) mGp.syncHistoryView.getChildAt(0).findViewById(R.id.history_list_view_date);
+                        TextView listTextView = mGp.syncHistoryView.getChildAt(0).findViewById(R.id.history_list_view_date);
                         int text_context_size = 0;
                         if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
                         y_offset = first_item_height - first_item_y_bottom + text_context_size;
@@ -3606,7 +3592,7 @@ public class ActivityMain extends AppCompatActivity {
 
                 if (last_item_height > lv_height) {
                     //item is more than one page: position to the top, the current bottom exat last visible position, minus 3 text lines
-                    TextView listTextView = (TextView) mGp.syncHistoryView.getChildAt(last_item_pos).findViewById(R.id.history_list_view_date);
+                    TextView listTextView = mGp.syncHistoryView.getChildAt(last_item_pos).findViewById(R.id.history_list_view_date);
                     int text_context_size = 0;
                     if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
                     y_offset = -(lv_height - last_item_y_top - text_context_size);
@@ -4705,7 +4691,7 @@ public class ActivityMain extends AppCompatActivity {
                     y_offset = first_item_height;
                     if (y_offset > lv_height) {
                         //item is more than one page: position to the bottom, the current top exact last visible position, minus 3 text lines
-                        TextView listTextView = (TextView) mGp.syncMessageView.getChildAt(0).findViewById(R.id.message_list_item_date);
+                        TextView listTextView = mGp.syncMessageView.getChildAt(0).findViewById(R.id.message_list_item_date);
                         int text_context_size = 0;
                         if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
                         y_offset = first_item_height - first_item_y_bottom + text_context_size;
@@ -4733,7 +4719,7 @@ public class ActivityMain extends AppCompatActivity {
 
                 if (last_item_height > lv_height) {
                     //item is more than one page: position to the top, the current bottom exat last visible position, minus 3 text lines
-                    TextView listTextView = (TextView) mGp.syncMessageView.getChildAt(last_item_pos).findViewById(R.id.message_list_item_date);
+                    TextView listTextView = mGp.syncMessageView.getChildAt(last_item_pos).findViewById(R.id.message_list_item_date);
                     int text_context_size = 0;
                     if (listTextView != null) text_context_size = (int)(listTextView.getTextSize() * 3);
                     y_offset = -(lv_height - last_item_y_top - text_context_size);
@@ -4828,7 +4814,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void clearMessageFilterSearchString() {
-        final EditText et_find_string=(EditText)mMessageView.findViewById(R.id.main_message_filter_string_value);
+        final EditText et_find_string= mMessageView.findViewById(R.id.main_message_filter_string_value);
         if (et_find_string.getText().length()>0) {
             et_find_string.setText("");
             mGp.syncMessageListAdapter.setFilterString("");
@@ -4836,22 +4822,22 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private void setMessageFilterListener() {
-        LinearLayout ll_filter_category=(LinearLayout) mMessageView.findViewById(R.id.main_message_filter_category_view);
-        LinearLayout ll_filter_string=(LinearLayout) mMessageView.findViewById(R.id.main_message_filter_string_view);
+        LinearLayout ll_filter_category= mMessageView.findViewById(R.id.main_message_filter_category_view);
+        LinearLayout ll_filter_string= mMessageView.findViewById(R.id.main_message_filter_string_view);
         if (mGp.themeColorList.theme_is_light) {
             ll_filter_category.setBackgroundColor(Color.LTGRAY);
             ll_filter_string.setBackgroundColor(Color.LTGRAY);
         }
 
-        final CheckBox cb_filter_info=(CheckBox)mMessageView.findViewById(R.id.main_message_filter_category_info);
-        final CheckBox cb_filter_warn=(CheckBox)mMessageView.findViewById(R.id.main_message_filter_category_warn);
-        final CheckBox cb_filter_error=(CheckBox)mMessageView.findViewById(R.id.main_message_filter_category_error);
+        final CheckBox cb_filter_info= mMessageView.findViewById(R.id.main_message_filter_category_info);
+        final CheckBox cb_filter_warn= mMessageView.findViewById(R.id.main_message_filter_category_warn);
+        final CheckBox cb_filter_error= mMessageView.findViewById(R.id.main_message_filter_category_error);
 
-        final EditText et_find_string=(EditText)mMessageView.findViewById(R.id.main_message_filter_string_value);
-        final Button btn_find=(Button)mMessageView.findViewById(R.id.main_message_filter_string_find);
+        final EditText et_find_string= mMessageView.findViewById(R.id.main_message_filter_string_value);
+        final Button btn_find= mMessageView.findViewById(R.id.main_message_filter_string_find);
         btn_find.setVisibility(Button.GONE);
-        final Button btn_reset=(Button)mMessageView.findViewById(R.id.main_message_filter_string_reset);
-        final CheckBox cb_filter_case_sensitive=(CheckBox) mMessageView.findViewById(R.id.main_message_filter_string_case_insensitive);
+        final Button btn_reset= mMessageView.findViewById(R.id.main_message_filter_string_reset);
+        final CheckBox cb_filter_case_sensitive= mMessageView.findViewById(R.id.main_message_filter_string_case_insensitive);
 
         cb_filter_info.setTextColor(mGp.themeColorList.text_color_primary);
         cb_filter_warn.setTextColor(mGp.themeColorList.text_color_warning);

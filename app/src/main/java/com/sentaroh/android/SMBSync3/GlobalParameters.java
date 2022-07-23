@@ -97,7 +97,7 @@ public class GlobalParameters {
 
     public ArrayBlockingQueue<SyncRequestItem> syncRequestQueue = new ArrayBlockingQueue<SyncRequestItem>(1000);
 
-    public ThreadCtrl syncThreadConfirm = new ThreadCtrl();
+    public final ThreadCtrl syncThreadConfirm = new ThreadCtrl();
     public ThreadCtrl syncThreadCtrl = new ThreadCtrl();
 
     public boolean activityRestartRequired = false;
