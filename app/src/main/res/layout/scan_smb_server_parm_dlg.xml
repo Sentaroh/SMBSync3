@@ -136,6 +136,7 @@
                     android:ems="10"
                     android:hint="@string/msgs_scan_smb_server_parm_dlg_smb_port_hint"
                     android:inputType="number"
+                    android:maxLength="5"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </com.google.android.material.textfield.TextInputLayout>
 
