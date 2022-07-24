@@ -64,8 +64,6 @@ public class ActivitySettings extends PreferenceActivity {
 
     private Activity mActivity=null;
 
-    private static String mCurrentScreenTheme=SCREEN_THEME_STANDARD;
-
     private static String mCurrentAppSettingsDirectory = APP_SETTINGS_DIRECTORY_ROOT;
 
     private CommonUtilities mUtil = null;
@@ -88,20 +86,17 @@ public class ActivitySettings extends PreferenceActivity {
         mActivity=ActivitySettings.this;
         mGp= GlobalWorkArea.getGlobalParameter(ActivitySettings.this);
         SharedPreferences shared_pref = CommonUtilities.getSharedPreference(ActivitySettings.this);
-        mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
-        if (mCurrentScreenTheme.equals(SCREEN_THEME_STANDARD)) setTheme(R.style.Main);
-        else if (mCurrentScreenTheme.equals(SCREEN_THEME_LIGHT)) setTheme(R.style.MainLight);
-        else if (mCurrentScreenTheme.equals(SCREEN_THEME_BLACK)) setTheme(R.style.MainBlack);
+
+        // on Activity settings restart, apply new theme as it could have changed in settings
+        setTheme(GlobalParameters.getScreenTemeValue(mActivity));
         //GlobalParameters.setDisplayFontScale(ActivitySettings.this);
+
         super.onCreate(savedInstanceState);
 
         if (mUtil == null) mUtil = new CommonUtilities(this, "SettingsActivity", mGp, null);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mGp.settingFixDeviceOrientationToPortrait) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-
-        mCurrentScreenTheme=shared_pref.getString(getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
-        mCurrentLangaue =GlobalParameters.getLanguageCode(ActivitySettings.this);
     }
 
     @Override
@@ -397,21 +392,21 @@ public class ActivitySettings extends PreferenceActivity {
         }
     }
 
-    private static String mCurrentLangaue =null;
-
     public static class SettingsUi extends PreferenceFragment {
         private SharedPreferences.OnSharedPreferenceChangeListener listenerAfterHc =
-                new SharedPreferences.OnSharedPreferenceChangeListener() {
-                    public void onSharedPreferenceChanged(SharedPreferences shared_pref, String key_string) {
-                        checkSettingValue(mUtil, shared_pref, key_string, getContext());
-                    }
-                };
+            new SharedPreferences.OnSharedPreferenceChangeListener() {
+                public void onSharedPreferenceChanged(SharedPreferences shared_pref, String key_string) {
+                    checkSettingValue(mUtil, shared_pref, key_string, getContext());
+                }
+            };
 
         private Activity mActivity=null;
         private CommonUtilities mUtil = null;
 
         private int mInitVolume = 100;
-        private String mCurrentFontScaleFactor=null;
+        private String mCurrentLangaueSetting = null;
+        private String mCurrentThemeSetting = null;
+        private String mCurrentFontScaleSetting = null;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -426,7 +421,10 @@ public class ActivitySettings extends PreferenceActivity {
 
             mInitVolume = shared_pref.getInt(getString(R.string.settings_playback_ringtone_volume), 100);
 
-            mCurrentFontScaleFactor=shared_pref.getString(getString(R.string.settings_display_font_scale_factor), GlobalParameters.FONT_SCALE_FACTOR_NORMAL);
+            // Get current language, theme and font scale settings from Saved preferences (use global public method since we have one)
+            mCurrentLangaueSetting = GlobalParameters.getLanguageCode(mActivity);
+            mCurrentThemeSetting = GlobalParameters.getScreenTemeSetting(mActivity);
+            mCurrentFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mActivity);
 
             setCurrentValue(shared_pref);
         }
@@ -494,11 +492,10 @@ public class ActivitySettings extends PreferenceActivity {
                 String[] wl_label = c.getResources().getStringArray(R.array.settings_screen_theme_list_entries);
                 String sum_msg = wl_label[Integer.parseInt(tid)];
                 pref_key.setSummary(sum_msg);
-                if (!mCurrentScreenTheme.equals(tid)) {
-                    if (tid.equals(SCREEN_THEME_STANDARD)) mActivity.setTheme(R.style.Main);
-                    else if (tid.equals(SCREEN_THEME_LIGHT)) mActivity.setTheme(R.style.MainLight);
-                    else if (tid.equals(SCREEN_THEME_BLACK)) mActivity.setTheme(R.style.MainBlack);
-                    mCurrentScreenTheme=tid;
+                if (!mCurrentThemeSetting.equals(tid)) {
+                    // Theme language changed, restart ActivitySettings for the changes to take effect. They will be applied by onCreate() of ActivitySettings
+                    // App restart will be triggered on exiting Settings
+                    //mCurrentThemeSetting = tid; //not needed because we restart activity immeadiately
                     mActivity.finish();
                     Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -517,10 +514,11 @@ public class ActivitySettings extends PreferenceActivity {
                     }
                 }
                 pref_key.setSummary(sum_msg);
-                if (!lang_value.equals(mCurrentLangaue)) {
-                    // Setting changed, restart ActivitySettings to apply new theme. Full app restart will be triggered on return to MainActivity
+                if (!lang_value.equals(mCurrentLangaueSetting)) {
+                    // Setting changed, restart ActivitySettings to apply new language. Full app restart will be triggered on return to MainActivity
+                    // Language is applied to settings activity from attachBaseContext()
+                    //mCurrentLangaueSetting = lang_value; //not needed because we restart activity immeadiately
                     mActivity.finish();
-                    //GlobalParameters.setLocaleAndMetrics(mActivity);
                     Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     mActivity.startActivity(intent);
@@ -530,10 +528,10 @@ public class ActivitySettings extends PreferenceActivity {
                 String[] font_scale_label = c.getResources().getStringArray(R.array.settings_display_font_scale_factor_list_entries);
                 String sum_msg = font_scale_label[Integer.parseInt(font_scale_id)];
                 pref_key.setSummary(sum_msg);
-                if (!mCurrentFontScaleFactor.equals(font_scale_id)) {
+                if (!mCurrentFontScaleSetting.equals(font_scale_id)) {
                     // Setting changed, restart ActivitySettings to apply new language. Full app restart will be triggered on return to MainActivity
-                    mCurrentFontScaleFactor=font_scale_id;
-                    //GlobalParameters.setLocaleAndMetrics(mActivity);
+                    // Fon scale is applied to settings activity from attachBaseContext()
+                    //mCurrentFontScaleSetting = font_scale_id; //not needed because we restart activity immeadiately
                     mActivity.finish();
                     Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

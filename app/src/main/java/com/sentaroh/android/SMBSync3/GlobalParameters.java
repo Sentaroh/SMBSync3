@@ -537,7 +537,7 @@ public class GlobalParameters {
             pe.putString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
 
         if (!prefs.contains(c.getString(R.string.settings_display_font_scale_factor)))
-            pe.putString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
+            pe.putString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_SETTING_DEFAULT);
 
         pe.commit();
 
@@ -787,9 +787,26 @@ public class GlobalParameters {
     }
 
     public boolean isScreenThemeIsLight() {
-        boolean result=false;
-        if (settingScreenTheme.equals(SCREEN_THEME_LIGHT)) result = true;
-        return result;
+        return settingScreenTheme.equals(SCREEN_THEME_LIGHT);
+    }
+
+    // Get screen theme setting from saved setting Preferences
+    static public String getScreenTemeSetting(Context c) {
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
+        String theme_setting = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+        if (!theme_setting.equals(SCREEN_THEME_STANDARD) && !theme_setting.equals(SCREEN_THEME_LIGHT) && !theme_setting.equals(SCREEN_THEME_BLACK)) {
+            if (log.isDebugEnabled()) log.debug("getScreenTemeSetting Error: Invalid preference found: theme_setting="+theme_setting);
+            return SCREEN_THEME_STANDARD;
+        }
+        return theme_setting;
+    }
+
+    // Get screen theme value from saved setting Preferences
+    static public int getScreenTemeValue(Context c) {
+        String theme_setting = getScreenTemeSetting(c);
+        if (theme_setting.equals(SCREEN_THEME_LIGHT)) return R.style.MainLight;
+        else if (theme_setting.equals(SCREEN_THEME_BLACK)) return R.style.MainBlack;
+        else return R.style.Main;
     }
 
     final static public String SMB_LM_COMPATIBILITY_DEFAULT="3";
