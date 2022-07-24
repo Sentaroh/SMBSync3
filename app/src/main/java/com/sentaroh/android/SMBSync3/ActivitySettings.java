@@ -81,7 +81,7 @@ public class ActivitySettings extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         mActivity=ActivitySettings.this;
         mGp= GlobalWorkArea.getGlobalParameter(ActivitySettings.this);
-        SharedPreferences shared_pref = CommonUtilities.getSharedPreference(ActivitySettings.this);
+        //SharedPreferences shared_pref = CommonUtilities.getSharedPreference(ActivitySettings.this);
 
         // on Activity settings restart, apply new theme as it could have changed in settings
         setTheme(GlobalParameters.getScreenTemeValue(mActivity));
@@ -107,6 +107,7 @@ public class ActivitySettings extends PreferenceActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
+    // not used
     private List<Header> mHeaderList=null;
     public void refreshHeader(String fs) {
         invalidateHeaders();
@@ -131,7 +132,7 @@ public class ActivitySettings extends PreferenceActivity {
     public static boolean isTablet(Context context, CommonUtilities cu) {
         float fs= GlobalParameters.getFontScaleFactorValue(context);
         int multiPaneDP=500;
-        String lang_code=Locale.getDefault().getLanguage();
+//        String lang_code=Locale.getDefault().getLanguage();
 //        if (lang_code.equals("fr")) multiPaneDP=540;
 //        else if (lang_code.equals("ru")) multiPaneDP=800;
 
@@ -148,7 +149,7 @@ public class ActivitySettings extends PreferenceActivity {
         return portrait_mp||sc_land_mp; //use MultiPane display in portrait if width >= multiPaneDP or in landscape if largest screen side >= multiPaneDP
     }
 
-
+    // not used
     private Context getActivityContext() {
         return ActivitySettings.this;
     }
@@ -537,8 +538,7 @@ public class ActivitySettings extends PreferenceActivity {
             } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
                 boolean portrait=shared_pref.getBoolean(key_string, false);
                 Preference pref_key_tablet=findPreference(c.getString(R.string.settings_device_orientation_landscape_tablet));
-                if (portrait) pref_key_tablet.setEnabled(false);
-                else pref_key_tablet.setEnabled(true);
+                pref_key_tablet.setEnabled(!portrait);
             }
         }
 

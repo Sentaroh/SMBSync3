@@ -35,14 +35,11 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.wifi.WifiManager;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.LocaleList;
 import android.os.Looper;
 import android.os.PowerManager;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -66,6 +63,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Locale;
@@ -75,13 +73,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import jcifs13.util.LogStream;
 
-import static android.content.Context.WINDOW_SERVICE;
 import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.*;
 
 public class GlobalParameters {
 //    public Context appContext = null;
-    private ReentrantReadWriteLock configurationLock =new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock configurationLock =new ReentrantReadWriteLock();
 
     public Handler uiHandler = null;
 
@@ -106,25 +103,27 @@ public class GlobalParameters {
     public boolean syncThreadActive = false;
     public boolean isSyncWorkerActive() {return syncWorkerIsActive;}
 
-    private boolean syncWorkerIsActive =false;
+    private boolean syncWorkerIsActive = false;
     public void setSyncWorkerActive(boolean active) {syncWorkerIsActive =active;}
     public boolean syncThreadConfirmWait = false;
 
-    public CallBackListener callbackShowDialogWindow =null;
-    public CallBackListener callbackHideDialogWindow =null;
-    public CallBackListener callbackShowConfirmDialog =null;
-    public CallBackListener callbackHideConfirmDialog =null;
+    public CallBackListener callbackShowDialogWindow = null;
+    public CallBackListener callbackHideDialogWindow = null;
+    public CallBackListener callbackShowConfirmDialog = null;
+    public CallBackListener callbackHideConfirmDialog = null;
 
 //    public boolean themeIsLight = true;
     public String settingScreenTheme = SCREEN_THEME_STANDARD;
     public int applicationTheme = -1;
     public ThemeColorList themeColorList = null;
 
-    //	Settings parameter
+    // Path where messages, history, logs and autosave files are stored
+    // App config on start is always stored in /data/data by android PreferencesManager
 //    public String settingAppManagemsntDirectoryUuid ="primary";
-    // Mod 1/2: Set app settings directory to /storage/emulated/0/SMBSync3
     //public String settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
-    public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files";
+    public static String settingAppManagemsntDirectoryName = null; //"/data/data/"+APPLICATION_ID+"/files"; // null, to ensure init on app start
+
+    // currently unused
     public boolean settingExitClean = true;
 
     public boolean settingWriteSyncResultLog = true;
@@ -187,12 +186,14 @@ public class GlobalParameters {
         settingSupressShortcut3ConfirmationMessage =suppress;
     }
 
+    // not used
     final static private String PRIVACY_POLICY_AGGREEMENT_KEY="privacy_policy_aggreed";
     static public boolean isPrivacyPolicyAgreed(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        boolean aggree=prefs.getBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, false);
-        return aggree;
+        return prefs.getBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, false);
     }
+
+    // not used
     static public void setPrivacyPolicyAgreed(Context c, boolean aggreed) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, aggreed).commit();
@@ -240,7 +241,7 @@ public class GlobalParameters {
     public long notificationLastShowedWhen = 0;
     public String notificationAppName = "";
     //	public boolean notiifcationEnabled=false;
-    public long notificationNextShowedTime = 0;
+    //public long notificationNextShowedTime = 0;
 //    public Bitmap notificationLargeIcon = null;
 
     public static final int MESSAGE_LIST_INITIAL_VALUE=5500;
@@ -327,7 +328,7 @@ public class GlobalParameters {
     public SafManager3 safMgr = null;
 
     private static LogStream logStream=null;//JCIFS logStream
-    private static Logger log = LoggerFactory.getLogger(GlobalParameters.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalParameters.class);
 
     public GlobalParameters() {
     }
@@ -362,7 +363,7 @@ public class GlobalParameters {
         debuggable = isDebuggable(c);
 
 /*      // Set app settings directory to /data/data/package_name/files
-        // Mod 2/2: Set app settings directory to /storage/emulated/0/SMBSync3
+        // Redundant as it is init in loadSettingsParms()
         try {
             settingAppManagemsntDirectoryName=c.getFilesDir().getCanonicalPath();
         } catch (IOException e) {
@@ -372,9 +373,9 @@ public class GlobalParameters {
         //externalStoragePrefix = Environment.getExternalStorageDirectory().getPath();
         externalStoragePrefix = SafManager3.getPrimaryStoragePath();
 
-        mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-dim");
-        forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-force-dim");
-        mPartialWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-partial");
+        mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-dim");
+        forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-force-dim");
+        mPartialWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-partial");
         WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync3-thread");
 
@@ -418,21 +419,25 @@ public class GlobalParameters {
             @Override
             public void write(int b) throws IOException {
                 byte[] buff = ByteBuffer.allocate(4).putInt(b).array();
+                write(buff, 0, buff.length);
+//                Log.v("SMBSync3",StringUtil.getHexString(buff, 0, 4));
             }
             @Override
             public void write(byte[] buff) throws IOException {
                 if (buff.length==1 && buff[0]!=0x0a) {
                 } else {
-                    String msg=new String(buff,"UTF-8");
-                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0,"I",msg);
+                    String msg=new String(buff, StandardCharsets.UTF_8);
+                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0, "I", msg);
+//                    Log.v("SMBSync3",StringUtil.getHexString(buff, 0, buff.length));
                 }
             }
             @Override
             public void write(byte[] buff, int buff_offset, int buff_length) throws IOException {
                 if (buff_length==1 && buff[buff_offset]!=0x0a) {
                 } else {
-                    String msg=new String(buff,buff_offset,buff_length, "UTF-8");
+                    String msg=new String(buff,buff_offset,buff_length, StandardCharsets.UTF_8);
                     if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0,"I",msg);
+//                    Log.v("SMBSync3",StringUtil.getHexString(buff, buff_offset, buff_length));
                 }
             }
         };
@@ -440,7 +445,7 @@ public class GlobalParameters {
         LogStream.setInstance(smb1_ps);
         logStream= LogStream.getInstance();//Initial create JCIFS logStream object
 
-        Slf4jLogWriter jcifs_ng_lw=new Slf4jLogWriter(jcifs_ng_lu);
+        Slf4jLogWriter jcifs_ng_lw= new Slf4jLogWriter(jcifs_ng_lu);
         log.setWriter(jcifs_ng_lw);
     }
 
@@ -668,8 +673,7 @@ public class GlobalParameters {
     //Get current app settings directory value saved in Preferences
     static public String getAppManagementDirSetting(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String pos=prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);                         
-        return pos;
+        return prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
     }
 
     public static final String FONT_SCALE_FACTOR_SMALL = "0";
@@ -859,7 +863,7 @@ public class GlobalParameters {
         } catch (PackageManager.NameNotFoundException e) {
             result = false;
         }
-        if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE)
+        if (appInfo != null && (appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE)
             result = true;
 //        Log.v("","debuggable="+result);
         return result;
@@ -898,7 +902,7 @@ public class GlobalParameters {
                 util.addDebugMsg(1, "I", "Wifilock acquired");
             }
         }
-        isScreenOn(c,util);
+
         if ((settingPreventSyncStartDelay)) {// && isScreenOn(c, util))) {// && !activityIsBackground) {
             if (!mDimWakeLock.isHeld()) {
                 mDimWakeLock.acquire();
@@ -912,6 +916,7 @@ public class GlobalParameters {
         }
     }
 
+    // not used
     static public boolean isScreenOn(Context context, CommonUtilities util) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         util.addDebugMsg(1, "I", "isDeviceIdleMode()=" + pm.isDeviceIdleMode() +
@@ -919,7 +924,7 @@ public class GlobalParameters {
         return pm.isInteractive();
     }
 
-    class Slf4jLogWriter extends LoggerWriter {
+    static class Slf4jLogWriter extends LoggerWriter {
         private LogUtil mLu =null;
         public Slf4jLogWriter(LogUtil lu) {
             mLu =lu;

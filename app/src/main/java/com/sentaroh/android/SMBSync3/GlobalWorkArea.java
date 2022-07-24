@@ -37,6 +37,6 @@ public class GlobalWorkArea {
         return gp;
     }
     static public boolean isGlobalParameterCreated() {
-        return gp==null?false:true;
+        return gp != null;
     }
 }

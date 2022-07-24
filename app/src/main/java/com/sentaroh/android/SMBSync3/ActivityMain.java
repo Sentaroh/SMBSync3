@@ -2065,8 +2065,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     private boolean isLegacyStorageAccessGranted() {
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) return true;
-        return false;
+        return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     // not used
