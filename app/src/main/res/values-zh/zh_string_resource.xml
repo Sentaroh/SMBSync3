@@ -511,9 +511,9 @@
         <string name="msgs_smbsync_main_restart_by_killed">应用程序被重新启动，因为它移动到后台时被杀死了。</string>
         <string name="msgs_smbsync_main_settings_restart_title">重新启动应用程序</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">SMBv1的参数已被更改。 在重新启动应用程序之前，此更改不会生效。 现在退出此应用程序？</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">建议在更改主题或语言后重新启动应用程序。点击 \"重新启动\"，现在就可以重新启动。如果您想稍后重启，请点击 \"稍后\"。</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">后来</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">重新启动</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">It is recommended to restart the application after changing the theme, language or font. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">后来</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">重新启动</string>
         <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">应用开始。</string>
         <string name="msgs_smnsync_main_kill_application">杀死应用程序？</string>

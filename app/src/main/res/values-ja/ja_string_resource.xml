@@ -515,9 +515,9 @@
         <string name="msgs_smbsync_main_restart_by_killed">アプリケーションがバックグラウンドに遷移後、強制終了しました。</string>
         <string name="msgs_smbsync_main_settings_restart_title">アプリケーション再起動</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">SMB1パラメーターが変更されましたがアプリケーションを再起動するまで有効になりません。アプリケーションを終了しますか?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">テーマまたは言語を変更した場合はアプリケーションを再起動するまで反映されません。 「再起動」 をクリックすると直ぐに再起動します。後で再起動する場合は「後で」をクリックしてください。</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">後で</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">再起動</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">It is recommended to restart the application after changing the theme, language or font. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">後で</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">再起動</string>
         <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">アプリケーションが起動しました。</string>
         <string name="msgs_smnsync_main_kill_application">SMBSync3を強制終了しますか？</string>

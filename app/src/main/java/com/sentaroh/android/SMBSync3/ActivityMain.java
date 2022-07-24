@@ -1690,6 +1690,13 @@ public class ActivityMain extends AppCompatActivity {
             public void negativeResponse(Context c, Object[] o) {
             }
         });
+        // save current active settings that need a restart before any modification and a call to reloadSettingParms()
+        // if they are changed during import, we can trigger app restart
+        mPrevThemeSetting = GlobalParameters.getScreenTemeSetting(mContext);
+        mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
+        mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
+        mPrevAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mContext);
+
         TaskListImportExport eitl=new TaskListImportExport(mActivity, mGp, mUtil);
         eitl.importSyncTaskListDlg(ntfy);
     }
@@ -1900,11 +1907,12 @@ public class ActivityMain extends AppCompatActivity {
     private void invokeSettingsActivity() {
         mUtil.addDebugMsg(1, "I", "Invoke Setting activity.");
 
-        // save current settings that need a restart before entering Settings activity
+        // save current active settings that need a restart before any modification and a call to reloadSettingParms()
         // if they are changed in Settings Activity, we can trigger app restart
+        mPrevThemeSetting = GlobalParameters.getScreenTemeSetting(mContext);
         mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
         mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
-        mPrevAppSettingsDirectory = GlobalParameters.getAppSettingsDirId(mContext);
+        mPrevAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mContext);
 
         // Start settings activity
         Intent intent = new Intent(mContext, ActivitySettings.class);
@@ -1917,30 +1925,38 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
+    private String mPrevThemeSetting = null; //SCREEN_THEME_STANDARD
+    private String mPrevLanguageSetting = null; //APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
+    private String mPrevFontScaleSetting = null; //GlobalParameters.FONT_SCALE_FACTOR_SETTING_DEFAULT;
+    private String mPrevAppSettingsDirectory = null; //APP_SETTINGS_DIRECTORY_ROOT;
+
     // reloads settings from saved config. Called after:
-    // - user changes settings in App Settings Activity
-    // - user imports sync task config file
-    private String mPrevLanguageSetting=APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
-    private String mPrevFontScaleSetting=GlobalParameters.FONT_SCALE_FACTOR_SETTING_DEFAULT;
-    private String mPrevAppSettingsDirectory=APP_SETTINGS_DIRECTORY_ROOT;
+    // - user changes settings in App Settings Activity: invokeSettingsActivity()
+    // - user imports sync task config file: importSyncTaskAndParms()
+    //
+    // Before calling reloadSettingParms(), you must update the below variables with current active settings before calling the method that modifies them
+    // - mPrevThemeSetting = GlobalParameters.getScreenTemeSetting(mContext);
+    // - mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
+    // - mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
+    // - mPrevAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mContext);
     private void reloadSettingParms() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
-        String p_theme = mGp.settingScreenTheme;
-        String p_settings_app_dir = mGp.settingSecurityAppSettingsDirectory;
-
         mGp.loadSettingsParms(mContext); //reload settings from disk (Preference manager /data/data)
 
+        String new_theme = GlobalParameters.getScreenTemeSetting(mContext);
+        final boolean theme_changed = !new_theme.equals(mPrevThemeSetting);
+
         String new_lc = GlobalParameters.getLanguageCode(mContext);
-        final boolean theme_lang_changed = !new_lc.equals(mPrevLanguageSetting);
+        final boolean lang_changed = !new_lc.equals(mPrevLanguageSetting);
 
         String new_fs = GlobalParameters.getFontScaleFactorSetting(mContext);
         final boolean font_scale_changed = !mPrevFontScaleSetting.equals(new_fs);
 
-        String new_dirId=GlobalParameters.getAppSettingsDirId(mContext);
+        String new_dirId = GlobalParameters.getAppManagementDirSetting(mContext);
         final boolean app_settings_dir_changed = !new_dirId.equals(mPrevAppSettingsDirectory);
 
-        if (!p_settings_app_dir.equals(mGp.settingSecurityAppSettingsDirectory) || app_settings_dir_changed) {
+        if (app_settings_dir_changed) {
             // app restart mandatory to save messages, history, logs, autosaved configs to new dircectory
             mUtil.showCommonDialog(false, "W",
                     mContext.getString(R.string.msgs_smbsync_main_settings_restart_title),
@@ -1956,13 +1972,13 @@ public class ActivityMain extends AppCompatActivity {
                             }
                         }
             });
-        } else if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed || font_scale_changed) {
+        } else if (theme_changed || lang_changed || font_scale_changed) {
             // app restart recommended
             mUtil.showCommonDialogWarn(true,
                 mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_main_settings_restart_title),
-                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart),
-                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_immediate),
-                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart_later),
+                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_theme_changed_restart),
+                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_theme_changed_restart_immediate),
+                mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_theme_changed_restart_later),
                 new CallBackListener() {
                     @Override
                     public void onCallBack(Context c, boolean positive, Object[] objects) {

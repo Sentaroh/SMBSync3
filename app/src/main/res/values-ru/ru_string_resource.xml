@@ -516,9 +516,9 @@
         <string name="msgs_smbsync_main_restart_by_killed">Приложение было перезапущено, потому что оно было отключено при перемещении в фоновый режим.</string>
         <string name="msgs_smbsync_main_settings_restart_title">Перезапуск приложения</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Параметры SMBv1 были изменены. Это изменение не вступит в силу, пока приложение не будет перезапущено. Выход из этого приложения сейчас?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">После изменения темы или языка необходимо перезапустить приложение. Нажмите \"Начни заново\", чтобы перезагрузить систему. Если вы хотите перезапустить его позже, нажмите \"Потом\".</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Потом</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Начни заново</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">It is recommended to restart the application after changing the theme, language or font. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">Потом</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">Начни заново</string>
         <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">Приложение запущено.</string>
         <string name="msgs_smnsync_main_kill_application">Убить приложение?</string>

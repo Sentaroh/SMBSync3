@@ -61,11 +61,7 @@ public class ActivitySettings extends PreferenceActivity {
     static final private Logger log= LoggerFactory.getLogger(ActivitySettings.class);
 
     private static GlobalParameters mGp = null;
-
     private Activity mActivity=null;
-
-    private static String mCurrentAppSettingsDirectory = APP_SETTINGS_DIRECTORY_ROOT;
-
     private CommonUtilities mUtil = null;
 
     @Override
@@ -573,6 +569,8 @@ public class ActivitySettings extends PreferenceActivity {
         private Activity mActivity=null;
         private CommonUtilities mUtil = null;
 
+        private String mCurrentAppSettingsDirectory = null;
+
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             if (requestCode == 0) {
@@ -593,7 +591,8 @@ public class ActivitySettings extends PreferenceActivity {
             addPreferencesFromResource(R.xml.settings_frag_security);
 
             SharedPreferences shared_pref=CommonUtilities.getSharedPreference(getContext());
-            mCurrentAppSettingsDirectory=shared_pref.getString(getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
+
+            mCurrentAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mActivity);
 
             setCurrentValue(shared_pref);
 
@@ -668,8 +667,9 @@ public class ActivitySettings extends PreferenceActivity {
                 pref_key.setSummary(summary);
 
                 if (!mCurrentAppSettingsDirectory.equals(kv)) {
-                    mCurrentAppSettingsDirectory=kv;
-                    // Settings changed, app restart needed to properly display further messages and history: triggered in reloadSettingParms() rather than restart activity now
+                    //mCurrentAppSettingsDirectory = kv; //not needed because we restart activity immeadiately on Settings exit
+                    // Settings changed, app restart needed to properly display further messages and history
+                    // - Restart triggered in reloadSettingParms() because it is useless here
                     //mActivity.finish();
                     //Intent intent = new Intent(mActivity, ActivitySettings.class);
                     //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

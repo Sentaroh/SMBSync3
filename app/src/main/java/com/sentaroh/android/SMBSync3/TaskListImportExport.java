@@ -1208,7 +1208,6 @@ public class TaskListImportExport {
         } else {
             ntfy.notifyToListener(true, null);
         }
-
     }
 
     final static private String CONFIG_FILE_NAME = "config.xml";

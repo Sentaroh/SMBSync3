@@ -666,7 +666,7 @@ public class GlobalParameters {
     }
 
     //Get current app settings directory value saved in Preferences
-    static public String getAppSettingsDirId(Context c) {
+    static public String getAppManagementDirSetting(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         String pos=prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);                         
         return pos;

@@ -515,9 +515,9 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_smbsync_main_restart_by_killed">Die Anwendung wurde erneut gestartet, weil sie beim Übergang in den Hintergrund getötet wurde.</string>
         <string name="msgs_smbsync_main_settings_restart_title">Neustart der Anwendung</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Die Parameter von SMBv1 wurden geändert.  Diese Änderung wird erst wirksam, wenn die Anwendung neu gestartet wird.  Beenden Sie diese Anwendung jetzt?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">Es wird empfohlen, die Anwendung nach einer Änderung des Themas oder der Sprache neu zu starten. Klicken Sie auf \"Neustart\", um die Anwendung jetzt neu zu starten. Wenn Sie die Anwendung später neu starten möchten, klicken Sie auf \"Später\".</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Später</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">neu starten</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">It is recommended to restart the application after changing the theme, language or font. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">Später</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">neu starten</string>
         <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">Anwendung gestartet.</string>
         <string name="msgs_smnsync_main_kill_application">Anwendung beenden?</string>
