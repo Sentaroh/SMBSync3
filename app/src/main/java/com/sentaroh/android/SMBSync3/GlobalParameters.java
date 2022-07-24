@@ -577,7 +577,7 @@ public class GlobalParameters {
         else applicationTheme = R.style.Main;
 
 //        loadLanguagePreference(c);
-        setDisplayFontScale(c);
+        //setDisplayFontScale(c);
 
         settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
 
@@ -665,52 +665,57 @@ public class GlobalParameters {
         prefs.edit().putBoolean(SCHEDULE_ENABLED_KEY, enabled).commit();
     }
 
-    public static final String FONT_SCALE_FACTOR_SMALL="0";
-    public static final float FONT_SCALE_FACTOR_SMALL_VALUE=0.8f;
-    public static final String FONT_SCALE_FACTOR_NORMAL="1";
-    public static final float FONT_SCALE_FACTOR_NORMAL_VALUE=1.0f;
-    public static final String FONT_SCALE_FACTOR_LARGE="2";
-    public static final float FONT_SCALE_FACTOR_LARGE_VALUE=1.2f;
-    public static final String FONT_SCALE_FACTOR_LARGEST="3";
-    public static final float FONT_SCALE_FACTOR_LARGEST_VALUE=1.6f;
-    static public String getFontScaleFactor(Context c) {
+    //Get current app settings directory value saved in Preferences
+    static public String getAppSettingsDirId(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
-        return fs;
+        String pos=prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);                         
+        return pos;
     }
 
+    public static final String FONT_SCALE_FACTOR_SMALL = "0";
+    public static final float FONT_SCALE_FACTOR_SMALL_VALUE = 0.8f;
+    public static final String FONT_SCALE_FACTOR_NORMAL = "1";
+    public static final float FONT_SCALE_FACTOR_NORMAL_VALUE = 1.0f;
+    public static final String FONT_SCALE_FACTOR_LARGE = "2";
+    public static final float FONT_SCALE_FACTOR_LARGE_VALUE = 1.2f;
+    public static final String FONT_SCALE_FACTOR_LARGEST = "3";
+    public static final float FONT_SCALE_FACTOR_LARGEST_VALUE = 1.6f;
+    public static final String FONT_SCALE_FACTOR_SETTING_DEFAULT = FONT_SCALE_FACTOR_NORMAL;
+    public static final float FONT_SCALE_FACTOR_DEFAULT_VALUE = FONT_SCALE_FACTOR_NORMAL_VALUE;
+
+    //Get font scale saved settings from Preferences
+    static public String getFontScaleFactorSetting(Context c) {
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
+        return prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_SETTING_DEFAULT);
+    }
+
+    // Get font scale float value from saved Preferences
     static public float getFontScaleFactorValue(Context c) {
-        String fs=getFontScaleFactor(c);
-        float fs_value=getFontScaleFactorValue(c, fs);
-        return fs_value;
-    }
-
-    static public float getFontScaleFactorValue(Context c, String fs) {
-        float fs_value=1.0f;
+        String fs=getFontScaleFactorSetting(c);
+        float fs_value = GlobalParameters.FONT_SCALE_FACTOR_DEFAULT_VALUE;
         if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_SMALL)) {
-            fs_value=FONT_SCALE_FACTOR_SMALL_VALUE;
+            fs_value = FONT_SCALE_FACTOR_SMALL_VALUE;
         } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_NORMAL)) {
-            fs_value=FONT_SCALE_FACTOR_NORMAL_VALUE;
+            fs_value = FONT_SCALE_FACTOR_NORMAL_VALUE;
         } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_LARGE)) {
-            fs_value=FONT_SCALE_FACTOR_LARGE_VALUE;
+            fs_value = FONT_SCALE_FACTOR_LARGE_VALUE;
         } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_LARGEST)) {
-            fs_value=FONT_SCALE_FACTOR_LARGEST_VALUE;
+            fs_value = FONT_SCALE_FACTOR_LARGEST_VALUE;
         }
+
         return fs_value;
     }
 
-    static public void setDisplayFontScale(Context c) {
-        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
-        setDisplayFontScale(c, fs);
-    }
+    // Return current config, updated with font scale factor from saved preferences
+    static private Configuration setDisplayFontScaleConfig(Context c) {
+        float fs = getFontScaleFactorValue(c); // get font scale from saved preferences
+        Resources res = c.getResources();
+        Configuration config = new Configuration(res.getConfiguration());
+        config.fontScale = fs;
+        return config;
 
-    static public void setDisplayFontScale(Context c, String fs) {
-        float fs_value=getFontScaleFactorValue(c, fs);
-        setDisplayFontScale(c, fs_value);
-    }
-
-    static public void setDisplayFontScale(Context c, float scale) {
+/*
+        // Deprecated API < 24
         Configuration configuration=c.getResources().getConfiguration();
         configuration.fontScale = scale;
         DisplayMetrics metrics = c.getResources().getDisplayMetrics();
@@ -719,48 +724,41 @@ public class GlobalParameters {
         wm.getDefaultDisplay().getMetrics(metrics);
         metrics.scaledDensity = configuration.fontScale * metrics.density;
         c.getResources().updateConfiguration(configuration, metrics);
-
+*/
     }
 
+    // Returns current context updated with locale from settings Preferences
     static public Context setNewLocale(Context c) {
-        String lc= getLanguageCode(c);
+        String lc= getLanguageCode(c); //get language code from saved preferences
         return updateLanguageResources(c, lc);
     }
 
     public static final String APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT = "system";
-
+    // get language code from saved Preferences
     static public String getLanguageCode(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String lc=prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
-        return lc;
-    }
-
-    static public String getAppSettingsDirId(Context c) {
-        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String pos=prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);                         
-        return pos;
+        return prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
     }
 
     // wrap language layout in the base context for all activities
-    static private Context updateLanguageResources(Context context, String language) {
+    static private Context updateLanguageResources(Context c, String language) {
         //if language is set to system default (defined as "0"), do not apply non existing language code "0" and return current context without wrapped language
-        if (!language.equals(APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT)) {
-            Locale locale = new Locale(language);
-            Locale.setDefault(locale);
+        if (language.equals(APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT)) return c;
 
-            Resources res = context.getResources();
-            android.content.res.Configuration config = new android.content.res.Configuration(res.getConfiguration());
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
 
-            setLocaleForApi24(config, locale);
-            context = context.createConfigurationContext(config);
-        }
-        return context;
+        Resources res = c.getResources();
+        Configuration config = new Configuration(res.getConfiguration()); //current config
+        Configuration newConfig = setLocaleConfigForApi24(config, locale); //apply new locale to current config
+
+        return c.createConfigurationContext(newConfig);
     }
 
-    static private void setLocaleForApi24(android.content.res.Configuration config, Locale target) {
+    static private Configuration setLocaleConfigForApi24(Configuration config, Locale new_locale) {
         Set<Locale> set = new LinkedHashSet<>();
-        // bring the target locale to the front of the list
-        set.add(target);
+        // bring the new locale to the front of the list
+        set.add(new_locale);
 
         LocaleList all = LocaleList.getDefault();
         for (int i = 0; i < all.size(); i++) {
@@ -769,13 +767,24 @@ public class GlobalParameters {
         }
 
         Locale[] locales = set.toArray(new Locale[0]);
-        config.setLocales(new LocaleList(locales));
+
+        config.setLocales(new LocaleList(locales)); //new config with locale
+        return config;
     }
 
 //    static public void loadLanguagePreference(Context c) {
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 //        settingApplicationLanguage = prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
 //    }
+
+    // wrapper called only from attachBaseContext()
+    static public Context setLocaleAndMetrics(Context c) {
+        Context newContext = setNewLocale(c); // context with Locale from saved preferences
+        Configuration config = setDisplayFontScaleConfig(newContext); // config with locale and font scale factor from saved preferences
+        newContext = newContext.createConfigurationContext(config); // context with new config holding font scale and locale from saved preferences
+
+        return newContext;
+    }
 
     public boolean isScreenThemeIsLight() {
         boolean result=false;

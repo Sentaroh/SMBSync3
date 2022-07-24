@@ -80,7 +80,7 @@ public class ActivitySettings extends PreferenceActivity {
     @Override
     protected void attachBaseContext(Context base) {
 //        log.info("attachBaseContext entered");
-        super.attachBaseContext(GlobalParameters.setNewLocale(base));
+        super.attachBaseContext(GlobalParameters.setLocaleAndMetrics(base));
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ActivitySettings extends PreferenceActivity {
         if (mCurrentScreenTheme.equals(SCREEN_THEME_STANDARD)) setTheme(R.style.Main);
         else if (mCurrentScreenTheme.equals(SCREEN_THEME_LIGHT)) setTheme(R.style.MainLight);
         else if (mCurrentScreenTheme.equals(SCREEN_THEME_BLACK)) setTheme(R.style.MainBlack);
-        GlobalParameters.setDisplayFontScale(ActivitySettings.this);
+        //GlobalParameters.setDisplayFontScale(ActivitySettings.this);
         super.onCreate(savedInstanceState);
 
         if (mUtil == null) mUtil = new CommonUtilities(this, "SettingsActivity", mGp, null);
@@ -518,8 +518,9 @@ public class ActivitySettings extends PreferenceActivity {
                 }
                 pref_key.setSummary(sum_msg);
                 if (!lang_value.equals(mCurrentLangaue)) {
-                    mActivity.finish();//finish current preferences activity. Will trigger checkThemeLanguageChanged() to force restart app from main activity
-                    GlobalParameters.setNewLocale(mActivity);
+                    // Setting changed, restart ActivitySettings to apply new theme. Full app restart will be triggered on return to MainActivity
+                    mActivity.finish();
+                    //GlobalParameters.setLocaleAndMetrics(mActivity);
                     Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     mActivity.startActivity(intent);
@@ -530,8 +531,9 @@ public class ActivitySettings extends PreferenceActivity {
                 String sum_msg = font_scale_label[Integer.parseInt(font_scale_id)];
                 pref_key.setSummary(sum_msg);
                 if (!mCurrentFontScaleFactor.equals(font_scale_id)) {
+                    // Setting changed, restart ActivitySettings to apply new language. Full app restart will be triggered on return to MainActivity
                     mCurrentFontScaleFactor=font_scale_id;
-                    GlobalParameters.setDisplayFontScale(c, mCurrentFontScaleFactor);
+                    //GlobalParameters.setLocaleAndMetrics(mActivity);
                     mActivity.finish();
                     Intent intent = new Intent(mActivity, ActivitySettings.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -669,7 +671,11 @@ public class ActivitySettings extends PreferenceActivity {
 
                 if (!mCurrentAppSettingsDirectory.equals(kv)) {
                     mCurrentAppSettingsDirectory=kv;
-                    // app restart needed to properly display further messages and history: triggered in reloadSettingParms()
+                    // Settings changed, app restart needed to properly display further messages and history: triggered in reloadSettingParms() rather than restart activity now
+                    //mActivity.finish();
+                    //Intent intent = new Intent(mActivity, ActivitySettings.class);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //mActivity.startActivity(intent);
                 }
             }
         }

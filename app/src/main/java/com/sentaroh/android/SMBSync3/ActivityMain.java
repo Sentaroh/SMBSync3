@@ -176,8 +176,8 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(GlobalParameters.setNewLocale(base));
-        GlobalParameters.setDisplayFontScale(base);
+        super.attachBaseContext(GlobalParameters.setLocaleAndMetrics(base));
+        //GlobalParameters.setDisplayFontScale(base);
     }
 
     @Override
@@ -193,7 +193,7 @@ public class ActivityMain extends AppCompatActivity {
 //        Intent splash=new Intent(mActivity, ActivitySplash.class);
 //        startActivity(splash);
         mGp= GlobalWorkArea.getGlobalParameter(mActivity);
-        GlobalParameters.setDisplayFontScale(mActivity);
+        //GlobalParameters.setDisplayFontScale(mActivity);
         setTheme(mGp.applicationTheme);
         super.onCreate(savedInstanceState);
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
@@ -868,7 +868,7 @@ public class ActivityMain extends AppCompatActivity {
 
         createTabView();
 
-        GlobalParameters.setDisplayFontScale(mActivity);
+        //GlobalParameters.setDisplayFontScale(mActivity);
 
         mGp.syncTaskListAdapter = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, pfl, mGp);
         mGp.syncTaskListAdapter.setShowCheckBox(vsa.prof_adapter_show_cb);
@@ -1899,8 +1899,14 @@ public class ActivityMain extends AppCompatActivity {
 
     private void invokeSettingsActivity() {
         mUtil.addDebugMsg(1, "I", "Invoke Setting activity.");
-        mPrevLanguageSetting=GlobalParameters.getLanguageCode(mContext);
-        mPrevAppSettingsDirectory=GlobalParameters.getAppSettingsDirId(mContext);
+
+        // save current settings that need a restart before entering Settings activity
+        // if they are changed in Settings Activity, we can trigger app restart
+        mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
+        mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
+        mPrevAppSettingsDirectory = GlobalParameters.getAppSettingsDirId(mContext);
+
+        // Start settings activity
         Intent intent = new Intent(mContext, ActivitySettings.class);
         launchActivityResult(mActivity, "Settings", intent, new CallBackListener() {
             @Override
@@ -1911,7 +1917,11 @@ public class ActivityMain extends AppCompatActivity {
         });
     }
 
+    // reloads settings from saved config. Called after:
+    // - user changes settings in App Settings Activity
+    // - user imports sync task config file
     private String mPrevLanguageSetting=APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
+    private String mPrevFontScaleSetting=GlobalParameters.FONT_SCALE_FACTOR_SETTING_DEFAULT;
     private String mPrevAppSettingsDirectory=APP_SETTINGS_DIRECTORY_ROOT;
     private void reloadSettingParms() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
@@ -1919,15 +1929,19 @@ public class ActivityMain extends AppCompatActivity {
         String p_theme = mGp.settingScreenTheme;
         String p_settings_app_dir = mGp.settingSecurityAppSettingsDirectory;
 
-        mGp.loadSettingsParms(mContext);
+        mGp.loadSettingsParms(mContext); //reload settings from disk (Preference manager /data/data)
 
-        String new_lc=GlobalParameters.getLanguageCode(mContext);
-        final boolean theme_lang_changed=!new_lc.equals(mPrevLanguageSetting);
+        String new_lc = GlobalParameters.getLanguageCode(mContext);
+        final boolean theme_lang_changed = !new_lc.equals(mPrevLanguageSetting);
+
+        String new_fs = GlobalParameters.getFontScaleFactorSetting(mContext);
+        final boolean font_scale_changed = !mPrevFontScaleSetting.equals(new_fs);
 
         String new_dirId=GlobalParameters.getAppSettingsDirId(mContext);
-        final boolean app_settings_dir_changed=!new_dirId.equals(mPrevAppSettingsDirectory);
+        final boolean app_settings_dir_changed = !new_dirId.equals(mPrevAppSettingsDirectory);
 
         if (!p_settings_app_dir.equals(mGp.settingSecurityAppSettingsDirectory) || app_settings_dir_changed) {
+            // app restart mandatory to save messages, history, logs, autosaved configs to new dircectory
             mUtil.showCommonDialog(false, "W",
                     mContext.getString(R.string.msgs_smbsync_main_settings_restart_title),
                     mContext.getString(R.string.msgs_smbsync_security_settings_app_dir_changed_restart),
@@ -1942,8 +1956,8 @@ public class ActivityMain extends AppCompatActivity {
                             }
                         }
             });
-        } else if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed) {
-            // app restart required
+        } else if (!p_theme.equals(mGp.settingScreenTheme) || theme_lang_changed || font_scale_changed) {
+            // app restart recommended
             mUtil.showCommonDialogWarn(true,
                 mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_main_settings_restart_title),
                 mUtil.getStringWithLangCode(mActivity, new_lc, R.string.msgs_smbsync_ui_settings_language_changed_restart),
@@ -1963,7 +1977,7 @@ public class ActivityMain extends AppCompatActivity {
             );
         }
 
-        GlobalParameters.setDisplayFontScale(mActivity);
+        //GlobalParameters.setDisplayFontScale(mActivity);
         reloadScreen(false);
 
         if (mGp.settingFixDeviceOrientationToPortrait)
@@ -2025,7 +2039,7 @@ public class ActivityMain extends AppCompatActivity {
                 ", settingFixDeviceOrientationToPortrait=" + mGp.settingFixDeviceOrientationToPortrait +
                 ", settingForceDeviceTabletViewInLandscape=" + mGp.settingForceDeviceTabletViewInLandscape +
                 ", settingApplicationLanguage=" + GlobalParameters.getLanguageCode(mContext) +
-                ", settingApplicationFontScale=" + GlobalParameters.getFontScaleFactor(mContext) +
+                ", settingApplicationFontScale=" + GlobalParameters.getFontScaleFactorSetting(mContext) +
 
                 ", settingExportedTaskEncryptRequired=" + mGp.settingExportedTaskEncryptRequired +
                 ", settingScreenTheme=" + mGp.applicationTheme+//.settingScreenTheme +

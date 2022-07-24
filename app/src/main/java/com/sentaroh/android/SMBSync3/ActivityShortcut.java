@@ -69,7 +69,7 @@ public class ActivityShortcut extends FragmentActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(GlobalParameters.setNewLocale(base));
+        super.attachBaseContext(GlobalParameters.setLocaleAndMetrics(base));
     }
 
     @Override
@@ -80,7 +80,7 @@ public class ActivityShortcut extends FragmentActivity {
 
         mActivity= ActivityShortcut.this;
         mGp= GlobalWorkArea.getGlobalParameter(mActivity);
-        GlobalParameters.setDisplayFontScale(mActivity);
+        //GlobalParameters.setDisplayFontScale(mActivity);
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
         }
