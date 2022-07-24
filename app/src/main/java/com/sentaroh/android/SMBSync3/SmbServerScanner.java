@@ -805,8 +805,25 @@ public class SmbServerScanner {
     }
 
 /*  Scan thread:
-    - performSmbServerScan(): starts the first non UI thread
-        + starts a scan for 100
+    - performSmbServerScan(): starts the first non UI thread startSmbServerScanThread()
+        + starts a scan for the first 100 IPs in the scan range
+        + waits for the first 100 Ips to complete for a maximum of 210*30= 6300 msecs
+        + starts a next 100 IPs scan...
+    - startSmbServerScanThread() scans for a single IP, called multiple times in multithreading
+    - mScanRequestedAddrList: each IP to scan is added to this list, once the IP scan thread completed, it is removed from the list
+    - mThreadScanResultList: ArrayList with all found SMB servers during scan, not bound to a GUI adapter
+    - mScanResultList: ArrayList with all found SMB servers during scan and bound to mAdapter
+    - mAdapter: the adapter bound to mScanResultList to display the servers found during scan
+    - During each scan result by startSmbServerScanThread(), if a server is found, it is first added to mThreadScanResultList
+      Then, in a Synchronized GUI post thread handler, mScanResultList is cleared and repopulated with all mThreadScanResultList contents
+      This makes it possible to start createSmbServerInfo() in multithreading and modify the results list bound to the GUI adapter in parallel
+    - startSmbServerScanThread() starts a first thread to test isSmbHost()
+      + if it finds an smb host, the first thread starts a second sub-thread th2 to launch createSmbServerInfo() in the background
+      + this way, first thread doesn't have to wait for createSmbServerInfo() to complete
+      + once th2 is completed, it handles the results in a handler.post GUI thread
+      + the GUI thread populates mScanResultList as explained above in a synchronized way and notifies the adapter
+        the GUI thread also updates the scan progress
+    - Scan progress is controlled by mLockScanProgress
 */
     private int mScanCompleteCount = 0, mScanAddrCount = 0;
     // private int mStartedThreadsCount = 0, mTh2ResultEntered = 0, mTh2ResultOut = 0 //debug scanner multithreading
@@ -815,7 +832,7 @@ public class SmbServerScanner {
     private final ArrayList<SmbServerScanResult> mThreadScanResultList = new ArrayList<SmbServerScanResult>(); // non UI network scan threads
     private static final Object mLockThreadsScanResultList = new Object(); //for mThreadScanResultList
     private static final Object mLockScanProgress = new Object(); //for mScanRequestedAddrList and mScanCompleteCount
-    private static final Object mLockSmbServerScanAdapter = new Object(); //mScanResultList and mAdapter
+    private static final Object mLockSmbServerScanAdapter = new Object(); //for mScanResultList and mAdapter
 
     private void performSmbServerScan(
             final Dialog dialog,
@@ -957,7 +974,7 @@ public class SmbServerScanner {
         if (!tc.isEnabled()) return;
         Thread th = new Thread(new Runnable() {
             @Override
-            public void run() {//non UI thread
+            public void run() {//non UI thread to start isSmbHost() for the given IP in the background and be able to scan more incoming IPs
                 //mStartedThreadsCount++;
                 if (!tc.isEnabled()) return;
 //                byte[] oo=new byte[Integer.MAX_VALUE];
@@ -986,17 +1003,19 @@ public class SmbServerScanner {
                 //if (true) {//debug to add all scanned servers
                 if (found) {
                     // start a new non UI background thread to scan for SMBv1 and SMBv2/3 protocols on the found server
+                    // we don't have to lock around SmbServerScanResult and have to wait for createSmbServerInfo() to accept more threads for the next IPs
                     Thread th2 = new Thread(new Runnable() {
                         @Override
                         public void run() {//non UI thread
                             final SmbServerScanResult result = createSmbServerInfo(tc, scan_smbv1, scan_smbv23, null, null, null, addr, ssi.serverPort);
                             //final SmbServerScanResult result = createSmbServerInfo(tc, false, false, null, null, null, addr, port); //debug to add all scanned servers
-                            //mTh2ResultOut++;
+                            //mTh2ResultOut++; //debug
 
                             synchronized (mLockThreadsScanResultList) {
                                 if (result != null) mThreadScanResultList.add(result);
                             }
                             handler.post(new Runnable() {//UI thread, createSmbServerInfo() thread completed, update the results ListView
+                                // modify the results list and adapter with results
                                 @Override
                                 public void run() {
                                     synchronized (mLockSmbServerScanAdapter) {

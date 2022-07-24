@@ -373,8 +373,13 @@ public class GlobalParameters {
         //externalStoragePrefix = Environment.getExternalStorageDirectory().getPath();
         externalStoragePrefix = SafManager3.getPrimaryStoragePath();
 
+        //If option Force Screen On during sync is enabled, screen is kept turned on and dimmed during sync
+        // The lock is released if a confirmation message pauses the sync (confir delete, confirm overwrite...)
+        // The method SCREEN_DIM_WAKE_LOCK is deprecated and only alternative would be to start Sync Job in a new ActivitySync and implement the new alternative in onCreate
+        // However, new alternative keeps the screen on and at full brightness. So, for now, we keep the deprecated method. Else, writing a new ACtivity for Snyc jobs will be needed
         mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-dim");
         forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-force-dim");
+
         mPartialWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-partial");
         WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync3-thread");
