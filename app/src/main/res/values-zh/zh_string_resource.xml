@@ -103,7 +103,7 @@
         <string name="msgs_delete_following_profile">删除以下任务？</string>
         <string name="msgs_dir_empty">找不到目录</string>
         <string name="msgs_duplicate_task_name">重复的任务名称。</string>
-        <string name="msgs_sync_task_name_length_invalid">任务名称的长度不应超过%s个字符。</string>
+        <string name="msgs_sync_task_name_length_invalid">任务名称的长度不应超过%d个字符。</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">重命名任务时，计划表/组中的任务名称也会改变。</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">删除任务时，计划表/组中的任务名称也会被删除。</string>
         <string name="msgs_task_name_contains_invalid_character">任务名称包含无效字符：\"%s\"</string>

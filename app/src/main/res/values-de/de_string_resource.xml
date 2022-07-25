@@ -108,7 +108,7 @@
         <string name="msgs_delete_following_profile">Die folgenden Aufgaben löschen?</string>
         <string name="msgs_dir_empty">Verzeichnis konnte nicht gefunden werden</string>
         <string name="msgs_duplicate_task_name">Name der Aufgabe duplizieren.</string>
-        <string name="msgs_sync_task_name_length_invalid">Der Aufgabenname sollte nicht länger als %s Zeichen sein</string>
+        <string name="msgs_sync_task_name_length_invalid">Der Aufgabenname sollte nicht länger als %d Zeichen sein</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">Wenn eine Aufgabe umbenannt wird, wird auch der Aufgabenname im Zeitplan bzw. in der Gruppe geändert.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">Wenn die Aufgabe gelöscht wird, wird auch der Aufgabenname in dem Zeitplan/der Gruppe gelöscht.</string>
         <string name="msgs_task_name_contains_invalid_character">The task name contains invalid characters: \"%s\"</string>

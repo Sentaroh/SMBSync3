@@ -108,7 +108,7 @@
         <string name="msgs_delete_following_profile">Eliminare i seguenti task?</string>
         <string name="msgs_dir_empty">Cartelle non può essere trovato</string>
         <string name="msgs_duplicate_task_name">Nome task duplicato.</string>
-        <string name="msgs_sync_task_name_length_invalid">Il nome del compito non deve superare i caratteri %s in lunghezza</string>
+        <string name="msgs_sync_task_name_length_invalid">Il nome del compito non deve superare i caratteri %d in lunghezza</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">Quando un task viene rinominato, viene anche cambiato il nome del task nella pianificazione.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">Quando un task viene eliminato, viene anche eliminato il nome del task nella pianificazione.</string>
         <string name="msgs_task_name_contains_invalid_character">Il nome della task contiene caratteri non validi: \"%s\"</string>

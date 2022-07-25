@@ -108,7 +108,7 @@
         <string name="msgs_delete_following_profile">下記タスクを削除します。</string>
         <string name="msgs_dir_empty">ディレクトリが見つかりませんでした</string>
         <string name="msgs_duplicate_task_name">タスク名が重複しています</string>
-        <string name="msgs_sync_task_name_length_invalid">タスク名の長さは%s文字以内にしてください</string>
+        <string name="msgs_sync_task_name_length_invalid">タスク名の長さは%d文字以内にしてください</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">タスク名を変更するとスケジュール/グループ内のタスク名も変更されます。</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">タスクを削除するとスケジュール/グループ内のタスク名も削除されます。</string>
         <string name="msgs_task_name_contains_invalid_character">タスク名に無効な文字が含まれています: \"%s\"</string>

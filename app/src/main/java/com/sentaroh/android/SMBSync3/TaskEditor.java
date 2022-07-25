@@ -4976,7 +4976,7 @@ public class TaskEditor extends DialogFragment {
             t_name_msg= TaskListUtils.hasSyncTaskNameUnusableCharacter(mActivity, et_sync_main_task_name.getText().toString());
         }
         if (t_name_msg.equals("")) {
-            if (et_sync_main_task_name.getText().length()>SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH) t_name_msg=mActivity.getString(R.string.msgs_sync_task_name_length_invalid, SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH);
+            if (et_sync_main_task_name.getText().length() > SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH) t_name_msg = String.format(mActivity.getString(R.string.msgs_sync_task_name_length_invalid), SyncTaskItem.SYNC_TASK_NAME_MAX_LENGTH);
         }
 
         if (t_name_msg.equals("")) {
