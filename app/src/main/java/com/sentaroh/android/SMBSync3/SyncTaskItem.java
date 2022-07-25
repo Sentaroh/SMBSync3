@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import androidx.annotation.NonNull;
+
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
 import com.sentaroh.android.Utilities3.SafManager3;
 
@@ -38,6 +40,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
+//class SyncTaskItem implements Serializable {
 class SyncTaskItem implements Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
     private static Logger log= LoggerFactory.getLogger(SyncTaskItem.class);
@@ -702,9 +705,23 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isChanged() {return isChanged;}
     public void setChanged(boolean changed) {isChanged=changed;}
 
-    @SuppressWarnings("unchecked")
+    // Clone using java Cloneable clone()
+    // not used
+    @NonNull
     @Override
     public SyncTaskItem clone() {
+        SyncTaskItem npfli = null;
+        try {
+            npfli = (SyncTaskItem) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        assert npfli != null;
+        return npfli;
+    }
+
+    // Custom clone using Serialization/Deserialization
+    public SyncTaskItem cloneSerial() {
         SyncTaskItem npfli = null;
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -724,9 +741,7 @@ class SyncTaskItem implements Serializable, Cloneable {
             npfli = (SyncTaskItem) ois.readObject();
             ois.close();
             bais.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

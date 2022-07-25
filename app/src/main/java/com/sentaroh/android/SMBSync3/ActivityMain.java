@@ -4265,7 +4265,7 @@ public class ActivityMain extends AppCompatActivity {
                             ntfy_check.setListener(new NotifyEvent.NotifyEventListener() {
                                 @Override
                                 public void positiveResponse(Context c, Object[] o) {
-                                    SyncTaskItem npfli = item.clone();
+                                    SyncTaskItem npfli = item.cloneSerial();
                                     npfli.setLastSyncResult(0);
                                     npfli.setLastSyncTime("");
                                     if (mTaskEditor ==null) mTaskEditor = TaskEditor.newInstance();

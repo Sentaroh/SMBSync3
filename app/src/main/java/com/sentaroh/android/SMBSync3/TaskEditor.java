@@ -3305,7 +3305,7 @@ public class TaskEditor extends DialogFragment {
     public static final String TASK_EDIT_METHOD_EDIT="EDIT";
     public static final String TASK_EDIT_METHOD_COPY="COPY";
     private void editSyncTask(final String type, final SyncTaskItem pfli) {
-        final SyncTaskItem n_sti = pfli.clone();
+        final SyncTaskItem n_sti = pfli.cloneSerial();
         mUtil.addDebugMsg(1,"I","editSyncTask entered, type="+type+", task="+pfli.getSyncTaskName());
 
         mGp.safMgr.refreshSafList();
@@ -4112,7 +4112,7 @@ public class TaskEditor extends DialogFragment {
                 ntfy_swap.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        SyncTaskItem t_sti = n_sti.clone();
+                        SyncTaskItem t_sti = n_sti.cloneSerial();
 
                         String new_dir=t_sti.getDestinationDirectoryName();
                         if (SyncThread.isTakenDateConvertRequired(new_dir)) {
@@ -4649,7 +4649,7 @@ public class TaskEditor extends DialogFragment {
 
         final Spinner sp_sync_retain_period = dialog.findViewById(R.id.edit_sync_filter_archive_retention_period);
 
-        SyncTaskItem nstli = base_stli.clone();
+        SyncTaskItem nstli = base_stli.cloneSerial();
 
         nstli.setSyncTaskAuto(ctv_auto.isChecked());
         nstli.setSyncTaskName(et_sync_main_task_name.getText().toString());
