@@ -105,6 +105,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -608,7 +609,7 @@ public final class CommonUtilities {
         try {
             SafFile3 mf =new SafFile3(c, gp.settingAppManagemsntDirectoryName + "/.messages");
             if (mf!=null && mf.exists()) {
-                InputStreamReader isr = new InputStreamReader(mf.getInputStream(), "UTF-8");
+                InputStreamReader isr = new InputStreamReader(mf.getInputStream(), StandardCharsets.UTF_8);
                 BufferedReader bir=new BufferedReader(isr, GENERAL_IO_BUFFER_SIZE);
                 String line=null;
                 while((line=bir.readLine())!=null) {
@@ -633,14 +634,12 @@ public final class CommonUtilities {
         return result;
     }
 
-    private final int MAX_MSG_COUNT = 5000;
-
-    final public void addLogMsg(boolean ui_thread, boolean has_result_type, boolean has_path, boolean has_title,
+    public void addLogMsg(boolean ui_thread, boolean has_result_type, boolean has_path, boolean has_title,
                                 String cat, String title, String result_type, String path, String... msg) {
 //		final SyncMessageItem mli=new SyncMessageItem(cat, "","", title, mLog.buildLogCatMsg("", cat, msg), path, type);
         String finalMsg = "";
         StringBuilder log_msg = new StringBuilder(512);
-        for (int i = 0; i < msg.length; i++) log_msg.append(msg[i]);
+        for (String s : msg) log_msg.append(s);
         if (!log_msg.toString().equals("")) finalMsg = log_msg.toString();
         if (!title.equals("")) {
             if (finalMsg.equals("")) mLog.addLogMsg(cat, title.concat(": ").concat(path).concat(result_type));
@@ -665,18 +664,21 @@ public final class CommonUtilities {
         }
     }
 
-    final public void addLogMsg(String cat, String task, String... msg) {
+    public void addLogMsg(String cat, String task, String... msg) {
         addLogMsg(false, false, false, false, cat, task, "", "", msg);
     }
 
-    final public void addLogMsgFromUI(String cat, String task, String... msg) {
+    // not used
+    public void addLogMsgFromUI(String cat, String task, String... msg) {
         addLogMsg(true, false, false, false, cat, task, "", "", msg);
     }
 
     private void putMsgListArray(MessageListAdapter.MessageListItem mli) {
+        final int MAX_MSG_COUNT = 5000;
         synchronized (mGp.mLockSyncMessageList) {
             if (mGp.syncMessageList.size() > (MAX_MSG_COUNT + 200)) {
-                for (int i = 0; i < 200; i++) mGp.syncMessageList.remove(0);
+                mGp.syncMessageList.subList(0, 200).clear();
+                //for (int i = 0; i < 200; i++) mGp.syncMessageList.remove(0);
             }
             mGp.syncMessageList.add(mli);
             mGp.syncMessageListChanged =true;
@@ -689,18 +691,20 @@ public final class CommonUtilities {
         }
     }
 
-    final public void addDebugMsg(int lvl, String cat, String... msg) {
+    public void addDebugMsg(int lvl, String cat, String... msg) {
         mLog.addDebugMsg(lvl, cat, msg);
     }
 
-    final public boolean isLogFileExists() {
+    // not used
+    public boolean isLogFileExists() {
         boolean result = false;
         result = mLog.isLogFileExists();
         if (mLog.getLogLevel() >= 3) addDebugMsg(3, "I", "Log file exists=" + result);
         return result;
     }
 
-    final public String getLogFilePath() {
+    // not used
+    public String getLogFilePath() {
         return mLog.getLogFilePath();
     }
 
@@ -712,11 +716,10 @@ public final class CommonUtilities {
         } catch (NameNotFoundException e) {
             return false;
         }
-        if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE)
-            return true;
-        return false;
+        return (appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE;
     }
 
+    // not used
     public boolean isWifiActive() {
         boolean ret = false;
         WifiManager mWifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
@@ -734,8 +737,7 @@ public final class CommonUtilities {
 
     public static String encryptUserData(Context c, EncryptUtilV3.CipherParms cp_int, String user_data) {
         byte[] enc_byte = EncryptUtilV3.encrypt(user_data, cp_int);
-        String enc_str = Base64Compat.encodeToString(enc_byte, Base64Compat.NO_WRAP);
-        return enc_str;
+        return Base64Compat.encodeToString(enc_byte, Base64Compat.NO_WRAP);
     }
 
     public static String buildSmbUrlAddressElement(String host, String port) {
@@ -755,10 +757,8 @@ public final class CommonUtilities {
     }
 
     public static boolean canSmbHostConnectable(String addr) {
-        boolean result = false;
-        if (JcifsUtil.canIpAddressAndPortConnectable(addr, 139, 3500) ||
-                JcifsUtil.canIpAddressAndPortConnectable(addr, 445, 3500)) result = true;
-        return result;
+        return JcifsUtil.canIpAddressAndPortConnectable(addr, 139, 3500) ||
+                JcifsUtil.canIpAddressAndPortConnectable(addr, 445, 3500);
     }
 
     public static boolean canSmbHostConnectable(String addr, String port) {
@@ -773,6 +773,7 @@ public final class CommonUtilities {
         return result;
     }
 
+    // not used
     public static boolean isSmbHost(CommonUtilities cu, String address, String scan_port) {
         return isSmbHost(cu, address, scan_port, 3500);
     }
@@ -839,10 +840,12 @@ public final class CommonUtilities {
         try {
             result= InetAddress.getByName(addr);
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return result;
     }
 
+    // not used
     public static boolean isIpAddressV4(String addr) {
         boolean result=false;
         InetAddress ia=getInetAddress(addr);
@@ -899,6 +902,7 @@ public final class CommonUtilities {
         return addr;
     }
 
+    // not used
     public static String resolveHostName(GlobalParameters gp, CommonUtilities cu, String smb_level, String hn) {
         String resolve_addr = JcifsUtil.getSmbHostIpAddressByHostName(smb_level, hn);
         if (resolve_addr != null) {//list dns name resolve
@@ -916,6 +920,7 @@ public final class CommonUtilities {
         return resolve_addr;
     }
 
+    // not used
     public static boolean isIpV4PrivateAddress(String ip_v4_addr) {
         if (ip_v4_addr.startsWith("10.")) return true;
         else if (ip_v4_addr.startsWith("192.168.")) return true;
@@ -950,8 +955,9 @@ public final class CommonUtilities {
         return false;
     }
 
+    // not used
     public static String getIfHwAddress(String if_name) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         boolean exit = false;
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
@@ -960,7 +966,7 @@ public final class CommonUtilities {
                     InetAddress inetAddress = enumIpAddr.nextElement();
                     if (inetAddress.isSiteLocalAddress() && (inetAddress instanceof Inet4Address)) {
                         if (intf.getName().equals(if_name)) {
-                            for(int i=0;i<intf.getHardwareAddress().length;i++) result += String.format("%2h",intf.getHardwareAddress()[i]).replaceAll(" ","0");
+                            for(int i=0;i<intf.getHardwareAddress().length;i++) result.append(String.format("%2h", intf.getHardwareAddress()[i]).replaceAll(" ", "0"));
                             exit = true;
                             break;
                         }
@@ -971,9 +977,10 @@ public final class CommonUtilities {
         } catch (SocketException ex) {
             log.error("getIfHwAddress error, if="+if_name, ex);
         }
-        return result;
+        return result.toString();
     }
 
+    // not used
     private void sendMagicPacket(final String target_mac, final String if_network) {
 //                sendMagicPacket("08:bd:43:f6:48:2a", if_ip);
         Thread th=new Thread(){
@@ -983,7 +990,7 @@ public final class CommonUtilities {
                 for(int i=0;i<6;i++) broadcastMacAddress[i]=(byte)0xff;
                 InetAddress broadcastIpAddress = null;
                 try {
-                    int j=if_network.lastIndexOf(".");
+                    //int j=if_network.lastIndexOf(".");
                     String if_ba=if_network.substring(0,if_network.lastIndexOf("."))+".255";
                     broadcastIpAddress = InetAddress.getByName(if_ba);//.getByAddress(new byte[]{-1,-1,-1,-1});
 
@@ -1006,10 +1013,6 @@ public final class CommonUtilities {
                     DatagramSocket socket = new DatagramSocket();
                     socket.send(packet);
                     socket.close();
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (SocketException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -1028,12 +1031,12 @@ public final class CommonUtilities {
     }
 
     public ArrayList<HistoryListAdapter.HistoryListItem> loadHistoryList() {
-        long b_time=System.currentTimeMillis();
+        //long b_time=System.currentTimeMillis();
         ArrayList<HistoryListAdapter.HistoryListItem> hl = new ArrayList<HistoryListAdapter.HistoryListItem>(GlobalParameters.HISTORY_LIST_INITIAL_VALUE);
         try {
             SafFile3 lf =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName + "/.history");
             if (lf.exists()) {
-                InputStreamReader isr = new InputStreamReader(lf.getInputStream(), "UTF-8");
+                InputStreamReader isr = new InputStreamReader(lf.getInputStream(), StandardCharsets.UTF_8);
                 BufferedReader bir=new BufferedReader(isr, 1024*100);
                 String line = "";
                 String[] l_array = null;
@@ -1046,16 +1049,16 @@ public final class CommonUtilities {
                             hli.sync_time = l_array[1];
                             hli.sync_elapsed_time = Long.parseLong(l_array[2]);
                             hli.sync_task = l_array[3];
-                            hli.sync_status = Integer.valueOf(l_array[4]);
-                            hli.sync_test_mode = l_array[5].equals("1") ? true : false;
-                            hli.sync_result_no_of_copied = Integer.valueOf(l_array[6]);
-                            hli.sync_result_no_of_deleted = Integer.valueOf(l_array[7]);
-                            hli.sync_result_no_of_ignored = Integer.valueOf(l_array[8]);
-                            hli.sync_result_no_of_moved = Integer.valueOf(l_array[9]);
-                            hli.sync_result_no_of_replaced = Integer.valueOf(l_array[10]);
+                            hli.sync_status = Integer.parseInt(l_array[4]);
+                            hli.sync_test_mode = l_array[5].equals("1");
+                            hli.sync_result_no_of_copied = Integer.parseInt(l_array[6]);
+                            hli.sync_result_no_of_deleted = Integer.parseInt(l_array[7]);
+                            hli.sync_result_no_of_ignored = Integer.parseInt(l_array[8]);
+                            hli.sync_result_no_of_moved = Integer.parseInt(l_array[9]);
+                            hli.sync_result_no_of_replaced = Integer.parseInt(l_array[10]);
                             hli.sync_req = l_array[11];
                             hli.sync_error_text = l_array[12].replaceAll(LIST_ITEM_ENCODE_CR_CHARACTER, "\n");
-                            hli.sync_result_no_of_retry = Integer.valueOf(l_array[13]);
+                            hli.sync_result_no_of_retry = Integer.parseInt(l_array[13]);
                             hli.sync_transfer_speed=l_array[14];
                             hli.sync_result_file_path = l_array[15];
                             hl.add(hli);
@@ -1067,7 +1070,7 @@ public final class CommonUtilities {
                 }
                 bir.close();
                 if (hl.size() > 1) {
-                    Collections.sort(hl, new Comparator<HistoryListAdapter.HistoryListItem>() {
+                    hl.sort(new Comparator<HistoryListAdapter.HistoryListItem>() {
                         @Override
                         public int compare(HistoryListAdapter.HistoryListItem lhs, HistoryListAdapter.HistoryListItem rhs) {
                             if (rhs.sync_date.equals(lhs.sync_date)) {
@@ -1090,8 +1093,8 @@ public final class CommonUtilities {
         else return SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+uuid;
     }
 
-    final public void saveHistoryList(final ArrayList<HistoryListAdapter.HistoryListItem> hl) {
-        if (hl == null || (hl!=null && hl.size()==0)) return;
+    public void saveHistoryList(final ArrayList<HistoryListAdapter.HistoryListItem> hl) {
+        if (hl == null || hl.size() == 0) return;
         synchronized (hl) {
             try {
                 SafFile3 df =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName);
