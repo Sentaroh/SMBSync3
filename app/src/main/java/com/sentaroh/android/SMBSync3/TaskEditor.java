@@ -1870,7 +1870,7 @@ public class TaskEditor extends DialogFragment {
         } else {
             t_dialog = new Dialog(this.mActivity, mGp.applicationTheme);
             mEditFolderDialog=t_dialog;
-            mEditFolderSfev=sfev.cloneSfev();
+            mEditFolderSfev=sfev.cloneSerial();
             mEditFolderSti=sti;
             mEditFolderNotify=ntfy;
             t_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2305,7 +2305,7 @@ public class TaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_ignore_source_directory_hierarchy= dialog.findViewById(R.id.edit_sync_folder_dlg_archive_ignore_source_directory_hierarchy);
 
-        SyncFolderEditValue nsfev = org_sfev.cloneSfev();
+        SyncFolderEditValue nsfev = org_sfev.cloneSerial();
 
         String sel = sp_sync_folder_type.getSelectedItem().toString();
         if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {//Internal
@@ -5304,7 +5304,7 @@ public class TaskEditor extends DialogFragment {
         }
 
         // Custom clone using Serialization/Deserialization
-        public SyncFolderEditValue cloneSfev() {
+        public SyncFolderEditValue cloneSerial() {
             SyncFolderEditValue npfli = null;
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
