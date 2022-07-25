@@ -67,6 +67,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -181,9 +182,14 @@ public class TaskEditor extends DialogFragment {
     }
 
     @Override
-    final public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (mActivity == null) mActivity = (ActivityMain)getActivity();
+    final public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity){
+            mActivity = (ActivityMain) context;
+        }
+
+        //if (mActivity == null) mActivity = (ActivityMain)getActivity();
+        //if (mActivity == null) log.debug("TaskEditor onAttach mActivity is null");
         if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mActivity);
         if (mUtil == null) mUtil = new CommonUtilities(mActivity, "TaskEditor", mGp, getFragmentManager());
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");

@@ -373,10 +373,18 @@ public class GlobalParameters {
         //externalStoragePrefix = Environment.getExternalStorageDirectory().getPath();
         externalStoragePrefix = SafManager3.getPrimaryStoragePath();
 
-        //If option Force Screen On during sync is enabled, screen is kept turned on and dimmed during sync
-        // The lock is released if a confirmation message pauses the sync (confir delete, confirm overwrite...)
-        // The method SCREEN_DIM_WAKE_LOCK is deprecated and only alternative would be to start Sync Job in a new ActivitySync and implement the new alternative in onCreate
-        // However, new alternative keeps the screen on and at full brightness. So, for now, we keep the deprecated method. Else, writing a new ACtivity for Snyc jobs will be needed
+        // If option "Force Screen On during sync" is enabled, screen is kept turned on and dimmed during sync
+        // The lock is released if a confirmation message pauses the sync (confirm delete, confirm overwrite...)
+        // - SCREEN_DIM_WAKE_LOCK: when acquired by acquireWakeLock() method, keep screen on and dimmed, if it was on, until lock is released by releaseWakeLock() method
+        // - ACQUIRE_CAUSES_WAKEUP: when SCREEN_DIM_WAKE_LOCK is acquired, turn on screen even if it was off when the lock was acquired
+        // SCREEN_DIM_WAKE_LOCK and ACQUIRE_CAUSES_WAKEUP are deprecated and only alternative is FLAG_KEEP_SCREEN_ON.
+        // New FLAG_KEEP_SCREEN_ON doesn't need a permission in manifest but must be added to an activity, not a service
+        // FLAG_KEEP_SCREEN_ON is bound to a window and keeps screen on while the window is active and visible
+        // FLAG_KEEP_SCREEN_ON keeps the screen on and at full brightness.
+        // So, for now, we keep the deprecated method. Else, SyncTask should be writtent as an activity and not a service,
+        // we would loose dim and screen cannot be kept awake without main activity in forground
+        // An alternative is to use PowerManager.PARTIAL_WAKE_LOCK, to only keep CPU active during background sync
+        // Another alternative is R.attr.turnScreenOn or Activity.setTurnScreenOn(boolean) in conjunction with R.attr.showWhenLocked
         mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-dim");
         forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-force-dim");
 
@@ -723,7 +731,7 @@ public class GlobalParameters {
         config.fontScale = fs;
         return config;
 
-/*
+        /*
         // Deprecated API < 24
         Configuration configuration=c.getResources().getConfiguration();
         configuration.fontScale = scale;
@@ -733,7 +741,7 @@ public class GlobalParameters {
         wm.getDefaultDisplay().getMetrics(metrics);
         metrics.scaledDensity = configuration.fontScale * metrics.density;
         c.getResources().updateConfiguration(configuration, metrics);
-*/
+        */
     }
 
     // Returns current context updated with locale from settings Preferences
@@ -787,6 +795,11 @@ public class GlobalParameters {
 //    }
 
     // wrapper called only from attachBaseContext()
+    //  - use as wrapper in attachBaseContext() for all activities and App or extend all App/Activities from a base Activity Class with attachBaseContext()
+    //  - for App: implement also in onConfigurationChanged(), not needed in AppCompatActivity class
+    // To use updateConfiguration() deprecated method
+    //  - no need to use wrapper in attachBaseContext()
+    //  - all activities and App in AndroidManifest must have: android:configChanges="locale|orientation|screenSize|keyboardHidden|layoutDirection"
     static public Context setLocaleAndMetrics(Context c) {
         Context newContext = setNewLocale(c); // context with Locale from saved preferences
         Configuration config = setDisplayFontScaleConfig(newContext); // config with locale and font scale factor from saved preferences
