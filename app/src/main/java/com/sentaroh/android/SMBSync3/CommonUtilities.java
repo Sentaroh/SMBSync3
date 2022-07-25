@@ -1170,9 +1170,8 @@ public final class CommonUtilities {
         ll.setLayoutParams(mlp);
     }
 
-    final public static float toPixel(Resources res, int dip) {
-        float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, res.getDisplayMetrics());
-        return px;
+    public static float toPixel(Resources res, int dip) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, res.getDisplayMetrics());
     }
 
     public static boolean isCharging(Context c, CommonUtilities cu) {
@@ -1201,8 +1200,7 @@ public final class CommonUtilities {
     public static boolean isIgnoringBatteryOptimizations(Context c) {
         String packageName = c.getPackageName();
         PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
-        boolean result=pm.isIgnoringBatteryOptimizations(packageName);
-        return result;
+        return pm.isIgnoringBatteryOptimizations(packageName);
     }
 
     public static boolean isExfatFileSystem(String uuid) {
@@ -1226,7 +1224,7 @@ public final class CommonUtilities {
             }
             log.debug("getExternalStorageFileSystemName result="+result+", uuid="+uuid);
         } catch (Exception e) {
-            log.debug("getExternalStorageFileSystemName error="+e.toString(),e);
+            log.debug("getExternalStorageFileSystemName error="+ e);
         }
         return result;
     }
