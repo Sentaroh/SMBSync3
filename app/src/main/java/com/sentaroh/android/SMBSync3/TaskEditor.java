@@ -4498,9 +4498,24 @@ public class TaskEditor extends DialogFragment {
 
     private String getConvertedDirectoryFileName(String template, long time, String org_name) {
         String result="";
-
-        Date c_date = new Date("2000/01/02 01:20:30");
+        //for Current Date: date = new Date();
+        //for default Date: date = new Date(0);
+        Date c_date = null;
         Date e_date = new Date();
+        try {
+            String date_c_format = "2000/01/02 01:20:30";
+            DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault()); //Locale.getDefault() is lang set in app, not system wide, as we alter locale in mGp.setLocaleConfigForApi24()
+            c_date = format.parse(date_c_format);
+        } catch (ParseException pe) {
+            mUtil.addDebugMsg(1, "E", "getConvertedDirectoryFileName: parse data format exception");
+        } 
+
+        if (c_date == null) {
+            Calendar cal = Calendar.getInstance();
+            cal.set(2000, 1, 2, 1, 20, 30);
+            c_date = cal.getTime();
+        }
+
         String taken_converted=SyncThread.replaceKeywordTakenDateValue(template, c_date.getTime());
         String exec_converted=SyncThread.replaceKeywordExecutionDateValue(taken_converted, e_date.getTime());
         result=exec_converted.replaceAll(SyncTaskItem.TEMPLATE_ORIGINAL_NAME, org_name);
