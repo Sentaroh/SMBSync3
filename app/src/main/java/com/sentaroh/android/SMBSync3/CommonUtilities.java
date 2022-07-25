@@ -58,6 +58,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.CheckedTextView;
@@ -525,7 +526,8 @@ public final class CommonUtilities {
 //        wv.getSettings().setBuiltInZoomControls(true);
         wv.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+            public boolean shouldOverrideUrlLoading (WebView view, WebResourceRequest request) {
+                // Returning false means we are going to load this url in the webView itself
                 return false;
             }
         });
