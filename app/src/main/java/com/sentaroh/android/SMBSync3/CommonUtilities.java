@@ -580,7 +580,7 @@ public final class CommonUtilities {
                 BufferedOutputStream bos=new BufferedOutputStream(fos, GENERAL_IO_BUFFER_SIZE);
                 PrintWriter pw=new PrintWriter(bos);
                 StringBuilder sb=new StringBuilder(1024*5);
-                synchronized (gp.syncMessageList) {
+                synchronized (gp.mLockSyncMessageList) {
                     for (MessageListAdapter.MessageListItem smi:gp.syncMessageList) {
                         sb.setLength(0);
                         sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getCategory()).append(LIST_ITEM_DATA_SEPARATOR); //msgCat
@@ -590,7 +590,7 @@ public final class CommonUtilities {
                         sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getMessage().replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_DATA_SEPARATOR); //msgBody
                         sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getPath()).append(LIST_ITEM_DATA_SEPARATOR); //msgPath
                         sb.append(LIST_ITEM_DUMMY_DATA).append(smi.getType()).append(LIST_ITEM_DATA_SEPARATOR); //msgType
-                        pw.println(sb.toString());
+                        pw.println(sb);
                     }
                     gp.syncMessageListChanged =false;
                 }
@@ -603,7 +603,7 @@ public final class CommonUtilities {
     }
 
     public static ArrayList<MessageListAdapter.MessageListItem> loadMessageList(Context c, GlobalParameters gp) {
-        long b_time= System.currentTimeMillis();
+        //long b_time= System.currentTimeMillis();
         ArrayList<MessageListAdapter.MessageListItem> result=new ArrayList<MessageListAdapter.MessageListItem>(GlobalParameters.MESSAGE_LIST_INITIAL_VALUE);
         try {
             SafFile3 mf =new SafFile3(c, gp.settingAppManagemsntDirectoryName + "/.messages");
@@ -674,7 +674,7 @@ public final class CommonUtilities {
     }
 
     private void putMsgListArray(MessageListAdapter.MessageListItem mli) {
-        synchronized (mGp.syncMessageList) {
+        synchronized (mGp.mLockSyncMessageList) {
             if (mGp.syncMessageList.size() > (MAX_MSG_COUNT + 200)) {
                 for (int i = 0; i < 200; i++) mGp.syncMessageList.remove(0);
             }

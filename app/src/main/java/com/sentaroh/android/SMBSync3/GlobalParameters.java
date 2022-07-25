@@ -245,6 +245,7 @@ public class GlobalParameters {
 //    public Bitmap notificationLargeIcon = null;
 
     public static final int MESSAGE_LIST_INITIAL_VALUE=5500;
+    public final Object mLockSyncMessageList = new Object();
     public ArrayList<MessageListAdapter.MessageListItem> syncMessageList = null; //new ArrayList<MessageListItem>();
     public boolean syncMessageListChanged =false;
     public boolean freezeMessageViewScroll = false;
@@ -399,7 +400,7 @@ public class GlobalParameters {
         initSettingsParms(c);
         loadSettingsParms(c);
 
-        if (syncMessageList == null) syncMessageList =CommonUtilities.loadMessageList(c, this);
+        if (syncMessageList == null) syncMessageList = CommonUtilities.loadMessageList(c, this);
 
         initJcifsOption(c);
 
