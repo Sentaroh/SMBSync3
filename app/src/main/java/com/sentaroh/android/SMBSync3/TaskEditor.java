@@ -3270,15 +3270,16 @@ public class TaskEditor extends DialogFragment {
         String exc_char = "\u2296"; //(-) ASCII
 
         if (filter_list != null && filter_list.size() > 0) {
-            String t_info = "", cn = "";
+            StringBuilder t_info = new StringBuilder();
+            String cn = "";
             for (int i = 0; i < filter_list.size(); i++) {
                 if (!filter_list.get(i).isDeleted() && filter_list.get(i).isEnabled()) {
-                    if (filter_list.get(i).isInclude()) t_info += cn+inc_char+ filter_list.get(i).getFilter()+";";
-                    else t_info +=cn+ exc_char+ filter_list.get(i).getFilter()+";";
+                    if (filter_list.get(i).isInclude()) t_info.append(cn).append(inc_char).append(filter_list.get(i).getFilter()).append(";");
+                    else t_info.append(cn).append(exc_char).append(filter_list.get(i).getFilter()).append(";");
                     cn=" ";
                 }
             }
-            if (!t_info.equals("")) info = t_info;
+            if (!t_info.toString().equals("")) info = t_info.toString();
         }
         return info;
     }
@@ -3341,11 +3342,13 @@ public class TaskEditor extends DialogFragment {
             et_sync_main_task_name.setText(n_sti.getSyncTaskName());
             ll_sync_task_name_view.setVisibility(EditText.GONE);
             dlg_title.setText(mActivity.getString(R.string.msgs_edit_sync_profile));
-            dlg_title_sub.setText(" (" + n_sti.getSyncTaskName() + ")");
+            String str = String.format(" (%s)", n_sti.getSyncTaskName());
+            dlg_title_sub.setText(str);
         } else if (type.equals(TASK_EDIT_METHOD_COPY)) {
             et_sync_main_task_name.setText(n_sti.getSyncTaskName());
             dlg_title.setText(mActivity.getString(R.string.msgs_copy_sync_profile));
-            dlg_title_sub.setText(" (" + n_sti.getSyncTaskName() + ")");
+            String str = String.format(" (%s)", n_sti.getSyncTaskName());
+            dlg_title_sub.setText(str);
         } else if (type.equals(TASK_EDIT_METHOD_ADD)) {
             dlg_title.setText(mActivity.getString(R.string.msgs_add_sync_profile));
             dlg_title_sub.setVisibility(TextView.GONE);
@@ -3640,12 +3643,13 @@ public class TaskEditor extends DialogFragment {
         });
 
         final TextView tv_archive_type= mDialog.findViewById(R.id.edit_sync_filter_archive_file_type_list);
-        String arch_type="", arch_sep="";
+        StringBuilder arch_type= new StringBuilder();
+        String arch_sep="";
         for(String arch_item:ARCHIVE_FILE_TYPE) {
-            arch_type+=arch_sep+arch_item;
+            arch_type.append(arch_sep).append(arch_item);
             arch_sep=", ";
         }
-        tv_archive_type.setText(arch_type);
+        tv_archive_type.setText(arch_type.toString());
 
         final Spinner sp_sync_retain_period = mDialog.findViewById(R.id.edit_sync_filter_archive_retention_period);
         sp_sync_retain_period.setOnItemSelectedListener(null);
@@ -3802,8 +3806,7 @@ public class TaskEditor extends DialogFragment {
 
         final CheckedTextView ctvRetry = mDialog.findViewById(R.id.edit_sync_task_option_ctv_retry_if_error_occured);
         CommonUtilities.setCheckedTextViewListener(ctvRetry);
-        if (n_sti.getSyncOptionRetryCount()==0) ctvRetry.setChecked(false);
-        else ctvRetry.setChecked(true);
+        ctvRetry.setChecked(n_sti.getSyncOptionRetryCount() != 0);
         setCtvListenerForEditSyncTask(ctvRetry, type, n_sti, dlg_msg);
 
         final CheckedTextView ctvSyncUseRemoteSmallIoArea = mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_use_remote_small_io_area);
@@ -3825,7 +3828,6 @@ public class TaskEditor extends DialogFragment {
         CommonUtilities.setViewEnabled(mActivity, ctv_auto, !ctvTestMode.isChecked());
 
         final LinearLayout ll_use_file_last_mod = mDialog.findViewById(R.id.edit_sync_task_option_sync_diff_use_last_mod_time_view);
-        final LinearLayout ll_last_mod_allowed_time = mDialog.findViewById(R.id.edit_sync_task_option_diff_file_determin_time_value_view);
         final CheckedTextView ctvDeterminChangedFileSizeGtDestination = mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_file_size_greater_than_destination);
         ctvDeterminChangedFileSizeGtDestination.setChecked(n_sti.isSyncDifferentFileSizeGreaterThanDestinationFile());
         final CheckedTextView ctvDiffUseFileSize = mDialog.findViewById(R.id.edit_sync_task_option_ctv_sync_diff_use_file_size);
@@ -3992,8 +3994,7 @@ public class TaskEditor extends DialogFragment {
                 checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
             }
         });
-        if (n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) CommonUtilities.setViewEnabled(mActivity, swap_source_destination,false);
-        else CommonUtilities.setViewEnabled(mActivity, swap_source_destination, true);
+        CommonUtilities.setViewEnabled(mActivity, swap_source_destination, !n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP));
 
         source_folder_info.setOnClickListener(new OnClickListener() {
             @Override
@@ -4095,17 +4096,9 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_smb_share = n_sti.getSourceSmbShareName();
                 sfev.folder_smb_protocol=n_sti.getSourceSmbProtocol();
                 sfev.folder_type = n_sti.getSourceFolderType();
-                if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("")) {
-                    sfev.folder_smb_use_pswd =true;
-                } else {
-                    sfev.folder_smb_use_pswd =false;
-                }
+                sfev.folder_smb_use_pswd = !sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("");
 
-                if (!sfev.folder_smb_port.equals("")) {
-                    sfev.folder_smb_use_port =true;
-                } else {
-                    sfev.folder_smb_use_port =false;
-                }
+                sfev.folder_smb_use_port = !sfev.folder_smb_port.equals("");
 
                 sfev.folder_error_code=n_sti.getSourceFolderStatusError();
                 editSyncFolder(false, n_sti, sfev, ntfy);
@@ -4210,8 +4203,7 @@ public class TaskEditor extends DialogFragment {
                         n_sti.setDestinationArchiveSuffixOption(nsfev.archive_file_append_suffix_digit);
                         n_sti.setDestinationArchiveIgnoreSourceDirectory(nsfev.archive_ignore_source_directory_hiearachy);
 
-                        if (n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) CommonUtilities.setViewEnabled(mActivity, swap_source_destination, false);
-                        else CommonUtilities.setViewEnabled(mActivity, swap_source_destination, true);
+                        CommonUtilities.setViewEnabled(mActivity, swap_source_destination, !n_sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP));
 
                         setSpinnerSyncTaskType(spinnerSyncType, n_sti.getSyncTaskType());
                         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
@@ -4283,17 +4275,9 @@ public class TaskEditor extends DialogFragment {
                 sfev.folder_type = n_sti.getDestinationFolderType();
                 sfev.folder_smb_protocol = n_sti.getDestinationSmbProtocol();
 
-                if (!sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("")) {
-                    sfev.folder_smb_use_pswd =true;
-                } else {
-                    sfev.folder_smb_use_pswd =false;
-                }
+                sfev.folder_smb_use_pswd = !sfev.folder_smb_account.equals("") || !sfev.folder_smb_password.equals("");
 
-                if (!sfev.folder_smb_port.equals("")) {
-                    sfev.folder_smb_use_port =true;
-                } else {
-                    sfev.folder_smb_use_port =false;
-                }
+                sfev.folder_smb_use_port = !sfev.folder_smb_port.equals("");
 
                 sfev.zip_comp_level = n_sti.getDestinationZipCompressionLevel();
                 sfev.zip_enc_method = n_sti.getDestinationZipEncryptMethod();
@@ -4448,6 +4432,7 @@ public class TaskEditor extends DialogFragment {
         checkSyncTaskOkButtonEnabled(mDialog, type, n_sti, dlg_msg);
     }
 
+    // unused
     private String removeKeyword(String input_string) {
         String new_val=input_string;
         if (input_string.contains("%")) {
@@ -4492,8 +4477,8 @@ public class TaskEditor extends DialogFragment {
             if (!et_file_template.getText().toString().equals(n_sti.getDestinationArchiveRenameFileTemplate())) changed=true;
 //            else if (n_sti.getDestinationArchiveRetentionPeriod()!=sp_sync_retain_period.getSelectedItemPosition()) changed=true;
         }
-        if (changed) setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);//CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_ok, true);
-        else setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);//CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_ok, false);
+        //CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_ok, changed);
+        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, changed);
 
     }
 
