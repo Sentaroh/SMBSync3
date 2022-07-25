@@ -107,7 +107,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -1093,9 +1092,10 @@ public final class CommonUtilities {
         else return SafFile3.SAF_FILE_EXTERNAL_STORAGE_PREFIX+uuid;
     }
 
+    public final Object mLockHistoryListAdapter = new Object();
     public void saveHistoryList(final ArrayList<HistoryListAdapter.HistoryListItem> hl) {
         if (hl == null || hl.size() == 0) return;
-        synchronized (hl) {
+        synchronized (mLockHistoryListAdapter) {
             try {
                 SafFile3 df =new SafFile3(mContext, mGp.settingAppManagemsntDirectoryName);
                 if (!df.exists()) df.mkdirs();
@@ -1110,7 +1110,7 @@ public final class CommonUtilities {
                 int max = 500;
                 StringBuilder sb_buf = new StringBuilder(1024 * 2);
                 HistoryListAdapter.HistoryListItem shli = null;
-                final ArrayList<HistoryListAdapter.HistoryListItem> del_list = new ArrayList<HistoryListAdapter.HistoryListItem>();
+                //final ArrayList<HistoryListAdapter.HistoryListItem> del_list = new ArrayList<HistoryListAdapter.HistoryListItem>();
                 for (int i = 0; i < hl.size(); i++) {
                     if (!hl.get(i).sync_task.equals("")) {
                         shli = hl.get(i);
@@ -1118,7 +1118,7 @@ public final class CommonUtilities {
                             sb_buf.setLength(0);
                             sb_buf.append(shli.sync_date).append(LIST_ITEM_DATA_SEPARATOR)                           //0
                                     .append(shli.sync_time).append(LIST_ITEM_DATA_SEPARATOR)                         //1
-                                    .append(String.valueOf(shli.sync_elapsed_time)).append(LIST_ITEM_DATA_SEPARATOR) //2
+                                    .append(shli.sync_elapsed_time).append(LIST_ITEM_DATA_SEPARATOR) //2
                                     .append(shli.sync_task).append(LIST_ITEM_DATA_SEPARATOR)                         //3
                                     .append(shli.sync_status).append(LIST_ITEM_DATA_SEPARATOR)                       //4
                                     .append(shli.sync_test_mode ? "1" : "0").append(LIST_ITEM_DATA_SEPARATOR)        //5
@@ -1131,15 +1131,17 @@ public final class CommonUtilities {
                                     .append(shli.sync_error_text.replaceAll("\n", LIST_ITEM_ENCODE_CR_CHARACTER)).append(LIST_ITEM_DATA_SEPARATOR)//12
                                     .append(shli.sync_result_no_of_retry).append(LIST_ITEM_DATA_SEPARATOR)           //13
                                     .append(shli.sync_transfer_speed).append(LIST_ITEM_DATA_SEPARATOR)               //14
-                                    .append(shli.sync_result_file_path)                                         //15
+                                    .append(shli.sync_result_file_path)                                              //15
                                     .append("\n");
 
                             bw.append(sb_buf.toString());
                         } else {
-                            del_list.add(shli);
+                            //del_list.add(shli);
                             if (!shli.sync_result_file_path.equals("")) {
+                                // Delete result_log/sync_result_file_date.txt for the history items removed
+                                // Optional: keep them, or move to result_log.old direcory
                                 File tlf = new File(shli.sync_result_file_path);
-                                if (tlf.exists()) tlf.delete();
+                                if (!tlf.exists() || !tlf.delete()) log.error("saveHistoryList: Error, failed to prune shli.sync_result_file_path="+tlf.getName());
                             }
                         }
                     }
