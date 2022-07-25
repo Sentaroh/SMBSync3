@@ -1870,7 +1870,7 @@ public class TaskEditor extends DialogFragment {
         } else {
             t_dialog = new Dialog(this.mActivity, mGp.applicationTheme);
             mEditFolderDialog=t_dialog;
-            mEditFolderSfev=sfev.clone();
+            mEditFolderSfev=sfev.cloneSfev();
             mEditFolderSti=sti;
             mEditFolderNotify=ntfy;
             t_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2305,7 +2305,7 @@ public class TaskEditor extends DialogFragment {
 
         final CheckedTextView ctv_ignore_source_directory_hierarchy= dialog.findViewById(R.id.edit_sync_folder_dlg_archive_ignore_source_directory_hierarchy);
 
-        SyncFolderEditValue nsfev = org_sfev.clone();
+        SyncFolderEditValue nsfev = org_sfev.cloneSfev();
 
         String sel = sp_sync_folder_type.getSelectedItem().toString();
         if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_local))) {//Internal
@@ -5247,7 +5247,8 @@ public class TaskEditor extends DialogFragment {
         return result;
     }
 
-    static class SyncFolderEditValue implements Serializable {
+    //static class SyncFolderEditValue implements Serializable { //optional way and remove the overrided clone() method
+    static class SyncFolderEditValue implements Serializable, Cloneable {
         public boolean isChanged=false;
         public String task_type="";
         public String folder_title = "";
@@ -5286,7 +5287,24 @@ public class TaskEditor extends DialogFragment {
 
         public SyncFolderEditValue(){}
 
+
+        // Clone using java Cloneable clone()
+        // not used
+        @NonNull
+        @Override
         public SyncFolderEditValue clone() {
+            SyncFolderEditValue npfli = null;
+            try {
+                npfli = (SyncFolderEditValue) super.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+            assert npfli != null;
+            return npfli;
+        }
+
+        // Custom clone using Serialization/Deserialization
+        public SyncFolderEditValue cloneSfev() {
             SyncFolderEditValue npfli = null;
             try {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
