@@ -121,7 +121,7 @@ public class GlobalParameters {
     // App config on start is always stored in /data/data by android PreferencesManager
 //    public String settingAppManagemsntDirectoryUuid ="primary";
     //public String settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
-    public static String settingAppManagemsntDirectoryName = null; //"/data/data/"+APPLICATION_ID+"/files"; // null, to ensure init on app start
+    public String settingAppManagemsntDirectoryName = null; //"/data/data/"+APPLICATION_ID+"/files"; // null, to ensure init on app start
 
     // currently unused
     public boolean settingExitClean = true;

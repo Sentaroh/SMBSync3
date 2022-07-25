@@ -162,62 +162,67 @@ public final class CommonUtilities {
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
         cdf.showDialog(mFragMgr,cdf, listener);
-    };
+    }
+
     public void showCommonDialogInfo(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_INFO, title, msgtext);
         cdf.showDialog(mFragMgr,cdf, listener);
-    };
+    }
+
     public void showCommonDialogWarn(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_WARN, title, msgtext);
         cdf.showDialog(mFragMgr,cdf, listener);
-    };
+    }
+
     public void showCommonDialogError(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_ERROR, title, msgtext);
         cdf.showDialog(mFragMgr,cdf, listener);
-    };
+    }
+
+    // not used
     public void showCommonDialogDanger(final boolean negative, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_DANGER, title, msgtext);
         cdf.showDialog(mFragMgr,cdf, listener);
-    };
+    }
 
     public static void showCommonDialog(FragmentManager fm, final boolean negative, String type, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
         cdf.showDialog(fm, cdf, listener);
-    };
+    }
 
     public void showCommonDialog(final boolean negative, String type, String title, Spannable msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, "");
         cdf.setMessageText(msgtext);
         cdf.showDialog(mFragMgr,cdf,listener);
-    };
+    }
 
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext, int text_color, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
         cdf.setTextColor(text_color);
         cdf.showDialog(mFragMgr,cdf,listener);
-    };
+    }
 
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, ok_text, cancel_text);
         cdf.showDialog(mFragMgr,cdf,listener);
-    };
+    }
 
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext,
                                  String ok_text, String cancel_text, String extra_btn_label,
                                  Object listener, CallBackListener cbl, boolean max) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext, ok_text, cancel_text, extra_btn_label);
         cdf.showDialog(mFragMgr, cdf, listener, cbl, max);
-    };
+    }
 
     public void showCommonDialogWarn(final boolean negative, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_WARN, title, msgtext, ok_text, cancel_text);
         cdf.showDialog(mFragMgr,cdf,listener);
-    };
+    }
 
     public void showCommonDialogDanger(boolean negative, String title, String msgtext, String ok_text, String cancel_text, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, MessageDialogFragment.CATEGORY_DANGER, title, msgtext, ok_text, cancel_text);
         cdf.showDialog(mFragMgr,cdf,listener);
-    };
+    }
 
     public static String convertMakdownToHtml(Context c, String mark_down_fp) {
 //        long b_time=System.currentTimeMillis();
@@ -237,10 +242,10 @@ public final class CommonUtilities {
     public String getStringWithLangCode(Activity c, String lang_code, int res_id) {
         Configuration config = new Configuration(c.getResources().getConfiguration());
         config.setLocale(new Locale(lang_code));
-        String result = c.createConfigurationContext(config).getText(res_id).toString();
-        return result;
+        return c.createConfigurationContext(config).getText(res_id).toString();
     }
 
+    // not used
     public String getStringWithLangCode(Activity c, String lang_code, int res_id, Object... value) {
         String text = getStringWithLangCode(c, lang_code, res_id);
         String result=text;
@@ -248,39 +253,42 @@ public final class CommonUtilities {
         return result;
     }
 
+    // not used
     public static String getRootFilePath(String fp) {
         String reform_fp=StringUtil.removeRedundantDirectorySeparator(fp);
         String is_pre=Environment.getExternalStorageDirectory().toString();
         if (reform_fp.startsWith(is_pre)) return is_pre;
         else {
             String[] fp_parts=reform_fp.startsWith("/")?reform_fp.substring(1).split("/"):reform_fp.split("/");
-            String rt_fp="/"+fp_parts[0]+"/"+fp_parts[1];
-            return rt_fp;
+            return "/"+fp_parts[0]+"/"+fp_parts[1];
         }
     }
 
+    // not used
     public static boolean isAllFileAccessAvailable() {
         return SafFile3.isAllFileAccessAvailable();
     }
 
-    final public void setLogId(String li) {
+    // not used
+    public void setLogId(String li) {
         mLog.setLogId(li);
     }
 
-    final public static String getExecutedMethodName() {
-        String name = Thread.currentThread().getStackTrace()[3].getMethodName();
-        return name;
+    public static String getExecutedMethodName() {
+        return Thread.currentThread().getStackTrace()[3].getMethodName();
     }
 
-    final public void resetLogReceiver() {
+    // not used
+    public void resetLogReceiver() {
         mLog.resetLogReceiver();
     }
 
-    final public void flushLog() {
+    public void flushLog() {
         mLog.flushLog();
     }
 
-    final public void rotateLogFile() {
+    // not used
+    public void rotateLogFile() {
         mLog.rotateLogFile();
     }
 
@@ -334,7 +342,7 @@ public final class CommonUtilities {
             if (activeNetwork!=null) {
                 String network=activeNetwork.getExtraInfo();
 
-                boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+                boolean isConnected = activeNetwork.isConnectedOrConnecting();
                 boolean isWiFi = activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
 
                 out.add("   Network="+network+", isConnected="+isConnected+", isWiFi="+isWiFi);
@@ -377,7 +385,7 @@ public final class CommonUtilities {
         return out;
     }
 
-    final public static boolean isLocationServiceEnabled(Context c, GlobalParameters mGp) {
+    public static boolean isLocationServiceEnabled(Context c, GlobalParameters mGp) {
         if (Build.VERSION.SDK_INT >= 27) {
             LocationManager lm = (LocationManager)c.getSystemService(Context.LOCATION_SERVICE);
             if (Build.VERSION.SDK_INT == 27) {
@@ -391,7 +399,8 @@ public final class CommonUtilities {
         return false;
     }
 
-    final public static boolean isNetworkConnected(Context context) {
+    // not used
+    public static boolean isNetworkConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
         if (ni != null) {
@@ -400,7 +409,8 @@ public final class CommonUtilities {
         return false;
     }
 
-    final public void deleteLogFile() {
+    // not used
+    public void deleteLogFile() {
         mLog.deleteLogFile();
     }
 
@@ -464,12 +474,13 @@ public final class CommonUtilities {
             public void onFindResultReceived(int i, int i1, boolean b) {
                 if (et_find_string.getText().length()>0) {
                     if (i1>0) {
-                        tv_find_count.setText((i+1)+"/"+i1);
+                        String str = String.format("%d/%d", (i+1), i1);
+                        tv_find_count.setText(str);
                         tv_find_count.setTextColor(default_text_color);
                         CommonUtilities.setViewEnabled(a, ib_find_next, true);
                         CommonUtilities.setViewEnabled(a, ib_find_prev, true);
                     } else {
-                        tv_find_count.setText(0+"/"+0);
+                        tv_find_count.setText("0/0");
                         tv_find_count.setTextColor(Color.RED);
                         CommonUtilities.setViewEnabled(a, ib_find_next, false);
                         CommonUtilities.setViewEnabled(a, ib_find_prev, false);
@@ -556,8 +567,8 @@ public final class CommonUtilities {
     final public static String LIST_ITEM_LINE_SEPARATOR="\n";
     synchronized public static void saveMessageList(Context c, GlobalParameters gp) {
 //        Thread.dumpStack();
-        if (gp.syncMessageList == null || (gp.syncMessageList!=null && gp.syncMessageList.size()==0)) return;
-        long b_time= System.currentTimeMillis();
+        if (gp.syncMessageList == null || gp.syncMessageList.size() == 0) return;
+        //long b_time= System.currentTimeMillis();
         if (gp.syncMessageListChanged) {
             try {
                 SafFile3 df =new SafFile3(c, gp.settingAppManagemsntDirectoryName);
@@ -568,7 +579,7 @@ public final class CommonUtilities {
                 OutputStream fos=mf.getOutputStream();
                 BufferedOutputStream bos=new BufferedOutputStream(fos, GENERAL_IO_BUFFER_SIZE);
                 PrintWriter pw=new PrintWriter(bos);
-                StringBuffer sb=new StringBuffer(1024*5);
+                StringBuilder sb=new StringBuilder(1024*5);
                 synchronized (gp.syncMessageList) {
                     for (MessageListAdapter.MessageListItem smi:gp.syncMessageList) {
                         sb.setLength(0);
@@ -1175,7 +1186,7 @@ public final class CommonUtilities {
 //        boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
 //        boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
 
-        BatteryManager bm=(BatteryManager)c.getSystemService(Context.BATTERY_SERVICE);;
+        BatteryManager bm=(BatteryManager)c.getSystemService(Context.BATTERY_SERVICE);
         boolean bm_charging=bm.isCharging();
         cu.addDebugMsg(1, "I", "Battery status="+status+", level="+batteryLevel+", chargePlug="+chargePlug+", bm_charging="+bm_charging+", legacy_charging="+legacy_charging);
 
