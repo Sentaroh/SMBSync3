@@ -67,6 +67,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.sentaroh.android.JcifsFile2.JcifsUtil;
@@ -153,8 +154,8 @@ public final class CommonUtilities {
     }
 
     public static void setSpinnerBackground(Context c, Spinner spinner, boolean theme_is_light) {
-        if (theme_is_light) spinner.setBackground(c.getDrawable(R.drawable.spinner_color_background_light));
-        else spinner.setBackground(c.getDrawable(R.drawable.spinner_color_background));
+        if (theme_is_light) spinner.setBackground(ContextCompat.getDrawable(c, R.drawable.spinner_color_background_light));
+        else spinner.setBackground(ContextCompat.getDrawable(c, R.drawable.spinner_color_background));
     }
 
     public void showCommonDialog(final boolean negative, String type, String title, String msgtext, Object listener) {
