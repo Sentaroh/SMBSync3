@@ -187,14 +187,14 @@ public class GlobalParameters {
     }
 
     // not used
-    final static private String PRIVACY_POLICY_AGGREEMENT_KEY="privacy_policy_aggreed";
-    static public boolean isPrivacyPolicyAgreed(Context c) {
+    final private static String PRIVACY_POLICY_AGGREEMENT_KEY="privacy_policy_aggreed";
+    public static boolean isPrivacyPolicyAgreed(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return prefs.getBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, false);
     }
 
     // not used
-    static public void setPrivacyPolicyAgreed(Context c, boolean aggreed) {
+    public static void setPrivacyPolicyAgreed(Context c, boolean aggreed) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, aggreed).commit();
     }
@@ -228,8 +228,8 @@ public class GlobalParameters {
     public boolean settingScheduleSyncEnabled=true;
 
     public NotificationManager notificationManager = null;
-    final static public int notificationOngoingMessageID=1;
-    final static public int notificationNoticeMessageID=2;
+    final public static int notificationOngoingMessageID=1;
+    final public static int notificationNoticeMessageID=2;
     public boolean notificationEnabled = true;
     public int notificationSmallIcon = R.drawable.ic_48_smbsync_wait;
     public Notification notification = null;
@@ -684,7 +684,7 @@ public class GlobalParameters {
     }
 
     //Get current app settings directory value saved in Preferences
-    static public String getAppManagementDirSetting(Context c) {
+    public static String getAppManagementDirSetting(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
     }
@@ -701,13 +701,13 @@ public class GlobalParameters {
     public static final float FONT_SCALE_FACTOR_DEFAULT_VALUE = FONT_SCALE_FACTOR_NORMAL_VALUE;
 
     //Get font scale saved settings from Preferences
-    static public String getFontScaleFactorSetting(Context c) {
+    public static String getFontScaleFactorSetting(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_SETTING_DEFAULT);
     }
 
     // Get font scale float value from saved Preferences
-    static public float getFontScaleFactorValue(Context c) {
+    public static float getFontScaleFactorValue(Context c) {
         String fs=getFontScaleFactorSetting(c);
         float fs_value = GlobalParameters.FONT_SCALE_FACTOR_DEFAULT_VALUE;
         if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_SMALL)) {
@@ -724,7 +724,7 @@ public class GlobalParameters {
     }
 
     // Return current config, updated with font scale factor from saved preferences
-    static private Configuration setDisplayFontScaleConfig(Context c) {
+    private static Configuration setDisplayFontScaleConfig(Context c) {
         float fs = getFontScaleFactorValue(c); // get font scale from saved preferences
         Resources res = c.getResources();
         Configuration config = new Configuration(res.getConfiguration());
@@ -745,20 +745,20 @@ public class GlobalParameters {
     }
 
     // Returns current context updated with locale from settings Preferences
-    static public Context setNewLocale(Context c) {
+    public static Context setNewLocale(Context c) {
         String lc= getLanguageCode(c); //get language code from saved preferences
         return updateLanguageResources(c, lc);
     }
 
     public static final String APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT = "system";
     // get language code from saved Preferences
-    static public String getLanguageCode(Context c) {
+    public static String getLanguageCode(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         return prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
     }
 
     // wrap language layout in the base context for all activities
-    static private Context updateLanguageResources(Context c, String language) {
+    private static Context updateLanguageResources(Context c, String language) {
         //if language is set to system default (defined as "0"), do not apply non existing language code "0" and return current context without wrapped language
         if (language.equals(APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT)) return c;
 
@@ -772,7 +772,7 @@ public class GlobalParameters {
         return c.createConfigurationContext(newConfig);
     }
 
-    static private Configuration setLocaleConfigForApi24(Configuration config, Locale new_locale) {
+    private static Configuration setLocaleConfigForApi24(Configuration config, Locale new_locale) {
         Set<Locale> set = new LinkedHashSet<>();
         // bring the new locale to the front of the list
         set.add(new_locale);
@@ -789,7 +789,7 @@ public class GlobalParameters {
         return config;
     }
 
-//    static public void loadLanguagePreference(Context c) {
+//    public static void loadLanguagePreference(Context c) {
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 //        settingApplicationLanguage = prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
 //    }
@@ -800,7 +800,7 @@ public class GlobalParameters {
     // To use updateConfiguration() deprecated method
     //  - no need to use wrapper in attachBaseContext()
     //  - all activities and App in AndroidManifest must have: android:configChanges="locale|orientation|screenSize|keyboardHidden|layoutDirection"
-    static public Context setLocaleAndMetrics(Context c) {
+    public static Context setLocaleAndMetrics(Context c) {
         Context newContext = setNewLocale(c); // context with Locale from saved preferences
         Configuration config = setDisplayFontScaleConfig(newContext); // config with locale and font scale factor from saved preferences
         newContext = newContext.createConfigurationContext(config); // context with new config holding font scale and locale from saved preferences
@@ -813,7 +813,7 @@ public class GlobalParameters {
     }
 
     // Get screen theme setting from saved setting Preferences
-    static public String getScreenTemeSetting(Context c) {
+    public static String getScreenTemeSetting(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         String theme_setting = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
         if (!theme_setting.equals(SCREEN_THEME_STANDARD) && !theme_setting.equals(SCREEN_THEME_LIGHT) && !theme_setting.equals(SCREEN_THEME_BLACK)) {
@@ -824,17 +824,17 @@ public class GlobalParameters {
     }
 
     // Get screen theme value from saved setting Preferences
-    static public int getScreenTemeValue(Context c) {
+    public static int getScreenTemeValue(Context c) {
         String theme_setting = getScreenTemeSetting(c);
         if (theme_setting.equals(SCREEN_THEME_LIGHT)) return R.style.MainLight;
         else if (theme_setting.equals(SCREEN_THEME_BLACK)) return R.style.MainBlack;
         else return R.style.Main;
     }
 
-    final static public String SMB_LM_COMPATIBILITY_DEFAULT="3";
-    final static public String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT="30000";
-    final static public String SMB_USE_EXTENDED_SECURITY_DEFAULT="true";
-    final static public String SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT="false";
+    final public static String SMB_LM_COMPATIBILITY_DEFAULT="3";
+    final public static String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT="30000";
+    final public static String SMB_USE_EXTENDED_SECURITY_DEFAULT="true";
+    final public static String SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT="false";
 
     public String settingsSmbLmCompatibility = SMB_LM_COMPATIBILITY_DEFAULT,
             settingsSmbUseExtendedSecurity = SMB_USE_EXTENDED_SECURITY_DEFAULT,
@@ -935,7 +935,7 @@ public class GlobalParameters {
     }
 
     // not used
-    static public boolean isScreenOn(Context context, CommonUtilities util) {
+    public static boolean isScreenOn(Context context, CommonUtilities util) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         util.addDebugMsg(1, "I", "isDeviceIdleMode()=" + pm.isDeviceIdleMode() +
                 ", isPowerSaveMode()=" + pm.isPowerSaveMode() + ", isInteractive()=" + pm.isInteractive());

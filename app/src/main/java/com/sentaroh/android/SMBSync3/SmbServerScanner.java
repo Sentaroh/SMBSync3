@@ -1427,7 +1427,7 @@ public class SmbServerScanner {
         return (String)spinner.getSelectedItem();
     }
 
-    static public class SmbServerInfo {
+    public static class SmbServerInfo {
         public String serverHostIpAddress ="";
         public String serverHostName ="";
         //public String serverHostNameOrIP = "";

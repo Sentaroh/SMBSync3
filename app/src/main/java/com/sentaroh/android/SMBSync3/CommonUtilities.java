@@ -40,12 +40,10 @@ import android.graphics.Color;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -80,7 +78,6 @@ import com.sentaroh.android.Utilities3.CallBackListener;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogFragment;
 import com.sentaroh.android.Utilities3.EncryptUtilV3;
-import com.sentaroh.android.Utilities3.MiscUtil;
 import com.sentaroh.android.Utilities3.SafFile3;
 import com.sentaroh.android.Utilities3.ShellCommandUtil;
 import com.sentaroh.android.Utilities3.StringUtil;
@@ -117,7 +114,7 @@ import static com.sentaroh.android.SMBSync3.Constants.GENERAL_IO_BUFFER_SIZE;
 import static com.sentaroh.android.Utilities3.SafFile3.SAF_FILE_PRIMARY_UUID;
 
 public final class CommonUtilities {
-    private static Logger log= LoggerFactory.getLogger(CommonUtilities.class);
+    private static final Logger log= LoggerFactory.getLogger(CommonUtilities.class);
     private Context mContext = null;
     private LogUtil mLog = null;
     private GlobalParameters mGp = null;
@@ -141,17 +138,17 @@ public final class CommonUtilities {
         return mLog;
     }
 
-    static public void setViewEnabled(Activity a, View v, boolean enabled) {
+    public static void setViewEnabled(Activity a, View v, boolean enabled) {
 //        Thread.dumpStack();
         GlobalParameters gp=GlobalWorkArea.getGlobalParameter(a);
         CommonDialog.setViewEnabled(gp.themeColorList.theme_is_light, v, enabled);
     }
 
-    final public SharedPreferences getSharedPreference() {
+    public SharedPreferences getSharedPreference() {
         return getSharedPreference(mContext);
     }
 
-    final static public SharedPreferences getSharedPreference(Context c) {
+    public static SharedPreferences getSharedPreference(Context c) {
         return PreferenceManager.getDefaultSharedPreferences(c);
     }
 
@@ -181,7 +178,7 @@ public final class CommonUtilities {
         cdf.showDialog(mFragMgr,cdf, listener);
     };
 
-    static public void showCommonDialog(FragmentManager fm, final boolean negative, String type, String title, String msgtext, Object listener) {
+    public static void showCommonDialog(FragmentManager fm, final boolean negative, String type, String title, String msgtext, Object listener) {
         MessageDialogFragment cdf =MessageDialogFragment.newInstance(negative, type, title, msgtext);
         cdf.showDialog(fm, cdf, listener);
     };
@@ -249,7 +246,7 @@ public final class CommonUtilities {
         return result;
     }
 
-    static public String getRootFilePath(String fp) {
+    public static String getRootFilePath(String fp) {
         String reform_fp=StringUtil.removeRedundantDirectorySeparator(fp);
         String is_pre=Environment.getExternalStorageDirectory().toString();
         if (reform_fp.startsWith(is_pre)) return is_pre;
@@ -268,7 +265,7 @@ public final class CommonUtilities {
         mLog.setLogId(li);
     }
 
-    final static public String getExecutedMethodName() {
+    final public static String getExecutedMethodName() {
         String name = Thread.currentThread().getStackTrace()[3].getMethodName();
         return name;
     }
@@ -285,7 +282,7 @@ public final class CommonUtilities {
         mLog.rotateLogFile();
     }
 
-    static public ArrayList<String> listSystemInfo(Context c, GlobalParameters gp) {
+    public static ArrayList<String> listSystemInfo(Context c, GlobalParameters gp) {
 
         ArrayList<String> out=SystemInfo.listSystemInfo(c, gp.safMgr);
 
@@ -379,13 +376,13 @@ public final class CommonUtilities {
     }
 
     final public static boolean isLocationServiceEnabled(Context c, GlobalParameters mGp) {
-        if (Build.VERSION.SDK_INT>=27) {
-            LocationManager lm= (LocationManager)c.getSystemService(Context.LOCATION_SERVICE);
-            if (Build.VERSION.SDK_INT==27) {
-                boolean gps=lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-                boolean nw=lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-                return gps|nw;
-            } else {
+        if (Build.VERSION.SDK_INT >= 27) {
+            LocationManager lm = (LocationManager)c.getSystemService(Context.LOCATION_SERVICE);
+            if (Build.VERSION.SDK_INT == 27) {
+                boolean gps = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                boolean nw = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                return gps | nw;
+            } else if (Build.VERSION.SDK_INT >= 28) {
                 return lm.isLocationEnabled();
             }
         }
@@ -409,7 +406,7 @@ public final class CommonUtilities {
         return mLog.buildPrintLogMsg(cat, msg);
     }
 
-    static public void setAboutFindListener(Activity a, LinearLayout ll, WebView wv) {
+    public static void setAboutFindListener(Activity a, LinearLayout ll, WebView wv) {
         final EditText et_find_string=(EditText)ll.findViewById(R.id.dlg_find_view_search_word);
         final ImageButton ib_find_next=(ImageButton) ll.findViewById(R.id.dlg_find_view_find_next);
         final ImageButton ib_find_prev=(ImageButton) ll.findViewById(R.id.dlg_find_view_find_prev);
@@ -504,7 +501,7 @@ public final class CommonUtilities {
         });
     }
 
-    static public void setWebViewListener(GlobalParameters gp, WebView wv, int zf) {
+    public static void setWebViewListener(GlobalParameters gp, WebView wv, int zf) {
 //        wv.setBackgroundColor(Color.LTGRAY);
 //        if (Build.VERSION.SDK_INT>=29) {
 //            if (!gp.themeColorList.theme_is_light) {
@@ -550,11 +547,11 @@ public final class CommonUtilities {
         });
     }
 
-    final static public String LIST_ITEM_DATA_SEPARATOR ="\u0000";
-    final static public String LIST_ITEM_DUMMY_DATA ="\u0001";
-    final static public String LIST_ITEM_ENCODE_CR_CHARACTER ="\u0003";
-    final static public String LIST_ITEM_LINE_SEPARATOR="\n";
-    synchronized static public void saveMessageList(Context c, GlobalParameters gp) {
+    final public static String LIST_ITEM_DATA_SEPARATOR ="\u0000";
+    final public static String LIST_ITEM_DUMMY_DATA ="\u0001";
+    final public static String LIST_ITEM_ENCODE_CR_CHARACTER ="\u0003";
+    final public static String LIST_ITEM_LINE_SEPARATOR="\n";
+    synchronized public static void saveMessageList(Context c, GlobalParameters gp) {
 //        Thread.dumpStack();
         if (gp.syncMessageList == null || (gp.syncMessageList!=null && gp.syncMessageList.size()==0)) return;
         long b_time= System.currentTimeMillis();
@@ -591,7 +588,7 @@ public final class CommonUtilities {
         }
     }
 
-    static public ArrayList<MessageListAdapter.MessageListItem> loadMessageList(Context c, GlobalParameters gp) {
+    public static ArrayList<MessageListAdapter.MessageListItem> loadMessageList(Context c, GlobalParameters gp) {
         long b_time= System.currentTimeMillis();
         ArrayList<MessageListAdapter.MessageListItem> result=new ArrayList<MessageListAdapter.MessageListItem>(GlobalParameters.MESSAGE_LIST_INITIAL_VALUE);
         try {
@@ -727,7 +724,7 @@ public final class CommonUtilities {
         return enc_str;
     }
 
-    static public String buildSmbUrlAddressElement(String host, String port) {
+    public static String buildSmbUrlAddressElement(String host, String port) {
         String url_port=port.equals("")?"":":"+port;
         String url_address="";
         if (CommonUtilities.isIpAddressV6(host)) {
@@ -762,11 +759,11 @@ public final class CommonUtilities {
         return result;
     }
 
-    static public boolean isSmbHost(CommonUtilities cu, String address, String scan_port) {
+    public static boolean isSmbHost(CommonUtilities cu, String address, String scan_port) {
         return isSmbHost(cu, address, scan_port, 3500);
     }
 
-    static public boolean isSmbHost(CommonUtilities cu, String address, String scan_port, int time_out) {
+    public static boolean isSmbHost(CommonUtilities cu, String address, String scan_port, int time_out) {
         boolean smbhost = false;
         if (scan_port.equals("")) {
             if (!JcifsUtil.canIpAddressAndPortConnectable(address, 445, time_out)) {
@@ -779,7 +776,7 @@ public final class CommonUtilities {
         return smbhost;
     }
 
-    static public String getSmbHostName(CommonUtilities cu, String smb_level, String address) {
+    public static String getSmbHostName(CommonUtilities cu, String smb_level, String address) {
         String srv_name = JcifsUtil.getSmbHostNameByAddress(smb_level, address);
         cu.addDebugMsg(1, "I", "getSmbHostName Address=" + address + ", name=" + srv_name);
         return srv_name;
@@ -905,7 +902,7 @@ public final class CommonUtilities {
         return resolve_addr;
     }
 
-    static public boolean isIpV4PrivateAddress(String ip_v4_addr) {
+    public static boolean isIpV4PrivateAddress(String ip_v4_addr) {
         if (ip_v4_addr.startsWith("10.")) return true;
         else if (ip_v4_addr.startsWith("192.168.")) return true;
         else if (ip_v4_addr.startsWith("172.16.")) return true;
@@ -927,7 +924,7 @@ public final class CommonUtilities {
         return false;
     }
 
-    static public boolean isPrivateAddress(String if_addr) {
+    public static boolean isPrivateAddress(String if_addr) {
         InetAddress ia=null;
         try {
             ia=InetAddress.getByName(if_addr);
@@ -1007,7 +1004,7 @@ public final class CommonUtilities {
         th.start();
     }
 
-    static public void setCheckedTextViewListener(final CheckedTextView ctv) {
+    public static void setCheckedTextViewListener(final CheckedTextView ctv) {
         ctv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1138,11 +1135,11 @@ public final class CommonUtilities {
         }
     }
 
-    static public void setDialogBoxOutline(Context c, LinearLayout ll) {
+    public static void setDialogBoxOutline(Context c, LinearLayout ll) {
         setDialogBoxOutline(c, ll, 3, 5);
     }
 
-    static public void setDialogBoxOutline(Context c, LinearLayout ll, int padding_dp, int margin_dp) {
+    public static void setDialogBoxOutline(Context c, LinearLayout ll, int padding_dp, int margin_dp) {
         ll.setBackgroundResource(R.drawable.dialog_box_outline);
         int padding=(int)toPixel(c.getResources(),padding_dp);
         ll.setPadding(padding, padding, padding, padding);
@@ -1154,7 +1151,7 @@ public final class CommonUtilities {
         ll.setLayoutParams(mlp);
     }
 
-    final static public float toPixel(Resources res, int dip) {
+    final public static float toPixel(Resources res, int dip) {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dip, res.getDisplayMetrics());
         return px;
     }
@@ -1182,21 +1179,21 @@ public final class CommonUtilities {
         return bm_charging;
     }
 
-    static public boolean isIgnoringBatteryOptimizations(Context c) {
+    public static boolean isIgnoringBatteryOptimizations(Context c) {
         String packageName = c.getPackageName();
         PowerManager pm = (PowerManager) c.getSystemService(Context.POWER_SERVICE);
         boolean result=pm.isIgnoringBatteryOptimizations(packageName);
         return result;
     }
 
-    static public boolean isExfatFileSystem(String uuid) {
+    public static boolean isExfatFileSystem(String uuid) {
         boolean result=false;
         String fs=getExternalStorageFileSystemName(uuid);
         if (fs.toLowerCase().contains("exfat")) result=true;
         return result;
     }
 
-    static public String getExternalStorageFileSystemName(String uuid) {
+    public static String getExternalStorageFileSystemName(String uuid) {
         String result="";
         try {
             String resp= ShellCommandUtil.executeShellCommand(new String[]{"/bin/sh", "-c", "mount | grep -e ^/dev.*/mnt/media_rw/"+uuid});

@@ -574,7 +574,7 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-//    static public void exitCleanly(Context c, GlobalParameters gp) {
+//    public static void exitCleanly(Context c, GlobalParameters gp) {
 //        if (gp.settingExitClean && !gp.activityRestartRequired) {
 //            Handler hndl = new Handler();
 //            hndl.postDelayed(new Runnable() {
@@ -2287,8 +2287,8 @@ public class ActivityMain extends AppCompatActivity {
         private int requestCode=0;
         private CallBackListener callBackListener=null;
         private String permission=null;
-        final static public int TYPE_ACTIVITY=0;
-        final static public int TYPE_PERMISSION=1;
+        final public static int TYPE_ACTIVITY=0;
+        final public static int TYPE_PERMISSION=1;
         private int type=TYPE_ACTIVITY;
         public ActivityLaunchItem(int req_code, String req_id, CallBackListener cbl) {
             this.requestorId=req_id;
@@ -5346,7 +5346,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp.confirmCancel.setOnClickListener(mGp.confirmCancelListener);
     }
 
-    static public void sendConfirmResponse(GlobalParameters gp, int response) {
+    public static void sendConfirmResponse(GlobalParameters gp, int response) {
         gp.confirmDialogShowed = false;
         synchronized (gp.syncThreadConfirm) {
             gp.syncThreadConfirm.setExtraDataInt(response);
