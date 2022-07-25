@@ -60,6 +60,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -2117,8 +2118,7 @@ public class TaskEditor extends DialogFragment {
 
                     String cv=getConvertedDirectoryFileName(s.toString(), System.currentTimeMillis(), "DSC-001");
                     dlg_image.setText(cv);
-                    if (etInput.getText().toString().equals(dlg_keyword.getText().toString())) CommonUtilities.setViewEnabled(mActivity, dlg_ok, false);
-                    else CommonUtilities.setViewEnabled(mActivity, dlg_ok, true);
+                    CommonUtilities.setViewEnabled(mActivity, dlg_ok, !etInput.getText().toString().equals(dlg_keyword.getText().toString()));
                 } else {
                     CommonUtilities.setViewEnabled(mActivity, dlg_ok, false);
                 }
@@ -2252,8 +2252,7 @@ public class TaskEditor extends DialogFragment {
                 else et.getText().replace(et.getSelectionStart(), et.getSelectionEnd(), key_word);
                 String cv=getConvertedDirectoryFileName(et.getText().toString(), System.currentTimeMillis(), "DSC-001");
                 dlg_image.setText(cv);
-                if (et.getText().toString().equals(original_string.toString())) CommonUtilities.setViewEnabled(mActivity, dlg_ok, false);
-                else CommonUtilities.setViewEnabled(mActivity, dlg_ok, true);
+                CommonUtilities.setViewEnabled(mActivity, dlg_ok, !et.getText().toString().equals(original_string));
 
             }
         });
@@ -2360,7 +2359,7 @@ public class TaskEditor extends DialogFragment {
 
             if (mGp.settingSecurityReinitZipPasswordValue && et_zip_pswd.getText().toString().length()>0)  nsfev.isChanged=true;
 
-            nsfev.show_zip_passowrd=et_zip_pswd.getTransformationMethod()==null?true:false;
+            nsfev.show_zip_passowrd = et_zip_pswd.getTransformationMethod() == null;
 
             nsfev.folder_type = SyncTaskItem.SYNC_FOLDER_TYPE_ZIP;
         } else if (sel.equals(mActivity.getString(R.string.msgs_main_sync_profile_dlg_sync_folder_type_smb))) {//smb
@@ -2407,8 +2406,7 @@ public class TaskEditor extends DialogFragment {
             nsfev.show_smb_detail_settings=ctv_sync_folder_edit_smb_detail.isChecked();
 
             // Mod 2/2: Preserve SMB password masked/unmasked state on screen rotation
-            if (nsfev.show_smb_detail_settings && et_sync_folder_pswd.getTransformationMethod() == null) nsfev.show_smb_passowrd = true;
-            else nsfev.show_smb_passowrd = false;
+            nsfev.show_smb_passowrd = nsfev.show_smb_detail_settings && et_sync_folder_pswd.getTransformationMethod() == null;
         }
         return nsfev;
     }
@@ -2600,15 +2598,15 @@ public class TaskEditor extends DialogFragment {
                             setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_specify_host_userid_pswd));
                         }
                     }
-                    if (result && folder_share_name.equals("")) {
+                    if (result && folder_share_name.equals("")) { //result always true !
                         setDialogMsg(dlg_msg, mActivity.getString(R.string.msgs_main_sync_profile_dlg_specify_host_share_name));
                         CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_smb_list_share, ctv_sync_folder_edit_smb_detail.isChecked());
                         CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_smb_list_dir, false);
                         CommonUtilities.setViewEnabled(mActivity, btn_sync_folder_edit_smb_dir_rule, false);
                         result = false;
                     } else {
-                        if (result) {
-                            if (result && !sfev.is_source_folder) {
+                        if (result) { //result always true !
+                            if (result && !sfev.is_source_folder) { //result always true !
                                 if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) {
                                     String e_msg=checkTakenDateParameterUsed(et_sync_folder_dir_name.getText().toString());
                                     if (!e_msg.equals("")) {
@@ -2685,8 +2683,7 @@ public class TaskEditor extends DialogFragment {
         final Button btn_sync_folder_ok = dialog.findViewById(R.id.edit_profile_remote_btn_ok);
         SyncFolderEditValue nsfev = buildSyncFolderEditValue(dialog, org_sfev, false);
         boolean same = nsfev.isSame(org_sfev, mUtil);
-        if (!same) setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
-        else setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
+        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, !same);
     }
 
     static public Dialog showDialogWithHideOption(final Activity activity, final GlobalParameters gp, CommonUtilities cu,
@@ -2805,7 +2802,7 @@ public class TaskEditor extends DialogFragment {
                 if (SafManager3.isUuidRegistered(mActivity, sti.getSourceStorageUuid())) img_res=R.drawable.ic_32_external_media;
                 else img_res=R.drawable.ic_32_external_media_bad;
             }
-            info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
+            info_icon.setImageDrawable(ContextCompat.getDrawable(mActivity, img_res));
         } else if (sti.getSourceFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String host = sti.getSourceSmbHost();
             String share = sti.getSourceSmbShareName();
@@ -2815,7 +2812,7 @@ public class TaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
                 else info = "smb://" + host + "/" + share + "/" + dir;
             }
-            info_icon.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_32_server, null));
+            info_icon.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_32_server));
         }
         return info;
     }
@@ -2835,7 +2832,7 @@ public class TaskEditor extends DialogFragment {
                 if (SafManager3.isUuidRegistered(mActivity, sti.getDestinationStorageUuid())) img_res=R.drawable.ic_32_external_media;
                 else img_res=R.drawable.ic_32_external_media_bad;
             }
-            info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
+            info_icon.setImageDrawable(ContextCompat.getDrawable(mActivity, img_res));
         } else if (sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_ZIP)) {
             info = CommonUtilities.getStoragePathFromUuid(sti.getDestinationStorageUuid())+"/"+ sti.getDestinationZipOutputFileName();
             int img_res=0;
@@ -2847,7 +2844,7 @@ public class TaskEditor extends DialogFragment {
                     img_res=R.drawable.ic_32_archive_bad;
                 }
             }
-            info_icon.setImageDrawable(mActivity.getResources().getDrawable(img_res, null));
+            info_icon.setImageDrawable(ContextCompat.getDrawable(mActivity, img_res));
         } else if (sti.getDestinationFolderType().equals(SyncTaskItem.SYNC_FOLDER_TYPE_SMB)) {
             String host = sti.getDestinationSmbHost();
             String share = sti.getDestinationSmbShareName();
@@ -2857,7 +2854,7 @@ public class TaskEditor extends DialogFragment {
                 if (dir.startsWith("/")) info = "smb://" + host + "/" + share + dir;
                 else info = "smb://" + host + "/" + share + "/" + dir;
             }
-            info_icon.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_32_server, null));
+            info_icon.setImageDrawable(ContextCompat.getDrawable(mActivity, R.drawable.ic_32_server));
         }
         return info;
     }
@@ -3094,6 +3091,7 @@ public class TaskEditor extends DialogFragment {
         adapterSyncOption.notifyDataSetChanged();
     }
 
+    // not used
     private void setSpinnerTwoWaySyncConflictRule(Spinner spinner, String cv) {
         CommonUtilities.setSpinnerBackground(mActivity, spinner, mGp.isScreenThemeIsLight());
         final CustomSpinnerAdapter adapter = new CustomSpinnerAdapter(mActivity, android.R.layout.simple_spinner_item);
