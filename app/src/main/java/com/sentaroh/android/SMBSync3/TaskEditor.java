@@ -4669,7 +4669,7 @@ public class TaskEditor extends DialogFragment {
 
         nstli.setSyncOptionDeleteFirstWhenMirror(ctvDeleteFirst.isChecked());
 
-        nstli.setSyncTaskErrorOption(nstli.getSyncTaskErrorOptionValueByIndex(sp_sync_task_option_error_option.getSelectedItemPosition()));
+        nstli.setSyncTaskErrorOption(SyncTaskItem.getSyncTaskErrorOptionValueByIndex(sp_sync_task_option_error_option.getSelectedItemPosition()));
 
         String wifi_sel = getSpinnerSyncTaskWifiOptionValue(spinnerSyncWifiStatus);
         nstli.setSyncOptionWifiStatusOption(wifi_sel);
@@ -4690,23 +4690,25 @@ public class TaskEditor extends DialogFragment {
         nstli.setSyncOptionIgnoreDstDifference(ctv_ignore_dst_difference.isChecked());
         try {
             String dst_offset=(String)spinnerSyncDstOffsetValue.getSelectedItem();
-            nstli.setSyncOptionOffsetOfDst(Integer.valueOf(dst_offset));
-        } catch(Exception e) {}
+            nstli.setSyncOptionOffsetOfDst(Integer.parseInt(dst_offset));
+        } catch(Exception e) {
+            mUtil.addDebugMsg(1, "E", "buildSyncTaskListItem: Error parseInt for Exception="+e);
+        }
 
         nstli.setSyncOptionDoNotOverwriteDestinationFileIfItIsNewerThanTheSourceFile(ctv_never_overwrite_destination_file_newer_than_the_source_file.isChecked());
 
         nstli.setSyncOptionIgnoreDirectoriesOrFilesThatContainUnusableCharacters(ctv_ignore_unusable_character_used_directory_file_name.isChecked());
 
         String diff_val = spinnerSyncDiffTimeValue.getSelectedItem().toString();
-        nstli.setSyncOptionDifferentFileAllowableTime(Integer.valueOf(diff_val));
-        String size_type=nstli.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
+        nstli.setSyncOptionDifferentFileAllowableTime(Integer.parseInt(diff_val));
+        String size_type= SyncTaskItem.getSyncFilterFileSizeTypeByIndex(sp_file_size_type.getSelectedItemPosition());
         nstli.setSyncFilterFileSizeType(size_type);
-        String size_unit=nstli.getSyncFilterFileSizeUnitByIndex(sp_file_size_unit.getSelectedItemPosition());
+        String size_unit= SyncTaskItem.getSyncFilterFileSizeUnitByIndex(sp_file_size_unit.getSelectedItemPosition());
         nstli.setSyncFilterFileSizeUnit(size_unit);
 
         nstli.setSyncFilterFileSizeValue(et_file_size_value.getText().toString());
 
-        String date_type=nstli.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
+        String date_type= SyncTaskItem.getSyncFilterFileDateTypeByIndex(sp_file_date_type.getSelectedItemPosition());
         nstli.setSyncFilterFileDateType(date_type);
 
         nstli.setSyncFilterFileDateValue(et_file_date_value.getText().toString());
@@ -4719,7 +4721,7 @@ public class TaskEditor extends DialogFragment {
 
         nstli.setSyncOptionRemoveDirectoryFileThatExcludedByFilter(ctvIgnoreFilterRemoveDirFileDesNotExistsInSource.isChecked());
 
-        nstli.setSyncOptionMaxDestinationFileNameLength(Integer.valueOf(et_max_dest_file_name_length.getText().toString()));
+        nstli.setSyncOptionMaxDestinationFileNameLength(Integer.parseInt(et_max_dest_file_name_length.getText().toString()));
 
         nstli.setSyncOptionIgnoreFileSize0ByteFile(ctvIgnore_0_byte_file.isChecked());
 
@@ -5022,7 +5024,7 @@ public class TaskEditor extends DialogFragment {
                             } else {
                                 String ev=et_max_dest_file_name_length.getText().toString();
                                 if (ev.length()>0) {
-                                    int val=Integer.parseInt(ev.toString());
+                                    int val=Integer.parseInt(ev);
                                     if (val==0) {
                                         s_msg=mActivity.getString(R.string.msgs_task_sync_task_sync_ignore_file_name_length_gt_specified_value_gt_0);
                                     } else if (val>255) {
@@ -5033,17 +5035,15 @@ public class TaskEditor extends DialogFragment {
                                 }
                                 if (s_msg.equals("")) {
                                     setDialogMsg(dlg_msg, s_msg);
-                                    if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                                    else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                                    CommonUtilities.setViewEnabled(mActivity, btn_ok, isSyncTaskChanged(n_sti, mCurrentSyncTaskItem));
                                 } else {
                                     setDialogMsg(dlg_msg, s_msg);
-                                    CommonDialog.setViewEnabled(getActivity(), btn_ok, false);
+                                    CommonDialog.setViewEnabled(mActivity, btn_ok, false);
                                 }
                             }
                         } else {
                             setDialogMsg(dlg_msg, s_msg);
-                            if (isSyncTaskChanged(n_sti, mCurrentSyncTaskItem)) CommonUtilities.setViewEnabled(mActivity, btn_ok, true);
-                            else CommonUtilities.setViewEnabled(mActivity, btn_ok, false);
+                            CommonUtilities.setViewEnabled(mActivity, btn_ok, isSyncTaskChanged(n_sti, mCurrentSyncTaskItem));
                         }
                     } else {
                         setDialogMsg(dlg_msg, filter_msg);
@@ -5062,8 +5062,7 @@ public class TaskEditor extends DialogFragment {
         String n_type = new_stli.getSyncTaskType();
         String c_type = mCurrentSyncTaskItem.getSyncTaskType();
 
-        boolean result = !new_stli.isSame(org_stli);
-        return result;
+        return !new_stli.isSame(org_stli);
     }
 
     private String checkFilter(Dialog dialog, String type, SyncTaskItem n_sti) {
@@ -5147,12 +5146,13 @@ public class TaskEditor extends DialogFragment {
 
     private void setWifiApWhiteListInfo(ArrayList<FilterListAdapter.FilterListItem> wpal, Button edit_wifi_ap_list) {
         if (wpal.size() > 0) {
-            String ap_list = "", sep = "";
+            StringBuilder ap_list = new StringBuilder();
+            String sep = "";
             for (FilterListAdapter.FilterListItem wapl : wpal) {
-                ap_list += sep + wapl.getFilter();
+                ap_list.append(sep).append(wapl.getFilter());
                 sep = ",";
             }
-            edit_wifi_ap_list.setText(ap_list);
+            edit_wifi_ap_list.setText(ap_list.toString());
         } else {
             edit_wifi_ap_list.setText(mActivity.getString(R.string.msgs_filter_list_dlg_not_specified));
         }
@@ -5214,7 +5214,7 @@ public class TaskEditor extends DialogFragment {
             if (sti.getDestinationDirectoryName().equals("")) {
                 //Valid combination
             } else {
-                if (sti.getSourceDirectoryName().toLowerCase().equals(sti.getDestinationDirectoryName().toLowerCase())) {
+                if (sti.getSourceDirectoryName().equalsIgnoreCase(sti.getDestinationDirectoryName())) {
                     msg=mActivity.getString(R.string.msgs_main_sync_profile_dlg_invalid_source_destination_combination_external);
                 } else {
                     if (!sti.getDestinationDirectoryName().toLowerCase().equals(sti.getSourceDirectoryName().toLowerCase())) {
@@ -5284,8 +5284,9 @@ public class TaskEditor extends DialogFragment {
 
         public int folder_error_code= SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR;
 
-        public SyncFolderEditValue(){};
+        public SyncFolderEditValue(){}
 
+        @NonNull
         @Override
         public SyncFolderEditValue clone() {
             SyncFolderEditValue npfli = null;
@@ -5307,12 +5308,11 @@ public class TaskEditor extends DialogFragment {
                 npfli = (SyncFolderEditValue) ois.readObject();
                 ois.close();
                 bais.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
 
+            assert npfli != null;
             return npfli;
         }
 
