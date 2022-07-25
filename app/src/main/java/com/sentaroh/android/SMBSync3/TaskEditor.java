@@ -5247,7 +5247,7 @@ public class TaskEditor extends DialogFragment {
         return result;
     }
 
-    static class SyncFolderEditValue implements Serializable, Cloneable {
+    static class SyncFolderEditValue implements Serializable {
         public boolean isChanged=false;
         public String task_type="";
         public String folder_title = "";
@@ -5286,8 +5286,6 @@ public class TaskEditor extends DialogFragment {
 
         public SyncFolderEditValue(){}
 
-        @NonNull
-        @Override
         public SyncFolderEditValue clone() {
             SyncFolderEditValue npfli = null;
             try {
@@ -5312,7 +5310,6 @@ public class TaskEditor extends DialogFragment {
                 e.printStackTrace();
             }
 
-            assert npfli != null;
             return npfli;
         }
 
