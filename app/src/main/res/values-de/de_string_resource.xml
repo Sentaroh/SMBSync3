@@ -898,8 +898,8 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">Nummer der Woche</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">Wochentag (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">Wochentag (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">Wochentag\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">Wochentag\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Geändert auf lokalen Ordner, da ZIP-Ordner nicht verwendet werden können, wenn die Synchronisierungsmethode Archiv ist.</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">Die Anforderung wurde ignoriert, da ZIP-Dateien nicht als Ziele für den Synchronisierungstyp Archiv verwendet werden können.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Jahr</string>

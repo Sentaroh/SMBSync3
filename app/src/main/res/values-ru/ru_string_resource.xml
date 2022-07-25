@@ -899,8 +899,8 @@
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">ЕЖЕНЕДЕЛЬНЫЙ ЧИСЛО</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">День недели (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">День недели (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">День недели\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">День недели\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Изменена на локальную папку, так как папка ZIP не может быть использована, когда метод синхронизации - архив.</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">Запрошенная операция была проигнорированна. Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Год</string>

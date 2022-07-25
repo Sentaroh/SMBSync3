@@ -898,8 +898,8 @@
         <string name="msgs_sync_folder_archive_btn_title_min">分</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">秒</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">週番号</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">曜日 (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">曜日 (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">曜日\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">曜日\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">同期方式がアーカイブの時はZIPフォルダーを使用できないためローカルフォルダーに変更しました。</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">要求された操作は無視されました。同期方法がアーカイブの場合、ZIPは使用できません。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">西暦</string>

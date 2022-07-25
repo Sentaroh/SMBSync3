@@ -894,8 +894,8 @@
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">周数</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">工作日 (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">工作日 (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">工作日\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">工作日\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">改为本地文件夹，因为当同步方式为存档时，不能使用ZIP文件夹。</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">该请求被忽略，因为Zip文件不能用作存档同步类型的目的地。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">年份</string>

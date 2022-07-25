@@ -94,8 +94,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -2219,8 +2224,27 @@ public class TaskEditor extends DialogFragment {
     }
 
     private void setWeekDayButtonLabel(Button short_button, Button long_button, String short_label, String long_label) {
-        Date date_sunday=new Date("2020/07/26");
-        Date date_monday=new Date("2020/07/27");
+        //for Current Date: date = new Date();
+        //for default Date: date = new Date(0);
+        Date date_sunday = null;
+        Date date_monday = null;
+        try {
+            String date_sun_format = "2022/07/24"; //a sunday day of the year
+            String date_mon_format = "2022/07/25"; //a monday day of the year
+            DateFormat format = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()); //Locale.getDefault() is lang set in app, not system wide, as we alter locale in mGp.setLocaleConfigForApi24()
+            date_sunday = format.parse(date_sun_format);
+            date_monday = format.parse(date_mon_format);
+        } catch (ParseException pe) {
+            mUtil.addDebugMsg(1, "E", "setWeekDayButtonLabel: parse data format exception");
+        } 
+
+        if (date_sunday == null || date_monday == null) {
+            date_sunday = new Date(); //today
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date_sunday); 
+            cal.add(Calendar.DATE, 1); //tomorrow, aka next day relative to date_sunday
+            date_monday = cal.getTime();
+        }
         String s_sunday=SyncThread.getWeekday(date_sunday.getTime());
         String s_monday=SyncThread.getWeekday(date_monday.getTime());
         String l_sunday=SyncThread.getWeekdayLong(date_sunday.getTime());

@@ -901,8 +901,8 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">NUMÉRO DE LA SEMAINE</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">JOUR DE SEMAINE (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">JOUR DE SEMAINE (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">JOUR DE SEMAINE\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">JOUR DE SEMAINE\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Changé en dossier local car le dossier ZIP ne peut pas être utilisé lorsque la méthode de synchronisation est l\'archive.</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">La requête a été ignorée car les fichiers ZIP ne peuvent pas être utilisés comme destination pour une synchronisation de type Archive.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Année</string>
