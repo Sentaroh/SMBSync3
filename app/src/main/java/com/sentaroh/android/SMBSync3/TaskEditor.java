@@ -1070,15 +1070,17 @@ public class TaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        boolean changed=(boolean)objects[0];
+                        final String edited_name = (String)objects[0];
+                        final EditText et_sync_folder_dir_name = dialog.findViewById(R.id.edit_sync_folder_dlg_smb_directory_name);
+                        et_sync_folder_dir_name.setText(edited_name);
+
                         final Button btn_sync_folder_ok = dialog.findViewById(R.id.edit_profile_remote_btn_ok);
-                        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, changed);
+                        checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                boolean disable_taken_date=false;
-                if (sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR)) disable_taken_date=true;
+                boolean disable_taken_date= sfev.task_type.equals(SyncTaskItem.SYNC_TASK_TYPE_MIRROR);
                 editDirectoryFileNameRule(true, disable_taken_date, sti, sfev, et_sync_folder_dir_name,
                         mActivity.getString(R.string.msgs_task_sync_task_edit_directory_name_keyword), ntfy);
 
@@ -1302,8 +1304,11 @@ public class TaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        boolean changed=(boolean)objects[0];
-                        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, changed);
+                        final String edited_name = (String)objects[0];
+                        final EditText et_sync_folder_dir_name = dialog.findViewById(R.id.edit_sync_folder_dlg_internal_directory_name);
+                        et_sync_folder_dir_name.setText(edited_name);
+
+                        checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
@@ -1505,9 +1510,12 @@ public class TaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        boolean changed=(boolean)objects[0];
-//                        if (changed) setSyncFolderOkButtonEnabled(btn_sync_folder_ok, true);
-//                        else setSyncFolderOkButtonEnabled(btn_sync_folder_ok, false);
+                        final String edited_name = (String)objects[0];
+                        final EditText et_file_template = dialog.findViewById(R.id.edit_sync_folder_dlg_archive_file_name_template);
+                        et_file_template.setText(edited_name);
+
+                        // not needed, change will trigger et_file_template.addTextChangedListener() which will call checkArchiveOkButtonEnabled()
+                        //checkArchiveOkButtonEnabled(sfev, n_sti, dialog);
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
@@ -1569,7 +1577,6 @@ public class TaskEditor extends DialogFragment {
         });
         tv_template.setText(getSyncTaskArchiveTemplateNewName(sp_sync_suffix_option.getSelectedItemPosition(),
                 et_file_template.getText().toString(), sfev.folder_directory, n_sti));
-
     }
 
     private void setSyncFolderArchiveFileImage(final Dialog dialog, SyncTaskItem n_sti, final String destination_dir, boolean create_directory) {
@@ -1650,8 +1657,12 @@ public class TaskEditor extends DialogFragment {
                 ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        boolean changed=(boolean)objects[0];
-                        setSyncFolderOkButtonEnabled(btn_sync_folder_ok, changed);
+                        final String edited_name = (String)objects[0];
+                        final EditText et_zip_file = dialog.findViewById(R.id.edit_sync_folder_dlg_zip_file_name);
+                        et_zip_file.setText(edited_name);
+
+                        // Called in et_zip_file.addTextChangedListener
+                        //checkSyncFolderValidation(dialog, sti, sfev, org_sfev);
                     }
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
@@ -2179,7 +2190,8 @@ public class TaskEditor extends DialogFragment {
         dlg_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                etInput.setText(dlg_keyword.getText());
+                //etInput.setText(dlg_keyword.getText());
+                p_ntfy.notifyToListener(true, new Object[]{dlg_keyword.getText().toString()});
                 dialog.dismiss();
             }
         });
