@@ -461,8 +461,7 @@ public class ActivityMain extends AppCompatActivity {
         return info;
     }
 
- 
-    static public void requestLocalStoragePermission(final ActivityMain activity,
+    public static void requestLocalStoragePermission(final ActivityMain activity,
                                                      final GlobalParameters gp, final CommonUtilities ut, final NotifyEvent p_ntfy) {
 //        final Spinner sp_sync_folder_local_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_local_storage_selector);
         NotifyEvent ntfy=new NotifyEvent(activity);
@@ -541,7 +540,22 @@ public class ActivityMain extends AppCompatActivity {
 
     }
 
-    static public void requestStoragePermissionByUuid(final ActivityMain a, final CommonUtilities cu, final String uuid, final NotifyEvent ntfy) {
+    ActivityResultLauncher<Intent> activityResultLaunchStoragePermissionByUuid = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+        new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (mNtfyStoragePermissionByUuidListener != null) {
+                    int resultCode = result.getResultCode();
+                    Intent data = result.getData(); //(Intent)objects[1];
+                    mNtfyStoragePermissionByUuidListener.notifyToListener(true, new Object[]{resultCode, data, mNtfyStoragePermissionByUuidListenerUUID});
+                }
+            }
+        }
+    );
+
+    private static NotifyEvent mNtfyStoragePermissionByUuidListener;
+    private static String mNtfyStoragePermissionByUuidListenerUUID;
+    public static void requestStoragePermissionByUuid(final ActivityMain a, final CommonUtilities cu, final String uuid, final NotifyEvent ntfy) {
         cu.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" enterd");
         Intent intent = null;
         StorageManager sm = (StorageManager) a.getSystemService(Context.STORAGE_SERVICE);
@@ -559,12 +573,19 @@ public class ActivityMain extends AppCompatActivity {
                 }
                 if (intent!=null) {
                     try {
-                        a.launchActivityResult(a, "UUID", intent, new CallBackListener() {
-                            @Override
-                            public void onCallBack(Context context, boolean positive, Object[] objects) {
-                                ntfy.notifyToListener(true, new Object[]{positive?0:-1, objects[0], uuid});
+                        mNtfyStoragePermissionByUuidListener = ntfy;
+                        mNtfyStoragePermissionByUuidListenerUUID = uuid;
+                        a.activityResultLaunchStoragePermissionByUuid.launch(intent);
+/*
+                        a.launchActivityResult(a, "UUID", intent,
+                            new CallBackListener() {
+                                @Override
+                                public void onCallBack(Context context, boolean positive, Object[] objects) {
+                                    ntfy.notifyToListener(true, new Object[]{positive ? 0:-1, objects[0], uuid});
+                                }
                             }
-                        });
+                        );
+*/
                     } catch(Exception e) {
                         String st= MiscUtil.getStackTraceString(e);
                         cu.showCommonDialog(false, "E",
