@@ -1308,9 +1308,9 @@ public class ActivityMain extends AppCompatActivity {
 
         menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(false);
         //Enable "ALL_FILE_ACCESS"
-//        if (CommonUtilities.isAllFileAccessAvailable()) { // checks if Build.VERSION.SDK_INT>=30
-//            menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(true);
-//        }
+        if (CommonUtilities.isAllFileAccessAvailable()) { //checks if Build.VERSION.SDK_INT>=30
+            menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(true);
+        }
 
         if (mGp.settingScheduleSyncEnabled) menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule);
         else menu.findItem(R.id.menu_top_scheduler).setIcon(R.drawable.ic_64_schedule_disabled);
@@ -2172,18 +2172,20 @@ public class ActivityMain extends AppCompatActivity {
 
             @Override
             public void negativeResponse(Context context, Object[] objects) {
-                NotifyEvent ntfy_denied=new NotifyEvent(mContext);
-                ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        finish();
-                    }
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {}
-                });
-                mUtil.showCommonDialogWarn(false,
-                        mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
-                        mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
+                if (!isAllFileAccessPermissionGranted()) { //case called from Menu, access is already allowed, but user answers no
+                    NotifyEvent ntfy_denied=new NotifyEvent(mContext);
+                    ntfy_denied.setListener(new NotifyEvent.NotifyEventListener() {
+                        @Override
+                        public void positiveResponse(Context context, Object[] objects) {
+                            finish();
+                        }
+                        @Override
+                        public void negativeResponse(Context context, Object[] objects) {}
+                    });
+                    mUtil.showCommonDialogWarn(false,
+                            mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
+                            mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
+                } else if (cbl!=null) cbl.onCallBack(mContext, true, null);
             }
         });
         final Dialog dialog=new Dialog(mActivity, mGp.applicationTheme);
