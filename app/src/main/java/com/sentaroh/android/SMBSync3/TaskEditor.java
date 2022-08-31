@@ -27,14 +27,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.storage.StorageManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
@@ -69,7 +67,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.textfield.TextInputLayout;
 import com.sentaroh.android.SMBSync3.LocalStorageSelectorAdapter.LocalStorageSelectorItem;
 
-import com.sentaroh.android.Utilities3.CallBackListener;
 import com.sentaroh.android.Utilities3.Dialog.CommonDialog;
 import com.sentaroh.android.Utilities3.Dialog.CommonFileSelector2;
 import com.sentaroh.android.Utilities3.MiscUtil;
@@ -1291,7 +1288,7 @@ public class TaskEditor extends DialogFragment {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
+                ActivityMain.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
             }
         });
 
@@ -1353,120 +1350,6 @@ public class TaskEditor extends DialogFragment {
                 //setSyncFolderOkButtonEnabledIfFolderChanged(dialog, org_sfev);
             }
         });
-    }
-
-    static public void requestLocalStoragePermission(final ActivityMain activity,
-                                                     final GlobalParameters gp, final CommonUtilities ut, final NotifyEvent p_ntfy) {
-//        final Spinner sp_sync_folder_local_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_local_storage_selector);
-        NotifyEvent ntfy=new NotifyEvent(activity);
-        ntfy.setListener(new NotifyEvent.NotifyEventListener() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void positiveResponse(Context context, Object[] objects) {
-                ArrayList<String>uuid_list=(ArrayList<String>)objects[0];
-                final NotifyEvent ntfy_response=new NotifyEvent(context);
-                ntfy_response.setListener(new NotifyEvent.NotifyEventListener() {
-                    @Override
-                    public void positiveResponse(Context context, Object[] objects) {
-                        final int resultCode=(Integer)objects[0];
-                        final Intent data=(Intent)objects[1];
-                        final String uuid=(String)objects[2];
-
-                        if (resultCode == Activity.RESULT_OK) {
-                            if (data==null || data.getDataString()==null) {
-                                String msg=activity.getString(R.string.msgs_storage_permission_msg_grant_permission_failed_null);
-                                ut.showCommonDialogWarn(false, msg, "", null);
-                                ut.addLogMsg("E", "", msg, "");
-                                return;
-                            }
-                            ut.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
-                            if (!SafManager3.isRootTreeUri(data.getData())) {
-                                ut.addDebugMsg(1, "I", "Selected UUID="+ SafManager3.getUuidFromUri(data.getData().toString()));
-                                String em=gp.safMgr.getLastErrorMessage();
-                                if (em.length()>0) ut.addDebugMsg(1, "I", "SafMessage="+em);
-
-                                NotifyEvent ntfy_retry = new NotifyEvent(context);
-                                ntfy_retry.setListener(new NotifyEvent.NotifyEventListener() {
-                                    @Override
-                                    public void positiveResponse(Context c, Object[] o) {
-                                        requestStoragePermissionByUuid(activity, ut, uuid, ntfy_response);
-                                    }
-
-                                    @Override
-                                    public void negativeResponse(Context c, Object[] o) {}
-                                });
-                                ut.showCommonDialogWarn(true, context.getString(R.string.msgs_main_external_storage_select_retry_select_msg),
-                                        data.getData().getPath(), ntfy_retry);
-                            } else {
-                                ut.addDebugMsg(1, "I", "Selected UUID="+SafManager3.getUuidFromUri(data.getData().toString()));
-                                String em=gp.safMgr.getLastErrorMessage();
-                                if (em.length()>0) ut.addDebugMsg(1, "I", "SafMessage="+em);
-                                boolean rc=gp.safMgr.addUuid(data.getData());
-                                if (!rc) {
-                                    String msg=activity.getString(R.string.msgs_storage_permission_msg_add_uuid_failed);
-                                    String saf_msg=gp.safMgr.getLastErrorMessage();
-                                    ut.showCommonDialogWarn(false, msg, saf_msg, null);
-                                    ut.addLogMsg("E", "", msg, "\n", saf_msg);
-                                }
-                                if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
-                            }
-                        } else {
-                            ut.showCommonDialogWarn(false,
-                                    context.getString(R.string.msgs_main_external_storage_request_permission),
-                                    context.getString(R.string.msgs_main_external_storage_select_required_cancel_msg), null);
-
-                        }
-                    }
-
-                    @Override
-                    public void negativeResponse(Context context, Object[] objects) {}
-                });
-                for(String uuid:uuid_list) {
-                    requestStoragePermissionByUuid(activity, ut, uuid, ntfy_response);
-                }
-            }
-
-            @Override
-            public void negativeResponse(Context context, Object[] objects) {}
-        });
-        StoragePermission sp=new StoragePermission(activity, ntfy);
-        sp.showDialog();
-
-    }
-
-    static public void requestStoragePermissionByUuid(final ActivityMain a, final CommonUtilities cu, final String uuid, final NotifyEvent ntfy) {
-        cu.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" enterd");
-        Intent intent = null;
-        StorageManager sm = (StorageManager) a.getSystemService(Context.STORAGE_SERVICE);
-        ArrayList<SafManager3.StorageVolumeInfo>vol_list=SafManager3.getStorageVolumeInfo(a);
-        for(SafManager3.StorageVolumeInfo svi:vol_list) {
-            if (svi.uuid.equals(uuid)) {
-                if (Build.VERSION.SDK_INT>=29) {
-                    if (!svi.uuid.equals(SAF_FILE_PRIMARY_UUID)) {
-                        intent=svi.volume.createOpenDocumentTreeIntent();
-                    }
-                } else {
-                    if (!svi.uuid.equals(SAF_FILE_PRIMARY_UUID)) {
-                        intent=svi.volume.createAccessIntent(null);
-                    }
-                }
-                if (intent!=null) {
-                    try {
-                        a.launchActivityResult(a, "UUID", intent, new CallBackListener() {
-                            @Override
-                            public void onCallBack(Context context, boolean positive, Object[] objects) {
-                                ntfy.notifyToListener(true, new Object[]{positive?0:-1, objects[0], uuid});
-                            }
-                        });
-                    } catch(Exception e) {
-                        String st= MiscUtil.getStackTraceString(e);
-                        cu.showCommonDialog(false, "E",
-                                a.getString(R.string.msgs_storage_permission_msg_saf_error_occured), e.getMessage()+"\n"+st, null);
-                    }
-                    break;
-                }
-            }
-        }
     }
 
     private void setSyncFolderArchiveListener(final Dialog dialog, final SyncTaskItem n_sti, final SyncFolderEditValue sfev, final SyncFolderEditValue org_sfev,final NotifyEvent ntfy) {
@@ -1626,7 +1509,7 @@ public class TaskEditor extends DialogFragment {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
+                ActivityMain.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
             }
         });
 
