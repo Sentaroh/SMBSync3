@@ -170,11 +170,14 @@ public class TaskEditor extends DialogFragment {
 
     }
 
+/*
+    //Deprecated
     @Override
     final public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
+*/
 
     @Override
     final public void onAttach(@NonNull Context context) {
