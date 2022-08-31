@@ -1295,7 +1295,7 @@ public class TaskEditor extends DialogFragment {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                ActivityMain.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
+                mActivity.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
             }
         });
 
@@ -1516,7 +1516,7 @@ public class TaskEditor extends DialogFragment {
                     @Override
                     public void negativeResponse(Context context, Object[] objects) {}
                 });
-                ActivityMain.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
+                mActivity.requestLocalStoragePermission(mActivity, mGp, mUtil, ntfy);
             }
         });
 

@@ -49,7 +49,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.storage.StorageManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.text.Editable;
@@ -461,7 +460,7 @@ public class ActivityMain extends AppCompatActivity {
         return info;
     }
 
-    public static void requestLocalStoragePermission(final ActivityMain activity,
+    public void requestLocalStoragePermission(final ActivityMain activity,
                                                      final GlobalParameters gp, final CommonUtilities ut, final NotifyEvent p_ntfy) {
 //        final Spinner sp_sync_folder_local_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_local_storage_selector);
         NotifyEvent ntfy=new NotifyEvent(activity);
@@ -553,12 +552,12 @@ public class ActivityMain extends AppCompatActivity {
         }
     );
 
-    private static NotifyEvent mNtfyStoragePermissionByUuidListener;
-    private static String mNtfyStoragePermissionByUuidListenerUUID;
-    public static void requestStoragePermissionByUuid(final ActivityMain a, final CommonUtilities cu, final String uuid, final NotifyEvent ntfy) {
+    private NotifyEvent mNtfyStoragePermissionByUuidListener;
+    private String mNtfyStoragePermissionByUuidListenerUUID;
+    public void requestStoragePermissionByUuid(final ActivityMain a, final CommonUtilities cu, final String uuid, final NotifyEvent ntfy) {
         cu.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" enterd");
         Intent intent = null;
-        StorageManager sm = (StorageManager) a.getSystemService(Context.STORAGE_SERVICE);
+        //StorageManager sm = (StorageManager) a.getSystemService(Context.STORAGE_SERVICE);
         ArrayList<SafManager3.StorageVolumeInfo>vol_list=SafManager3.getStorageVolumeInfo(a);
         for(SafManager3.StorageVolumeInfo svi:vol_list) {
             if (svi.uuid.equals(uuid)) {
