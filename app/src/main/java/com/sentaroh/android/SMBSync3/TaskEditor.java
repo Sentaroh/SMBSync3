@@ -157,9 +157,9 @@ public class TaskEditor extends DialogFragment {
         //setRetainInstance(true);
         if (mActivity == null) mActivity = (ActivityMain)getActivity();
         mFragment = this;
-        mFragMgr = this.getFragmentManager();
+        if (mFragMgr == null) mFragMgr = Objects.requireNonNull(mActivity).getSupportFragmentManager();
         if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mActivity);
-        if (mUtil == null) mUtil = new CommonUtilities(mActivity, "TaskEditor", mGp, getFragmentManager());
+        if (mUtil == null) mUtil = new CommonUtilities(mActivity, "TaskEditor", mGp, mFragMgr);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
         if (mTerminateRequired) {
             this.dismiss();
@@ -179,6 +179,7 @@ public class TaskEditor extends DialogFragment {
     }
 */
 
+    //Called before onCreate()
     @Override
     final public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -188,8 +189,9 @@ public class TaskEditor extends DialogFragment {
 
         //if (mActivity == null) mActivity = (ActivityMain)getActivity();
         //if (mActivity == null) log.debug("TaskEditor onAttach mActivity is null");
-        if (mGp==null) mGp=GlobalWorkArea.getGlobalParameter(mActivity);
-        if (mUtil == null) mUtil = new CommonUtilities(mActivity, "TaskEditor", mGp, getFragmentManager());
+        if (mFragMgr == null) mFragMgr = mActivity.getSupportFragmentManager();
+        if (mGp == null) mGp=GlobalWorkArea.getGlobalParameter(mActivity);
+        if (mUtil == null) mUtil = new CommonUtilities(mActivity, "TaskEditor", mGp, mFragMgr);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
     }
 
