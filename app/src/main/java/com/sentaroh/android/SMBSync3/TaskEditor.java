@@ -90,6 +90,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -153,7 +154,7 @@ public class TaskEditor extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+        //setRetainInstance(true);
         if (mActivity == null) mActivity = (ActivityMain)getActivity();
         mFragment = this;
         mFragMgr = this.getFragmentManager();
@@ -212,7 +213,8 @@ public class TaskEditor extends DialogFragment {
     @Override
     public void onDestroyView() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-        if (getDialog() != null && getRetainInstance())
+        //if (getDialog() != null && getRetainInstance())
+        if (getDialog() != null)
             getDialog().setDismissMessage(null);
         super.onDestroyView();
     }
