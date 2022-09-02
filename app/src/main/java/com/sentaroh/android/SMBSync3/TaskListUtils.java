@@ -1125,7 +1125,7 @@ public class TaskListUtils {
                             if (!add_exclude_btn.isChecked()) {
                                 add_exclude_btn.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
-                                        mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, filter), "", null);
+                                        String.format(mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude), filter), "", null);
                             }
                         } else {
                             CommonUtilities.setViewEnabled(mActivity, add_include_btn, true);
@@ -1907,7 +1907,7 @@ public class TaskListUtils {
                             if (!rb_exclude.isChecked()) {
                                 rb_exclude.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
-                                        mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, newfilter), "", null);
+                                        String.format(mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude), newfilter), "", null);
                             }
                         } else {
                             CommonUtilities.setViewEnabled(mActivity, rb_include, true);
@@ -2007,7 +2007,7 @@ public class TaskListUtils {
                     if (org_inc) {
                         CommonDialog.showCommonDialog(mActivity.getSupportFragmentManager(), false, "W",
                                 mActivity.getString(R.string.msgs_filter_edit_dlg_title),
-                                mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, fli.getFilter()), null);
+                                String.format(mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude), fli.getFilter()), null);
                     }
                 }
 

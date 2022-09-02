@@ -139,7 +139,7 @@
         <string name="msgs_filter_list_filter_not_allowed_blank_with_asterisk">Нельзя использовать пробелы до и после \"*\".</string>
         <string name="msgs_filter_list_filter_not_allowed_multiple_back_slash">Вы не можете использовать \"\" кроме первого символа. Пожалуйста, удалите \"\", кроме первой буквы. Фильтр=%</string>
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Содержит непригодные символы. Символы =\"%1$s\", Фильтр = %2$s.</string>
-        <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\\\".\nФильтр=%</string>
+        <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\\\".\nФильтр=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">Недействительный IP-адрес.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
