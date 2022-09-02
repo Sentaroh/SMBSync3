@@ -461,24 +461,24 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     public void requestLocalStoragePermission(final ActivityMain activity,
-                                                     final GlobalParameters gp, final CommonUtilities ut, final NotifyEvent p_ntfy) {
+                                                    final GlobalParameters gp, final CommonUtilities ut, final NotifyEvent p_ntfy) {
 //        final Spinner sp_sync_folder_local_storage_selector = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_local_storage_selector);
-        NotifyEvent ntfy=new NotifyEvent(activity);
+        NotifyEvent ntfy = new NotifyEvent(activity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context context, Object[] objects) {
-                ArrayList<String>uuid_list=(ArrayList<String>)objects[0];
-                final NotifyEvent ntfy_response=new NotifyEvent(context);
+                ArrayList<String>uuid_list = (ArrayList<String>)objects[0];
+                final NotifyEvent ntfy_response = new NotifyEvent(context);
                 ntfy_response.setListener(new NotifyEvent.NotifyEventListener() {
                     @Override
                     public void positiveResponse(Context context, Object[] objects) {
-                        final int resultCode=(Integer)objects[0];
-                        final Intent data=(Intent)objects[1];
-                        final String uuid=(String)objects[2];
+                        final int resultCode = (Integer)objects[0];
+                        final Intent data = (Intent)objects[1];
+                        final String uuid = (String)objects[2];
 
                         if (resultCode == Activity.RESULT_OK) {
-                            if (data==null || data.getDataString()==null) {
+                            if (data == null || data.getDataString() == null) {
                                 String msg=activity.getString(R.string.msgs_storage_permission_msg_grant_permission_failed_null);
                                 ut.showCommonDialogWarn(false, msg, "", null);
                                 ut.addLogMsg("E", "", msg, "");
@@ -486,9 +486,9 @@ public class ActivityMain extends AppCompatActivity {
                             }
                             ut.addDebugMsg(1, "I", "Intent=" + data.getData().toString());
                             if (!SafManager3.isRootTreeUri(data.getData())) {
-                                ut.addDebugMsg(1, "I", "Selected UUID="+ SafManager3.getUuidFromUri(data.getData().toString()));
-                                String em=gp.safMgr.getLastErrorMessage();
-                                if (em.length()>0) ut.addDebugMsg(1, "I", "SafMessage="+em);
+                                ut.addDebugMsg(1, "I", "Selected UUID=" + SafManager3.getUuidFromUri(data.getData().toString()));
+                                String em = gp.safMgr.getLastErrorMessage();
+                                if (em.length() > 0) ut.addDebugMsg(1, "I", "SafMessage="+em);
 
                                 NotifyEvent ntfy_retry = new NotifyEvent(context);
                                 ntfy_retry.setListener(new NotifyEvent.NotifyEventListener() {
@@ -504,16 +504,16 @@ public class ActivityMain extends AppCompatActivity {
                                         data.getData().getPath(), ntfy_retry);
                             } else {
                                 ut.addDebugMsg(1, "I", "Selected UUID="+SafManager3.getUuidFromUri(data.getData().toString()));
-                                String em=gp.safMgr.getLastErrorMessage();
-                                if (em.length()>0) ut.addDebugMsg(1, "I", "SafMessage="+em);
-                                boolean rc=gp.safMgr.addUuid(data.getData());
+                                String em = gp.safMgr.getLastErrorMessage();
+                                if (em.length() > 0) ut.addDebugMsg(1, "I", "SafMessage="+em);
+                                boolean rc = gp.safMgr.addUuid(data.getData());
                                 if (!rc) {
-                                    String msg=activity.getString(R.string.msgs_storage_permission_msg_add_uuid_failed);
-                                    String saf_msg=gp.safMgr.getLastErrorMessage();
+                                    String msg = activity.getString(R.string.msgs_storage_permission_msg_add_uuid_failed);
+                                    String saf_msg = gp.safMgr.getLastErrorMessage();
                                     ut.showCommonDialogWarn(false, msg, saf_msg, null);
                                     ut.addLogMsg("E", "", msg, "\n", saf_msg);
                                 }
-                                if (p_ntfy!=null) p_ntfy.notifyToListener(true, null);
+                                if (p_ntfy != null) p_ntfy.notifyToListener(true, null);
                             }
                         } else {
                             ut.showCommonDialogWarn(false,
@@ -534,7 +534,7 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void negativeResponse(Context context, Object[] objects) {}
         });
-        StoragePermission sp=new StoragePermission(activity, ntfy);
+        StoragePermission sp = new StoragePermission(activity, ntfy);
         sp.showDialog();
 
     }
@@ -545,7 +545,7 @@ public class ActivityMain extends AppCompatActivity {
             public void onActivityResult(ActivityResult result) {
                 if (mNtfyStoragePermissionByUuidListener != null) {
                     int resultCode = result.getResultCode();
-                    Intent data = result.getData(); //(Intent)objects[1];
+                    Intent data = result.getData();
                     mNtfyStoragePermissionByUuidListener.notifyToListener(true, new Object[]{resultCode, data, mNtfyStoragePermissionByUuidListenerUUID});
                 }
             }
@@ -558,19 +558,19 @@ public class ActivityMain extends AppCompatActivity {
         cu.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName()+" enterd");
         Intent intent = null;
         //StorageManager sm = (StorageManager) a.getSystemService(Context.STORAGE_SERVICE);
-        ArrayList<SafManager3.StorageVolumeInfo>vol_list=SafManager3.getStorageVolumeInfo(a);
+        ArrayList<SafManager3.StorageVolumeInfo> vol_list = SafManager3.getStorageVolumeInfo(a);
         for(SafManager3.StorageVolumeInfo svi:vol_list) {
             if (svi.uuid.equals(uuid)) {
-                if (Build.VERSION.SDK_INT>=29) {
+                if (Build.VERSION.SDK_INT >= 29) {
                     if (!svi.uuid.equals(SAF_FILE_PRIMARY_UUID)) {
-                        intent=svi.volume.createOpenDocumentTreeIntent();
+                        intent = svi.volume.createOpenDocumentTreeIntent();
                     }
-                } else {
+                } else { //createAccessIntent only valid for Build.VERSION.SDK_INT <= 28
                     if (!svi.uuid.equals(SAF_FILE_PRIMARY_UUID)) {
-                        intent=svi.volume.createAccessIntent(null);
+                        intent = svi.volume.createAccessIntent(null);
                     }
                 }
-                if (intent!=null) {
+                if (intent != null) {
                     try {
                         mNtfyStoragePermissionByUuidListener = ntfy;
                         mNtfyStoragePermissionByUuidListenerUUID = uuid;
@@ -586,9 +586,9 @@ public class ActivityMain extends AppCompatActivity {
                         );
 */
                     } catch(Exception e) {
-                        String st= MiscUtil.getStackTraceString(e);
+                        String st = MiscUtil.getStackTraceString(e);
                         cu.showCommonDialog(false, "E",
-                                a.getString(R.string.msgs_storage_permission_msg_saf_error_occured), e.getMessage()+"\n"+st, null);
+                                a.getString(R.string.msgs_storage_permission_msg_saf_error_occured), e.getMessage() + "\n" + st, null);
                     }
                     break;
                 }
