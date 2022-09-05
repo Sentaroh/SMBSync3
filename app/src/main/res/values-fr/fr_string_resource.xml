@@ -938,6 +938,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_storage_permission_all_file_access_error_message">L\'écran d\'autorisation \"Accès à tous les fichiers\" n\'a pas pu être affiché.\nErreur=%s</string>
     <!-- Setting main -->
         <string name="settings_security_title">Sécurité</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">Mot de Passe de l\'Application</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">Spécifier le niveau de sécurité</string>
@@ -997,7 +998,8 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_force_screen_on_while_sync_summary_ena">Quitter la mise en veille et maintenir l\'écran allumé au démarrage de la synchronisation (activer si la sync ne démarre pas ou qu\'elle est interrompue par la mise en veille)</string>
         <string name="settings_force_screen_on_while_sync_title">Allumer l\'Ecran</string>
         <string name="settings_main_title">Paramètres</string>
-        <string name="settings_misc_title">Divers</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Ne pas Compresser ces Types de Fichiers</string>
         <string name="settings_no_compress_file_type_hint">Type de fichier</string>
@@ -1084,6 +1086,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_smb_lm_compatibility_summary">Compatibilité SMB (LmCompatibility)</string>
         <string name="settings_smb_lm_compatibility_title">Compatibilité SMB(SMBv1)</string>
         <string name="settings_smb_title">Paramètres SMB</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Utiliser la Sécurité Etendue</string>
         <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue(SMBv1)</string>
@@ -1106,7 +1109,9 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_sync_history_log_summary_ena">Journal de synchronisation détaillé</string>
         <string name="settings_sync_history_log_title">Historique des Synchronisations</string>
         <string name="settings_sync_title">Synchronisation</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">Interface Utilisateur</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Langue</string>
         <string name="settings_screen_theme_language_dialog_title">Changer la Langue</string>

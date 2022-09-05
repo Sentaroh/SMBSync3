@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings_ui_title" android:layout="@layout/setting_preference_category_layout">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory>
   	    <ListPreference
 			android:key="@string/settings_notification_message_when_sync_ended"
 			android:title="@string/settings_notification_message_when_sync_ended_title"
@@ -17,7 +19,7 @@
 			android:entries="@array/settings_playback_ringtone_when_sync_ended_list_entries"
 			android:entryValues="@array/settings_playback_ringtone_when_sync_ended_list_values"
 			android:singleLineTitle="false"/>
-        <com.sentaroh.android.SMBSync3.SeekBarPreference
+        <SeekBarPreference
             android:key="@string/settings_playback_ringtone_volume"
             android:title="@string/settings_playback_ringtone_volume_title"
             android:summary="@string/settings_playback_ringtone_volume_summary"

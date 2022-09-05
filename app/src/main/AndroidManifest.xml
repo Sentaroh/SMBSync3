@@ -82,6 +82,11 @@
             android:label="@string/app_name"
             android:screenOrientation="unspecified"
             android:icon="@drawable/smbsync">
+
+            <!-- Return to main app when pressing Top action bar back button -->
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".ActivityMain"/>
         </activity>
 
         <activity

@@ -935,6 +935,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="msgs_storage_permission_all_file_access_error_message">The \"All File Access\" permission screen could not be displayed.\nError=%s</string>
     <!-- Setting main -->
         <string name="settings_security_title">Sicherheit</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">Passwort für die Anmeldung</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">Bitte tippen Sie hier, um Sicherheitsdetails einzustellen</string>
@@ -994,7 +995,8 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="settings_force_screen_on_while_sync_summary_ena">Der Bildschirm leuchtet auf, wenn die Synchronisierung beginnt und aufwacht</string>
         <string name="settings_force_screen_on_while_sync_title">Verhindern Sie eine Verzögerung der Startsynchronisation während des Schlafs</string>
         <string name="settings_main_title">Einstellungen</string>
-        <string name="settings_misc_title">Verschiedenes</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Diese Dateitypen nicht komprimieren</string>
         <string name="settings_no_compress_file_type_hint">Dateityp</string>
@@ -1081,6 +1083,7 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility Ebene</string>
         <string name="settings_smb_lm_compatibility_title">LmCompatibility Ebene(SMBv1)</string>
         <string name="settings_smb_title">SMB-Einstellungen</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
@@ -1103,7 +1106,9 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="settings_sync_history_log_summary_ena">Detailliertes Protokoll der Synchronisierungsvergangenheit führen</string>
         <string name="settings_sync_history_log_title">Sync-Geschichte</string>
         <string name="settings_sync_title">Sync</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">Benutzerschnittstelle</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Sprache</string>
         <string name="settings_screen_theme_language_dialog_title">Sprache ändern</string>

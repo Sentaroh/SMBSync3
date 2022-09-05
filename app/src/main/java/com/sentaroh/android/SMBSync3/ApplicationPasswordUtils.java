@@ -65,13 +65,15 @@ public class ApplicationPasswordUtils {
 
     final static private long APPLICATION_PASSWORD_VALIDITY_PERIOD =30*60*1000;//30 Min
 
-    private static final String APPLICATION_PASSWORD_HASH_VALUE = "settings_application_password_hash_value";
+    private static final String APPLICATION_PASSWORD_HASH_PREFERENCE_KEY = "settings_application_password_hash_value";
+    private static final String APPLICATION_PASSWORD_HASH_PREFERENCE_DEFAULT_VALUE = "";
+
     static public String getPasswordHashValue(SharedPreferences prefs) {
-        return prefs.getString(APPLICATION_PASSWORD_HASH_VALUE, "");
+        return prefs.getString(APPLICATION_PASSWORD_HASH_PREFERENCE_KEY, APPLICATION_PASSWORD_HASH_PREFERENCE_DEFAULT_VALUE);
     }
 
     static public void savePasswordHashValue(GlobalParameters gp, SharedPreferences prefs, String hv) {
-        prefs.edit().putString(APPLICATION_PASSWORD_HASH_VALUE, hv).commit();
+        prefs.edit().putString(APPLICATION_PASSWORD_HASH_PREFERENCE_KEY, hv).commit();
         gp.settingSecurityApplicationPasswordHashValue=hv;
     }
 

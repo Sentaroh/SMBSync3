@@ -1,13 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
-	<header android:title="@string/settings_sync_title"
-	    android:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsSync"/>
-    <header android:title="@string/settings_ui_title"
-	    android:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsUi"/>
-	<header android:title="@string/settings_smb_title"
-	    android:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsSmb"/>
-    <header android:title="@string/settings_security_title"
-        android:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsSecurity"/>
-	<header android:title="@string/settings_misc_title"
-	    android:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsMisc"/>
-</preference-headers>
+<!--
+  ~ Copyright 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:title="@string/settings_sync_title"
+        app:summary="@string/settings_sync_summary"
+        app:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsSyncFragment"/>
+
+    <Preference
+        app:title="@string/settings_ui_title"
+        app:summary="@string/settings_ui_summary"
+        app:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsUiFragment"/>
+
+    <Preference
+        app:title="@string/settings_smb_title"
+        app:summary="@string/settings_smb_summary"
+        app:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsSmbFragment"/>
+
+    <Preference
+        app:title="@string/settings_security_title"
+        app:summary="@string/settings_security_summary"
+        app:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsSecurityFragment"/>
+
+    <Preference
+        app:title="@string/settings_misc_title"
+        app:summary="@string/settings_misc_summary"
+        app:fragment="com.sentaroh.android.SMBSync3.ActivitySettings$SettingsMiscFragment"/>
+</PreferenceScreen>

@@ -936,6 +936,7 @@
         <string name="msgs_storage_permission_all_file_access_error_message">Экран разрешения \"Доступ ко всем файлам\" не мог отображаться.\nОшибка = %s</string>
     <!-- Setting main -->
         <string name="settings_security_title">Безопасность</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">Пароль приложения</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">Пожалуйста, нажмите здесь, чтобы установить детали безопасности</string>
@@ -995,7 +996,8 @@
         <string name="settings_force_screen_on_while_sync_summary_ena">The screen lights up when the sync starts and wakes up</string>
         <string name="settings_force_screen_on_while_sync_title">Предотвратить задержку начала синхронизации во время сна</string>
         <string name="settings_main_title">Настройки</string>
-        <string name="settings_misc_title">Разное</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Не сжимать эти типы файлов</string>
         <string name="settings_no_compress_file_type_hint">Тип файла</string>
@@ -1082,6 +1084,7 @@
         <string name="settings_smb_lm_compatibility_summary">Уровень LmCompatibility</string>
         <string name="settings_smb_lm_compatibility_title">Уровень LmCompatibility(SMBv1)</string>
         <string name="settings_smb_title">Настройки SMB</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Использовать расширенную безопасность</string>
         <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность(SMBv1)</string>
@@ -1104,7 +1107,9 @@
         <string name="settings_sync_history_log_summary_ena">Вести подробный журнал истории синхронизации</string>
         <string name="settings_sync_history_log_title">Синхронизация истории</string>
         <string name="settings_sync_title">Синхронизация</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">Пользовательский интерфейс</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Язык</string>
         <string name="settings_screen_theme_language_dialog_title">Изменить язык</string>

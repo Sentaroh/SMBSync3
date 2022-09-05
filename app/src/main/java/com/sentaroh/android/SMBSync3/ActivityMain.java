@@ -317,7 +317,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void initApplication() {
         setMediaStatusListener();
-        checkStoredKey(new CallBackListener(){
+        checkStoredKey(new CallBackListener() {
             @Override
             public void onCallBack(Context context, boolean positive, Object[] objects) {
                 setActivityForeground(true);

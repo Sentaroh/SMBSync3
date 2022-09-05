@@ -27,13 +27,13 @@ import android.os.Handler;
 import android.os.Looper;
 
 public class GlobalWorkArea {
-    private static GlobalParameters gp=null;
+    private static GlobalParameters gp = null;
     public static GlobalParameters getGlobalParameter(Context c) {
-        if (gp ==null) {
-            gp =new GlobalParameters();
+        if (gp == null) {
+            gp = new GlobalParameters();
             gp.initGlobalParamter(c);
         }
-        if (Looper.myLooper()!=null && gp.uiHandler==null) gp.uiHandler = new Handler(Looper.getMainLooper());
+        if (Looper.myLooper()!= null && gp.uiHandler == null) gp.uiHandler = new Handler(Looper.getMainLooper());
         return gp;
     }
     public static boolean isGlobalParameterCreated() {

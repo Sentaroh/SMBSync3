@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<PreferenceScreen 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="@string/settings_sync_title"
-        android:layout="@layout/setting_preference_category_layout">
+    <PreferenceCategory>
         <CheckBoxPreference
             android:key="@string/settings_wifi_lock"
             android:title="@string/settings_wifi_lock_title"
@@ -56,7 +56,7 @@
             android:summary="@string/settings_suppress_shortcut3_confirmation_message_summary_ena"
             android:singleLineTitle="false"/>
 
-        <com.sentaroh.android.Utilities3.Preference.ListEditPreference
+        <EditTextPreference
             android:key="@string/settings_no_compress_file_type"
             android:title="@string/settings_no_compress_file_type_title"
             app:hint="@string/settings_no_compress_file_type_hint"

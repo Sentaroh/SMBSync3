@@ -935,6 +935,7 @@
         <string name="msgs_storage_permission_all_file_access_error_message">All File Access許可画面を表示できませんでした。\nエラー=%s</string>
     <!-- Setting main -->
         <string name="settings_security_title">セキュリティ</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">アプリケーションパスワード</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">ここをタップしてセキュリティ設定してください</string>
@@ -994,7 +995,8 @@
         <string name="settings_force_screen_on_while_sync_summary_ena">同期開始時に画面を点灯しスリープを解除します。</string>
         <string name="settings_force_screen_on_while_sync_title">スリープ中の同期開始遅延防止</string>
         <string name="settings_main_title">設定</string>
-        <string name="settings_misc_title">その他</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">圧縮しないファイルタイプ</string>
         <string name="settings_no_compress_file_type_hint">ファイルタイプ</string>
@@ -1081,6 +1083,7 @@
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility Level</string>
         <string name="settings_smb_lm_compatibility_title">LmCompatibility Level(SMBv1)</string>
         <string name="settings_smb_title">SMB設定</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
@@ -1103,7 +1106,9 @@
         <string name="settings_sync_history_log_summary_ena">詳細ログを保存する</string>
         <string name="settings_sync_history_log_title">同期履歴</string>
         <string name="settings_sync_title">同期</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">ユーザーインターフェース</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">言語</string>
         <string name="settings_screen_theme_language_dialog_title">言語を変更</string>

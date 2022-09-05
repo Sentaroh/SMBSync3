@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="@string/settings_security_title" android:layout="@layout/setting_preference_category_layout">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory>
         <PreferenceScreen
             android:key="@string/settings_security_application_password"
             android:title="@string/settings_security_application_password_setting_title"
-            android:singleLineTitle="false"
-            />
+            android:singleLineTitle="false"/>
   	    <ListPreference
 			android:key="@string/settings_security_app_settings_directory"
 			android:title="@string/settings_security_app_settings_directory_title"

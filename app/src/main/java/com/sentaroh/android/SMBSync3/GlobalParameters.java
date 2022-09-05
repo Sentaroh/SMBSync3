@@ -78,7 +78,7 @@ import static com.sentaroh.android.SMBSync3.ScheduleConstants.*;
 
 public class GlobalParameters {
 //    public Context appContext = null;
-    private final ReentrantReadWriteLock configurationLock =new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock configurationLock = new ReentrantReadWriteLock();
 
     public Handler uiHandler = null;
 
@@ -209,8 +209,8 @@ public class GlobalParameters {
     public boolean settingSecurityHideShowSmbPasswordButton = false;
     public boolean settingSecurityHideShowZipPasswordButton = false;
 
-    public boolean appPasswordAuthValidated=false;
-    public long appPasswordAuthLastTime=0L;
+    public boolean appPasswordAuthValidated = false;
+    public long appPasswordAuthLastTime = 0L;
 
     public String settingSecurityAppSettingsDirectory = APP_SETTINGS_DIRECTORY_ROOT;
 
@@ -225,11 +225,11 @@ public class GlobalParameters {
 
     public int settingNotificationVolume = 100;
 
-    public boolean settingScheduleSyncEnabled=true;
+    public boolean settingScheduleSyncEnabled = true;
 
     public NotificationManager notificationManager = null;
-    final public static int notificationOngoingMessageID=1;
-    final public static int notificationNoticeMessageID=2;
+    final public static int notificationOngoingMessageID = 1;
+    final public static int notificationNoticeMessageID = 2;
     public boolean notificationEnabled = true;
     public int notificationSmallIcon = R.drawable.ic_48_smbsync_wait;
     public Notification notification = null;
@@ -247,7 +247,7 @@ public class GlobalParameters {
     public static final int MESSAGE_LIST_INITIAL_VALUE=5500;
     public final Object mLockSyncMessageList = new Object();
     public ArrayList<MessageListAdapter.MessageListItem> syncMessageList = null; //new ArrayList<MessageListItem>();
-    public boolean syncMessageListChanged =false;
+    public boolean syncMessageListChanged = false;
     public boolean freezeMessageViewScroll = false;
     public MessageListAdapter syncMessageListAdapter = null;
     public ListView syncMessageView = null;
@@ -260,12 +260,12 @@ public class GlobalParameters {
     public ArrayList<ScheduleListAdapter.ScheduleListItem> syncScheduleList = new ArrayList<ScheduleListAdapter.ScheduleListItem>();
     public ScheduleListAdapter syncScheduleListAdapter = null;
     public ListView syncScheduleView = null;
-    public TextView syncScheduleMessage =null;
+    public TextView syncScheduleMessage = null;
 
     public ArrayList<GroupListAdapter.GroupListItem> syncGroupList = new ArrayList<GroupListAdapter.GroupListItem>();
     public GroupListAdapter syncGroupListAdapter = null;
     public ListView syncGroupView = null;
-    public TextView syncGroupMessage =null;
+    public TextView syncGroupMessage = null;
 
     public ArrayList<SyncTaskItem> syncTaskList = new ArrayList<SyncTaskItem>();
     public TaskListAdapter syncTaskListAdapter = null;
@@ -304,20 +304,20 @@ public class GlobalParameters {
     public Button confirmNoAll = null;
     public View.OnClickListener confirmNoAllListener = null;
 
-    public TextView confirmDialogConflictFilePathA=null;
-    public TextView confirmDialogConflictFileLengthA=null;
-    public TextView confirmDialogConflictFileLastModA=null;
-    public TextView confirmDialogConflictFilePathB=null;
-    public TextView confirmDialogConflictFileLengthB=null;
-    public TextView confirmDialogConflictFileLastModB=null;
+    public TextView confirmDialogConflictFilePathA = null;
+    public TextView confirmDialogConflictFileLengthA = null;
+    public TextView confirmDialogConflictFileLastModA = null;
+    public TextView confirmDialogConflictFilePathB = null;
+    public TextView confirmDialogConflictFileLengthB = null;
+    public TextView confirmDialogConflictFileLastModB = null;
 
-    public Button confirmDialogConflictButtonSelectA=null;
+    public Button confirmDialogConflictButtonSelectA = null;
     public View.OnClickListener confirmDialogConflictButtonSelectAListener = null;
-    public Button confirmDialogConflictButtonSelectB=null;
+    public Button confirmDialogConflictButtonSelectB = null;
     public View.OnClickListener confirmDialogConflictButtonSelectBListener = null;
-    public Button confirmDialogConflictButtonSyncIgnoreFile=null;
+    public Button confirmDialogConflictButtonSyncIgnoreFile = null;
     public View.OnClickListener confirmDialogConflictButtonSyncIgnoreFileListener = null;
-    public Button confirmDialogConflictButtonCancelSyncTask=null;
+    public Button confirmDialogConflictButtonCancelSyncTask = null;
     public View.OnClickListener confirmDialogConflictButtonCancelSyncTaskListener = null;
 
     public LinearLayout progressSpinView = null;
@@ -328,7 +328,7 @@ public class GlobalParameters {
 
     public SafManager3 safMgr = null;
 
-    private static LogStream logStream=null;//JCIFS logStream
+    private static LogStream logStream = null;//JCIFS logStream
     private static final Logger log = LoggerFactory.getLogger(GlobalParameters.class);
 
     public GlobalParameters() {
@@ -359,7 +359,7 @@ public class GlobalParameters {
     }
 
     synchronized public void initGlobalParamter(Context c) {
-        if (Looper.myLooper()!=null) uiHandler = new Handler();
+        if (Looper.myLooper() != null) uiHandler = new Handler();
 
         debuggable = isDebuggable(c);
 
@@ -406,15 +406,15 @@ public class GlobalParameters {
 
     }
 
-    public boolean configListLoaded=false;
+    public boolean configListLoaded = false;
     public void loadConfigList(Context c, CommonUtilities cu) {
-        if (cu.getLogLevel()>0) cu.addDebugMsg(1, "I", "config load started");
+        if (cu.getLogLevel() > 0) cu.addDebugMsg(1, "I", "config load started");
         acquireConfigurationLock();
         if (!configListLoaded) {
-            configListLoaded=true;
-            ArrayList<SyncTaskItem>stl=new ArrayList<SyncTaskItem>();
-            ArrayList<ScheduleListAdapter.ScheduleListItem>sl=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
-            ArrayList<GroupListAdapter.GroupListItem>gl=new ArrayList<GroupListAdapter.GroupListItem>();
+            configListLoaded = true;
+            ArrayList<SyncTaskItem>stl = new ArrayList<SyncTaskItem>();
+            ArrayList<ScheduleListAdapter.ScheduleListItem>sl = new ArrayList<ScheduleListAdapter.ScheduleListItem>();
+            ArrayList<GroupListAdapter.GroupListItem>gl = new ArrayList<GroupListAdapter.GroupListItem>();
             TaskListImportExport.loadTaskListFromAppDirectory(c, this, cu, stl, sl, null, gl);
             syncTaskList.addAll(stl);
             syncScheduleList.addAll(sl);
@@ -428,8 +428,8 @@ public class GlobalParameters {
         final LogUtil jcifs_ng_lu = new LogUtil(c, "SLF4J");
         final LogUtil jcifs_old_lu = new LogUtil(c, "JCIFS-V1");
 
-        PrintStream smb1_ps= null;
-        OutputStream smb1_os=new OutputStream() {
+        PrintStream smb1_ps = null;
+        OutputStream smb1_os = new OutputStream() {
             @Override
             public void write(int b) throws IOException {
                 byte[] buff = ByteBuffer.allocate(4).putInt(b).array();
@@ -438,28 +438,28 @@ public class GlobalParameters {
             }
             @Override
             public void write(byte[] buff) throws IOException {
-                if (buff.length==1 && buff[0]!=0x0a) {
+                if (buff.length == 1 && buff[0] != 0x0a) {
                 } else {
                     String msg=new String(buff, StandardCharsets.UTF_8);
-                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0, "I", msg);
+                    if (!msg.equals("\n") && msg.replaceAll(" ", "").length() > 0) jcifs_old_lu.addDebugMsg(0, "I", msg);
 //                    Log.v("SMBSync3",StringUtil.getHexString(buff, 0, buff.length));
                 }
             }
             @Override
             public void write(byte[] buff, int buff_offset, int buff_length) throws IOException {
-                if (buff_length==1 && buff[buff_offset]!=0x0a) {
+                if (buff_length == 1 && buff[buff_offset] != 0x0a) {
                 } else {
-                    String msg=new String(buff,buff_offset,buff_length, StandardCharsets.UTF_8);
-                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0,"I",msg);
+                    String msg = new String(buff,buff_offset,buff_length, StandardCharsets.UTF_8);
+                    if (!msg.equals("\n") && msg.replaceAll(" ","").length() > 0) jcifs_old_lu.addDebugMsg(0, "I", msg);
 //                    Log.v("SMBSync3",StringUtil.getHexString(buff, buff_offset, buff_length));
                 }
             }
         };
-        smb1_ps=new PrintStream(smb1_os);
+        smb1_ps = new PrintStream(smb1_os);
         LogStream.setInstance(smb1_ps);
-        logStream= LogStream.getInstance();//Initial create JCIFS logStream object
+        logStream = LogStream.getInstance();//Initial create JCIFS logStream object
 
-        Slf4jLogWriter jcifs_ng_lw= new Slf4jLogWriter(jcifs_ng_lu);
+        Slf4jLogWriter jcifs_ng_lw = new Slf4jLogWriter(jcifs_ng_lu);
         log.setWriter(jcifs_ng_lw);
     }
 
@@ -476,7 +476,7 @@ public class GlobalParameters {
 
     public void refreshMediaDir(Context c) {
         if (safMgr == null) {
-            Thread th=new Thread(){
+            Thread th = new Thread(){
                 @Override
                 public void run() {
                     safMgr = new SafManager3(c);
@@ -507,9 +507,9 @@ public class GlobalParameters {
         if (!prefs.contains(c.getString(R.string.settings_notification_message_when_sync_ended)))
             pe.putString(c.getString(R.string.settings_notification_message_when_sync_ended),NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS);
         if (!prefs.contains(c.getString(R.string.settings_vibrate_when_sync_ended)))
-            pe.putString(c.getString(R.string.settings_vibrate_when_sync_ended),NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
+            pe.putString(c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
         if (!prefs.contains(c.getString(R.string.settings_playback_ringtone_when_sync_ended)))
-            pe.putString(c.getString(R.string.settings_playback_ringtone_when_sync_ended),NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS);
+            pe.putString(c.getString(R.string.settings_playback_ringtone_when_sync_ended), NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS);
         if (!prefs.contains(c.getString(R.string.settings_playback_ringtone_volume)))
             pe.putInt(c.getString(R.string.settings_playback_ringtone_volume), 100);
 
@@ -559,13 +559,12 @@ public class GlobalParameters {
             pe.putString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_SETTING_DEFAULT);
 
         pe.commit();
-
     }
 
     public void loadSettingsParms(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
 
-        settingExitClean=prefs.getBoolean(c.getString(R.string.settings_exit_clean), false);
+        settingExitClean = prefs.getBoolean(c.getString(R.string.settings_exit_clean), false);
 
 //        settingErrorOption = prefs.getBoolean(c.getString(R.string.settings_error_option), false);
         settingWifiLockRequired = prefs.getBoolean(c.getString(R.string.settings_wifi_lock), true);
@@ -587,7 +586,7 @@ public class GlobalParameters {
             boolean themeIsLight = prefs.getBoolean("settings_use_light_theme", false);
             if (themeIsLight) {
                 prefs.edit().remove("settings_use_light_theme").commit();
-                settingScreenTheme= SCREEN_THEME_LIGHT;
+                settingScreenTheme = SCREEN_THEME_LIGHT;
                 prefs.edit().putString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_LIGHT).commit();
             }
         }
@@ -606,7 +605,7 @@ public class GlobalParameters {
 
         settingWriteSyncResultLog = prefs.getBoolean(c.getString(R.string.settings_sync_history_log), true);
 
-        settingPreventSyncStartDelay =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
+        settingPreventSyncStartDelay = prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
 
         settingSecurityApplicationPasswordHashValue = ApplicationPasswordUtils.getPasswordHashValue(prefs);
         settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), false);
@@ -639,11 +638,11 @@ public class GlobalParameters {
             settingAppManagemsntDirectoryName = SafManager3.getPrimaryStoragePath()+"/"+APPLICATION_TAG;
         }
 
-        settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULE_ENABLED_KEY, true);
+        settingScheduleSyncEnabled = prefs.getBoolean(SCHEDULE_ENABLED_KEY, true);
 
-        settingSupressAddExternalStorageNotification=
+        settingSupressAddExternalStorageNotification =
             prefs.getBoolean(c.getString(R.string.settings_suppress_add_external_storage_notification), false);
-        settingSupressStartSyncConfirmationMessage=
+        settingSupressStartSyncConfirmationMessage =
                 prefs.getBoolean(c.getString(R.string.settings_suppress_start_sync_confirmation_message), false);
         settingSupressShortcut1ConfirmationMessage =
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut1_confirmation_message), false);
@@ -661,11 +660,11 @@ public class GlobalParameters {
         settingSecurityHideShowSmbPasswordButton = false;
         settingSecurityHideShowZipPasswordButton = false;
 
-        settingSecurityReinitSmbAccountPasswordValue=false;
-        settingSecurityReinitZipPasswordValue=false;
+        settingSecurityReinitSmbAccountPasswordValue = false;
+        settingSecurityReinitZipPasswordValue = false;
 
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        SharedPreferences.Editor editor=prefs.edit();
+        SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), settingSecurityApplicationPasswordUseAppStartup);
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_edit_task), settingSecurityApplicationPasswordUseEditTask);
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_export_task), settingSecurityApplicationPasswordUseExport);
@@ -680,7 +679,7 @@ public class GlobalParameters {
 
     public void setScheduleEnabled(Context c, boolean enabled) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        settingScheduleSyncEnabled=enabled;
+        settingScheduleSyncEnabled = enabled;
         prefs.edit().putBoolean(SCHEDULE_ENABLED_KEY, enabled).commit();
     }
 
@@ -747,7 +746,7 @@ public class GlobalParameters {
 
     // Returns current context updated with locale from settings Preferences
     public static Context setNewLocale(Context c) {
-        String lc= getLanguageCode(c); //get language code from saved preferences
+        String lc = getLanguageCode(c); //get language code from saved preferences
         return updateLanguageResources(c, lc);
     }
 
@@ -840,14 +839,14 @@ public class GlobalParameters {
     public String settingsSmbLmCompatibility = SMB_LM_COMPATIBILITY_DEFAULT,
             settingsSmbUseExtendedSecurity = SMB_USE_EXTENDED_SECURITY_DEFAULT,
             settingsSmbClientResponseTimeout = SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT,
-            settingsSmbDisablePlainTextPasswords=SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT;
+            settingsSmbDisablePlainTextPasswords = SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT;
 
     final public void initJcifsOption(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
 
         settingsSmbLmCompatibility = prefs.getString(c.getString(R.string.settings_smb_lm_compatibility), SMB_LM_COMPATIBILITY_DEFAULT);
         boolean ues = prefs.getBoolean(c.getString(R.string.settings_smb_use_extended_security), true);
-        boolean dpp=prefs.getBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false);
+        boolean dpp = prefs.getBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false);
         settingsSmbClientResponseTimeout = prefs.getString(c.getString(R.string.settings_smb_client_response_timeout), SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT);
 
         if (settingsSmbLmCompatibility.equals("3") || settingsSmbLmCompatibility.equals("4")) {
@@ -858,7 +857,7 @@ public class GlobalParameters {
         }
 
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
-        settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
+        settingsSmbDisablePlainTextPasswords = dpp ? "true" : "false";
 
         System.setProperty(JCIFS_OPTION_CLIENT_ATTR_EXPIRATION_PERIOD, "0");
         System.setProperty(JCIFS_OPTION_NETBIOS_RETRY_TIMEOUT, "3000");

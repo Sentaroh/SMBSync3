@@ -931,6 +931,7 @@
         <string name="msgs_storage_permission_all_file_access_error_message">The \"All File Access\" permission screen could not be displayed.\nError=%s</string>
     <!-- Setting main -->
         <string name="settings_security_title">安保</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">应用密码</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">点击这里设置您的安全</string>
@@ -990,7 +991,8 @@
         <string name="settings_force_screen_on_while_sync_summary_ena">屏幕亮起，同步开始时从睡眠中醒来。</string>
         <string name="settings_force_screen_on_while_sync_title">防止睡眠期间延迟启动同步</string>
         <string name="settings_main_title">设置</string>
-        <string name="settings_misc_title">杂项</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">不要压缩这些文件类型</string>
         <string name="settings_no_compress_file_type_hint">文件类型</string>
@@ -1077,6 +1079,7 @@
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility 级别</string>
         <string name="settings_smb_lm_compatibility_title">LmCompatibility 级别(SMBv1)</string>
         <string name="settings_smb_title">SMB设置</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
@@ -1099,7 +1102,9 @@
         <string name="settings_sync_history_log_summary_ena">保存详细的同步历史记录</string>
         <string name="settings_sync_history_log_title">同步历史</string>
         <string name="settings_sync_title">同步</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">用户界面</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">语种</string>
         <string name="settings_screen_theme_language_dialog_title">更改语言</string>
