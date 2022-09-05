@@ -2048,10 +2048,10 @@ public class ActivityMain extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if (result.getResultCode() == Activity.RESULT_OK) {
-                mUtil.addDebugMsg(1, "I", "Return from Setting activity.");
-                reloadSettingParms();
-            }
+            //if (result.getResultCode() == Activity.RESULT_OK) {
+            mUtil.addDebugMsg(1, "I", "Return from Setting activity.");
+            reloadSettingParms();
+            //}
         }
     });
 
