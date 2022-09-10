@@ -24,12 +24,14 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -650,6 +652,11 @@ public class GlobalParameters {
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut2_confirmation_message), false);
         settingSupressShortcut3ConfirmationMessage =
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut3_confirmation_message), false);
+    }
+
+    public void setDeviceOrientation(final Activity a) {
+        if (settingFixDeviceOrientationToPortrait) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     public void clearApplicationPasswordSetting(Context c) {

@@ -91,12 +91,11 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
         setTheme(GlobalParameters.getScreenTemeValue(mActivity));
         //GlobalParameters.setDisplayFontScale(ActivitySettings.this);
 
+        mGp.setDeviceOrientation(mActivity);
+
         super.onCreate(savedInstanceState);
 
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
-
-        if (mGp.settingFixDeviceOrientationToPortrait) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         setContentView(R.layout.settings_preference_main_layout);
 
@@ -660,9 +659,13 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
                 }
             } //else if (key_string.equals(c.getString(R.string.settings_device_orientation_landscape_tablet))) { }
               else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
-                //boolean portrait = shared_pref.getBoolean(key_string, false);
+                boolean isPortrait = shared_pref.getBoolean(key_string, false);
+                mGp.settingFixDeviceOrientationToPortrait = isPortrait;
+                mGp.setDeviceOrientation(mActivity);
+
+                // Disable "Tablet view in landscape mode" (dual pane prefs) menu when option to fix orientation to portrait is checked
                 //Preference pref_key_tablet = findPreference(c.getString(R.string.settings_device_orientation_landscape_tablet));
-                //Objects.requireNonNull(pref_key_tablet).setEnabled(!portrait);
+                //Objects.requireNonNull(pref_key_tablet).setEnabled(!isPortrait);
             }
         }
     }

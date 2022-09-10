@@ -196,10 +196,13 @@ public class ActivityMain extends AppCompatActivity {
 
 //        Intent splash=new Intent(mActivity, ActivitySplash.class);
 //        startActivity(splash);
-        mGp= GlobalWorkArea.getGlobalParameter(mActivity);
+        mGp = GlobalWorkArea.getGlobalParameter(mActivity);
         //GlobalParameters.setDisplayFontScale(mActivity);
         setTheme(mGp.applicationTheme);
+        mGp.setDeviceOrientation(mActivity);
+
         super.onCreate(savedInstanceState);
+
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
 
         setContentView(R.layout.main_screen);
@@ -212,16 +215,16 @@ public class ActivityMain extends AppCompatActivity {
         if (mGp.syncHistoryList == null) mGp.syncHistoryList = mUtil.loadHistoryList();
         mGp.syncHistoryListAdapter = new HistoryListAdapter(mActivity, R.layout.history_list_item, mGp.syncHistoryList);
 
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName(), " entered, appStartStaus="+appStartStaus);
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName(), " entered, appStartStaus=" + appStartStaus);
 
         mUtil.addLogMsg("I", "",
-                mContext.getString(R.string.msgs_smbsync_main_start) +" API=" + Build.VERSION.SDK_INT +", Version=" + SystemInfo.getApplVersionNameCode(mContext));
+                mContext.getString(R.string.msgs_smbsync_main_start) +" API=" + Build.VERSION.SDK_INT + ", Version=" + SystemInfo.getApplVersionNameCode(mContext));
 
-        mTabNameTask=getString(R.string.msgs_tab_name_task);
-        mTabNameSchedule=getString(R.string.msgs_tab_name_schedule);
-        mTabNameHistory=getString(R.string.msgs_tab_name_history);
-        mTabNameMessage=getString(R.string.msgs_tab_name_msg);
-        mTabNameGroup=getString(R.string.msgs_tab_name_group);
+        mTabNameTask = getString(R.string.msgs_tab_name_task);
+        mTabNameSchedule = getString(R.string.msgs_tab_name_schedule);
+        mTabNameHistory = getString(R.string.msgs_tab_name_history);
+        mTabNameMessage = getString(R.string.msgs_tab_name_msg);
+        mTabNameGroup = getString(R.string.msgs_tab_name_group);
         mCurrentTab = mTabNameTask;
 
         mActionBar = getSupportActionBar();
@@ -229,16 +232,14 @@ public class ActivityMain extends AppCompatActivity {
             mActionBar.setDisplayShowHomeEnabled(false);
             mActionBar.setHomeButtonEnabled(false);
         }
-        if (mGp.settingFixDeviceOrientationToPortrait) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         mGp.syncTaskListAdapter = new TaskListAdapter(mActivity, R.layout.sync_task_item_view, mGp.syncTaskList, mGp);
 
-        Thread th=new Thread(){
+        Thread th = new Thread(){
             @Override
             public void run() {
 //                makeCacheDirectory();
-                if (mGp.syncTaskList.size()==0) {
+                if (mGp.syncTaskList.size() == 0) {
                     mGp.loadConfigList(mContext, mUtil);
                 }
                 mTaskUtil = new TaskListUtils(mUtil, mActivity, mGp, mActivity.getSupportFragmentManager());
@@ -259,7 +260,7 @@ public class ActivityMain extends AppCompatActivity {
     private class MyUncaughtExceptionHandler extends AppUncaughtExceptionHandler {
         @Override
         public void appUniqueProcess(Throwable ex, String strace) {
-            log.error("UncaughtException detected, error="+ex);
+            log.error("UncaughtException detected, error=" + ex);
             log.error(strace);
             mUtil.flushLog();
         }
