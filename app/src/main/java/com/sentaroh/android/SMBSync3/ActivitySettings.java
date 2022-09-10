@@ -27,12 +27,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.view.MenuItem;
 
 import androidx.activity.result.ActivityResult;
@@ -846,8 +846,8 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
             //getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
             shared_pref.registerOnSharedPreferenceChangeListener(this);
 
-            // Register listener to override "Restore default values" button onClick action
-            Preference button = (Preference)getPreferenceManager().findPreference(getString(R.string.settings_security_application_password));
+            // Register listener to start password activity on preference click
+            Preference button = findPreference(getString(R.string.settings_security_application_password));
             Objects.requireNonNull(button).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(@NonNull Preference preference) {
@@ -1029,6 +1029,21 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
             // Register listener to call onSharedPreferenceChanged() when a preference changes
             //getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
             shared_pref.registerOnSharedPreferenceChangeListener(this);
+
+            // Register listener to start activity with system app permissions
+            Preference button = findPreference(getString(R.string.settings_app_permissions));
+            Objects.requireNonNull(button).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", mActivity.getPackageName(), null);
+                    intent.setData(uri);
+                    mActivity.startActivity(intent);
+
+                    return false;
+                }
+            });
 
             // Check all currrent preferences values and do any custom actions (enable/disable a setting...) on preferences screen creations
             //setCurrentValues(shared_pref);

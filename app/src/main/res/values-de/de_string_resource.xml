@@ -987,6 +987,8 @@ Bitte beachten Sie die Datenschutzbestimmungen zum Umgang mit Daten und den erfo
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">Zeigen Sie die Mehrfachansicht immer im Querformat an, auch auf einem Bildschirm mit geringer Dichte</string>
         <string name="settings_device_orientation_landscape_tablet_title">Tablett-Ansicht im Querformat</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">App-Prozess nach App-Bereinigung beenden</string>
         <string name="settings_exit_clean_title">Sauber beenden</string>

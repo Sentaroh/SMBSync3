@@ -983,6 +983,8 @@
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">即使在低密度屏幕上，也始终以横向方向显示多窗格视图</string>
         <string name="settings_device_orientation_landscape_tablet_title">横向模式下的平板电脑视图</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">清理应用后杀死应用进程</string>
         <string name="settings_exit_clean_title">清洁退出</string>

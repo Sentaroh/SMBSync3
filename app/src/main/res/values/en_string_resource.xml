@@ -988,6 +988,8 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">Always display the multi-pane view in landscape orientation even on a low density screen</string>
         <string name="settings_device_orientation_landscape_tablet_title">Tablet View in Landscape Mode</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">If the application process is killed, exit cleanly</string>
         <string name="settings_exit_clean_title">Exit Cleanly</string>

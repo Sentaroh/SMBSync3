@@ -990,6 +990,8 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">Toujours afficher la vue multi-volets quand le téléphone est orienté en mode paysage, même sur les écrans de basse résolution</string>
         <string name="settings_device_orientation_landscape_tablet_title">Vue Tablette en Mode Paysage</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">Quitter proprement l\'application en cas d\'arrêt forcé</string>
         <string name="settings_exit_clean_title">Quitter Proprement</string>
