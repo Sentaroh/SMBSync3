@@ -558,7 +558,7 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
 
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_screen_theme_language), mContext);
             checkSettingValue(mUtil, shared_pref, getString(R.string.settings_display_font_scale_factor), mContext);
-            checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), mContext);
+            //checkSettingValue(mUtil, shared_pref, getString(R.string.settings_device_orientation_landscape_tablet), mContext);
         }
 
         private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
@@ -658,11 +658,11 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     mActivity.startActivity(intent);
                 }
-            } else if (key_string.equals(c.getString(R.string.settings_device_orientation_landscape_tablet))) {
-            } else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
-                boolean portrait = shared_pref.getBoolean(key_string, false);
-                Preference pref_key_tablet=findPreference(c.getString(R.string.settings_device_orientation_landscape_tablet));
-                Objects.requireNonNull(pref_key_tablet).setEnabled(!portrait);
+            } //else if (key_string.equals(c.getString(R.string.settings_device_orientation_landscape_tablet))) { }
+              else if (key_string.equals(c.getString(R.string.settings_device_orientation_portrait))) {
+                //boolean portrait = shared_pref.getBoolean(key_string, false);
+                //Preference pref_key_tablet = findPreference(c.getString(R.string.settings_device_orientation_landscape_tablet));
+                //Objects.requireNonNull(pref_key_tablet).setEnabled(!portrait);
             }
         }
     }

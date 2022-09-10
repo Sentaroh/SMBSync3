@@ -597,7 +597,7 @@ public class GlobalParameters {
 //        loadLanguagePreference(c);
         //setDisplayFontScale(c);
 
-        settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
+        //settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
 
         settingFixDeviceOrientationToPortrait = prefs.getBoolean(c.getString(R.string.settings_device_orientation_portrait), false);
 

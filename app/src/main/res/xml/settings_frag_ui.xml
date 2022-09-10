@@ -38,11 +38,13 @@
 			android:title="@string/settings_device_orientation_portrait_title"
 			android:summary="@string/settings_device_orientation_portrait_summary_ena"
 			android:singleLineTitle="false"/>
+<!--
 		<CheckBoxPreference
 			android:key="@string/settings_device_orientation_landscape_tablet"
 			android:title="@string/settings_device_orientation_landscape_tablet_title"
 			android:summary="@string/settings_device_orientation_landscape_tablet_summary_ena"
 			android:singleLineTitle="false"/>
+-->
         <ListPreference
             android:key="@string/settings_screen_theme"
             android:title="@string/settings_screen_theme_title"
