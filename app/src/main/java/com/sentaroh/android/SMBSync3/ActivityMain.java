@@ -193,20 +193,20 @@ public class ActivityMain extends AppCompatActivity {
 //        Log.v(APPLICATION_TAG, "onCreate entered");
         mActivity = ActivityMain.this;
         mContext = mActivity;
+        mGp = GlobalWorkArea.getGlobalParameter(mActivity);
+        mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
 
 //        Intent splash=new Intent(mActivity, ActivitySplash.class);
 //        startActivity(splash);
-        mGp = GlobalWorkArea.getGlobalParameter(mActivity);
+
         //GlobalParameters.setDisplayFontScale(mActivity);
         setTheme(mGp.applicationTheme);
+        mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
         mGp.setDeviceOrientation(mActivity);
 
         super.onCreate(savedInstanceState);
 
-        mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
-
         setContentView(R.layout.main_screen);
-        mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
 
         MyUncaughtExceptionHandler myUncaughtExceptionHandler = new MyUncaughtExceptionHandler();
         myUncaughtExceptionHandler.init(mContext, myUncaughtExceptionHandler);
@@ -657,7 +657,7 @@ public class ActivityMain extends AppCompatActivity {
         super.onPause();
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, currentView=" + mCurrentTab +
                 ", getChangingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
-        Thread th=new Thread() {
+        Thread th = new Thread() {
             @Override
             public void run() {
                 CommonUtilities.saveMessageList(mContext, mGp);
@@ -686,13 +686,13 @@ public class ActivityMain extends AppCompatActivity {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, isFinishing=" + isFinishing() +
                 ", changingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
 
-        mGp.appPasswordAuthValidated=false;
+        mGp.appPasswordAuthValidated = false;
         mGp.activityIsFinished = isFinishing();
 
-        mGp.callbackShowDialogWindow =null;
-        mGp.callbackHideDialogWindow =null;
-        mGp.callbackShowConfirmDialog =null;
-        mGp.callbackHideConfirmDialog =null;
+        mGp.callbackShowDialogWindow = null;
+        mGp.callbackHideDialogWindow = null;
+        mGp.callbackShowConfirmDialog = null;
+        mGp.callbackHideConfirmDialog = null;
 
         LogUtil.flushLog(mContext);
 
@@ -702,7 +702,7 @@ public class ActivityMain extends AppCompatActivity {
         System.gc();
 
         if (mGp.activityRestartRequired) {
-            mGp.activityRestartRequired=false;
+            mGp.activityRestartRequired = false;
             Handler hndl = new Handler();
             hndl.postDelayed(new Runnable() {
                 @Override
@@ -1444,7 +1444,7 @@ public class ActivityMain extends AppCompatActivity {
 
         menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(false);
         //Enable "ALL_FILE_ACCESS"
-        if (CommonUtilities.isAllFileAccessAvailable()) { //checks if Build.VERSION.SDK_INT>=30
+        if (CommonUtilities.isAllFileAccessAvailable()) { //checks if Build.VERSION.SDK_INT >= 30
             menu.findItem(R.id.menu_top_request_all_file_access_permission).setVisible(true);
         }
 
@@ -1574,7 +1574,7 @@ public class ActivityMain extends AppCompatActivity {
             return true;
         } else if (itemId == R.id.menu_top_request_all_file_access_permission) {
             //Enable "ALL_FILE_ACCESS"
-            if (Build.VERSION.SDK_INT>=30) requestAllFileAccessPermission(null);
+            if (Build.VERSION.SDK_INT >= 30) requestAllFileAccessPermission(null);
             return true;
         }
         if (isUiEnabled()) {
@@ -2121,7 +2121,7 @@ public class ActivityMain extends AppCompatActivity {
                         @Override
                         public void onCallBack(Context c, boolean positive, Object[] objects) {
                             if (positive) {
-                                mGp.activityRestartRequired=true;
+                                mGp.activityRestartRequired = true;
                                 mUtil.flushLog();
                                 mGp.settingExitClean=false;
                                 finish();
@@ -2139,9 +2139,9 @@ public class ActivityMain extends AppCompatActivity {
                     @Override
                     public void onCallBack(Context c, boolean positive, Object[] objects) {
                         if (positive) {
-                            mGp.activityRestartRequired=true;
+                            mGp.activityRestartRequired = true;
                             mUtil.flushLog();
-                            mGp.settingExitClean=false;
+                            mGp.settingExitClean = false;
                             finish();
                         }
                     }
@@ -2159,22 +2159,23 @@ public class ActivityMain extends AppCompatActivity {
         if (isJcifsOptionChanged()) {
             // app restart required
             listSettingsOption();
-            NotifyEvent ntfy=new NotifyEvent(mContext);
+            NotifyEvent ntfy = new NotifyEvent(mContext);
             ntfy.setListener(new NotifyEvent.NotifyEventListener() {
                 @Override
                 public void positiveResponse(Context context, Object[] objects) {
                     mUtil.flushLog();
-                    mGp.settingExitClean=true;
+                    mGp.settingExitClean = true;
                     finish();
                 }
                 @Override
                 public void negativeResponse(Context context, Object[] objects) {
-                    mGp.settingExitClean=true;
+                    mGp.settingExitClean = true;
                 }
             });
             mUtil.showCommonDialog(true, "W",
                     mContext.getString(R.string.msgs_smbsync_main_settings_restart_title),
-                    mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart), ntfy);
+                    mContext.getString(R.string.msgs_smbsync_main_settings_jcifs_changed_restart),
+                    ntfy);
         }
     }
 
@@ -2320,7 +2321,8 @@ public class ActivityMain extends AppCompatActivity {
                     });
                     mUtil.showCommonDialogWarn(false,
                             mContext.getString(R.string.msgs_storage_permission_all_file_access_title),
-                            mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message), ntfy_denied);
+                            mContext.getString(R.string.msgs_storage_permission_all_file_access_denied_message),
+                            ntfy_denied);
                 } else if (cbl!=null) cbl.onCallBack(mContext, true, null);
             }
         });

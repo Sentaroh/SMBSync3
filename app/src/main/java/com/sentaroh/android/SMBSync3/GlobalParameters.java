@@ -824,7 +824,7 @@ public class GlobalParameters {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         String theme_setting = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
         if (!theme_setting.equals(SCREEN_THEME_STANDARD) && !theme_setting.equals(SCREEN_THEME_LIGHT) && !theme_setting.equals(SCREEN_THEME_BLACK)) {
-            if (log.isDebugEnabled()) log.debug("getScreenTemeSetting Error: Invalid preference found: theme_setting="+theme_setting);
+            if (log.isDebugEnabled()) log.debug("getScreenTemeSetting Error: Invalid preference found: theme_setting=" + theme_setting);
             return SCREEN_THEME_STANDARD;
         }
         return theme_setting;
@@ -838,10 +838,10 @@ public class GlobalParameters {
         else return R.style.Main;
     }
 
-    final public static String SMB_LM_COMPATIBILITY_DEFAULT="3";
-    final public static String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT="30000";
-    final public static String SMB_USE_EXTENDED_SECURITY_DEFAULT="true";
-    final public static String SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT="false";
+    final public static String SMB_LM_COMPATIBILITY_DEFAULT = "3";
+    final public static String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT = "30000";
+    final public static String SMB_USE_EXTENDED_SECURITY_DEFAULT = "true";
+    final public static String SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT = "false";
 
     public String settingsSmbLmCompatibility = SMB_LM_COMPATIBILITY_DEFAULT,
             settingsSmbUseExtendedSecurity = SMB_USE_EXTENDED_SECURITY_DEFAULT,
