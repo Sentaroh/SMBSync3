@@ -115,7 +115,7 @@ public class GlobalParameters {
     public CallBackListener callbackHideConfirmDialog = null;
 
 //    public boolean themeIsLight = true;
-    public String settingScreenTheme = SCREEN_THEME_STANDARD;
+    public String settingScreenTheme = SCREEN_THEME_DEFAULT;
     public int applicationTheme = -1;
     public ThemeColorList themeColorList = null;
 
@@ -504,7 +504,7 @@ public class GlobalParameters {
         }
 
         if (!prefs.contains(c.getString(R.string.settings_screen_theme)))
-            pe.putString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+            pe.putString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_DEFAULT);
 
         if (!prefs.contains(c.getString(R.string.settings_notification_message_when_sync_ended)))
             pe.putString(c.getString(R.string.settings_notification_message_when_sync_ended),NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS);
@@ -583,7 +583,7 @@ public class GlobalParameters {
         settingNotificationVibrateWhenSyncEnded = prefs.getString(c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
         settingExportedTaskEncryptRequired = prefs.getBoolean(c.getString(R.string.settings_exported_profile_encryption), true);
 
-        settingScreenTheme =prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+        settingScreenTheme = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_DEFAULT);
         if (prefs.contains("settings_use_light_theme")) {
             boolean themeIsLight = prefs.getBoolean("settings_use_light_theme", false);
             if (themeIsLight) {
@@ -822,10 +822,10 @@ public class GlobalParameters {
     // Get screen theme setting from saved setting Preferences
     public static String getScreenTemeSetting(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String theme_setting = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+        String theme_setting = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_DEFAULT);
         if (!theme_setting.equals(SCREEN_THEME_STANDARD) && !theme_setting.equals(SCREEN_THEME_LIGHT) && !theme_setting.equals(SCREEN_THEME_BLACK)) {
             if (log.isDebugEnabled()) log.debug("getScreenTemeSetting Error: Invalid preference found: theme_setting=" + theme_setting);
-            return SCREEN_THEME_STANDARD;
+            return SCREEN_THEME_DEFAULT;
         }
         return theme_setting;
     }

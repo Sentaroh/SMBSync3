@@ -608,7 +608,7 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
                         String.format(c.getString(R.string.settings_playback_ringtone_volume_summary), vol));
                 if (mInitVolume != vol) playBackDefaultNotification(c, mActivity.getSupportFragmentManager(), vol);
             } else if (key_string.equals(c.getString(R.string.settings_screen_theme))) {
-                String tid = shared_pref.getString(key_string, SCREEN_THEME_STANDARD);
+                String tid = shared_pref.getString(key_string, SCREEN_THEME_DEFAULT);
                 String[] wl_label = c.getResources().getStringArray(R.array.settings_screen_theme_list_entries);
                 String sum_msg = wl_label[Integer.parseInt(tid)];
                 pref_key.setSummary(sum_msg);

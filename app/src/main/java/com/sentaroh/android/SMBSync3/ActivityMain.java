@@ -2117,7 +2117,7 @@ public class ActivityMain extends AppCompatActivity {
     - if we set mPrev... variables to defaults, this can trigger an app restart if the settings are set to other values than default
     - this case is handled in onActivityResult(): reloadSettingParms() is not called as settings were properly loaded on activity creation
 */
-    private String mPrevThemeSetting = null; //SCREEN_THEME_STANDARD;
+    private String mPrevThemeSetting = null; //SCREEN_THEME_DEFAULT;
     private String mPrevLanguageSetting = null; //GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
     private String mPrevFontScaleSetting = null; //GlobalParameters.FONT_SCALE_FACTOR_SETTING_DEFAULT;
     private String mPrevAppSettingsDirectory = null; //APP_SETTINGS_DIRECTORY_ROOT;
