@@ -150,7 +150,8 @@ public class ActivityMain extends AppCompatActivity {
     private final static int START_INITIALYZING = 2;
     private int appStartStaus = START_BEGINING;
 
-    private boolean appStartWithRestored =false;
+    //private boolean appStartWithRestored = false;
+    private Bundle mSavedInstanceState = null;
 
     private final Handler mUiHandler = new Handler();
 
@@ -169,13 +170,14 @@ public class ActivityMain extends AppCompatActivity {
         out.putString("currentTab", mCurrentTab);
     }
 
+    // onRestoreInstanceState() is called only when recreating activity (onCreate()) after it was killed by the OS
     @Override
     protected void onRestoreInstanceState(Bundle in) {
         super.onRestoreInstanceState(in);
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered.");
         mCurrentTab = in.getString("currentTab");
 
-        appStartWithRestored =true;
+        //appStartWithRestored = true;
     }
 
     @Override
@@ -195,6 +197,7 @@ public class ActivityMain extends AppCompatActivity {
         mContext = mActivity;
         mGp = GlobalWorkArea.getGlobalParameter(mActivity);
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
+        mSavedInstanceState = savedInstanceState;
 
 //        Intent splash=new Intent(mActivity, ActivitySplash.class);
 //        startActivity(splash);
@@ -368,12 +371,15 @@ public class ActivityMain extends AppCompatActivity {
                                     if (mGp.syncThreadActive) {
                                         mMainTabLayout.setCurrentTabByName(mTabNameMessage);
                                     }
-                                    if (!appStartWithRestored) {
+                                    //if (!appStartWithRestored) {
+                                    if (mSavedInstanceState == null) {
                                         if (mGp.syncThreadActive) mMainTabLayout.setCurrentTabByName(mTabNameMessage);
                                     } else {
                                         if (mGp.activityIsFinished) {
+                                            // ActivityMain killed in background (low memory, user changes system app permissions...)
                                             mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
                                         } else {
+                                            // ActivityMain probably killed in background by Android system developer's option "Don't keep activities"
                                             mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
                                         }
                                         mMainTabLayout.setCurrentTabByName(mTabNameMessage);
