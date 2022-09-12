@@ -88,7 +88,9 @@ public class GlobalParameters {
 
     public String externalStoragePrefix="";
 
-    public boolean activityIsFinished = true;
+    // Don't declare this variable in ActivityMain class, or it will be reset to default on app creation
+    // When app is restarted by system kill, GlobalParameters are restored on app recreated
+    public boolean activityKilledByDeveloperOption = false;
 
     public String profilePassword = "";
 

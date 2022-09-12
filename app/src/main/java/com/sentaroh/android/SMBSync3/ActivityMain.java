@@ -198,6 +198,7 @@ public class ActivityMain extends AppCompatActivity {
         mGp = GlobalWorkArea.getGlobalParameter(mActivity);
         mUtil = new CommonUtilities(mContext, "Main", mGp, getSupportFragmentManager());
         mSavedInstanceState = savedInstanceState;
+        mPrevActivityKilled = mSavedInstanceState != null;
 
 //        Intent splash=new Intent(mActivity, ActivitySplash.class);
 //        startActivity(splash);
@@ -373,14 +374,19 @@ public class ActivityMain extends AppCompatActivity {
                                     }
                                     //if (!appStartWithRestored) {
                                     if (mSavedInstanceState == null) {
+                                        // app was created on a first start
                                         if (mGp.syncThreadActive) mMainTabLayout.setCurrentTabByName(mTabNameMessage);
                                     } else {
-                                        if (mGp.activityIsFinished) {
-                                            // ActivityMain killed in background (low memory, user changes system app permissions...)
-                                            mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
-                                        } else {
+                                        // there is an onCreate() savedInstanceState bundle. App was recreated because:
+                                        // + user changes app system permissions while in Settings activity (Android calls onCreate() if app system permissions are changed)
+                                        // + system kills MainActivity while in Activity Settings because of low memory
+                                        // + advanced Android system Developer option "Don't keep activities" was enabled by user
+                                        if (mGp.activityKilledByDeveloperOption) {
                                             // ActivityMain probably killed in background by Android system developer's option "Don't keep activities"
                                             mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_smbsync_main_restart_by_destroyed));
+                                        } else {
+                                            // ActivityMain killed in background (low memory, user changes system app permissions, force stop by user)
+                                            mUtil.addLogMsg("W", "", mContext.getString(R.string.msgs_smbsync_main_restart_by_killed));
                                         }
                                         mMainTabLayout.setCurrentTabByName(mTabNameMessage);
                                     }
@@ -686,14 +692,28 @@ public class ActivityMain extends AppCompatActivity {
 //        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 //    }
 
+/*
+    onDestroy() called and isFinishing values:
+    - called if app uses finish() method
+      -> isFinishing() == true
+    - called if user quits the app (back button, clean screen from system recent apps)
+      -> isFinishing() == true
+    - called when app is killed because Android system Developer's option "Don't keep activities" is enabled and we enter another activity
+      -> isFinishing() == false !!!!
+    - not called when app killed because of:
+      + low memory
+      + user modifies system app permissions
+      + user uses system "Force stop" on the app
+*/
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, isFinishing=" + isFinishing() +
-                ", changingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
 
         mGp.appPasswordAuthValidated = false;
-        mGp.activityIsFinished = isFinishing();
+        mGp.activityKilledByDeveloperOption = !isFinishing();
+
+        mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered, activityKilledByDeveloperOption=" + mGp.activityKilledByDeveloperOption +
+                ", changingConfigurations=" + String.format("0x%08x", getChangingConfigurations()));
 
         mGp.callbackShowDialogWindow = null;
         mGp.callbackHideDialogWindow = null;
@@ -2057,14 +2077,14 @@ public class ActivityMain extends AppCompatActivity {
         public void onActivityResult(ActivityResult result) {
             //if (result.getResultCode() == Activity.RESULT_OK) {
             mUtil.addDebugMsg(1, "I", "Return from Setting activity.");
-            if (mSavedInstanceState != null) {
+            if (mPrevActivityKilled) {
                 // Activity was recreated on returning from activity settings:
                 // + user changes app system permissions while in Settings activity (Android calls onCreate() if app system permissions are changed)
                 // + system kills MainActivity while in Activity Settings because of low memory
                 // + advanced Android system Developer option "Don't keep activities" was enabled by user
                 // Android will call onCreate() in that case. However, Bundle savedInstanceState will not be null except on first app start
                 // No need to call reloadSettingParms() in that case as system settings were properly reloaded and applied during app recreation
-                mUtil.addDebugMsg(1, "I", "ActivityMain recreated on returning from Setting activity.");
+                mUtil.addDebugMsg(1, "I", "ActivityMain killed and recreated on returning from Setting activity.");
             } else {
                 reloadSettingParms();
             }
@@ -2081,6 +2101,7 @@ public class ActivityMain extends AppCompatActivity {
         mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
         mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
         mPrevAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mContext);
+        mPrevActivityKilled = false;
 
         // Start settings activity
         Intent intent = new Intent(mContext, ActivitySettings.class);
@@ -2107,6 +2128,7 @@ public class ActivityMain extends AppCompatActivity {
     - mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
     - mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
     - mPrevAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mContext);
+    - mPrevActivityKilled = false; //Only before settings app
 
     WARNING: if MainActivity onCreate() gets called (activity recreated) when returning from Settings Activity, reloadSettingParms() will get called by onActivityResult()
     - this can happen if:
@@ -2121,6 +2143,7 @@ public class ActivityMain extends AppCompatActivity {
     private String mPrevLanguageSetting = null; //GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
     private String mPrevFontScaleSetting = null; //GlobalParameters.FONT_SCALE_FACTOR_SETTING_DEFAULT;
     private String mPrevAppSettingsDirectory = null; //APP_SETTINGS_DIRECTORY_ROOT;
+    private boolean mPrevActivityKilled = false;
 
     private void reloadSettingParms() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
