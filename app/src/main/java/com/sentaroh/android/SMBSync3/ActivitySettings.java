@@ -210,6 +210,12 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
 
     @Override
     public void onBackPressed() {
+        // By default, super.onBackPressed() calls finish() but sets result to Activity.RESULT_CANCELED (val = 0)
+        // We set it to Activity.RESULT_OK (-1)
+        Intent resultInt = new Intent();
+        resultInt.putExtra("Result", "Done");
+        setResult(Activity.RESULT_OK, resultInt);
+
         super.onBackPressed();
     }
 
