@@ -2057,7 +2057,17 @@ public class ActivityMain extends AppCompatActivity {
         public void onActivityResult(ActivityResult result) {
             //if (result.getResultCode() == Activity.RESULT_OK) {
             mUtil.addDebugMsg(1, "I", "Return from Setting activity.");
-            reloadSettingParms();
+            if (mSavedInstanceState != null) {
+                // Activity was recreated on returning from activity settings:
+                // + user changes app system permissions while in Settings activity (Android calls onCreate() if app system permissions are changed)
+                // + system kills MainActivity while in Activity Settings because of low memory
+                // + advanced Android system Developer option "Don't keep activities" was enabled by user
+                // Android will call onCreate() in that case. However, Bundle savedInstanceState will not be null except on first app start
+                // No need to call reloadSettingParms() in that case as system settings were properly reloaded and applied during app recreation
+                mUtil.addDebugMsg(1, "I", "ActivityMain recreated on returning from Setting activity.");
+            } else {
+                reloadSettingParms();
+            }
             //}
         }
     });
@@ -2087,20 +2097,31 @@ public class ActivityMain extends AppCompatActivity {
 */
     }
 
-    private String mPrevThemeSetting = null; //SCREEN_THEME_STANDARD
-    private String mPrevLanguageSetting = null; //APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
+/*
+    reloadSettingParms(): Reloads settings from saved config. Called after:
+    - user changes settings in App Settings Activity: invokeSettingsActivity()
+    - user imports sync task config file: importSyncTaskAndParms()
+
+    Before calling reloadSettingParms(), you must update the below variables with current active settings before calling the method that modifies them
+    - mPrevThemeSetting = GlobalParameters.getScreenTemeSetting(mContext);
+    - mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
+    - mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
+    - mPrevAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mContext);
+
+    WARNING: if MainActivity onCreate() gets called (activity recreated) when returning from Settings Activity, reloadSettingParms() will get called by onActivityResult()
+    - this can happen if:
+      + user changes app system permissions while in Settings activity (Android calls onCreate() if app system permissions are changed)
+      + system kills MainActivity while in Activity Settings because of low memory
+      + advanced Android system Developer option "Don't keep activities" was enabled by user
+    - an NPE will occur if reloadSettingParms() is called in that case because mPrev... variables are null on app start
+    - if we set mPrev... variables to defaults, this can trigger an app restart if the settings are set to other values than default
+    - this case is handled in onActivityResult(): reloadSettingParms() is not called as settings were properly loaded on activity creation
+*/
+    private String mPrevThemeSetting = null; //SCREEN_THEME_STANDARD;
+    private String mPrevLanguageSetting = null; //GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT;
     private String mPrevFontScaleSetting = null; //GlobalParameters.FONT_SCALE_FACTOR_SETTING_DEFAULT;
     private String mPrevAppSettingsDirectory = null; //APP_SETTINGS_DIRECTORY_ROOT;
 
-    // reloads settings from saved config. Called after:
-    // - user changes settings in App Settings Activity: invokeSettingsActivity()
-    // - user imports sync task config file: importSyncTaskAndParms()
-    //
-    // Before calling reloadSettingParms(), you must update the below variables with current active settings before calling the method that modifies them
-    // - mPrevThemeSetting = GlobalParameters.getScreenTemeSetting(mContext);
-    // - mPrevLanguageSetting = GlobalParameters.getLanguageCode(mContext);
-    // - mPrevFontScaleSetting = GlobalParameters.getFontScaleFactorSetting(mContext);
-    // - mPrevAppSettingsDirectory = GlobalParameters.getAppManagementDirSetting(mContext);
     private void reloadSettingParms() {
         mUtil.addDebugMsg(1, "I", CommonUtilities.getExecutedMethodName() + " entered");
 
