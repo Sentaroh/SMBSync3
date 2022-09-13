@@ -989,6 +989,9 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="settings_device_orientation_landscape_tablet_title">Vista in tavoletta in modalità Paesaggio</string>
         <string name="settings_app_permissions">settings_app_permissions</string>
         <string name="settings_app_permissions_title">Open app permissions</string>
+        <string name="settings_storage_permission">settings_storage_permission</string>
+        <string name="settings_storage_permission_title_granted">Storage permission granted</string>
+        <string name="settings_storage_permission_title_denied">Storage permission denied</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">Se il processo di applicazione viene interrotto, uscire in modo pulito</string>
         <string name="settings_exit_clean_title">Uscire in modo pulito</string>

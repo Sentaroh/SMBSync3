@@ -990,6 +990,9 @@
         <string name="settings_device_orientation_landscape_tablet_title">Вид планшета в ландшафтном режиме</string>
         <string name="settings_app_permissions">settings_app_permissions</string>
         <string name="settings_app_permissions_title">Open app permissions</string>
+        <string name="settings_storage_permission">settings_storage_permission</string>
+        <string name="settings_storage_permission_title_granted">Storage permission granted</string>
+        <string name="settings_storage_permission_title_denied">Storage permission denied</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">Убить процесс приложения после очистки приложения</string>
         <string name="settings_exit_clean_title">Выход посли очистки</string>

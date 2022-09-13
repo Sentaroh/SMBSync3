@@ -23,6 +23,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -1014,6 +1016,14 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
         private Context mContext = null;
         private CommonUtilities mUtil = null;
 
+        ActivityResultLauncher<String> requestPermissionLaunchLegacyStorage = registerForActivityResult(new ActivityResultContracts.RequestPermission(),
+                new ActivityResultCallback<Boolean>() {
+            @Override
+            public void onActivityResult(Boolean result) {
+                checkStoragePreferenceState();
+            }
+        });
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             mActivity = (ActivitySettings)getActivity();
@@ -1037,8 +1047,8 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
             shared_pref.registerOnSharedPreferenceChangeListener(this);
 
             // Register listener to start activity with system app permissions
-            Preference button = findPreference(getString(R.string.settings_app_permissions));
-            Objects.requireNonNull(button).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            Preference app_perms_pref = findPreference(getString(R.string.settings_app_permissions));
+            Objects.requireNonNull(app_perms_pref).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(@NonNull Preference preference) {
                     Intent intent = new Intent();
@@ -1046,6 +1056,22 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
                     Uri uri = Uri.fromParts("package", mActivity.getPackageName(), null);
                     intent.setData(uri);
                     mActivity.startActivity(intent);
+
+                    return false;
+                }
+            });
+
+            // Register listener to start activity with system app permissions
+            Preference storage_perms_pref = findPreference(getString(R.string.settings_storage_permission));
+            Objects.requireNonNull(storage_perms_pref).setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(@NonNull Preference preference) {
+                    if (Build.VERSION.SDK_INT >= 30) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                        mActivity.startActivity(intent);
+                    } else {
+                        requestPermissionLaunchLegacyStorage.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    }
 
                     return false;
                 }
@@ -1109,7 +1135,30 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
             shared_pref.unregisterOnSharedPreferenceChangeListener(this);
         }
 
+        private void checkStoragePreferenceState() {
+            Preference pref_key = findPreference(getString(R.string.settings_storage_permission));
+            Objects.requireNonNull(pref_key);
+            if (Build.VERSION.SDK_INT < 30) {
+                if (ActivityMain.isLegacyStorageAccessGranted(mActivity)) {
+                    pref_key.setEnabled(false);
+                    pref_key.setTitle(mContext.getString(R.string.settings_storage_permission_title_granted));
+                } else {
+                    pref_key.setEnabled(true);
+                    pref_key.setTitle(mContext.getString(R.string.settings_storage_permission_title_denied));
+                }
+            } else {
+                pref_key.setEnabled(true);
+                if (ActivityMain.isAllFileAccessPermissionGranted()) {
+                    pref_key.setTitle(mContext.getString(R.string.settings_storage_permission_title_granted));
+                } else {
+                    pref_key.setTitle(mContext.getString(R.string.settings_storage_permission_title_denied));
+                }
+            }
+        }
+
         private void checkSettingValue(CommonUtilities ut, SharedPreferences shared_pref, String key_string, Context c) {
+            checkStoragePreferenceState();
+
             if (key_string.equals(c.getString(R.string.settings_exit_clean))) {
             }
         }

@@ -295,7 +295,7 @@ public class ActivityMain extends AppCompatActivity {
                     initApplication();
                 }
             } else {
-                if (isLegacyStorageAccessGranted()) {
+                if (isLegacyStorageAccessGranted(mActivity)) {
                     initApplication();
                 } else {
                     requestLegacyStoragePermission(new CallBackListener(){
@@ -700,8 +700,9 @@ public class ActivityMain extends AppCompatActivity {
       -> isFinishing() == true
     - called when app is killed because Android system Developer's option "Don't keep activities" is enabled and we enter another activity
       -> isFinishing() == false !!!!
+    - called when app is killed by system for example because of low memory
+      -> isFinishing() == false !!!!
     - not called when app killed because of:
-      + low memory
       + user modifies system app permissions
       + user uses system "Force stop" on the app
 */
@@ -2271,8 +2272,8 @@ public class ActivityMain extends AppCompatActivity {
                 "");
     }
 
-    private boolean isLegacyStorageAccessGranted() {
-        return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    public static boolean isLegacyStorageAccessGranted(Activity a) {
+        return a.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     // not used
@@ -2443,7 +2444,7 @@ public class ActivityMain extends AppCompatActivity {
 
     //Build.VERSION.SDK_INT>=30
     @RequiresApi(api = Build.VERSION_CODES.R)
-    private boolean isAllFileAccessPermissionGranted() {
+    public static boolean isAllFileAccessPermissionGranted() {
         return Environment.isExternalStorageManager();
     }
 
