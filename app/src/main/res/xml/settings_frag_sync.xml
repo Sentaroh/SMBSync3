@@ -56,7 +56,7 @@
             android:summary="@string/settings_suppress_shortcut3_confirmation_message_summary_ena"
             android:singleLineTitle="false"/>
 
-        <EditTextPreference
+        <com.sentaroh.android.Utilities3.Preference.ListEditPreference
             android:key="@string/settings_no_compress_file_type"
             android:title="@string/settings_no_compress_file_type_title"
             app:hint="@string/settings_no_compress_file_type_hint"

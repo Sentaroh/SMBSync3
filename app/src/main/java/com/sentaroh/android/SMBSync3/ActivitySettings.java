@@ -45,6 +45,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentManager.OnBackStackChangedListener;
@@ -55,6 +56,8 @@ import androidx.preference.PreferenceFragmentCompat.OnPreferenceStartFragmentCal
 import androidx.preference.PreferenceManager;
 
 import com.sentaroh.android.Utilities3.Dialog.MessageDialogAppFragment;
+import com.sentaroh.android.Utilities3.Preference.ListEditPreferenceDialogFragment;
+import com.sentaroh.android.Utilities3.Preference.ListEditPreference;
 import com.sentaroh.android.Utilities3.SafFile3;
 import com.sentaroh.android.Utilities3.SafManager3;
 
@@ -376,6 +379,29 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
             // Check all currrent preferences values and do any custom actions (enable/disable a setting...) on preferences screen creations
             setCurrentValues(shared_pref);
         }
+
+    private static final String DIALOG_FRAGMENT_TAG = "ListEditPreferenceDialogFragment.DIALOG";
+    @Override
+    public void onDisplayPreferenceDialog(@NonNull Preference preference) {
+        // check if dialog is already showing
+        if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+            return;
+        }
+
+        final DialogFragment f;
+
+        if (preference instanceof ListEditPreference) {
+            f = ListEditPreferenceDialogFragment.newInstance(preference.getKey());
+        } else
+            f = null;
+
+        if (f != null) {
+            f.setTargetFragment(this, 0);
+            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+        } else {
+            super.onDisplayPreferenceDialog(preference);
+        }
+    }
 
         /*
          * Listener when the preferences change
