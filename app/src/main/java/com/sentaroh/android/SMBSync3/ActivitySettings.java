@@ -380,28 +380,41 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
             setCurrentValues(shared_pref);
         }
 
-    private static final String DIALOG_FRAGMENT_TAG = "ListEditPreferenceDialogFragment.DIALOG";
-    @Override
-    public void onDisplayPreferenceDialog(@NonNull Preference preference) {
-        // check if dialog is already showing
-        if (getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
-            return;
+        private static final String DIALOG_FRAGMENT_TAG = "ListEditPreferenceDialogFragment.DIALOG";
+        //@SuppressWarnings("deprecation")
+        @Override
+        public void onDisplayPreferenceDialog(@NonNull Preference preference) {
+            // check if dialog is already showing
+            if (mActivity.getSupportFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG) != null) {
+                return;
+            }
+
+            // Try if the preference is one of our custom Preferences
+            final DialogFragment fragment;
+            if (preference instanceof ListEditPreference) {
+                // Create a new instance of ListEditPreferenceDialogFragment with the key of the related preference
+                fragment = ListEditPreferenceDialogFragment.newInstance(preference.getKey());
+            } else {
+                fragment = null;
+            }
+
+            if (fragment != null) {
+                // The dialog was created (it was one of our custom Preferences), show the dialog for it
+                /*
+                    Deprecated setTargetFragment() must be implemented because source file PreferenceDialogFragmentCompat.java
+                    implements @SuppressWarnings("deprecation") in onCreate() for deprecated getTargetFragment() method
+                    Else, we get JavaExcption error "Target fragment must implement TargetFragment interface"
+                    Until PreferenceDialogFragmentCompat.java adds an alternative, we're stuck to using setTargetFragment() deprecated method here
+                    https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-preference-release/preference/preference/src/main/java/androidx/preference/PreferenceDialogFragmentCompat.java#78
+                */
+                fragment.setTargetFragment(this, 0);
+                fragment.show(mActivity.getSupportFragmentManager(), DIALOG_FRAGMENT_TAG);
+            } else {
+                // Dialog creation could not be handled here (another preference not instance of our custom ListEditPreference.
+                // Try with the super method to show regular preferences
+                super.onDisplayPreferenceDialog(preference);
+            }
         }
-
-        final DialogFragment f;
-
-        if (preference instanceof ListEditPreference) {
-            f = ListEditPreferenceDialogFragment.newInstance(preference.getKey());
-        } else
-            f = null;
-
-        if (f != null) {
-            f.setTargetFragment(this, 0);
-            f.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-        } else {
-            super.onDisplayPreferenceDialog(preference);
-        }
-    }
 
         /*
          * Listener when the preferences change
