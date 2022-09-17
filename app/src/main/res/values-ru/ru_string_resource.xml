@@ -1006,6 +1006,7 @@
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Не сжимать эти типы файлов</string>
         <string name="settings_no_compress_file_type_hint">Тип файла</string>
+        <string name="settings_no_compress_file_type_dialog_title">Non compressed file types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Выберите тип уведомления</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">

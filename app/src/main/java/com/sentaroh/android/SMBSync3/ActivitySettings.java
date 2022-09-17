@@ -393,7 +393,12 @@ public class ActivitySettings extends AppCompatActivity implements OnPreferenceS
             final DialogFragment fragment;
             if (preference instanceof ListEditPreference) {
                 // Create a new instance of ListEditPreferenceDialogFragment with the key of the related preference
-                fragment = ListEditPreferenceDialogFragment.newInstance(preference.getKey());
+                String dialog_title = "";
+                if (preference.getKey().equals(getString(R.string.settings_no_compress_file_type))) {
+                    dialog_title = mContext.getString(R.string.settings_no_compress_file_type_dialog_title);
+                }
+
+                fragment = ListEditPreferenceDialogFragment.newInstance(preference.getKey(), dialog_title);
             } else {
                 fragment = null;
             }

@@ -1005,6 +1005,7 @@ Si prega di fare riferimento all\'Informativa sulla privacy per il trattamento d
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Non comprimere questi tipi di file</string>
         <string name="settings_no_compress_file_type_hint">Tipo di file</string>
+        <string name="settings_no_compress_file_type_dialog_title">Non compressed file types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Selezionare le notifiche da visualizzare</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
