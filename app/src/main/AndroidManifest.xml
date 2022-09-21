@@ -1,7 +1,6 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.sentaroh.android.SMBSync3">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
@@ -59,12 +58,12 @@
         </receiver>
 
         <activity
-            android:label="@string/app_name"
             android:name=".ActivityMain"
             android:launchMode="standard"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified"
-            android:alwaysRetainTaskState="true">
+            android:alwaysRetainTaskState="true"
+            android:exported="true">
 
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -79,7 +78,6 @@
 
         <activity
             android:name=".ActivitySettings"
-            android:label="@string/app_name"
             android:screenOrientation="unspecified"
             android:icon="@drawable/smbsync">
 
@@ -91,7 +89,6 @@
 
         <activity
             android:name=".ActivityPasswordSettings"
-            android:label="@string/app_name"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|layoutDirection|fontScale"
             android:screenOrientation="unspecified"
             android:icon="@drawable/smbsync"
@@ -99,13 +96,13 @@
         </activity>
 
         <activity
-            android:label="@string/app_name"
             android:name=".ActivityIntentHandler"
             android:theme="@android:style/Theme.Translucent"
             android:launchMode="singleTop"
             android:taskAffinity=".ActivityIntentHandler"
             android:screenOrientation="unspecified"
-            android:excludeFromRecents="true">
+            android:excludeFromRecents="true"
+            android:exported="true">
 
             <intent-filter >
                 <action android:name="${applicationId}.ACTION_START_SYNC"/>
