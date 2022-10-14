@@ -710,10 +710,9 @@ public class SyncThread extends Thread {
                 }
             }
             mStwa.util.addDebugMsg(1,"I","Source SMB Address reachable="+reachable+", addr="+sti.getSourceSmbHost());
+            // Mod: Source is SMB: fix SMB sync error message displaying url:port:port error instead of url:port
             if (!reachable) {
-                String msg="";
-                if (sti.getSourceSmbPort().equals("")) msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.sourceSmbHost);
-                else msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.sourceSmbHost +":"+sti.getSourceSmbPort());
+                String msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.sourceSmbHost);
                 showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", msg);
                 mGp.syncThreadCtrl.setThreadMessage(msg);
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -739,22 +738,22 @@ public class SyncThread extends Thread {
             }
             mStwa.destinationSmbHost =CommonUtilities.buildSmbUrlAddressElement(sti.getDestinationSmbHost(), sti.getDestinationSmbPort());
             boolean reachable=false;
+            // Mod: fix SMB sync unable to connect when setting a custom port in target
             if (sti.getDestinationSmbPort().equals("")) {
-                reachable=CommonUtilities.canSmbHostConnectable(mStwa.destinationSmbHost);
+                reachable=CommonUtilities.canSmbHostConnectable(sti.getDestinationSmbHost());
             } else {
                 try {
                     int port_no=Integer.valueOf(sti.getDestinationSmbPort());
-                    reachable=CommonUtilities.canSmbHostConnectable(mStwa.destinationSmbHost, port_no);
+                    reachable=CommonUtilities.canSmbHostConnectable(sti.getDestinationSmbHost(), port_no);
                 } catch(Exception e) {
                     mStwa.util.addDebugMsg(1,"I","Invalid Destination SMB port number="+sti.getDestinationSmbPort());
-                    reachable=CommonUtilities.canSmbHostConnectable(mStwa.destinationSmbHost);
+                    reachable=CommonUtilities.canSmbHostConnectable(sti.getDestinationSmbHost());
                 }
             }
             mStwa.util.addDebugMsg(1,"I","Destination SMB Address reachable="+reachable+", addr="+mStwa.destinationSmbHost);
             if (!reachable) {
-                String msg="";
-                if (sti.getDestinationSmbPort().equals("")) msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.destinationSmbHost);
-                else msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.destinationSmbHost +":"+sti.getDestinationSmbPort());
+                // Mod: Target is SMB: fix SMB sync error message displaying url:port:port error instead of url:port
+                String msg=mStwa.appContext.getString(R.string.msgs_mirror_smb_addr_not_connected, mStwa.destinationSmbHost);
                 showMsg(mStwa, true, mStwa.currentSTI.getSyncTaskName(), "E", "", "", msg);
                 mGp.syncThreadCtrl.setThreadMessage(msg);
                 sync_result = SyncTaskItem.SYNC_RESULT_STATUS_ERROR;
@@ -1289,14 +1288,14 @@ public class SyncThread extends Thread {
         return true;
     }
 
-//    static public boolean canAccessLocalDirectory(String path) {
+//    static public boolean canAccessLocalDirectory(String path, GlobalParameters gp) {
 //        boolean result=true;
 //        if (path.endsWith(".android_secure")) result=false;
 //        else {
 //            if (Build.VERSION.SDK_INT>=30) {
 //                String[] fp_array=path.split("/");
-//                if (path.startsWith("/storage/emulated/0")) {
-//                    String abs_dir=path.replace("/storage/emulated/0", "");
+//                if (path.startsWith(gp.externalStoragePrefix)) {
+//                    String abs_dir=path.replace(gp.externalStoragePrefix, "");
 //                    if (!abs_dir.equals("")) {
 //                        if (abs_dir.startsWith("/Android/data") || abs_dir.startsWith("/Android/obb")) {
 //                            result=false;

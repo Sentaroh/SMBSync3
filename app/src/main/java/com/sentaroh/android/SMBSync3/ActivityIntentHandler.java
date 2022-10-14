@@ -51,7 +51,7 @@ public class ActivityIntentHandler extends Activity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(GlobalParameters.setNewLocale(base));
+        super.attachBaseContext(GlobalParameters.setLocaleAndMetrics(base));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class ActivityIntentHandler extends Activity {
         if (mGp == null) {
             mGp =GlobalWorkArea.getGlobalParameter(c);
         }
-        if (mUtil == null) mUtil = mUtil = new CommonUtilities(c, "IntentHandler", mGp, null);
+        if (mUtil == null) mUtil = new CommonUtilities(c, "IntentHandler", mGp, null);
 
         mGp.loadConfigList(c, mUtil);
 
@@ -72,7 +72,6 @@ public class ActivityIntentHandler extends Activity {
         if (received_intent.getAction()!=null && !received_intent.getAction().equals("")) {
             if (received_intent.getAction().equals(QUERY_SYNC_TASK_INTENT)) {
                 querySyncTask(c, received_intent);
-                finish();
             } else {
                 String action=received_intent.getAction();
                 String task_list=received_intent.getStringExtra(START_SYNC_EXTRA_PARM_SYNC_TASK);
@@ -81,8 +80,8 @@ public class ActivityIntentHandler extends Activity {
                 } else {
                     SyncWorker.startSyncWorkerByAction(c, mGp, mUtil, action, "", task_list);
                 }
-                finish();
             }
+            finish();
         }
     }
 
@@ -98,7 +97,8 @@ public class ActivityIntentHandler extends Activity {
     }
 
     private void querySyncTask(Context c, Intent in) {
-        String reply_list = "", sep = "";
+        StringBuilder reply_list = new StringBuilder();
+        String sep = "";
         String task_type = QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO;
         if (in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE) != null)
             task_type = in.getStringExtra(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE);
@@ -109,24 +109,24 @@ public class ActivityIntentHandler extends Activity {
                 SyncTaskItem sti = mGp.syncTaskList.get(i);
                 if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_TEST.toLowerCase())) {
                     if (sti.isSyncTestMode()) {
-                        reply_list += sep + sti.getSyncTaskName();
+                        reply_list.append(sep).append(sti.getSyncTaskName());
                         sep = NAME_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_AUTO.toLowerCase())) {
                     if (sti.isSyncTaskAuto()) {
-                        reply_list += sep + sti.getSyncTaskName();
+                        reply_list.append(sep).append(sti.getSyncTaskName());
                         sep = NAME_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_MANUAL.toLowerCase())) {
                     if (!sti.isSyncTaskAuto()) {
-                        reply_list += sep + sti.getSyncTaskName();
+                        reply_list.append(sep).append(sti.getSyncTaskName());
                         sep = NAME_LIST_SEPARATOR;
                         reply_count++;
                     }
                 } else if (task_type.toLowerCase().equals(QUERY_SYNC_TASK_EXTRA_PARM_TASK_TYPE_ALL.toLowerCase())) {
-                    reply_list += sep + sti.getSyncTaskName();
+                    reply_list.append(sep).append(sti.getSyncTaskName());
                     sep = NAME_LIST_SEPARATOR;
                     reply_count++;
                 }
@@ -134,7 +134,7 @@ public class ActivityIntentHandler extends Activity {
         }
         Intent reply = new Intent(REPLY_SYNC_TASK_INTENT);
         reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_COUNT, reply_count);
-        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY, reply_list);
+        reply.putExtra(REPLY_SYNC_TASK_EXTRA_PARM_SYNC_ARRAY, reply_list.toString());
         mUtil.addDebugMsg(1, "I", "query result, count="+reply_count+", list=["+reply_list+"]");
         c.sendBroadcast(reply);
     }

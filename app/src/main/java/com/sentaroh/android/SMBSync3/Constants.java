@@ -120,6 +120,11 @@ public class Constants {
     public static final String SCREEN_THEME_STANDARD = String.valueOf(ThemeUtil.THEME_DEFAULT);
     public static final String SCREEN_THEME_LIGHT = String.valueOf(ThemeUtil.THEME_LIGHT);
     public static final String SCREEN_THEME_BLACK = String.valueOf(ThemeUtil.THEME_BLACK);
+    public static final String SCREEN_THEME_DEFAULT = SCREEN_THEME_STANDARD;
+
+	public static final String APP_SETTINGS_DIRECTORY_ROOT = "0";
+	public static final String APP_SETTINGS_DIRECTORY_APP_SPECIFIC_INTERNAL = "1";
+	public static final String APP_SETTINGS_DIRECTORY_STORAGE = "2";
 
     public static final String STORED_SECRET_KEY_VALIDATION_KEY ="stored_secret_key_validation_key";
 

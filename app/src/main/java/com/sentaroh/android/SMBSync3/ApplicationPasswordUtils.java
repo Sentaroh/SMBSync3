@@ -65,13 +65,15 @@ public class ApplicationPasswordUtils {
 
     final static private long APPLICATION_PASSWORD_VALIDITY_PERIOD =30*60*1000;//30 Min
 
-    private static final String APPLICATION_PASSWORD_HASH_VALUE = "settings_application_password_hash_value";
+    private static final String APPLICATION_PASSWORD_HASH_PREFERENCE_KEY = "settings_application_password_hash_value";
+    private static final String APPLICATION_PASSWORD_HASH_PREFERENCE_DEFAULT_VALUE = "";
+
     static public String getPasswordHashValue(SharedPreferences prefs) {
-        return prefs.getString(APPLICATION_PASSWORD_HASH_VALUE, "");
+        return prefs.getString(APPLICATION_PASSWORD_HASH_PREFERENCE_KEY, APPLICATION_PASSWORD_HASH_PREFERENCE_DEFAULT_VALUE);
     }
 
     static public void savePasswordHashValue(GlobalParameters gp, SharedPreferences prefs, String hv) {
-        prefs.edit().putString(APPLICATION_PASSWORD_HASH_VALUE, hv).commit();
+        prefs.edit().putString(APPLICATION_PASSWORD_HASH_PREFERENCE_KEY, hv).commit();
         gp.settingSecurityApplicationPasswordHashValue=hv;
     }
 
@@ -159,7 +161,7 @@ public class ApplicationPasswordUtils {
         tv_msg.setText(mActivity.getString(R.string.msgs_security_application_password_auth_specify_password));
         final CheckedTextView ctv_prot=(CheckedTextView)dialog.findViewById(R.id.password_input_ctv_protect);
         ctv_prot.setVisibility(CheckedTextView.GONE);
-        final TextInputLayout ll_pswd1=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
+        //final TextInputLayout ll_pswd1=(TextInputLayout)dialog.findViewById(R.id.password_input_password_view);
         final TextInputEditText et_pswd1=(TextInputEditText)dialog.findViewById(R.id.password_input_password);
         final TextInputLayout ll_pswd2=(TextInputLayout)dialog.findViewById(R.id.password_input_password_confirm_view);
         final TextInputEditText et_pswd2=(TextInputEditText)dialog.findViewById(R.id.password_input_password_confirm);

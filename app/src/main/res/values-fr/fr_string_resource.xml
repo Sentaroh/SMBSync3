@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Fonctions</string>
         <string name="msgs_about_dlg_privacy_btn">Confidentialité</string>
         <string name="msgs_about_dlg_change_btn">Historique des modifications</string>
-        <string name="msgs_dlg_title_about">À propos de SMBSync3</string>
+        <string name="msgs_dlg_title_about">À propos de SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_FR_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_FR_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -108,7 +108,7 @@
         <string name="msgs_delete_following_profile">Supprimer les tâches suivantes ?</string>
         <string name="msgs_dir_empty">Dossier non trouvé</string>
         <string name="msgs_duplicate_task_name">Une tâche de synchronisation du même nom existe.</string>
-        <string name="msgs_sync_task_name_length_invalid">Le nom de la tâche ne doit pas dépasser %s caractères</string>
+        <string name="msgs_sync_task_name_length_invalid">Le nom de la tâche ne doit pas dépasser %d caractères</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">Lorsqu\'une tâche est renommée, le nom de la tâche dans l\'horaire/le groupe est également modifié.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">Lorsque la tâche est supprimée, le nom de la tâche dans l\'annexe/le groupe est également supprimé.</string>
         <string name="msgs_task_name_contains_invalid_character">Le nom de la tâche contient des caractères non valides: \"%s\"</string>
@@ -302,12 +302,17 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_task_edit_sync_folder_dlg_search_smb_server_and_configure">Trouver et configurer le serveur SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parameters">Modifier les paramètres du serveur SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_select_smb_share_name">Choisir le nom de l\'action SMB</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Autorisez le compte ou indiquez le nom correct du compte et appuyez sur le bouton \"Rafraîchir la liste des actions\".</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">Un nom de compte qui ne peut pas se connecter est spécifié. Indiquez le nom de compte correct et cliquez sur le bouton \"Rafraîchir la liste des actions\".</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">Le nom de compte ou le mot de passe est incorrect. Indiquez le nom de compte et le mot de passe corrects et cliquez sur le bouton \"Rafraîchir la liste des actions\".</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Le nom de compte ou le mot de passe n\'est pas précisé. Indiquez le nom de compte et le mot de passe corrects et cliquez sur le bouton \"Rafraîchir la liste des actions\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Autorisez le compte ou indiquez le nom correct du compte et appuyez sur le bouton \"Actualiser les dossiers partagés\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">Un nom de compte qui ne peut pas se connecter est spécifié. Indiquez le nom de compte correct et cliquez sur le bouton \"Actualiser les dossiers partagés\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">Le nom de compte ou le mot de passe est incorrect. Indiquez le nom de compte et le mot de passe corrects et cliquez sur le bouton \"Actualiser les dossiers partagés\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Connexion échouée. Le nom d\'utilisateur ou le mot de passe ne sont pas spécifiés. Saisisez le compte et le mot de passe, puis appuyer sur \"Actualiser les dossiers partagés\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty">Saisisez le nom d\'utilisateur et le mot de passe, puis appuyer sur \"Actualiser les dossiers partagés\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares">Appuyer sur \"Actualiser les dossiers partagés\" et sélectionnez un partage.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error">Connection failed: ensure server is online or specify the proper port and SMB protocol</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty">No shares found. Try another account or ensure the account has the proper permissions to list the shares</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error">Server does not support any SMB level. Please restart scan and report error to author</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Choisir les paramètres du serveur SMB</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Rafraîchir la liste des actions</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Actualiser les dossiers partagés</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">Compte et mot de passe du serveur SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_port_number">Numéro de port</string>
         <string name="msgs_task_edit_sync_folder_dlg_remote_smb_password">Mot de passe</string>
@@ -511,9 +516,10 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_smbsync_main_restart_by_killed">L\'application a été redémarrée après un arrêt forcé lors de son passage en arrière-plan.</string>
         <string name="msgs_smbsync_main_settings_restart_title">Redémarrage de l\'application</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">La configuration SMBv1 a été modifiée. Ce changement ne sera pas effectif avant le redémarrage de l\'application. Redémarrer l\'application maintenant ?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">Il est recommandé de redémarrer l\'application après avoir changé de thème ou de langue. Appuyer sur \"Redémarrer\" pour la relancer maintenant. Dans le cas contraire, appuyer sur   \"Plus tard\".</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Plus tard</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Redémarrer</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">Il est recommandé de redémarrer l\'application après avoir changé de thème, de langue ou de police. Appuyer sur \"Redémarrer\" pour la relancer maintenant. Dans le cas contraire, appuyer sur   \"Plus tard\".</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">Plus tard</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">Redémarrer</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">Après avoir changé le dossier des paramètres de l\'application, un redémarrage est nécessaire pour assurer l\'affichage des prochains messages et historique de synchronisation. Appuyer sur Oui pour redémarrer maintenant.</string>
         <string name="msgs_smbsync_main_start">Application démarrée.</string>
         <string name="msgs_smnsync_main_kill_application">Forcer l\'arrêt de l\'application?</string>
         <string name="msgs_specify_task_name">Choisir un nom pour la nouvelle tâche</string>
@@ -559,7 +565,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_menu_show_battery_optimization_screen">Optimiser la batterie</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archivage annulé par l\'utilisateur]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">La date de capture de l\'image ne peut pas être obtenue depuis l\'entête EXIF. Utiliser la date de mise à jour du fichier image? (Désactiver l\'option \"Confirmer\" de la tâche pour ne plus afficher ce message)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Copie annulée par l\'utilisateur]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confirmer le remplacement du fichier \n%s\n(Désactiver l\'option \"Confirmer avant de remplacer/supprimer\" de la tâche pour pour ne plus afficher ce message)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Suppression annulée par l\'utilisateur]</string>
@@ -656,9 +662,11 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_scan_ip_address_scan_btn">Rechercher</string>
         <string name="msgs_scan_ip_address_press_scan_btn">Spécifier la plage d\'addresses IP, puis appuyer sur Rechercher</string>
         <string name="msgs_scan_ip_address_not_detected">Aucun serveur SMB trouvé.</string>
-        <string name="msgs_scan_ip_address_select_detected_host">Sélectionner le nom d\'hôte ou l\'addresse IP dans les résultats de recherche.</string>
-        <string name="msgs_scan_ip_address_scan_result_title">Résultats de recherche</string>
-        <string name="msgs_ip_address_scan_progress">Recherche du serveur SMB… %s%% terminé.</string>
+        <string name="msgs_scan_ip_address_select_detected_host">Selectionner un serveur dans les résultats de recherches ou bien modifier les paramètres pour une nouvelle recherche</string>
+        <string name="msgs_scan_ip_address_scan_result_title">Résultats de recherche :</string>
+        <string name="msgs_ip_address_scan_progress_ip_range">Scanning %1$s.%2$d -> %3$d</string>
+        <string name="msgs_ip_address_scan_progress_percent">Recherche du serveur SMB… %d%% terminé.</string>
+        <string name="msgs_ip_address_range_select_title">Selectionner l\'intervalle IP à scanner</string>
         <string name="msgs_ip_address_range_dlg_begin">Début</string>
         <string name="msgs_ip_address_range_dlg_end">Fin</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">Spécifier le début de la plage d\'addresses.</string>
@@ -668,10 +676,16 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">L\'addresse de fin doit être comprise entre 2 et 254.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">L\'adresse de fin doit être plus grande que l\'adresse de début.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Impossible d\'effectuer une recherche autre que les adresses privées.</string>
+        <string name="msgs_scan_dlg_smb_protocol">Protocole SMB</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Selectionner le protocole SMB</string>
+        <string name="scan_smb_server_scan_dlg_port_number_title">Scanner le numéro de port</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">par défaut 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">La recherche n\'est pas possible car le WiFi est désactivé. Veuillez activer le WiFi pour rechercher votre serveur SMB.</string>
         <string name="msgs_progress_dlg_canceling">Annulation…</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Obtention de la liste des fichiers…</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">Annuler</string>
+        <string name="msgs_scan_smb_server_parm_dlg_smb_port_hint">Server port number</string>
+        <string name="msgs_scan_smb_server_scan_dlg_scan_error">A JcifsException occured during scan, check logs for more info !</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Planifier</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">Nom de l\'annexe</string>
@@ -887,8 +901,8 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">NUMÉRO DE LA SEMAINE</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">JOUR DE SEMAINE (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">JOUR DE SEMAINE (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">JOUR DE SEMAINE\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">JOUR DE SEMAINE\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Changé en dossier local car le dossier ZIP ne peut pas être utilisé lorsque la méthode de synchronisation est l\'archive.</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">La requête a été ignorée car les fichiers ZIP ne peuvent pas être utilisés comme destination pour une synchronisation de type Archive.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Année</string>
@@ -924,6 +938,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="msgs_storage_permission_all_file_access_error_message">L\'écran d\'autorisation \"Accès à tous les fichiers\" n\'a pas pu être affiché.\nErreur=%s</string>
     <!-- Setting main -->
         <string name="settings_security_title">Sécurité</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">Mot de Passe de l\'Application</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">Spécifier le niveau de sécurité</string>
@@ -953,12 +968,33 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">N\'affichez pas le bouton \"Afficher le mot de passe\" sur l\'écran de synchronisation des modifications</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Choisir l\'emplacement pour les paramètres de l\'application (Redémarrage nécessaire !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Racine (/data/data)</item>
+            <item>Dossier de l\'application (/Android/data)</item>
+            <item>Stockage interne</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">Les paramètres sont enregistrés sous:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">Les paramètres sont enregistrés sous:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_storage">Les paramètres sont enregistrés sous:\n%s</string>
+        <string name="settings_security_app_settings_directory_title">Dossier des paramètres de l\'application</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Afficher l\'application en mode portrait</string>
         <string name="settings_device_orientation_portrait_title">Forcer le Mode Portrait</string>
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">Toujours afficher la vue multi-volets quand le téléphone est orienté en mode paysage, même sur les écrans de basse résolution</string>
         <string name="settings_device_orientation_landscape_tablet_title">Vue Tablette en Mode Paysage</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
+        <string name="settings_storage_permission">settings_storage_permission</string>
+        <string name="settings_storage_permission_title_granted">Storage permission granted</string>
+        <string name="settings_storage_permission_title_denied">Storage permission denied</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">Quitter proprement l\'application en cas d\'arrêt forcé</string>
         <string name="settings_exit_clean_title">Quitter Proprement</string>
@@ -967,10 +1003,12 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_force_screen_on_while_sync_summary_ena">Quitter la mise en veille et maintenir l\'écran allumé au démarrage de la synchronisation (activer si la sync ne démarre pas ou qu\'elle est interrompue par la mise en veille)</string>
         <string name="settings_force_screen_on_while_sync_title">Allumer l\'Ecran</string>
         <string name="settings_main_title">Paramètres</string>
-        <string name="settings_misc_title">Divers</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Ne pas Compresser ces Types de Fichiers</string>
         <string name="settings_no_compress_file_type_hint">Type de fichier</string>
+        <string name="settings_no_compress_file_type_dialog_title">Non compressed file types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Sélectionner les notifications à afficher</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
@@ -993,7 +1031,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_other_title">Autre</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">Aucun son de notification par défaut défini.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s%% du volume</string>
+        <string name="settings_playback_ringtone_volume_summary">%d%% du volume</string>
         <string name="settings_playback_ringtone_volume_title">Volume du Son des Notifications</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Sélectionner quand le son par défaut des notifications est activé</string>
@@ -1054,6 +1092,7 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_smb_lm_compatibility_summary">Compatibilité SMB (LmCompatibility)</string>
         <string name="settings_smb_lm_compatibility_title">Compatibilité SMB(SMBv1)</string>
         <string name="settings_smb_title">Paramètres SMB</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Utiliser la Sécurité Etendue</string>
         <string name="settings_smb_use_extended_security_title">Utiliser la Sécurité Etendue(SMBv1)</string>
@@ -1076,7 +1115,9 @@ Veuillez vous référer à la politique de confidentialité pour le traitement d
         <string name="settings_sync_history_log_summary_ena">Journal de synchronisation détaillé</string>
         <string name="settings_sync_history_log_title">Historique des Synchronisations</string>
         <string name="settings_sync_title">Synchronisation</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">Interface Utilisateur</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Langue</string>
         <string name="settings_screen_theme_language_dialog_title">Changer la Langue</string>

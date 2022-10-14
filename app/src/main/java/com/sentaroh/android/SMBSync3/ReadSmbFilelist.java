@@ -305,6 +305,11 @@ public class ReadSmbFilelist implements Runnable {
 
             JcifsFile remoteFile = new JcifsFile(smbUrl, auth);
             fl = remoteFile.listFiles();
+            try {
+                remoteFile.close();
+            } catch(Exception e) {
+                mUtil.addDebugMsg(1,"I","close() failed. Error=",e.getMessage());
+            }
         } catch (JcifsException e) {
             e.printStackTrace();
             String cause="";

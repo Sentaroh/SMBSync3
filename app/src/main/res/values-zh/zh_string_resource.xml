@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">功能</string>
         <string name="msgs_about_dlg_privacy_btn">私隐政策</string>
         <string name="msgs_about_dlg_change_btn">变更日志</string>
-        <string name="msgs_dlg_title_about">关于SMBSync3</string>
+        <string name="msgs_dlg_title_about">关于SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_ZH_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_ZH_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -103,7 +103,7 @@
         <string name="msgs_delete_following_profile">删除以下任务？</string>
         <string name="msgs_dir_empty">找不到目录</string>
         <string name="msgs_duplicate_task_name">重复的任务名称。</string>
-        <string name="msgs_sync_task_name_length_invalid">任务名称的长度不应超过%s个字符。</string>
+        <string name="msgs_sync_task_name_length_invalid">任务名称的长度不应超过%d个字符。</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">重命名任务时，计划表/组中的任务名称也会改变。</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">删除任务时，计划表/组中的任务名称也会被删除。</string>
         <string name="msgs_task_name_contains_invalid_character">任务名称包含无效字符：\"%s\"</string>
@@ -301,7 +301,12 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">授权账户或指定正确的账户名，按 \"刷新共享列表 \"按钮。</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">指定了一个无法登录的账户名。指定正确的账户名，然后点击 \"刷新共享列表 \"按钮。</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">帐户名或密码不正确。指定正确的账户名和密码，然后点击 \"刷新共享列表 \"按钮。</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">未指定账户名或密码。指定正确的账户名和密码，然后点击 \"刷新共享列表 \"按钮。</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Connection failed. No account name or password specified. Enter the correct credentials then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty">Enter an account name and password then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares">Click \"Refresh share list\" button and select a share.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error">Connection failed: ensure server is online or specify the proper port and SMB protocol</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty">No shares found. Try another account or ensure the account has the proper permissions to list the shares</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error">Server does not support any SMB level. Please restart scan and report error to author</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">选择SMB服务器参数</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">刷新分享列表</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">SMB服务器账户和密码</string>
@@ -506,9 +511,10 @@
         <string name="msgs_smbsync_main_restart_by_killed">应用程序被重新启动，因为它移动到后台时被杀死了。</string>
         <string name="msgs_smbsync_main_settings_restart_title">重新启动应用程序</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">SMBv1的参数已被更改。 在重新启动应用程序之前，此更改不会生效。 现在退出此应用程序？</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">建议在更改主题或语言后重新启动应用程序。点击 \"重新启动\"，现在就可以重新启动。如果您想稍后重启，请点击 \"稍后\"。</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">后来</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">重新启动</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">It is recommended to restart the application after changing the theme, language or font. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">后来</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">重新启动</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">应用开始。</string>
         <string name="msgs_smnsync_main_kill_application">杀死应用程序？</string>
         <string name="msgs_specify_task_name">请为任务指定一个名称</string>
@@ -554,7 +560,7 @@
         <string name="msgs_menu_show_battery_optimization_screen">电池优化</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[用户取消的存档操作]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">无法从EXIF数据中获取图像拍摄时间和日期。 请使用文件更新时间和日期代替？ (禁用此同步任务的 \"确认 \"存档选项，以避免今后出现此信息)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[用户取消复制操作]</string>
         <string name="msgs_mirror_confirm_copy_confirm">确认覆盖文件\n%s\n(禁用此同步任务的 \"覆盖/删除前确认 \"选项，以避免将来出现此消息)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[用户取消的删除操作]</string>
@@ -650,9 +656,11 @@
         <string name="msgs_scan_ip_address_scan_btn">检索</string>
         <string name="msgs_scan_ip_address_press_scan_btn">指定IP地址范围，然后按搜索按钮。</string>
         <string name="msgs_scan_ip_address_not_detected">没有找到SMB服务器。</string>
-        <string name="msgs_scan_ip_address_select_detected_host">从搜索结果中选择主机名或IP地址</string>
-        <string name="msgs_scan_ip_address_scan_result_title">搜索结果</string>
-        <string name="msgs_ip_address_scan_progress">搜索SMB主机...%s%%完成。</string>
+        <string name="msgs_scan_ip_address_select_detected_host">Select server from search results or change settings to start a new scan</string>
+        <string name="msgs_scan_ip_address_scan_result_title">搜索结果:</string>
+        <string name="msgs_ip_address_scan_progress_ip_range">Scanning %1$s.%2$d -> %3$d</string>
+        <string name="msgs_ip_address_scan_progress_percent">搜索SMB主机...%d%%完成。</string>
+        <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">开始</string>
         <string name="msgs_ip_address_range_dlg_end">结束</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">指定地址范围的开始。</string>
@@ -662,10 +670,16 @@
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">起始地址大于结束地址。</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">结束地址应大于起始地址。</string>
         <string name="msgs_ip_address_range_dlg_not_private">无法搜索除私人地址以外的其他地址。</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan protocol</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Select SMB protocol</string>
+        <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">由于WiFi关闭，无法搜索。请打开WiFi搜索SMB服务器。</string>
         <string name="msgs_progress_dlg_canceling">取消...</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">获取文件清单...</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">取消</string>
+        <string name="msgs_scan_smb_server_parm_dlg_smb_port_hint">Server port number</string>
+        <string name="msgs_scan_smb_server_scan_dlg_scan_error">A JcifsException occured during scan, check logs for more info !</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">时间表</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">时间表名称</string>
@@ -880,8 +894,8 @@
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">周数</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">工作日 (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">工作日 (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">工作日\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">工作日\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">改为本地文件夹，因为当同步方式为存档时，不能使用ZIP文件夹。</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">该请求被忽略，因为Zip文件不能用作存档同步类型的目的地。</string>
         <string name="msgs_sync_folder_archive_btn_title_year">年份</string>
@@ -917,6 +931,7 @@
         <string name="msgs_storage_permission_all_file_access_error_message">The \"All File Access\" permission screen could not be displayed.\nError=%s</string>
     <!-- Setting main -->
         <string name="settings_security_title">安保</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">应用密码</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">点击这里设置您的安全</string>
@@ -946,12 +961,33 @@
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">不要在 \"编辑同步任务 \"屏幕上显示 \"显示密码 \"按钮。</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Select location to store app settings (Resart Required !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Root (/data/data)</item>
+            <item>App specific (/Android/data)</item>
+            <item>Internal storage</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">以纵向显示应用程序</string>
         <string name="settings_device_orientation_portrait_title">逼真的人像方向</string>
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">即使在低密度屏幕上，也始终以横向方向显示多窗格视图</string>
         <string name="settings_device_orientation_landscape_tablet_title">横向模式下的平板电脑视图</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
+        <string name="settings_storage_permission">settings_storage_permission</string>
+        <string name="settings_storage_permission_title_granted">Storage permission granted</string>
+        <string name="settings_storage_permission_title_denied">Storage permission denied</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">清理应用后杀死应用进程</string>
         <string name="settings_exit_clean_title">清洁退出</string>
@@ -960,10 +996,12 @@
         <string name="settings_force_screen_on_while_sync_summary_ena">屏幕亮起，同步开始时从睡眠中醒来。</string>
         <string name="settings_force_screen_on_while_sync_title">防止睡眠期间延迟启动同步</string>
         <string name="settings_main_title">设置</string>
-        <string name="settings_misc_title">杂项</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">不要压缩这些文件类型</string>
         <string name="settings_no_compress_file_type_hint">文件类型</string>
+        <string name="settings_no_compress_file_type_dialog_title">Non compressed file types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">选择通知信息类型</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
@@ -986,7 +1024,7 @@
         <string name="settings_other_title">其他</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">未设置默认的通知音</string>
-        <string name="settings_playback_ringtone_volume_summary">系统音量的%s%%</string>
+        <string name="settings_playback_ringtone_volume_summary">系统音量的%d%%</string>
         <string name="settings_playback_ringtone_volume_title">通知音音量</string>
         <string name="settings_playback_ringtone_when_sync_ended">设置_播放_铃声_当同步结束时的设置</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">选择播放声音条件</string>
@@ -1047,6 +1085,7 @@
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility 级别</string>
         <string name="settings_smb_lm_compatibility_title">LmCompatibility 级别(SMBv1)</string>
         <string name="settings_smb_title">SMB设置</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
@@ -1069,7 +1108,9 @@
         <string name="settings_sync_history_log_summary_ena">保存详细的同步历史记录</string>
         <string name="settings_sync_history_log_title">同步历史</string>
         <string name="settings_sync_title">同步</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">用户界面</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">语种</string>
         <string name="settings_screen_theme_language_dialog_title">更改语言</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/settings_smb_title" android:layout="@layout/setting_preference_category_layout">
-        <PreferenceScreen
+    <PreferenceCategory>
+        <Preference
             android:key="@string/settings_smb_set_default_value_key"
             android:title="@string/settings_smb_set_default_value_text"/>
         <ListPreference

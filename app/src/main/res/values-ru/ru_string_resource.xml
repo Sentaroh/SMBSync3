@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Функции</string>
         <string name="msgs_about_dlg_privacy_btn">Политика приватности</string>
         <string name="msgs_about_dlg_change_btn">Журнал изменений</string>
-        <string name="msgs_dlg_title_about">О SMBSync3</string>
+        <string name="msgs_dlg_title_about">О SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_RU_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_RU_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -108,7 +108,7 @@
         <string name="msgs_delete_following_profile">Удалить следующие задачи?</string>
         <string name="msgs_dir_empty">Каталог не найден</string>
         <string name="msgs_duplicate_task_name">Задача с таким именем существует.</string>
-        <string name="msgs_sync_task_name_length_invalid">Имя задачи не должно превышать %s символа в длину</string>
+        <string name="msgs_sync_task_name_length_invalid">Имя задачи не должно превышать %d символа в длину</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">При переименовании задачи имя задачи в расписании/группе также изменяется.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">При удалении задачи имя задачи в расписании/группе также удаляется.</string>
         <string name="msgs_task_name_contains_invalid_character">Имя задачи содержит недопустимые символы: \"%s\"</string>
@@ -139,7 +139,7 @@
         <string name="msgs_filter_list_filter_not_allowed_blank_with_asterisk">Нельзя использовать пробелы до и после \"*\".</string>
         <string name="msgs_filter_list_filter_not_allowed_multiple_back_slash">Вы не можете использовать \"\" кроме первого символа. Пожалуйста, удалите \"\", кроме первой буквы. Фильтр=%</string>
         <string name="msgs_filter_list_filter_contains_not_allowed_character">Содержит непригодные символы. Символы =\"%1$s\", Фильтр = %2$s.</string>
-        <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\\\".\nФильтр=%</string>
+        <string name="msgs_filter_list_match_any_where_change_to_exclude">Изменили фильтр, чтобы исключить его из списка, так как он содержит букву \"\\\".\nФильтр=%s</string>
         <string name="msgs_filter_list_invalid_ip_address">Недействительный IP-адрес.</string>
         <string name="msgs_hist_cont_label_copy">Скопировать в буфер обмена</string>
         <string name="msgs_hist_cont_label_delete">Удалить историю</string>
@@ -305,7 +305,12 @@
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Авторизуйте счет или укажите правильное название счета и нажмите кнопку \"Обновить список акций\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">Указывается имя учетной записи, которая не может войти в систему. Укажите правильное имя учетной записи и нажмите кнопку \"Обновить общий список\".</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">Имя учетной записи или пароль неверны. Укажите правильное имя учетной записи и пароль и нажмите кнопку \"Обновить общий список\".</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Имя учетной записи или пароль не указаны. Укажите правильное имя учетной записи и пароль и нажмите кнопку \"Обновить общий список\".</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Connection failed. No account name or password specified. Enter the correct credentials then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty">Enter an account name and password then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares">Click \"Refresh share list\" button and select a share.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error">Connection failed: ensure server is online or specify the proper port and SMB protocol</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty">No shares found. Try another account or ensure the account has the proper permissions to list the shares</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error">Server does not support any SMB level. Please restart scan and report error to author</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Выберите параметры сервера SMB</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Обновить список Акций</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">Учетная запись и пароль сервера SMB</string>
@@ -511,9 +516,10 @@
         <string name="msgs_smbsync_main_restart_by_killed">Приложение было перезапущено, потому что оно было отключено при перемещении в фоновый режим.</string>
         <string name="msgs_smbsync_main_settings_restart_title">Перезапуск приложения</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">Параметры SMBv1 были изменены. Это изменение не вступит в силу, пока приложение не будет перезапущено. Выход из этого приложения сейчас?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">После изменения темы или языка необходимо перезапустить приложение. Нажмите \"Начни заново\", чтобы перезагрузить систему. Если вы хотите перезапустить его позже, нажмите \"Потом\".</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Потом</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Начни заново</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">It is recommended to restart the application after changing the theme, language or font. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">Потом</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">Начни заново</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">Приложение запущено.</string>
         <string name="msgs_smnsync_main_kill_application">Убить приложение?</string>
         <string name="msgs_specify_task_name">Пожалуйста, укажите название для задачи</string>
@@ -559,7 +565,7 @@
         <string name="msgs_menu_show_battery_optimization_screen">Показать экран оптимизации батареи</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Архив отменен по запросу пользователя]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">Время и дата изображения не могут быть получены из данных EXIF. Вместо этого использовать время и дату обновления файла? (Отключите параметр архивации \ \"Подтвердить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Копирование отменено по запросу пользователя]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Подтвердить перезапись файла \n %s \n (отключите опцию \ \"Подтвердить перед перезаписью / удалить \" для этой задачи синхронизации, чтобы избежать появления этого сообщения в будущем)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Удаление отменено по запросу пользователя]</string>
@@ -655,9 +661,11 @@
         <string name="msgs_scan_ip_address_scan_btn">Поиск</string>
         <string name="msgs_scan_ip_address_press_scan_btn">Укажите диапазон IP-адресов, затем нажмите кнопку поиска</string>
         <string name="msgs_scan_ip_address_not_detected">Сервер SMB не найден.</string>
-        <string name="msgs_scan_ip_address_select_detected_host">Выберите имя хоста или IP-адрес из результатов поиска</string>
-        <string name="msgs_scan_ip_address_scan_result_title">результаты поиска</string>
-        <string name="msgs_ip_address_scan_progress">Поиск хоста SMB…%s %% завершен.</string>
+        <string name="msgs_scan_ip_address_select_detected_host">Select server from search results or change settings to start a new scan</string>
+        <string name="msgs_scan_ip_address_scan_result_title">результаты поиска:</string>
+        <string name="msgs_ip_address_scan_progress_ip_range">Scanning %1$s.%2$d -> %3$d</string>
+        <string name="msgs_ip_address_scan_progress_percent">Поиск хоста SMB…%d%% завершен.</string>
+        <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Начать</string>
         <string name="msgs_ip_address_range_dlg_end">Конец</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">Укажите начало диапазона адресов.</string>
@@ -667,10 +675,16 @@
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">Конечный адрес должен быть от 2 до 254.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">Конечный адрес должен быть больше, чем начальный адрес.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Невозможен поиск, кроме личных адресов.</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan protocol</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Select SMB protocol</string>
+        <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">Поиск невозможен, потому что WiFi отключен. Пожалуйста, включите WiFi для поиска вашего сервера SMB.</string>
         <string name="msgs_progress_dlg_canceling">Отмена ...</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Получение списка файлов…</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">Отмена</string>
+        <string name="msgs_scan_smb_server_parm_dlg_smb_port_hint">Server port number</string>
+        <string name="msgs_scan_smb_server_scan_dlg_scan_error">A JcifsException occured during scan, check logs for more info !</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Расписание</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">Название расписания</string>
@@ -885,8 +899,8 @@
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">ЕЖЕНЕДЕЛЬНЫЙ ЧИСЛО</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">День недели (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">День недели (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">День недели\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">День недели\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Изменена на локальную папку, так как папка ZIP не может быть использована, когда метод синхронизации - архив.</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">Запрошенная операция была проигнорированна. Файлы ZIP не могут использоваться в качестве адресатов для типа синхронизации архива.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Год</string>
@@ -922,6 +936,7 @@
         <string name="msgs_storage_permission_all_file_access_error_message">Экран разрешения \"Доступ ко всем файлам\" не мог отображаться.\nОшибка = %s</string>
     <!-- Setting main -->
         <string name="settings_security_title">Безопасность</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">Пароль приложения</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">Пожалуйста, нажмите здесь, чтобы установить детали безопасности</string>
@@ -951,12 +966,33 @@
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">Не отображать кнопку \"Показывать пароль\" на экране задач редактирования синхронизации.</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Select location to store app settings (Resart Required !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Root (/data/data)</item>
+            <item>App specific (/Android/data)</item>
+            <item>Internal storage</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Показать приложение в портретной ориентации</string>
         <string name="settings_device_orientation_portrait_title">Разрешить портретную ориентацию</string>
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">Всегда отображать многопанельное представление в альбомной ориентации, даже на экране с низкой плотностью</string>
         <string name="settings_device_orientation_landscape_tablet_title">Вид планшета в ландшафтном режиме</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
+        <string name="settings_storage_permission">settings_storage_permission</string>
+        <string name="settings_storage_permission_title_granted">Storage permission granted</string>
+        <string name="settings_storage_permission_title_denied">Storage permission denied</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">Убить процесс приложения после очистки приложения</string>
         <string name="settings_exit_clean_title">Выход посли очистки</string>
@@ -965,10 +1001,12 @@
         <string name="settings_force_screen_on_while_sync_summary_ena">The screen lights up when the sync starts and wakes up</string>
         <string name="settings_force_screen_on_while_sync_title">Предотвратить задержку начала синхронизации во время сна</string>
         <string name="settings_main_title">Настройки</string>
-        <string name="settings_misc_title">Разное</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Не сжимать эти типы файлов</string>
         <string name="settings_no_compress_file_type_hint">Тип файла</string>
+        <string name="settings_no_compress_file_type_dialog_title">Non compressed file types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Выберите тип уведомления</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
@@ -991,7 +1029,7 @@
         <string name="settings_other_title">Другое</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">Звук уведомления по умолчанию не был установлен.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s %% системного тома</string>
+        <string name="settings_playback_ringtone_volume_summary">%d%% системного тома</string>
         <string name="settings_playback_ringtone_volume_title">Громкость звука уведомлений</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Выберите условия воспроизведения звука</string>
@@ -1052,6 +1090,7 @@
         <string name="settings_smb_lm_compatibility_summary">Уровень LmCompatibility</string>
         <string name="settings_smb_lm_compatibility_title">Уровень LmCompatibility(SMBv1)</string>
         <string name="settings_smb_title">Настройки SMB</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Использовать расширенную безопасность</string>
         <string name="settings_smb_use_extended_security_title">Использовать расширенную безопасность(SMBv1)</string>
@@ -1074,7 +1113,9 @@
         <string name="settings_sync_history_log_summary_ena">Вести подробный журнал истории синхронизации</string>
         <string name="settings_sync_history_log_title">Синхронизация истории</string>
         <string name="settings_sync_title">Синхронизация</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">Пользовательский интерфейс</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Язык</string>
         <string name="settings_screen_theme_language_dialog_title">Изменить язык</string>

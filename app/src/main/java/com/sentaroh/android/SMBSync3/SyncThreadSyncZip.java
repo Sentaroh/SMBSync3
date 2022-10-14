@@ -70,17 +70,17 @@ public class SyncThreadSyncZip {
         if (sti.getDestinationZipEncryptMethod().equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_STANDARD)) {
             zp.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
             zp.setEncryptFiles(true);
-            zp.setPassword(sti.getDestinationZipPassword());
+            //zp.setPassword(sti.getDestinationZipPassword());
         } else if (sti.getDestinationZipEncryptMethod().equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES128)) {
             zp.setEncryptionMethod(EncryptionMethod.AES);
             zp.setAesKeyStrength(AesKeyStrength.KEY_STRENGTH_128);
             zp.setEncryptFiles(true);
-            zp.setPassword(sti.getDestinationZipPassword());
+            //zp.setPassword(sti.getDestinationZipPassword());
         } else if (sti.getDestinationZipEncryptMethod().equals(SyncTaskItem.ZIP_OPTION_ENCRYPT_AES256)) {
             zp.setEncryptionMethod(EncryptionMethod.AES);
             zp.setAesKeyStrength(AesKeyStrength.KEY_STRENGTH_256);
             zp.setEncryptFiles(true);
-            zp.setPassword(sti.getDestinationZipPassword());
+            //zp.setPassword(sti.getDestinationZipPassword());
         }
 
     }
@@ -100,7 +100,7 @@ public class SyncThreadSyncZip {
         }
         String out_temp_path=dest_file_path+".tmp";
         try {
-            BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding());
+            BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding(), sti.getDestinationZipPassword());
             if (bzf != null) {
                 bzf.setNoCompressExtentionList(stwa.gp.settingNoCompressFileType);
 //                bzf.setPassword(sti.getDestinationZipPassword());
@@ -197,7 +197,7 @@ public class SyncThreadSyncZip {
         }
         String out_temp_path=dest_file_path+".tmp";
         try {
-            BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding());
+            BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding(), sti.getDestinationZipPassword());
             if (bzf != null) {
                 bzf.setNoCompressExtentionList(stwa.gp.settingNoCompressFileType);
 //                bzf.setPassword(sti.getDestinationZipPassword());
@@ -279,7 +279,7 @@ public class SyncThreadSyncZip {
         }
         String out_temp_path=dest_file_path+".tmp";
         try {
-            BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding());
+            BufferedZipFile3 bzf = new BufferedZipFile3(stwa.appContext, dest_file_path, out_temp_path, sti.getDestinationZipFileNameEncoding(), sti.getDestinationZipPassword());
             if (bzf != null) {
                 bzf.setNoCompressExtentionList(stwa.gp.settingNoCompressFileType);
 //                bzf.setPassword(sti.getDestinationZipPassword());

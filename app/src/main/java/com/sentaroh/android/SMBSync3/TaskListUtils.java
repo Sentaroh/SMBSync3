@@ -76,6 +76,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static com.sentaroh.android.SMBSync3.Constants.DIRECTORY_FILTER_MATCH_ANY_WHERE_PREFIX;
@@ -311,48 +312,56 @@ public class TaskListUtils {
             }
         });
         dialog.show();
-
     }
 
-    public void invokeSelectSmbShareDlg(Dialog dialog) {
-//		final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
+    //public void invokeSelectSmbShareDlg(Dialog dialog, final NotifyEvent p_ntfy) {
+    public void invokeSelectSmbShareDlg(final String remote_host, final String smb_proto, final String remote_port, final String remote_user, final String remote_pass, final String share_name, final NotifyEvent p_ntfy) {
+		//final TextView dlg_msg=(TextView) dialog.findViewById(R.id.edit_sync_folder_dlg_msg);
 
-        final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
-        final EditText edituser = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
-        final EditText editpass = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
-        final EditText editshare = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
-        final EditText edithost = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
-        final CheckedTextView ctv_use_userpass = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
-        final EditText editport = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
-        final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
-//        final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
-//        final CheckedTextView ctv_sync_folder_smb_use_smb2_negotiation = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation);
-        String remote_addr="", remote_user = "", remote_pass = "", remote_host="";
+        //final Spinner sp_sync_folder_smb_proto = (Spinner) dialog.findViewById(R.id.edit_sync_folder_dlg_smb_protocol);
+        //final EditText edituser = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_user);
+        //final EditText editpass = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_pass);
+        //final EditText editshare = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_share_name);
+        //final EditText edithost = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_server);
+        //final CheckedTextView ctv_use_userpass = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_user_pass);
+        //final EditText editport = (EditText) dialog.findViewById(R.id.edit_sync_folder_dlg_remote_port);
+        //final CheckedTextView ctv_use_port_number = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_use_remote_port_number);
+        ////final CheckedTextView ctv_sync_folder_smb_ipc_enforced = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_ipc_signing_enforced);
+        //final CheckedTextView ctv_sync_folder_smb_use_smb2_negotiation = (CheckedTextView) dialog.findViewById(R.id.edit_sync_folder_dlg_ctv_smb_use_smb2_negotiation);
 
-        if (ctv_use_userpass.isChecked()) {
-            remote_user = edituser.getText().toString().trim();
-            remote_pass = editpass.getText().toString();
-        }
+        //final String smb_proto=(String)sp_sync_folder_smb_proto.getSelectedItem();
+        //final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
+        //final boolean smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
 
-        final String smb_proto=(String)sp_sync_folder_smb_proto.getSelectedItem();
-//        final boolean ipc_enforced=ctv_sync_folder_smb_ipc_enforced.isChecked();
-//        final boolean smb2_negotiation=ctv_sync_folder_smb_use_smb2_negotiation.isChecked();
-        String host=edithost.getText().toString().trim();
+        SmbServerInfo ssi = new SmbServerInfo();
+        ssi.serverHostName = remote_host;
+        ssi.serverProtocol = smb_proto;
+        ssi.serverPort = remote_port;
+        ssi.serverAccountName = remote_user;
+        ssi.serverAccountPassword = remote_pass;
+        ssi.serverShareName = share_name;
 
-        SmbServerInfo ssi=new SmbServerInfo();
-        ssi.serverHostName= edithost.getText().toString();
-        ssi.serverShareName=editshare.getText().toString();;
-        if (ctv_use_port_number.isChecked() && editport.getText().length() > 0) ssi.serverPort = editport.getText().toString();
-        ssi.serverProtocol=smb_proto;
-        ssi.serverAccountName=remote_user;
-        ssi.serverAccountPassword=remote_pass;
-
-        NotifyEvent ntfy = new NotifyEvent(mActivity);
         //Listen setRemoteShare response
+        NotifyEvent ntfy = new NotifyEvent(mActivity);
         ntfy.setListener(new NotifyEvent.NotifyEventListener() {
             @Override
             public void positiveResponse(Context arg0, Object[] arg1) {
-                editshare.setText((String) arg1[0]);
+                //editshare.setText((String) arg1[0]);
+                //String selected_share_name = (String) arg1[0];
+                List<List<String>> index_and_shares_lists = (List<List<String>>) arg1[0];
+                List<String> selected_index_list = index_and_shares_lists.get(0);
+                List<String> shares_list = index_and_shares_lists.get(1);
+
+                int selected_index = 0;
+                try {
+                    selected_index = Integer.parseInt(selected_index_list.get(0));
+                } catch (NumberFormatException e) {
+                    mUtil.addDebugMsg(1, "E", "invokeSelectSmbShareDlg: Integer Expected. selected_index="+selected_index_list.get(0));
+                    selected_index = 0;
+                }
+
+                String selected_share_name = shares_list.get(selected_index);
+                p_ntfy.notifyToListener(true, new Object[]{new String[]{selected_share_name}});
             }
 
             @Override
@@ -846,45 +855,45 @@ public class TaskListUtils {
         final Dialog dialog=CommonDialog.showProgressSpinIndicator(mActivity);
         dialog.show();
         Thread th=new Thread(){
-             @Override
-             public void run() {
-                  try {
-                      JcifsAuth auth=null;
-                      if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
-                          auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                      } else {
-                          auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
-                      }
-                      JcifsFile jf=new JcifsFile(new_dir, auth);
-                      if (jf.exists()) p_ntfy.notifyToListener(true, new Object[] {true});
-                      else p_ntfy.notifyToListener(true, new Object[] {false});
-                  } catch (MalformedURLException e) {
-                      e.printStackTrace();
-                      mUtil.addDebugMsg(1, "E", e.toString());
-                      p_ntfy.notifyToListener(false, new Object[]{e.toString()});
-                  } catch (JcifsException e) {
-                      e.printStackTrace();
-                      String suggest_msg=getJcifsErrorSugestionMessage(mActivity, MiscUtil.getStackTraceString(e));
-                      String cause="";
-                      String un="";
-                      if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
-                          if (ssi.serverAccountName!=null) un=(ssi.serverAccountName.equals(""))?"":"????????";
-                          else un=null;
-                      } else {
-                          un=ssi.serverAccountName;
-                      }
-                      String[] e_msg= JcifsUtil.analyzeNtStatusCode(e, new_dir, un);
-                      if (e.getCause()!=null) {
-                          String tc=e.getCause().toString();
-                          cause=tc.substring(tc.indexOf(":")+1);
-                          e_msg[0]=cause+"\n"+e_msg[0];
-                      }
-                      String error_msg=suggest_msg.equals("")?e_msg[0]:suggest_msg+"\n"+e_msg[0];
-                      mUtil.addDebugMsg(1, "E", error_msg);
-                      p_ntfy.notifyToListener(false, new Object[]{error_msg});
-                  }
-                  dialog.dismiss();
-             }
+            @Override
+            public void run() {
+                try {
+                    JcifsAuth auth=null;
+                    if (ssi.serverProtocol.equals(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB1)) {
+                        auth=new JcifsAuth(JcifsAuth.JCIFS_FILE_SMB1, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                    } else {
+                        auth=new JcifsAuth(SyncTaskItem.SYNC_FOLDER_SMB_PROTOCOL_SMB23, ssi.serverDomainName, ssi.serverAccountName, ssi.serverAccountPassword);
+                    }
+                    JcifsFile jf=new JcifsFile(new_dir, auth);
+                    if (jf.exists()) p_ntfy.notifyToListener(true, new Object[] {true});
+                    else p_ntfy.notifyToListener(true, new Object[] {false});
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                    mUtil.addDebugMsg(1, "E", e.toString());
+                    p_ntfy.notifyToListener(false, new Object[]{e.toString()});
+                } catch (JcifsException e) {
+                    e.printStackTrace();
+                    String suggest_msg=getJcifsErrorSugestionMessage(mActivity, MiscUtil.getStackTraceString(e));
+                    String cause="";
+                    String un="";
+                    if (mGp.settingSecurityReinitSmbAccountPasswordValue  && !mGp.settingSecurityApplicationPasswordHashValue.equals("")) {
+                        if (ssi.serverAccountName!=null) un=(ssi.serverAccountName.equals(""))?"":"????????";
+                        else un=null;
+                    } else {
+                        un=ssi.serverAccountName;
+                    }
+                    String[] e_msg= JcifsUtil.analyzeNtStatusCode(e, new_dir, un);
+                    if (e.getCause()!=null) {
+                        String tc=e.getCause().toString();
+                        cause=tc.substring(tc.indexOf(":")+1);
+                        e_msg[0]=cause+"\n"+e_msg[0];
+                    }
+                    String error_msg=suggest_msg.equals("")?e_msg[0]:suggest_msg+"\n"+e_msg[0];
+                    mUtil.addDebugMsg(1, "E", error_msg);
+                    p_ntfy.notifyToListener(false, new Object[]{error_msg});
+                }
+                dialog.dismiss();
+            }
         };
         th.start();
     }
@@ -1116,7 +1125,7 @@ public class TaskListUtils {
                             if (!add_exclude_btn.isChecked()) {
                                 add_exclude_btn.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
-                                        mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, filter), "", null);
+                                        String.format(mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude), filter), "", null);
                             }
                         } else {
                             CommonUtilities.setViewEnabled(mActivity, add_include_btn, true);
@@ -1898,7 +1907,7 @@ public class TaskListUtils {
                             if (!rb_exclude.isChecked()) {
                                 rb_exclude.setChecked(true);
                                 mUtil.showCommonDialog(false, "W",
-                                        mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, newfilter), "", null);
+                                        String.format(mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude), newfilter), "", null);
                             }
                         } else {
                             CommonUtilities.setViewEnabled(mActivity, rb_include, true);
@@ -1998,7 +2007,7 @@ public class TaskListUtils {
                     if (org_inc) {
                         CommonDialog.showCommonDialog(mActivity.getSupportFragmentManager(), false, "W",
                                 mActivity.getString(R.string.msgs_filter_edit_dlg_title),
-                                mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude, fli.getFilter()), null);
+                                String.format(mActivity.getString(R.string.msgs_filter_list_match_any_where_change_to_exclude), fli.getFilter()), null);
                     }
                 }
 
@@ -2745,15 +2754,15 @@ public class TaskListUtils {
             @SuppressWarnings("unchecked")
             @Override
             public void positiveResponse(Context c, Object[] o) {
-                final ArrayList<String> rows = new ArrayList<String>();
+                final ArrayList<String> shares_list = new ArrayList<String>();
                 ArrayList<TreeFilelistItem> rfl = (ArrayList<TreeFilelistItem>) o[0];
-                for (TreeFilelistItem item:rfl) rows.add(item.getName());
-                if (rows.size() < 1) {
+                for (TreeFilelistItem item:rfl) shares_list.add(item.getName());
+                if (shares_list.size() < 1) {
                     mUtil.showCommonDialog(false, "W",
                             mActivity.getString(R.string.msgs_share_list_not_obtained), "", null);
                     return;
                 }
-                Collections.sort(rows, String.CASE_INSENSITIVE_ORDER);
+                Collections.sort(shares_list, String.CASE_INSENSITIVE_ORDER);
                 //カスタムダイアログの生成
                 final Dialog dialog = new Dialog(mActivity, mGp.applicationTheme);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2782,7 +2791,7 @@ public class TaskListUtils {
 
                 final ListView lv = (ListView) dialog.findViewById(R.id.list_view);
                 lv.setAdapter(new ArrayAdapter<String>(mActivity,
-                        android.R.layout.simple_list_item_single_choice, rows));
+                        android.R.layout.simple_list_item_single_choice, shares_list));
                 lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
                 lv.setScrollingCacheEnabled(false);
                 lv.setScrollbarFadingEnabled(false);
@@ -2805,9 +2814,23 @@ public class TaskListUtils {
                     public void onClick(View v) {
                         dialog.dismiss();
                         SparseBooleanArray checked = lv.getCheckedItemPositions();
-                        for (int i = 0; i <= rows.size(); i++) {
+
+                        final List<List<String>> index_and_shares_lists = new ArrayList<List<String>>();
+                        final ArrayList<String> selected_index_list = new ArrayList<String>();
+                        for (int i = 0; i <= shares_list.size(); i++) {
                             if (checked.get(i) == true) {
-                                p_ntfy.notifyToListener(true, new Object[]{rows.get(i)});
+                                selected_index_list.add(String.valueOf(i));
+                                index_and_shares_lists.add(selected_index_list);
+                                index_and_shares_lists.add(shares_list);
+                                if (mUtil.getLogLevel() >= 3) {
+                                    for (List<String> list:index_and_shares_lists) {
+                                        for (String item:list) {
+                                            mUtil.addDebugMsg(3, "I", "selectRemoteShareDlg p_notify: " + item);
+                                        }
+                                    }
+                                }
+                                p_ntfy.notifyToListener(true, new Object[]{index_and_shares_lists});
+                                //p_ntfy.notifyToListener(true, new Object[]{shares_list.get(i)});
                                 break;
                             }
                         }

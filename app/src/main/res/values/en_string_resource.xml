@@ -4,7 +4,7 @@
         <string name="msgs_about_dlg_func_btn">Functions</string>
         <string name="msgs_about_dlg_privacy_btn">Privacy Policy</string>
         <string name="msgs_about_dlg_change_btn">Change Log</string>
-        <string name="msgs_dlg_title_about">About SMBSync3</string>
+        <string name="msgs_dlg_title_about">About SMBSync3 (v%s)</string>
         <string name="msgs_dlg_title_about_func_desc">SMBSync3_about_EN_Desc.md</string>
         <string name="msgs_dlg_title_about_privacy_desc">SMBSync3_about_EN_Privacy.md</string>
         <string name="msgs_dlg_title_about_change_desc">SMBSync3_about_EN_Change.md</string>
@@ -109,7 +109,7 @@
         <string name="msgs_delete_following_profile">Delete the following task(s)?</string>
         <string name="msgs_dir_empty">Directory could not be found</string>
         <string name="msgs_duplicate_task_name">Duplicate task name.</string>
-        <string name="msgs_sync_task_name_length_invalid">The task name should not exceed %s characters in length</string>
+        <string name="msgs_sync_task_name_length_invalid">The task name should not exceed %d characters in length</string>
         <string name="msgs_task_name_rename_with_schedule_group_task_list">When a task is renamed, the task name in the schedule/group is also changed.</string>
         <string name="msgs_task_name_remove_with_schedule_group_task_list">When the task is deleted, the task name in the schedule/group is also deleted.</string>
         <string name="msgs_task_name_contains_invalid_character">The task name contains invalid characters: \"%s\"</string>
@@ -306,7 +306,12 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account">Authorize the account or specify the correct account name and press the \"Refresh share list\" button.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_enable_account">An account name that cannot log in is specified. Specify the correct account name and click the \"Refresh share list\" button.</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_specify_correct_account_password">The account name or password is incorrect. Specify the correct account name and password and click the \"Refresh share list\" button.</string>
-        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">The account name or password is not specified. Specify the correct account name and password and click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_not_specified">Connection failed. No account name or password specified. Enter the correct credentials then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_account_password_empty">Enter an account name and password then click the \"Refresh share list\" button.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_refresh_shares">Click \"Refresh share list\" button and select a share.</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_server_connection_error">Connection failed: ensure server is online or specify the proper port and SMB protocol</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_shares_list_empty">No shares found. Try another account or ensure the account has the proper permissions to list the shares</string>
+        <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_no_smb_level_error">Server does not support any SMB level. Please restart scan and report error to author</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_parm_chose_parameters">Chose SMB server parameters</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_refresh_share_list">Refresh Share list</string>
         <string name="msgs_task_edit_sync_folder_dlg_edit_smb_server_account_password">SMB Server account and password</string>
@@ -511,9 +516,10 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_smbsync_main_restart_by_killed">Application was restarted because it was killed when it moved to the background.</string>
         <string name="msgs_smbsync_main_settings_restart_title">Restarting the app</string>
         <string name="msgs_smbsync_main_settings_jcifs_changed_restart">The settings of SMBv1 have been changed.  This change will not be effective until the application is restarted.  Exit this application now?</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart">It is recommended to restart the application after changing the theme or language. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_later">Later</string>
-        <string name="msgs_smbsync_ui_settings_language_changed_restart_immediate">Restart</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart">It is recommended to restart the application after changing the theme, language or font. Click \"Restart\" to restart now. If you want to restart it later, click \"Later\"</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_later">Later</string>
+        <string name="msgs_smbsync_ui_settings_theme_changed_restart_immediate">Restart</string>
+        <string name="msgs_smbsync_security_settings_app_dir_changed_restart">After changing the settings directory, the app must be restarted to properly display further messages and sync histroy events. Click Ok to restart now.</string>
         <string name="msgs_smbsync_main_start">Application started.</string>
         <string name="msgs_smnsync_main_kill_application">Kill application?</string>
         <string name="msgs_specify_task_name">Please specify a name for the task</string>
@@ -559,7 +565,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_menu_show_battery_optimization_screen">Battery optimization</string>
     <!-- Mirror -->
         <string name="msgs_mirror_confirm_archive_date_time_from_file_cancel">[Archive operation cancelled by user]</string>
-        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file update time and date instead?  (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
+        <string name="msgs_mirror_confirm_archive_date_time_from_file_confirm">The image capture time and date cannot be obtained from EXIF data.  Use file modification time (%1$s) instead ? File=%2$s\n (Disable the \"Confirm\" archiving option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_copy_cancel">[Copy operation cancelled by user]</string>
         <string name="msgs_mirror_confirm_copy_confirm">Confirm overwrite of file \n%s\n(Disable the \"Confirm before overwrite/delete\" option for this sync task to avoid this message in the future)</string>
         <string name="msgs_mirror_confirm_delete_cancel">[Delete operation cancelled by user]</string>
@@ -655,9 +661,11 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_scan_ip_address_scan_btn">Search</string>
         <string name="msgs_scan_ip_address_press_scan_btn">Specify IP address range, then press the Search button</string>
         <string name="msgs_scan_ip_address_not_detected">No SMB server found.</string>
-        <string name="msgs_scan_ip_address_select_detected_host">Select host name or IP address from search results</string>
-        <string name="msgs_scan_ip_address_scan_result_title">Search Results</string>
-        <string name="msgs_ip_address_scan_progress">Searching SMB host… %s%% completed.</string>
+        <string name="msgs_scan_ip_address_select_detected_host">Select server from search results or change settings to start a new scan</string>
+        <string name="msgs_scan_ip_address_scan_result_title">Search Results :</string>
+        <string name="msgs_ip_address_scan_progress_ip_range">Scanning %1$s.%2$d -> %3$d</string>
+        <string name="msgs_ip_address_scan_progress_percent">Searching SMB host… %d%% completed.</string>
+        <string name="msgs_ip_address_range_select_title">Select IP range to search</string>
         <string name="msgs_ip_address_range_dlg_begin">Start</string>
         <string name="msgs_ip_address_range_dlg_end">End</string>
         <string name="msgs_ip_address_range_dlg_begin_notspecified">Specify start of address range.</string>
@@ -667,10 +675,16 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_ip_address_range_dlg_begin_addr_gt_end_addr">End address must be 2 to 254.</string>
         <string name="msgs_ip_address_range_dlg_end_range_error">The end address should be larger than the start address.</string>
         <string name="msgs_ip_address_range_dlg_not_private">Unable to search other than private addresses.</string>
+        <string name="msgs_scan_dlg_smb_protocol">Scan protocol</string>
+        <string name="msgs_scan_dlg_smb_level_spinner_dlg_title">Select SMB protocol</string>
+        <string name="scan_smb_server_scan_dlg_port_number_title">Scan port number</string>
+        <string name="scan_smb_server_scan_dlg_port_number_hint">default 445 and 139</string>
         <string name="msgs_scan_not_started_because_wifi_off">Search is not possible because WiFi is off. Please turn on WiFi to search for your SMB server.</string>
         <string name="msgs_progress_dlg_canceling">Cancelling…</string>
         <string name="msgs_progress_spin_dlg_filelist_getting">Obtaining file list…</string>
         <string name="msgs_progress_spin_dlg_filelist_cancel">Cancel</string>
+        <string name="msgs_scan_smb_server_parm_dlg_smb_port_hint">Server port number</string>
+        <string name="msgs_scan_smb_server_scan_dlg_scan_error">A JcifsException occured during scan, check logs for more info !</string>
     <!-- Scheduler -->
         <string name="msgs_menu_scheduler">Schedule</string>
         <string name="msgs_scheduler_main_dlg_hdr_title_schedule_name">Schedule name</string>
@@ -885,8 +899,8 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_sync_folder_archive_btn_title_min">MIN</string>
         <string name="msgs_sync_folder_archive_btn_title_sec">SEC</string>
         <string name="msgs_sync_folder_archive_btn_title_week_number">WEEK NUMBER</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day">WEEK DAY (%1$s,%2$s...)</string>
-        <string name="msgs_sync_folder_archive_btn_title_week_day_long">WEEK DAY (%1$s,%2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day">WEEK DAY\n(%1$s, %2$s...)</string>
+        <string name="msgs_sync_folder_archive_btn_title_week_day_long">WEEK DAY\n(%1$s, %2$s...)</string>
         <string name="msgs_sync_folder_archive_zip_folder_not_supported">Changed to local folder because ZIP folder cannot be used when the sync method is archive.</string>
         <string name="deleted_msgs_sync_folder_archive_zip_folder_not_supported_error">The request was ignored because Zip files cannot be used as destinations for Archive sync type.</string>
         <string name="msgs_sync_folder_archive_btn_title_year">Year</string>
@@ -922,6 +936,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="msgs_storage_permission_all_file_access_error_message">The \"All File Access\" permission screen could not be displayed.\nError=%s</string>
     <!-- Setting main -->
         <string name="settings_security_title">Security</string>
+        <string name="settings_security_summary">Password protection, Config backup path…</string>
         <string name="settings_security_application_password_title">Application Password</string>
         <string name="settings_security_application_password">settings_application_password</string>
         <string name="settings_security_application_password_setting_title">Set security level</string>
@@ -951,12 +966,33 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="settings_security_hide_show_smb_passowrd">settings_security_hide_show_smb_passowrd</string>
         <string name="settings_security_hide_show_zip_passowrd_title">Do not display the \"Show Password\" button on the Edit ZIP folder screen</string>
         <string name="settings_security_hide_show_zip_passowrd">settings_security_hide_show_zip_passowrd</string>
+        <string name="settings_security_app_settings_directory">settings_security_app_settings_directory</string>
+        <string name="settings_security_app_settings_directory_dialog_title">Select location to store app settings (Resart Required !)</string>
+        <string-array name="settings_security_app_settings_directory_list_entries">
+            <item>Root (/data/data)</item>
+            <item>App specific (/Android/data)</item>
+            <item>Internal storage</item>
+        </string-array >
+        <string-array name="settings_security_app_settings_directory_list_values">
+            <item>0</item>
+            <item>1</item>
+            <item>2</item>
+        </string-array >
+        <string name="settings_security_app_settings_directory_summary_root">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_app_specific">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_summary_storage">App settings are stored in:\n%s</string>
+        <string name="settings_security_app_settings_directory_title">App settings directory</string>
         <string name="settings_device_orientation_portrait">settings_device_orientation_portrait</string>
         <string name="settings_device_orientation_portrait_summary_ena">Display app in portrait mode</string>
         <string name="settings_device_orientation_portrait_title">Force Portrait Mode</string>
         <string name="settings_device_orientation_landscape_tablet">settings_device_orientation_landscape_tablet</string>
         <string name="settings_device_orientation_landscape_tablet_summary_ena">Always display the multi-pane view in landscape orientation even on a low density screen</string>
         <string name="settings_device_orientation_landscape_tablet_title">Tablet View in Landscape Mode</string>
+        <string name="settings_app_permissions">settings_app_permissions</string>
+        <string name="settings_app_permissions_title">Open app permissions</string>
+        <string name="settings_storage_permission">settings_storage_permission</string>
+        <string name="settings_storage_permission_title_granted">Storage permission granted</string>
+        <string name="settings_storage_permission_title_denied">Storage permission denied</string>
         <string name="settings_exit_clean">settings_exit_clean</string>
         <string name="settings_exit_clean_summary_ena">If the application process is killed, exit cleanly</string>
         <string name="settings_exit_clean_title">Exit Cleanly</string>
@@ -965,10 +1001,12 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="settings_force_screen_on_while_sync_summary_ena">Wake up device and keep display on when sync starts (enable if sync doesn\'t start or complete during sleep)</string>
         <string name="settings_force_screen_on_while_sync_title">Force Screen On during Sync</string>
         <string name="settings_main_title">Settings</string>
-        <string name="settings_misc_title">Miscellaneous</string>
+        <string name="settings_misc_title">Advanced</string>
+        <string name="settings_misc_summary">Reset defaults, Permissions...</string>
         <string name="settings_no_compress_file_type">settings_no_compress_file_type</string>
         <string name="settings_no_compress_file_type_title">Do Not Compress These File Types</string>
         <string name="settings_no_compress_file_type_hint">File type</string>
+        <string name="settings_no_compress_file_type_dialog_title">Non compressed file types</string>
         <string name="settings_notification_message_when_sync_ended">settings_notification_message_when_sync_ended</string>
         <string name="settings_notification_message_when_sync_ended_dialog_title">Select notifications to display</string>
         <string-array name="settings_notification_message_when_sync_ended_list_entries">
@@ -991,7 +1029,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="settings_other_title">Other</string>
         <string name="settings_playback_ringtone_volume">settings_playback_ringtone_volume</string>
         <string name="settings_playback_ringtone_volume_disabled">The default notification sound has not been set.</string>
-        <string name="settings_playback_ringtone_volume_summary">%s%% of system volume</string>
+        <string name="settings_playback_ringtone_volume_summary">%d%% of system volume</string>
         <string name="settings_playback_ringtone_volume_title">Notification Sound Volume</string>
         <string name="settings_playback_ringtone_when_sync_ended">settings_playback_ringtone_when_sync_ended</string>
         <string name="settings_playback_ringtone_when_sync_ended_dialog_title">Select when to play the default notification sound</string>
@@ -1052,6 +1090,7 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="settings_smb_lm_compatibility_summary">LmCompatibility Level</string>
         <string name="settings_smb_lm_compatibility_title">LmCompatibility Level(SMBv1)</string>
         <string name="settings_smb_title">SMB Settings</string>
+        <string name="settings_smb_summary">SMB protocol, Connection timeout, Security level...</string>
         <string name="settings_smb_use_extended_security">settings_smb_use_extended_security</string>
         <string name="settings_smb_use_extended_security_summary_ena">Use Extended Security</string>
         <string name="settings_smb_use_extended_security_title">Use Extended Security(SMBv1)</string>
@@ -1074,7 +1113,9 @@ Please refer to the Privacy Policy for data handling and required permissions.\n
         <string name="settings_sync_history_log_summary_ena">Keep detailed sync history log</string>
         <string name="settings_sync_history_log_title">Sync history</string>
         <string name="settings_sync_title">Synchronization</string>
+        <string name="settings_sync_summary">Wifi, History, Compression, Shortcuts...</string>
         <string name="settings_ui_title">User Interface</string>
+        <string name="settings_ui_summary">Notifications, Sound, Vibration, Theme, Language, Text size...</string>
         <string name="settings_screen_theme_language">settings_screen_theme_language</string>
         <string name="settings_screen_theme_language_title">Language</string>
         <string name="settings_screen_theme_language_dialog_title">Change Language</string>

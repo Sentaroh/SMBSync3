@@ -66,19 +66,23 @@ public class ActivityPasswordSettings extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(GlobalParameters.setNewLocale(base));
+        super.attachBaseContext(GlobalParameters.setLocaleAndMetrics(base));
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         mActivity = ActivityPasswordSettings.this;
         mGp= GlobalWorkArea.getGlobalParameter(mActivity);
         setTheme(mGp.applicationTheme);
+
         if (mGp.themeColorList == null) {
             mGp.themeColorList = ThemeUtil.getThemeColorList(mActivity);
         }
+
+        mGp.setDeviceOrientation(mActivity);
+
+        super.onCreate(savedInstanceState);
 
         //Remove notification bar
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

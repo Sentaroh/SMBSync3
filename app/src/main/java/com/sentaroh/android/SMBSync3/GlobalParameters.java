@@ -24,25 +24,24 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.wifi.WifiManager;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.LocaleList;
 import android.os.Looper;
 import android.os.PowerManager;
-import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -66,6 +65,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Locale;
@@ -73,15 +73,14 @@ import java.util.Set;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import jcifs.util.LogStream;
+import jcifs13.util.LogStream;
 
-import static android.content.Context.WINDOW_SERVICE;
 import static com.sentaroh.android.SMBSync3.Constants.*;
 import static com.sentaroh.android.SMBSync3.ScheduleConstants.*;
 
 public class GlobalParameters {
 //    public Context appContext = null;
-    private ReentrantReadWriteLock configurationLock =new ReentrantReadWriteLock();
+    private final ReentrantReadWriteLock configurationLock = new ReentrantReadWriteLock();
 
     public Handler uiHandler = null;
 
@@ -89,7 +88,9 @@ public class GlobalParameters {
 
     public String externalStoragePrefix="";
 
-    public boolean activityIsFinished = true;
+    // Don't declare this variable in ActivityMain class, or it will be reset to default on app creation
+    // When app is restarted by system kill, GlobalParameters are restored on app recreated
+    public boolean activityKilledByDeveloperOption = false;
 
     public String profilePassword = "";
 
@@ -97,7 +98,7 @@ public class GlobalParameters {
 
     public ArrayBlockingQueue<SyncRequestItem> syncRequestQueue = new ArrayBlockingQueue<SyncRequestItem>(1000);
 
-    public ThreadCtrl syncThreadConfirm = new ThreadCtrl();
+    public final ThreadCtrl syncThreadConfirm = new ThreadCtrl();
     public ThreadCtrl syncThreadCtrl = new ThreadCtrl();
 
     public boolean activityRestartRequired = false;
@@ -106,24 +107,27 @@ public class GlobalParameters {
     public boolean syncThreadActive = false;
     public boolean isSyncWorkerActive() {return syncWorkerIsActive;}
 
-    private boolean syncWorkerIsActive =false;
+    private boolean syncWorkerIsActive = false;
     public void setSyncWorkerActive(boolean active) {syncWorkerIsActive =active;}
     public boolean syncThreadConfirmWait = false;
 
-    public CallBackListener callbackShowDialogWindow =null;
-    public CallBackListener callbackHideDialogWindow =null;
-    public CallBackListener callbackShowConfirmDialog =null;
-    public CallBackListener callbackHideConfirmDialog =null;
+    public CallBackListener callbackShowDialogWindow = null;
+    public CallBackListener callbackHideDialogWindow = null;
+    public CallBackListener callbackShowConfirmDialog = null;
+    public CallBackListener callbackHideConfirmDialog = null;
 
 //    public boolean themeIsLight = true;
-    public String settingScreenTheme = SCREEN_THEME_STANDARD;
+    public String settingScreenTheme = SCREEN_THEME_DEFAULT;
     public int applicationTheme = -1;
     public ThemeColorList themeColorList = null;
 
-    //	Settings parameter
+    // Path where messages, history, logs and autosave files are stored
+    // App config on start is always stored in /data/data by android PreferencesManager
 //    public String settingAppManagemsntDirectoryUuid ="primary";
-//    public String settingAppManagemsntDirectoryName = SafFile3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
-    public String settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files/mgt_dir";
+    //public String settingAppManagemsntDirectoryName = SafManager3.SAF_FILE_PRIMARY_STORAGE_PREFIX+"/"+APPLICATION_TAG;
+    public String settingAppManagemsntDirectoryName = null; //"/data/data/"+APPLICATION_ID+"/files"; // null, to ensure init on app start
+
+    // currently unused
     public boolean settingExitClean = true;
 
     public boolean settingWriteSyncResultLog = true;
@@ -186,13 +190,15 @@ public class GlobalParameters {
         settingSupressShortcut3ConfirmationMessage =suppress;
     }
 
-    final static private String PRIVACY_POLICY_AGGREEMENT_KEY="privacy_policy_aggreed";
-    static public boolean isPrivacyPolicyAgreed(Context c) {
+    // not used
+    final private static String PRIVACY_POLICY_AGGREEMENT_KEY="privacy_policy_aggreed";
+    public static boolean isPrivacyPolicyAgreed(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        boolean aggree=prefs.getBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, false);
-        return aggree;
+        return prefs.getBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, false);
     }
-    static public void setPrivacyPolicyAgreed(Context c, boolean aggreed) {
+
+    // not used
+    public static void setPrivacyPolicyAgreed(Context c, boolean aggreed) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
         prefs.edit().putBoolean(PRIVACY_POLICY_AGGREEMENT_KEY, aggreed).commit();
     }
@@ -207,8 +213,10 @@ public class GlobalParameters {
     public boolean settingSecurityHideShowSmbPasswordButton = false;
     public boolean settingSecurityHideShowZipPasswordButton = false;
 
-    public boolean appPasswordAuthValidated=false;
-    public long appPasswordAuthLastTime=0L;
+    public boolean appPasswordAuthValidated = false;
+    public long appPasswordAuthLastTime = 0L;
+
+    public String settingSecurityAppSettingsDirectory = APP_SETTINGS_DIRECTORY_ROOT;
 
     public boolean settingPreventSyncStartDelay = false;
 //    public boolean settingScreenOnIfScreenOnAtStartOfSync = false;
@@ -221,11 +229,11 @@ public class GlobalParameters {
 
     public int settingNotificationVolume = 100;
 
-    public boolean settingScheduleSyncEnabled=true;
+    public boolean settingScheduleSyncEnabled = true;
 
     public NotificationManager notificationManager = null;
-    final static public int notificationOngoingMessageID=1;
-    final static public int notificationNoticeMessageID=2;
+    final public static int notificationOngoingMessageID = 1;
+    final public static int notificationNoticeMessageID = 2;
     public boolean notificationEnabled = true;
     public int notificationSmallIcon = R.drawable.ic_48_smbsync_wait;
     public Notification notification = null;
@@ -237,12 +245,13 @@ public class GlobalParameters {
     public long notificationLastShowedWhen = 0;
     public String notificationAppName = "";
     //	public boolean notiifcationEnabled=false;
-    public long notificationNextShowedTime = 0;
+    //public long notificationNextShowedTime = 0;
 //    public Bitmap notificationLargeIcon = null;
 
     public static final int MESSAGE_LIST_INITIAL_VALUE=5500;
+    public final Object mLockSyncMessageList = new Object();
     public ArrayList<MessageListAdapter.MessageListItem> syncMessageList = null; //new ArrayList<MessageListItem>();
-    public boolean syncMessageListChanged =false;
+    public boolean syncMessageListChanged = false;
     public boolean freezeMessageViewScroll = false;
     public MessageListAdapter syncMessageListAdapter = null;
     public ListView syncMessageView = null;
@@ -255,12 +264,12 @@ public class GlobalParameters {
     public ArrayList<ScheduleListAdapter.ScheduleListItem> syncScheduleList = new ArrayList<ScheduleListAdapter.ScheduleListItem>();
     public ScheduleListAdapter syncScheduleListAdapter = null;
     public ListView syncScheduleView = null;
-    public TextView syncScheduleMessage =null;
+    public TextView syncScheduleMessage = null;
 
     public ArrayList<GroupListAdapter.GroupListItem> syncGroupList = new ArrayList<GroupListAdapter.GroupListItem>();
     public GroupListAdapter syncGroupListAdapter = null;
     public ListView syncGroupView = null;
-    public TextView syncGroupMessage =null;
+    public TextView syncGroupMessage = null;
 
     public ArrayList<SyncTaskItem> syncTaskList = new ArrayList<SyncTaskItem>();
     public TaskListAdapter syncTaskListAdapter = null;
@@ -299,20 +308,20 @@ public class GlobalParameters {
     public Button confirmNoAll = null;
     public View.OnClickListener confirmNoAllListener = null;
 
-    public TextView confirmDialogConflictFilePathA=null;
-    public TextView confirmDialogConflictFileLengthA=null;
-    public TextView confirmDialogConflictFileLastModA=null;
-    public TextView confirmDialogConflictFilePathB=null;
-    public TextView confirmDialogConflictFileLengthB=null;
-    public TextView confirmDialogConflictFileLastModB=null;
+    public TextView confirmDialogConflictFilePathA = null;
+    public TextView confirmDialogConflictFileLengthA = null;
+    public TextView confirmDialogConflictFileLastModA = null;
+    public TextView confirmDialogConflictFilePathB = null;
+    public TextView confirmDialogConflictFileLengthB = null;
+    public TextView confirmDialogConflictFileLastModB = null;
 
-    public Button confirmDialogConflictButtonSelectA=null;
+    public Button confirmDialogConflictButtonSelectA = null;
     public View.OnClickListener confirmDialogConflictButtonSelectAListener = null;
-    public Button confirmDialogConflictButtonSelectB=null;
+    public Button confirmDialogConflictButtonSelectB = null;
     public View.OnClickListener confirmDialogConflictButtonSelectBListener = null;
-    public Button confirmDialogConflictButtonSyncIgnoreFile=null;
+    public Button confirmDialogConflictButtonSyncIgnoreFile = null;
     public View.OnClickListener confirmDialogConflictButtonSyncIgnoreFileListener = null;
-    public Button confirmDialogConflictButtonCancelSyncTask=null;
+    public Button confirmDialogConflictButtonCancelSyncTask = null;
     public View.OnClickListener confirmDialogConflictButtonCancelSyncTaskListener = null;
 
     public LinearLayout progressSpinView = null;
@@ -323,8 +332,8 @@ public class GlobalParameters {
 
     public SafManager3 safMgr = null;
 
-    private static LogStream logStream=null;//JCIFS logStream
-    private static Logger log = LoggerFactory.getLogger(GlobalParameters.class);
+    private static LogStream logStream = null;//JCIFS logStream
+    private static final Logger log = LoggerFactory.getLogger(GlobalParameters.class);
 
     public GlobalParameters() {
     }
@@ -354,21 +363,37 @@ public class GlobalParameters {
     }
 
     synchronized public void initGlobalParamter(Context c) {
-        if (Looper.myLooper()!=null) uiHandler = new Handler();
+        if (Looper.myLooper() != null) uiHandler = new Handler();
 
         debuggable = isDebuggable(c);
 
+/*      // Set app settings directory to /data/data/package_name/files
+        // Redundant as it is init in loadSettingsParms()
         try {
             settingAppManagemsntDirectoryName=c.getFilesDir().getCanonicalPath();
         } catch (IOException e) {
             e.printStackTrace();
         }
+*/
+        //externalStoragePrefix = Environment.getExternalStorageDirectory().getPath();
+        externalStoragePrefix = SafManager3.getPrimaryStoragePath();
 
-        externalStoragePrefix= Environment.getExternalStorageDirectory().getPath();
+        // If option "Force Screen On during sync" is enabled, screen is kept turned on and dimmed during sync
+        // The lock is released if a confirmation message pauses the sync (confirm delete, confirm overwrite...)
+        // - SCREEN_DIM_WAKE_LOCK: when acquired by acquireWakeLock() method, keep screen on and dimmed, if it was on, until lock is released by releaseWakeLock() method
+        // - ACQUIRE_CAUSES_WAKEUP: when SCREEN_DIM_WAKE_LOCK is acquired, turn on screen even if it was off when the lock was acquired
+        // SCREEN_DIM_WAKE_LOCK and ACQUIRE_CAUSES_WAKEUP are deprecated and only alternative is FLAG_KEEP_SCREEN_ON.
+        // New FLAG_KEEP_SCREEN_ON doesn't need a permission in manifest but must be added to an activity, not a service
+        // FLAG_KEEP_SCREEN_ON is bound to a window and keeps screen on while the window is active and visible
+        // FLAG_KEEP_SCREEN_ON keeps the screen on and at full brightness.
+        // So, for now, we keep the deprecated method. Else, SyncTask should be writtent as an activity and not a service,
+        // we would loose dim and screen cannot be kept awake without main activity in forground
+        // An alternative is to use PowerManager.PARTIAL_WAKE_LOCK, to only keep CPU active during background sync
+        // Another alternative is R.attr.turnScreenOn or Activity.setTurnScreenOn(boolean) in conjunction with R.attr.showWhenLocked
+        mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-dim");
+        forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-force-dim");
 
-        mDimWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-dim");
-        forceDimScreenWakelock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-force-dim");
-        mPartialWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3-thread-partial");
+        mPartialWakeLock = ((PowerManager) c.getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.PARTIAL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "SMBSync3:thread-partial");
         WifiManager wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
         mWifiLock = wm.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "SMBSync3-thread");
 
@@ -379,21 +404,21 @@ public class GlobalParameters {
         initSettingsParms(c);
         loadSettingsParms(c);
 
-        if (syncMessageList == null) syncMessageList =CommonUtilities.loadMessageList(c, this);
+        if (syncMessageList == null) syncMessageList = CommonUtilities.loadMessageList(c, this);
 
         initJcifsOption(c);
 
     }
 
-    public boolean configListLoaded=false;
+    public boolean configListLoaded = false;
     public void loadConfigList(Context c, CommonUtilities cu) {
-        if (cu.getLogLevel()>0) cu.addDebugMsg(1, "I", "config load started");
+        if (cu.getLogLevel() > 0) cu.addDebugMsg(1, "I", "config load started");
         acquireConfigurationLock();
         if (!configListLoaded) {
-            configListLoaded=true;
-            ArrayList<SyncTaskItem>stl=new ArrayList<SyncTaskItem>();
-            ArrayList<ScheduleListAdapter.ScheduleListItem>sl=new ArrayList<ScheduleListAdapter.ScheduleListItem>();
-            ArrayList<GroupListAdapter.GroupListItem>gl=new ArrayList<GroupListAdapter.GroupListItem>();
+            configListLoaded = true;
+            ArrayList<SyncTaskItem>stl = new ArrayList<SyncTaskItem>();
+            ArrayList<ScheduleListAdapter.ScheduleListItem>sl = new ArrayList<ScheduleListAdapter.ScheduleListItem>();
+            ArrayList<GroupListAdapter.GroupListItem>gl = new ArrayList<GroupListAdapter.GroupListItem>();
             TaskListImportExport.loadTaskListFromAppDirectory(c, this, cu, stl, sl, null, gl);
             syncTaskList.addAll(stl);
             syncScheduleList.addAll(sl);
@@ -407,34 +432,38 @@ public class GlobalParameters {
         final LogUtil jcifs_ng_lu = new LogUtil(c, "SLF4J");
         final LogUtil jcifs_old_lu = new LogUtil(c, "JCIFS-V1");
 
-        PrintStream smb1_ps= null;
-        OutputStream smb1_os=new OutputStream() {
+        PrintStream smb1_ps = null;
+        OutputStream smb1_os = new OutputStream() {
             @Override
             public void write(int b) throws IOException {
                 byte[] buff = ByteBuffer.allocate(4).putInt(b).array();
+                write(buff, 0, buff.length);
+//                Log.v("SMBSync3",StringUtil.getHexString(buff, 0, 4));
             }
             @Override
             public void write(byte[] buff) throws IOException {
-                if (buff.length==1 && buff[0]!=0x0a) {
+                if (buff.length == 1 && buff[0] != 0x0a) {
                 } else {
-                    String msg=new String(buff,"UTF-8");
-                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0,"I",msg);
+                    String msg=new String(buff, StandardCharsets.UTF_8);
+                    if (!msg.equals("\n") && msg.replaceAll(" ", "").length() > 0) jcifs_old_lu.addDebugMsg(0, "I", msg);
+//                    Log.v("SMBSync3",StringUtil.getHexString(buff, 0, buff.length));
                 }
             }
             @Override
             public void write(byte[] buff, int buff_offset, int buff_length) throws IOException {
-                if (buff_length==1 && buff[buff_offset]!=0x0a) {
+                if (buff_length == 1 && buff[buff_offset] != 0x0a) {
                 } else {
-                    String msg=new String(buff,buff_offset,buff_length, "UTF-8");
-                    if (!msg.equals("\n") && msg.replaceAll(" ","").length()>0) jcifs_old_lu.addDebugMsg(0,"I",msg);
+                    String msg = new String(buff,buff_offset,buff_length, StandardCharsets.UTF_8);
+                    if (!msg.equals("\n") && msg.replaceAll(" ","").length() > 0) jcifs_old_lu.addDebugMsg(0, "I", msg);
+//                    Log.v("SMBSync3",StringUtil.getHexString(buff, buff_offset, buff_length));
                 }
             }
         };
-        smb1_ps=new PrintStream(smb1_os);
+        smb1_ps = new PrintStream(smb1_os);
         LogStream.setInstance(smb1_ps);
-        logStream= LogStream.getInstance();//Initial create JCIFS logStream object
+        logStream = LogStream.getInstance();//Initial create JCIFS logStream object
 
-        Slf4jLogWriter jcifs_ng_lw=new Slf4jLogWriter(jcifs_ng_lu);
+        Slf4jLogWriter jcifs_ng_lw = new Slf4jLogWriter(jcifs_ng_lu);
         log.setWriter(jcifs_ng_lw);
     }
 
@@ -451,7 +480,7 @@ public class GlobalParameters {
 
     public void refreshMediaDir(Context c) {
         if (safMgr == null) {
-            Thread th=new Thread(){
+            Thread th = new Thread(){
                 @Override
                 public void run() {
                     safMgr = new SafManager3(c);
@@ -477,14 +506,14 @@ public class GlobalParameters {
         }
 
         if (!prefs.contains(c.getString(R.string.settings_screen_theme)))
-            pe.putString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+            pe.putString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_DEFAULT);
 
         if (!prefs.contains(c.getString(R.string.settings_notification_message_when_sync_ended)))
             pe.putString(c.getString(R.string.settings_notification_message_when_sync_ended),NOTIFICATION_MESSAGE_WHEN_SYNC_ENDED_ALWAYS);
         if (!prefs.contains(c.getString(R.string.settings_vibrate_when_sync_ended)))
-            pe.putString(c.getString(R.string.settings_vibrate_when_sync_ended),NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
+            pe.putString(c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
         if (!prefs.contains(c.getString(R.string.settings_playback_ringtone_when_sync_ended)))
-            pe.putString(c.getString(R.string.settings_playback_ringtone_when_sync_ended),NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS);
+            pe.putString(c.getString(R.string.settings_playback_ringtone_when_sync_ended), NOTIFICATION_SOUND_WHEN_SYNC_ENDED_ALWAYS);
         if (!prefs.contains(c.getString(R.string.settings_playback_ringtone_volume)))
             pe.putInt(c.getString(R.string.settings_playback_ringtone_volume), 100);
 
@@ -518,6 +547,9 @@ public class GlobalParameters {
         if (!prefs.contains(c.getString(R.string.settings_security_hide_show_zip_passowrd)))
             pe.putBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), false);
 
+        if (!prefs.contains(c.getString(R.string.settings_security_app_settings_directory)))
+            pe.putString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
+
         if (!prefs.contains(c.getString(R.string.settings_wifi_lock)))
             pe.putBoolean(c.getString(R.string.settings_wifi_lock), true);
 
@@ -528,16 +560,15 @@ public class GlobalParameters {
             pe.putString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
 
         if (!prefs.contains(c.getString(R.string.settings_display_font_scale_factor)))
-            pe.putString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
+            pe.putString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_SETTING_DEFAULT);
 
         pe.commit();
-
     }
 
     public void loadSettingsParms(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
 
-        settingExitClean=prefs.getBoolean(c.getString(R.string.settings_exit_clean), false);
+        settingExitClean = prefs.getBoolean(c.getString(R.string.settings_exit_clean), false);
 
 //        settingErrorOption = prefs.getBoolean(c.getString(R.string.settings_error_option), false);
         settingWifiLockRequired = prefs.getBoolean(c.getString(R.string.settings_wifi_lock), true);
@@ -554,12 +585,12 @@ public class GlobalParameters {
         settingNotificationVibrateWhenSyncEnded = prefs.getString(c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS);
         settingExportedTaskEncryptRequired = prefs.getBoolean(c.getString(R.string.settings_exported_profile_encryption), true);
 
-        settingScreenTheme =prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD);
+        settingScreenTheme = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_DEFAULT);
         if (prefs.contains("settings_use_light_theme")) {
             boolean themeIsLight = prefs.getBoolean("settings_use_light_theme", false);
             if (themeIsLight) {
                 prefs.edit().remove("settings_use_light_theme").commit();
-                settingScreenTheme= SCREEN_THEME_LIGHT;
+                settingScreenTheme = SCREEN_THEME_LIGHT;
                 prefs.edit().putString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_LIGHT).commit();
             }
         }
@@ -568,9 +599,9 @@ public class GlobalParameters {
         else applicationTheme = R.style.Main;
 
 //        loadLanguagePreference(c);
-        setDisplayFontScale(c);
+        //setDisplayFontScale(c);
 
-        settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
+        //settingForceDeviceTabletViewInLandscape = prefs.getBoolean(c.getString(R.string.settings_device_orientation_landscape_tablet), false);
 
         settingFixDeviceOrientationToPortrait = prefs.getBoolean(c.getString(R.string.settings_device_orientation_portrait), false);
 
@@ -578,7 +609,7 @@ public class GlobalParameters {
 
         settingWriteSyncResultLog = prefs.getBoolean(c.getString(R.string.settings_sync_history_log), true);
 
-        settingPreventSyncStartDelay =prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
+        settingPreventSyncStartDelay = prefs.getBoolean(c.getString(R.string.settings_force_screen_on_while_sync), false);
 
         settingSecurityApplicationPasswordHashValue = ApplicationPasswordUtils.getPasswordHashValue(prefs);
         settingSecurityApplicationPasswordUseAppStartup = prefs.getBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), false);
@@ -590,11 +621,32 @@ public class GlobalParameters {
         settingSecurityHideShowSmbPasswordButton = prefs.getBoolean(c.getString(R.string.settings_security_hide_show_smb_passowrd), false);
         settingSecurityHideShowZipPasswordButton = prefs.getBoolean(c.getString(R.string.settings_security_hide_show_zip_passowrd), false);
 
-        settingScheduleSyncEnabled=prefs.getBoolean(SCHEDULE_ENABLED_KEY, true);
+        settingSecurityAppSettingsDirectory = prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
+        if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_ROOT)) {
+            // Set app settings directory to /data/data/APPLICATION_ID/files
+            try {
+                settingAppManagemsntDirectoryName = c.getFilesDir().getCanonicalPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+                settingAppManagemsntDirectoryName = "/data/data/"+APPLICATION_ID+"/files";
+            }
+        } else if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_APP_SPECIFIC_INTERNAL)) {
+            // Set app settings directory to /storage/emulated/0/Android/data/APPLICATION_ID/files
+            settingAppManagemsntDirectoryName = SafManager3.getAppSpecificDirectory(c, SafFile3.SAF_FILE_PRIMARY_UUID);
+            if (settingAppManagemsntDirectoryName == null) {
+                settingAppManagemsntDirectoryName = SafManager3.getPrimaryStoragePath()+"/Android/data/"+APPLICATION_ID+"/files";
+                if (log.isDebugEnabled()) log.debug("loadSettingsParms: SafManager3.getAppSpecificDirectory returns null on primary uid");
+            }
+        } else if (settingSecurityAppSettingsDirectory.equals(APP_SETTINGS_DIRECTORY_STORAGE)) {
+            // Set app settings directory to /storage/emulated/0/app_name
+            settingAppManagemsntDirectoryName = SafManager3.getPrimaryStoragePath()+"/"+APPLICATION_TAG;
+        }
 
-        settingSupressAddExternalStorageNotification=
+        settingScheduleSyncEnabled = prefs.getBoolean(SCHEDULE_ENABLED_KEY, true);
+
+        settingSupressAddExternalStorageNotification =
             prefs.getBoolean(c.getString(R.string.settings_suppress_add_external_storage_notification), false);
-        settingSupressStartSyncConfirmationMessage=
+        settingSupressStartSyncConfirmationMessage =
                 prefs.getBoolean(c.getString(R.string.settings_suppress_start_sync_confirmation_message), false);
         settingSupressShortcut1ConfirmationMessage =
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut1_confirmation_message), false);
@@ -602,6 +654,11 @@ public class GlobalParameters {
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut2_confirmation_message), false);
         settingSupressShortcut3ConfirmationMessage =
                 prefs.getBoolean(c.getString(R.string.settings_suppress_shortcut3_confirmation_message), false);
+    }
+
+    public void setDeviceOrientation(final Activity a) {
+        if (settingFixDeviceOrientationToPortrait) a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     public void clearApplicationPasswordSetting(Context c) {
@@ -612,11 +669,11 @@ public class GlobalParameters {
         settingSecurityHideShowSmbPasswordButton = false;
         settingSecurityHideShowZipPasswordButton = false;
 
-        settingSecurityReinitSmbAccountPasswordValue=false;
-        settingSecurityReinitZipPasswordValue=false;
+        settingSecurityReinitSmbAccountPasswordValue = false;
+        settingSecurityReinitZipPasswordValue = false;
 
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        SharedPreferences.Editor editor=prefs.edit();
+        SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_app_startup), settingSecurityApplicationPasswordUseAppStartup);
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_edit_task), settingSecurityApplicationPasswordUseEditTask);
         editor.putBoolean(c.getString(R.string.settings_security_application_password_use_export_task), settingSecurityApplicationPasswordUseExport);
@@ -631,56 +688,60 @@ public class GlobalParameters {
 
     public void setScheduleEnabled(Context c, boolean enabled) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        settingScheduleSyncEnabled=enabled;
+        settingScheduleSyncEnabled = enabled;
         prefs.edit().putBoolean(SCHEDULE_ENABLED_KEY, enabled).commit();
     }
 
-    public static final String FONT_SCALE_FACTOR_SMALL="0";
-    public static final float FONT_SCALE_FACTOR_SMALL_VALUE=0.8f;
-    public static final String FONT_SCALE_FACTOR_NORMAL="1";
-    public static final float FONT_SCALE_FACTOR_NORMAL_VALUE=1.0f;
-    public static final String FONT_SCALE_FACTOR_LARGE="2";
-    public static final float FONT_SCALE_FACTOR_LARGE_VALUE=1.2f;
-    public static final String FONT_SCALE_FACTOR_LARGEST="3";
-    public static final float FONT_SCALE_FACTOR_LARGEST_VALUE=1.6f;
-    static public String getFontScaleFactor(Context c) {
+    //Get current app settings directory value saved in Preferences
+    public static String getAppManagementDirSetting(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
-        return fs;
+        return prefs.getString(c.getString(R.string.settings_security_app_settings_directory), APP_SETTINGS_DIRECTORY_ROOT);
     }
 
-    static public float getFontScaleFactorValue(Context c) {
-        String fs=getFontScaleFactor(c);
-        float fs_value=getFontScaleFactorValue(c, fs);
-        return fs_value;
+    public static final String FONT_SCALE_FACTOR_SMALL = "0";
+    public static final float FONT_SCALE_FACTOR_SMALL_VALUE = 0.8f;
+    public static final String FONT_SCALE_FACTOR_NORMAL = "1";
+    public static final float FONT_SCALE_FACTOR_NORMAL_VALUE = 1.0f;
+    public static final String FONT_SCALE_FACTOR_LARGE = "2";
+    public static final float FONT_SCALE_FACTOR_LARGE_VALUE = 1.2f;
+    public static final String FONT_SCALE_FACTOR_LARGEST = "3";
+    public static final float FONT_SCALE_FACTOR_LARGEST_VALUE = 1.6f;
+    public static final String FONT_SCALE_FACTOR_SETTING_DEFAULT = FONT_SCALE_FACTOR_NORMAL;
+    public static final float FONT_SCALE_FACTOR_DEFAULT_VALUE = FONT_SCALE_FACTOR_NORMAL_VALUE;
+
+    //Get font scale saved settings from Preferences
+    public static String getFontScaleFactorSetting(Context c) {
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
+        return prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_SETTING_DEFAULT);
     }
 
-    static public float getFontScaleFactorValue(Context c, String fs) {
-        float fs_value=1.0f;
+    // Get font scale float value from saved Preferences
+    public static float getFontScaleFactorValue(Context c) {
+        String fs=getFontScaleFactorSetting(c);
+        float fs_value = GlobalParameters.FONT_SCALE_FACTOR_DEFAULT_VALUE;
         if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_SMALL)) {
-            fs_value=FONT_SCALE_FACTOR_SMALL_VALUE;
+            fs_value = FONT_SCALE_FACTOR_SMALL_VALUE;
         } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_NORMAL)) {
-            fs_value=FONT_SCALE_FACTOR_NORMAL_VALUE;
+            fs_value = FONT_SCALE_FACTOR_NORMAL_VALUE;
         } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_LARGE)) {
-            fs_value=FONT_SCALE_FACTOR_LARGE_VALUE;
+            fs_value = FONT_SCALE_FACTOR_LARGE_VALUE;
         } else if (fs.equals(GlobalParameters.FONT_SCALE_FACTOR_LARGEST)) {
-            fs_value=FONT_SCALE_FACTOR_LARGEST_VALUE;
+            fs_value = FONT_SCALE_FACTOR_LARGEST_VALUE;
         }
+
         return fs_value;
     }
 
-    static public void setDisplayFontScale(Context c) {
-        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String fs=prefs.getString(c.getString(R.string.settings_display_font_scale_factor), FONT_SCALE_FACTOR_NORMAL);
-        setDisplayFontScale(c, fs);
-    }
+    // Return current config, updated with font scale factor from saved preferences
+    private static Configuration setDisplayFontScaleConfig(Context c) {
+        float fs = getFontScaleFactorValue(c); // get font scale from saved preferences
+        Resources res = c.getResources();
+        Configuration config = new Configuration(res.getConfiguration());
+        config.fontScale = fs;
+        return config;
 
-    static public void setDisplayFontScale(Context c, String fs) {
-        float fs_value=getFontScaleFactorValue(c, fs);
-        setDisplayFontScale(c, fs_value);
-    }
-
-    static public void setDisplayFontScale(Context c, float scale) {
+        /*
+        // Deprecated API < 24
         Configuration configuration=c.getResources().getConfiguration();
         configuration.fontScale = scale;
         DisplayMetrics metrics = c.getResources().getDisplayMetrics();
@@ -689,42 +750,41 @@ public class GlobalParameters {
         wm.getDefaultDisplay().getMetrics(metrics);
         metrics.scaledDensity = configuration.fontScale * metrics.density;
         c.getResources().updateConfiguration(configuration, metrics);
-
+        */
     }
 
-    static public Context setNewLocale(Context c) {
-        String lc= getLanguageCode(c);
+    // Returns current context updated with locale from settings Preferences
+    public static Context setNewLocale(Context c) {
+        String lc = getLanguageCode(c); //get language code from saved preferences
         return updateLanguageResources(c, lc);
     }
 
     public static final String APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT = "system";
-
-    static public String getLanguageCode(Context c) {
+    // get language code from saved Preferences
+    public static String getLanguageCode(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
-        String lc=prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
-        return lc;
+        return prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
     }
 
     // wrap language layout in the base context for all activities
-    static private Context updateLanguageResources(Context context, String language) {
+    private static Context updateLanguageResources(Context c, String language) {
         //if language is set to system default (defined as "0"), do not apply non existing language code "0" and return current context without wrapped language
-        if (!language.equals(APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT)) {
-            Locale locale = new Locale(language);
-            Locale.setDefault(locale);
+        if (language.equals(APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT)) return c;
 
-            Resources res = context.getResources();
-            android.content.res.Configuration config = new android.content.res.Configuration(res.getConfiguration());
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
 
-            setLocaleForApi24(config, locale);
-            context = context.createConfigurationContext(config);
-        }
-        return context;
+        Resources res = c.getResources();
+        Configuration config = new Configuration(res.getConfiguration()); //current config
+        Configuration newConfig = setLocaleConfigForApi24(config, locale); //apply new locale to current config
+
+        return c.createConfigurationContext(newConfig);
     }
 
-    static private void setLocaleForApi24(android.content.res.Configuration config, Locale target) {
+    private static Configuration setLocaleConfigForApi24(Configuration config, Locale new_locale) {
         Set<Locale> set = new LinkedHashSet<>();
-        // bring the target locale to the front of the list
-        set.add(target);
+        // bring the new locale to the front of the list
+        set.add(new_locale);
 
         LocaleList all = LocaleList.getDefault();
         for (int i = 0; i < all.size(); i++) {
@@ -733,36 +793,69 @@ public class GlobalParameters {
         }
 
         Locale[] locales = set.toArray(new Locale[0]);
-        config.setLocales(new LocaleList(locales));
+
+        config.setLocales(new LocaleList(locales)); //new config with locale
+        return config;
     }
 
-//    static public void loadLanguagePreference(Context c) {
+//    public static void loadLanguagePreference(Context c) {
 //        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
 //        settingApplicationLanguage = prefs.getString(c.getString(R.string.settings_screen_theme_language), APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT);
 //    }
 
-    public boolean isScreenThemeIsLight() {
-        boolean result=false;
-        if (settingScreenTheme.equals(SCREEN_THEME_LIGHT)) result = true;
-        return result;
+    // wrapper called only from attachBaseContext()
+    //  - use as wrapper in attachBaseContext() for all activities and App or extend all App/Activities from a base Activity Class with attachBaseContext()
+    //  - for App: implement also in onConfigurationChanged(), not needed in AppCompatActivity class
+    // To use updateConfiguration() deprecated method
+    //  - no need to use wrapper in attachBaseContext()
+    //  - all activities and App in AndroidManifest must have: android:configChanges="locale|orientation|screenSize|keyboardHidden|layoutDirection"
+    public static Context setLocaleAndMetrics(Context c) {
+        Context newContext = setNewLocale(c); // context with Locale from saved preferences
+        Configuration config = setDisplayFontScaleConfig(newContext); // config with locale and font scale factor from saved preferences
+        newContext = newContext.createConfigurationContext(config); // context with new config holding font scale and locale from saved preferences
+
+        return newContext;
     }
 
-    final static public String SMB_LM_COMPATIBILITY_DEFAULT="3";
-    final static public String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT="30000";
-    final static public String SMB_USE_EXTENDED_SECURITY_DEFAULT="true";
-    final static public String SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT="false";
+    public boolean isScreenThemeIsLight() {
+        return settingScreenTheme.equals(SCREEN_THEME_LIGHT);
+    }
+
+    // Get screen theme setting from saved setting Preferences
+    public static String getScreenTemeSetting(Context c) {
+        SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
+        String theme_setting = prefs.getString(c.getString(R.string.settings_screen_theme), SCREEN_THEME_DEFAULT);
+        if (!theme_setting.equals(SCREEN_THEME_STANDARD) && !theme_setting.equals(SCREEN_THEME_LIGHT) && !theme_setting.equals(SCREEN_THEME_BLACK)) {
+            if (log.isDebugEnabled()) log.debug("getScreenTemeSetting Error: Invalid preference found: theme_setting=" + theme_setting);
+            return SCREEN_THEME_DEFAULT;
+        }
+        return theme_setting;
+    }
+
+    // Get screen theme value from saved setting Preferences
+    public static int getScreenTemeValue(Context c) {
+        String theme_setting = getScreenTemeSetting(c);
+        if (theme_setting.equals(SCREEN_THEME_LIGHT)) return R.style.MainLight;
+        else if (theme_setting.equals(SCREEN_THEME_BLACK)) return R.style.MainBlack;
+        else return R.style.Main;
+    }
+
+    final public static String SMB_LM_COMPATIBILITY_DEFAULT = "3";
+    final public static String SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT = "30000";
+    final public static String SMB_USE_EXTENDED_SECURITY_DEFAULT = "true";
+    final public static String SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT = "false";
 
     public String settingsSmbLmCompatibility = SMB_LM_COMPATIBILITY_DEFAULT,
             settingsSmbUseExtendedSecurity = SMB_USE_EXTENDED_SECURITY_DEFAULT,
             settingsSmbClientResponseTimeout = SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT,
-            settingsSmbDisablePlainTextPasswords=SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT;
+            settingsSmbDisablePlainTextPasswords = SMB_USE_DISABLE_PLAIN_TEXT_PASSWORD_DEFAULT;
 
     final public void initJcifsOption(Context c) {
         SharedPreferences prefs = CommonUtilities.getSharedPreference(c);
 
         settingsSmbLmCompatibility = prefs.getString(c.getString(R.string.settings_smb_lm_compatibility), SMB_LM_COMPATIBILITY_DEFAULT);
         boolean ues = prefs.getBoolean(c.getString(R.string.settings_smb_use_extended_security), true);
-        boolean dpp=prefs.getBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false);
+        boolean dpp = prefs.getBoolean(c.getString(R.string.settings_smb_disable_plain_text_passwords),false);
         settingsSmbClientResponseTimeout = prefs.getString(c.getString(R.string.settings_smb_client_response_timeout), SMB_CLIENT_RESPONSE_TIMEOUT_DEFAULT);
 
         if (settingsSmbLmCompatibility.equals("3") || settingsSmbLmCompatibility.equals("4")) {
@@ -773,7 +866,7 @@ public class GlobalParameters {
         }
 
         settingsSmbUseExtendedSecurity = ues ? "true" : "false";
-        settingsSmbDisablePlainTextPasswords=dpp ? "true" : "false";
+        settingsSmbDisablePlainTextPasswords = dpp ? "true" : "false";
 
         System.setProperty(JCIFS_OPTION_CLIENT_ATTR_EXPIRATION_PERIOD, "0");
         System.setProperty(JCIFS_OPTION_NETBIOS_RETRY_TIMEOUT, "3000");
@@ -797,7 +890,7 @@ public class GlobalParameters {
         } catch (PackageManager.NameNotFoundException e) {
             result = false;
         }
-        if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE)
+        if (appInfo != null && (appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE)
             result = true;
 //        Log.v("","debuggable="+result);
         return result;
@@ -836,7 +929,7 @@ public class GlobalParameters {
                 util.addDebugMsg(1, "I", "Wifilock acquired");
             }
         }
-        isScreenOn(c,util);
+
         if ((settingPreventSyncStartDelay)) {// && isScreenOn(c, util))) {// && !activityIsBackground) {
             if (!mDimWakeLock.isHeld()) {
                 mDimWakeLock.acquire();
@@ -850,14 +943,15 @@ public class GlobalParameters {
         }
     }
 
-    static public boolean isScreenOn(Context context, CommonUtilities util) {
+    // not used
+    public static boolean isScreenOn(Context context, CommonUtilities util) {
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         util.addDebugMsg(1, "I", "isDeviceIdleMode()=" + pm.isDeviceIdleMode() +
                 ", isPowerSaveMode()=" + pm.isPowerSaveMode() + ", isInteractive()=" + pm.isInteractive());
         return pm.isInteractive();
     }
 
-    class Slf4jLogWriter extends LoggerWriter {
+    static class Slf4jLogWriter extends LoggerWriter {
         private LogUtil mLu =null;
         public Slf4jLogWriter(LogUtil lu) {
             mLu =lu;

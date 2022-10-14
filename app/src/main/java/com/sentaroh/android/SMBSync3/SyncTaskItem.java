@@ -23,6 +23,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 */
 
+import androidx.annotation.NonNull;
+
 import com.sentaroh.android.JcifsFile2.JcifsAuth;
 import com.sentaroh.android.Utilities3.SafManager3;
 
@@ -38,12 +40,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
+//class SyncTaskItem implements Serializable {
 class SyncTaskItem implements Serializable, Cloneable {
     private static final long serialVersionUID = 1L;
-    private static Logger log= LoggerFactory.getLogger(SyncTaskItem.class);
+    private static final Logger log= LoggerFactory.getLogger(SyncTaskItem.class);
 
     public SyncTaskItem(String stn, boolean pfa, boolean ic) {
-        syncTasｋName = stn;
+        syncTaskName = stn;
         syncTaskEnabled = pfa;
         isChecked = ic;
         initOffsetOfDst();
@@ -59,9 +62,9 @@ class SyncTaskItem implements Serializable, Cloneable {
     }
 
     public static final int SYNC_TASK_NAME_MAX_LENGTH=64;
-    private String syncTasｋName = "";
-    public String getSyncTaskName() {return syncTasｋName;}
-    public void setSyncTaskName(String p) {syncTasｋName = p;}
+    private String syncTaskName = "";
+    public String getSyncTaskName() {return syncTaskName;}
+    public void setSyncTaskName(String p) {syncTaskName = p;}
 
     public final static String SYNC_TASK_TYPE_MIRROR = "M"; // index 0 (Indexes position from SYNC_TASK_TYPE_LIST not used for now)
     public final static String SYNC_TASK_TYPE_COPY = "C"; // index 1
@@ -152,7 +155,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getSyncFilterFileSizeType() {return syncFilterFileSizeType;}
     public void setSyncFilterFileSizeType(String p) {syncFilterFileSizeType = p;}
     static final public String[] syncFilterFileSizeTypeValueArray=new String[]{FILTER_FILE_SIZE_TYPE_NONE, FILTER_FILE_SIZE_TYPE_LESS_THAN, FILTER_FILE_SIZE_TYPE_GREATER_THAN};
-    static public String getSyncFilterFileSizeTypeByIndex(int index) {
+    public static String getSyncFilterFileSizeTypeByIndex(int index) {
         if (index>=0 && index<=2) return syncFilterFileSizeTypeValueArray[index];
         else return FILTER_FILE_SIZE_TYPE_NONE;
     }
@@ -166,7 +169,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getSyncFilterFileSizeUnit() {return syncFilterFileSizeUnit;}
     public void setSyncFilterFileSizeUnit(String p) {syncFilterFileSizeUnit = p;}
     static final public String[] syncFilterFileSizeUnitValueArray=new String[]{FILTER_FILE_SIZE_UNIT_BYTE, FILTER_FILE_SIZE_UNIT_KIB, FILTER_FILE_SIZE_UNIT_MIB, FILTER_FILE_SIZE_UNIT_GIB};
-    static public String getSyncFilterFileSizeUnitByIndex(int index) {
+    public static String getSyncFilterFileSizeUnitByIndex(int index) {
         if (index>=0 && index<=3) return syncFilterFileSizeUnitValueArray[index];
         else return FILTER_FILE_SIZE_TYPE_NONE;
     }
@@ -185,7 +188,7 @@ class SyncTaskItem implements Serializable, Cloneable {
     public String getSyncFilterFileDateType() {return syncFilterFileDateType;}
     public void setSyncFilterFileDateType(String p) {syncFilterFileDateType = p;}
     static final public String[] syncFilterFileDateTypeValueArray=new String[]{FILTER_FILE_DATE_TYPE_NONE, FILTER_FILE_DATE_TYPE_OLDER_THAN, FILTER_FILE_DATE_TYPE_NEWER_THAN, FILTER_FILE_DATE_TYPE_AFTER_SYNC_BEGIN_DAY};
-    static public String getSyncFilterFileDateTypeByIndex(int index) {
+    public static String getSyncFilterFileDateTypeByIndex(int index) {
         if (index>=0 && index<=3) return syncFilterFileDateTypeValueArray[index];
         else return FILTER_FILE_SIZE_TYPE_NONE;
     }
@@ -260,7 +263,7 @@ class SyncTaskItem implements Serializable, Cloneable {
             WIFI_STATUS_WIFI_HAS_PRIVATE_IP_ADDRESS, WIFI_STATUS_WIFI_IP_ADDRESS_LIST};
     private String syncOptionWifiStatus = WIFI_STATUS_WIFI_DEFAULT;
     public String getSyncOptionWifiStatusOption() {return syncOptionWifiStatus;}
-    static public String getSyncOptionWifiStatusOptionValueByIndex(int index) {
+    public static String getSyncOptionWifiStatusOptionValueByIndex(int index) {
         if (index>=0 && index<=3) return WIFI_STATUS_WIFI_LIST[index];
         return WIFI_STATUS_WIFI_LIST[0];
     }
@@ -332,16 +335,16 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty() {return syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty;}
     public void setSyncOptionMoveOnlyRemoveSourceDirectoryIfEmpty(boolean p) {syncOptionMoveOnlyRemoveSourceDirectoryIfEmpty = p;}
 
-    final static public String SYNC_TASK_OPTION_ERROR_OPTION_STOP ="STOP";
-    final static public int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_STOP =0;
-    final static public String SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND ="SKIP_UNCOND";
-    final static public int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_UNCOND =1;
-    final static public String SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK ="SKIP_NETWORK";
-    final static public int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_NETWORK =2;
-    final static private String[] SYNC_OPTION_TASK_ERROR_VALUES=new String[]{SYNC_TASK_OPTION_ERROR_OPTION_STOP, SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND, SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK};
+    final public static String SYNC_TASK_OPTION_ERROR_OPTION_STOP ="STOP";
+    final public static int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_STOP =0;
+    final public static String SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND ="SKIP_UNCOND";
+    final public static int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_UNCOND =1;
+    final public static String SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK ="SKIP_NETWORK";
+    final public static int SYNC_TASK_OPTION_ERROR_OPTION_INDEX_NETWORK =2;
+    final private static String[] SYNC_OPTION_TASK_ERROR_VALUES=new String[]{SYNC_TASK_OPTION_ERROR_OPTION_STOP, SYNC_TASK_OPTION_ERROR_OPTION_SKIP_UNCOND, SYNC_TASK_OPTION_ERROR_OPTION_SKIP_NETWORK};
     private String syncOptionTaskErrorOption= SYNC_TASK_OPTION_ERROR_OPTION_STOP;
     public String getSyncTaskErrorOption() {return syncOptionTaskErrorOption;}
-    static public String getSyncTaskErrorOptionValueByIndex(int index) {
+    public static String getSyncTaskErrorOptionValueByIndex(int index) {
         if (index>=0 && index<=2) return SYNC_OPTION_TASK_ERROR_VALUES[index];
         else return SYNC_OPTION_TASK_ERROR_VALUES[0];
     }
@@ -373,7 +376,12 @@ class SyncTaskItem implements Serializable, Cloneable {
     public final static String SYNC_FOLDER_SMB_PROTOCOL_SMB23 = JcifsAuth.JCIFS_FILE_SMB23;
     public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT = SYNC_FOLDER_SMB_PROTOCOL_SMB23;
     public final static String SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_DESCRIPTION = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
-    public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[]{SYNC_FOLDER_SMB_PROTOCOL_SMB1, SYNC_FOLDER_SMB_PROTOCOL_SMB23};
+    public final static int SYNC_FOLDER_SMB_PROTOCOL_SMB1_INDEX = 0;
+    public final static int SYNC_FOLDER_SMB_PROTOCOL_SMB23_INDEX = 1;
+    public final static int SYNC_FOLDER_SMB_PROTOCOL_DEFAULT_INDEX = SYNC_FOLDER_SMB_PROTOCOL_SMB23_INDEX;
+    public final static String[] SYNC_FOLDER_SMB_PROTOCOL_LIST=new String[] { 
+        SYNC_FOLDER_SMB_PROTOCOL_SMB1,      // 0
+        SYNC_FOLDER_SMB_PROTOCOL_SMB23};    // 1
     private String syncTaskSourceFolderSmbProtocol = SYNC_FOLDER_SMB_PROTOCOL_DEFAULT;
     public String getSourceSmbProtocol() {return syncTaskSourceFolderSmbProtocol;}
     public void setSourceSmbProtocol(String proto) {syncTaskSourceFolderSmbProtocol=proto;}
@@ -657,32 +665,32 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isSyncTaskRunning() {return syncTaskIsRunning;}
 
     private int syncLastSyncResult = 0;
-    static public final int SYNC_RESULT_STATUS_SUCCESS = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SUCCESS;
-    static public final int SYNC_RESULT_STATUS_CANCEL = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_CANCEL;
-    static public final int SYNC_RESULT_STATUS_ERROR = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR;
-    static public final int SYNC_RESULT_STATUS_WARNING = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_WARNING;
-    static public final int SYNC_RESULT_STATUS_SKIP = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SKIP;
-    static public final int SYNC_RESULT_STATUS_DEFAULT = SYNC_RESULT_STATUS_SUCCESS;
-    static public final String SYNC_RESULT_STATUS_DEFAULT_DESCRIPTION = "SUCCESS";
+    public static final int SYNC_RESULT_STATUS_SUCCESS = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SUCCESS;
+    public static final int SYNC_RESULT_STATUS_CANCEL = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_CANCEL;
+    public static final int SYNC_RESULT_STATUS_ERROR = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_ERROR;
+    public static final int SYNC_RESULT_STATUS_WARNING = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_WARNING;
+    public static final int SYNC_RESULT_STATUS_SKIP = HistoryListAdapter.HistoryListItem.SYNC_RESULT_STATUS_SKIP;
+    public static final int SYNC_RESULT_STATUS_DEFAULT = SYNC_RESULT_STATUS_SUCCESS;
+    public static final String SYNC_RESULT_STATUS_DEFAULT_DESCRIPTION = "SUCCESS";
     public final static int[] SYNC_RESULT_STATUS_LIST = new int[]{SYNC_RESULT_STATUS_SUCCESS, SYNC_RESULT_STATUS_CANCEL, SYNC_RESULT_STATUS_ERROR, SYNC_RESULT_STATUS_WARNING};
     public int getLastSyncResult() {return syncLastSyncResult;}
     public void setLastSyncResult(int p) {syncLastSyncResult = p;}
 
     private int syncTaskStatusErrorCode =0;
-    static public final int SYNC_TASK_STATUS_ERROR_NO_ERROR =0;
-    static public final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_AUDIO =1;
-    static public final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_IMAGE =2;
-    static public final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_VIDEO =4;
-//    static public final int SYNC_TASK_ERROR_DIRECTORY_FILTER=1;
+    public static final int SYNC_TASK_STATUS_ERROR_NO_ERROR =0;
+    public static final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_AUDIO =1;
+    public static final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_IMAGE =2;
+    public static final int SYNC_TASK_STATUS_ERROR_PRESET_FILTER_VIDEO =4;
+//    public static final int SYNC_TASK_ERROR_DIRECTORY_FILTER=1;
     public boolean isSyncTaskError() {return !(syncTaskStatusErrorCode == SYNC_TASK_STATUS_ERROR_NO_ERROR);}
     public int getSyncTaskStatusErrorCode() {return syncTaskStatusErrorCode;}
     public void setSyncTaskStatusErrorCode(int error) {
         syncTaskStatusErrorCode =error;}
 
-    static public final int SYNC_FOLDER_STATUS_ERROR_NO_ERROR =0;
-    static public final int SYNC_FOLDER_STATUS_ERROR_ACCOUNT_NAME =1;
-    static public final int SYNC_FOLDER_STATUS_ERROR_ACCOUNT_PASSWORD =2;
-    static public final int SYNC_FOLDER_STATUS_ERROR_ZIP_PASSWORD =4;
+    public static final int SYNC_FOLDER_STATUS_ERROR_NO_ERROR =0;
+    public static final int SYNC_FOLDER_STATUS_ERROR_ACCOUNT_NAME =1;
+    public static final int SYNC_FOLDER_STATUS_ERROR_ACCOUNT_PASSWORD =2;
+    public static final int SYNC_FOLDER_STATUS_ERROR_ZIP_PASSWORD =4;
     private int syncSourceFolderStatusError = SyncTaskItem.SYNC_FOLDER_STATUS_ERROR_NO_ERROR;
     public boolean isSyncFolderStatusError() {return (syncSourceFolderStatusError + syncDestinationFolderStatusError)!= SYNC_FOLDER_STATUS_ERROR_NO_ERROR;}
     public int getSourceFolderStatusError() {return syncSourceFolderStatusError;}
@@ -697,9 +705,23 @@ class SyncTaskItem implements Serializable, Cloneable {
     public boolean isChanged() {return isChanged;}
     public void setChanged(boolean changed) {isChanged=changed;}
 
-    @SuppressWarnings("unchecked")
+    // Clone using java Cloneable clone()
+    // not used
+    @NonNull
     @Override
     public SyncTaskItem clone() {
+        SyncTaskItem npfli = null;
+        try {
+            npfli = (SyncTaskItem) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        assert npfli != null;
+        return npfli;
+    }
+
+    // Custom clone using Serialization/Deserialization
+    public SyncTaskItem cloneSerial() {
         SyncTaskItem npfli = null;
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -719,9 +741,7 @@ class SyncTaskItem implements Serializable, Cloneable {
             npfli = (SyncTaskItem) ois.readObject();
             ois.close();
             bais.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -730,7 +750,7 @@ class SyncTaskItem implements Serializable, Cloneable {
 
     public boolean isSame(SyncTaskItem sti) {
         boolean result = false;
-        if (syncTasｋName.equals(sti.getSyncTaskName()) &&
+        if (syncTaskName.equals(sti.getSyncTaskName()) &&
                 (isChanged==sti.isChanged()) &&
                 (syncTaskGroup.equals(sti.getSyncTaskGroup())) &&
                 (syncTaskEnabled==sti.isSyncTaskAuto()) &&
@@ -831,34 +851,34 @@ class SyncTaskItem implements Serializable, Cloneable {
 
                         (syncOptionSyncOnlyCharging==sti.isSyncOptionSyncWhenCharging())) {
 
-                    String ff_cmp1 = "";
-                    for (FilterListAdapter.FilterListItem item : syncFileNameFilter) ff_cmp1 += item.toString()+" ";
+                    StringBuilder ff_cmp1 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : syncFileNameFilter) ff_cmp1.append(item.toString()).append(" ");
 
-                    String ff_cmp2 = "";
-                    for (FilterListAdapter.FilterListItem item : sti.getFileNameFilter()) ff_cmp2 += item.toString()+" ";
+                    StringBuilder ff_cmp2 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : sti.getFileNameFilter()) ff_cmp2.append(item.toString()).append(" ");
 
-                    String df_cmp1 = "";
-                    for (FilterListAdapter.FilterListItem item : syncDirectoryFilter) df_cmp1 += item.toString()+" ";
+                    StringBuilder df_cmp1 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : syncDirectoryFilter) df_cmp1.append(item.toString()).append(" ");
 
-                    String df_cmp2 = "";
-                    for (FilterListAdapter.FilterListItem item : sti.getDirectoryFilter()) df_cmp2 += item.toString()+" ";
+                    StringBuilder df_cmp2 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : sti.getDirectoryFilter()) df_cmp2.append(item.toString()).append(" ");
 
-                    String wap_cmp1 = "";
-                    for (FilterListAdapter.FilterListItem item : syncOptionWifiAccessPointGrantList) wap_cmp1 += item.toString()+" ";
+                    StringBuilder wap_cmp1 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : syncOptionWifiAccessPointGrantList) wap_cmp1.append(item.toString()).append(" ");
 
-                    String wap_cmp2 = "";
-                    for (FilterListAdapter.FilterListItem item : sti.getSyncOptionWifiAccessPointGrantList()) wap_cmp2 += item.toString()+" ";
+                    StringBuilder wap_cmp2 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : sti.getSyncOptionWifiAccessPointGrantList()) wap_cmp2.append(item.toString()).append(" ");
 
-                    String wad_cmp1 = "";
-                    for (FilterListAdapter.FilterListItem item : syncOptionWifiIPAddressGrantList) wad_cmp1 += item.toString()+" ";
+                    StringBuilder wad_cmp1 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : syncOptionWifiIPAddressGrantList) wad_cmp1.append(item.toString()).append(" ");
 
-                    String wad_cmp2 = "";
-                    for (FilterListAdapter.FilterListItem item : sti.getSyncOptionWifiIPAddressGrantList()) wad_cmp2 += item.toString()+" ";
+                    StringBuilder wad_cmp2 = new StringBuilder();
+                    for (FilterListAdapter.FilterListItem item : sti.getSyncOptionWifiIPAddressGrantList()) wad_cmp2.append(item.toString()).append(" ");
 
-                    if ((ff_cmp1.equals(ff_cmp2)) &&
-                            (df_cmp1.equals(df_cmp2)) &&
-                            (wap_cmp1.equals(wap_cmp2)) &&
-                            (wad_cmp1.equals(wad_cmp2))
+                    if ((ff_cmp1.toString().equals(ff_cmp2.toString())) &&
+                            (df_cmp1.toString().equals(df_cmp2.toString())) &&
+                            (wap_cmp1.toString().equals(wap_cmp2.toString())) &&
+                            (wad_cmp1.toString().equals(wad_cmp2.toString()))
                     ) {
                         result = true;
                     }

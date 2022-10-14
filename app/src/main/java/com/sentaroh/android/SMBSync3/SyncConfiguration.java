@@ -543,7 +543,7 @@ public class SyncConfiguration {
 
         setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_vibrate_when_sync_ended), NOTIFICATION_VIBRATE_WHEN_SYNC_ENDED_ALWAYS));//gp.settingNotificationVibrateWhenSyncEnded);
         setting_tag.appendChild(createXmlSettingDataItemBoolean(c, gp, cu, main_document, c.getString(R.string.settings_device_orientation_portrait), false));//gp.settingFixDeviceOrientationToPortrait?"true":"false");
-        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_screen_theme), SCREEN_THEME_STANDARD));//gp.settingScreenTheme);
+        setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_screen_theme), SCREEN_THEME_DEFAULT));//gp.settingScreenTheme);
         setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_screen_theme_language), GlobalParameters.APPLICATION_LANGUAGE_SETTING_SYSTEM_DEFAULT));
         setting_tag.appendChild(createXmlSettingDataItemString(c, gp, cu, main_document, c.getString(R.string.settings_display_font_scale_factor), GlobalParameters.FONT_SCALE_FACTOR_NORMAL));
 

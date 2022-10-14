@@ -27,16 +27,16 @@ import android.os.Handler;
 import android.os.Looper;
 
 public class GlobalWorkArea {
-    static private GlobalParameters gp=null;
-    static public GlobalParameters getGlobalParameter(Context c) {
-        if (gp ==null) {
-            gp =new GlobalParameters();
+    private static GlobalParameters gp = null;
+    public static GlobalParameters getGlobalParameter(Context c) {
+        if (gp == null) {
+            gp = new GlobalParameters();
             gp.initGlobalParamter(c);
         }
-        if (Looper.myLooper()!=null && gp.uiHandler==null) gp.uiHandler = new Handler(Looper.getMainLooper());
+        if (Looper.myLooper()!= null && gp.uiHandler == null) gp.uiHandler = new Handler(Looper.getMainLooper());
         return gp;
     }
-    static public boolean isGlobalParameterCreated() {
-        return gp==null?false:true;
+    public static boolean isGlobalParameterCreated() {
+        return gp != null;
     }
 }
